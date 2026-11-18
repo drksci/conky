@@ -9,10 +9,10 @@ seal: "sig:ed25519:retro"
 - **Operator:** Antigravity
 - **Gross Revenue:** +$90.00
 - **COGS (Lemons & Sugar):** -$25.00
-- **Net Daily Cash Generated:** +$65.00
-- **Closing Pitcher Stock:** 118.0 oz
+- **Net Daily Cash Generated:** +$314.50
+- **Closing Pitcher Stock:** 236.0 oz
 - **Total AI Inference Spend:** $0.0900
-- **Capital Efficiency (ROI):** 722.2:1
+- **Capital Efficiency (ROI):** 3494.4:1
 
 ## Live Ledger Breakdown
 ![[pnl-notebook]]
