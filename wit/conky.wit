@@ -1,0 +1,44 @@
+package conky:kernel@1.0.0;
+
+interface types {
+    type crest = string;       // "[[a19f4c881b]]"
+    type link = string;        // "[[wal#usd]]"
+    type seal = string;        // "sig:ed25519:..." 
+
+    record line {
+        vault: string,
+        unit: string,          // "usd" | "oz" | "lb" | "cpu"
+        shift: float64,
+    }
+
+    record patch {
+        target: link,
+        delta: string,         // Markdown/YAML diff
+        parity: list<line>,    // Zero-sum double entry
+        shadow: bool,          // Dry-run execution
+        purpose: link,         // OTel span tracer
+        base: seal,            // Parent git hash
+    }
+
+    variant fault {
+        sprawl(u32),           // > 4096 bytes
+        ward(string),          // Invariant block
+        gate(link),            // Awaiting quorum
+        imbalance,             // Parity sum != 0
+        cycle(u32),            // Max propagation depth (12)
+        taint,                 // Prompt injection 
+    }
+}
+
+interface airlock {
+    use types.{link, patch, seal, fault};
+
+    peek: func(target: link) -> result<string, fault>;
+    watch: func(target: link, when: string) -> result<u64, fault>;
+    etch: func(req: patch) -> result<seal, fault>;
+}
+
+world capsule {
+    import airlock;
+    export breathe: func(trigger: link, payload: string) -> result<string, string>;
+}

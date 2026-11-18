@@ -1,0 +1,12 @@
+[package]
+name = "conky-engines"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+conky-airlock = { path = "../conky-airlock" }
+thiserror.workspace = true
+anyhow.workspace = true
+tracing.workspace = true

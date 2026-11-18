@@ -1,0 +1,15 @@
+[package]
+name = "conky-graph"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+conky-airlock = { path = "../conky-airlock" }
+serde.workspace = true
+serde_yaml.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true
+regex.workspace = true
+tracing.workspace = true
