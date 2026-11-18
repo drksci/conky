@@ -10,12 +10,12 @@ seal: "sig:ed25519:pnl_live"
 
 | purpose | unit | net |
 | :--- | :--- | :--- |
-| [[initial_float]] | usd | 184.50 |
-| [[prebatch_heatwave]] | oz | 150.00 |
-| [[initial_float]] | oz | 112.00 |
-| [[midday_sales]] | usd | 90.00 |
-| [[morning_ignition]] | cpu | -0.02 |
-| [[prebatch_heatwave]] | cpu | -0.03 |
-| [[midday_sales]] | cpu | -0.04 |
-| [[prebatch_heatwave]] | usd | -25.00 |
-| [[midday_sales]] | oz | -144.00 |
+| [[initial_float]] | usd | 369.00 |
+| [[prebatch_heatwave]] | oz | 300.00 |
+| [[initial_float]] | oz | 224.00 |
+| [[midday_sales]] | usd | 180.00 |
+| [[morning_ignition]] | cpu | -0.04 |
+| [[prebatch_heatwave]] | cpu | -0.06 |
+| [[midday_sales]] | cpu | -0.08 |
+| [[prebatch_heatwave]] | usd | -50.00 |
+| [[midday_sales]] | oz | -288.00 |
