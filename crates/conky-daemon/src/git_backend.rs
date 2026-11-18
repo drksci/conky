@@ -55,6 +55,15 @@ impl GitBackend {
     }
 
     pub fn commit_etch(&self, patch: &Patch, identity: &Crest) -> Result<Oid, git2::Error> {
+        self.commit_sealed_etch(patch, identity, "flux:quiescent")
+    }
+
+    pub fn commit_sealed_etch(
+        &self,
+        patch: &Patch,
+        crest: &str,
+        pulse_root: &str,
+    ) -> Result<Oid, git2::Error> {
         let mut index = self.repo.index()?;
         let clean_target = patch.target.trim_matches(|c| c == '[' || c == ']');
         index.add_path(Path::new(&format!("{}.md", clean_target)))?;
@@ -64,8 +73,8 @@ impl GitBackend {
         let tree = self.repo.find_tree(tree_id)?;
 
         let sig = Signature::now(
-            &identity.to_string(),
-            &format!("purpose:{}", patch.purpose),
+            crest,
+            &format!("purpose:{}|pulse:{}", patch.purpose, pulse_root),
         )?;
 
         let mut parents = Vec::new();
@@ -93,7 +102,7 @@ impl GitBackend {
             Some("HEAD"),
             &sig,
             &sig,
-            &format!("etch: {} -> {}", identity, patch.target),
+            &format!("seal: {} -> {}", crest, patch.target),
             &tree,
             &parent_refs,
         )

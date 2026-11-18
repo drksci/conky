@@ -47,6 +47,7 @@ mod tests {
                 Line { vault: "lemon_supplier".into(), unit: "usd".into(), shift: 5.0 },
             ],
             shadow: false,
+            settle: "quiescent".into(),
             purpose: "[[buy_lemons]]".into(),
             base: "sig:dummy".into(),
         };
@@ -63,6 +64,7 @@ mod tests {
                 Line { vault: "lemon_supplier".into(), unit: "usd".into(), shift: 4.5 },
             ],
             shadow: false,
+            settle: "quiescent".into(),
             purpose: "[[buy_lemons]]".into(),
             base: "sig:dummy".into(),
         };
