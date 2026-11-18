@@ -1,15 +1,21 @@
 ---
 crest: "[[pnl-notebook]]"
 engine: "organ/duckdb"
-maker: "[[sol]]"
+maker: "[[a19f4c881b]]"
 guard: "[[guard-pnl-notebook]]"
 view: "[[view-pnl-notebook]]"
-source: ".iceberg/[[wal]]/ledger.parquet"
-sql: "SELECT unit, SUM(shift) AS net FROM source WHERE vault='usd' GROUP BY unit"
-seal: "sig:ed25519:1b7a998124b"
+seal: "sig:ed25519:pnl_live"
 ---
-# Real-Time Margin Analysis
-| unit | net |
-| :--- | :--- |
-| lemonade_sales | +$168.00 |
-| lemon_cogs | -$33.50 |
+# Real-Time Margin Ledger Analysis
+
+| purpose | unit | net |
+| :--- | :--- | :--- |
+| [[initial_float]] | usd | 184.50 |
+| [[prebatch_heatwave]] | oz | 150.00 |
+| [[initial_float]] | oz | 112.00 |
+| [[midday_sales]] | usd | 90.00 |
+| [[morning_ignition]] | cpu | -0.02 |
+| [[prebatch_heatwave]] | cpu | -0.03 |
+| [[midday_sales]] | cpu | -0.04 |
+| [[prebatch_heatwave]] | usd | -25.00 |
+| [[midday_sales]] | oz | -144.00 |
