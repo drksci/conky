@@ -1,11 +1,9 @@
 ---
 crest: "[[batch-scaler]]"
 engine: "gear"
-maker: "[[a19f4c881b]]"
-guard: "[[guard-batch-scaler]]"
-view: "[[view-batch-scaler]]"
-code: "cel: 160 - 32"
-seal: "sig:ed25519:forge_batch-scaler"
+status: "ARCHIVED"
+ttl: "2026-06-01"
+seal: "sig:ed25519:archived_scaler"
 ---
-# batch-scaler
-*Autopoietically forged tool by [[a19f4c881b]] to reduce inference spend.*
+# Lemonade Batch Scaler (ARCHIVED)
+*Decommissioned during winter pivot.*

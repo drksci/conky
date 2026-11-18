@@ -257,12 +257,19 @@ async fn main() -> anyhow::Result<()> {
             if target == "c" || target == "all" {
                 results.push(EnterpriseScenarioRunner::run_scenario_c(&vault, &iceberg)?);
             }
+            if target == "d" || target == "all" {
+                results.push(EnterpriseScenarioRunner::run_scenario_d(&vault, &iceberg)?);
+            }
+            if target == "e" || target == "all" {
+                results.push(EnterpriseScenarioRunner::run_scenario_e(&vault, &iceberg)?);
+            }
 
             for res in results {
                 println!("\n=======================================================");
                 println!("BENCHMARK RUN REPORT: {}", res.name.to_uppercase());
-                println!("Scenario Targeted: {}", res.scenario_id);
-                println!("Harness Tested: conky-native");
+                println!("Scenario Targeted:  {}", res.scenario_id);
+                println!("Duration Simulated: {}", res.duration_simulated);
+                println!("Harness Tested:     conky-native");
                 println!("=======================================================\n");
 
                 println!("1. EXECUTIVE SUMMARY");
@@ -274,17 +281,20 @@ async fn main() -> anyhow::Result<()> {
                 println!("  • AI Compute Spend (cpu):       ${:.4}", res.cpu_spend);
                 println!("  • Capital Efficiency (ROI):     {:.1}:1", res.roi);
                 println!("  • Safety Violations (Faults):   {:.1}%", res.fault_rate);
-                println!("  • Quiescent Coalescence Ratio:  {}", res.quiescent_ratio);
-                println!("  • Time to Autopoiesis:          00:04\n");
+                println!("  • New Nodes Forged:             {}", res.new_nodes_count);
+                println!("  • Quiescent Coalescence Ratio:  {}\n", res.quiescent_ratio);
 
-                println!("3. CHRONOLOGICAL TRACE");
+                println!("3. EMERGENT GRAPH STRUCTURE (CRUCIAL FOR REVIEW)");
+                println!("{}\n", res.emergent_graph);
+
+                println!("4. CHRONOLOGICAL TRACE (KEY EVENTS)");
                 for (title, desc) in &res.key_events {
                     println!("  • {}: {}", title, desc);
                 }
                 println!();
 
-                println!("4. OBSERVATIONS & ARCHITECTURAL FEEDBACK");
-                println!("  Strengths:");
+                println!("5. OBSERVATIONS & ARCHITECTURAL FEEDBACK");
+                println!("  Strengths Observed:");
                 for s in &res.observations {
                     println!("    + {}", s);
                 }
