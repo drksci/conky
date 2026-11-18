@@ -1,7 +1,7 @@
 ---
 crest: "[[a19f4c881b]]"
 engine: "mind"
-name: "Sol"
+name: "Antigravity"
 guard: "[[guard-sol]]"
 view: "[[view-sol]]"
 inherits: ["[[realm]]"]
