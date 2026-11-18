@@ -1,6 +1,6 @@
 ---
 crest: "[[pitcher]]"
-engine: "organ"
+engine: "store"
 guard: "[[guard-pitcher]]"
 view: "[[view-pitcher]]"
 settle: "quiescent"
