@@ -66,7 +66,27 @@ impl GitBackend {
     ) -> Result<Oid, git2::Error> {
         let mut index = self.repo.index()?;
         let clean_target = patch.target.trim_matches(|c| c == '[' || c == ']');
-        index.add_path(Path::new(&format!("{}.md", clean_target)))?;
+        let vault_target = Path::new("vault").join(format!("{}.md", clean_target));
+        let direct_target = std::path::PathBuf::from(format!("{}.md", clean_target));
+
+        let target_path = if vault_target.exists() {
+            vault_target
+        } else if direct_target.exists() {
+            direct_target
+        } else {
+            let p = if Path::new("vault").exists() {
+                vault_target
+            } else {
+                direct_target
+            };
+            if let Some(parent) = p.parent() {
+                let _ = std::fs::create_dir_all(parent);
+            }
+            let _ = std::fs::write(&p, &patch.delta);
+            p
+        };
+
+        index.add_path(&target_path)?;
         index.write()?;
 
         let tree_id = index.write_tree()?;

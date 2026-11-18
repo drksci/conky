@@ -1,5 +1,7 @@
 pub mod git_backend;
 pub mod signer;
+pub mod stream;
+pub mod tests_suite;
 pub mod watcher;
 
 use conky_graph::VaultReader;

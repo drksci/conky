@@ -24,5 +24,7 @@ tracing-subscriber.workspace = true
 anyhow.workspace = true
 thiserror.workspace = true
 regex.workspace = true
+clap.workspace = true
+blake3.workspace = true
 serde.workspace = true
 serde_yaml.workspace = true
