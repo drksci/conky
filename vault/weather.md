@@ -1,7 +1,7 @@
 ---
 crest: "[[weather]]"
 engine: "organ"
-seal: "sig:ed25519:init"
 ---
-# Weather Sensor Feed
-heat: 0.75
+# Weather Feed
+heat: 0.88
+forecast: Heatwave 34C

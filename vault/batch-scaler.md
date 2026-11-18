@@ -1,9 +1,11 @@
 ---
 crest: "[[batch-scaler]]"
 engine: "gear"
-maker: "[[sol]]"
-code: "cel: { lemons: ceil((160 - wal.oz) / 16), sugar: ceil((160 - wal.oz) / 32) }"
-seal: "sig:ed25519:88e147102b"
+maker: "[[a19f4c881b]]"
+guard: "[[guard-batch-scaler]]"
+view: "[[view-batch-scaler]]"
+code: "cel: 160 - 32"
+seal: "sig:ed25519:forge_batch-scaler"
 ---
-# Lemonade Batch Scaler
-*Dynamically forged by Sol to reduce math inference costs.*
+# batch-scaler
+*Autopoietically forged tool by [[a19f4c881b]] to reduce inference spend.*

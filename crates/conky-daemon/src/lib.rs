@@ -1,8 +1,13 @@
+pub mod adapters;
 pub mod git_backend;
 pub mod signer;
+pub mod simulate;
 pub mod stream;
 pub mod tests_suite;
 pub mod watcher;
+
+pub use adapters::ExternalHarnessAdapter;
+pub use simulate::{run_playbook_simulation, SimulationReport, SimulationStepLog};
 
 use conky_graph::VaultReader;
 use std::fs;

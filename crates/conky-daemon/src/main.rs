@@ -49,6 +49,13 @@ enum Commands {
         #[arg(short, long, default_value = ".")]
         repo: String,
     },
+    /// Run the full SunnySide operational playbook simulation
+    Simulate {
+        #[arg(short, long, default_value = "./vault")]
+        vault: PathBuf,
+        #[arg(short, long, default_value = "./.iceberg")]
+        iceberg: PathBuf,
+    },
 }
 
 #[derive(Subcommand, Debug)]
@@ -195,6 +202,36 @@ async fn main() -> anyhow::Result<()> {
             if !all_ok {
                 std::process::exit(1);
             }
+        }
+        Commands::Simulate { vault, iceberg } => {
+            info!("Starting SunnySide Playbook Simulation (Operator: Antigravity)...");
+            let report = conky_daemon::simulate::run_playbook_simulation(&vault, &iceberg)?;
+
+            println!("\n=======================================================");
+            println!("   SUNNYSIDE OPERATIONAL PLAYBOOK SIMULATION REPORT    ");
+            println!("   Operator: {} | Location: Brisbane, QLD     ", report.operator);
+            println!("=======================================================\n");
+
+            for (i, step) in report.steps.iter().enumerate() {
+                println!("--- [STEP {}] {} ---", i + 1, step.phase);
+                println!("Timestamp:  {}", step.timestamp_aest);
+                println!("Prompt:     {}", step.prompt_flattened.replace('\n', " "));
+                println!("LLM Output: {}", step.llm_response_jsonl);
+                println!("Airlock:    {}", step.airlock_verdict);
+                println!("Git Commit: {}", step.git_commit);
+                println!("WAL State:  {:?}\n", step.wal_state);
+            }
+
+            println!("-------------------------------------------------------");
+            println!("FINANCIAL & PERFORMANCE METRICS:");
+            println!("  • Gross Revenue:          +${:.2} USD", report.total_revenue_usd);
+            println!("  • Inventory COGS:         -${:.2} USD", report.total_cogs_usd);
+            println!("  • Net Cash Generated:     +${:.2} USD", report.net_profit_usd);
+            println!("  • AI Compute Spend:       ${:.4} USD", report.cpu_spend_usd);
+            println!("  • Capital Efficiency ROI: {:.1}:1 ROI (Target > 50:1)", report.capital_efficiency_roi);
+            println!("  • Taint Injections Dropped: {}", report.taint_blocks);
+            println!("  • Signed Git Commits:     {}", report.commits_recorded);
+            println!("=======================================================\n");
         }
     }
 
