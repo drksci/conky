@@ -1,30 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="180" viewBox="0 0 880 180" role="img" aria-label="Text sent in the median run of each harness, cut by where it came from.">
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="180" viewBox="0 0 720 180" role="img" aria-label="Text sent in the median run of each harness, cut by where it came from.">
 <title>Text sent in the median run of each harness, cut by where it came from.</title>
 <defs><pattern id="dots" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1z" fill="#1E1E1E" shape-rendering="crispEdges"/></pattern><pattern id="dense" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#1E1E1E" shape-rendering="crispEdges"/></pattern><pattern id="dense-accent" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#E600E6" shape-rendering="crispEdges"/></pattern></defs>
 <text x="24.0" y="28.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start" fill="#1E1E1E">Where the text went</text>
-<text x="856.0" y="28.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="end" fill="#8A8A86" letter-spacing="0.14em">CHARACTERS, MEDIAN RUN</text>
-<line x1="24.0" y1="40.0" x2="856.0" y2="40.0" stroke="#1E1E1E" stroke-width="0.75" stroke-linecap="round"/>
+<text x="696.0" y="28.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="end" fill="#8A8A86" letter-spacing="0.14em">CHARACTERS, MEDIAN RUN</text>
+<line x1="24.0" y1="40.0" x2="696.0" y2="40.0" stroke="#1E1E1E" stroke-width="0.75" stroke-linecap="round"/>
 <text x="24.0" y="78.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E" letter-spacing="0.14em">LOOP</text>
-<rect x="204.0" y="62.0" width="69.5" height="24.0" fill="none" stroke="#1E1E1E" stroke-width="1.0"/>
-<text x="208.0" y="100.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">38k</text>
-<text x="208.0" y="55.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="start" fill="#8A8A86" letter-spacing="0.14em">TASK</text>
-<rect x="273.5" y="62.0" width="322.2" height="24.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="1.0"/>
-<text x="277.5" y="100.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">175k</text>
-<text x="277.5" y="55.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="start" fill="#8A8A86" letter-spacing="0.14em">SCREEN</text>
-<rect x="595.6" y="62.0" width="31.3" height="24.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="1.0"/>
-<text x="599.6" y="100.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">17k</text>
-<rect x="627.0" y="62.0" width="5.0" height="24.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="1.0"/>
-<text x="642.0" y="79.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#1E1E1E">232k</text>
+<rect x="172.0" y="62.0" width="56.5" height="24.0" fill="none" stroke="#1E1E1E" stroke-width="1.0"/>
+<text x="176.0" y="100.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">38k</text>
+<text x="176.0" y="55.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="start" fill="#8A8A86" letter-spacing="0.14em">TASK</text>
+<rect x="228.5" y="62.0" width="262.0" height="24.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="1.0"/>
+<text x="232.5" y="100.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">175k</text>
+<text x="232.5" y="55.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="start" fill="#8A8A86" letter-spacing="0.14em">SCREEN</text>
+<rect x="490.4" y="62.0" width="25.5" height="24.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="1.0"/>
+<text x="494.4" y="100.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">17k</text>
+<rect x="515.9" y="62.0" width="4.1" height="24.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="1.0"/>
+<text x="530.0" y="79.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#1E1E1E">232k</text>
 <text x="24.0" y="140.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" font-weight="bold" text-anchor="start" fill="#E600E6" letter-spacing="0.14em">CONKY</text>
-<rect x="204.0" y="124.0" width="71.1" height="24.0" fill="none" stroke="#E600E6" stroke-width="1.0"/>
-<text x="208.0" y="162.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">39k</text>
-<rect x="275.1" y="124.0" width="148.9" height="24.0" fill="url(#dots)" stroke="#E600E6" stroke-width="1.0"/>
-<text x="279.1" y="162.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">81k</text>
-<rect x="424.0" y="124.0" width="65.8" height="24.0" fill="url(#dense-accent)" stroke="#E600E6" stroke-width="1.0"/>
-<text x="428.0" y="162.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">36k</text>
-<text x="428.0" y="117.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="start" fill="#8A8A86" letter-spacing="0.14em">SCAFFOLDING</text>
-<rect x="489.8" y="124.0" width="2.5" height="24.0" fill="#E600E6" stroke="#E600E6" stroke-width="1.0"/>
-<text x="502.3" y="141.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#E600E6">157k</text>
-<text x="724.0" y="96.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="start" fill="#E600E6">33%</text>
-<text x="724.0" y="114.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9" font-weight="normal" text-anchor="start" fill="#8A8A86">less than loop</text>
+<rect x="172.0" y="124.0" width="57.8" height="24.0" fill="none" stroke="#E600E6" stroke-width="1.0"/>
+<text x="176.0" y="162.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">39k</text>
+<rect x="229.8" y="124.0" width="121.0" height="24.0" fill="url(#dots)" stroke="#E600E6" stroke-width="1.0"/>
+<text x="233.8" y="162.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">81k</text>
+<rect x="350.9" y="124.0" width="53.5" height="24.0" fill="url(#dense-accent)" stroke="#E600E6" stroke-width="1.0"/>
+<text x="354.9" y="162.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">36k</text>
+<rect x="404.4" y="124.0" width="2.1" height="24.0" fill="#E600E6" stroke="#E600E6" stroke-width="1.0"/>
+<text x="416.4" y="141.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#E600E6">157k</text>
+<text x="604.0" y="96.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="start" fill="#E600E6">29%</text>
+<text x="604.0" y="114.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9" font-weight="normal" text-anchor="start" fill="#8A8A86">less than loop</text>
 </svg>

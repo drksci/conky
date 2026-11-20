@@ -13,7 +13,7 @@ from xml.sax.saxutils import escape
 
 from bench import record
 
-WIDTH = 880
+WIDTH = 720
 MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
 LOOKS = {
@@ -24,8 +24,8 @@ TITLE = (
     "Every run drawn as a bar from start to goal, one band per harness, "
     "with what was held equal above and what it cost below."
 )
-X0, X1 = 204.0, 632.0  # the span every progress axis shares, so the panels line up
-SIDE = 664.0  # where the right-hand column starts
+X0, X1 = 172.0, 520.0  # the span every progress axis shares, so the panels line up
+SIDE = 548.0  # where the right-hand column starts
 
 
 class Sheet:
@@ -280,12 +280,12 @@ def text(rows: list[dict], calls: list[dict], look: str) -> str:
     if len(thinking) == 2 and any(accent[h] for h in thinking):
         ours = next(h for h in thinking if accent[h])
         other = next(h for h in thinking if h != ours)
-        a, b = sum(totals[ours].values()), sum(totals[other].values())
+        a, b = (statistics.median(r["chars"] for r in arms[h]) for h in (ours, other))
         if b and a != b:
             change = round(100 * (a / b - 1))
-            s.text(SIDE + 60, 96, f"{abs(change)}%", 30, "accent", SANS, "bold")
+            s.text(SIDE + 56, 96, f"{abs(change)}%", 30, "accent", SANS, "bold")
             s.text(
-                SIDE + 60, 114, f"{'less' if change < 0 else 'more'} than {other}", 9, "grey", SANS
+                SIDE + 56, 114, f"{'less' if change < 0 else 'more'} than {other}", 9, "grey", SANS
             )
     return s.svg(y - 6, "Text sent in the median run of each harness, cut by where it came from.")
 
@@ -328,13 +328,8 @@ def time(rows: list[dict], calls: list[dict], look: str) -> str:
                 0.75,
             )
         end = cs[-1]["at"] + cs[-1]["seconds"] if cs else 0
-        thinking_time = sum(c["seconds"] for c in cs)
         s.text(px(end) + 10, y + 17, f"{end:,.0f} s", 14, colour, SANS, "bold")
-        s.caps(
-            24,
-            y + 30,
-            f"{len(cs)} calls · {100 * thinking_time / end:.0f}% in the model" if end else "",
-        )
+        s.caps(24, y + 30, f"{len(cs)} calls")
         y += 56
     for tick in range(0, int(longest) + 1, 60):
         s.line(px(tick), 52, px(tick), y - 22, 0.75, "grey", "1 4")

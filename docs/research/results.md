@@ -42,19 +42,19 @@ Counts are runs. Other columns are the median over seeds.
 | `conky` | one character in a vault | 4 of 5 | 2,040 | 42 | 0 | 298 |
 | `loop` | one model in a plain loop | 4 of 5 | 2,040 | 42 | 0 | 240 |
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/reached.dark.svg"><img src="../results/pilot-2/reached.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, under the model, seeds, budget and commit that were held equal." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/reached.dark.svg"><img src="../results/pilot-2/reached.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, under the model, seeds, budget and commit that were held equal." width="720"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/text.dark.svg"><img src="../results/pilot-2/text.light.svg" alt="The text each harness sent in its median run, cut by where it came from." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/text.dark.svg"><img src="../results/pilot-2/text.light.svg" alt="The text each harness sent in its median run, cut by where it came from." width="720"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/time.dark.svg"><img src="../results/pilot-2/time.light.svg" alt="The median run of each harness along a time axis: steps above, model calls below." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/time.dark.svg"><img src="../results/pilot-2/time.light.svg" alt="The median run of each harness along a time axis: steps above, model calls below." width="720"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/progress.dark.svg"><img src="../results/pilot-2/progress.light.svg" alt="miles left to Oregon against turn, one line per arm." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/progress.dark.svg"><img src="../results/pilot-2/progress.light.svg" alt="miles left to Oregon against turn, one line per arm." width="720"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/spend.dark.svg"><img src="../results/pilot-2/spend.light.svg" alt="Model calls and text sent against turn, one line per arm." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/spend.dark.svg"><img src="../results/pilot-2/spend.light.svg" alt="Model calls and text sent against turn, one line per arm." width="720"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/rules.dark.svg"><img src="../results/pilot-2/rules.light.svg" alt="House rules broken in the game, by turn, for each run." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/rules.dark.svg"><img src="../results/pilot-2/rules.light.svg" alt="House rules broken in the game, by turn, for each run." width="720"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/board.dark.svg"><img src="../results/pilot-2/board.light.svg" alt="Every measure for every arm on one board." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/board.dark.svg"><img src="../results/pilot-2/board.light.svg" alt="Every measure for every arm on one board." width="720"></picture></p>
 
 ## Data
 

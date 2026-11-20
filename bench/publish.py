@@ -39,7 +39,7 @@ ALT = {
 }
 
 
-def picture(folder: str, name: str, f: dict, width: int = 800) -> str:
+def picture(folder: str, name: str, f: dict, width: int = 720) -> str:
     return (
         f'<picture><source media="(prefers-color-scheme: dark)" '
         f'srcset="{folder}/{name}.dark.svg"><img src="{folder}/{name}.light.svg" '
