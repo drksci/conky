@@ -1,8 +1,8 @@
 """Build the stopped vault that `conky assimilate` takes over when it is given no source.
 
-    python scripts/build_stopped_vault.py src/conky/stopped/stall.bundle
+    python scripts/build_stopped_vault.py src/conky/stopped/lemonade.bundle
 
-The vault is the first four steps of the `stall` example, at fixed instants, signed by a key
+The vault is the first four steps of the `lemonade` example, at fixed instants, signed by a key
 derived from a fixed seed. Ed25519 signatures are deterministic, so every run gives the same
 commit ids. The seed stands in for a key that is never kept: nothing it signs needs trust, and the
 packaged vault holds only the public half.
@@ -22,7 +22,7 @@ from pathlib import Path
 from conky import demo
 from conky.vault import Vault
 
-SEED = hashlib.sha256(b"conky stopped vault: stall").digest()
+SEED = hashlib.sha256(b"conky stopped vault: lemonade").digest()
 START = datetime(2026, 1, 1, 9, 0, 0, tzinfo=UTC)
 STOPPED_AFTER = 4
 
@@ -104,11 +104,12 @@ def write_key(keys_dir: Path, actor: str) -> None:
 
 def build(bundle: Path) -> None:
     """Build the stopped vault in a scratch folder and bundle it at the path bundle."""
-    steps = demo.load("stall").steps[:STOPPED_AFTER]
+    steps = demo.load("lemonade").steps[:STOPPED_AFTER]
     instants = iter(START + timedelta(minutes=n) for n in range(len(steps)))
     with tempfile.TemporaryDirectory() as scratch:
         root = Path(scratch)
-        write_key(root / "keys", "alice")
+        for actor in sorted({step.actor for step in steps}):
+            write_key(root / "keys", actor)
         vault = Vault.init(root / "vault", root / "keys")
         for step in steps:
             at = next(instants).strftime("%Y-%m-%dT%H:%M:%SZ")

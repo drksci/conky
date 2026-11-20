@@ -29,32 +29,32 @@ def pages(vault: Vault) -> dict[str, bytes]:
 
 
 def test_write_is_a_signed_commit_with_trailers_and_dates(vault: Vault) -> None:
-    result = w(vault, "stall", {"stock": 40}, "Fresh bread.")
+    result = w(vault, "cooler", {"stock": 40}, "Fresh bread.")
     assert result.ok and result.id == commits(vault)[-1]
     subject, found = message(vault)
-    assert subject == "write stall" and found == {"Kind": "write", "Page": "stall"}
+    assert subject == "write cooler" and found == {"Kind": "write", "Page": "cooler"}
     shown = git(vault.path, "log", "-1", "--format=%an|%ae|%cn|%ce|%at|%ct")
     stamp = str(int(datetime.fromisoformat(AT).timestamp()))
     assert shown.strip() == "alice|alice@conky|alice|alice@conky|" + "|".join([stamp] * 2)
     assert signed_by(vault.path) == "alice@conky"
-    assert (vault.pages_dir / "stall.md").read_text() == "---\nstock: 40\n---\nFresh bread.\n"
-    assert git(vault.path, "show", "HEAD:pages/stall.md") == "---\nstock: 40\n---\nFresh bread.\n"
+    assert (vault.pages_dir / "cooler.md").read_text() == "---\nstock: 40\n---\nFresh bread.\n"
+    assert git(vault.path, "show", "HEAD:pages/cooler.md") == "---\nstock: 40\n---\nFresh bread.\n"
     vault.verify()
 
 
 def test_first_write_registers_the_key_in_the_same_commit(vault: Vault) -> None:
-    w(vault, "stall", {"stock": 1})
-    w(vault, "stall", {"stock": 2})
+    w(vault, "cooler", {"stock": 1})
+    w(vault, "cooler", {"stock": 2})
     first = git(vault.path, "show", "--name-only", "--format=", commits(vault)[0]).split()
     second = git(vault.path, "show", "--name-only", "--format=", commits(vault)[1]).split()
-    assert sorted(first) == ["keys/allowed_signers", "pages/stall.md"]
-    assert second == ["pages/stall.md"]
+    assert sorted(first) == ["keys/allowed_signers", "pages/cooler.md"]
+    assert second == ["pages/cooler.md"]
     line = (vault.path / "keys" / "allowed_signers").read_text()
     assert line.startswith('alice@conky namespaces="git" ssh-ed25519 ')
 
 
 def test_init_sets_the_repository_up_for_plain_git(vault: Vault) -> None:
-    w(vault, "stall", {"stock": 1})
+    w(vault, "cooler", {"stock": 1})
     assert git(vault.path, "config", "--get", "gpg.format").strip() == "ssh"
     assert git(vault.path, "config", "--get", "commit.gpgsign").strip() == "true"
     assert git(vault.path, "branch", "--show-current").strip() == "main"
@@ -63,12 +63,12 @@ def test_init_sets_the_repository_up_for_plain_git(vault: Vault) -> None:
 
 
 def test_refused_write_is_an_empty_signed_commit(vault: Vault) -> None:
-    assert w(vault, "stall", {"rules": ["page.stock >= 0"], "stock": 5}).ok
+    assert w(vault, "cooler", {"rules": ["page.stock >= 0"], "stock": 5}).ok
     before = pages(vault)
-    result = w(vault, "stall", {"stock": -1}, "some body")
+    result = w(vault, "cooler", {"stock": -1}, "some body")
     assert not result.ok and result.id == commits(vault)[-1]
     subject, found = message(vault)
-    assert subject == "refused stall" and found["Kind"] == "refused"
+    assert subject == "refused cooler" and found["Kind"] == "refused"
     assert found["Reason"] == result.reason and "page.stock >= 0" in found["Reason"]
     assert found["Attempt"] == '{"stock":-1}' and found["Body-Bytes"] == "9"
     assert git(vault.path, "show", "--name-only", "--format=", "HEAD") == ""
@@ -78,25 +78,25 @@ def test_refused_write_is_an_empty_signed_commit(vault: Vault) -> None:
 
 
 def test_refusal_by_a_new_actor_registers_its_key(vault: Vault) -> None:
-    result = w(vault, "depot", {"watch": [{"on": "stall"}]}, actor="carol")
+    result = w(vault, "supplier", {"watch": [{"on": "cooler"}]}, actor="carol")
     assert not result.ok and result.reason.startswith("shape")
     assert signed_by(vault.path) == "carol@conky"
     vault.verify()
 
 
 def test_rule_error_refuses(vault: Vault) -> None:
-    result = w(vault, "stall", {"rules": ["page.missing > 0"]})
+    result = w(vault, "cooler", {"rules": ["page.missing > 0"]})
     assert not result.ok and result.reason.startswith("rule")
 
 
 def test_rule_inherited_through_two_level_chain(vault: Vault) -> None:
-    w(vault, "market", {"rules": ["page.price >= 0"], "price": 0})
-    w(vault, "bazaar", {"within": "market", "price": 0})
-    assert w(vault, "stall", {"within": "bazaar", "price": 3}).ok
-    result = w(vault, "stall", {"price": -3})
+    w(vault, "stand", {"rules": ["page.price >= 0"], "price": 0})
+    w(vault, "bazaar", {"within": "stand", "price": 0})
+    assert w(vault, "cooler", {"within": "bazaar", "price": 3}).ok
+    result = w(vault, "cooler", {"price": -3})
     assert not result.ok
     assert result.reason.startswith("rule") and "page.price >= 0" in result.reason
-    assert vault.read("stall").fields["price"] == 3
+    assert vault.read("cooler").fields["price"] == 3
 
 
 def test_size_rule_in_a_space_refuses_an_oversized_member(vault: Vault) -> None:
@@ -115,38 +115,38 @@ def test_page_without_a_size_rule_accepts_a_large_body(vault: Vault) -> None:
 
 
 def test_malformed_watch_is_refused(vault: Vault) -> None:
-    result = w(vault, "depot", {"watch": [{"on": "stall"}]})
+    result = w(vault, "supplier", {"watch": [{"on": "cooler"}]})
     assert not result.ok and result.reason.startswith("shape")
 
 
 def watch_pair(vault: Vault) -> None:
-    w(vault, "stall", {"stock": 40})
+    w(vault, "cooler", {"stock": 40})
     w(
         vault,
-        "depot",
+        "supplier",
         {
             "reorder": False,
-            "watch": [{"on": "stall", "when": "other.stock < 10", "set": {"reorder": "true"}}],
+            "watch": [{"on": "cooler", "when": "other.stock < 10", "set": {"reorder": "true"}}],
         },
     )
 
 
 def test_reaction_is_caused_by_and_signed_by_the_reacting_page(vault: Vault) -> None:
     watch_pair(vault)
-    first = w(vault, "stall", {"stock": 4})
-    assert vault.read("depot").fields["reorder"] is True
+    first = w(vault, "cooler", {"stock": 4})
+    assert vault.read("supplier").fields["reorder"] is True
     subject, found = message(vault)
-    assert subject == "write depot" and found["Cause"] == first.id
-    assert signed_by(vault.path) == "depot@conky"
+    assert subject == "write supplier" and found["Cause"] == first.id
+    assert signed_by(vault.path) == "supplier@conky"
     assert signed_by(vault.path, first.id) == "alice@conky"
     vault.verify()
 
 
 def test_reaction_that_changes_nothing_is_skipped(vault: Vault) -> None:
     watch_pair(vault)
-    w(vault, "stall", {"stock": 4})
+    w(vault, "cooler", {"stock": 4})
     count = len(commits(vault))
-    w(vault, "stall", {"stock": 3})
+    w(vault, "cooler", {"stock": 3})
     assert len(commits(vault)) == count + 1
 
 
@@ -167,8 +167,8 @@ def test_reaction_cycle_stops_at_depth_12(vault: Vault) -> None:
 
 def test_watch_key_on_is_plain_text_in_frontmatter(vault: Vault) -> None:
     watch_pair(vault)
-    assert "- on: stall\n" in (vault.pages_dir / "depot.md").read_text()
-    assert vault.read("depot").watch[0]["on"] == "stall"
+    assert "- on: cooler\n" in (vault.pages_dir / "supplier.md").read_text()
+    assert vault.read("supplier").watch[0]["on"] == "cooler"
 
 
 MEASURE = [
@@ -212,38 +212,38 @@ def test_threshold_fires_a_reaction_and_the_sequence_settles(
 
 
 def test_other_size_is_visible_to_a_watcher(vault: Vault) -> None:
-    w(vault, "gauge", {"watch": [{"on": "stall", "when": "true", "set": {"seen": "other_size"}}]})
-    w(vault, "stall", {}, "x" * 500)
-    assert vault.read("gauge").fields["seen"] == len((vault.pages_dir / "stall.md").read_bytes())
+    w(vault, "gauge", {"watch": [{"on": "cooler", "when": "true", "set": {"seen": "other_size"}}]})
+    w(vault, "cooler", {}, "x" * 500)
+    assert vault.read("gauge").fields["seen"] == len((vault.pages_dir / "cooler.md").read_bytes())
 
 
 def make_history(vault: Vault) -> None:
-    w(vault, "market", {"rules": ["page.stock >= 0"], "stock": 0})
-    w(vault, "stall", {"within": "market", "stock": 40}, "Bread.")
-    w(vault, "stall", {"stock": -5})
-    w(vault, "stall", {"stock": 7})
+    w(vault, "stand", {"rules": ["page.stock >= 0"], "stock": 0})
+    w(vault, "cooler", {"within": "stand", "stock": 40}, "Bread.")
+    w(vault, "cooler", {"stock": -5})
+    w(vault, "cooler", {"stock": 7})
 
 
 def test_hand_edited_page_fails_verify_and_blocks_writes(vault: Vault) -> None:
     make_history(vault)
     vault.verify()
-    page = vault.pages_dir / "stall.md"
+    page = vault.pages_dir / "cooler.md"
     page.write_text(page.read_text().replace("stock: 7", "stock: 8"))
     with pytest.raises(VerifyFailed, match="rebuild"):
         vault.verify()
     with pytest.raises(BadInput, match="rebuild"):
-        w(vault, "stall", {"stock": 9})
+        w(vault, "cooler", {"stock": 9})
     vault.rebuild()
     vault.verify()
     assert page.read_text().count("stock: 7") == 1
-    assert w(vault, "stall", {"stock": 9}).ok
+    assert w(vault, "cooler", {"stock": 9}).ok
 
 
 def test_rebuild_discards_stray_files(vault: Vault) -> None:
     make_history(vault)
     before = pages(vault)
     (vault.pages_dir / "ghost.md").write_text("---\n---\n")
-    (vault.pages_dir / "stall.md").unlink()
+    (vault.pages_dir / "cooler.md").unlink()
     vault.rebuild()
     assert pages(vault) == before
     vault.verify()
@@ -251,7 +251,7 @@ def test_rebuild_discards_stray_files(vault: Vault) -> None:
 
 def test_unsigned_commit_fails_verify(vault: Vault) -> None:
     make_history(vault)
-    page = vault.pages_dir / "stall.md"
+    page = vault.pages_dir / "cooler.md"
     page.write_text(page.read_text().replace("stock: 7", "stock: 8"))
     git(vault.path, "-c", "commit.gpgsign=false", "commit", "-qam", "edit")
     with pytest.raises(VerifyFailed, match="signature"):
@@ -270,7 +270,7 @@ def test_commit_signed_by_an_unlisted_key_fails_verify(vault: Vault, tmp_path: P
         "-qS",
         "--allow-empty",
         "-m",
-        "write stall\n\nKind: write\nPage: stall",
+        "write cooler\n\nKind: write\nPage: cooler",
     )
     with pytest.raises(VerifyFailed, match="signature"):
         vault.verify()
@@ -303,7 +303,7 @@ def test_write_commit_touching_other_files_fails_verify(vault: Vault) -> None:
         "commit",
         "-qS",
         "-m",
-        "write stall\n\nKind: write\nPage: stall",
+        "write cooler\n\nKind: write\nPage: cooler",
     )
     with pytest.raises(VerifyFailed, match="notes.txt"):
         vault.verify()
@@ -311,7 +311,7 @@ def test_write_commit_touching_other_files_fails_verify(vault: Vault) -> None:
 
 def test_refused_commit_that_changes_a_page_fails_verify(vault: Vault) -> None:
     make_history(vault)
-    page = vault.pages_dir / "stall.md"
+    page = vault.pages_dir / "cooler.md"
     page.write_text(page.read_text().replace("stock: 7", "stock: 8"))
     git(
         vault.path,
@@ -322,7 +322,7 @@ def test_refused_commit_that_changes_a_page_fails_verify(vault: Vault) -> None:
         "-S",
         "-a",
         "-m",
-        "refused stall\n\nKind: refused\nPage: stall",
+        "refused cooler\n\nKind: refused\nPage: cooler",
     )
     with pytest.raises(VerifyFailed, match="refused"):
         vault.verify()
@@ -334,7 +334,7 @@ def test_vault_travels_alone_by_clone_and_by_bundle(vault: Vault, tmp_path: Path
     git(tmp_path, "clone", "-q", str(vault.path), "copy")
     copy = Vault(tmp_path / "copy", nowhere)
     copy.verify()
-    assert copy.read("stall").fields["stock"] == 7
+    assert copy.read("cooler").fields["stock"] == 7
     assert copy.log() == vault.log()
     bundle = tmp_path / "vault.bundle"
     git(vault.path, "bundle", "create", str(bundle), "--all")
@@ -360,17 +360,17 @@ def test_no_private_key_material_under_the_vault(vault: Vault, keys_dir: Path) -
 
 
 def test_embeds_resolve_on_read(vault: Vault) -> None:
-    w(vault, "stall", {"stock": 40})
-    w(vault, "sign", {}, "We hold ![[stall#stock]] loaves.")
-    assert vault.read("sign").body == "We hold 40 loaves.\n"
-    assert "![[stall#stock]]" in (vault.pages_dir / "sign.md").read_text()
-    w(vault, "stall", {"stock": 12})
-    assert vault.read("sign").body == "We hold 12 loaves.\n"
+    w(vault, "cooler", {"stock": 40})
+    w(vault, "sign", {}, "We hold ![[cooler#stock]] cups.")
+    assert vault.read("sign").body == "We hold 40 cups.\n"
+    assert "![[cooler#stock]]" in (vault.pages_dir / "sign.md").read_text()
+    w(vault, "cooler", {"stock": 12})
+    assert vault.read("sign").body == "We hold 12 cups.\n"
 
 
 def test_missing_embed_target_resolves_to_empty(vault: Vault) -> None:
-    w(vault, "stall", {"stock": 1})
-    w(vault, "sign", {}, "a ![[nowhere#x]] b ![[stall#nofield]] c")
+    w(vault, "cooler", {"stock": 1})
+    w(vault, "sign", {}, "a ![[nowhere#x]] b ![[cooler#nofield]] c")
     assert vault.read("sign").body == "a  b  c\n"
 
 
@@ -397,12 +397,12 @@ def test_history_needs_no_expressions(
 
 
 def test_log_lists_history_oldest_first(vault: Vault) -> None:
-    first = w(vault, "stall", {"rules": ["page.stock >= 0"], "stock": 5})
-    w(vault, "stall", {"stock": -1})
+    first = w(vault, "cooler", {"rules": ["page.stock >= 0"], "stock": 5})
+    w(vault, "cooler", {"stock": -1})
     lines = vault.log()
     assert [line.split()[3] for line in lines] == ["write", "refused"]
-    assert lines[0].startswith(f"{first.id[:7]} 2026-01-01T00:00:00Z alice write stall")
-    assert lines[1].endswith("rule: page.stock >= 0 (from stall) is false")
+    assert lines[0].startswith(f"{first.id[:7]} 2026-01-01T00:00:00Z alice write cooler")
+    assert lines[1].endswith("rule: page.stock >= 0 (from cooler) is false")
 
 
 def test_opening_a_directory_that_is_not_a_vault_says_how_to_create_one(tmp_path: Path) -> None:

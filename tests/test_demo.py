@@ -5,13 +5,14 @@ import pytest
 from conky import demo
 from conky.cli import main
 from conky.errors import BadInput
+from conky.page import parse
 
 
 def run_demo(tmp_path: Path, *args: str) -> int:
     return main(["--keys", str(tmp_path / "k"), "demo", *args])
 
 
-@pytest.mark.parametrize("name", ["stall", "team"])
+@pytest.mark.parametrize("name", ["lemonade", "team"])
 def test_example_files_validate(name: str) -> None:
     example = demo.load(name)
     assert example.steps
@@ -31,25 +32,38 @@ def test_a_malformed_example_is_named_and_explained() -> None:
         )
 
 
-def test_demo_stall_runs_verifies_and_records_refusal_and_reaction(
+def test_demo_lemonade_runs_verifies_and_records_refusal_and_reaction(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     vault = tmp_path / "vault"
     assert run_demo(tmp_path, "--into", str(vault)) == 0
     out = capsys.readouterr().out
-    assert "refused: stall" in out
-    assert "Then depot changed by itself" in out
+    assert "refused: cooler" in out
+    assert "Then supplier changed by itself" in out
     assert "\x1b" not in out
     assert max(len(x) for x in out.splitlines() if str(vault) not in x) <= 80
     assert f"git -C {vault} log --oneline" in out
-    assert f"conky --vault {vault} read depot" in out
+    assert f"conky --vault {vault} read supplier" in out
     log = main(["--vault", str(vault), "log"])
     history = capsys.readouterr().out.splitlines()
     assert log == 0
-    assert any(" refused stall " in line for line in history)
-    assert any(" depot write depot cause " in line for line in history)
-    assert any(" journal write journal cause " in line for line in history)
+    assert any(" refused cooler " in line for line in history)
+    assert any(" supplier write supplier cause " in line for line in history)
+    assert any(" daybook write daybook cause " in line for line in history)
     assert main(["--vault", str(vault), "verify"]) == 0
+
+
+def test_the_lemonade_pages_read_as_written_by_people(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    vault = tmp_path / "vault"
+    assert run_demo(tmp_path, "--into", str(vault)) == 0
+    pages = sorted((vault / "pages").glob("*.md"))
+    assert [p.stem for p in pages] == ["cooler", "daybook", "stand", "supplier"]
+    for page in pages:
+        assert parse(page.read_text(encoding="utf-8")).body.strip(), page.name
+    order = parse((vault / "pages" / "supplier.md").read_text(encoding="utf-8")).fields["order"]
+    assert isinstance(order, str) and " " in order and order.endswith(".")
 
 
 def test_demo_team_runs_and_verifies(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
@@ -65,14 +79,14 @@ def test_demo_keys_default_to_a_folder_beside_the_vault(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     assert main(["demo", "--into", str(tmp_path / "vault")]) == 0
-    assert (tmp_path / "keys" / "alice").exists()
-    assert not (tmp_path / "vault" / "keys" / "alice").exists()
+    assert (tmp_path / "keys" / "maya").exists()
+    assert not (tmp_path / "vault" / "keys" / "maya").exists()
 
 
 def test_demo_list_shows_the_examples(capsys: pytest.CaptureFixture[str]) -> None:
     assert main(["demo", "--list"]) == 0
     out = capsys.readouterr().out
-    assert "stall" in out and "team" in out
+    assert "lemonade" in out and "team" in out
 
 
 def test_demo_into_an_existing_folder_fails_helpfully(

@@ -23,7 +23,7 @@ SUMMARY = (
     "where it stopped. No model is involved."
 )
 INTO = "conky-assimilated"
-PACKAGED = "the stopped market stall that ships with conky"
+PACKAGED = "a stopped lemonade stand that ships with conky"
 
 
 @dataclass(frozen=True)
@@ -40,7 +40,7 @@ class Carry:
 
 def packaged_carry(actor: str) -> list[Carry]:
     """Return the carry-on writes that ship beside the built-in vault, as the actor."""
-    text = (resources.files("conky") / "stopped" / "stall.yaml").read_text(encoding="utf-8")
+    text = (resources.files("conky") / "stopped" / "lemonade.yaml").read_text(encoding="utf-8")
     carried = []
     for item in load_value(text)["steps"]:
         write = item["write"]
@@ -54,7 +54,9 @@ def _take(source: str | None, into: Path) -> None:
     into.parent.mkdir(parents=True, exist_ok=True)
     try:
         if source is None:
-            with resources.as_file(resources.files("conky") / "stopped" / "stall.bundle") as path:
+            with resources.as_file(
+                resources.files("conky") / "stopped" / "lemonade.bundle"
+            ) as path:
                 git.run(["clone", "-q", "--", str(path), str(into.resolve())], into.parent)
         else:
             found = Path(source)

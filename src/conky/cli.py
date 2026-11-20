@@ -48,7 +48,9 @@ def _parser() -> argparse.ArgumentParser:
     sub.add_parser("verify", help="check the tree, the objects, the seals and the history")
     sub.add_parser("rebuild", help="restore the working tree to the committed state")
     demo_cmd = sub.add_parser("demo", help="build a small example vault and show it working")
-    demo_cmd.add_argument("name", nargs="?", default="stall", help="the example (default: stall)")
+    demo_cmd.add_argument(
+        "name", nargs="?", default="lemonade", help="the example (default: lemonade)"
+    )
     demo_cmd.add_argument(
         "--into", default=None, help="folder to create (default: ./conky-demo-NAME)"
     )

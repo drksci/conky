@@ -57,7 +57,7 @@ def test_plain_output_has_no_escapes_when_not_a_terminal_or_never_or_no_color(
     no_color = demo(tmp_path / "c", capsys, "--color", "auto")
     for out in (auto, never, no_color):
         assert "\x1b" not in out
-        assert "refused: stall, because rule:" in out
+        assert "refused: cooler, because rule:" in out
     assert auto.replace("/a/", "/x/") == never.replace("/b/", "/x/")
 
 
@@ -72,14 +72,14 @@ def test_always_styles_the_demo_and_loses_nothing(
         assert corner in styled
     seen = " ".join(ESCAPE.sub("", styled).split())
     assert "written" in seen and "refused" in seen
-    assert "↳ depot changed by itself" in seen
-    for step in examples.load("stall").steps:
+    assert "↳ supplier changed by itself" in seen
+    for step in examples.load("lemonade").steps:
         assert " ".join(step.say.split()) in seen
     for page in re.findall(r"-> written: (\w+)", plain):
         assert f"written {page}" in seen
-    assert re.findall(r"-> refused: (\w+)", plain) == ["stall"]
-    assert "refused stall" in seen
-    assert "because rule: !has(page.stock) || page.stock >= 0 (from market) is false" in seen
+    assert re.findall(r"-> refused: (\w+)", plain) == ["cooler"]
+    assert "refused cooler" in seen
+    assert "because rule: !has(page.cups) || page.cups >= 0 (from stand) is false" in seen
 
 
 def test_narrow_terminal_keeps_every_styled_line_within_the_width(
@@ -124,9 +124,9 @@ def test_styled_log_aligns_columns_and_marks_model_answers() -> None:
     from conky.present import Styled
 
     lines = [
-        "a1b2c3d 2026-11-20T10:00:00Z alice write stall",
-        "b2c3d4e 2026-11-20T10:00:01Z depot write depot cause a1b2c3d",
-        "c3d4e5f 2026-11-20T10:00:02Z alice refused stall model: no key model helper",
+        "a1b2c3d 2026-11-20T10:00:00Z alice write cooler",
+        "b2c3d4e 2026-11-20T10:00:01Z supplier write supplier cause a1b2c3d",
+        "c3d4e5f 2026-11-20T10:00:02Z alice refused cooler model: no key model helper",
     ]
     out = Styled(88).log(lines)
     plain = [ESCAPE.sub("", x) for x in out]

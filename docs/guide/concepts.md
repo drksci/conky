@@ -20,7 +20,7 @@ In detail: [vault format](../reference/vault-format.md#pages).
 
 ## Spaces
 
-A space is a page that other pages belong to. A page names its space, and the page then follows the space's rules, much as the stalls in a market follow the market's rules. A space can itself belong to a larger space, and a page follows the rules of every space above it.
+A space is a page that other pages belong to. A page names its space, and the page then follows the space's rules, much as the cooler and the daybook at a lemonade stand follow the stand's rules. A space can itself belong to a larger space, and a page follows the rules of every space above it.
 
 <p align="center"><img src="../assets/figures/fig-2-spaces.svg" alt="A large sheet labelled space holds two pages and a smaller space, which holds two pages of its own. A rule is written once at the top of the large sheet, and thin lines carry it down to every page, including the pages in the smaller space." width="800"></p>
 
@@ -30,7 +30,7 @@ In detail: [rules and spaces](../reference/rules-and-reactions.md#rules-and-spac
 
 ## Rules
 
-A rule is a statement that must be true after every change, such as "stock is never below zero". It is checked by the system each time, not left to the good behaviour of whoever is making the change. A change that would break a rule is refused. The refusal is recorded, and nothing else changes.
+A rule is a statement that must be true after every change, such as "the cooler never holds less than nothing". It is checked by the system each time, not left to the good behaviour of whoever is making the change. A change that would break a rule is refused. The refusal is recorded, and nothing else changes.
 
 This is the difference between a rule and a request. A request in a note on the wall depends on people remembering it. A rule is like a turnstile: it does not argue and it does not need reminding.
 
@@ -38,7 +38,7 @@ In detail: [rules and refusals](../reference/rules-and-reactions.md#refusals).
 
 ## Reactions
 
-A page can be set to watch another page. When the watched page changes and a stated condition is true, the watching page updates itself. A stall's stock falls below a threshold, and the depot's page marks a reorder, with nobody deciding to. This works like a spreadsheet, where changing one cell updates the cells that depend on it.
+A page can be set to watch another page. When the watched page changes and a stated condition is true, the watching page updates itself. The cups in a cooler fall below a threshold, and the supplier's page writes an order, with nobody deciding to. This works like a spreadsheet, where changing one cell updates the cells that depend on it.
 
 Reactions need no thinking, by a person or by an AI model. Thinking is for the questions that state cannot answer, and a page can ask a model for those (see [Asking a model](#asking-a-model)).
 

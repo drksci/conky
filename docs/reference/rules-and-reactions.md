@@ -27,7 +27,7 @@ A rule or a `when` condition holds only if it evaluates to the boolean `true`. A
 | Watch | `other` | The fields of the page that was just written. |
 | Watch | `other_size` | The byte length of the page that was just written. |
 
-A field is read as `page.stock`. There is no size constant in the runtime: a limit such as `size <= 2000` is an ordinary rule ([decision 0006](../decisions/0006-size-is-a-rule.md)).
+A field is read as `page.cups`. There is no size constant in the runtime: a limit such as `size <= 2000` is an ordinary rule ([decision 0006](../decisions/0006-size-is-a-rule.md)).
 
 ## Rules and spaces
 
@@ -55,10 +55,10 @@ A page watches another page, or itself, through entries in `watch`. Each entry h
 
 ```yaml
 watch:
-- on: stall                    # the page watched
-  when: other.stock < 10       # a condition
+- on: cooler                   # the page watched
+  when: other.cups < 10        # a condition
   set:                         # fields to set, each a value expression
-    reorder: "true"
+    ordered: "true"
 ```
 
 After a write is committed, the runtime looks at every page, in order of name, for entries whose `on` is the page just written. For each one whose `when` is true it evaluates the `set` expressions and writes the results to the watching page. That write:

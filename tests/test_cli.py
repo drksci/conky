@@ -17,25 +17,25 @@ def test_cli_init_write_refuse_read_log_verify_rebuild(
 ) -> None:
     assert main(["--keys", str(tmp_path / "k"), "init", str(tmp_path / "v")]) == 0
     assert (
-        run(tmp_path, "write", "market", 'rules=["page.stock >= 0"]', "stock=0", "--as", "alice")
+        run(tmp_path, "write", "stand", 'rules=["page.stock >= 0"]', "stock=0", "--as", "alice")
         == 0
     )
-    assert run(tmp_path, "write", "stall", "within=market", "stock=40", "--as", "alice") == 0
+    assert run(tmp_path, "write", "cooler", "within=stand", "stock=40", "--as", "alice") == 0
     capsys.readouterr()
-    assert run(tmp_path, "read", "stall") == 0
-    assert capsys.readouterr().out == "---\nwithin: market\nstock: 40\n---\n"
-    assert run(tmp_path, "write", "stall", "stock=-1", "--as", "alice") == 1
+    assert run(tmp_path, "read", "cooler") == 0
+    assert capsys.readouterr().out == "---\nwithin: stand\nstock: 40\n---\n"
+    assert run(tmp_path, "write", "cooler", "stock=-1", "--as", "alice") == 1
     assert "rule: page.stock >= 0" in capsys.readouterr().err
     assert run(tmp_path, "log") == 0
     lines = capsys.readouterr().out.splitlines()
     assert [line.split()[3:5] for line in lines] == [
-        ["write", "market"],
-        ["write", "stall"],
-        ["refused", "stall"],
+        ["write", "stand"],
+        ["write", "cooler"],
+        ["refused", "cooler"],
     ]
     assert run(tmp_path, "verify") == 0
     assert capsys.readouterr().out == "ok: 3 commits verified\n"
-    (tmp_path / "v" / "pages" / "stall.md").unlink()
+    (tmp_path / "v" / "pages" / "cooler.md").unlink()
     assert run(tmp_path, "verify") == 1
     assert "rebuild" in capsys.readouterr().err
     assert run(tmp_path, "rebuild") == 0
@@ -47,11 +47,11 @@ def test_cli_hand_edit_fails_verify_and_names_the_fix(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     main(["--keys", str(tmp_path / "k"), "init", str(tmp_path / "v")])
-    run(tmp_path, "write", "stall", "stock=1", "--as", "alice")
-    page = tmp_path / "v" / "pages" / "stall.md"
+    run(tmp_path, "write", "cooler", "stock=1", "--as", "alice")
+    page = tmp_path / "v" / "pages" / "cooler.md"
     page.write_text(page.read_text().replace("1", "2"))
     capsys.readouterr()
-    assert run(tmp_path, "write", "stall", "stock=3", "--as", "alice") == 1
+    assert run(tmp_path, "write", "cooler", "stock=3", "--as", "alice") == 1
     assert "conky --vault" in capsys.readouterr().err
     assert run(tmp_path, "verify") == 1
 

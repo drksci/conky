@@ -1,0 +1,78 @@
+title: A lemonade stand
+summary: A small stand with a house rule, a supplier that orders for itself, and a daybook that notices how long it has grown.
+look_at: supplier
+steps:
+  - say: Maya sets up the stand and writes down its one house rule. The cooler never holds less than nothing.
+    write:
+      page: stand
+      actor: maya
+      fields:
+        rules: ["!has(page.cups) || page.cups >= 0"]
+      body: |-
+        Welcome to the stand. I am Maya, and Sam helps me on busy days.
+
+        We make the lemonade each morning and keep it in the cooler. Sam does the counting. When we run low, the supplier brings more lemons.
+
+        There is one rule here. We never sell what we have not made.
+  - say: She fills the cooler with 40 cups. From now on it follows the house rule.
+    write:
+      page: cooler
+      actor: maya
+      fields:
+        within: stand
+        cups: 40
+      body: Maya made 40 cups this morning. Sam keeps the count, and changes it whenever a cup goes out.
+  - say: The supplier is asked to keep an eye on the cooler. If it drops below 10 cups, lemons are ordered.
+    write:
+      page: supplier
+      actor: maya
+      fields:
+        order: Nothing needed yet.
+        ordered: false
+        watch:
+          - on: cooler
+            when: other.cups < 10
+            set:
+              order: '"Two bags of lemons, please. We are nearly out."'
+              ordered: "true"
+      body: The supplier is the farm down the road. Orders usually arrive within the hour, and the bags are always heavier than they look.
+  - say: Sam tries to write down minus one cup. The house rule turns him away.
+    write:
+      page: cooler
+      actor: sam
+      fields:
+        cups: -1
+  - say: A busy hour takes the cooler down to 4 cups. Nobody calls the supplier, and the order goes in anyway.
+    write:
+      page: cooler
+      actor: sam
+      fields:
+        cups: 4
+  - say: Maya starts the daybook for the day. It keeps a measure of how long it has grown.
+    write:
+      page: daybook
+      actor: maya
+      fields:
+        pressure: 0
+        watch:
+          - on: daybook
+            when: "true"
+            set:
+              pressure: size / 400
+      body: |-
+        9:00. Opened up. Sunny, with a small breeze.
+        9:05. Forty cups in the cooler.
+  - say: A long entry goes into the daybook, and the daybook notices its own weight.
+    write:
+      page: daybook
+      actor: maya
+      body: |-
+        9:00. Opened up. Sunny, with a small breeze.
+        9:05. Forty cups in the cooler.
+        10:30. A school group walked by on their way to the park. Fourteen cups gone in ten minutes. Sam ran out of straws and used the paper ones from the back.
+        11:15. The cooler is down to four cups. I did not call the supplier. The supplier ordered lemons by itself, which still makes me smile.
+        12:00. Noon count with Sam. We both got four. That never happens.
+        12:40. A woman asked if the lemonade was sweet. I said it was sweet and sharp, like most good things. She bought two and sat on the wall to drink them.
+        13:30. Slow hour. Sam cut the last of the lemons and we talked about whether to put mint in the cooler tomorrow. Sam says yes. I say we try one jug first.
+        14:10. The sun moved and the stand is in shade now. People stop longer. Good for chatting, bad for selling.
+        15:00. Wrote this entry. The day was longer than I expected, and I am happy with it.

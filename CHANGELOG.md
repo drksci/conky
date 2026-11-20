@@ -20,6 +20,6 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 - Pages that ask a model. A provider is a page (`openai` or `anthropic` wire format, secret by name and never in the vault). A watch entry can carry `ask` in place of `set`, and the answer is a signed write that records the prompt, the model and the tokens. Tested against stand-in servers only.
 - `conky ask`: a one-off question whose answer is written to a page by an actor.
 - Trailers `Model`, `Model-Name`, `Tokens-In` and `Tokens-Out`, and `model <provider>` marks in `conky log`.
-- `conky demo`: builds a small example vault, with `stall` and `team` examples, and tells its story step by step.
+- `conky demo`: builds a small example vault, with `lemonade` and `team` examples, written as notes people leave for each other, and tells its story step by step.
 - Styled terminal output in the Charm manner, with rounded boxes and badges, switched by `--color auto|always|never` and `NO_COLOR`; plain output is unchanged.
 - `conky assimilate`: takes over a stopped vault from its folder alone, checks it, reads it and carries on as a new actor with a new key. With no source it uses a small stopped vault that ships in the package, built by `scripts/build_stopped_vault.py`. It is the mechanical form of the assimilation test and involves no model.

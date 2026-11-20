@@ -1,0 +1,7 @@
+steps:
+  - say: A busy hour takes the cooler down to 4 cups. Nobody calls the supplier, and it is expected to order lemons on its own.
+    write:
+      page: cooler
+      fields:
+        cups: 4
+    reacts: [supplier]

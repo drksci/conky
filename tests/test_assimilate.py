@@ -13,7 +13,7 @@ from .conftest import git, signed_by
 
 ROOT = Path(__file__).resolve().parent.parent
 STOPPED = resources.files("conky") / "stopped"
-BUNDLE = Path(str(STOPPED / "stall.bundle"))
+BUNDLE = Path(str(STOPPED / "lemonade.bundle"))
 
 
 def take(tmp_path: Path, *args: str, color: str = "never") -> int:
@@ -37,14 +37,14 @@ def test_bare_command_takes_checks_carries_on_and_checks_again(
     lines = [line.split() for line in vault.log()]
     assert len(lines) == 6
     _, _, actor, kind, page, *_ = lines[4]
-    assert (actor, kind, page) == ("newcomer", "write", "stall")
-    assert lines[5][2:5] == ["depot", "write", "depot"]
+    assert (actor, kind, page) == ("newcomer", "write", "cooler")
+    assert lines[5][2:5] == ["supplier", "write", "supplier"]
     assert lines[5][5:] == ["cause", lines[4][0]]
     assert signed_by(vault.path, "HEAD~1") == "newcomer@conky"
-    assert vault.read("stall").fields["stock"] == 4
-    assert vault.read("depot").fields["reorder"] is True
+    assert vault.read("cooler").fields["cups"] == 4
+    assert vault.read("supplier").fields["ordered"] is True
     assert "4 commits, 3 pages, 1 space" in out
-    assert "Then depot changed by itself" in out
+    assert "Then supplier changed by itself" in out
     assert "What this shows" in out and "no model was involved" in out
     assert "\x1b" not in out
 
@@ -57,20 +57,20 @@ def test_no_key_of_the_original_author_is_needed_and_the_newcomer_is_listed_at_o
     monkeypatch.setenv("HOME", str(home))
     monkeypatch.chdir(tmp_path)
     assert b"PRIVATE KEY" not in BUNDLE.read_bytes()
-    for name in ("stall.yaml", "how-it-was-made.txt"):
+    for name in ("lemonade.yaml", "how-it-was-made.txt"):
         assert "PRIVATE KEY" not in (STOPPED / name).read_text(encoding="utf-8")
     assert take(tmp_path) == 0
     keys = tmp_path / "keys"
     assert sorted(p.name for p in keys.iterdir()) == [
-        "depot",
-        "depot.pub",
         "newcomer",
         "newcomer.pub",
+        "supplier",
+        "supplier.pub",
     ]
     assert not (home / ".conky").exists()
     vault = tmp_path / "conky-assimilated"
     changed = git(vault, "show", "--name-only", "--format=", "HEAD~1").split()
-    assert changed == ["keys/allowed_signers", "pages/stall.md"]
+    assert changed == ["keys/allowed_signers", "pages/cooler.md"]
     signers = (vault / "keys" / "allowed_signers").read_text()
     assert signers.count("newcomer@conky") == 1
     assert git(vault, "log", "-1", "--format=%an", "HEAD~1").strip() == "newcomer"
@@ -88,12 +88,12 @@ def test_the_source_can_be_a_directory_a_bundle_or_a_url(
     else:
         given = source.as_uri() if form == "url" else str(source)
     into, keys = tmp_path / "taken", tmp_path / "k"
-    args = [given, "--into", str(into), "--keys", str(keys), "--then", "stall", "stock=4"]
+    args = [given, "--into", str(into), "--keys", str(keys), "--then", "cooler", "cups=4"]
     assert take(tmp_path, *args) == 0
     Vault(into, keys).verify()
     log = Vault(into, keys).log()
-    assert len(log) == 6 and log[-1].split()[2:5] == ["depot", "write", "depot"]
-    assert "Then depot changed by itself" in capsys.readouterr().out
+    assert len(log) == 6 and log[-1].split()[2:5] == ["supplier", "write", "supplier"]
+    assert "Then supplier changed by itself" in capsys.readouterr().out
 
 
 def test_without_then_it_stops_after_reading_and_says_how_to_continue(
@@ -103,9 +103,9 @@ def test_without_then_it_stops_after_reading_and_says_how_to_continue(
     into = tmp_path / "taken"
     assert take(tmp_path, str(source), "--into", str(into), "--keys", str(tmp_path / "k")) == 0
     out = capsys.readouterr().out
-    assert "market: not in a space; 1 rule (1 own, 0 inherited)" in out
-    assert "stall: in market; 1 rule (0 own, 1 inherited)" in out
-    assert "depot: not in a space; 0 rules (0 own, 0 inherited); watches stall" in out
+    assert "stand: not in a space; 1 rule (1 own, 0 inherited)" in out
+    assert "cooler: in stand; 1 rule (0 own, 1 inherited)" in out
+    assert "supplier: not in a space; 0 rules (0 own, 0 inherited); watches cooler" in out
     flat = " ".join(out.split())
     assert f"conky --vault {into}" in flat and "write PAGE FIELD=VALUE" in flat
     assert len(Vault(into, tmp_path / "k").log()) == 4
@@ -130,14 +130,14 @@ def test_then_writes_run_in_order_and_a_refusal_alone_does_not_fail_the_run(
 ) -> None:
     into, keys = tmp_path / "taken", tmp_path / "k"
     args = [str(BUNDLE), "--into", str(into), "--keys", str(keys), "--as", "carol"]
-    args += ["--then", "stall", "stock=-1", "--then", "stall", "stock=4"]
+    args += ["--then", "cooler", "cups=-1", "--then", "cooler", "cups=4"]
     assert take(tmp_path, *args) == 0
     out = capsys.readouterr().out
-    assert "refused: stall, because rule: " in out
-    assert "(from market) is false" in out
+    assert "refused: cooler, because rule: " in out
+    assert "(from stand) is false" in out
     kinds = [line.split()[3:5] for line in Vault(into, keys).log()[4:]]
-    assert kinds == [["refused", "stall"], ["write", "stall"], ["write", "depot"]]
-    assert out.index("refused: stall") < out.index("written: stall")
+    assert kinds == [["refused", "cooler"], ["write", "cooler"], ["write", "supplier"]]
+    assert out.index("refused: cooler") < out.index("written: cooler")
 
 
 def test_into_an_existing_folder_fails_helpfully(
@@ -176,7 +176,7 @@ def test_plain_output_has_no_escape_codes_and_styled_output_loses_nothing(
         place = tmp_path / mode
         place.mkdir()
         monkeypatch.chdir(place)
-        args = [str(BUNDLE), "--then", "stall", "stock=-1", "--then", "stall", "stock=4"]
+        args = [str(BUNDLE), "--then", "cooler", "cups=-1", "--then", "cooler", "cups=4"]
         assert take(place, *args, color=mode) == 0
         shown[mode] = capsys.readouterr().out
     plain, styled = shown["never"], shown["always"]
@@ -185,9 +185,9 @@ def test_plain_output_has_no_escape_codes_and_styled_output_loses_nothing(
         assert badge in style.strip(styled)
     stripped = " ".join(style.strip(styled).split())
     for fact in (
-        "depot: not in a space; 0 rules (0 own, 0 inherited); watches stall",
+        "supplier: not in a space; 0 rules (0 own, 0 inherited); watches cooler",
         "because rule: ",
-        "(from market) is false",
+        "(from stand) is false",
         "cause",
         "no model was involved",
     ):
