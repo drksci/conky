@@ -83,6 +83,18 @@ A watch entry needs on (page name, within, link or refusal), when (text) and eit
 
 The name members is taken: it lists the pages within a space. Another name is needed.
 
+## shows-shape
+
+A space says what it shows with a mapping that has the keys {keys}, as in shows: {{most: 5, first: "text.size()"}}. Use only those keys.
+
+## shows-most
+
+The most a space shows is a whole number from 1 to {cap}. Write most with a number in that range, or leave it out to show {cap}.
+
+## shows-first
+
+The first of a space is an expression that gives a number for each member, and it can read page, space and text only: {reason}
+
 ## missing-elsewhere
 
 {root}.{name} does not exist here: {where} has {name}, read it as {other}.{name}

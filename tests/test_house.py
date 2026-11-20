@@ -137,6 +137,7 @@ def code() -> dict[str, set[str]]:
         "Command options": command_options(),
         "Connectors": set(subparsers(subparsers(parser)["connect"])),
         "Reserved keys": set(page.RESERVED),
+        "Shows keys": set(page.SHOWS_KEYS),
         "Watch keys": set(page.WATCH_KEYS),
         "Watch relations": set(page.RELATIONS),
         "Ask keys": set(page.ASK_KEYS),
@@ -207,4 +208,7 @@ def test_every_line_the_runtime_says_to_a_model_is_on_the_voice_page_and_used():
     assert voice.line("plain") == model.PLAIN
 
 
-FILLED = ["page", "space", "reason", "shown", "entry", "root", "name", "where", "other"]
+FILLED = [
+    *("keys", "cap", "page", "space", "reason", "shown"),
+    *("entry", "root", "name", "where", "other"),
+]

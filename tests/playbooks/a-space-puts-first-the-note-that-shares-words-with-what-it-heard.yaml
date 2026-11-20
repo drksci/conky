@@ -1,0 +1,21 @@
+# The space orders its notes by the words they share with a field it keeps, read through the text functions.
+pages:
+  broken: {api: command, command: no-such-program-here}
+  den:
+    heard: "Where is the parcel for Mrs Okafor"
+    shows:
+      most: 2
+      first: "space.heard.lowerAscii().split(' ').filter(w, size(w) > 3 && text.lowerAscii().contains(w)).size()"
+  reader:
+    seen: ""
+    watch:
+      - on: ticket
+        when: "true"
+        ask: {provider: broken, prompt: p, otherwise: "![[den#members]]", into: seen}
+  ticket: {text: one}
+steps:
+  - write: {page: n1, fields: {within: den}, body: "The boiler key is in the drawer"}
+  - write: {page: n2, fields: {within: den}, body: "Parcel for Okafor is on shelf nine"}
+  - write: {page: n3, fields: {within: den}, body: "The parcel van comes at noon"}
+  - write: {page: ticket, fields: {text: two}}
+  - expect: {fields: {reader.seen: "n2: Parcel for Okafor is on shelf nine\nn3: The parcel van comes at noon\n(1 more not shown)"}}

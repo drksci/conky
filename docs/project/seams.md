@@ -293,7 +293,7 @@ Core means the design's claims depend on it. Optional means a vault works fully 
 - **Why.** Fading of unused pages, an allowance that follows use and a quiet reflection all need one ordering, and without it each is a separate mechanism.
 - **Seam.** The members embed and a measure that writes a field. Constrained by [decision 0008](../decisions/0008-measures-are-self-watches.md): the value is a recorded event.
 - **Placeholder.** [Standing](../ideas/standing.md), with [nothing goes stale](../ideas/staleness.md) and [background minds](../ideas/background-minds.md).
-- **Refactor risk.** `page._members_text` sorts names with `sorted(...)` and takes the first `MEMBERS_CAP`. Ordering by a field means the sort key and the cap are decided together, with a stated fallback to name order for pages that lack the field, so that a vault with no standing field lists as it does today. The line format `name: first line` must stay, since the cache key hashes the resolved text. Uptake is counted from links (`page.links`) and from joinings in history, so the change of `within` must stay in the record.
+- **Refactor risk.** `page._members_text` now orders by a space's `shows.first` when it has one, with a fallback to name order for members it cannot score and for a space with no `shows` ([decision 0042](../decisions/0042-a-space-shows-what-bears-first.md)). What is left is a stored measure of use for `first` to read, and counting uptake from links (`page.links`) and from joinings in history, so the change of `within` must stay in the record. The line format `name: first line` must stay, since the cache key hashes the resolved text.
 - **Standing.** Core.
 
 ### 27. Being told

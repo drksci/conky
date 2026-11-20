@@ -24,7 +24,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `rule` | An expression the runtime evaluates before a write is kept. |
 | `event` | A commit: one write or one refusal. |
 | `seal` | The signature on an event. |
-| `space` | A page that other pages lie within, handing down its rules. |
+| `space` | A page that other pages lie within, handing down its rules. A space may carry `shows`, which says how many of its members an embedded list shows and in what order. |
 | `error` | A message that says what went wrong and what to do next. |
 
 ## Verbs
@@ -99,6 +99,13 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `within` | The space a page lies within. |
 | `rules` | The list of rules a page and the pages in its space must satisfy. |
 | `watch` | The list of watch entries that say how a page reacts. |
+
+## Shows keys
+
+| Name | Meaning |
+|---|---|
+| `most` | The most members a space's embedded list shows, from 1 to the cap of 20. |
+| `first` | An expression that gives each member a number; the highest are shown first. |
 
 ## Watch keys
 

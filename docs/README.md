@@ -77,6 +77,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0039-an-event-can-be-noticed.md](decisions/0039-an-event-can-be-noticed.md): An event can be noticed
 - [decisions/0040-the-runtime-narrates-and-pages-speak.md](decisions/0040-the-runtime-narrates-and-pages-speak.md): The runtime narrates and pages speak
 - [decisions/0041-a-character-gives-its-space-reflexes.md](decisions/0041-a-character-gives-its-space-reflexes.md): A character gives its space reflexes
+- [decisions/0042-a-space-shows-what-bears-first.md](decisions/0042-a-space-shows-what-bears-first.md): A space shows what bears first
 
 ### Research
 

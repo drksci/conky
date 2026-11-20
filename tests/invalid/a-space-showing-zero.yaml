@@ -1,0 +1,8 @@
+# A space shows at least one member: `most` is a whole number from 1 to the cap.
+pages:
+  den: {}
+write:
+  page: den
+  set:
+    shows: {most: 0}
+refused: shape

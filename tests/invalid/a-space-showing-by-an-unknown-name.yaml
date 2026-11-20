@@ -1,0 +1,8 @@
+# `first` reads page, space and text only.
+pages:
+  den: {}
+write:
+  page: den
+  set:
+    shows: {first: "other.weight"}
+refused: shape

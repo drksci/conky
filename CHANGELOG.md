@@ -15,6 +15,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ### Added
 
+- A space can say what it shows: a field `shows` with `most` and `first` orders and cuts the list `![[space#members]]` gives, by an expression over `page`, `text` and `space`, so a character with more on its desk than fits is shown what bears on the matter in hand with no model call and nothing stored. A space with no `shows` lists as before ([decision 0042](docs/decisions/0042-a-space-shows-what-bears-first.md)).
 - An answer that is pages may add reflex watch entries, as well as rules, to the space it writes into: a block naming that space holds `rules`, `watch` or both and nothing else, entries are added and never replace, and an added entry with `ask` is refused with reason `limit` until asks are metered. A character can now make its own space count what it turns away ([decision 0041](docs/decisions/0041-a-character-gives-its-space-reflexes.md)).
 - One idea placed in the design as an idea, nothing built: attention (every page hears what it chose to hear, at the cheapest layer that can deal with it), with its layers, encapsulation rules, trial ladder and falsifying test.
 - Three ideas placed in the design as ideas, nothing built: standing (what is shown first is decided by a measure), being told (a refusal that a watch can notice) and faculties (a sentence in, the form written by a watching page), with entries 26 to 28 in the seams page and falsifying tests added to the pages they touch.

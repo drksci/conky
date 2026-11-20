@@ -11,7 +11,7 @@ import yaml
 
 from conky import arch, voice
 from conky.errors import BadInput
-from conky.rules import RULE_NAMES, WATCH_NAMES, RuleError, check
+from conky.rules import RULE_NAMES, WATCH_NAMES, RuleError, check, evaluate
 
 RESERVED = arch.constant(
     ("within", "rules", "watch"),
@@ -182,6 +182,10 @@ def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
             watch = value
         elif key == MEMBERS:
             raise ShapeError(voice.line("members-name"))
+        elif key == SHOWS:
+            if value is not None:
+                _check_shows(value)
+            fields[key] = value
         else:
             fields[key] = value
     result = Page(within, rules, watch, fields, page.body if body is None else body)
@@ -307,6 +311,18 @@ MEMBERS_CAP = arch.constant(
 )
 
 
+SHOWS = "shows"
+SHOWS_KEYS = arch.constant(
+    ("most", "first"),
+    "shows key",
+    "conky.page.SHOWS_KEYS",
+    "slot.key",
+    "Keys of a space's `shows`: how many members an embedded list shows and what orders them.",
+    doc="vocabulary.md#shows-keys",
+)
+SHOWS_NAMES = ("page", "space", "text")
+
+
 def _within(name: str, space: str, lookup: dict[str, Page]) -> bool:
     """Return whether the page name lies within space, directly or through spaces."""
     seen: set[str] = set()
@@ -319,15 +335,62 @@ def _within(name: str, space: str, lookup: dict[str, Page]) -> bool:
     return False
 
 
+def _check_shows(value: Any) -> None:
+    """Refuse a `shows` that is not a mapping of `most` and `first` with each in range."""
+    ok = isinstance(value, dict) and set(value) <= set(SHOWS_KEYS)
+    if not ok:
+        raise ShapeError(voice.line("shows-shape", keys=", ".join(SHOWS_KEYS)))
+    most = value.get("most", MEMBERS_CAP)
+    if isinstance(most, bool) or not isinstance(most, int) or not 1 <= most <= MEMBERS_CAP:
+        raise ShapeError(voice.line("shows-most", cap=MEMBERS_CAP))
+    if "first" in value:
+        try:
+            if not isinstance(value["first"], str):
+                raise RuleError(f"{value['first']!r} is not an expression")
+            check(value["first"], SHOWS_NAMES)
+        except RuleError as exc:
+            raise ShapeError(voice.line("shows-first", reason=str(exc))) from exc
+
+
+def _score(expression: str, member: Page, space: Page) -> float | None:
+    """Return what `first` makes of one member, or None when it is not a number."""
+    scope = {"page": member.fields, "text": member.body, "space": space.fields}
+    try:
+        value = evaluate(expression, scope)
+    except RuleError:
+        return None
+    if isinstance(value, bool) or not isinstance(value, int | float) or value != value:
+        return None
+    return value
+
+
+@arch.law(
+    "law.embed.shows",
+    "A space says how its members are shown, and the order is worked out on reading, never stored.",
+    doc="vault-format.md#pages",
+    roadmap="R40",
+)
 def _members_text(space: str, lookup: dict[str, Page]) -> str | None:
-    """Return one line per page within space, sorted by name, or None when there is none."""
+    """Return one line per page within space, or None when there is none.
+
+    The lines are sorted by name and cut at MEMBERS_CAP. A space that carries `shows` orders
+    them by `first`, highest first, with ties and members it cannot score after by name, and
+    cuts at `most`. Nothing is written: the order is worked out each time the embed is resolved.
+    """
     names = sorted(n for n in lookup if _within(n, space, lookup))
+    shows = lookup[space].fields.get(SHOWS)
+    cap = MEMBERS_CAP
+    if isinstance(shows, dict):
+        cap = shows.get("most", MEMBERS_CAP)
+        if "first" in shows:
+            scores = {n: _score(shows["first"], lookup[n], lookup[space]) for n in names}
+            names.sort(key=lambda n: (scores[n] is None, -(scores[n] or 0)))
     lines = []
-    for name in names[:MEMBERS_CAP]:
+    for name in names[:cap]:
         first = next((ln.strip() for ln in lookup[name].body.splitlines() if ln.strip()), "")
         lines.append(f"{name}: {first}" if first else name)
-    if len(names) > MEMBERS_CAP:
-        lines.append(f"({len(names) - MEMBERS_CAP} more not shown)")
+    if len(names) > cap:
+        lines.append(f"({len(names) - cap} more not shown)")
     return "\n".join(lines) or None
 
 

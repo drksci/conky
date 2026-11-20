@@ -31,7 +31,7 @@ Standing adds no new word. It gives five things that are otherwise separate idea
 
 ## The one runtime change
 
-The members embed lists pages sorted by name. Ordering it by a named field is the only change to the runtime. Everything else is a pattern made from a measure, a rule and a reaction.
+The members embed lists pages sorted by name. Ordering it by a named field is the only change to the runtime. That part is built: a space that carries `shows` orders and cuts its members by an expression ([decision 0042](../decisions/0042-a-space-shows-what-bears-first.md)), and `first` may read a field a measure keeps. What remains unbuilt is the measure of use and fading that would keep such a field. Everything else is a pattern made from a measure, a rule and a reaction.
 
 ## Composes from
 

@@ -1,0 +1,20 @@
+# A member that `first` cannot score is shown after the scored ones, ties and unscored by name, and nothing is refused.
+pages:
+  broken: {api: command, command: no-such-program-here}
+  den:
+    shows: {first: "page.weight"}
+  z: {within: den}
+  m: {within: den, weight: 2}
+  a: {within: den, weight: 2}
+  b: {within: den, weight: 5}
+  n: {within: den, weight: words}
+  reader:
+    seen: ""
+    watch:
+      - on: ticket
+        when: "true"
+        ask: {provider: broken, prompt: p, otherwise: "![[den#members]]", into: seen}
+  ticket: {text: one}
+steps:
+  - write: {page: ticket, fields: {text: two}}
+  - expect: {fields: {reader.seen: "b\na\nm\nn\nz"}}

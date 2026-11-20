@@ -1,0 +1,19 @@
+# A space with `shows` orders its members by `first`, highest first, and cuts to `most`.
+pages:
+  broken: {api: command, command: no-such-program-here}
+  den:
+    shows: {most: 2, first: "page.weight"}
+  a: {within: den, weight: 1}
+  b: {within: den, weight: 9}
+  c: {within: den, weight: 5}
+  d: {within: den, weight: 3}
+  reader:
+    seen: ""
+    watch:
+      - on: ticket
+        when: "true"
+        ask: {provider: broken, prompt: p, otherwise: "![[den#members]]", into: seen}
+  ticket: {text: one}
+steps:
+  - write: {page: ticket, fields: {text: two}}
+  - expect: {fields: {reader.seen: "b\nc\n(2 more not shown)"}}

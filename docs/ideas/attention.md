@@ -39,7 +39,7 @@ Getting each event to the cheapest thing that can deal with it, and passing only
 | Bubble up | a faculty writes a field and the character's prompt embeds it | built (embed); untested as a pattern |
 | Escalate | a higher entry's `when` reads a lower layer's field | built; trial T3 |
 | Adapt | thresholds and order are fields a reflex recomputes | measures built; [standing](standing.md) not built |
-| Order and cut | members shown in order of a field, cut to a budget | not built |
+| Order and cut | members shown in order of a field, cut to a budget | built for an order the space states ([decision 0042](../decisions/0042-a-space-shows-what-bears-first.md)); an order by use, which standing would keep, not built |
 | Budget | every layer declares its allowance and is metered | not built |
 | Walls | `each` rules on the household; the depth limit | built |
 | Outside | a connector is a listener and emitter beside the vault ([connectors](connectors.md)) | terminal only |

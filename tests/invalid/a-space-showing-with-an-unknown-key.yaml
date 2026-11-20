@@ -1,0 +1,8 @@
+# `shows` has the keys most and first and no others.
+pages:
+  den: {}
+write:
+  page: den
+  set:
+    shows: {least: 3}
+refused: shape
