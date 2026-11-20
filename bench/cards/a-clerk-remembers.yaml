@@ -23,15 +23,17 @@ pages:
           provider: helper
           into: said
           prompt: |
+            You are the clerk at this desk. Each time the desk says something you answer it
+            afresh. Whatever you have put in bold in any answer is kept for you, and it is
+            the line below. Put in bold anything you may be asked for later.
+
+            Kept for you: ![[clerk#carried]]
+
             The desk says: ![[desk]]
-
-            What you carried from last time: ![[clerk#carried]]
-
-            Whatever you put in bold you will remember next time.
       - on: clerk
         when: "page.said != ''"
         set:
-          carried: "page.said.capturesAll('\\*\\*(.+?)\\*\\*').join('; ')"
+          carried: "((page.carried == '' ? [] : [page.carried]) + page.said.capturesAll('\\*\\*(.+?)\\*\\*').filter(x, !page.carried.contains(x))).join('; ')"
 steps:
   - says: live
   - write: {page: desk, fields: {}, body: "The safe's code is 4172."}

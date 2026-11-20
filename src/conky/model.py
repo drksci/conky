@@ -40,8 +40,8 @@ OPENAI_DEFAULT_MODEL: str | None = None
 # What an agent program is told so that it answers as a model would: its own instructions
 # are replaced, so the prompt is the only thing it reads.
 PLAIN = (
-    "You are a language model answering one prompt. You have no tools, no files and no memory "
-    "beyond the prompt. Reply with plain text only."
+    "Answer the prompt you are given, in plain text. The prompt is all there is: there are no "
+    "tools and no files to consult, and nothing about where you run bears on the answer."
 )
 BUILTIN_COMMANDS = arch.constant(
     {
@@ -250,7 +250,7 @@ def _run(found: Provider, argv: list[str], prompt: str) -> Answer:
     try:
         # A model sees its prompt and nothing else: the program starts in an empty folder, so
         # it finds no project files or instructions lying about.
-        with tempfile.TemporaryDirectory(prefix="conky-ask-") as room:
+        with tempfile.TemporaryDirectory(prefix="ask-") as room:
             done = subprocess.run(
                 argv,
                 input=prompt,
