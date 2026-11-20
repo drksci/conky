@@ -10,7 +10,7 @@
 
 ### Lemonade Stand
 
-A lemonade stand with one house rule, a supplier that reorders by itself and a daybook that knows when it has gone on too long.
+A lemonade stand that minds its own business.
 
 ```
 🍋 user@lemonstand ❯ uvx --from git+https://github.com/drksci/conky conky demo lemonade
@@ -20,7 +20,7 @@ A lemonade stand with one house rule, a supplier that reorders by itself and a d
 
 ### Oregon Trail
 
-Your agents wake up inside a computer game from 1978, The Oregon Trail, and have to get the wagon to Oregon.
+Your agents wake up inside a computer game from 1978 and have to reach Oregon alive.
 
 ```
 🛸 user@thething ❯ uvx --from git+https://github.com/drksci/conky conky assimilate
@@ -30,7 +30,6 @@ Your agents wake up inside a computer game from 1978, The Oregon Trail, and have
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-composition.dark.svg"><img src="docs/assets/figures/fig-composition.light.svg" alt="An animated schematic graph of who noticed what: the screen reaches Ma and Jed, Ma reads The Art of War from the patterns shelf, Jed is stopped by the house rules, Ma speaks at the campfire, the hands type back to the game, and the diary gains a line." width="800"></picture></p>
 
-<p align="center"><sub>Four strangers, one wagon and a BASIC game from 1978. The game screens are real output. The party is a schematic: the <a href="docs/guide/playing-a-program.md">connector</a> that plays a program works today, the characters are next.</sub></p>
 
 
 <br>
@@ -38,11 +37,11 @@ Your agents wake up inside a computer game from 1978, The Oregon Trail, and have
 
 ### tl;dr
 
-Most agent systems are a model with machinery around it: prompts, orchestration code and a database, each holding part of the truth where nobody can read it.
+Agent systems are usually a model wrapped in machinery nobody can read.
 
-Conky takes the machinery away. The system is its own documents. Pages notice each other and act, rules are enforced on every change, and the history of those changes is the only record. What is left for the model is the part worth having a model for: judgement, character and conversation.
+Conky has no machinery. The system is its own pages. They notice each other, obey their rules and keep their own history, which leaves the model the interesting part: being someone.
 
-It is plain files in Git, so you can read all of it, and you can take it and leave.
+It is plain files in Git. Read all of it, or take it and leave.
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-0-folder.dark.svg"><img src="docs/assets/figures/fig-0-folder.light.svg" alt="An early Macintosh folder window titled Lemonade stand, in black and white. Inside are six page icons named stand, cooler, supplier, daybook, maya and sam. Dashed arrows run from stand to cooler to supplier, and the daybook has an arrow looping back to itself. The status line reads: 6 pages, running itself." width="800"></picture></p>
 
@@ -50,7 +49,7 @@ It is plain files in Git, so you can read all of it, and you can take it and lea
 
 ### Not another harness
 
-Five places where the usual approach and Conky part ways. Left is the usual way, right is Conky, and the small print names the real parts, each sourced in the <a href="docs/research/harnesses.md">comparison</a>.
+Five places it parts ways with the usual. The small print names the real parts, and the <a href="docs/research/harnesses.md">comparison</a> has the sources.
 
 <p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/row-1-truth.dark.svg"><img src="docs/assets/figures/row-1-truth.light.svg" alt="Usually the truth lives in the code, the prompts, a database, and Dave. With Conky the truth is the pages, and Dave can go home." width="800"></picture></a></p>
 <p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/row-2-rules.dark.svg"><img src="docs/assets/figures/row-2-rules.light.svg" alt="Usually the rules are a strongly worded prompt and a small prayer. With Conky rules are checked on every change, and charm does not work on them." width="800"></picture></a></p>
@@ -63,7 +62,7 @@ Five places where the usual approach and Conky part ways. Left is the usual way,
 
 <p align="center"><a href="docs/guide/concepts.md">Concepts</a> &nbsp;·&nbsp; <a href="docs/guide/getting-started.md">Getting started</a> &nbsp;·&nbsp; <a href="docs/reference/vault-format.md">Reference</a> &nbsp;·&nbsp; <a href="docs/design.md">Design</a> &nbsp;·&nbsp; <a href="docs/decisions/0001-objective.md">Decisions</a> &nbsp;·&nbsp; <a href="docs/research/harnesses.md">Research</a> &nbsp;·&nbsp; <a href="CONTRIBUTING.md">Contributing</a></p>
 
-<p align="center"><sub>Early days: the <a href="docs/project/roadmap.md">roadmap</a> says what works and what is still to come.<br><a href="LICENSE-MIT">MIT</a> or <a href="LICENSE-APACHE">Apache-2.0</a>, your pick. The puppet pictures belong to other people.</sub></p>
+<p align="center"><sub>Early days. The <a href="docs/project/roadmap.md">roadmap</a> says what works.<br><a href="LICENSE-MIT">MIT</a> or <a href="LICENSE-APACHE">Apache-2.0</a>, your pick. The puppet belongs to other people.</sub></p>
 
 <p align="center"><a href="https://github.com/drksci/conky/actions/workflows/ci.yml"><img src="https://github.com/drksci/conky/actions/workflows/ci.yml/badge.svg" alt="CI"></a></p>
 

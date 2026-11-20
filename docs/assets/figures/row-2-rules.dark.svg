@@ -52,8 +52,13 @@
 <path class="i" d="M119.71 52.93L126 56L119.71 59.07"/>
 <path class="a" d="M132 54L141 65L160 38"/>
 </g>
-<text class="u" text-anchor="end"><tspan x="424" y="63">The rules are a</tspan><tspan x="424" y="86">strongly worded prompt</tspan><tspan x="424" y="109">and a small prayer.</tspan></text>
-<text class="u" text-anchor="start"><tspan x="456" y="63">Rules are checked on</tspan><tspan x="456" y="86">every change. Charm</tspan><tspan x="456" y="109">does not work on them.</tspan></text>
+<text class="u" x="424" y="51.5" text-anchor="end" style="word-spacing:2.38px">The rules are a</text>
+<text class="u" x="424" y="74.5" text-anchor="end" style="word-spacing:0px">strongly worded</text>
+<text class="u" x="424" y="97.5" text-anchor="end" style="word-spacing:9px">prompt and a</text>
+<text class="u" x="424" y="120.5" text-anchor="end" style="word-spacing:0px">small prayer.</text>
+<text class="u" x="456" y="63" text-anchor="start" style="word-spacing:4.76px">Rules are checked on</text>
+<text class="u" x="456" y="86" text-anchor="start" style="word-spacing:9px">every change. Charm</text>
+<text class="u" x="456" y="109" text-anchor="start" style="word-spacing:0px">does not work on them.</text>
 <path d="M440 6 Q443.2 17 439.2 28 Q437.4 39 440.8 50 Q442.2 61 439.2 72 Q436.6 83 440.8 94 Q443.2 105 439.2 116 Q437.4 127 440.8 138 Q442.2 149 439.2 160 Q436.6 169 440.8 178" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-dasharray="1 6" stroke-linecap="round" opacity=".7"/>
 <svg x="23" y="9" width="30" height="30" viewBox="0 0 128 128"><path d="M64 12.81C1.88 12.81.41 82.46.41 96.25c0 13.77 28.47 24.94 63.59 24.94 35.12 0 63.59-11.17 63.59-24.94 0-13.79-1.46-83.44-63.59-83.44z" fill="#fcc21b"/><ellipse cx="43.95" cy="56.46" rx="7.92" ry="9.63" fill="#2f2f2f"/><ellipse cx="84.03" cy="56.46" rx="7.92" ry="9.63" fill="#2f2f2f"/><path d="M95 101.6H33c-7.7 0-14-6.3-14-14s6.3-14 14-14h62c7.7 0 14 6.3 14 14s-6.3 14-14 14z" fill="#fff"/><g fill="#838383"><path d="M47.44 75.17h3.12v25h-3.12zM32.44 75.17h3.12v25h-3.12zM92.45 75.17h3.12v25h-3.12zM77.44 75.17h3.12v25h-3.12zM62.44 75.17h3.12v25h-3.12z"/><path d="M20.49 86.04h87.01v3.12H20.49z"/></g><path d="M95 77.6c5.51 0 10 4.49 10 10s-4.49 10-10 10H33c-5.51 0-10-4.49-10-10s4.49-10 10-10h62m0-4H33c-7.7 0-14 6.3-14 14s6.3 14 14 14h62c7.7 0 14-6.3 14-14s-6.3-14-14-14z" fill="#2f2f2f"/></svg>
 </svg>
