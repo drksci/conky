@@ -59,7 +59,7 @@ The same shape serves an owner signing off, a practice promoted to a shared patt
 
 ## Somebody is told
 
-A page can be noticed by relation and not only by name. Two relations are built: a page written within, and a page that links. A third is a refusal: a write by a page, or to a page within it, was refused, with the reason in scope. A refused write is already an event in history, but nothing can react to it, so the author's space never learns it is stuck. A watch on the refusal relation lets an owner be told, lets a character learn from its own refusals between turns, and lets a stuck page be noticed rather than left. It is a relation for a watch, not a new kind of thing.
+A page can be noticed by relation and not only by name. Two relations are built: a page written within, and a page that links. A third is a refusal, built ([decision 0039](../decisions/0039-an-event-can-be-noticed.md), rung: enforced): a write by a page, or to a page within it, was refused, with the reason in scope. A refused write is already an event in history, but nothing can react to it, so the author's space never learns it is stuck. A watch on the refusal relation lets an owner be told, lets a character learn from its own refusals between turns, and lets a stuck page be noticed rather than left. It is a relation for a watch, not a new kind of thing.
 
 The same relation serves an approval: a proposal refused for lack of a second signature tells the proposer why.
 

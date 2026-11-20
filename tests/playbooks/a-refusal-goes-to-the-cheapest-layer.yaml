@@ -1,0 +1,22 @@
+# Refusals within a space are counted by a reflex with no model call, and only when the count
+# passes a threshold does a second entry ask the character.
+pages:
+  helper: {api: command, command: stand}
+  den:
+    refusals: 0
+    said: ""
+    rules: [{each: "!has(page.amount) || page.amount >= 0"}]
+    watch:
+      - on: refusal
+        when: "event.kind == 'refused'"
+        set: {refusals: "page.refusals + 1"}
+      - on: refusal
+        when: "page.refusals == 3"
+        ask: {provider: helper, prompt: "Refusals pile up in the den: ![[den#refusals]]", into: said}
+steps:
+  - says: "Close the till for tonight."
+  - write: {page: pay-a, fields: {within: den, amount: -1}}
+  - write: {page: pay-b, fields: {within: den, amount: -2}}
+  - expect: {fields: {den.refusals: 2, den.said: ""}, model_calls: 0}
+  - write: {page: pay-c, fields: {within: den, amount: -3}}
+  - expect: {refused: rule, fields: {den.refusals: 3}, answer: {den.said: "till"}, model_calls: 1, verify: true}

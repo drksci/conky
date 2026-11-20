@@ -52,7 +52,11 @@ Every function is pure. Text over 65536 characters, a result over 65536 characte
 | Watch | `other` | The fields of the page that was just written. |
 | Watch | `other_size` | The byte length of the page that was just written. |
 | Watch | `other_name` | The name of the page that was just written. |
-| Watch | `event` | The id of the change being reacted to. A case can keep it in a field to mark what it has met, then test `page.met != event`. |
+| Watch | `event` | A map describing the event being reacted to, for every kind of watch. |
+| Watch | `event.id` | The id of the commit being reacted to. A case can keep it in a field to mark what it has met, then test `page.met != event.id`. |
+| Watch | `event.kind` | `write` for a kept write, `refused` for a refusal, the words of the `Kind` trailer. |
+| Watch | `event.by` | The actor of the write or the refused write. |
+| Watch | `event.reason` | The one-line reason of a refusal, and empty text for a kept write. |
 
 A field is read as `page.cups`. The runtime has no size limit of its own: `size <= 2000` is an ordinary rule ([decision 0006](../decisions/0006-size-is-a-rule.md)).
 
@@ -68,7 +72,7 @@ rules:
   - each: page.amount <= space.cash - 20    # every page within this one, not this one
 ```
 
-A rule is proven when it is written. Every rule and every watch `when` and `set` expression is parsed at the write, and a syntax error is refused for shape. A rule may read only `page`, `space`, `size` and `text`, and a watch entry those and `other`, `other_text`, `other_size`, `other_name` and `event`; any other name is refused for shape, and the reason lists the names allowed there. The names are found from the structure of the parsed expression, so nothing is evaluated, and a variable bound by `all`, `exists`, `exists_one`, `map` or `filter` is not a name read from outside. An `each` rule that is added is also tried against every page already within the space, at any depth, and the write is refused for rule, naming the page, if it is false or cannot be evaluated for one ([decision 0038](../decisions/0038-a-rule-is-proven-when-written.md)). The names are judged by the shape of the expression and the fields by the pages, so a rule that reads a field some page lacks lands when the pages within it already have the field.
+A rule is proven when it is written. Every rule and every watch `when` and `set` expression is parsed at the write, and a syntax error is refused for shape. A rule may read only `page`, `space`, `size` and `text`, and a watch entry those and `other`, `other_text`, `other_size`, `other_name` and `event`, a map with `id`, `kind`, `by` and `reason`; any other name is refused for shape, and the reason lists the names allowed there. The names are found from the structure of the parsed expression, so nothing is evaluated, and a variable bound by `all`, `exists`, `exists_one`, `map` or `filter` is not a name read from outside. An `each` rule that is added is also tried against every page already within the space, at any depth, and the write is refused for rule, naming the page, if it is false or cannot be evaluated for one ([decision 0038](../decisions/0038-a-rule-is-proven-when-written.md)). The names are judged by the shape of the expression and the fields by the pages, so a rule that reads a field some page lacks lands when the pages within it already have the field.
 
 Every page within the space is judged, including a space page that lies within it, so a page that lacks the field fails the rule as any missing field does. Any other mapping is refused for shape, and the reason says what is allowed. A refusal names the condition and the space it came from, whichever form it had ([decision 0034](../decisions/0034-a-rule-for-the-pages-within.md), the key renamed by [decision 0035](../decisions/0035-a-character-binds-its-own-space.md)).
 
@@ -111,7 +115,7 @@ watch:
     ordered: "true"
 ```
 
-`on` can also name a relation instead of a page ([decision 0037](../decisions/0037-a-watch-can-fire-on-a-relation.md)). `on: within` reacts to a write of any page within the watching page, at any depth. `on: link` reacts to a write of a page whose body or text fields contain a link `[[NAME]]` to the watching page. A page never reacts to its own write through a relation, and a page may not be named `within` or `link`, which is refused with reason `shape`. `other_name` says which page was written.
+`on` can also name a relation instead of a page ([decision 0037](../decisions/0037-a-watch-can-fire-on-a-relation.md)). `on: within` reacts to a write of any page within the watching page, at any depth. `on: link` reacts to a write of a page whose body or text fields contain a link `[[NAME]]` to the watching page. `on: refusal` reacts to a refused write ([below](#noticing-a-refusal)). A page never reacts to its own write through a relation, and a page may not be named `within`, `link` or `refusal`, which is refused with reason `shape`. `other_name` says which page was written.
 
 After a write is committed, the runtime visits every page in order of name, looking for entries whose `on` is the page just written or names a relation that the write satisfies. For each one whose `when` is true it evaluates the `set` expressions and writes the results to the watching page. That write:
 
@@ -122,7 +126,13 @@ After a write is committed, the runtime visits every page in order of name, look
 
 Watchers are visited in order of name, and the reactions to one reaction finish before the next watcher is visited, so the order of the commits is the same on every run. A page that watches both `a-first` and `z-last`, which both watch one page, always meets `a-first` first.
 
-A reaction that would leave the watching page unchanged is skipped, which is what ends a stable state. Reactions nest to a depth of 12, and a deeper one is refused with reason `cycle`. A refused write triggers no reactions, because nothing changed.
+A reaction that would leave the watching page unchanged is skipped, which is what ends a stable state. Reactions nest to a depth of 12, and a deeper one is refused with reason `cycle`. A refused write changes no page, so it triggers only the entries that name a refusal.
+
+### Noticing a refusal
+
+An entry with `on: refusal` reacts to a refused write of any kind, after the refusal commit is recorded ([decision 0039](../decisions/0039-an-event-can-be-noticed.md)). A page is told when the refused write was to it and it exists, when it was the actor, or when the page written lies within it, by its kept `within` or else the one the write attempted, at any depth. In the entry, `event.kind` is `refused`, `event.reason` is the reason on one line, `event.by` is the actor, `other_name` is the page the write was to and `other` is the changes attempted, with no body. The reaction is an ordinary write by the watching page, caused by the refusal, one level deeper. A refusal recorded past the depth limit tells nobody, and a reaction that is itself refused may tell others within the same limit. The refused write returns the same result as before.
+
+The entry says what picks the refusal up. A `set` that counts refusals is a reflex and asks no model. An `ask` to a small provider is a faculty. An `ask` to the character's own provider is the character. A second entry on the same page can read what the first counted, so the cheapest layer that can deal with a refusal does, and only a count past a threshold reaches the character.
 
 ## Asking a model
 

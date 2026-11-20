@@ -32,8 +32,8 @@ Getting each event to the cheapest thing that can deal with it, and passing only
 | Bus | the vault's history; every commit is an event | built |
 | Emit | any write or refusal; a connector's write is the same | built |
 | Subscribe | a watch entry on the listener, written by the listener | built |
-| Where | `on`: a name, `within`, `link`; and `on: refusal` | `within` and `link` built; `refusal` being built |
-| What happened | `event.kind`, `event.by`, `event.reason` readable in a watch | being built |
+| Where | `on`: a name, `within`, `link`; and `on: refusal` | built ([decision 0039](../decisions/0039-an-event-can-be-noticed.md)) |
+| What happened | `event.kind`, `event.by`, `event.reason` readable in a watch | built |
 | Layer | `set` is a reflex, `ask` of a small provider is a faculty, `ask` of the character's own provider is thought | built; a faculty is a convention with no golden yet ([faculties](faculties.md)) |
 | Household | a character is a space and its faculties are pages within it | composable now; untested |
 | Bubble up | a faculty writes a field and the character's prompt embeds it | built (embed); untested as a pattern |

@@ -1,0 +1,13 @@
+# A page told of its own refusal whose reaction is refused again stops at the depth limit, and
+# the refusal past the limit tells nobody, so the count stays where the limit left it.
+pages:
+  loop:
+    n: 0
+    rules: ["page.n == 0"]
+    watch:
+      - on: refusal
+        when: "true"
+        set: {n: "page.n + 1"}
+steps:
+  - write: {page: loop, actor: loop, fields: {n: 5}}
+  - expect: {refused: rule, fields: {loop.n: 0}, verify: true}

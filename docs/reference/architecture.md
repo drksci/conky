@@ -35,6 +35,7 @@ The capability and the three laws of [decision 0029](../decisions/0029-autonomy-
 | <a id="law.data.three"></a>`law.data.three` | Data is a document, a table or a stream, and a change of shape is a forward re-projection. | [0010-no-debt-no-down-migrations.md](../decisions/0010-no-debt-no-down-migrations.md) | `conky.page.serialize` | `tests/test_laws.py::test_golden_vault_still_reads` | - | built |
 | <a id="law.debt.none"></a>`law.debt.none` | No fix-later notes, shims or dead code. | [0010-no-debt-no-down-migrations.md](../decisions/0010-no-debt-no-down-migrations.md) | `tests/test_house.py` | `tests/test_house.py::test_no_fix_later_notes` | - | built |
 | <a id="law.docs.check"></a>`law.docs.check` | Ideas climb rungs, and the documents, links and this index are checked. | [0015-ideas-climb-rungs.md](../decisions/0015-ideas-climb-rungs.md) | `scripts/check_docs.py` | `tests/test_docs.py::test_docs_pass_the_check` | - | built |
+| <a id="law.event.notice"></a>`law.event.notice` | Every recorded event can be noticed by the pages in relation to it, and the entry says what picks it up: a reflex, a faculty or the character. | [0039-an-event-can-be-noticed.md](../decisions/0039-an-event-can-be-noticed.md) | `conky.vault.Vault._tell` | `tests/test_laws.py::test_a_refusal_can_be_noticed_and_stays_a_refusal` | R38 | built |
 | <a id="law.event.seal"></a>`law.event.seal` | Every change is signed and says what caused it. | [vault-format.md#a-write](vault-format.md#a-write) | `conky.vault.Vault._record` | `tests/test_laws.py::test_write_is_a_signed_commit_with_trailers_and_dates`<br>`tests/test_laws.py::test_reaction_is_caused_by_and_signed_by_the_reacting_page` | - | built |
 | <a id="law.fallback.always"></a>`law.fallback.always` | Everything works with nothing configured, and rules stay strict. | [0026-it-always-works.md](../decisions/0026-it-always-works.md) | `conky.model.detect` | `tests/test_command.py::test_detection_lists_anthropic_then_openai_then_claude_then_codex`<br>`tests/test_command.py::test_a_failing_detected_model_falls_to_the_next_and_then_to_a_sentence`<br>`tests/test_command.py::test_with_no_model_an_ask_writes_a_sentence_that_names_the_question` | R26 | built |
 | <a id="law.measure.watch"></a>`law.measure.watch` | A measure is a page watching itself, and its value is a recorded event. | [0008-measures-are-self-watches.md](../decisions/0008-measures-are-self-watches.md) | `conky.vault.Vault._react` | `tests/test_laws.py::test_other_size_is_visible_to_a_watcher`<br>`tests/test_laws.py::test_history_needs_no_expressions` | R2 | built |
@@ -44,7 +45,7 @@ The capability and the three laws of [decision 0029](../decisions/0029-autonomy-
 | <a id="law.provider.page"></a>`law.provider.page` | A provider is a page, and a secret is never written to a vault. | [0019-providers-are-pages.md](../decisions/0019-providers-are-pages.md) | `conky.model.provider` | `tests/test_model.py::test_changing_provider_is_editing_one_page`<br>`tests/test_model.py::test_a_secret_appears_nowhere_in_the_vault` | R4 | built |
 | <a id="law.reach.down"></a>`law.reach.down` | A character writes only inside the space it was given, and creates nothing wider. | [0029-autonomy-inside-limits-that-hold.md](../decisions/0029-autonomy-inside-limits-that-hold.md) | `conky.vault.Vault._breach` | `tests/test_pages.py::test_a_page_outside_the_space_is_refused_and_recorded_and_the_others_land`<br>`tests/test_pages.py::test_a_watch_entry_cannot_widen_where_a_character_may_write` | R29 | built |
 | <a id="law.reflex.free"></a>`law.reflex.free` | Whatever follows from state is a reflex with no model call. | [0007-inference-for-real-thinking.md](../decisions/0007-inference-for-real-thinking.md) | `conky.vault.Vault._react` | `tests/test_laws.py::test_reaction_is_caused_by_and_signed_by_the_reacting_page`<br>`tests/test_model.py::test_every_failure_is_a_model_refusal_and_nothing_else_is_affected` | - | built |
-| <a id="law.refusal.record"></a>`law.refusal.record` | A refused write is recorded as an empty commit, never dropped. | [vault-format.md#a-refusal](vault-format.md#a-refusal) | `conky.vault.Vault._refuse` | `tests/test_laws.py::test_refused_write_is_an_empty_signed_commit` | - | built |
+| <a id="law.refusal.record"></a>`law.refusal.record` | A refused write is recorded as an empty commit, never dropped. | [vault-format.md#a-refusal](vault-format.md#a-refusal) | `conky.vault.Vault._refuse` | `tests/test_laws.py::test_refused_write_is_an_empty_signed_commit`<br>`tests/test_laws.py::test_a_refusal_can_be_noticed_and_stays_a_refusal` | - | built |
 | <a id="law.rule.never"></a>`law.rule.never` | Anything that must never happen is a rule the runtime evaluates. | [rules-and-reactions.md#expressions](rules-and-reactions.md#expressions) | `conky.rules.holds` | `tests/test_laws.py::test_rule_error_refuses`<br>`tests/test_laws.py::test_rule_inherited_through_two_level_chain`<br>`tests/test_laws.py::test_size_rule_in_a_space_refuses_an_oversized_member` | - | built |
 | <a id="law.rule.proven"></a>`law.rule.proven` | An `each` rule is tried on the pages already within when it is written, so it lands only if it can be evaluated and holds for them. | [rules-and-reactions.md#rules-and-spaces](rules-and-reactions.md#rules-and-spaces) | `conky.vault.Vault._each_reason` | review | - | built |
 | <a id="law.rule.pure"></a>`law.rule.pure` | Rules and measures are pure: no clock, randomness or input and output. | [rules-and-reactions.md#expressions](rules-and-reactions.md#expressions) | `conky.rules.evaluate` | review | - | built |
@@ -228,6 +229,7 @@ One chain: a stimulus arrives, it is noticed, thought happens when state cannot 
 | Stimulus | <a id="stage.stimulus.prompt"></a>`stage.stimulus.prompt` | A request typed at the screen becomes an ordinary write. | [compositor.md](../ideas/compositor.md) | - | idea | R11f | planned |
 | Notice | <a id="stage.notice.event"></a>`stage.notice.event` | A watch entry reads `event`, the id of the change it is reacting to, so a case can mark what it met. | [rules-and-reactions.md#variables-in-scope](rules-and-reactions.md#variables-in-scope) | `conky.vault.Vault._ask` | - | - | built |
 | Notice | <a id="stage.notice.pressure"></a>`stage.notice.pressure` | A second self-watch entry whose `when` reads the number crossing a threshold. | [rules-and-reactions.md#measures](rules-and-reactions.md#measures) | `conky.vault.Vault._react` | - | R2 | built |
+| Notice | <a id="stage.notice.refusal"></a>`stage.notice.refusal` | `on: refusal` notices a refused write: the page refused, the page that tried it and the spaces the page lies within are told, and the entry reads `event.reason`. | [rules-and-reactions.md#noticing-a-refusal](rules-and-reactions.md#noticing-a-refusal) | `conky.vault.Vault._tell` | - | - | built |
 | Notice | <a id="stage.notice.relation"></a>`stage.notice.relation` | `on: within` and `on: link` notice a write by its place or its links, not its name. | [rules-and-reactions.md#reactions](rules-and-reactions.md#reactions) | `conky.vault.Vault._react` | - | - | built |
 | Notice | <a id="stage.notice.settled"></a>`stage.notice.settled` | A question is settled only while its recorded answer is still in place; an overwritten answer is asked again. | [rules-and-reactions.md#asking-a-model](rules-and-reactions.md#asking-a-model) | `conky.vault.Vault._ask` | - | - | built |
 | Notice | <a id="stage.notice.text"></a>`stage.notice.text` | `text` and `other_text` are the bodies of the watching page and of the page just written, so a watch can read what a page says. | [rules-and-reactions.md#variables-in-scope](rules-and-reactions.md#variables-in-scope) | `conky.vault.Vault._react` | - | - | built |
@@ -1205,6 +1207,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`law.data.three`](#law.data.three) | built | 1 | - |  |
 | [`law.debt.none`](#law.debt.none) | built | 1 | - |  |
 | [`law.docs.check`](#law.docs.check) | built | 1 | - |  |
+| [`law.event.notice`](#law.event.notice) | built | 1 | - |  |
 | [`law.event.seal`](#law.event.seal) | built | 2 | - |  |
 | [`law.fallback.always`](#law.fallback.always) | built | 3 | - |  |
 | [`law.measure.watch`](#law.measure.watch) | built | 2 | - |  |
@@ -1214,7 +1217,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`law.provider.page`](#law.provider.page) | built | 2 | - |  |
 | [`law.reach.down`](#law.reach.down) | built | 2 | - |  |
 | [`law.reflex.free`](#law.reflex.free) | built | 2 | - |  |
-| [`law.refusal.record`](#law.refusal.record) | built | 1 | - |  |
+| [`law.refusal.record`](#law.refusal.record) | built | 2 | - |  |
 | [`law.rule.never`](#law.rule.never) | built | 3 | - |  |
 | [`law.rule.proven`](#law.rule.proven) | built | - | - | review only |
 | [`law.rule.pure`](#law.rule.pure) | built | - | - | review only |
@@ -1383,6 +1386,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0036-a-plain-rule-stays-with-its-page](../decisions/0036-a-plain-rule-stays-with-its-page.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`part.space`](#part.space) |
 | [0037-a-watch-can-fire-on-a-relation](../decisions/0037-a-watch-can-fire-on-a-relation.md) | accepted | [`part.watch`](#part.watch), [`stage.notice.relation`](#stage.notice.relation) |
 | [0038-a-rule-is-proven-when-written](../decisions/0038-a-rule-is-proven-when-written.md) | accepted | [`law.rule.proven`](#law.rule.proven) |
+| [0039-an-event-can-be-noticed](../decisions/0039-an-event-can-be-noticed.md) | accepted | [`law.event.notice`](#law.event.notice), [`stage.notice.refusal`](#stage.notice.refusal) |
 
 ### Unplaced
 

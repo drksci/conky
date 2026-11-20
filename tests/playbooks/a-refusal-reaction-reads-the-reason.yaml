@@ -1,0 +1,11 @@
+# A watch on a refusal reads the reason, so it can tell one kind of no from another.
+pages:
+  den:
+    rules: [{each: "!has(page.amount) || page.amount >= 0"}]
+    watch:
+      - on: refusal
+        when: "event.reason.startsWith('rule')"
+        set: {last_no: "event.reason"}
+steps:
+  - write: {page: pay-a, fields: {within: den, amount: -5}}
+  - expect: {refused: rule, answer: {den.last_no: "^rule: "}, verify: true}

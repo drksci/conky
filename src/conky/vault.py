@@ -453,15 +453,18 @@ class Vault:
         at: str,
         cause: str | None,
         reason: str,
+        depth: int,
         asked: tuple[list[tuple[str, str]], str] = ([], ""),
     ) -> Result:
         extra = [(Trailer.REASON, " ".join(reason.split())), (Trailer.ATTEMPT, _compact(changes))]
         if body is not None:
             extra.append((Trailer.BODY_BYTES, str(len(body.encode("utf-8")))))
         extra += asked[0]
-        return Result(
+        refusal = Result(
             False, self._record("refused", page, actor, at, cause, extra, None, asked[1]), reason
         )
+        self._tell(page, changes, actor, at, refusal, depth)
+        return refusal
 
     @arch.change(
         "place.runtime.judge",
@@ -481,7 +484,7 @@ class Vault:
         bound: str | None = None,
     ) -> Result:
         def refuse(reason: str) -> Result:
-            return self._refuse(page, changes, body, actor, at, cause, reason, asked)
+            return self._refuse(page, changes, body, actor, at, cause, reason, depth, asked)
 
         if depth > MAX_DEPTH:
             return refuse(_CYCLE)
@@ -508,9 +511,9 @@ class Vault:
             reason, space = refused
             if space != page:
                 asked = ([*asked[0], (Trailer.FROM, space)], asked[1])
-            return self._refuse(page, changes, body, actor, at, cause, reason, asked)
+            return self._refuse(page, changes, body, actor, at, cause, reason, depth, asked)
         commit = self._record("write", page, actor, at, cause, asked[0], result, asked[1])
-        self._react(page, result, commit, at, depth)
+        self._react(page, result, commit, actor, at, depth)
         return Result(True, commit)
 
     def _inside(self, name: str | None, space: str) -> bool:
@@ -815,42 +818,104 @@ class Vault:
         "Running reactions after a write, depth first, bounded at 12.",
         doc="rules-and-reactions.md#reactions",
     )
-    def _react(self, source: str, written: Page, commit: str, at: str, depth: int) -> None:
+    def _react(
+        self, source: str, written: Page, commit: str, actor: str, at: str, depth: int
+    ) -> None:
         for watcher in sorted(p.stem for p in self.pages_dir.glob("*.md")):
             for entry in (self._load(watcher) or Page()).watch:
-                if not self._notices(entry["on"], watcher, source, written):
-                    continue
-                current = self._load(watcher) or Page()
-                scope = {
-                    "other": written.fields,
-                    "other_name": source,
-                    "page": current.fields,
-                    "space": self._context(watcher, current.within),
-                    "other_size": _size(written),
-                    "size": _size(current),
-                    "other_text": written.body,
-                    "text": current.body,
-                    "event": commit,
-                }
-                try:
-                    if not holds(entry["when"], scope):
-                        continue
-                    changes = {k: evaluate(v, scope) for k, v in entry.get("set", {}).items()}
-                    unchanged = serialize(apply(current, changes, None)) == serialize(current)
-                except (RuleError, ShapeError) as exc:
-                    why = (
-                        str(exc)
-                        if isinstance(exc, ShapeError)
-                        else missing([entry["when"], *entry.get("set", {}).values()], scope)
-                    )
-                    reason = f"{Refusal.WATCH}: {entry['when']} (on {watcher}) failed: {why}"
-                    self._refuse(watcher, {}, None, watcher, at, commit, reason)
-                    continue
-                if "ask" in entry:
-                    ask = Ask(**entry["ask"])
-                    self._ask(watcher, ask, watcher, at, commit, depth + 1, skip_settled=True)
-                elif not unchanged:
-                    self._write(watcher, changes, None, watcher, at, commit, depth + 1)
+                if self._notices(entry["on"], watcher, source, written):
+                    other = (written.fields, source, _size(written), written.body)
+                    event = {"id": commit, "kind": "write", "by": actor, "reason": ""}
+                    self._reaction(watcher, entry, other, event, at, depth)
+
+    @arch.law(
+        "law.event.notice",
+        "Every recorded event can be noticed by the pages in relation to it, and the entry "
+        "says what picks it up: a reflex, a faculty or the character.",
+        doc="../decisions/0039-an-event-can-be-noticed.md",
+        roadmap="R38",
+    )
+    @arch.stage(
+        "notice",
+        "stage.notice.refusal",
+        "`on: refusal` notices a refused write: the page refused, the page that tried it and "
+        "the spaces the page lies within are told, and the entry reads `event.reason`.",
+        doc="rules-and-reactions.md#noticing-a-refusal",
+    )
+    def _tell(
+        self, page: str, changes: dict[str, Any], actor: str, at: str, refusal: Result, depth: int
+    ) -> None:
+        """Run the `on: refusal` entries of the pages that a refused write concerns.
+
+        A page is told when the refused write was to it and it exists, when it was the actor,
+        or when the page written lies within it, by its kept `within` or else the one the write
+        attempted. A refusal recorded past the depth limit tells nobody, so a loop of refusals
+        ends.
+        """
+        if depth > MAX_DEPTH:
+            return
+        kept = self._load(page)
+        place = kept.within if kept is not None else changes.get("within")
+        place = place if isinstance(place, str) else None
+        other = (changes, page, 0, "")
+        event = {
+            "id": refusal.id,
+            "kind": "refused",
+            "by": actor,
+            "reason": " ".join((refusal.reason or "").split()),
+        }
+        for watcher in sorted(p.stem for p in self.pages_dir.glob("*.md")):
+            told = (
+                (watcher == page and kept is not None)
+                or watcher == actor
+                or self._inside(place, watcher)
+            )
+            for entry in (self._load(watcher) or Page()).watch if told else []:
+                if entry["on"] == "refusal":
+                    self._reaction(watcher, entry, other, event, at, depth)
+
+    def _reaction(
+        self,
+        watcher: str,
+        entry: dict[str, Any],
+        other: tuple[dict[str, Any], str, int, str],
+        event: dict[str, Any],
+        at: str,
+        depth: int,
+    ) -> None:
+        """Run one watch entry for what happened: judge `when`, then write `set` or ask."""
+        fields, name, size, text = other
+        current = self._load(watcher) or Page()
+        scope = {
+            "other": fields,
+            "other_name": name,
+            "page": current.fields,
+            "space": self._context(watcher, current.within),
+            "other_size": size,
+            "size": _size(current),
+            "other_text": text,
+            "text": current.body,
+            "event": event,
+        }
+        try:
+            if not holds(entry["when"], scope):
+                return
+            changes = {k: evaluate(v, scope) for k, v in entry.get("set", {}).items()}
+            unchanged = serialize(apply(current, changes, None)) == serialize(current)
+        except (RuleError, ShapeError) as exc:
+            why = (
+                str(exc)
+                if isinstance(exc, ShapeError)
+                else missing([entry["when"], *entry.get("set", {}).values()], scope)
+            )
+            failed = f"{Refusal.WATCH}: {entry['when']} (on {watcher}) failed: {why}"
+            self._refuse(watcher, {}, None, watcher, at, event["id"], failed, depth + 1)
+            return
+        if "ask" in entry:
+            ask = Ask(**entry["ask"])
+            self._ask(watcher, ask, watcher, at, event["id"], depth + 1, skip_settled=True)
+        elif not unchanged:
+            self._write(watcher, changes, None, watcher, at, event["id"], depth + 1)
 
     @arch.stage(
         "notice",
@@ -910,7 +975,7 @@ class Vault:
         entry's `otherwise` text when it has one and stops. Never more than that one retry.
         """
         if depth > MAX_DEPTH:
-            return self._refuse(page, {}, None, actor, at, cause, _CYCLE)
+            return self._refuse(page, {}, None, actor, at, cause, _CYCLE, depth)
         pages = self._all()
         prompt = resolve_text(ask.prompt, pages)
         if ask.writes is not None:
@@ -968,7 +1033,8 @@ class Vault:
                 if reply is not None:
                     return self._answered(found, reply, ask, pages, prompt, sent, where)
             except model.ModelError as exc:
-                self._refuse(page, {}, None, actor, at, cause, f"{Refusal.MODEL}: {exc}")
+                failed = f"{Refusal.MODEL}: {exc}"
+                self._refuse(page, {}, None, actor, at, cause, failed, where[4])
         for choice in model.detect().choices:
             try:
                 reply = model.ask_once(
@@ -1071,7 +1137,7 @@ class Vault:
                 changes, body = given(block.text)
             except ShapeError as exc:
                 reason = f"{Refusal.SHAPE}: page block {block.name or '(no name)'}: {exc}"
-                landed.append((name, self._refuse(name, {}, None, actor, at, cause, reason)))
+                landed.append((name, self._refuse(name, {}, None, actor, at, cause, reason, depth)))
                 continue
             landed.append(
                 (name, self._write(name, changes, body, actor, at, cause, depth, bound=space))
@@ -1105,7 +1171,7 @@ class Vault:
                 f"{Refusal.MODEL}: no model answered, so no pages were written: "
                 f"to give Conky one, {model.WAYS}"
             )
-            return self._refuse(page, {}, None, actor, at, cause, reason)
+            return self._refuse(page, {}, None, actor, at, cause, reason, depth)
         if ask.otherwise is None:
             text = model.plain_sentence(page, ask.into, prompt)
         else:

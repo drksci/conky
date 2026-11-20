@@ -9,7 +9,7 @@ pages:
     said: ""
     watch:
       - on: gate
-        when: page.met != event
+        when: page.met != event.id
         ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, writes: camp}
 steps:
   - says: |-
@@ -19,9 +19,9 @@ steps:
       watch:
         - on: gate
           when: "other.asks == 'ford'"
-          set: {said: "'no'", met: event}
+          set: {said: "'no'", met: event.id}
         - on: gate
-          when: page.met != event
+          when: page.met != event.id
           ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, writes: camp}
       ---
   - write: {page: gate, fields: {asks: ford}}
@@ -32,12 +32,12 @@ steps:
       watch:
         - on: gate
           when: "other.asks == 'ford'"
-          set: {said: "'no'", met: event}
+          set: {said: "'no'", met: event.id}
         - on: gate
           when: "other.asks == 'storm'"
-          set: {said: "'rest'", met: event}
+          set: {said: "'rest'", met: event.id}
         - on: gate
-          when: page.met != event
+          when: page.met != event.id
           ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, writes: camp}
       ---
   - write: {page: gate, fields: {asks: storm}}

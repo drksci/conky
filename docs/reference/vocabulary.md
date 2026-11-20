@@ -115,6 +115,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 |---|---|
 | `within` | Reacts to a write of any page within the watching page, at any depth. |
 | `link` | Reacts to a write of a page whose text links to the watching page. |
+| `refusal` | Reacts to a refused write to the watching page, by it, or within it. |
 
 ## Ask keys
 

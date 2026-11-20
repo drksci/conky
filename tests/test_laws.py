@@ -496,3 +496,22 @@ def test_a_changed_space_field_refuses_the_next_member_write(vault: Vault) -> No
     refused = w(vault, "scout", {"cups": 4, "note": "again"})
     assert not refused.ok and "space.limit" in refused.reason
     assert message(vault)[1]["Kind"] == "refused"
+
+
+@arch.holds("law.refusal.record", "law.event.notice")
+def test_a_refusal_can_be_noticed_and_stays_a_refusal(vault: Vault) -> None:
+    watch = [{"on": "refusal", "when": "true", "set": {"no": "event.reason"}}]
+    floor = [{"each": "!has(page.cash) || page.cash >= 0"}]
+    assert w(vault, "den", {"rules": floor, "watch": watch}).ok
+    refused = w(vault, "pay", {"within": "den", "cash": -1})
+    assert not refused.ok
+    assert not (vault.pages_dir / "pay.md").exists()
+    assert message(vault, "HEAD~1")[1]["Kind"] == "refused"
+    assert message(vault)[1]["Kind"] == "write"
+    assert message(vault)[1]["Cause"] == refused.id
+    assert vault.read("den").fields["no"] == " ".join(refused.reason.split())
+    vault.verify()
+    before = pages(vault)
+    vault.rebuild()
+    vault.verify()
+    assert pages(vault) == before

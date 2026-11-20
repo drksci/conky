@@ -1,0 +1,6 @@
+pages: {}
+write:
+  page: refusal
+  set:
+    cash: 1
+refused: shape

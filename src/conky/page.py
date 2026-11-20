@@ -30,7 +30,7 @@ WATCH_KEYS = arch.constant(
     doc="vocabulary.md#watch-keys",
 )
 RELATIONS = arch.constant(
-    ("within", "link"),
+    ("within", "link", "refusal"),
     "watch relation",
     "conky.page.RELATIONS",
     "slot.watch",
@@ -115,7 +115,7 @@ def _check_watch(entry: Any) -> None:
     )
     if not ok:
         raise ShapeError(
-            "watch entries need on (page name, within or link), when (text) and either "
+            "watch entries need on (page name, within, link or refusal), when (text) and either "
             "set (field: text) or ask (prompt, with into or writes or both, "
             "and optional provider and otherwise)"
         )

@@ -1,0 +1,8 @@
+pages:
+  den: {cash: 10}
+write:
+  page: den
+  set:
+    watch:
+      - {on: refusal, when: "bogus.x > 1", set: {seen: "1"}}
+refused: shape

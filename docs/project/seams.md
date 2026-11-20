@@ -42,7 +42,7 @@ An entry earns its place only if ignoring it could cost a refactor or miss a dif
 | 24 | Resume, benchmark and repeated runs | core | exists |
 | 25 | A second backend, a runtime planner, hosting | out of scope | none wanted |
 | 26 | Standing | core | new idea, strains the members list |
-| 27 | Being told | core | new idea, strains the watch relations |
+| 27 | Being told | core | built as the `refusal` relation, with the `event` map in watch scope |
 | 28 | Faculties | optional | new idea |
 
 Core means the design's claims depend on it. Optional means a vault works fully without it and gains when it is there. Out of scope means it is left out on purpose.
@@ -302,7 +302,8 @@ Core means the design's claims depend on it. Optional means a vault works fully 
 - **Why.** A refusal is an event in history that nothing can react to. The author's space never learns it is stuck.
 - **Seam.** A third relation for a watch beside `within` and `link`, a pattern like [approvals](../ideas/approvals.md). Constrained by [`law.refusal.record`](../reference/architecture.md#law.refusal.record).
 - **Placeholder.** [Approvals as a pattern](../ideas/approvals.md), and the offer between neighbours in [patterns](../ideas/patterns.md).
-- **Refactor risk.** `Vault._notices` matches `within` and `link` by name and falls through to a page name, and `page.RELATIONS` and `_check_watch` list the valid values of `on`. A refusal relation adds a value there. `Vault._refuse` returns a `Result` that is not ok and `Vault._react` runs only after a kept write, so a refusal has no path into the reactions today. The reason is in the commit trailers (`Trailer.REASON`) and would need to reach the reaction's scope. A refusal caused by a reaction must not trigger itself in a loop, so the existing depth limit has to cover it. A page named for the new relation is refused as `within` and `link` are, by the check in `Vault.write`.
+- **Built.** `on: refusal` ([decision 0039](../decisions/0039-an-event-can-be-noticed.md)): `Vault._refuse` records the refusal and then tells the pages in relation through `Vault._tell`, with the depth limit covering loops. Not built: reactions to the refusals of model answers in bulk, and `on: refusal` across mounts.
+- **Refactor risk.** A later kind of event adds a value of `event.kind` and a rule for who is told, in `Vault._tell`; the `event` map in the watch scope is the one place a reaction reads what happened.
 - **Standing.** Core.
 
 ### 28. Faculties

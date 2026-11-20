@@ -74,6 +74,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0036-a-plain-rule-stays-with-its-page.md](decisions/0036-a-plain-rule-stays-with-its-page.md): A plain rule stays with its page
 - [decisions/0037-a-watch-can-fire-on-a-relation.md](decisions/0037-a-watch-can-fire-on-a-relation.md): A watch can fire on a relation
 - [decisions/0038-a-rule-is-proven-when-written.md](decisions/0038-a-rule-is-proven-when-written.md): A rule is proven when it is written
+- [decisions/0039-an-event-can-be-noticed.md](decisions/0039-an-event-can-be-noticed.md): An event can be noticed
 
 ### Research
 

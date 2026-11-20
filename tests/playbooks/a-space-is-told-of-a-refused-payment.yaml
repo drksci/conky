@@ -1,0 +1,12 @@
+# A space notices a refused payment written within it, and keeps a note of it.
+pages:
+  den:
+    cash: 25
+    rules: [{each: "!has(page.amount) || page.amount <= space.cash - 20"}]
+    watch:
+      - on: refusal
+        when: "other_name == 'pay-a'"
+        set: {turned_away: "other_name"}
+steps:
+  - write: {page: pay-a, fields: {within: den, amount: 30}}
+  - expect: {refused: rule, missing: [pay-a], fields: {den.turned_away: pay-a}, verify: true}

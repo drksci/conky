@@ -1,0 +1,13 @@
+# A character whose write is refused is told, as the actor, whatever page it tried to write.
+pages:
+  camp:
+    rules: [{each: "!has(page.cups) || page.cups >= 0"}]
+  scout:
+    within: camp
+    watch:
+      - on: refusal
+        when: "other_name == 'store'"
+        set: {told: "other_name"}
+steps:
+  - write: {page: store, actor: scout, fields: {within: camp, cups: -1}}
+  - expect: {refused: rule, fields: {scout.told: store}, verify: true}
