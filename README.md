@@ -1,84 +1,110 @@
 # conky
 
-A runtime where every agent, tool, data store and rule is a living Markdown document in a Git-backed vault.
+A small Python runtime in which every actor, tool, data store and rule is a living Markdown page.
 
 [![CI](https://github.com/drksci/conky/actions/workflows/ci.yml/badge.svg)](https://github.com/drksci/conky/actions/workflows/ci.yml)
 
 > [!WARNING]
-> conky is a pre-alpha research scaffold. The interfaces are sketched and several enforcement paths are stand-ins. It is not usable for real work yet.
+> Pre-alpha. This builds the first thin path only. Interfaces and file formats will change.
 
 ## Why
 
-- **The document is the system.** No config registry and no hidden state: everything has a Markdown and frontmatter surface.
-- **Small, present-tense surfaces.** A surface is at most 4096 bytes. History lives in Git.
-- **Physics over prompts.** Invariants are enforced by the runtime and fail closed, not requested in a prompt.
-- **Few primitives, composed.** New ideas are built from existing pieces rather than added beside them.
+- The document is the system: a vault of Markdown pages, nothing hidden elsewhere.
+- The log is the authority: pages are projections of a signed, append-only event log.
+- Rules are enforced by the runtime, not requested in a prompt.
+- Inference is for real thinking. Everything that follows from state just happens.
 
-## Core ideas
-
-| Term | Meaning |
-|---|---|
-| crest | Self-certifying identity |
-| surface | A Markdown document, at most 4096 bytes |
-| link / slot | A reference / a live transclusion of another surface |
-| seal | A signed Git commit |
-| guard | A pre-commit validator bound to a surface |
-| view | A declarative UI port |
-| pulse | A streamed delta |
-
-Verbs: `peek`, `watch`, `etch`. Engines: `mind` (LLM), `gear` (deterministic logic), `organ` (data store).
-
-## What works today
-
-| Area | State |
-|---|---|
-| Frontmatter parsing and link graph (`conky-graph`) | Implemented, with tests |
-| Recursive slot transclusion with the 4096-byte limit | Implemented, with tests |
-| Double-entry parity check | Implemented, with tests |
-| Git commit per etch via libgit2 | Implemented |
-| Guard certification and SMT subsumption | Stub (string matching) |
-| Wasmtime capsule execution | Stub |
-| ed25519 signing | Real signatures, but keys are in memory per run, so seals cannot be verified later |
-| Benchmark scenarios | None yet |
-
-## Quick start
+## Sixty seconds
 
 ```bash
-git clone https://github.com/drksci/conky.git
-cd conky
-cargo build --workspace
-cargo test --workspace
-cargo run --bin conky -- --help
+pip install -e '.[dev]'   # Python 3.11 or newer
 ```
 
-Commands that etch create Git commits in the Git repository of the current working directory, so run them from a separate scratch directory with `--vault` pointing there, not from this checkout.
-
-## Repository layout
-
-```text
-crates/
-  conky-airlock/   patch validation pipeline, taint fence, guard certification stub, parity checks
-  conky-daemon/    the `conky` binary: Git backend, signer, pulse streams, file watcher
-  conky-engines/   CEL evaluation, SQLite ledger and projections, gear tool forging
-  conky-graph/     frontmatter parsing, backlink index, slot transclusion
-  conky-wasm/      capsule host (stub for Wasmtime execution)
-wit/conky.wit      component interface definitions
-docs/blueprint.md  the v2.0 specification, partly historical
-docs/gemini-osi-stack/  design conversation archive, source material only
-CLAUDE.md          rules for contributors and coding agents
+```console
+$ conky init demo
+initialised demo
+$ cd demo
+$ conky write market 'rules=["page.stock >= 0", "size <= 2000"]' stock=0 --as alice
+written (seq 0)
+$ conky write stall within=market stock=40 --body "Fresh bread." --as alice
+written (seq 1)
+$ conky write stall stock=-1 --as alice
+refused (seq 2): rule: page.stock >= 0 (from market) is false
+$ conky write depot reorder=false 'watch=[{on: stall, when: "other.stock < 10", set: {reorder: "true"}}]' --as alice
+written (seq 3)
+$ conky write stall stock=4 --as alice
+written (seq 4)
+$ conky read depot
+---
+watch:
+- on: stall
+  when: other.stock < 10
+  set:
+    reorder: 'true'
+reorder: true
+---
+$ conky verify
+ok: 6 events verified
+$ rm -r pages
+$ conky rebuild
+rebuilt pages/ from the log
+$ conky verify
+ok: 6 events verified
 ```
 
-## Roadmap
+`market` is a space: `stall` is `within` it and inherits its rules. The refused write is
+recorded in the log and changes nothing. Writing `stall` with a stock below 10 made `depot`
+change by itself, signed by the key of `depot`, with no model involved. The two extra events
+are the refusal and the reaction. Private keys are kept in `~/.conky/keys`, never in the vault.
 
-1. Make v2.0 real: persistent keys and verifiable seals, real guard evaluation, a Wasmtime host.
-2. A transportable vault with table and stream data in open formats, plus the assimilation test.
-3. A harness-neutral benchmark run identically against other agent harnesses.
-4. Fold later ideas from the archive, one mechanism at a time.
+## Vocabulary
+
+| Word | Meaning |
+|---|---|
+| vault | The directory that holds everything and travels alone. |
+| page | A Markdown document with YAML frontmatter. |
+| key | An actor's ed25519 identity. |
+| link | `[[name]]`, a reference to another page. |
+| embed | `![[name#field]]`, a live inclusion resolved when the page is read. |
+| rule | A pure boolean expression a write must satisfy. |
+| event | One entry in the log. |
+| seal | The signature on an event. |
+| space | A page whose rules its members inherit. |
+| error | A refused write. |
+| read, write, watch | The verbs. |
+
+## What exists
+
+- Pages with deterministic serialisation, and a write path that is the only way state changes.
+- Rules in CEL, inherited through `within` chains, with `page` and `size` in scope.
+- A signed, hash-chained, append-only event log that also records refused writes.
+- Reactions: pages that watch other pages and write themselves, with no model call.
+- `verify` and `rebuild`, and a command line: `init`, `write`, `read`, `log`, `verify`, `rebuild`.
+
+## Not built yet
+
+1. Tables stored as Parquet beside their page.
+2. Model-backed pages: a page that asks a question state cannot answer.
+3. A ledger with conservation.
+4. The assimilation test: hand a fresh consumer only a stopped vault and score whether it resumes correctly.
+5. The harness-neutral benchmark against other agent harnesses.
+
+See [docs/design.md](docs/design.md).
+
+## Layout
+
+```
+src/conky/   the runtime: page, log, keys, rules, vault, cli
+tests/       one test per law, each fails if the law is removed
+docs/        design.md
+<vault>/     pages/  log/events.jsonl  keys/  (public keys only)
+```
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [CLAUDE.md](CLAUDE.md).
+Read [CLAUDE.md](CLAUDE.md) and [CONTRIBUTING.md](CONTRIBUTING.md). Run `ruff check .`,
+`ruff format --check .` and `pytest` before opening a pull request.
 
-## License
+## Licence
 
-Dual-licensed under [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option.
+Dual licensed under [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option.

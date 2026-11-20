@@ -1,27 +1,27 @@
 # conky
 
-A Rust runtime (`crates/`, `wit/`) where every actor is a living Markdown document. Pre-alpha. This file stays under 4096 bytes; CI checks it.
+A Python runtime (`src/conky/`) where every actor is a living Markdown page and the event log is the authority. Pre-alpha.
 
 ## Truth order
 
 1. Code and passing tests: what is enforced.
-2. `docs/blueprint.md`: the v2.0 specification, partly historical.
+2. `docs/design.md`: the model, and what is not built yet.
 3. `docs/gemini-osi-stack/`: source material. Read `SUMMARY.md` first. Never edit it or treat it as a requirement.
 
 ```bash
-cargo fmt --all -- --check && cargo clippy --workspace --all-targets -- -D warnings && cargo test --workspace
+ruff check . && ruff format --check . && pytest
 ```
 
 ## The razor
 
-- **The document is the system.** No config registry, no hidden state. If it exists, it has a Markdown + frontmatter surface.
-- **Surfaces are present tense, at most 4096 bytes.** History lives in Git; bulk lives in data primitives.
+- **The document is the system.** No config registry, no hidden state. If it exists, it has a Markdown + frontmatter page.
+- **Pages are present tense and small.** History lives in the log; bulk lives in data primitives. A size limit is an ordinary rule a space sets, never a constant.
 - **Few primitives, composed.** A new concept is built from existing primitives or deletes one. Otherwise it does not land.
 - **One concept, one short word.** No synonyms, no abbreviations, no two mechanisms for one job.
 - **Physics over prompts.** Invariants are enforced by the runtime and fail closed.
 - **Evidence over narrative.** Only deterministic or signed facts count. Model claims and scripted output are hypotheses.
 - **Inference is for real thinking.** Whatever follows from state just happens in the runtime, with no model call.
-- **Surfaces read naturally**, as if a person wrote them.
+- **Pages read naturally**, as if a person wrote them.
 
 Every principle here is open to challenge. Change it in this file first, with the reason, then change the code.
 
@@ -31,11 +31,11 @@ Every principle here is open to challenge. Change it in this file first, with th
 
 - **No tech debt.** No compatibility shims, deprecated aliases, dead code or "fix later" notes. Replacing something removes the old thing in the same change.
 - **No down-migrations, no migration ladders.** Data lives in three simple primitives in open formats: document (Markdown + frontmatter), table (Parquet), stream (append-only log). A change of shape is a forward re-projection from those, never an in-place rewrite with a way back.
-- **The vault travels alone.** A cold reader given only the directory can rebuild the running system. Data sits at relative paths named by its surface.
+- **The vault travels alone.** A cold reader given only the directory can rebuild the running system. Data sits at relative paths named by its page.
 - **No stub passes as real.** Name it `stub`, say so in its doc comment, and never let it mint anything shaped like `cert:` or `sig:`. Replacing a stub outranks adding a concept.
 - **Runtime output never enters this repo.** Vaults and `seal:` commits live in their own repository.
 - **Anything in the background declares a budget** and is metered.
-- **A measure is a pure, fuel-bounded function** over surfaces and streams, like a guard. No clocks, RNG or I/O inside it.
+- **A measure is a pure, fuel-bounded function** over pages and streams, like a rule. No clocks, RNG or I/O inside it.
 
 ## Folding ideas from the archive
 
@@ -44,12 +44,12 @@ Each idea states its rung wherever it is mentioned:
 | Rung | Means |
 |---|---|
 | idea | Only in the archive. Cite `turn N` or the canvas file. |
-| folded | In `docs/blueprint.md`: the law, the primitives it composes from, what it removes, the test that falsifies it. |
+| folded | In `docs/design.md`: the law, the primitives it composes from, what it removes, the test that falsifies it. |
 | enforced | Runtime code plus a test that fails when the law is broken. |
 | proven | Measured in a run that was not scripted. |
 
 - Fold mechanisms, not vocabulary.
-- The lexicon is under revision: one plain word per concept, renamed atomically everywhere.
+- The lexicon: `vault page key link embed rule event seal space error`, verbs `read write watch`. One plain word per concept; a rename is atomic everywhere.
 - Contradictions are resolved in writing before folding, not by keeping both.
 
 ## Benchmarking

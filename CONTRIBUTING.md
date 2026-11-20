@@ -4,16 +4,16 @@ conky is pre-alpha. Small, focused contributions are welcome.
 
 ## Prerequisites
 
-- Stable Rust (with `rustfmt` and `clippy`).
+- Python 3.11 or newer.
 
 ## Checks
 
-Run all three before opening a pull request:
+Install with `pip install -e '.[dev]'`, then run all three before opening a pull request:
 
 ```bash
-cargo fmt --all -- --check
-cargo clippy --workspace --all-targets -- -D warnings
-cargo test --workspace
+ruff check .
+ruff format --check .
+pytest
 ```
 
 ## Ground rules

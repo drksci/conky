@@ -1,8 +1,11 @@
-/target/
-**/*.rs.bk
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.venv/
+dist/
 *.swp
 *.DS_Store
-.iceberg/
 
 # Runtime vaults do not belong in this repository
 /vault/
