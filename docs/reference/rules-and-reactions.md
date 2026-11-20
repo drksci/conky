@@ -130,7 +130,7 @@ When the entry fires, in order:
 2. With `writes`, the fixed instruction for pages ([An answer that is pages](#an-answer-that-is-pages)) is placed ahead of the resolved prompt, so the author's question is the last thing the model reads. The skip rule applies. The watching page keeps a field `<into>_asked` holding the SHA-256 hex digest of the resolved prompt together with the answer it got, or `writes_asked` when the entry has no `into` (the digest then covers the prompt alone). If `into` is present (or the entry has none) and the field matches the resolved prompt and the answer now in `into`, nothing is asked and nothing is written. A question is settled only while its answer is still in place: when another entry or a write has changed `into`, the same prompt is asked again. Otherwise a settled question is never asked twice, so a loop settles. The depth limit of 12 still applies, checked before the model is called.
 3. The provider page, if one is named, is read ([providers](providers.md)) and the model is called once. Without one, or when it fails, detected models are tried in order.
 4. If no model answered, the `otherwise` text or a built-in sentence is written to `into` and `<into>_asked` is left out, so a later ask with a model replaces it ([when no model answers](providers.md#when-no-model-answers)).
-5. The trimmed answer is written to `into`, together with `<into>_asked`, in one write by the watching page. It carries `Cause` like any reaction and is checked against the page's rules and its spaces' rules. A refused answer is recorded as a refusal and the field keeps its value.
+5. The trimmed answer is written to `into`, together with `<into>_asked`, in one write by the watching page. It carries `Cause` like any reaction and is checked against the page's rules and its spaces' rules. A refused answer is recorded as a refusal and the field keeps its value, and when a rule refused it the question is asked again ([When an answer is refused](#when-an-answer-is-refused)).
 
 The commit records the question and the model ([vault format](vault-format.md#a-model-answer)). Reading the history needs no model call.
 
@@ -166,9 +166,21 @@ A page can be a note to yourself, or it can carry a rule that must stay true fro
 
 When no model answers, the plain sentence goes to `into` as today and no pages are written. An entry with `writes` and no `into` has nowhere to put the sentence, so the failure is one `model` refusal. `conky ask` takes the same ability through `--writes` ([command line](cli.md#ask)).
 
+### When an answer is refused
+
+When a rule refuses the write of an answer, whether the write to `into` or a page the answer holds, the same question is sent once more. The second prompt is the first followed by a blank line and one fixed sentence, so it is the last thing the model reads:
+
+```
+Your last answer was refused: <reason> Answer again so that it holds.
+```
+
+`<reason>` is the reason recorded on the refusal, for example `rule: page.said != 'no' (from camp) is false`. The history of a retried answer reads in this order: the write that triggered the entry, the refusal of the first answer, then the second answer, whose `Cause` is the refusal. The second ask is an ordinary recorded ask, and its prompt, which differs from the first, is a different moment for the cache, so it never hits the first answer. The field `<into>_asked` holds the digest of the entry's own prompt, so the question settles as if it had been asked once.
+
+The retry is one, and no more. When the second answer is refused by a rule too, the entry's `otherwise` text is written to `into` as an ordinary write that the rules judge, and when that is refused it is recorded and the asking stops. With no `otherwise` text, or no `into`, the asking stops with the second refusal recorded and the field keeps its value. A refusal with reason `shape`, `limit` or `cycle` is not retried, and neither is a failure to ask, which is covered below.
+
 ### When asking fails
 
-Each of these, for a named provider page, is recorded as a refusal on the asking page, and the question then falls through to detection and the plain sentence: a missing or malformed provider page, a secret that cannot be found, a failed connection, an HTTP error, a reply with no answer text, and no reply within 60 seconds. The reason starts with `model:` and says what to do next, for example `model: secret 'openrouter' not found: set CONKY_SECRET_OPENROUTER or put it in openrouter.secret in the key directory`. There are no retries. The write that triggered the entry stands and every other reaction runs, so everything that needs no model works with no network.
+Each of these, for a named provider page, is recorded as a refusal on the asking page, and the question then falls through to detection and the plain sentence: a missing or malformed provider page, a secret that cannot be found, a failed connection, an HTTP error, a reply with no answer text, and no reply within 60 seconds. The reason starts with `model:` and says what to do next, for example `model: secret 'openrouter' not found: set CONKY_SECRET_OPENROUTER or put it in openrouter.secret in the key directory`. A failure to ask is not retried. The write that triggered the entry stands and every other reaction runs, so everything that needs no model works with no network.
 
 ## Measures
 

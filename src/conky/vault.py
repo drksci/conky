@@ -80,12 +80,21 @@ class Refusal(StrEnum):
     LIMIT = "limit"
 
 
+RETRY = "Your last answer was refused: {reason} Answer again so that it holds."
 _CYCLE = f"{Refusal.CYCLE}: reactions nested deeper than {MAX_DEPTH}"
 
 
 def _mark(prompt: str, answer: str | None) -> str:
     """Return the digest that settles a question: its resolved prompt and the answer it got."""
     return hashlib.sha256(f"{prompt}\0{answer or ''}".encode()).hexdigest()
+
+
+def _ruled(result: Result) -> Result | None:
+    """Return the first write of an answer that a rule refused, or None."""
+    for found in (result, *(each for _, each in result.pages)):
+        if not found.ok and (found.reason or "").startswith(f"{Refusal.RULE}:"):
+            return found
+    return None
 
 
 def _size(page: Page) -> int:
@@ -747,6 +756,13 @@ class Vault:
     )
     @arch.stage(
         "think",
+        "stage.think.retry",
+        "An answer a rule refused is asked again once, with the reason; a second refusal "
+        "writes the entry's `otherwise` text or stops.",
+        doc="rules-and-reactions.md#when-an-answer-is-refused",
+    )
+    @arch.stage(
+        "think",
         "stage.think.ask",
         "A prompt whose embeds are resolved and recorded as `Read`.",
         doc="rules-and-reactions.md#asking-a-model",
@@ -776,6 +792,10 @@ class Vault:
         refusal whose reason starts with `model:`. Then each detected model is tried in order,
         and when none answers a plain sentence is written. Returns None when the question is
         skipped because its answer is already recorded.
+
+        When a rule refuses the answer, or a page of it, the same prompt is sent once more with
+        the reason after it, caused by the refusal. A second refusal by a rule writes the
+        entry's `otherwise` text when it has one and stops. Never more than that one retry.
         """
         if depth > MAX_DEPTH:
             return self._refuse(page, {}, None, actor, at, cause, _CYCLE)
@@ -795,6 +815,34 @@ class Vault:
         ):
             return None
         where = (page, actor, at, cause, depth)
+        result = self._think(ask, pages, prompt, prompt, where, skip_settled)
+        refused = None if result is None or result.plain else _ruled(result)
+        if refused is None:
+            return result
+        note = RETRY.format(reason=" ".join((refused.reason or "").split()))
+        again = (page, actor, at, refused.id, depth)
+        result = self._think(ask, pages, prompt, f"{prompt}\n\n{note}", again, False)
+        refused = None if result is None or result.plain else _ruled(result)
+        if refused is None or ask.into is None or ask.otherwise is None:
+            return result
+        last = (page, actor, at, refused.id, depth)
+        return self._plain(last, ask, pages, prompt, False)
+
+    def _think(
+        self,
+        ask: Ask,
+        pages: dict[str, Page],
+        prompt: str,
+        sent: str,
+        where: tuple[str, str, str, str | None, int],
+        skip_settled: bool,
+    ) -> Result | None:
+        """Put sent to the models in order and write what comes back, or a plain sentence.
+
+        The question is settled by prompt, the digest of what the entry asked, so a retry that
+        adds a note to sent still settles the entry's own prompt.
+        """
+        page, actor, at, cause, _ = where
         moment = cause or self._head()
         if ask.provider is not None:
             try:
@@ -804,9 +852,9 @@ class Vault:
                 def secret(found: model.Provider = found) -> str | None:
                     return model.find_secret(found.secret, self.keys_dir) if found.secret else None
 
-                reply = model.ask_once(self.cache, found, secret, prompt, self.keys_dir, moment)
+                reply = model.ask_once(self.cache, found, secret, sent, self.keys_dir, moment)
                 if reply is not None:
-                    return self._answered(found, reply, ask, pages, prompt, where)
+                    return self._answered(found, reply, ask, pages, prompt, sent, where)
             except model.ModelError as exc:
                 self._refuse(page, {}, None, actor, at, cause, f"{Refusal.MODEL}: {exc}")
         for choice in model.detect().choices:
@@ -815,14 +863,14 @@ class Vault:
                     self.cache,
                     choice.provider,
                     lambda choice=choice: choice.secret,
-                    prompt,
+                    sent,
                     self.keys_dir,
                     moment,
                 )
             except model.ModelError:
                 continue
             if reply is not None:
-                return self._answered(choice.provider, reply, ask, pages, prompt, where)
+                return self._answered(choice.provider, reply, ask, pages, prompt, sent, where)
         return self._plain(where, ask, pages, prompt, skip_settled)
 
     @arch.stage(
@@ -839,6 +887,7 @@ class Vault:
         ask: Ask,
         pages: dict[str, Page],
         prompt: str,
+        sent: str,
         where: tuple[str, str, str, str | None, int],
     ) -> Result:
         """Write a model's answer to the asking page, with the trailers that record it.
@@ -862,7 +911,7 @@ class Vault:
         changes = {ask.marker: _mark(prompt, text if ask.into is not None else None)}
         if ask.into is not None:
             changes[ask.into] = text
-        result = self._write(page, changes, None, actor, at, cause, depth, (trailers, prompt))
+        result = self._write(page, changes, None, actor, at, cause, depth, (trailers, sent))
         if not (result.ok and blocks and ask.writes is not None):
             return result
         landed = self._land(blocks, ask.writes, page, actor, at, result.id, depth + 1)

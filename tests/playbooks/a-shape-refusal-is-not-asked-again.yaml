@@ -1,0 +1,16 @@
+# A page block with no name is refused for its shape, not by a rule, so the question is not asked again.
+pages:
+  helper: {api: command, command: stand}
+  camp: {}
+  gate: {asks: ""}
+  guide:
+    within: camp
+    said: ""
+    watch:
+      - on: gate
+        when: "other.asks != ''"
+        ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, writes: camp}
+steps:
+  - says: "kept\n=== page:  ===\nhello\n=== end ==="
+  - write: {page: gate, fields: {asks: hunt}}
+  - expect: {fields: {guide.said: "kept"}, model_calls: 1, verify: true}

@@ -1,0 +1,17 @@
+# Both answers are refused by a rule and the entry has no otherwise text, so the field keeps its value and the asking stops.
+pages:
+  helper: {api: command, command: stand}
+  camp:
+    rules: ["!has(page.said) || page.said != 'no'"]
+  gate: {asks: ""}
+  guide:
+    within: camp
+    said: "unchanged"
+    watch:
+      - on: gate
+        when: "other.asks != ''"
+        ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said}
+steps:
+  - says: "no"
+  - write: {page: gate, fields: {asks: hunt}}
+  - expect: {fields: {guide.said: "unchanged"}, model_calls: 2, verify: true}

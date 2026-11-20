@@ -417,7 +417,7 @@ def test_an_answer_that_breaks_a_rule_is_a_refusal_and_the_field_is_unchanged(
     provider(vault, stand)
     desk(vault, rules=["page.summary.size() <= 5"])
     new_ticket(vault)
-    assert len(stand.requests) == 1
+    assert len(stand.requests) == 2
     refusal = last_refusal(vault)
     assert refusal["Reason"].startswith("rule: page.summary.size() <= 5")
     assert refusal["Model"] == "helper"

@@ -1,0 +1,17 @@
+# Both answers are refused by a rule, so the entry's own sentence is written, and the model is asked only twice.
+pages:
+  helper: {api: command, command: stand}
+  camp:
+    rules: ["!has(page.said) || page.said != 'no'"]
+  gate: {asks: ""}
+  guide:
+    within: camp
+    said: ""
+    watch:
+      - on: gate
+        when: "other.asks != ''"
+        ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, otherwise: "Nobody can say."}
+steps:
+  - says: "no"
+  - write: {page: gate, fields: {asks: hunt}}
+  - expect: {fields: {guide.said: "Nobody can say."}, model_calls: 2, verify: true}

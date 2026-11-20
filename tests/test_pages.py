@@ -244,9 +244,9 @@ def test_a_rule_of_a_space_refuses_a_page_that_breaks_it(den: Vault, stand: Stan
     )
     trigger(den, "rules")
     assert exists(den, "small") and not exists(den, "large")
-    (found,) = refusals(den)
-    assert found["Page"] == "large" and found["From"] == "shelf"
-    assert found["Reason"].startswith("rule: size <= 200 (from shelf)")
+    asked, again = refusals(den)
+    assert asked["Page"] == again["Page"] == "large" and asked["From"] == "shelf"
+    assert asked["Reason"].startswith("rule: size <= 200 (from shelf)")
     den.verify()
 
 
@@ -263,8 +263,9 @@ def test_a_character_can_add_a_rule_to_a_space_it_made_and_the_rule_binds_a_late
     )
     trigger(den, "use")
     assert exists(den, "small") and not exists(den, "large")
-    (found,) = refusals(den)
-    assert found["Reason"].startswith("rule: size <= 120 (from shelf)")
+    asked, again = refusals(den)
+    assert asked["Reason"].startswith("rule: size <= 120 (from shelf)")
+    assert again["Reason"] == asked["Reason"]
     den.verify()
 
 

@@ -1,0 +1,17 @@
+# A rule refuses the first answer, so the same question comes again once, and the second answer holds.
+pages:
+  helper: {api: command, command: stand}
+  camp:
+    rules: ["!has(page.said) || page.said != 'ask 1'"]
+  gate: {asks: ""}
+  guide:
+    within: camp
+    said: ""
+    watch:
+      - on: gate
+        when: "other.asks != ''"
+        ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said}
+steps:
+  - says: "ask {n}"
+  - write: {page: gate, fields: {asks: hunt}}
+  - expect: {fields: {guide.said: "ask 2"}, model_calls: 2, verify: true}
