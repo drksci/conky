@@ -83,7 +83,7 @@ are the refusal and the reaction. Private keys are kept in `~/.conky/keys`, neve
 
 1. Tables stored as Parquet beside their page.
 2. Model-backed pages: a page that asks a question state cannot answer.
-3. A ledger with conservation.
+3. Grouped writes and a pattern library (accounting as a pattern, not a runtime feature).
 4. The assimilation test: hand a fresh consumer only a stopped vault and score whether it resumes correctly.
 5. The harness-neutral benchmark against other agent harnesses.
 

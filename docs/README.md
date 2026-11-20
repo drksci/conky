@@ -25,6 +25,7 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 - [decisions/0015-open-questions.md](decisions/0015-open-questions.md): Open design questions
 - [decisions/0016-principles-as-rules.md](decisions/0016-principles-as-rules.md): Principles as rules
 - [decisions/0017-no-hosted-ci-yet.md](decisions/0017-no-hosted-ci-yet.md): No hosted CI yet
+- [decisions/0018-patterns-not-features.md](decisions/0018-patterns-not-features.md): Patterns, not features
 
 ## Ideas
 
@@ -37,6 +38,7 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 - [ideas/learned-reactions.md](ideas/learned-reactions.md): Learned reactions
 - [ideas/ledger.md](ideas/ledger.md): Ledger
 - [ideas/measures.md](ideas/measures.md): Measures
+- [ideas/patterns.md](ideas/patterns.md): Patterns
 - [ideas/tables.md](ideas/tables.md): Tables
 - [ideas/thought-to-change.md](ideas/thought-to-change.md): Thought to change
 

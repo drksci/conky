@@ -23,3 +23,7 @@ Ad hoc balance fields kept consistent by hand.
 ## Falsifying test
 
 A sequence of recorded writes in which the total changes without a recorded source or sink and the runtime accepts it.
+
+## Standing
+
+The operator judged a built-in ledger a bad idea. Accounting should be a pattern, not a runtime feature; see [patterns](patterns.md). The conservation need survives as the grouped write described there.

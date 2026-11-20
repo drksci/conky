@@ -8,12 +8,10 @@ conky is pre-alpha. Small, focused contributions are welcome.
 
 ## Checks
 
-Install with `pip install -e '.[dev]'`, then run all three before opening a pull request:
+Install with `pip install -e '.[dev]'`, then run all checks before opening a pull request:
 
 ```bash
-ruff check .
-ruff format --check .
-pytest
+ruff check . && ruff format --check . && pytest && python scripts/check_docs.py
 ```
 
 ## Ground rules

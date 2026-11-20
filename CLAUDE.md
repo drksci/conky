@@ -36,6 +36,7 @@ Run this before every push. There is no hosted CI yet; see `docs/decisions/0017-
 ## Design
 
 - Build a new concept from existing words or remove one. If it does neither, it does not land. (review)
+- Domain structures (accounting, stock, approvals) are patterns composed from existing words, never runtime features. The runtime gains only general primitives. (review)
 - One plain word per concept: `vault page key link embed rule event seal space error`, verbs `read write watch`. A rename is atomic everywhere. (check: `tests/test_house.py`)
 - Nothing already built has to stay. Existing code is reference, not an obligation. (review)
 - No debt: no shims, deprecated aliases, dead code or fix-later notes. Replacing something removes the old thing in the same change. (check: `tests/test_house.py` for fix-later notes; review for the rest)
