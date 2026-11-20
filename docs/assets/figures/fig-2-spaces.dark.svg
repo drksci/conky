@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 300" width="880" height="300" role="img" aria-labelledby="t">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 244.4" width="880" height="244.4" role="img" aria-labelledby="t">
 <title id="t">A rule reaches every page</title>
 <style>
 :root{--ink:#EDEDED;--tone:#2B2F36;--acc:#F4C430}
@@ -15,15 +15,11 @@
 .t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 </style>
-<path class="k" d="M26 22H854Q858 22 858 26V274Q858 278 854 278H26Q22 278 22 274V26Q22 22 26 22Z"/>
-<path class="m" d="M630.21 256H855Q858 256 858 259V275Q858 278 855 278H630.21Q627.21 278 627.21 275V259Q627.21 256 630.21 256Z"/>
-<path class="k" d="M738.52 256L738.52 278"/>
-<text class="t" x="635.21" y="270.5" font-size="9.2" text-anchor="start">FIG. 2  SPACES</text>
-<text class="t" x="746.52" y="270.5" font-size="7.36" text-anchor="start">SCHEMATIC, NOT DATA</text>
+<g transform="translate(0 -16.8)">
 <path class="s" d="M50 34H806L830 58V244H50Z"/>
 <path class="k" d="M806 34V58H830"/>
-<text class="t" x="74" y="66" font-size="12.88" text-anchor="start">SPACE</text>
-<text class="t" x="440" y="60" font-size="12.88" text-anchor="middle">RULE</text>
+<text class="t" x="74" y="66" font-size="11.76" fill-opacity="0.8" text-anchor="start">SPACE</text>
+<text class="t" x="440" y="60" font-size="11.76" fill-opacity="0.8" text-anchor="middle">RULE</text>
 <path class="a" d="M360 72L520 72"/>
 <path class="k" d="M440 72L440 90"/>
 <path class="k" d="M130 90L560 90"/>
@@ -45,7 +41,7 @@
 <path class="k" d="M214 202L266 202"/>
 <path class="s" d="M330 116H770L790 136V232H330Z"/>
 <path class="k" d="M770 116V136H790"/>
-<text class="t" x="352" y="142" font-size="12.88" text-anchor="start">SPACE</text>
+<text class="t" x="352" y="142" font-size="11.76" fill-opacity="0.8" text-anchor="start">SPACE</text>
 <path class="k" d="M560 116L560 156"/>
 <path class="k" d="M495 156L625 156"/>
 <path class="k" d="M495 156L495 168"/>
@@ -60,4 +56,5 @@
 <path class="k" d="M650 172V182H660"/>
 <path class="k" d="M604 194L646 194"/>
 <path class="k" d="M604 208L646 208"/>
+</g>
 </svg>

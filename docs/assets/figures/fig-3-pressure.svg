@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 272" width="880" height="272" role="img" aria-labelledby="t">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 172.7" width="880" height="172.7" role="img" aria-labelledby="t">
 <title id="t">A wall and pressure</title>
 <style>
 :root{--ink:#1E1E1E;--tone:#E6E3DC;--acc:#F4C430}
@@ -17,15 +17,9 @@
 .t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 </style>
-<path class="k" d="M26 22H854Q858 22 858 26V246Q858 250 854 250H26Q22 250 22 246V26Q22 22 26 22Z"/>
-<path class="m" d="M616.59 228H855Q858 228 858 231V247Q858 250 855 250H616.59Q613.59 250 613.59 247V231Q613.59 228 616.59 228Z"/>
-<path class="k" d="M738.52 228L738.52 250"/>
-<text class="t" x="621.59" y="242.5" font-size="9.2" text-anchor="start">FIG. 3  PRESSURE</text>
-<text class="t" x="746.52" y="242.5" font-size="7.36" text-anchor="start">SCHEMATIC, NOT DATA</text>
-<path class="k" d="M44 36H426Q430 36 430 40V214Q430 218 426 218H44Q40 218 40 214V40Q40 36 44 36Z"/>
-<path class="k" d="M454 36H836Q840 36 840 40V214Q840 218 836 218H454Q450 218 450 214V40Q450 36 454 36Z"/>
-<text class="t" x="58" y="62" font-size="12.88" text-anchor="start">WALL</text>
-<text class="t" x="468" y="62" font-size="12.88" text-anchor="start">PRESSURE</text>
+<g transform="translate(-1 -48.5)">
+<text class="t" x="72" y="74" font-size="13.44" fill-opacity="0.92" text-anchor="start">WALL</text>
+<text class="t" x="470" y="74" font-size="13.44" fill-opacity="0.92" text-anchor="start">PRESSURE</text>
 <path class="s" d="M72 96H128L142 110V192H72Z"/>
 <path class="k" d="M128 96V110H142"/>
 <path class="k" d="M86 130L128 130"/>
@@ -56,4 +50,5 @@
 <path class="k" d="M764 132L796 132"/>
 <path class="k" d="M764 150L796 150"/>
 <path class="k" d="M764 168L796 168"/>
+</g>
 </svg>

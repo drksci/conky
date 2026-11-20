@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 256" width="880" height="256" role="img" aria-labelledby="t">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 191.7" width="880" height="191.7" role="img" aria-labelledby="t">
 <title id="t">One change, and what follows</title>
 <style>
 :root{--ink:#1E1E1E;--tone:#E6E3DC;--acc:#F4C430}
@@ -17,11 +17,7 @@
 .t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 </style>
-<path class="k" d="M26 22H854Q858 22 858 26V230Q858 234 854 234H26Q22 234 22 230V26Q22 22 26 22Z"/>
-<path class="m" d="M602.97 212H855Q858 212 858 215V231Q858 234 855 234H602.97Q599.97 234 599.97 231V215Q599.97 212 602.97 212Z"/>
-<path class="k" d="M738.52 212L738.52 234"/>
-<text class="t" x="607.97" y="226.5" font-size="9.2" text-anchor="start">FIG. 1  ONE CHANGE</text>
-<text class="t" x="746.52" y="226.5" font-size="7.36" text-anchor="start">SCHEMATIC, NOT DATA</text>
+<g transform="translate(-2.15 -22.8)">
 <path class="s" d="M85 40H177L195 58V152H85Z"/>
 <path class="k" d="M177 40V58H195"/>
 <path class="k" d="M99 74L181 74"/>
@@ -53,9 +49,10 @@
 <path class="k" d="M702 114L747.1 114"/>
 <path class="i" d="M706 100L711 105L720 92"/>
 <path class="a" d="M706 132L782 132"/>
-<text class="t" x="140" y="178" font-size="13.8" text-anchor="middle">STALL</text>
-<text class="t" x="360" y="178" font-size="13.8" text-anchor="middle">HISTORY</text>
-<text class="t" x="540" y="178" font-size="13.8" text-anchor="middle">RULES</text>
-<text class="t" x="743" y="178" font-size="13.8" text-anchor="middle">DEPOT</text>
-<text class="t" x="743" y="198" font-size="10.58" text-anchor="middle">NOBODY DECIDED</text>
+<text class="t" x="140" y="178" font-size="12.6" fill-opacity="0.8" text-anchor="middle">STALL</text>
+<text class="t" x="360" y="178" font-size="12.6" fill-opacity="0.8" text-anchor="middle">HISTORY</text>
+<text class="t" x="540" y="178" font-size="12.6" fill-opacity="0.8" text-anchor="middle">RULES</text>
+<text class="t" x="743" y="178" font-size="12.6" fill-opacity="0.8" text-anchor="middle">DEPOT</text>
+<text class="t" x="743" y="198" font-size="10.92" fill-opacity="0.8" text-anchor="middle">NOBODY DECIDED</text>
+</g>
 </svg>
