@@ -14,6 +14,8 @@ from conky import answer, arch, git, model
 from conky.cache import Cache
 from conky.errors import BadInput, VerifyFailed
 from conky.page import (
+    EMBED,
+    MEMBERS,
     NAME,
     Page,
     ShapeError,
@@ -740,7 +742,11 @@ class Vault:
         pages = self._all()
         prompt = resolve_text(ask.prompt, pages)
         if ask.writes is not None:
-            prompt += answer.instruction(ask.writes)
+            shown = any(
+                (found.group(1), found.group(2)) == (ask.writes, MEMBERS)
+                for found in EMBED.finditer(ask.prompt)
+            )
+            prompt += answer.instruction(page, ask.writes, shown)
         current = (self._load(page) or Page()).fields
         if (
             skip_settled

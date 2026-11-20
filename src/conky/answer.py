@@ -18,14 +18,25 @@ END = "=== end ==="
     "lane.provider",
     "the prompt plus the fixed page instruction",
 )
-def instruction(space: str) -> str:
-    """Return the fixed text appended to a prompt that may write pages into space."""
+def instruction(page: str, space: str, shown: bool) -> str:
+    """Return the fixed text appended to a prompt that lets page write pages into space.
+
+    shown says the prompt embeds what space holds, which the text then tells the page.
+    """
+    seen = (
+        f"Each time you are asked, you are shown what {space} holds, so you will see what "
+        "you kept. "
+        if shown
+        else ""
+    )
     return (
-        f"\n\nYou may write pages into the space {space}. Start each page with a line "
-        f"{HEADER} <name> ===, then the page as Markdown with frontmatter between two --- "
-        f"lines, with within: {space} (or a space inside it) in the frontmatter. "
-        f"A line {END} closes a page. Text before the first page, or after a closed page, "
-        "is your plain answer."
+        f"\n\nYou are a page called {page}, and {space} is a space you can write into. "
+        f"Your reply is whatever you write outside a page. You may write pages into {space}, "
+        f"and they are kept. Write one like this:\n\n{HEADER} <name> ===\n---\n"
+        f"within: {space}\n---\nwhat you want to keep\n{END}\n\n"
+        "A page can be a note to yourself, or it can carry a rule that must stay true from now "
+        "on: a line under `rules:`, a CEL condition on `page.FIELD`. "
+        f"{seen}You cannot write anywhere else. Writing nothing more is fine."
     )
 
 

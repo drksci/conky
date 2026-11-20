@@ -45,12 +45,22 @@ The same vault, with exactly these additions and nothing else:
   its own `turn` exists before the first screen).
 - The ask gains `writes: den`, and its `when` gains ` && page.turn != other.turn`, so a screen
   that a case on the page has already answered is not asked about again.
-- The prompt starts with one line, "You are the page `traveller` in the space `den`.", and its
-  last part reads `The screen, turn ![[screen#turn]]:` in place of `The screen:`. The character
-  cannot rewrite its own page without knowing its name, and a case on its own page can key only
-  on the screen page's `turn`, which the screen's text does not show.
+- The prompt starts with the part `<<<den>>>![[den#members]]<<</den>>>`, which shows the
+  character what its space holds, one line a page, so it sees the notes it kept. It reads
+  `The screen, turn ![[screen#turn]]:` in place of `The screen:`, because a case on the
+  character's own page can key only on the screen page's `turn`, which the screen's text does
+  not show.
 - The runtime appends its own fixed instruction for pages to the prompt, as it does for every
-  ask with `writes`; the adapter does not write it.
+  ask with `writes`; the adapter does not write it. It tells the character its name and its
+  space, how a page is written (the header and end lines the parser cuts on, the page's `within`),
+  that a page can be a note or carry a rule, that the space's members are shown to it each time
+  because the prompt embeds them, and that it cannot write anywhere else. It is 563 bytes for
+  `traveller` in `den`, built in `src/conky/answer.py` from the constants the parser uses.
+
+The scaffolding the arm adds a call with `--answers pages` is therefore the `den` part and its
+blank line (37 bytes), the turn in the last label (23 bytes more than `The screen:`), the shelf
+line when offered, and the 563 bytes of instruction: 623 bytes a call over the keys arm, besides
+the shelf line, plus the member lines as notes are kept.
 
 A case, when the character makes one, is a watch entry it writes on its own page, in the form
 `on: screen`, `when: other.turn == N && <live>`, `set: {keys: '<line>', turn: other.turn}`. The

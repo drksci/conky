@@ -106,10 +106,19 @@ The commit records the question and the model ([vault format](vault-format.md#a-
 
 With `writes`, the answer may hold pages as well as text, so that a character can organise itself: make notes, other characters, spaces and rules. The key names a space, and the character may write only inside it. `writes` is the verb for what a page does to a space, as `watch` is for what it does to another page. Without the key an answer is text, as before.
 
-**The format.** The reply is cut into lines. A line that reads exactly `=== page: <name> ===` starts a page and names it. The page is Markdown with frontmatter, as in [vault format](vault-format.md#pages), and runs to the next header line or to a line that reads exactly `=== end ===`. Text before the first header, and text after an `=== end ===`, is the plain answer. If the entry has `into`, the plain text goes there, with the empty string when there is none. Leading and trailing blank lines of a page are ignored. This instruction is appended to the prompt, so authors do not restate it:
+**The format.** The reply is cut into lines. A line that reads exactly `=== page: <name> ===` starts a page and names it. The page is Markdown with frontmatter, as in [vault format](vault-format.md#pages), and runs to the next header line or to a line that reads exactly `=== end ===`. Text before the first header, and text after an `=== end ===`, is the plain answer. If the entry has `into`, the plain text goes there, with the empty string when there is none. Leading and trailing blank lines of a page are ignored. This instruction is appended to the prompt, so authors do not restate it. It is built from the same constants the parser cuts on, so the example page in it is one the parser accepts. `<page>` is the asking page, and the sentence about what the space holds is present only when the prompt itself embeds `![[<space>#members]]`:
 
 ```
-You may write pages into the space <space>. Start each page with a line === page: <name> ===, then the page as Markdown with frontmatter between two --- lines, with within: <space> (or a space inside it) in the frontmatter. A line === end === closes a page. Text before the first page, or after a closed page, is your plain answer.
+You are a page called <page>, and <space> is a space you can write into. Your reply is whatever you write outside a page. You may write pages into <space>, and they are kept. Write one like this:
+
+=== page: <name> ===
+---
+within: <space>
+---
+what you want to keep
+=== end ===
+
+A page can be a note to yourself, or it can carry a rule that must stay true from now on: a line under `rules:`, a CEL condition on `page.FIELD`. Each time you are asked, you are shown what <space> holds, so you will see what you kept. You cannot write anywhere else. Writing nothing more is fine.
 ```
 
 **How a page is applied.** The answer is written first, as today. If that write held, each page is applied in the order given as an ordinary write, one commit per page, by the actor that asked (the asking page, when a watch entry asked) and so signed by its key. Each carries `Cause`, the id of the commit of the answer. A page sets the keys its frontmatter names, and its body replaces the body when it has any text, as `conky write` does. A key it leaves out stays as it is, so a page can change its own `watch` and keep its `within`. If the answer write was refused nothing is applied, because the answer did not settle.

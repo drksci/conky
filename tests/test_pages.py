@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 from conky import Vault, arch
-from conky.answer import instruction
+from conky.answer import END, HEADER, instruction, split
 from conky.cli import main
 from conky.errors import BadInput
 from conky.git import trailers
@@ -132,12 +132,43 @@ def test_the_instruction_is_appended_to_what_is_sent_and_recorded(den: Vault, st
     stand.says("Nothing to add.")
     trigger(den, "one")
     sent = stand.prompts[-1]
-    assert sent == "Tidy up after one" + instruction("den")
+    assert sent == "Tidy up after one" + instruction("scribe", "den", False)
     assert "=== page: <name> ===" in sent and "within: den" in sent
     body = git(den.path, "log", "-1", "--format=%B")
     assert sent in body
     assert den.read("scribe").fields["said"] == "Nothing to add."
     assert not refusals(den)
+    den.verify()
+
+
+def test_the_instruction_example_is_a_page_the_parser_cuts(den: Vault) -> None:
+    text = instruction("scribe", "den", True)
+    example = text[text.index(HEADER) : text.index(END) + len(END)].replace("<name>", "note")
+    plain, blocks = split("Done.\n" + example)
+    assert plain == "Done."
+    assert [(b.name, b.problem) for b in blocks] == [("note", None)]
+    assert "within: den" in blocks[0].text and "what you want to keep" in blocks[0].text
+    assert "scribe" in text and "shown what den holds" in text
+    assert "shown what" not in instruction("scribe", "den", False)
+    assert w(den, "note", {"within": "den"}).ok
+
+
+def test_a_note_is_in_the_next_prompt_that_embeds_the_members_and_in_its_read_trailer(
+    den: Vault, stand: Stand
+) -> None:
+    prompt = "Tidy up after ![[ticket#text]]\n![[den#members]]"
+    assert w(den, "scribe", {"watch": [entry(prompt=prompt)]}).ok
+    stand.says("Kept.\n=== page: note-a ===\n---\nwithin: den\n---\nBuy oxen first.\n")
+    trigger(den, "one")
+    stand.says("Nothing more.")
+    trigger(den, "two")
+    first, second = stand.prompts[-2:]
+    assert "note-a" not in first
+    assert "note-a: Buy oxen first." in second
+    assert "shown what den holds" in second
+    log = history(den)
+    asked = [tags for _, tags in log if tags["Page"] == "scribe" and "Model" in tags]
+    assert "den" in asked[-1]["Read"].split(", ")
     den.verify()
 
 

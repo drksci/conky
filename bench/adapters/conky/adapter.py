@@ -41,10 +41,11 @@ PROMPT = (
     "{shelf}"
     "The screen:\n<<<screen>>>![[screen]]<<</screen>>>"
 )
-# With pages the character is told who it is and which screen it answers, because the screen
-# page's `turn` is the one thing a case on its own page can key on.
+# With pages the character is shown what its space holds, so it sees what it kept, and which
+# screen it answers, because the screen page's `turn` is the one thing a case on its own page can
+# key on. The runtime appends who it is and how to write a page.
 PAGES_PROMPT = (
-    "You are the page `traveller` in the space `den`.\n\n"
+    "<<<den>>>![[den#members]]<<</den>>>\n\n"
     "<<<pack>>>![[traveller#task]]<<</pack>>>\n\n"
     "<<<pack>>>![[traveller#house_rules]]<<</pack>>>\n\n"
     "{shelf}"
