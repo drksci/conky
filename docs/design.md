@@ -49,7 +49,7 @@ Outside the eight is how two vaults relate, which is an open question.
 5. **Trying first.** A change is applied on a throwaway branch, the consequences are reported and the branch is discarded. See [dry run](ideas/dry-run.md).
 6. **Asking a model.** A page can ask a model and write the answer as an ordinary signed change. Asking is built and tested against stand-in servers. A declared budget that stops spending is not built. See [pages that ask a model](ideas/model-pages.md) and [background minds](ideas/background-minds.md).
 7. **Tables.** Tabular data sits as Parquet beside its page, so it travels with the vault. See [tables](ideas/tables.md).
-8. **Derived data.** Indexes, summaries and views are optional, live outside the history and can be deleted. The rule is recorded in [decision 0017](decisions/0017-derived-data.md). Nothing is built. See [the history is the trace](ideas/trace.md), [the people's view](ideas/obsidian-view.md) and [a screen from the pages](ideas/a2ui.md).
+8. **Derived data.** Indexes, summaries and views are optional, live outside the history and can be deleted. The rule is recorded in [decision 0017](decisions/0017-derived-data.md). Nothing is built. See [the history is the trace](ideas/trace.md), [the people's view](ideas/obsidian-view.md) and [a screen from the pages](ideas/a2ui.md). Connectors for outside protocols and the composed screen belong here too: see [connectors](ideas/connectors.md) and [the compositor](ideas/compositor.md).
 
 ## The parts
 

@@ -40,6 +40,7 @@ Run this before every push. CI runs the same command on every pull request.
 
 - Build a new concept from existing words or remove one. If it does neither, it does not land. (review)
 - Domain structures (accounting, stock, approvals) are patterns made on demand from goldens and composed from existing words, never runtime features or a shipped catalogue. The runtime gains only general primitives. (review)
+- Outside protocols are reached through connectors beside the vault, never built into the core. A connector holds no state and writes through the same rules as anyone. (review: none built)
 - One plain word per concept: `vault page key link embed rule event seal space error`, verbs `read write watch`. An event is a commit and a seal is its signature. A rename is atomic everywhere. (check: `tests/test_house.py`)
 - Nothing already built has to stay. Existing code is reference, not an obligation. (review)
 - No debt: no shims, deprecated aliases, dead code or fix-later notes. Replacing something removes the old thing in the same change. (check: `tests/test_house.py` for fix-later notes; review for the rest)

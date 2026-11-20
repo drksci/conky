@@ -57,6 +57,7 @@ Outside work, compared on a fixed basis, with the depth of reading stated.
 - [research/dair-2026.md](research/dair-2026.md): DAIR.AI papers of the week, 2026: relevance index
 - [research/harnesses.md](research/harnesses.md): Agent harnesses compared
 - [research/papers.md](research/papers.md): Paper register
+- [research/protocols.md](research/protocols.md): Protocols for agents, tools and interfaces
 - [research/benchmarks.md](research/benchmarks.md): Benchmarks and evaluations for agent harnesses
 - [research/evaluation-plan.md](research/evaluation-plan.md): Evaluation plan (draft): three kinds of result kept apart, and steps from cheapest first
 
@@ -83,6 +84,8 @@ Candidates that are not yet requirements. Each states its rung.
 - [ideas/background-minds.md](ideas/background-minds.md): Background minds
 - [ideas/cascading-context.md](ideas/cascading-context.md): Context that flows down
 - [ideas/clock.md](ideas/clock.md): Time as an ordinary change
+- [ideas/compositor.md](ideas/compositor.md): The compositor: a screen that is asked for once
+- [ideas/connectors.md](ideas/connectors.md): Connectors: every protocol is a door, not a room
 - [ideas/gatekeeper.md](ideas/gatekeeper.md): Permission that stays out of the way
 - [ideas/direction-and-drift.md](ideas/direction-and-drift.md): Direction and drift
 - [ideas/dry-run.md](ideas/dry-run.md): Trying a change first
