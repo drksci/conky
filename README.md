@@ -2,6 +2,10 @@
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/tagline.dark.svg"><img src="docs/assets/figures/tagline.light.svg" alt="The unharnessed harness" height="30" align="absmiddle"></picture></p>
 
+<p><img src="docs/assets/conky-hero.jpg" alt="A ventriloquist puppet in a sweater that reads conky, with the caption: You just remember I call the shots here, Bubbles." width="100%"><br><sub><a href="https://www.youtube.com/watch?v=vcsm6QO-MWE">Trailer Park Boys: Conky</a></sub></p>
+
+### Copy pasta
+
 ```
 🍋 user@lemonstand ❯ uvx --from git+https://github.com/drksci/conky conky demo lemonade
 ```
@@ -10,14 +14,9 @@
 🛸 user@thething ❯ uvx --from git+https://github.com/drksci/conky conky assimilate
 ```
 
-<p align="center">
-  <img src="docs/assets/conky-hero.jpg" alt="A ventriloquist puppet in a sweater that reads conky, with the caption: You just remember I call the shots here, Bubbles." width="800">
-</p>
-<p align="center"><sub><a href="https://www.youtube.com/watch?v=vcsm6QO-MWE">Trailer Park Boys: Conky</a></sub></p>
+<h3 align="center">Delete the harness. Keep the agents.</h3>
 
-<h3 align="center">A folder where everything is somebody.</h3>
-
-<p align="center">An open-source agent harness with nothing wrapped around the model.<br>The system is a folder of pages. Every person, agent, tool, rule and record is one,<br>and each has a name, a voice and limits it cannot argue with.</p>
+<p align="center">Conky is an open-source agent harness with the harness taken out.<br>People, agents, tools, rules and records are all pages in one Git folder.<br>They notice each other, keep their own rules and sign what they do,<br>so the system runs itself and you can read every bit of it.</p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/demo.dark.svg"><img src="docs/assets/figures/demo.light.svg" alt="Left, a terminal playing the demo: Maya sets up a lemonade stand with one house rule, fills the cooler, a cup count below zero is refused, a busy hour empties the cooler and the supplier orders lemons by itself. Right, a wireframe of the same thing as a screen, in the pages' own words: the house rule, the cooler's count, the supplier's order and lines from the daybook, updating in step." width="800"></picture></p>
 
