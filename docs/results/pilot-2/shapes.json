@@ -1,0 +1,1717 @@
+[
+ {
+  "harness": "conky",
+  "seed": 1,
+  "kind": "vault",
+  "start": {
+   "nodes": [
+    {
+     "id": "den",
+     "kind": "space",
+     "size": 45
+    },
+    {
+     "id": "meter",
+     "kind": "provider",
+     "size": 46
+    },
+    {
+     "id": "shelf",
+     "kind": "space",
+     "size": 40
+    },
+    {
+     "id": "shelf-art-of-war",
+     "kind": "page",
+     "size": 3436
+    },
+    {
+     "id": "shelf-fables",
+     "kind": "page",
+     "size": 2427
+    },
+    {
+     "id": "shelf-meditations",
+     "kind": "page",
+     "size": 2432
+    },
+    {
+     "id": "shelf-packing",
+     "kind": "page",
+     "size": 2358
+    },
+    {
+     "id": "shelf-thirteen-virtues",
+     "kind": "page",
+     "size": 2912
+    },
+    {
+     "id": "traveller",
+     "kind": "character",
+     "size": 68
+    }
+   ],
+   "edges": [
+    {
+     "from": "shelf-art-of-war",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-fables",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-meditations",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-packing",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-thirteen-virtues",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "meter",
+     "kind": "ask"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "writes"
+    }
+   ]
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "den",
+     "kind": "space",
+     "size": 45
+    },
+    {
+     "id": "meter",
+     "kind": "provider",
+     "size": 46
+    },
+    {
+     "id": "screen",
+     "kind": "page",
+     "size": 1735
+    },
+    {
+     "id": "shelf",
+     "kind": "space",
+     "size": 40
+    },
+    {
+     "id": "shelf-art-of-war",
+     "kind": "page",
+     "size": 3436
+    },
+    {
+     "id": "shelf-fables",
+     "kind": "page",
+     "size": 2427
+    },
+    {
+     "id": "shelf-meditations",
+     "kind": "page",
+     "size": 2432
+    },
+    {
+     "id": "shelf-packing",
+     "kind": "page",
+     "size": 2358
+    },
+    {
+     "id": "shelf-thirteen-virtues",
+     "kind": "page",
+     "size": 2912
+    },
+    {
+     "id": "trail-outcome",
+     "kind": "page",
+     "size": 307
+    },
+    {
+     "id": "traveller",
+     "kind": "character",
+     "size": 68
+    }
+   ],
+   "edges": [
+    {
+     "from": "shelf-art-of-war",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-fables",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-meditations",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-packing",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-thirteen-virtues",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "trail-outcome",
+     "to": "den",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "screen",
+     "kind": "watch"
+    },
+    {
+     "from": "traveller",
+     "to": "screen",
+     "kind": "watch"
+    },
+    {
+     "from": "traveller",
+     "to": "meter",
+     "kind": "ask"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "writes"
+    }
+   ]
+  },
+  "facts": [
+   {
+    "name": "pages at start",
+    "value": 9
+   },
+   {
+    "name": "pages at end",
+    "value": 11
+   },
+   {
+    "name": "pages it wrote",
+    "value": 2
+   },
+   {
+    "name": "signed changes",
+    "value": 141
+   },
+   {
+    "name": "refused",
+    "value": 0
+   }
+  ]
+ },
+ {
+  "harness": "conky",
+  "seed": 2,
+  "kind": "vault",
+  "start": {
+   "nodes": [
+    {
+     "id": "den",
+     "kind": "space",
+     "size": 45
+    },
+    {
+     "id": "meter",
+     "kind": "provider",
+     "size": 46
+    },
+    {
+     "id": "shelf",
+     "kind": "space",
+     "size": 40
+    },
+    {
+     "id": "shelf-art-of-war",
+     "kind": "page",
+     "size": 3436
+    },
+    {
+     "id": "shelf-fables",
+     "kind": "page",
+     "size": 2427
+    },
+    {
+     "id": "shelf-meditations",
+     "kind": "page",
+     "size": 2432
+    },
+    {
+     "id": "shelf-packing",
+     "kind": "page",
+     "size": 2358
+    },
+    {
+     "id": "shelf-thirteen-virtues",
+     "kind": "page",
+     "size": 2912
+    },
+    {
+     "id": "traveller",
+     "kind": "character",
+     "size": 68
+    }
+   ],
+   "edges": [
+    {
+     "from": "shelf-art-of-war",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-fables",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-meditations",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-packing",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-thirteen-virtues",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "meter",
+     "kind": "ask"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "writes"
+    }
+   ]
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "den",
+     "kind": "space",
+     "size": 45
+    },
+    {
+     "id": "meter",
+     "kind": "provider",
+     "size": 46
+    },
+    {
+     "id": "screen",
+     "kind": "page",
+     "size": 1685
+    },
+    {
+     "id": "shelf",
+     "kind": "space",
+     "size": 40
+    },
+    {
+     "id": "shelf-art-of-war",
+     "kind": "page",
+     "size": 3436
+    },
+    {
+     "id": "shelf-fables",
+     "kind": "page",
+     "size": 2427
+    },
+    {
+     "id": "shelf-meditations",
+     "kind": "page",
+     "size": 2432
+    },
+    {
+     "id": "shelf-packing",
+     "kind": "page",
+     "size": 2358
+    },
+    {
+     "id": "shelf-thirteen-virtues",
+     "kind": "page",
+     "size": 2912
+    },
+    {
+     "id": "traveller",
+     "kind": "character",
+     "size": 68
+    },
+    {
+     "id": "traveller-notes",
+     "kind": "page",
+     "size": 459
+    }
+   ],
+   "edges": [
+    {
+     "from": "shelf-art-of-war",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-fables",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-meditations",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-packing",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-thirteen-virtues",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "screen",
+     "kind": "watch"
+    },
+    {
+     "from": "traveller",
+     "to": "screen",
+     "kind": "watch"
+    },
+    {
+     "from": "traveller",
+     "to": "meter",
+     "kind": "ask"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "writes"
+    },
+    {
+     "from": "traveller-notes",
+     "to": "den",
+     "kind": "within"
+    }
+   ]
+  },
+  "facts": [
+   {
+    "name": "pages at start",
+    "value": 9
+   },
+   {
+    "name": "pages at end",
+    "value": 11
+   },
+   {
+    "name": "pages it wrote",
+    "value": 2
+   },
+   {
+    "name": "signed changes",
+    "value": 140
+   },
+   {
+    "name": "refused",
+    "value": 0
+   }
+  ]
+ },
+ {
+  "harness": "conky",
+  "seed": 3,
+  "kind": "vault",
+  "start": {
+   "nodes": [
+    {
+     "id": "den",
+     "kind": "space",
+     "size": 45
+    },
+    {
+     "id": "meter",
+     "kind": "provider",
+     "size": 46
+    },
+    {
+     "id": "shelf",
+     "kind": "space",
+     "size": 40
+    },
+    {
+     "id": "shelf-art-of-war",
+     "kind": "page",
+     "size": 3436
+    },
+    {
+     "id": "shelf-fables",
+     "kind": "page",
+     "size": 2427
+    },
+    {
+     "id": "shelf-meditations",
+     "kind": "page",
+     "size": 2432
+    },
+    {
+     "id": "shelf-packing",
+     "kind": "page",
+     "size": 2358
+    },
+    {
+     "id": "shelf-thirteen-virtues",
+     "kind": "page",
+     "size": 2912
+    },
+    {
+     "id": "traveller",
+     "kind": "character",
+     "size": 68
+    }
+   ],
+   "edges": [
+    {
+     "from": "shelf-art-of-war",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-fables",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-meditations",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-packing",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-thirteen-virtues",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "meter",
+     "kind": "ask"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "writes"
+    }
+   ]
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "den",
+     "kind": "space",
+     "size": 45
+    },
+    {
+     "id": "meter",
+     "kind": "provider",
+     "size": 46
+    },
+    {
+     "id": "screen",
+     "kind": "page",
+     "size": 1709
+    },
+    {
+     "id": "shelf",
+     "kind": "space",
+     "size": 40
+    },
+    {
+     "id": "shelf-art-of-war",
+     "kind": "page",
+     "size": 3436
+    },
+    {
+     "id": "shelf-fables",
+     "kind": "page",
+     "size": 2427
+    },
+    {
+     "id": "shelf-meditations",
+     "kind": "page",
+     "size": 2432
+    },
+    {
+     "id": "shelf-packing",
+     "kind": "page",
+     "size": 2358
+    },
+    {
+     "id": "shelf-thirteen-virtues",
+     "kind": "page",
+     "size": 2912
+    },
+    {
+     "id": "traveller",
+     "kind": "character",
+     "size": 68
+    }
+   ],
+   "edges": [
+    {
+     "from": "shelf-art-of-war",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-fables",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-meditations",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-packing",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-thirteen-virtues",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "screen",
+     "kind": "watch"
+    },
+    {
+     "from": "traveller",
+     "to": "screen",
+     "kind": "watch"
+    },
+    {
+     "from": "traveller",
+     "to": "meter",
+     "kind": "ask"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "writes"
+    }
+   ]
+  },
+  "facts": [
+   {
+    "name": "pages at start",
+    "value": 9
+   },
+   {
+    "name": "pages at end",
+    "value": 10
+   },
+   {
+    "name": "pages it wrote",
+    "value": 1
+   },
+   {
+    "name": "signed changes",
+    "value": 125
+   },
+   {
+    "name": "refused",
+    "value": 0
+   }
+  ]
+ },
+ {
+  "harness": "conky",
+  "seed": 4,
+  "kind": "vault",
+  "start": {
+   "nodes": [
+    {
+     "id": "den",
+     "kind": "space",
+     "size": 45
+    },
+    {
+     "id": "meter",
+     "kind": "provider",
+     "size": 46
+    },
+    {
+     "id": "shelf",
+     "kind": "space",
+     "size": 40
+    },
+    {
+     "id": "shelf-art-of-war",
+     "kind": "page",
+     "size": 3436
+    },
+    {
+     "id": "shelf-fables",
+     "kind": "page",
+     "size": 2427
+    },
+    {
+     "id": "shelf-meditations",
+     "kind": "page",
+     "size": 2432
+    },
+    {
+     "id": "shelf-packing",
+     "kind": "page",
+     "size": 2358
+    },
+    {
+     "id": "shelf-thirteen-virtues",
+     "kind": "page",
+     "size": 2912
+    },
+    {
+     "id": "traveller",
+     "kind": "character",
+     "size": 68
+    }
+   ],
+   "edges": [
+    {
+     "from": "shelf-art-of-war",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-fables",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-meditations",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-packing",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-thirteen-virtues",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "meter",
+     "kind": "ask"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "writes"
+    }
+   ]
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "den",
+     "kind": "space",
+     "size": 45
+    },
+    {
+     "id": "meter",
+     "kind": "provider",
+     "size": 46
+    },
+    {
+     "id": "screen",
+     "kind": "page",
+     "size": 1662
+    },
+    {
+     "id": "shelf",
+     "kind": "space",
+     "size": 40
+    },
+    {
+     "id": "shelf-art-of-war",
+     "kind": "page",
+     "size": 3436
+    },
+    {
+     "id": "shelf-fables",
+     "kind": "page",
+     "size": 2427
+    },
+    {
+     "id": "shelf-meditations",
+     "kind": "page",
+     "size": 2432
+    },
+    {
+     "id": "shelf-packing",
+     "kind": "page",
+     "size": 2358
+    },
+    {
+     "id": "shelf-thirteen-virtues",
+     "kind": "page",
+     "size": 2912
+    },
+    {
+     "id": "traveller",
+     "kind": "character",
+     "size": 68
+    },
+    {
+     "id": "traveller-notes",
+     "kind": "page",
+     "size": 167
+    }
+   ],
+   "edges": [
+    {
+     "from": "shelf-art-of-war",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-fables",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-meditations",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-packing",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-thirteen-virtues",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "screen",
+     "kind": "watch"
+    },
+    {
+     "from": "traveller",
+     "to": "screen",
+     "kind": "watch"
+    },
+    {
+     "from": "traveller",
+     "to": "meter",
+     "kind": "ask"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "writes"
+    },
+    {
+     "from": "traveller-notes",
+     "to": "den",
+     "kind": "within"
+    }
+   ]
+  },
+  "facts": [
+   {
+    "name": "pages at start",
+    "value": 9
+   },
+   {
+    "name": "pages at end",
+    "value": 11
+   },
+   {
+    "name": "pages it wrote",
+    "value": 2
+   },
+   {
+    "name": "signed changes",
+    "value": 170
+   },
+   {
+    "name": "refused",
+    "value": 0
+   }
+  ]
+ },
+ {
+  "harness": "conky",
+  "seed": 5,
+  "kind": "vault",
+  "start": {
+   "nodes": [
+    {
+     "id": "den",
+     "kind": "space",
+     "size": 45
+    },
+    {
+     "id": "meter",
+     "kind": "provider",
+     "size": 46
+    },
+    {
+     "id": "shelf",
+     "kind": "space",
+     "size": 40
+    },
+    {
+     "id": "shelf-art-of-war",
+     "kind": "page",
+     "size": 3436
+    },
+    {
+     "id": "shelf-fables",
+     "kind": "page",
+     "size": 2427
+    },
+    {
+     "id": "shelf-meditations",
+     "kind": "page",
+     "size": 2432
+    },
+    {
+     "id": "shelf-packing",
+     "kind": "page",
+     "size": 2358
+    },
+    {
+     "id": "shelf-thirteen-virtues",
+     "kind": "page",
+     "size": 2912
+    },
+    {
+     "id": "traveller",
+     "kind": "character",
+     "size": 68
+    }
+   ],
+   "edges": [
+    {
+     "from": "shelf-art-of-war",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-fables",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-meditations",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-packing",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-thirteen-virtues",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "meter",
+     "kind": "ask"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "writes"
+    }
+   ]
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "den",
+     "kind": "space",
+     "size": 45
+    },
+    {
+     "id": "meter",
+     "kind": "provider",
+     "size": 46
+    },
+    {
+     "id": "screen",
+     "kind": "page",
+     "size": 2034
+    },
+    {
+     "id": "shelf",
+     "kind": "space",
+     "size": 40
+    },
+    {
+     "id": "shelf-art-of-war",
+     "kind": "page",
+     "size": 3436
+    },
+    {
+     "id": "shelf-fables",
+     "kind": "page",
+     "size": 2427
+    },
+    {
+     "id": "shelf-meditations",
+     "kind": "page",
+     "size": 2432
+    },
+    {
+     "id": "shelf-packing",
+     "kind": "page",
+     "size": 2358
+    },
+    {
+     "id": "shelf-thirteen-virtues",
+     "kind": "page",
+     "size": 2912
+    },
+    {
+     "id": "traveller",
+     "kind": "character",
+     "size": 68
+    }
+   ],
+   "edges": [
+    {
+     "from": "shelf-art-of-war",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-fables",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-meditations",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-packing",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "shelf-thirteen-virtues",
+     "to": "shelf",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "within"
+    },
+    {
+     "from": "traveller",
+     "to": "screen",
+     "kind": "watch"
+    },
+    {
+     "from": "traveller",
+     "to": "screen",
+     "kind": "watch"
+    },
+    {
+     "from": "traveller",
+     "to": "meter",
+     "kind": "ask"
+    },
+    {
+     "from": "traveller",
+     "to": "den",
+     "kind": "writes"
+    }
+   ]
+  },
+  "facts": [
+   {
+    "name": "pages at start",
+    "value": 9
+   },
+   {
+    "name": "pages at end",
+    "value": 10
+   },
+   {
+    "name": "pages it wrote",
+    "value": 1
+   },
+   {
+    "name": "signed changes",
+    "value": 17
+   },
+   {
+    "name": "refused",
+    "value": 0
+   }
+  ]
+ },
+ {
+  "harness": "floor-continue",
+  "seed": 1,
+  "kind": "policy",
+  "start": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "facts": []
+ },
+ {
+  "harness": "floor-continue",
+  "seed": 2,
+  "kind": "policy",
+  "start": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "facts": []
+ },
+ {
+  "harness": "floor-continue",
+  "seed": 3,
+  "kind": "policy",
+  "start": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "facts": []
+ },
+ {
+  "harness": "floor-continue",
+  "seed": 4,
+  "kind": "policy",
+  "start": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "facts": []
+ },
+ {
+  "harness": "floor-continue",
+  "seed": 5,
+  "kind": "policy",
+  "start": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "facts": []
+ },
+ {
+  "harness": "floor-random",
+  "seed": 1,
+  "kind": "policy",
+  "start": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "facts": []
+ },
+ {
+  "harness": "floor-random",
+  "seed": 2,
+  "kind": "policy",
+  "start": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "facts": []
+ },
+ {
+  "harness": "floor-random",
+  "seed": 3,
+  "kind": "policy",
+  "start": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "facts": []
+ },
+ {
+  "harness": "floor-random",
+  "seed": 4,
+  "kind": "policy",
+  "start": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "facts": []
+ },
+ {
+  "harness": "floor-random",
+  "seed": 5,
+  "kind": "policy",
+  "start": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "policy",
+     "kind": "policy",
+     "size": 0
+    }
+   ],
+   "edges": []
+  },
+  "facts": []
+ },
+ {
+  "harness": "loop",
+  "seed": 1,
+  "kind": "conversation",
+  "start": {
+   "nodes": [
+    {
+     "id": "model",
+     "kind": "model",
+     "size": 0
+    },
+    {
+     "id": "conversation",
+     "kind": "conversation",
+     "size": 0
+    }
+   ],
+   "edges": [
+    {
+     "from": "model",
+     "to": "conversation",
+     "kind": "reads"
+    }
+   ]
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "model",
+     "kind": "model",
+     "size": 0
+    },
+    {
+     "id": "conversation",
+     "kind": "conversation",
+     "size": 6372
+    }
+   ],
+   "edges": [
+    {
+     "from": "model",
+     "to": "conversation",
+     "kind": "reads"
+    }
+   ]
+  },
+  "facts": [
+   {
+    "name": "messages",
+    "value": 46
+   },
+   {
+    "name": "characters in the last call",
+    "value": 6372
+   },
+   {
+    "name": "kept after it stops",
+    "value": 0
+   }
+  ]
+ },
+ {
+  "harness": "loop",
+  "seed": 2,
+  "kind": "conversation",
+  "start": {
+   "nodes": [
+    {
+     "id": "model",
+     "kind": "model",
+     "size": 0
+    },
+    {
+     "id": "conversation",
+     "kind": "conversation",
+     "size": 0
+    }
+   ],
+   "edges": [
+    {
+     "from": "model",
+     "to": "conversation",
+     "kind": "reads"
+    }
+   ]
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "model",
+     "kind": "model",
+     "size": 0
+    },
+    {
+     "id": "conversation",
+     "kind": "conversation",
+     "size": 6551
+    }
+   ],
+   "edges": [
+    {
+     "from": "model",
+     "to": "conversation",
+     "kind": "reads"
+    }
+   ]
+  },
+  "facts": [
+   {
+    "name": "messages",
+    "value": 42
+   },
+   {
+    "name": "characters in the last call",
+    "value": 6551
+   },
+   {
+    "name": "kept after it stops",
+    "value": 0
+   }
+  ]
+ },
+ {
+  "harness": "loop",
+  "seed": 3,
+  "kind": "conversation",
+  "start": {
+   "nodes": [
+    {
+     "id": "model",
+     "kind": "model",
+     "size": 0
+    },
+    {
+     "id": "conversation",
+     "kind": "conversation",
+     "size": 0
+    }
+   ],
+   "edges": [
+    {
+     "from": "model",
+     "to": "conversation",
+     "kind": "reads"
+    }
+   ]
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "model",
+     "kind": "model",
+     "size": 0
+    },
+    {
+     "id": "conversation",
+     "kind": "conversation",
+     "size": 6577
+    }
+   ],
+   "edges": [
+    {
+     "from": "model",
+     "to": "conversation",
+     "kind": "reads"
+    }
+   ]
+  },
+  "facts": [
+   {
+    "name": "messages",
+    "value": 41
+   },
+   {
+    "name": "characters in the last call",
+    "value": 6577
+   },
+   {
+    "name": "kept after it stops",
+    "value": 0
+   }
+  ]
+ },
+ {
+  "harness": "loop",
+  "seed": 4,
+  "kind": "conversation",
+  "start": {
+   "nodes": [
+    {
+     "id": "model",
+     "kind": "model",
+     "size": 0
+    },
+    {
+     "id": "conversation",
+     "kind": "conversation",
+     "size": 0
+    }
+   ],
+   "edges": [
+    {
+     "from": "model",
+     "to": "conversation",
+     "kind": "reads"
+    }
+   ]
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "model",
+     "kind": "model",
+     "size": 0
+    },
+    {
+     "id": "conversation",
+     "kind": "conversation",
+     "size": 6443
+    }
+   ],
+   "edges": [
+    {
+     "from": "model",
+     "to": "conversation",
+     "kind": "reads"
+    }
+   ]
+  },
+  "facts": [
+   {
+    "name": "messages",
+    "value": 43
+   },
+   {
+    "name": "characters in the last call",
+    "value": 6443
+   },
+   {
+    "name": "kept after it stops",
+    "value": 0
+   }
+  ]
+ },
+ {
+  "harness": "loop",
+  "seed": 5,
+  "kind": "conversation",
+  "start": {
+   "nodes": [
+    {
+     "id": "model",
+     "kind": "model",
+     "size": 0
+    },
+    {
+     "id": "conversation",
+     "kind": "conversation",
+     "size": 0
+    }
+   ],
+   "edges": [
+    {
+     "from": "model",
+     "to": "conversation",
+     "kind": "reads"
+    }
+   ]
+  },
+  "end": {
+   "nodes": [
+    {
+     "id": "model",
+     "kind": "model",
+     "size": 0
+    },
+    {
+     "id": "conversation",
+     "kind": "conversation",
+     "size": 5730
+    }
+   ],
+   "edges": [
+    {
+     "from": "model",
+     "to": "conversation",
+     "kind": "reads"
+    }
+   ]
+  },
+  "facts": [
+   {
+    "name": "messages",
+    "value": 36
+   },
+   {
+    "name": "characters in the last call",
+    "value": 5730
+   },
+   {
+    "name": "kept after it stops",
+    "value": 0
+   }
+  ]
+ }
+]

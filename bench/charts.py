@@ -24,7 +24,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from xml.sax.saxutils import escape
 
-from bench import plate, record
+from bench import plate, record, shape
 
 WIDTH = 880
 YELLOW = "#F4C430"
@@ -63,6 +63,7 @@ class Run:
     wall: float = 0.0
     tokens_known: bool = True
     kept: int | None = None  # pages a character wrote for itself, None when not counted
+    folder: Path | None = None  # where the run's files are
 
 
 def load_run(folder: Path) -> Run:
@@ -92,6 +93,7 @@ def load_run(folder: Path) -> Run:
         wall=standard["wall_s"],
         tokens_known=all(c["tokens_known"] for c in made),
         kept=standard["kept"],
+        folder=folder,
     )
 
 
@@ -674,7 +676,8 @@ def render(runs: list[Run], out: Path, kind: str = "runs") -> list[Path]:
 
 
 def export(runs: list[Run], out: Path) -> list[Path]:
-    """Write the standard rows as `runs.csv` and `runs.json`, and their series as `series.json`."""
+    """Write the standard rows as `runs.csv` and `runs.json`, their series as `series.json` and
+    the shape of each run as `shapes.json`."""
     data = [r.row for r in sorted(runs, key=lambda r: (r.arm, r.seed))]
     table = out / "runs.csv"
     with table.open("w", encoding="utf-8", newline="") as handle:
@@ -695,7 +698,15 @@ def export(runs: list[Run], out: Path) -> list[Path]:
         + "\n",
         encoding="utf-8",
     )
-    return [table, tree, per]
+    shapes = out / "shapes.json"
+    shapes.write_text(
+        json.dumps(
+            [shape.shape(r.folder) for r in sorted(runs, key=lambda r: (r.arm, r.seed))], indent=1
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return [table, tree, per, shapes]
 
 
 def main(argv: list[str] | None = None) -> int:

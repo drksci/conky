@@ -22,5 +22,8 @@
   ],
   "gloss": {
     "cli": "a stock agent CLI, unmetered"
+  },
+  "shape": {
+    "kind": "conversation"
   }
 }

@@ -18,5 +18,8 @@
   "gloss": {
     "floor-continue": "always presses continue",
     "floor-random": "presses keys at random"
+  },
+  "shape": {
+    "kind": "policy"
   }
 }

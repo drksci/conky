@@ -136,6 +136,7 @@ def test_every_chart_renders_light_and_dark(results: Path, tmp_path: Path) -> No
         "runs.csv",
         "runs.json",
         "series.json",
+        "shapes.json",
     ]
     table = (tmp_path / "svg" / "runs.csv").read_text(encoding="utf-8").splitlines()
     assert table[0] == ",".join(record.KEYS)
