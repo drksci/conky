@@ -1,18 +1,8 @@
-<h3 align="center"><img src="docs/assets/conky-mark.png" alt="" width="36" height="36" align="absmiddle">&nbsp;&nbsp;Conky</h3>
+<h3 align="center"><img src="docs/assets/conky-mark.png" alt="" width="32" height="32" align="absmiddle">&nbsp;&nbsp;Conky&nbsp;&nbsp;&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/slogan.dark.svg"><img src="docs/assets/figures/slogan.light.svg" alt="The unharnessed harness" height="20" align="absmiddle"></picture></h3>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/slogan.dark.svg"><img src="docs/assets/figures/slogan.light.svg" alt="The unharnessed harness" width="520"></picture></p>
+<p><img src="docs/assets/figures/chip-stall.svg" alt="Market stall demo" height="22" align="absmiddle">&nbsp;&nbsp;<code>uvx --from git+https://github.com/drksci/conky conky demo</code></p>
 
-<img src="docs/assets/figures/chip-stall.svg" alt="Market stall demo" height="22">
-
-```bash
-uvx --from git+https://github.com/drksci/conky conky demo
-```
-
-<img src="docs/assets/figures/chip-assimilate.svg" alt="Assimilation" height="22">
-
-```bash
-uvx --from git+https://github.com/drksci/conky conky assimilate
-```
+<p><img src="docs/assets/figures/chip-assimilate.svg" alt="Assimilation" height="22" align="absmiddle">&nbsp;&nbsp;<code>uvx --from git+https://github.com/drksci/conky conky assimilate</code></p>
 
 <p align="center">
   <img src="docs/assets/conky-hero.jpg" alt="A ventriloquist puppet in a sweater that reads conky, with the caption: You just remember I call the shots here, Bubbles." width="800">
