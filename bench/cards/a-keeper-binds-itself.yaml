@@ -1,10 +1,15 @@
 # Told that every payment must leave a floor, a keeper states an each rule for the pages within a space, and a later payment that breaks it is refused.
-claim: told that every payment must leave a floor, a character states an each rule for the pages within a space and a later payment that breaks it is refused
+objective: a character states a standing limit on the space it works in, and that limit refuses a payment that breaks it
+hypothesis: told that every payment must leave a floor, a character states an each rule for the pages within a space and a later payment that breaks it is refused
+success: {draws: 5, pass: 4}
 forecast: a small model states an `each` rule that parses in 3 of 5 draws, 2 of them on the den itself; the breaking payment is refused in 3 of 5
 par:
   outcome: the baker is paid and the landlord's payment is refused, with the refusal on record
   structure: every payment is a page and one standing rule on the den covers them all
   cost: one call for the payment; none for the refusal
+  craft: the rule reads the den's cash field by its real name and is written once, on the den, in one line
+dial: the model is told the floor and the field name and must write the rule itself; the next notch tells it only that payments must be safe
+if_not: look first at where the rule was written (the den, or a page that does not cover the payments) and whether the names it reads exist there, `page.amount` and `space.cash`
 pages:
   helper: {api: command, command: stand}
   den: {cash: 80}

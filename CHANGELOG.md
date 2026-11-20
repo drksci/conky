@@ -12,6 +12,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ### Added
 
+- A trial states itself before it runs: every card carries `objective`, `hypothesis` (which replaces `claim`), `success` as data (`draws`, `pass`, optional `calls_at_most` and `sent_at_most`), `forecast`, `par` with a new `craft` line, `dial` and `if_not`. The runner refuses a card missing any, and after the draws prints and records `success met` or `success not met` with the numbers against each bar ([cards](docs/reference/playbooks.md#cards)).
 - `capturesAll` in expressions, the first group of every match, and a trial of memory across fresh calls: a clerk's reflex gathers what it put in bold into the field it reads next time. Two stand-in playbooks hold the mechanism; the card `a-clerk-remembers` is written and not drawn.
 - A watch entry can fire on a relation: `on: within` for a write within the watching page at any depth, `on: link` for a write of a page that links to it. The entry reads `other_name`, the name of the page written. A page named `within` or `link` is refused ([decision 0037](docs/decisions/0037-a-watch-can-fire-on-a-relation.md)).
 

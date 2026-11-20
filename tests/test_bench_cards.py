@@ -46,9 +46,11 @@ def test_a_card_whose_live_step_is_answered_passes_and_writes_its_row(
     out = tmp_path / "out"
     assert cards.main([str(CARD), "--draws", "2", "--out", str(out)]) == 0
     first, second = rows(out)
-    assert first["card"] == "a-keeper-binds-itself" and "claim" in first and "forecast" in first
-    assert first["par"].keys() == {"outcome", "structure", "cost"}
-    assert "claim" not in second and "par" not in second
+    assert first["card"] == "a-keeper-binds-itself"
+    assert {k for k in first if k in cards.STATEMENTS} == set(cards.STATEMENTS)
+    assert first["par"].keys() == set(cards.PAR)
+    assert first["success"] == {"draws": 5, "pass": 4}
+    assert "hypothesis" not in second and "par" not in second
     assert first["expects"] == [{"step": 3, "failed": []}, {"step": 5, "failed": []}]
     assert (first["draw"], first["calls"], first["model"]) == (1, 1, "claude")
     assert first["sent"] > 0 and first["received"] == len(GOOD.rstrip())
@@ -56,7 +58,12 @@ def test_a_card_whose_live_step_is_answered_passes_and_writes_its_row(
     Vault(first["vault"], Path(first["vault"]).parent / "keys").verify()
     said = capsys.readouterr().out
     assert said.index("forecast:") < said.index("par outcome:") < said.index("draw 1:")
-    assert said.splitlines()[-1] == "passed 2 of 2"
+    assert said.index("objective:") < said.index("hypothesis:") < said.index("success draws:")
+    assert said.index("par craft:") < said.index("dial:") < said.index("if_not:")
+    assert "passed 2 of 2" in said.splitlines()
+    assert said.splitlines()[-1] == (
+        "success not met: passed 2 of 2 (bar: at least 4 of 5); drew 2 of the 5 stated"
+    )
 
 
 def test_a_draw_where_no_each_rule_is_written_fails_its_expects_and_is_kept(
@@ -141,8 +148,10 @@ def test_read_prints_the_claim_the_pass_count_and_what_each_draw_did(
     capsys.readouterr()
     assert cards.main(["--read", str(out)]) == 0
     said = capsys.readouterr().out.splitlines()
-    assert said[0].startswith("claim: ") and any(x.startswith("par outcome: ") for x in said)
-    assert "passed 2 of 2" in said
+    assert any(x.startswith("hypothesis: ") for x in said) and any(
+        x.startswith("par outcome: ") for x in said
+    )
+    assert "passed 2 of 2" in said and any(x.startswith("success not met: ") for x in said)
     draw = next(x for x in said if x.startswith("draw 2:"))
     assert f"rule on den: {RULE}" in draw and "refused landlord-payment: rule" in draw
 
@@ -158,3 +167,50 @@ def test_a_rule_on_a_page_within_the_den_does_not_refuse_a_payment_written_direc
     cards.main([str(CARD), "--draws", "1", "--out", str(out)])
     (row,) = rows(out)
     assert row["expects"][0]["failed"] == [] and row["expects"][1]["failed"]
+
+
+def test_a_card_missing_a_statement_is_refused_naming_what_is_missing_and_draws_nothing(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    text = CARD.read_text()
+    bare = "\n".join(x for x in text.splitlines() if not x.startswith(("dial:", "  craft:")))
+    card = tmp_path / "bare.yaml"
+    card.write_text(bare.replace("success: {draws: 5, pass: 4}", "success: {draws: 5}"))
+    out = tmp_path / "out"
+    assert cards.main([str(card), "--draws", "1", "--out", str(out)]) == 1
+    said = capsys.readouterr().out
+    for line in ("dial: write", "par craft: write", "success pass: write"):
+        assert line in said
+    assert not out.exists()
+
+
+def test_both_cards_state_the_seven_statements_and_their_bars_are_data() -> None:
+    from conky.page import load_value
+
+    for name, bar in (
+        ("a-keeper-binds-itself", {"draws": 5, "pass": 4}),
+        ("a-clerk-remembers", {"draws": 5, "pass": 3, "calls_at_most": 4}),
+    ):
+        plan = load_value((CARD.parent / f"{name}.yaml").read_text())
+        assert cards.missing(plan) == [] and plan["success"] == bar
+
+
+def row(wins: bool, calls: int, sent: int = 100) -> dict:
+    return {"expects": [{"step": 1, "failed": [] if wins else ["x"]}], "calls": calls, "sent": sent}
+
+
+def test_the_verdict_is_met_only_when_every_stated_bar_holds_and_gives_the_numbers() -> None:
+    bar = {"draws": 3, "pass": 2, "calls_at_most": 4}
+    met = cards.verdict(bar, [row(True, 4), row(True, 3), row(False, 4)])
+    assert met == (
+        "success met: passed 2 of 3 (bar: at least 2 of 3); median calls a draw 4 (bar: at most 4)"
+    )
+    assert cards.verdict(bar, [row(True, 5), row(True, 5), row(True, 4)]).startswith(
+        "success not met"
+    )
+    assert cards.verdict(bar, [row(True, 1), row(False, 1), row(False, 1)]).startswith(
+        "success not met"
+    )
+    assert cards.verdict({"draws": 1, "pass": 1, "sent_at_most": 50}, [row(True, 1)]).startswith(
+        "success not met"
+    )

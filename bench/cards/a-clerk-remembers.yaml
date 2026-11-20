@@ -1,10 +1,15 @@
 # A clerk answers each question in a fresh call. A reflex gathers what it put in bold into a field it reads next time, and a fact shown once is asked for three questions later.
-claim: what a character puts in bold is carried across fresh calls, so a fact shown once is still there three questions later
+objective: a fact shown once is carried across fresh model calls by what the character puts in bold, with no memory kept but one field a reflex fills
+hypothesis: what a character puts in bold is carried across fresh calls, so a fact shown once is still there three questions later
+success: {draws: 5, pass: 3, calls_at_most: 4}
 forecast: a small model keeps the fact in bold through all three questions in 2 of 5 draws; where it drops it, it drops it at the first unrelated question
 par:
   outcome: the code is given correctly at the end
   structure: one short carried line, nothing else kept
   cost: four calls, each as small as the first
+  craft: the fact is put in bold once, at the first question, and kept in bold at every answer after
+dial: the carried field holds only what is in bold and the model is told so; the next notch hides that instruction and asks the model to decide what to keep
+if_not: look first at whether the model kept the fact in bold at the first unrelated question; a miss there is a lapse of the model, not of the carried field
 pages:
   helper: {api: command, command: stand}
   desk: {}

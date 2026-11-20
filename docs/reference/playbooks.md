@@ -59,7 +59,33 @@ Playbooks never reach a live model. A step `says: live` is an error when the fil
 
 ## Cards
 
-A card is a playbook with `says: live` steps, which a real model answers, drawn several times. The pages, steps and checks are the same, so one language covers the free test and the paid measurement. A card may carry a `claim:` and a `forecast:` as text at the top, and a `par:` of three lines, `outcome`, `structure` and `cost`, saying what an ideal run looks like. Cards live in `bench/cards/`.
+A card is a playbook with `says: live` steps, which a real model answers, drawn several times. The pages, steps and checks are the same, so one language covers the free test and the paid measurement. A card states itself before it runs, in seven statements at the top, and the runner refuses a card that lacks any, naming what is missing. Cards live in `bench/cards/`.
+
+| Key | Meaning |
+|---|---|
+| `objective` | What the increment is for: the facet or primitive it forces, in one line. |
+| `hypothesis` | The statement that could be false. |
+| `success` | The measurable bar, as data: `draws: N, pass: K` means at least K of N draws hold every expect. The optional `calls_at_most` (median live calls a draw) and `sent_at_most` (median characters sent a draw) add bars the runner checks. |
+| `forecast` | What the author expects to see, written before the draw. It may differ from the bar: the bar is what counts as success, the forecast is a prediction to be scored against what happened. |
+| `par` | What the best would have done, in four lines: `outcome`, `structure`, `cost`, `craft`. |
+| `dial` | The notch this card sets and what the next notch would be. |
+| `if_not` | What a miss would point at: the lower layer to look at first. |
+
+A worked example, the top of `bench/cards/a-clerk-remembers.yaml`:
+
+```yaml
+objective: a fact shown once is carried across fresh model calls by what the character puts in bold
+hypothesis: what a character puts in bold is carried across fresh calls
+success: {draws: 5, pass: 3, calls_at_most: 4}
+forecast: a small model keeps the fact in bold through all three questions in 2 of 5 draws
+par:
+  outcome: the code is given correctly at the end
+  structure: one short carried line, nothing else kept
+  cost: four calls, each as small as the first
+  craft: the fact is put in bold once and kept in bold at every answer after
+dial: the model is told that bold is remembered; the next notch asks it to decide what to keep
+if_not: look first at whether the model kept the fact in bold at the first unrelated question
+```
 
 ```bash
 python -m bench.cards bench/cards/a-keeper-binds-itself.yaml --draws 5 --model claude-haiku-5-5
@@ -71,12 +97,12 @@ Draws run in parallel worker processes, each in its own folder. `--jobs N` sets 
 
 `--cap` is the most live model calls in all (default 40), held in one count that every draw spends from under a lock, so no call passes it. A run is refused before it starts when its draws could pass the cap in the worst case: each live step may be asked twice, because an answer a rule refuses is asked again once, so the draws times twice the live steps must not exceed the cap. The message states the sum. If the count is spent anyway, later calls are refused and the run says so.
 
-The runner draws no charts. It prints the claim and the forecast before drawing, one line a draw and a last line `passed K of N`, and appends one row a draw to `rows.jsonl` and one observation a draw to `observations.jsonl`. The rows:
+The runner draws no charts. It prints the seven statements before drawing, one line a draw, the line `passed K of N` and then one verdict line, and appends one row a draw to `rows.jsonl` and one observation a draw to `observations.jsonl`. The rows:
 
 | Key | Meaning |
 |---|---|
 | `card`, `draw` | The card's name and the draw's number. |
-| `claim`, `forecast`, `par` | The card's text, in the first row only. |
+| `objective`, `hypothesis`, `success`, `forecast`, `par`, `dial`, `if_not` | The card's statements, in the first row only. |
 | `model` | The names of the models that answered live steps. |
 | `expects` | One entry a `expect` step: `step` (its number) and `failed` (the lines that did not hold, empty when it held). |
 | `calls`, `sent`, `received`, `seconds` | Live calls, characters sent and received, and the draw's time. |
@@ -84,6 +110,8 @@ The runner draws no charts. It prints the claim and the forecast before drawing,
 | `error` | Present when the draw stopped early, with why. |
 
 A draw passes when every `expect` held and it reached its end.
+
+The verdict line is `success met` or `success not met`, then the numbers against each bar, for example `success met: passed 4 of 5 (bar: at least 4 of 5); median calls a draw 4 (bar: at most 4)`. It is not met when fewer draws were made than the bar states. The runner prints it, records it in `verdict.txt` beside the rows, and still exits 0 once it has drawn: a verdict is a result, not an error.
 
 `observations.jsonl` is read from each draw's vault after the run, with no model call and no verdict. It is the raw material for reading a walk. One line a draw, with these keys:
 
@@ -95,4 +123,4 @@ A draw passes when every `expect` held and it reached its end.
 | `refusals` | Every refusal in the vault's history, oldest first, each with its `page` and `reason`, read from the commit trailers. |
 | `answers` | The first 200 characters of each live answer. |
 
-`python -m bench.cards --read DIR` prints a short summary of a run from the two files: the claim, forecast and par as recorded, `passed K of N`, then one line a draw saying where it put a rule, what was refused and why, each trimmed.
+`python -m bench.cards --read DIR` prints a short summary of a run from the two files: the statements as recorded, `passed K of N`, the verdict line, then one line a draw saying where it put a rule, what was refused and why, each trimmed.

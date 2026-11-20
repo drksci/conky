@@ -8,7 +8,9 @@ folder. A live step is answered through conky's own provider detection, the path
 a provider takes, and the command provider runs `relay` below so that every model call is counted
 and kept. Draws run in parallel worker processes and share one call count. One row a draw goes
 to `rows.jsonl` and one line of what the draw did, read from its vault, to `observations.jsonl`;
-`--read` prints a plain summary of the two.
+`--read` prints a plain summary of the two. A card must state itself before it runs (objective,
+hypothesis, success, forecast, par, dial, if_not) or the runner refuses it; after the draws it
+prints and records one verdict line against the stated success.
 """
 
 from __future__ import annotations
@@ -18,6 +20,7 @@ import fcntl
 import json
 import os
 import shlex
+import statistics
 import subprocess
 import sys
 import time
@@ -43,6 +46,10 @@ CALLS = "calls.jsonl"
 BUDGET = "budget.txt"
 ROWS = "rows.jsonl"
 OBSERVATIONS = "observations.jsonl"
+VERDICT = "verdict.txt"
+STATEMENTS = ("objective", "hypothesis", "success", "forecast", "par", "dial", "if_not")
+PAR = ("outcome", "structure", "cost", "craft")
+BARS = {"draws": None, "pass": None, "calls_at_most": "calls", "sent_at_most": "sent"}
 
 
 def relay(folder: Path, budget: Path) -> int:
@@ -197,21 +204,78 @@ def trim(text: object, width: int = 90) -> str:
     return line if len(line) <= width else line[: width - 3] + "..."
 
 
+def missing(plan: dict) -> list[str]:
+    """Return what a card lacks of the seven statements, each as a line saying what to write."""
+    found = [
+        f"{key}: write this statement at the top of the card"
+        for key in STATEMENTS
+        if key not in plan
+    ]
+    par = plan.get("par")
+    if isinstance(par, dict):
+        found += [f"par {part}: write this line under par" for part in PAR if part not in par]
+    elif "par" in plan:
+        found.append(f"par: write the lines {', '.join(PAR)} under par")
+    bar = plan.get("success")
+    if isinstance(bar, dict):
+        found += [
+            f"success {k}: write this bar as a whole number"
+            for k in ("draws", "pass")
+            if not isinstance(bar.get(k), int)
+        ]
+        found += [
+            f"success {k}: not a bar, use one of {', '.join(BARS)}" for k in bar if k not in BARS
+        ]
+        if (
+            isinstance(bar.get("draws"), int)
+            and isinstance(bar.get("pass"), int)
+            and bar["pass"] > bar["draws"]
+        ):
+            found.append("success pass: cannot be more than success draws")
+    elif "success" in plan:
+        found.append("success: write `{draws: N, pass: K}` so the bar is data")
+    return found
+
+
+def show(statements: dict) -> None:
+    """Print each statement the card carries, a line a statement and a line a part of a mapping."""
+    for key in STATEMENTS:
+        text = statements.get(key)
+        if isinstance(text, dict):
+            for part, line in text.items():
+                print(f"{key} {part}: {line}")
+        elif text is not None:
+            print(f"{key}: {text}")
+
+
+def verdict(bar: dict, rows: list[dict]) -> str:
+    """Return the verdict line, `success met` or `success not met`, with the numbers per bar."""
+    wins = sum(map(passed, rows))
+    drawn = len(rows)
+    held = wins >= bar["pass"] and drawn >= bar["draws"]
+    parts = [f"passed {wins} of {drawn} (bar: at least {bar['pass']} of {bar['draws']})"]
+    if drawn < bar["draws"]:
+        parts.append(f"drew {drawn} of the {bar['draws']} stated")
+    for key, field in BARS.items():
+        if field is None or key not in bar:
+            continue
+        middle = statistics.median(row[field] for row in rows)
+        held = held and middle <= bar[key]
+        parts.append(f"median {field} a draw {middle:g} (bar: at most {bar[key]})")
+    return f"success {'met' if held else 'not met'}: " + "; ".join(parts)
+
+
 def read(out: Path) -> int:
     """Print a plain summary of a run from its rows and observations."""
     rows = lines(out / ROWS)
     if not rows:
         print(f"no rows in {out}: draw a card first, python -m bench.cards CARD.yaml --draws 1")
         return 1
-    for key in ("claim", "forecast", "par"):
-        text = rows[0].get(key)
-        if isinstance(text, dict):
-            for part, line in text.items():
-                print(f"{key} {part}: {line}")
-        elif text is not None:
-            print(f"{key}: {text}")
+    show(rows[0])
     seen = {o["draw"]: o for o in lines(out / OBSERVATIONS)}
     print(f"passed {sum(map(passed, rows))} of {len(rows)}")
+    if isinstance(rows[0].get("success"), dict):
+        print(verdict(rows[0]["success"], rows))
     for row in rows:
         did = seen.get(row["draw"], {})
         parts = [
@@ -269,6 +333,11 @@ def main(argv: list[str]) -> int:
         ask.error("draw a card with CARD.yaml and --draws N, or read a run with --read DIR")
     plan = load_value(args.card.read_text(encoding="utf-8"))
     stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+    lacks = missing(plan)
+    if lacks:
+        print(f"refused: {args.card.name} does not state itself before it runs:")
+        print("\n".join(f"  {line}" for line in lacks))
+        return 1
     out = args.out or Path.home() / ".conky" / "runs" / "cards" / f"{args.card.stem}-{stamp}"
     why = worst(plan, args.draws, args.cap)
     if why:
@@ -278,13 +347,8 @@ def main(argv: list[str]) -> int:
     (out / BUDGET).write_text(str(args.cap), encoding="utf-8")
     if args.model:
         os.environ[model.MODEL_VARIABLE] = args.model
-    notes = {key: plan[key] for key in ("claim", "forecast", "par") if key in plan}
-    for key, text in notes.items():
-        if isinstance(text, dict):
-            for part, line in text.items():
-                print(f"{key} {part}: {line}")
-        else:
-            print(f"{key}: {text}")
+    notes = {key: plan[key] for key in STATEMENTS}
+    show(notes)
     jobs = args.jobs or min(args.draws, MOST_JOBS)
     done: dict[int, tuple[dict, dict]] = {}
     with ProcessPoolExecutor(max_workers=jobs) as pool:
@@ -313,6 +377,9 @@ def main(argv: list[str]) -> int:
     if int((out / BUDGET).read_text(encoding="utf-8")) <= 0:
         print(f"the cap of {args.cap} calls is spent: later calls were refused")
     print(f"passed {wins} of {drawn}")
+    line = verdict(plan["success"], [done[n][0] for n in sorted(done)])
+    (out / VERDICT).write_text(line + "\n", encoding="utf-8")
+    print(line)
     return 0
 
 
