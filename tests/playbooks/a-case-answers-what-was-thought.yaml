@@ -1,0 +1,50 @@
+# A situation met twice is thought about once: the second time a case answers, and no model is asked.
+pages:
+  helper: {api: command, command: stand}
+  camp: {}
+  gate: {asks: "", turn: 0}
+  guide:
+    within: camp
+    handled: -1
+    said: ""
+    watch:
+      - on: gate
+        when: page.handled != other.turn
+        ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, writes: camp}
+steps:
+  - says: |-
+      no
+      === page: guide ===
+      ---
+      watch:
+        - on: gate
+          when: "other.asks == 'ford'"
+          set: {said: "'no'", handled: other.turn}
+        - on: gate
+          when: page.handled != other.turn
+          ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, writes: camp}
+      ---
+  - write: {page: gate, fields: {asks: ford, turn: 1}}
+  - expect: {fields: {guide.said: "no"}, model_calls: 1}
+  - says: |-
+      yes
+      === page: guide ===
+      ---
+      watch:
+        - on: gate
+          when: "other.asks == 'ford'"
+          set: {said: "'no'", handled: other.turn}
+        - on: gate
+          when: "other.asks == 'hunt'"
+          set: {said: "'yes'", handled: other.turn}
+        - on: gate
+          when: page.handled != other.turn
+          ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, writes: camp}
+      ---
+  - write: {page: gate, fields: {asks: hunt, turn: 2}}
+  - expect: {fields: {guide.said: "yes"}, model_calls: 2}
+  - write: {page: gate, fields: {asks: ford, turn: 3}}
+  - write: {page: gate, fields: {asks: hunt, turn: 4}}
+  - write: {page: gate, fields: {asks: ford, turn: 5}}
+  # Three more askings, all met by a case.
+  - expect: {fields: {guide.said: "no"}, model_calls: 2, model_commits: 2, verify: true}

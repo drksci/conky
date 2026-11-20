@@ -1,0 +1,11 @@
+# A rule on a space refuses a page one of its characters tries to write.
+pages:
+  camp:
+    rules: ["!has(page.cups) || page.cups >= 0"]
+  scout:
+    within: camp
+steps:
+  - write: {page: store, actor: scout, fields: {within: camp, cups: -1}}
+  - expect: {refused: rule, missing: [store]}
+  - write: {page: store, actor: scout, fields: {within: camp, cups: 3}}
+  - expect: {exists: [store], fields: {store.cups: 3}, verify: true}

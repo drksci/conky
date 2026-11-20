@@ -1,0 +1,41 @@
+# Removing the cases changes only the cost: every situation goes back to thought, and the answers stay the same.
+pages:
+  helper: {api: command, command: stand}
+  camp: {}
+  gate: {asks: "", turn: 0}
+  guide:
+    within: camp
+    handled: -1
+    said: ""
+    watch:
+      - on: gate
+        when: page.handled != other.turn
+        ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, writes: camp}
+steps:
+  - says: |-
+      no
+      === page: guide ===
+      ---
+      watch:
+        - on: gate
+          when: "other.asks == 'ford'"
+          set: {said: "'no'", handled: other.turn}
+        - on: gate
+          when: page.handled != other.turn
+          ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, writes: camp}
+      ---
+  - write: {page: gate, fields: {asks: ford, turn: 1}}
+  - write: {page: gate, fields: {asks: hunt, turn: 2}}
+  - write: {page: gate, fields: {asks: ford, turn: 3}}
+  - expect: {model_calls: 2}
+  - write:
+      page: guide
+      fields:
+        watch:
+          - on: gate
+            when: page.handled != other.turn
+            ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, writes: camp}
+  - says: "no"
+  - write: {page: gate, fields: {asks: storm, turn: 4}}
+  - write: {page: gate, fields: {asks: ford, turn: 5}}
+  - expect: {fields: {guide.said: "no"}, model_calls: 4, verify: true}

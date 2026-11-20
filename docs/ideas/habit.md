@@ -50,7 +50,7 @@ A [lens](lens.md) is habits of reading and of laying out. A [learned reaction](l
 
 Watch entries tried in order with each guard evaluated at that moment, measures, and an answer that is pages.
 
-**Built by hand, and it works.** `tests/test_habit.py` makes a habit from those parts with no change to the runtime: a character keeps its cases as watch entries on its own page, asks a model only when no case fits, and the answer adds the case. A situation met twice is thought about once, a new situation still goes to thought, and removing the cases changes only the cost. The model is a stand-in.
+**Built by hand, and it works.** The playbooks under `tests/playbooks/` make a habit from those parts with no change to the runtime: a character keeps its cases as watch entries on its own page, asks a model only when no case fits, and the answer adds the case. A situation met twice is thought about once, a new situation still goes to thought, and removing the cases changes only the cost. The model is a stand-in.
 
 **What building it found.** Two things that a slot for cases on an ask would remove, and that composition has to work around:
 

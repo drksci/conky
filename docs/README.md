@@ -21,6 +21,7 @@ Every document starts with frontmatter (`kind`, `title`, `status`, `date`, `sour
 
 - [reference/vault-format.md](reference/vault-format.md): Vault format
 - [reference/cli.md](reference/cli.md): Command line
+- [reference/playbooks.md](reference/playbooks.md): Playbooks
 - [reference/rules-and-reactions.md](reference/rules-and-reactions.md): Rules and reactions
 - [reference/providers.md](reference/providers.md): Providers
 - [reference/connectors.md](reference/connectors.md): Connectors
