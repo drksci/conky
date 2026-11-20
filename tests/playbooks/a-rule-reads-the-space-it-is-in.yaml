@@ -1,0 +1,12 @@
+# A rule on a member reads a field its space hands down, and guards the field it may lack.
+pages:
+  camp:
+    limit: 5
+  scout:
+    within: camp
+    rules: ["!has(page.cups) || page.cups <= space.limit"]
+steps:
+  - write: {page: scout, fields: {cups: 9}}
+  - expect: {refused: rule, fields: {scout.cups: null}}
+  - write: {page: scout, fields: {cups: 4}}
+  - expect: {fields: {scout.cups: 4}, verify: true}

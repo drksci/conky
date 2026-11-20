@@ -6,6 +6,8 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ### Added
 
+- Text functions in expressions: `split`, `substring`, `indexOf`, `trim`, `lowerAscii`, `replace` and `join` after the CEL strings extension, and `captures`, which returns the groups of a regular expression match as a list. Text and patterns are bounded at 65536 and 256 characters ([rules and reactions](docs/reference/rules-and-reactions.md#text-functions)).
+- `space` in expressions: the fields of the spaces a page is within, the outermost first and the nearest overriding, readable in rules (including those handed down), watch conditions and `set` values. A page within no space reads an empty map, and a missing field is a failed evaluation to guard with `has`. Changing a space does not re-judge its members.
 - The instruction appended to an ask that may write pages is now a short description of what the page can do: its name, its space, how a page is written (built from the constants the parser uses), that a page can be a note or carry a rule, and that it cannot write elsewhere. It says the space's members are shown to the page only when the prompt embeds `![[space#members]]`. The Conky benchmark arm's pages prompt embeds its space that way ([scaffold](bench/adapters/conky/scaffold.md)).
 - `![[space#members]]` embeds the pages within a space: one line each, `name: first line of body`, sorted by name, at most 20 lines and then a count of the rest. A missing or empty space embeds nothing, and a page may not carry a field named `members`.
 - `conky connect terminal --first-line` types only the first non-empty line of the hands page's keys and leaves the rest in the page. It is off by default, and the Conky benchmark arm uses it to keep the reply contract.

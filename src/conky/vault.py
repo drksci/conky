@@ -536,6 +536,31 @@ class Vault:
         return None
 
     @arch.law(
+        "law.context.down",
+        "A space hands its fields down: the nearest space wins, and a rule reads them as `space`.",
+        doc="rules-and-reactions.md#context-from-spaces",
+        roadmap="R22",
+    )
+    def _context(self, name: str, within: str | None) -> dict[str, Any]:
+        """Return the fields of the spaces above a page, the nearest overriding the rest.
+
+        A missing space or a loop ends the climb; `_walk` is what refuses those.
+        """
+        chain: list[Page] = []
+        seen = {name}
+        while within is not None and within not in seen:
+            seen.add(within)
+            found = self._load(within)
+            if found is None:
+                break
+            chain.append(found)
+            within = found.within
+        context: dict[str, Any] = {}
+        for found in reversed(chain):
+            context.update(found.fields)
+        return context
+
+    @arch.law(
         "law.rule.tighten",
         "A member adds a rule and cannot remove one or leave one behind.",
         doc="../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md",
@@ -549,7 +574,11 @@ class Vault:
         The rules of the page and of every space above it are judged. A write that changes
         `within` is also judged by the rules of the spaces the page was in before it.
         """
-        scope = {"page": page.fields, "size": _size(page)}
+        scope = {
+            "page": page.fields,
+            "space": self._context(name, page.within),
+            "size": _size(page),
+        }
         found = self._walk(name, page, name, scope)
         if found or before is None or not before.within or before.within == page.within:
             return found
@@ -672,6 +701,7 @@ class Vault:
                 scope = {
                     "other": written.fields,
                     "page": current.fields,
+                    "space": self._context(watcher, current.within),
                     "other_size": _size(written),
                     "size": _size(current),
                     "event": commit,

@@ -36,6 +36,7 @@ The capability and the three laws of [decision 0029](../decisions/0029-autonomy-
 | <a id="law.debt.none"></a>`law.debt.none` | No fix-later notes, shims or dead code. | [0010-no-debt-no-down-migrations.md](../decisions/0010-no-debt-no-down-migrations.md) | `tests/test_house.py` | `tests/test_house.py::test_no_fix_later_notes` | - | built |
 | <a id="law.docs.check"></a>`law.docs.check` | Ideas climb rungs, and the documents, links and this index are checked. | [0015-ideas-climb-rungs.md](../decisions/0015-ideas-climb-rungs.md) | `scripts/check_docs.py` | `tests/test_docs.py::test_docs_pass_the_check` | - | built |
 | <a id="law.event.seal"></a>`law.event.seal` | Every change is signed and says what caused it. | [vault-format.md#a-write](vault-format.md#a-write) | `conky.vault.Vault._record` | `tests/test_laws.py::test_write_is_a_signed_commit_with_trailers_and_dates`<br>`tests/test_laws.py::test_reaction_is_caused_by_and_signed_by_the_reacting_page` | - | built |
+| <a id="law.fallback.always"></a>`law.fallback.always` | Everything works with nothing configured, and rules stay strict. | [0026-it-always-works.md](../decisions/0026-it-always-works.md) | `conky.model.detect` | `tests/test_command.py::test_detection_lists_anthropic_then_openai_then_claude_then_codex`<br>`tests/test_command.py::test_a_failing_detected_model_falls_to_the_next_and_then_to_a_sentence`<br>`tests/test_command.py::test_with_no_model_an_ask_writes_a_sentence_that_names_the_question` | R26 | built |
 | <a id="law.measure.watch"></a>`law.measure.watch` | A measure is a page watching itself, and its value is a recorded event. | [0008-measures-are-self-watches.md](../decisions/0008-measures-are-self-watches.md) | `conky.vault.Vault._react` | `tests/test_laws.py::test_other_size_is_visible_to_a_watcher`<br>`tests/test_laws.py::test_history_needs_no_expressions` | R2 | built |
 | <a id="law.output.out"></a>`law.output.out` | Runtime output never enters the repository, except the golden vault. | [CLAUDE.md](../../CLAUDE.md) | `.gitignore` | review | - | built |
 | <a id="law.page.commit"></a>`law.page.commit` | Pages are the committed files, and a stray edit is refused or discarded. | [vault-format.md#what-verify-checks](vault-format.md#what-verify-checks) | `conky.vault.Vault.verify` | `tests/test_laws.py::test_hand_edited_page_fails_verify_and_blocks_writes`<br>`tests/test_laws.py::test_rebuild_discards_stray_files` | - | built |
@@ -46,14 +47,14 @@ The capability and the three laws of [decision 0029](../decisions/0029-autonomy-
 | <a id="law.refusal.record"></a>`law.refusal.record` | A refused write is recorded as an empty commit, never dropped. | [vault-format.md#a-refusal](vault-format.md#a-refusal) | `conky.vault.Vault._refuse` | `tests/test_laws.py::test_refused_write_is_an_empty_signed_commit` | - | built |
 | <a id="law.rule.never"></a>`law.rule.never` | Anything that must never happen is a rule the runtime evaluates. | [rules-and-reactions.md#expressions](rules-and-reactions.md#expressions) | `conky.rules.holds` | `tests/test_laws.py::test_rule_error_refuses`<br>`tests/test_laws.py::test_rule_inherited_through_two_level_chain`<br>`tests/test_laws.py::test_size_rule_in_a_space_refuses_an_oversized_member` | - | built |
 | <a id="law.rule.pure"></a>`law.rule.pure` | Rules and measures are pure: no clock, randomness or input and output. | [rules-and-reactions.md#expressions](rules-and-reactions.md#expressions) | `conky.rules.evaluate` | review | - | built |
-| <a id="law.rule.tighten"></a>`law.rule.tighten` | A member adds a rule and cannot remove one or leave one behind. | [0022-leaving-a-space-is-a-write-the-space-can-refuse.md](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md) | `conky.vault.Vault._rule_reason` | `tests/test_laws.py::test_leaving_a_space_is_judged_by_the_rules_of_the_space_it_leaves`<br>`tests/test_pages.py::test_a_rule_of_a_space_refuses_a_page_that_breaks_it`<br>`tests/test_pages.py::test_a_character_can_add_a_rule_to_a_space_it_made_and_the_rule_binds_a_later_write` | R29 | built |
+| <a id="law.rule.tighten"></a>`law.rule.tighten` | A member adds a rule and cannot remove one or leave one behind. | [0022-leaving-a-space-is-a-write-the-space-can-refuse.md](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md) | `conky.vault.Vault._rule_reason` | `tests/test_laws.py::test_leaving_a_space_is_judged_by_the_rules_of_the_space_it_leaves`<br>`tests/test_laws.py::test_a_changed_space_field_refuses_the_next_member_write`<br>`tests/test_pages.py::test_a_rule_of_a_space_refuses_a_page_that_breaks_it`<br>`tests/test_pages.py::test_a_character_can_add_a_rule_to_a_space_it_made_and_the_rule_binds_a_later_write` | R29 | built |
 | <a id="law.runtime.fixed"></a>`law.runtime.fixed` | The runtime is not a page, so no character can change it. | [0029-autonomy-inside-limits-that-hold.md](../decisions/0029-autonomy-inside-limits-that-hold.md) | `conky.vault.Vault._breach` | `tests/test_pages.py::test_a_character_cannot_write_a_secret_or_a_command_into_a_page` | - | built |
 | <a id="law.scope.out"></a>`law.scope.out` | No batching to hide, no second authority, no hidden state, no control by instruction. | [0018-not-doing.md](../decisions/0018-not-doing.md) | `docs/decisions/0018-not-doing.md` | review | - | built |
 | <a id="law.vault.golden"></a>`law.vault.golden` | The vault format is held stable by a golden vault that every version reads. | [0012-rust-core-planned.md](../decisions/0012-rust-core-planned.md) | `conky.page.parse` | `tests/test_laws.py::test_golden_vault_still_reads` | - | built |
 | <a id="law.vault.travel"></a>`law.vault.travel` | A vault travels alone, verifies anywhere and holds no private key. | [vault-format.md#reading-with-plain-git](vault-format.md#reading-with-plain-git) | `conky.git.init` | `tests/test_laws.py::test_init_sets_the_repository_up_for_plain_git`<br>`tests/test_laws.py::test_vault_travels_alone_by_clone_and_by_bundle`<br>`tests/test_laws.py::test_no_private_key_material_under_the_vault` | - | built |
 | <a id="law.word.exist"></a>`law.word.exist` | The vocabulary is what exists, checked against the code both ways. | [0027-the-vocabulary-is-what-exists.md](../decisions/0027-the-vocabulary-is-what-exists.md) | `conky.cli.main` | `tests/test_house.py::test_vocabulary_agrees_with_the_code` | - | built |
 | <a id="law.write.only"></a>`law.write.only` | State changes only through a write committed to the history. | [0002-git-is-the-store.md](../decisions/0002-git-is-the-store.md) | `conky.vault.Vault.write` | `tests/test_laws.py::test_write_is_a_signed_commit_with_trailers_and_dates` | - | built |
-| <a id="law.fallback.always"></a>`law.fallback.always` | Everything works with nothing configured, and rules stay strict. | [0026-it-always-works.md](../decisions/0026-it-always-works.md) | `conky.model.detect` | `tests/test_command.py::test_detection_lists_anthropic_then_openai_then_claude_then_codex`<br>`tests/test_command.py::test_a_failing_detected_model_falls_to_the_next_and_then_to_a_sentence`<br>`tests/test_command.py::test_with_no_model_an_ask_writes_a_sentence_that_names_the_question` | R26 | building |
+| <a id="law.context.down"></a>`law.context.down` | A space hands its fields down: the nearest space wins, and a rule reads them as `space`. | [rules-and-reactions.md#context-from-spaces](rules-and-reactions.md#context-from-spaces) | `conky.vault.Vault._context` | `tests/test_laws.py::test_a_changed_space_field_refuses_the_next_member_write` | R22 | building |
 | <a id="law.data.derived"></a>`law.data.derived` | Derived data is optional, outside the history, rebuildable and safe to delete. | [0017-derived-data.md](../decisions/0017-derived-data.md) | - | - | R11 | planned |
 | <a id="law.spend.conserve"></a>`law.spend.conserve` | What a space may spend is shared among what is inside it, so making more characters divides a budget. | [0029-autonomy-inside-limits-that-hold.md](../decisions/0029-autonomy-inside-limits-that-hold.md) | - | - | R17 | planned |
 | <a id="law.spend.meter"></a>`law.spend.meter` | Anything that runs in the background declares a budget and is metered. | [background-minds.md](../ideas/background-minds.md) | - | - | R17 | planned |
@@ -79,13 +80,21 @@ Every concept word and verb of the [vocabulary](vocabulary.md), and each named p
 | <a id="part.link"></a>`part.link` | [`layer.history`](#layer.history) | A page name written in a page so that one page points at another. No runtime code reads one, so it stays a convention. | [auto-linking.md](../ideas/auto-linking.md) | - | R15 | idea |
 | <a id="part.rename"></a>`part.rename` | [`layer.history`](#layer.history) | One change that also rewrites every link and embed that points at a page. | [rename.md](../ideas/rename.md) | - | R15 | idea |
 | <a id="part.rule"></a>`part.rule` | [`layer.reflex`](#layer.reflex) | A CEL expression judged before a write is kept. | [rules-and-reactions.md#expressions](rules-and-reactions.md#expressions) | `conky.rules.holds` | - | built |
+| <a id="part.rule.captures"></a>`part.rule.captures` | [`layer.reflex`](#layer.reflex) | The groups of the first match of a pattern, else an empty list. | [rules-and-reactions.md#text-functions](rules-and-reactions.md#text-functions) | `conky.rules._captures` | - | built |
+| <a id="part.rule.indexof"></a>`part.rule.indexof` | [`layer.reflex`](#layer.reflex) | The position of a substring from an optional start, or -1. | [rules-and-reactions.md#text-functions](rules-and-reactions.md#text-functions) | `conky.rules._index_of` | - | built |
+| <a id="part.rule.join"></a>`part.rule.join` | [`layer.reflex`](#layer.reflex) | Join a list of text with an optional separator. | [rules-and-reactions.md#text-functions](rules-and-reactions.md#text-functions) | `conky.rules._join` | - | built |
+| <a id="part.rule.lowerascii"></a>`part.rule.lowerascii` | [`layer.reflex`](#layer.reflex) | Lower-case the ASCII letters only. | [rules-and-reactions.md#text-functions](rules-and-reactions.md#text-functions) | `conky.rules._lower_ascii` | - | built |
+| <a id="part.rule.replace"></a>`part.rule.replace` | [`layer.reflex`](#layer.reflex) | Replace occurrences of a substring, with an optional limit. | [rules-and-reactions.md#text-functions](rules-and-reactions.md#text-functions) | `conky.rules._replace` | - | built |
+| <a id="part.rule.split"></a>`part.rule.split` | [`layer.reflex`](#layer.reflex) | Split text on a separator, with an optional limit on the pieces. | [rules-and-reactions.md#text-functions](rules-and-reactions.md#text-functions) | `conky.rules._split` | - | built |
+| <a id="part.rule.substring"></a>`part.rule.substring` | [`layer.reflex`](#layer.reflex) | Take the characters from a start to an optional end position. | [rules-and-reactions.md#text-functions](rules-and-reactions.md#text-functions) | `conky.rules._substring` | - | built |
+| <a id="part.rule.trim"></a>`part.rule.trim` | [`layer.reflex`](#layer.reflex) | Remove leading and trailing whitespace. | [rules-and-reactions.md#text-functions](rules-and-reactions.md#text-functions) | `conky.rules._trim` | - | built |
 | <a id="part.watch"></a>`part.watch` | [`layer.reflex`](#layer.reflex) | Name a page whose writes make this page react. | [rules-and-reactions.md#reactions](rules-and-reactions.md#reactions) | `conky.vault.Vault._react` | - | built |
 | <a id="part.seal.signer"></a>`part.seal.signer` | [`layer.reflex`](#layer.reflex) | Rules that can see who signed a change and how it arose. | [approvals.md](../ideas/approvals.md) | - | R14 | planned |
 | <a id="part.space"></a>`part.space` | [`layer.space`](#layer.space) | A page that others lie within, handing down its rules, with leaving judged. | [rules-and-reactions.md#rules-and-spaces](rules-and-reactions.md#rules-and-spaces) | `conky.vault.Vault._walk` | R29 | built |
-| <a id="part.space.context"></a>`part.space.context` | [`layer.space`](#layer.space) | A space handing down its context and its reactions, and a page within several spaces. | [inheritance.md](../ideas/inheritance.md) | - | R22 | planned |
+| <a id="part.space.context"></a>`part.space.context` | [`layer.space`](#layer.space) | A space handing down its context and its reactions, and a page within several spaces. | [inheritance.md](../ideas/inheritance.md) | - | R22 | building |
 | <a id="part.answer.cache"></a>`part.answer.cache` | [`layer.character`](#layer.character) | Model answers kept outside the history, keyed to the moment. | [providers.md#cache](providers.md#cache) | `conky.cache.Cache` | R30 | built |
 | <a id="part.answer.format"></a>`part.answer.format` | [`layer.character`](#layer.character) | The reply cut into plain text and page blocks. | [rules-and-reactions.md#an-answer-that-is-pages](rules-and-reactions.md#an-answer-that-is-pages) | `conky.answer.split` | R29 | built |
-| <a id="part.provider.detect"></a>`part.provider.detect` | [`layer.character`](#layer.character) | The models the environment offers, in the order to try them. | [providers.md#detection](providers.md#detection) | `conky.model.detect` | R26 | building |
+| <a id="part.provider.detect"></a>`part.provider.detect` | [`layer.character`](#layer.character) | The models the environment offers, in the order to try them. | [providers.md#detection](providers.md#detection) | `conky.model.detect` | R26 | built |
 | <a id="part.character.face"></a>`part.character.face` | [`layer.character`](#layer.character) | A fixed phrase per page, a stable identifier and a drawn face. | [seeds-and-faces.md](../ideas/seeds-and-faces.md) | - | R23 | planned |
 | <a id="part.character.self"></a>`part.character.self` | [`layer.character`](#layer.character) | A seed, a face, a temperament and a voice for every page. | [character.md](../ideas/character.md) | - | R23 | planned |
 | <a id="part.pattern.make"></a>`part.pattern.make` | [`layer.character`](#layer.character) | Domain structures are never built in. A pattern maker makes them on demand from worked examples. | [0009-patterns-not-features.md](../decisions/0009-patterns-not-features.md) | - | R6 | planned |
@@ -111,8 +120,8 @@ From the store upwards. Each layer sits on the one before.
 |---|---|---|---|
 | Git (<a id="layer.git"></a>`layer.git`) | The repository, signed commits, clone, bundle, `ssh-keygen`, `git fsck`. | [`part.key`](#part.key), [`part.seal`](#part.seal) | [`part.core.rust`](#part.core.rust) |
 | Pages and history (<a id="layer.history"></a>`layer.history`) | The page format, the write path, trailers, refusals. | [`part.embed`](#part.embed), [`part.error`](#part.error), [`part.event`](#part.event), [`part.page`](#part.page), [`part.read`](#part.read), [`part.vault`](#part.vault), [`part.write`](#part.write) | [`part.write.group`](#part.write.group), [`part.link`](#part.link), [`part.rename`](#part.rename) |
-| Reflexes (<a id="layer.reflex"></a>`layer.reflex`) | CEL rules, reactions, the depth bound, measures, pressure. | [`part.rule`](#part.rule), [`part.watch`](#part.watch) | [`part.seal.signer`](#part.seal.signer) |
-| Spaces (<a id="layer.space"></a>`layer.space`) | `within`, rules handed down, leaving judged. | [`part.space`](#part.space) | [`part.space.context`](#part.space.context) |
+| Reflexes (<a id="layer.reflex"></a>`layer.reflex`) | CEL rules, reactions, the depth bound, measures, pressure. | [`part.rule`](#part.rule), [`part.rule.captures`](#part.rule.captures), [`part.rule.indexof`](#part.rule.indexof), [`part.rule.join`](#part.rule.join), [`part.rule.lowerascii`](#part.rule.lowerascii), [`part.rule.replace`](#part.rule.replace), [`part.rule.split`](#part.rule.split), [`part.rule.substring`](#part.rule.substring), [`part.rule.trim`](#part.rule.trim), [`part.watch`](#part.watch) | [`part.seal.signer`](#part.seal.signer) |
+| Spaces (<a id="layer.space"></a>`layer.space`) | `within`, rules handed down, leaving judged. | [`part.space`](#part.space), [`part.space.context`](#part.space.context) | - |
 | Characters (<a id="layer.character"></a>`layer.character`) | Pages that ask a model, providers, answers that are pages. | [`part.answer.cache`](#part.answer.cache), [`part.answer.format`](#part.answer.format), [`part.provider.detect`](#part.provider.detect) | [`part.character.face`](#part.character.face), [`part.character.self`](#part.character.self), [`part.pattern.make`](#part.pattern.make), [`part.character.habit`](#part.character.habit) |
 | The edge (<a id="layer.edge"></a>`layer.edge`) | The command line, presenters, connectors, `demo`, `assimilate`. | [`part.cli.command`](#part.cli.command), [`part.cli.demo`](#part.cli.demo), [`part.cli.present`](#part.cli.present), [`part.connect.terminal`](#part.connect.terminal), [`part.vault.assimilate`](#part.vault.assimilate) | [`part.connect.protocol`](#part.connect.protocol), [`part.screen`](#part.screen), [`part.screen.page`](#part.screen.page), [`part.screen.update`](#part.screen.update), [`part.test.bench`](#part.test.bench), [`part.test.resume`](#part.test.resume), [`part.test.trial`](#part.test.trial) |
 
@@ -181,19 +190,19 @@ A page holds what a vault knows, the fixed runtime does what follows from it, an
 | <a id="place.page"></a>`place.page` | <a id="place.page.field"></a>`place.page.field` | Fields, body, `within`, `rules` and `watch`, only by a write. | [vault-format.md#pages](vault-format.md#pages) | `conky.page.apply` | - | built |
 | `place.page` | <a id="place.page.known"></a>`place.page.known` | Provider fields, a connector's screen and hands, a measure's value. | [providers.md#the-provider-page](providers.md#the-provider-page) | `conky.model.provider` | - | built |
 | <a id="place.runtime"></a>`place.runtime` | <a id="place.runtime.clock"></a>`place.runtime.clock` | Reading the clock, in this one place, to stamp each write. | [cli.md#time](cli.md#time) | `conky.cli.main` | - | built |
+| `place.runtime` | <a id="place.runtime.detect"></a>`place.runtime.detect` | Choosing a model when none is named. | [providers.md#detection](providers.md#detection) | `conky.model.detect` | R26 | built |
 | `place.runtime` | <a id="place.runtime.judge"></a>`place.runtime.judge` | Judging rules, shape and limits before a write is kept. | [rules-and-reactions.md#refusals](rules-and-reactions.md#refusals) | `conky.vault.Vault._write` | - | built |
 | `place.runtime` | <a id="place.runtime.limit"></a>`place.runtime.limit` | Enforcing the limits of an answer that is pages. | [rules-and-reactions.md#an-answer-that-is-pages](rules-and-reactions.md#an-answer-that-is-pages) | `conky.vault.Vault._breach` | R29 | built |
+| `place.runtime` | <a id="place.runtime.plain"></a>`place.runtime.plain` | Writing a plain sentence when no model answers. | [providers.md#when-no-model-answers](providers.md#when-no-model-answers) | `conky.vault.Vault._plain` | R26 | built |
 | `place.runtime` | <a id="place.runtime.react"></a>`place.runtime.react` | Running reactions after a write, depth first, bounded at 12. | [rules-and-reactions.md#reactions](rules-and-reactions.md#reactions) | `conky.vault.Vault._react` | - | built |
 | `place.runtime` | <a id="place.runtime.rebuild"></a>`place.runtime.rebuild` | Restoring the working tree from the history. | [vault-format.md#rebuild](vault-format.md#rebuild) | `conky.vault.Vault.rebuild` | - | built |
 | `place.runtime` | <a id="place.runtime.record"></a>`place.runtime.record` | Signing every event and recording every refusal. | [vault-format.md#commits](vault-format.md#commits) | `conky.vault.Vault._record` | - | built |
 | `place.runtime` | <a id="place.runtime.verify"></a>`place.runtime.verify` | Checking the history, never changing it. | [vault-format.md#what-verify-checks](vault-format.md#what-verify-checks) | `conky.vault.Vault.verify` | - | built |
-| `place.runtime` | <a id="place.runtime.detect"></a>`place.runtime.detect` | Choosing a model when none is named. | [providers.md#detection](providers.md#detection) | `conky.model.detect` | R26 | building |
-| `place.runtime` | <a id="place.runtime.plain"></a>`place.runtime.plain` | Writing a plain sentence when no model answers. | [providers.md#when-no-model-answers](providers.md#when-no-model-answers) | `conky.vault.Vault._plain` | R26 | building |
 | <a id="place.beside"></a>`place.beside` | <a id="place.beside.cache"></a>`place.beside.cache` | Cached answers: derived data outside every vault, deletable. | [providers.md#cache](providers.md#cache) | `conky.cache.Cache` | R30 | built |
+| `place.beside` | <a id="place.beside.command"></a>`place.beside.command` | Command lines, from the environment or the key directory, never from a page. | [providers.md#command](providers.md#command) | `conky.model.find_command` | R26 | built |
 | `place.beside` | <a id="place.beside.connector"></a>`place.beside.connector` | Connectors: processes that hold no state and write as their own actor. | [connectors.md](connectors.md) | `conky.connect.terminal` | - | built |
 | `place.beside` | <a id="place.beside.key"></a>`place.beside.key` | Private signing keys, in the key directory. | [vault-format.md#identity-and-signing](vault-format.md#identity-and-signing) | `conky.git.register` | - | built |
 | `place.beside` | <a id="place.beside.secret"></a>`place.beside.secret` | Secrets, by name, from the environment or the key directory. | [providers.md#secrets](providers.md#secrets) | `conky.model.find_secret` | R4 | built |
-| `place.beside` | <a id="place.beside.command"></a>`place.beside.command` | Command lines, from the environment or the key directory, never from a page. | [providers.md#command](providers.md#command) | `conky.model.find_command` | R26 | building |
 
 ## 8. Stimuli, attention and action
 
@@ -217,7 +226,7 @@ One chain: a stimulus arrives, it is noticed, thought happens when state cannot 
 | Attention beyond notice | <a id="stage.attention.stale"></a>`stage.attention.stale` | A page can carry a measure of how long it has gone untouched. Past a threshold it is noticed, and an archived page drops out of what others attend to. | [staleness.md](../ideas/staleness.md) | - | idea | R3 | idea |
 | Attention beyond notice | <a id="stage.attention.strip"></a>`stage.attention.strip` | Plain-language notices for people, derived from Read, Cause and From trailers. | [trace.md](../ideas/trace.md) | - | idea | R11e | idea |
 | Think | <a id="stage.think.ask"></a>`stage.think.ask` | A prompt whose embeds are resolved and recorded as `Read`. | [rules-and-reactions.md#asking-a-model](rules-and-reactions.md#asking-a-model) | `conky.vault.Vault._ask` | - | R4 | built |
-| Think | <a id="stage.think.provider"></a>`stage.think.provider` | A named page first, then detection, then a plain sentence. | [providers.md#when-no-model-answers](providers.md#when-no-model-answers) | `conky.vault.Vault._ask` | - | R26 | building |
+| Think | <a id="stage.think.provider"></a>`stage.think.provider` | A named page first, then detection, then a plain sentence. | [providers.md#when-no-model-answers](providers.md#when-no-model-answers) | `conky.vault.Vault._ask` | - | R26 | built |
 | Think | <a id="stage.think.budget"></a>`stage.think.budget` | A budget that stops spending. Token counts are recorded and nothing bounds them yet. | [0019-providers-are-pages.md](../decisions/0019-providers-are-pages.md) | - | accepted | R17 | planned |
 | Think | <a id="stage.think.context"></a>`stage.think.context` | Context richer than the embeds of one prompt, and a model's answer marked as an unchecked claim, are open questions. | [model-pages.md](../ideas/model-pages.md) | - | enforced | R17 | idea |
 | Act | <a id="stage.act.field"></a>`stage.act.field` | The answer is written to `into` by the asking page. | [rules-and-reactions.md#asking-a-model](rules-and-reactions.md#asking-a-model) | `conky.vault.Vault._answered` | - | R4 | built |
@@ -406,7 +415,7 @@ A page watching itself writes its own number as an event, and a threshold sets a
 
 ```mermaid
 ---
-title: Asking a model (building)
+title: Asking a model (built)
 ---
 sequenceDiagram
     participant lane.person
@@ -441,7 +450,7 @@ A named provider is tried first, then detected models in order, then a plain sen
 
 | Flow | Doc | Code | Test | Step | State |
 |---|---|---|---|---|---|
-| <a id="flow.ask.model"></a>`flow.ask.model` | [rules-and-reactions.md#asking-a-model](rules-and-reactions.md#asking-a-model) | `conky.vault.Vault._react`<br>`conky.vault.Vault.ask`<br>`conky.vault.Vault._ask`<br>`conky.model.provider`<br>`conky.model.find_secret`<br>`conky.model.ask_once`<br>`conky.model.ask`<br>`conky.model.detect`<br>`conky.vault.Vault._answered`<br>`conky.vault.Vault._plain` | `tests/test_command.py::test_detection_lists_anthropic_then_openai_then_claude_then_codex`<br>`tests/test_command.py::test_a_failing_detected_model_falls_to_the_next_and_then_to_a_sentence`<br>`tests/test_command.py::test_a_failing_named_page_is_recorded_and_the_detected_models_still_answer`<br>`tests/test_command.py::test_a_sentence_is_not_a_settled_answer_so_a_later_model_replaces_it`<br>`tests/test_model.py::test_an_ask_entry_answers_as_a_signed_write_by_the_asking_page`<br>`tests/test_model.py::test_each_wire_format_sends_the_right_request_and_reads_the_answer`<br>`tests/test_model.py::test_the_answer_names_each_page_that_was_embedded_once_in_order`<br>`tests/test_model.py::test_a_settled_question_is_not_asked_twice_and_a_changed_one_is`<br>`tests/test_model.py::test_every_failure_is_a_model_refusal_and_nothing_else_is_affected` | R26 | building |
+| <a id="flow.ask.model"></a>`flow.ask.model` | [rules-and-reactions.md#asking-a-model](rules-and-reactions.md#asking-a-model) | `conky.vault.Vault._react`<br>`conky.vault.Vault.ask`<br>`conky.vault.Vault._ask`<br>`conky.model.provider`<br>`conky.model.find_secret`<br>`conky.model.ask_once`<br>`conky.model.ask`<br>`conky.model.detect`<br>`conky.vault.Vault._answered`<br>`conky.vault.Vault._plain` | `tests/test_command.py::test_detection_lists_anthropic_then_openai_then_claude_then_codex`<br>`tests/test_command.py::test_a_failing_detected_model_falls_to_the_next_and_then_to_a_sentence`<br>`tests/test_command.py::test_a_failing_named_page_is_recorded_and_the_detected_models_still_answer`<br>`tests/test_command.py::test_a_sentence_is_not_a_settled_answer_so_a_later_model_replaces_it`<br>`tests/test_model.py::test_an_ask_entry_answers_as_a_signed_write_by_the_asking_page`<br>`tests/test_model.py::test_each_wire_format_sends_the_right_request_and_reads_the_answer`<br>`tests/test_model.py::test_the_answer_names_each_page_that_was_embedded_once_in_order`<br>`tests/test_model.py::test_a_settled_question_is_not_asked_twice_and_a_changed_one_is`<br>`tests/test_model.py::test_every_failure_is_a_model_refusal_and_nothing_else_is_affected` | R26 | built |
 
 <a id="flow.ask.pages#1"></a><a id="flow.ask.pages#2"></a><a id="flow.ask.pages#3"></a><a id="flow.ask.pages#4"></a><a id="flow.ask.pages#5"></a><a id="flow.ask.pages#6"></a><a id="flow.ask.pages#7"></a><a id="flow.ask.pages#8"></a><a id="flow.ask.pages#9"></a><a id="flow.ask.pages#10"></a>
 
@@ -763,7 +772,7 @@ Time passes when a clock page is written, and anything that depends on time watc
 
 ```mermaid
 ---
-title: A space hands down context and reactions (planned)
+title: A space hands down context and reactions (building)
 ---
 sequenceDiagram
     participant lane.person
@@ -786,7 +795,7 @@ A space hands down its context and its reactions as well as its rules.
 
 | Flow | Doc | Code | Test | Step | State |
 |---|---|---|---|---|---|
-| <a id="flow.space.inherit"></a>`flow.space.inherit` | [inheritance.md](../ideas/inheritance.md) | - | - | R22 | planned |
+| <a id="flow.space.inherit"></a>`flow.space.inherit` | [inheritance.md](../ideas/inheritance.md) | - | - | R22 | building |
 
 <a id="flow.spend.conserve#1"></a><a id="flow.spend.conserve#2"></a><a id="flow.spend.conserve#3"></a><a id="flow.spend.conserve#4"></a><a id="flow.spend.conserve#5"></a><a id="flow.spend.conserve#6"></a>
 
@@ -1159,7 +1168,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`flow.pattern.rise`](#flow.pattern.rise) | planned | not built | - | - |
 | [`flow.proposal.approve`](#flow.proposal.approve) | planned | not built | - | - |
 | [`flow.screen.prompt`](#flow.screen.prompt) | planned | not built | - | - |
-| [`flow.space.inherit`](#flow.space.inherit) | planned | not built | - | - |
+| [`flow.space.inherit`](#flow.space.inherit) | building | - | - | none |
 | [`flow.space.move`](#flow.space.move) | built | 1 | - |  |
 | [`flow.spend.conserve`](#flow.spend.conserve) | planned | not built | - | - |
 | [`flow.table.append`](#flow.table.append) | planned | not built | - | - |
@@ -1177,12 +1186,13 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`flow.write.refuse`](#flow.write.refuse) | built | 5 | - |  |
 | [`flow.write.try`](#flow.write.try) | planned | not built | - | - |
 | [`law.answer.pages`](#law.answer.pages) | built | 1 | check.character.organise |  |
+| [`law.context.down`](#law.context.down) | building | 1 | - |  |
 | [`law.data.derived`](#law.data.derived) | planned | not built | - | - |
 | [`law.data.three`](#law.data.three) | built | 1 | - |  |
 | [`law.debt.none`](#law.debt.none) | built | 1 | - |  |
 | [`law.docs.check`](#law.docs.check) | built | 1 | - |  |
 | [`law.event.seal`](#law.event.seal) | built | 2 | - |  |
-| [`law.fallback.always`](#law.fallback.always) | building | 3 | - |  |
+| [`law.fallback.always`](#law.fallback.always) | built | 3 | - |  |
 | [`law.measure.watch`](#law.measure.watch) | built | 2 | - |  |
 | [`law.output.out`](#law.output.out) | built | - | - | review only |
 | [`law.page.commit`](#law.page.commit) | built | 2 | - |  |
@@ -1193,7 +1203,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`law.refusal.record`](#law.refusal.record) | built | 1 | - |  |
 | [`law.rule.never`](#law.rule.never) | built | 3 | - |  |
 | [`law.rule.pure`](#law.rule.pure) | built | - | - | review only |
-| [`law.rule.tighten`](#law.rule.tighten) | built | 3 | - |  |
+| [`law.rule.tighten`](#law.rule.tighten) | built | 4 | - |  |
 | [`law.runtime.fixed`](#law.runtime.fixed) | built | 1 | - |  |
 | [`law.scope.out`](#law.scope.out) | built | - | - | review only |
 | [`law.spend.conserve`](#law.spend.conserve) | planned | not built | - | - |
@@ -1221,17 +1231,25 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`part.link`](#part.link) | idea | not built | - | - |
 | [`part.page`](#part.page) | built | - | - | none |
 | [`part.pattern.make`](#part.pattern.make) | planned | not built | - | - |
-| [`part.provider.detect`](#part.provider.detect) | building | - | - | none |
+| [`part.provider.detect`](#part.provider.detect) | built | - | - | none |
 | [`part.read`](#part.read) | built | - | - | none |
 | [`part.rename`](#part.rename) | idea | not built | - | - |
 | [`part.rule`](#part.rule) | built | - | - | none |
+| [`part.rule.captures`](#part.rule.captures) | built | - | - | none |
+| [`part.rule.indexof`](#part.rule.indexof) | built | - | - | none |
+| [`part.rule.join`](#part.rule.join) | built | - | - | none |
+| [`part.rule.lowerascii`](#part.rule.lowerascii) | built | - | - | none |
+| [`part.rule.replace`](#part.rule.replace) | built | - | - | none |
+| [`part.rule.split`](#part.rule.split) | built | - | - | none |
+| [`part.rule.substring`](#part.rule.substring) | built | - | - | none |
+| [`part.rule.trim`](#part.rule.trim) | built | - | - | none |
 | [`part.screen`](#part.screen) | planned | not built | - | - |
 | [`part.screen.page`](#part.screen.page) | planned | not built | - | - |
 | [`part.screen.update`](#part.screen.update) | planned | not built | - | - |
 | [`part.seal`](#part.seal) | built | - | - | none |
 | [`part.seal.signer`](#part.seal.signer) | planned | not built | - | - |
 | [`part.space`](#part.space) | built | - | - | none |
-| [`part.space.context`](#part.space.context) | planned | not built | - | - |
+| [`part.space.context`](#part.space.context) | building | - | - | none |
 | [`part.test.bench`](#part.test.bench) | planned | not built | - | - |
 | [`part.test.resume`](#part.test.resume) | planned | not built | - | - |
 | [`part.test.trial`](#part.test.trial) | planned | not built | - | - |

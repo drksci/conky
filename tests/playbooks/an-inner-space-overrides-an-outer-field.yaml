@@ -1,0 +1,16 @@
+# The nearest space wins: an inner space's field overrides the same field of an outer one.
+pages:
+  camp:
+    limit: 5
+    note: outer
+  tent:
+    within: camp
+    limit: 2
+  scout:
+    within: tent
+    rules: ["!has(page.cups) || page.cups <= space.limit", "space.note == 'outer'"]
+steps:
+  - write: {page: scout, fields: {cups: 3}}
+  - expect: {refused: rule}
+  - write: {page: scout, fields: {cups: 2}}
+  - expect: {fields: {scout.cups: 2}, verify: true}

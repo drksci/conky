@@ -16,13 +16,34 @@ Rules, watch conditions and watch values are CEL (Common Expression Language) ex
 
 A rule or a `when` condition holds only if it evaluates to the boolean `true`. Any other result, including a non-boolean, counts as false. An expression that fails to parse or evaluate is refused under its own reason ([Refusals](#refusals)).
 
+### Text functions
+
+An expression can take text apart with these functions. All but `captures` take their names and shapes from the strings extension of the CEL project ([cel-go `ext/README.md`](https://github.com/google/cel-go/blob/master/ext/README.md#strings), read 2026-11-20). Each can be called as a method (`text.split(',')`) or as a function (`split(text, ',')`). Positions count characters from zero.
+
+| Function | Gives | Example |
+|---|---|---|
+| `split(text, sep)`, `split(text, sep, limit)` | A list of text. A limit of 0 gives an empty list. | `'a,b,c'.split(',')` is `['a', 'b', 'c']` |
+| `substring(text, start)`, `substring(text, start, end)` | The characters from `start` up to `end`. A position out of range is an error. | `'tacocat'.substring(0, 4)` is `'taco'` |
+| `indexOf(text, find)`, `indexOf(text, find, start)` | The position of the first match from `start`, or -1. | `'hello mellow'.indexOf('ello', 2)` is `7` |
+| `trim(text)` | The text without leading and trailing whitespace. | `'  x '.trim()` is `'x'` |
+| `lowerAscii(text)` | The text with ASCII letters in lower case. | `'TacoCÆt'.lowerAscii()` is `'tacocÆt'` |
+| `replace(text, find, by)`, `replace(text, find, by, limit)` | The text with matches replaced. A limit of 0 replaces none. | `'hello hello'.replace('he', 'we', 1)` is `'wello hello'` |
+| `join(list)`, `join(list, sep)` | The list of text as one text. | `['a', 'b'].join('/')` is `'a/b'` |
+| `captures(text, pattern)` | The groups of the first match of a Python regular expression as a list of text, or the whole match when the pattern has no group, or an empty list when it does not match. Not in the standard. | `'x=1 y=2'.captures('x=(\\d+) y=(\\d+)')` is `['1', '2']` |
+
+The standard has no `captures`. Its regular-expression extension has `regex.extract`, which needs optional values and allows one group, so `captures` stands in until a need for the standard form is shown. The standard `int('12')` and `double('1.5')` already turn captured text into a number, so `int(line.captures('n=(\\d+)')[0])` reads a number out of a line. A pattern that does not match gives an empty list, and indexing it is an evaluation error, so a rule that reads such a number refuses a line without one.
+
+Every function is pure. Text over 65536 characters, a result over 65536 characters, or a pattern over 256 characters is an evaluation error, handled like any other failing expression ([Refusals](#refusals)). The limits bound the cost of a call but do not make every pattern fast: a pattern can still backtrack for a long time on an input under the limit.
+
 ## Variables in scope
 
 | Where | Name | Meaning |
 |---|---|---|
 | Rule | `page` | The fields of the page as it would be after the write. Reserved keys are not fields. |
+| Rule | `space` | The fields handed down by the spaces the page is within, nearest winning (see [Context from spaces](#context-from-spaces)). |
 | Rule | `size` | The byte length of the serialised page as it would be after the write. |
 | Watch | `page` | The fields of the watching page as it is now. |
+| Watch | `space` | The same, for the watching page. |
 | Watch | `size` | The byte length of the watching page as it is now. |
 | Watch | `other` | The fields of the page that was just written. |
 | Watch | `other_size` | The byte length of the page that was just written. |
@@ -37,6 +58,14 @@ A page may carry a list of rules in `rules`. A space is a page that other pages 
 The rules of a space therefore also apply to the space page itself, and a space whose rule mentions a field must carry that field. This is a known gap ([open questions](../project/open-questions.md)).
 
 A write that changes the `within` of a page that already exists is judged twice: by the page's own rules and the spaces it will be in, as above, and by the rules of every space it was in before, evaluated against the page as it would be after the write ([decision 0022](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md)). A space that says nothing about leaving lets its members go. A space that wants to bind states it as a rule. A refusal by a space the page is leaving names that space, as any refusal from a space does.
+
+## Context from spaces
+
+A space hands down its fields as `space`. For a page, the runtime starts from the outermost space it is within and overlays the fields of each inner space in turn, ending with the nearest, so the nearest space wins a field of the same name. Reserved keys are not included, and a page within no space reads an empty map. `space` is available in rules (the page's own and those handed down, so a space's rule can speak about context set further in), in watch `when` conditions and in `set` values, where it is the watcher's.
+
+Reading a field no space has is an error, as `page` is: the rule is refused as failing to evaluate. A rule that may run where the context is missing guards it, as in `!has(space.limit) || page.cups <= space.limit`.
+
+A write is judged only when its page is written. Changing a field of a space does not re-judge the pages within it; their next write meets the new value. A missing space or a loop in the chain ends the climb, and the walk of rules refuses it as before. Several spaces for one page, reactions handed down and embeds of context are not built.
 
 ## Refusals
 

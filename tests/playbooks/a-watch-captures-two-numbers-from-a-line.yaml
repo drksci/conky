@@ -1,0 +1,16 @@
+# A watch takes two numbers out of a line of text and keeps them as fields.
+pages:
+  feed: {line: ""}
+  tally:
+    cups: 0
+    sugar: 0
+    watch:
+      - on: feed
+        when: "other.line.contains(',')"
+        set:
+          cups: "int(other.line.captures('cups=(\\d+), sugar=(\\d+)')[0])"
+          sugar: "int(other.line.captures('cups=(\\d+), sugar=(\\d+)')[1])"
+          label: "other.line.split(',').map(p, p.trim()).join(' / ')"
+steps:
+  - write: {page: feed, fields: {line: "cups=12, sugar=3"}}
+  - expect: {fields: {tally.cups: 12, tally.sugar: 3, tally.label: "cups=12 / sugar=3"}, verify: true}

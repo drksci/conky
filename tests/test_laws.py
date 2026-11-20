@@ -482,3 +482,17 @@ def test_golden_vault_still_reads(tmp_path: Path) -> None:
     expected = json.loads((GOLDEN / "v1.pages.json").read_text(encoding="utf-8"))
     found = {p.stem: p.read_text(encoding="utf-8") for p in golden.pages_dir.glob("*.md")}
     assert found == expected and len(found) >= 4
+
+
+@arch.holds("law.context.down", "law.rule.tighten")
+def test_a_changed_space_field_refuses_the_next_member_write(vault: Vault) -> None:
+    assert w(vault, "camp", {"limit": 5}).ok
+    assert w(
+        vault, "scout", {"within": "camp", "rules": ["!has(page.cups) || page.cups <= space.limit"]}
+    ).ok
+    assert w(vault, "scout", {"cups": 4}).ok
+    assert w(vault, "camp", {"limit": 2}).ok
+    assert vault.read("scout").fields["cups"] == 4
+    refused = w(vault, "scout", {"cups": 4, "note": "again"})
+    assert not refused.ok and "space.limit" in refused.reason
+    assert message(vault)[1]["Kind"] == "refused"

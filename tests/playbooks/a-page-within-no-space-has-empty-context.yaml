@@ -1,0 +1,9 @@
+# A page within no space reads an empty `space`: a guarded rule passes, a bare read is refused.
+pages:
+  loner:
+    rules: ["!has(space.limit)"]
+steps:
+  - write: {page: loner, fields: {cups: 1}}
+  - expect: {fields: {loner.cups: 1}}
+  - write: {page: bare, fields: {rules: ["space.limit > 0"]}}
+  - expect: {refused: rule, missing: [bare]}

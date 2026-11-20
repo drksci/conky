@@ -1,0 +1,16 @@
+# A watch condition reads the watcher's space, and a set expression may use it.
+pages:
+  camp:
+    limit: 3
+  gauge:
+    within: camp
+    watch:
+      - on: feed
+        when: "other.cups > space.limit"
+        set: {over: "space.limit"}
+  feed: {}
+steps:
+  - write: {page: feed, fields: {cups: 2}}
+  - expect: {fields: {gauge.over: null}}
+  - write: {page: feed, fields: {cups: 7}}
+  - expect: {fields: {gauge.over: 3}, verify: true}
