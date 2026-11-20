@@ -118,13 +118,15 @@ def table(f: dict) -> str:
 def scores(f: dict, runs: list[charts.Run]) -> str:
     """The scores as one small table for the front page: a row a harness, medians over seeds."""
     heads = ("benchmark", "harness", "model", "runs", "reached", f["progress"]["unit"], "calls")
-    heads += ("text sent", "seconds", "rules broken", "pages kept")
+    heads += ("text sent", "cost a run", "seconds", "rules broken", "pages kept")
     out = ["<table>", "<tr>" + "".join(f"<th><sub>{h}</sub></th>" for h in heads) + "</tr>"]
     for arm in f["order"]:
         rs = [r for r in runs if r.arm == arm]
         p = f["per"][arm]
         kept = [r.kept for r in rs if r.kept is not None]
         sent = statistics.median(r.row["chars"] for r in rs)
+        paid = [record.dollars(r.row["model"], r.calls) for r in rs]
+        cost = statistics.median(p[0] for p in paid) if paid and all(paid) else None
         cells = (
             f["scenario"],
             f"<b>{arm}</b>",
@@ -134,6 +136,7 @@ def scores(f: dict, runs: list[charts.Run]) -> str:
             f"{p['value']:,.0f}",
             f"{p['calls']:,.0f}",
             f"{sent:,.0f}" if sent else "0",
+            f"${cost:.4f}" if cost is not None else ("$0" if not sent else ""),
             f"{p['wall']:,.0f}",
             sum(len(r.breaks) for r in rs),
             sum(kept) if kept else "",

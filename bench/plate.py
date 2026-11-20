@@ -8,6 +8,7 @@ for the harness whose `adapter.json` says `accent`, one for a broken rule.
 
 from __future__ import annotations
 
+import math
 import statistics
 from xml.sax.saxutils import escape
 
@@ -491,26 +492,60 @@ def became(rows: list[dict], shapes: list[dict], look: str) -> str:
     return s.svg(276, "The parts each harness was made of when its median run stopped.")
 
 
-def cost(rows: list[dict], series: list[dict], progress: dict, look: str) -> str:
-    """What it cost to get this far: text sent against progress, a line a run."""
+def cost(rows: list[dict], series: list[dict], calls: list[dict], progress: dict, look: str) -> str:
+    """What it cost to get this far, in dollars at list price: a line a run."""
     s = Sheet(look)
     order, arms, accent, thinking = _setup(rows)
     goal, unit = progress["goal"], progress["unit"]
     steps = {(e["harness"], e["seed"]): e["series"] for e in series}
-    _head(s, "What it cost", _state(rows, f"characters sent, by {unit} covered · every run"))
-    left, right, top, bottom = 64.0, WIDTH - 84.0, 62.0, 232.0
-    most = max((r["chars"] for h in thinking for r in arms[h]), default=1) or 1
-    ceiling = 50_000 * (int(most // 50_000) + 1)
+    made = {(e["harness"], e["seed"]): e["calls"] for e in calls}
+    spent: dict[tuple, float] = {}
+    basis = ""
+    for h in thinking:
+        for r in arms[h]:
+            found = record.dollars(r["model"], made.get((h, r["seed"]), []))
+            if found:
+                spent[(h, r["seed"])], basis = found
+    priced = bool(spent) and all((h, r["seed"]) in spent for h in thinking for r in arms[h])
+    _head(s, "What it cost", _state(rows, f"{'dollars' if priced else 'characters'}, by {unit}"))
+
+    def worth(h: str, r: dict, chars: float) -> float:
+        """Dollars for this many of the run's characters, or the characters when unpriced."""
+        if not priced or not r["chars"]:
+            return chars
+        return spent[(h, r["seed"])] * chars / r["chars"]
+
+    def show(value: float) -> str:
+        return f"${value:.4f}" if priced else short(value)
+
+    left, right, top, bottom = 64.0, WIDTH - 96.0, 84.0, 244.0
+    if priced:
+        listed = record.prices()
+        x = 24.0
+        for model in sorted({r["model"] for h in thinking for r in arms[h]}):
+            price = listed["models"][model]
+            words = (
+                f"{price['priced_as']} @ ${price['input']:.2f} in · ${price['output']:.2f} out "
+                f"per million tokens"
+            )
+            s.text(x, 62, words, 9.5, "ink", MONO)
+            x += len(words) * 5.9 + 24
+        s.text(WIDTH - 24, 62, basis, 9.5, "grey", MONO, anchor="end")
+    most = max((worth(h, r, r["chars"]) for h in thinking for r in arms[h]), default=1) or 1
+    grid = _nice(most / 4)
+    ceiling = grid * (int(most / grid) + 1)
 
     def px(value: float) -> float:
         return left + (right - left) * min(max(value, 0.0), goal) / goal
 
-    def py(chars: float) -> float:
-        return bottom - (bottom - top) * chars / ceiling
+    def py(value: float) -> float:
+        return bottom - (bottom - top) * value / ceiling
 
-    for level in range(0, ceiling + 1, 50_000):
+    level = 0.0
+    while level <= ceiling + grid / 2:
         s.line(left, py(level), right, py(level), 0.75, "grey", "1 4")
-        s.caps(left - 8, py(level) + 3, short(level) if level else "0", anchor="end")
+        s.caps(left - 8, py(level) + 3, show(level) if level else "0", anchor="end")
+        level += grid
     for tick in sorted({0.0, goal, *(m["at"] for m in progress.get("milestones", []))}):
         s.caps(px(tick), bottom + 14, f"{tick:,.0f}", anchor="middle")
     s.caps(left - 8, bottom + 14, unit, anchor="end")
@@ -523,14 +558,22 @@ def cost(rows: list[dict], series: list[dict], progress: dict, look: str) -> str
                 continue
             d, last = f"M{px(0):.1f},{py(0):.1f}", py(0)
             for point in points:
-                at, up = px(point["progress"] * goal), py(point["chars"])
+                at, up = px(point["progress"] * goal), py(worth(h, r, point["chars"]))
                 d += f" L{at:.1f},{last:.1f} L{at:.1f},{up:.1f}"
                 last = up
             end = px(points[-1]["progress"] * goal)
             s.path(d, "none", colour, 2.0 if r["seed"] == middle else 0.8)
             if r["ending"] != "reached":
                 end_mark(s, end, last, r["ending"], colour)
-        typical = statistics.median(r["chars"] for r in arms[h])
-        s.text(right + 8, py(typical) + 4, short(typical), 13, colour, SANS, "bold")
-        s.caps(right + 8, py(typical) + 16, h, colour, size=8)
-    return s.svg(bottom + 26, "Text sent against progress made, one line for every run.")
+        typical = statistics.median(worth(h, r, r["chars"]) for r in arms[h])
+        s.text(right + 8, py(typical) + 4, show(typical), 13, colour, SANS, "bold")
+        s.caps(right + 8, py(typical) + 16, f"{h}, a run", colour, size=8)
+    return s.svg(bottom + 26, "What each run cost against progress made, one line for every run.")
+
+
+def _nice(value: float) -> float:
+    """A round step at or above value: 1, 2 or 5 times a power of ten."""
+    if value <= 0:
+        return 1.0
+    scale = 10 ** math.floor(math.log10(value))
+    return next(scale * m for m in (1, 2, 5, 10) if scale * m >= value)

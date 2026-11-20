@@ -659,7 +659,7 @@ def render(runs: list[Run], out: Path, kind: str = "runs") -> list[Path]:
         drawn = {
             "reached": plate.reached(rows, series, runs[0].progress, kind, look),
             "became": plate.became(rows, [shape.shape(r.folder) for r in ordered], look),
-            "cost": plate.cost(rows, series, runs[0].progress, look),
+            "cost": plate.cost(rows, series, made, runs[0].progress, look),
             "text": plate.text(rows, made, look),
             "time": plate.time(rows, made, look),
         }

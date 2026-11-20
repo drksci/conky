@@ -1,0 +1,14 @@
+{
+  "note": "List prices in US dollars for a million tokens, used to turn a run's tokens into dollars. A model named here by an alias is priced as the model in `priced_as`.",
+  "source": "Anthropic first-party API price list",
+  "date": "2026-11-03",
+  "characters_per_token": 4,
+  "models": {
+    "haiku": {"priced_as": "claude-haiku-5-5", "input": 0.10, "output": 0.50},
+    "claude-haiku-5-5": {"priced_as": "claude-haiku-5-5", "input": 0.10, "output": 0.50},
+    "sonnet": {"priced_as": "claude-sonnet-5-5", "input": 2.00, "output": 10.00},
+    "claude-sonnet-5-5": {"priced_as": "claude-sonnet-5-5", "input": 2.00, "output": 10.00},
+    "opus": {"priced_as": "claude-opus-5-5", "input": 4.00, "output": 20.00},
+    "claude-opus-5-5": {"priced_as": "claude-opus-5-5", "input": 4.00, "output": 20.00}
+  }
+}

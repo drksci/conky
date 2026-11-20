@@ -122,3 +122,17 @@ def test_shared_bench_code_names_no_scenario() -> None:
     for name in SHARED:
         found = SCENARIO_WORDS.findall((bench / name).read_text(encoding="utf-8"))
         assert not found, f"bench/{name} names {found}: declare it in scenario.json instead"
+
+
+def test_dollars_come_from_the_price_list_and_say_how_tokens_were_counted() -> None:
+    listed = record.prices()
+    price = listed["models"]["haiku"]
+    made = [{"chars": 4_000_400, "answer": 400}]
+    cost, basis = record.dollars("haiku", made)
+    per = listed["characters_per_token"]
+    assert cost == pytest.approx(
+        (4_000_000 / per * price["input"] + 400 / per * price["output"]) / 1e6
+    )
+    assert "estimated" in basis and str(per) in basis
+    assert record.dollars("a-model-with-no-price", made) is None
+    assert record.dollars("haiku", []) is None

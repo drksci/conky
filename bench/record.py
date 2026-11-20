@@ -242,3 +242,25 @@ def comparable(rows: list[dict]) -> list[str]:
     if any(c.endswith("+changes") for c in commits):
         reasons.append("a run was made with uncommitted changes, so its commit is not what ran")
     return reasons
+
+
+def prices() -> dict:
+    """The price list in `bench/prices.json`."""
+    return json.loads((BENCH / "prices.json").read_text(encoding="utf-8"))
+
+
+def dollars(model: str, made: list[dict]) -> tuple[float, str] | None:
+    """What a run's model calls cost at list price, and how the tokens were counted.
+
+    None when the model has no price. Tokens are the recorded counts when every call has them;
+    otherwise they are estimated from characters, and the second value says so.
+    """
+    listed = prices()
+    price = listed["models"].get(model)
+    if price is None or not made:
+        return None
+    per = listed["characters_per_token"]
+    sent = sum(c["chars"] - c.get("answer", 0) for c in made) / per
+    answered = sum(c.get("answer", 0) for c in made) / per
+    basis = f"tokens estimated at {per} characters each"
+    return (sent * price["input"] + answered * price["output"]) / 1_000_000, basis
