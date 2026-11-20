@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 150" width="880" height="150" role="img" aria-labelledby="t">
-<title id="t">Ugh: Rules are a strongly worded prompt, and hope. Conky: Rules are checked on every change. A model cannot talk its way past one.</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 168" width="880" height="168" role="img" aria-labelledby="t">
+<title id="t">The usual way: Rules are a strongly worded prompt, and hope. Conky: Rules are checked on every change. A model cannot talk its way past one.</title>
 <style>
 :root{--ink:#EDEDED}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
@@ -19,9 +19,59 @@
 .b{font-weight:700}
 .u{fill:var(--ink);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:15px;font-weight:400}
 </style>
-<text class="t" x="24" y="20" font-size="10.08" fill-opacity="1" text-anchor="start">UGH</text>
-<text class="t" x="464" y="20" font-size="10.08" fill-opacity="1" text-anchor="start">CONKY</text>
-<g transform="translate(42 32)">
+<defs><pattern id="d25" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d50" width="4" height="4" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM2 2h2v2h-2z"/></pattern></defs>
+<g transform="translate(24 6)">
+<path class="s" d="M16 29.5C10 30.5 5 32.5 3.5 40"/>
+<path class="s" d="M24 29.5C30 30.5 35 32.5 36.5 40"/>
+<path class="k" d="M16 29.5L20 34L24 29.5"/>
+<path class="s" d="M10 17A10 11 0 1 1 30 17A10 11 0 1 1 10 17Z"/>
+<path class="f25" d="M11.1 12A10 11 0 0 1 28.9 12C27 10.4 24 9.4 20 9.3C16 9.4 13 10.4 11.1 12Z"/>
+<path class="k" d="M11.1 12C13 10.4 16 9.4 20 9.3C24 9.4 27 10.4 28.9 12"/>
+<path class="k" d="M15.2 6.4C14.8 7.6 15.2 8.6 15.9 9.2"/>
+<path class="k" d="M10 15C7.6 15 7.6 20.5 10.2 20.5"/>
+<path class="k" d="M30 15C32.4 15 32.4 20.5 29.8 20.5"/>
+<path class="k" d="M20 19.6C18.9 21.2 19.2 22 20.8 22"/>
+<path class="d" d="M11.5 24.6C13.5 21.8 17 21.8 20 23C23 21.8 26.5 21.8 28.5 24.6C26 26 22.5 25.3 20 24.7C17.5 25.3 14 26 11.5 24.6Z"/>
+<path class="s" d="M16 27.1V29.5"/>
+<path class="s" d="M24 27.1V29.5"/>
+<path class="d" d="M11 12.6L19 12.6L19 18.8L11 18.8ZM12.5 14.1L12.5 17.3L17.5 17.3L17.5 14.1Z"/>
+<path class="d" d="M21 12.6L29 12.6L29 18.8L21 18.8ZM22.5 14.1L22.5 17.3L27.5 17.3L27.5 14.1Z"/>
+<path class="d" d="M18.6 13.6L21.4 13.6L21.4 15.1L18.6 15.1Z"/>
+<path class="i" d="M13 13.9L17.4 15.7L13 17.5"/>
+<path class="i" d="M27 13.9L22.6 15.7L27 17.5"/>
+<path class="k" d="M12.5 10.8L18 9.4"/>
+<path class="k" d="M22 9.4L27.5 10.8"/>
+<path class="k" d="M17 27.2q1-.9 2 0t2 0t2 0"/>
+<path class="s" d="M20 28.2C23.6 29.6 25.4 33.4 24.8 38.2H15.2C14.6 33.4 16.4 29.6 20 28.2Z"/>
+<path class="k" d="M20 29.6L20 38.2"/>
+<path class="k" d="M17.4 32.4L17.8 38.2"/>
+<path class="k" d="M22.6 32.4L22.2 38.2"/>
+</g>
+<g transform="translate(464 6)">
+<path class="f50" d="M17 31.2C10 32 4 34 3 40H37C36 34 30 32 23 31.2Q20 35.6 17 31.2Z"/>
+<path class="s" d="M17 31.2C10 32 4 34 3 40"/>
+<path class="s" d="M23 31.2C30 32 36 34 37 40"/>
+<path class="s" d="M17 31.2Q20 35.6 23 31.2"/>
+<path class="s" d="M17.4 29.2V31.4"/>
+<path class="s" d="M22.6 29.2V31.4"/>
+<path class="s" d="M10 11V20C10 26 14 29.4 20 29.4C26 29.4 30 26 30 20V11"/>
+<path class="k" d="M9.8 17.5C7.4 17.5 7.4 22.4 10 22.4"/>
+<path class="k" d="M30.2 17.5C32.6 17.5 32.6 22.4 30 22.4"/>
+<path class="f25" d="M9.6 16C7.4 7 12.6 2.2 20 2.4C27.6 2.2 32.8 6.6 30.2 14C28.4 10 24.6 8.6 20.4 9.6C16.8 10.4 14 12 12.6 16.4C11.8 15.4 10.8 15.4 9.6 16Z"/>
+<path class="s" d="M9.6 16C7.4 7 12.6 2.2 20 2.4C27.6 2.2 32.8 6.6 30.2 14C28.4 10 24.6 8.6 20.4 9.6C16.8 10.4 14 12 12.6 16.4C11.8 15.4 10.8 15.4 9.6 16Z"/>
+<circle class="s" cx="15.2" cy="17.8" r="4.4"/>
+<circle class="s" cx="24.8" cy="17.8" r="4.4"/>
+<path class="i" d="M19.6 17.4L20.4 17.4"/>
+<path class="k" d="M20 19.6C19 21 19.2 22 20.6 21.8"/>
+<path class="k" d="M12.8 25L12.8 28.6"/>
+<path class="k" d="M27.2 25L27.2 28.6"/>
+<path class="k" d="M12 17H18.4"/>
+<circle class="d" cx="15.2" cy="18.6" r="1.1"/>
+<circle class="d" cx="24.8" cy="18.2" r="1.3"/>
+<path class="i" d="M20.8 11.8Q25 8.2 29.4 10.6"/>
+<path class="i" d="M12.8 25.8Q20 27 25.6 25.2Q27 24.6 27.4 23.4"/>
+</g>
+<g transform="translate(42 50)">
 <path class="s" d="M7 6H61Q68 6 68 13V45Q68 52 61 52H25L16 62L18 52H7Q0 52 0 45V13Q0 6 7 6Z"/>
 <path class="k" d="M11 20L56 20"/>
 <path class="k" d="M11 30L56 30"/>
@@ -34,7 +84,7 @@
 <path class="i" d="M72 28C94 28 100 48 102 68C104 90 116 98 134 98H150"/>
 <path class="i" d="M153.71 94.93L160 98L153.71 101.07"/>
 </g>
-<g transform="translate(482 32)">
+<g transform="translate(482 50)">
 <path class="s" d="M0 16H32L44 28V80H0Z"/>
 <path class="k" d="M32 16V28H44"/>
 <path class="k" d="M14 38L30 38"/>
@@ -47,6 +97,6 @@
 <path class="i" d="M119.71 52.93L126 56L119.71 59.07"/>
 <path class="a" d="M132 54L141 65L160 38"/>
 </g>
-<text class="u"><tspan x="240" y="82">Rules are a strongly</tspan><tspan x="240" y="102">worded prompt, and hope.</tspan></text>
-<text class="u"><tspan x="680" y="62">Rules are checked on</tspan><tspan x="680" y="82">every change. A model</tspan><tspan x="680" y="102">cannot talk its way past</tspan><tspan x="680" y="122">one.</tspan></text>
+<text class="u"><tspan x="240" y="100">Rules are a strongly</tspan><tspan x="240" y="120">worded prompt, and hope.</tspan></text>
+<text class="u"><tspan x="680" y="80">Rules are checked on</tspan><tspan x="680" y="100">every change. A model</tspan><tspan x="680" y="120">cannot talk its way past</tspan><tspan x="680" y="140">one.</tspan></text>
 </svg>

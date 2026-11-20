@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 150" width="880" height="150" role="img" aria-labelledby="t">
-<title id="t">Ugh: It grew until it could not be moved. Conky: A folder and its history. Pick it up and go.</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 168" width="880" height="168" role="img" aria-labelledby="t">
+<title id="t">The usual way: It grew until it could not be moved. Conky: A folder and its history. Pick it up and go.</title>
 <style>
 :root{--ink:#1E1E1E}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
@@ -41,11 +41,70 @@
 .p .y{stroke-width:9.31;stroke-dasharray:23.27 23.27}
 .u{fill:var(--ink);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:15px;font-weight:400}
 </style>
-<defs><pattern id="d12" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d12-w" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(1.80000)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d12-p" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(3.87837)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d25" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d25-w" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(1.80000)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d25-p" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(3.87837)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><clipPath id="c"><rect x="24" y="26" width="200" height="114"/></clipPath></defs>
-<text class="t" x="24" y="20" font-size="10.08" fill-opacity="1" text-anchor="start">UGH</text>
-<text class="t" x="464" y="20" font-size="10.08" fill-opacity="1" text-anchor="start">CONKY</text>
+<defs><pattern id="d12" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d12-w" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(1.80000)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d12-p" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(3.87837)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d25" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d25-w" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(1.80000)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d25-p" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(3.87837)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d50" width="4" height="4" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM2 2h2v2h-2z"/></pattern><pattern id="d50-w" width="4" height="4" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(1.80000)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM2 2h2v2h-2z"/></pattern><pattern id="d50-p" width="4" height="4" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(3.87837)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM2 2h2v2h-2z"/></pattern><clipPath id="c"><rect x="24" y="44" width="200" height="114"/></clipPath></defs>
+<g transform="translate(24 6)">
+<path class="s" d="M16 31C10 32 5 34.5 3.5 40"/>
+<path class="s" d="M24 31C30 32 35 34.5 36.5 40"/>
+<path class="k" d="M16 31L20 35.5L24 31"/>
+<path class="d" d="M18.4 35.5h3.2l-.5 2h-2.2z"/>
+<path class="s" d="M18.9 37.4L17.4 40H22.6L21.1 37.4Z"/>
+<path class="f50" d="M18.9 37.4L17.4 40H22.6L21.1 37.4Z"/>
+<g transform="translate(-1 1.5)">
+<path class="s" d="M10 17A10 11 0 1 1 30 17A10 11 0 1 1 10 17Z"/>
+<path class="f25" d="M11.1 12A10 11 0 0 1 28.9 12C27 10.4 24 9.4 20 9.3C16 9.4 13 10.4 11.1 12Z"/>
+<path class="k" d="M11.1 12C13 10.4 16 9.4 20 9.3C24 9.4 27 10.4 28.9 12"/>
+<path class="k" d="M15.2 6.4C14.8 7.6 15.2 8.6 15.9 9.2"/>
+<path class="k" d="M10 15C7.6 15 7.6 20.5 10.2 20.5"/>
+<path class="k" d="M30 15C32.4 15 32.4 20.5 29.8 20.5"/>
+<path class="k" d="M20 19.6C18.9 21.2 19.2 22 20.8 22"/>
+<path class="d" d="M11.5 24.6C13.5 21.8 17 21.8 20 23C23 21.8 26.5 21.8 28.5 24.6C26 26 22.5 25.3 20 24.7C17.5 25.3 14 26 11.5 24.6Z"/>
+<path class="s" d="M16 27.1V29.5"/>
+<path class="s" d="M24 27.1V29.5"/>
+<path class="d" d="M10.63 14.05L18.53 12.79L19.5 18.92L11.6 20.17ZM12.34 15.29L12.84 18.45L17.78 17.67L17.28 14.51Z"/>
+<path class="d" d="M20.5 12.48L28.4 11.23L29.37 17.35L21.47 18.61ZM22.22 13.73L22.72 16.89L27.66 16.11L27.16 12.95Z"/>
+<path class="d" d="M18.29 13.84L21.05 13.41L21.29 14.89L18.52 15.33Z"/>
+<circle class="d" cx="15.1" cy="16.4" r="1"/>
+<circle class="d" cx="24.9" cy="14.6" r="1"/>
+<path class="k" d="M13 14.9H17.2"/>
+<path class="k" d="M22.8 13.1H27"/>
+<path class="k" d="M17 28q3-2 6 0"/>
+<path class="k" d="M16.6 6L15.6 3.6"/>
+<path class="k" d="M20 6L20 2.8"/>
+<path class="k" d="M23.4 6.2L24.8 3.8"/>
+<path class="k" d="M26.5 3.6C24.5 2.4 27.6 1.4 25.4 0"/>
+</g>
+<g transform="translate(21.6 32.6) scale(0.9)">
+<path class="d" d="M0 2.2L13.5 0L16 1.6L13.5 3.2L1 3.8Z"/>
+<path class="d" d="M0 4.8H16.5V7H0Z"/>
+</g>
+<circle class="s" cx="30.4" cy="31.8" r="1.8"/>
+<path class="k" d="M28.6 31.8L26.4 30.6"/>
+</g>
+<g transform="translate(464 6)">
+<path class="f50" d="M17 31.2C10 32 4 34 3 40H37C36 34 30 32 23 31.2Q20 35.6 17 31.2Z"/>
+<path class="s" d="M17 31.2C10 32 4 34 3 40"/>
+<path class="s" d="M23 31.2C30 32 36 34 37 40"/>
+<path class="s" d="M17 31.2Q20 35.6 23 31.2"/>
+<path class="s" d="M17.4 29.2V31.4"/>
+<path class="s" d="M22.6 29.2V31.4"/>
+<path class="s" d="M10 11V20C10 26 14 29.4 20 29.4C26 29.4 30 26 30 20V11"/>
+<path class="k" d="M9.8 17.5C7.4 17.5 7.4 22.4 10 22.4"/>
+<path class="k" d="M30.2 17.5C32.6 17.5 32.6 22.4 30 22.4"/>
+<path class="f25" d="M9.6 16C7.4 7 12.6 2.2 20 2.4C27.6 2.2 32.8 6.6 30.2 14C28.4 10 24.6 8.6 20.4 9.6C16.8 10.4 14 12 12.6 16.4C11.8 15.4 10.8 15.4 9.6 16Z"/>
+<path class="s" d="M9.6 16C7.4 7 12.6 2.2 20 2.4C27.6 2.2 32.8 6.6 30.2 14C28.4 10 24.6 8.6 20.4 9.6C16.8 10.4 14 12 12.6 16.4C11.8 15.4 10.8 15.4 9.6 16Z"/>
+<circle class="s" cx="15.2" cy="17.8" r="4.4"/>
+<circle class="s" cx="24.8" cy="17.8" r="4.4"/>
+<path class="i" d="M19.6 17.4L20.4 17.4"/>
+<path class="k" d="M20 19.6C19 21 19.2 22 20.6 21.8"/>
+<path class="k" d="M12.8 25L12.8 28.6"/>
+<path class="k" d="M27.2 25L27.2 28.6"/>
+<path class="k" d="M12 17H18.4"/>
+<circle class="d" cx="15.2" cy="18.6" r="1.1"/>
+<path class="i" d="M21 18.4Q24.8 15.2 28.6 18.4"/>
+<path class="i" d="M12.8 25.8Q20 27.6 25.8 25Q27.2 24.2 27.6 23"/>
+</g>
 <g clip-path="url(#c)">
-<g class="w" transform="translate(7.33 -15.11) scale(0.56)">
+<g class="w" transform="translate(7.33 2.89) scale(0.56)">
 <path class="i" d="M285.64 169.48L295.84 163.33L288.1 150.49L277.9 156.64Z"/>
 <path class="i" d="M300.07 160.76L310.31 154.68L302.66 141.78L292.41 147.86Z"/>
 <path class="i" d="M314.38 152.35L324.87 146.71L317.76 133.5L307.27 139.15Z"/>
@@ -95,7 +154,7 @@
 <path class="i" d="M34 272L846 272"/>
 </g>
 </g>
-<g class="p" transform="translate(419.36 -3.23) scale(0.26)">
+<g class="p" transform="translate(419.36 14.77) scale(0.26)">
 <path class="k" d="M416.82 341.64Q429.99 393.48 469 430.07Q455.83 378.23 416.82 341.64Z"/>
 <path class="k" d="M469 430.07Q475.72 481.05 504.84 523.43Q498.12 472.45 469 430.07Z"/>
 <circle class="k" cx="469" cy="430.07" r="4.4"/>
@@ -149,8 +208,8 @@
 <path class="s" d="M788 190L828 182L828 548L788 540Z"/>
 <path class="y" d="M612 532C658 532 708 500 736 280"/>
 </g>
-<path class="i" d="M464 136L497.72 136"/>
-<path class="i" d="M634.95 136L664 136"/>
-<text class="u"><tspan x="240" y="82">It grew until it could</tspan><tspan x="240" y="102">not be moved.</tspan></text>
-<text class="u"><tspan x="680" y="82">A folder and its history.</tspan><tspan x="680" y="102">Pick it up and go.</tspan></text>
+<path class="i" d="M464 154L497.72 154"/>
+<path class="i" d="M634.95 154L664 154"/>
+<text class="u"><tspan x="240" y="100">It grew until it could</tspan><tspan x="240" y="120">not be moved.</tspan></text>
+<text class="u"><tspan x="680" y="100">A folder and its history.</tspan><tspan x="680" y="120">Pick it up and go.</tspan></text>
 </svg>
