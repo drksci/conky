@@ -193,7 +193,7 @@ def test_a_page_that_asks_a_model_plays_and_the_record_says_what_it_read(
     provider(vault, stand)
     stand.answer = "1"
     assert w(vault, "screen", {"turn": 0}).ok
-    ask = {"provider": "helper", "prompt": "Screen ![[screen#turn]] waits.", "into": "keys"}
+    ask = {"provider": "helper", "prompt": "Screen:\n![[screen]]", "into": "keys"}
     watch = [
         {"on": "screen", "when": "true", "ask": ask},
         {"on": "screen", "when": "true", "set": {"turn": "other.turn"}},
@@ -201,6 +201,9 @@ def test_a_page_that_asks_a_model_plays_and_the_record_says_what_it_read(
     assert w(vault, "hands", {"watch": watch}).ok
     assert connect(vault, "--max-steps", "2") == 0
     assert len(stand.requests) == 2
+    sent = [request["body"]["messages"][0]["content"] for request in stand.requests]
+    assert all(text.startswith("Screen:\n") and len(text) > len("Screen:\n") for text in sent)
+    assert any("Push on." in text for text in sent)
     answers = [tags for _, tags in history(vault, "hands") if "Model" in tags]
     assert len(answers) == 2
     assert all(tags["Read"] == "screen" and tags["Model"] == "helper" for tags in answers)

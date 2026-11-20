@@ -60,6 +60,5 @@ The connector prints one line for each screen written and each set of keys sent,
 - Polling. A hands write is noticed within a fraction of a second, not at once.
 - The screen is the tail of the output, not a model of a terminal window.
 - The program gets the terminal on its standard streams but not as its controlling terminal, so a program that opens `/dev/tty` directly may not work.
-- A prompt cannot embed the screen text. An embed reads a field, and the screen text is the body of the page. A prompt can embed the screen's `turn` and fields of other pages, not the screen itself.
 - One program and one pair of pages per run. To play two programs, run two connectors with different `--screen`, `--hands` and `--as`.
 - The page named by `--screen` is written to by the connector, so a rule that refuses its writes stops the run from recording screens. The refusal is recorded and printed.

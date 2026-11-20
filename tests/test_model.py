@@ -225,6 +225,53 @@ def test_the_answer_names_each_page_that_was_embedded_once_in_order(
     vault.verify()
 
 
+def test_an_embed_with_no_field_reads_the_body_and_the_answer_names_the_page(
+    vault: Vault, stand: Stand
+) -> None:
+    provider(vault, stand)
+    assert vault.write("log", {"n": 1}, "first line\nsecond line\n", actor="alice", at=AT).ok
+    assert w(vault, "ticket", {"status": "old"}).ok
+    prompt = "Log: ![[log]] and ![[log#n]]"
+    assert w(vault, "desk", {"summary": "", "watch": watch(prompt=prompt)}).ok
+    new_ticket(vault)
+    sent = stand.requests[0]["body"]["messages"][0]["content"]
+    assert sent == "Log: first line\nsecond line\n and 1"
+    assert message(vault)[1]["Read"] == "log"
+    assert vault.log()[-1].endswith("model helper read log")
+    vault.verify()
+
+
+def test_a_changed_body_is_a_changed_question_and_an_unchanged_one_is_not(
+    vault: Vault, stand: Stand
+) -> None:
+    provider(vault, stand)
+    assert vault.write("log", {}, "one\n", actor="alice", at=AT).ok
+    assert w(vault, "ticket", {"status": "old"}).ok
+    assert w(vault, "desk", {"summary": "", "watch": watch(prompt="![[log]]")}).ok
+    new_ticket(vault)
+    assert len(stand.requests) == 1
+    assert w(vault, "log", {"n": 2}).ok
+    assert w(vault, "ticket", {"note": "again"}).ok
+    assert len(stand.requests) == 1
+    assert vault.write("log", {}, "two\n", actor="alice", at=AT).ok
+    assert w(vault, "ticket", {"note": "once more"}).ok
+    assert len(stand.requests) == 2
+    assert stand.requests[1]["body"]["messages"][0]["content"] == "two\n"
+
+
+def test_a_missing_page_or_an_empty_body_embeds_nothing_and_is_not_read(
+    vault: Vault, stand: Stand
+) -> None:
+    provider(vault, stand)
+    assert w(vault, "empty", {"n": 1}).ok
+    assert w(vault, "ticket", {"status": "old"}).ok
+    prompt = "[![[ghost]]|![[empty]]]"
+    assert w(vault, "desk", {"summary": "", "watch": watch(prompt=prompt)}).ok
+    new_ticket(vault)
+    assert stand.requests[0]["body"]["messages"][0]["content"] == "[|]"
+    assert "Read" not in message(vault)[1]
+
+
 def test_an_answer_to_a_prompt_with_no_embeds_has_no_read_trailer(
     vault: Vault, stand: Stand
 ) -> None:

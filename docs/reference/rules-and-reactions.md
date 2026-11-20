@@ -92,7 +92,7 @@ An entry has either `set` or `ask`, never both. An `ask` has exactly `provider`,
 
 When the entry fires, in order:
 
-1. Embeds in `prompt` are resolved as they are when a page is read ([vault format](vault-format.md#pages)).
+1. Embeds in `prompt` are resolved as they are when a page is read ([vault format](vault-format.md#pages)). `![[page#field]]` reads one field and `![[page]]` reads the whole body. A change to either is a change to the resolved prompt, so the skip rule below asks again.
 2. The skip rule applies. The watching page keeps a field named `<into>_asked` that holds the SHA-256 hex digest of the resolved prompt it last got an answer for. If `into` is present and `<into>_asked` matches the resolved prompt, nothing is asked and nothing is written. This keeps a settled question from being asked twice and lets a loop settle. The reaction depth limit of 12 still applies, and is checked before the model is called.
 3. The provider page is read ([providers](providers.md)) and the model is called once.
 4. The answer text, trimmed, is written to `into`, together with `<into>_asked`, in one write by the watching page. It carries `Cause` like any reaction, is checked against the page's rules and its spaces' rules, and can be refused. A refused answer is recorded as a refusal and the field keeps its value.

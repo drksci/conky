@@ -28,7 +28,7 @@ A page is a line `---`, YAML frontmatter, a line `---`, then a Markdown body. A 
 
 Three frontmatter keys are reserved: `within` (the name of a space), `rules` (a list of expressions) and `watch` (a list of watch entries). Every other key is a field. Keys are written in a fixed order: reserved keys first, then fields sorted by name. A page's bytes are therefore a function of its content, and the same content always produces the same file.
 
-A body may contain `![[name#field]]`, an embed. It is resolved when the page is read, not when it is stored: the embed is replaced by the value of that field on that page. A string is inserted as it is, a boolean as `true` or `false`, a missing page or field as nothing, and any other value as compact JSON. The stored file keeps the embed text. See [rules and reactions](rules-and-reactions.md) for the meaning of `within`, `rules` and `watch`.
+A body may contain `![[name#field]]`, an embed. It is resolved when the page is read, not when it is stored: the embed is replaced by the value of that field on that page. `![[name]]`, with no `#field`, is replaced by the body of that page as stored. A string is inserted as it is, a boolean as `true` or `false`, a missing page, a missing field or an empty body as nothing, and any other value as compact JSON. An embedded body is not itself resolved. The stored file keeps the embed text. See [rules and reactions](rules-and-reactions.md) for the meaning of `within`, `rules` and `watch`.
 
 ## Commits
 
@@ -59,11 +59,11 @@ An answer from a model is a write ([rules and reactions](rules-and-reactions.md#
 | `Model-Name` | the `model` field of that page, as sent |
 | `Tokens-In` | prompt tokens, only when the provider reported them |
 | `Tokens-Out` | completion tokens, only when the provider reported them |
-| `Read` | a page whose fields were embedded in the prompt, one trailer for each distinct page in order of first use, and none when no page was embedded |
+| `Read` | a page whose fields or body were embedded in the prompt, one trailer for each distinct page in order of first use, and none when no page was embedded |
 
 Between the subject and the trailers sits the resolved prompt, exactly as it was sent, so the question is in the history beside its answer. The trailers are always the last paragraph of the message. A refusal of an answer that broke a rule carries the same trailers and note.
 
-`Read` records what the page looked at to ask its question. A page counts as read when an embed in the prompt named it and the named field exists. `conky log` shows the pages as `read a, b`.
+`Read` records what the page looked at to ask its question. A page counts as read when an embed in the prompt named it and the named field exists, or, for an embed with no field, when the body is not empty. `conky log` shows the pages as `read a, b`.
 
 The answer is a field of the page like any other. The secret used to reach the provider is never written to the vault, in a page, a trailer or a message. See [providers](providers.md#secrets).
 

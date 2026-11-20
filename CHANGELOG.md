@@ -6,6 +6,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ### Added
 
+- `![[page]]` with no field embeds the body of a page. A missing page or an empty body embeds nothing, as a missing field does, and a page read this way is listed in the `Read` trailer like one read by field. A page that asks a model can now read a connector's screen text.
 - A vault as a Git repository: every write is a signed commit, and a refused write is an empty signed commit.
 - Rules in CEL, inherited through spaces.
 - Reactions: pages that watch pages and write themselves.

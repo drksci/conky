@@ -13,7 +13,7 @@ from conky.errors import BadInput
 
 RESERVED = ("within", "rules", "watch")
 NAME = re.compile(r"^[a-z0-9][a-z0-9_-]{0,63}$")
-EMBED = re.compile(r"!\[\[([^\]#]+)#([^\]]+)\]\]")
+EMBED = re.compile(r"!\[\[([^\]#]+)(?:#([^\]]+))?\]\]")
 
 
 def _bool_is_true_false(base: type) -> type:
@@ -179,31 +179,39 @@ def parse(text: str) -> Page:
     return Page(head.get("within"), head.get("rules") or [], head.get("watch") or [], fields, body)
 
 
+def _embed_text(target: Page | None, field: str | None) -> str | None:
+    """Return the text an embed names on target, or None when there is nothing to embed.
+
+    With a field it is that field's value. Without one it is the body. A missing page, a
+    missing field and an empty body give None.
+    """
+    if target is None:
+        return None
+    if field is None:
+        return target.body or None
+    if field not in target.fields:
+        return None
+    value = target.fields[field]
+    if isinstance(value, str):
+        return value
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    return "" if value is None else json.dumps(value, sort_keys=True, ensure_ascii=False)
+
+
 def embedded(text: str, lookup: dict[str, Page]) -> list[str]:
-    """Return the pages whose fields text embeds, each once, in order of first use."""
+    """Return the pages whose fields or body text embeds, each once, in order of first use."""
     names: list[str] = []
     for found in EMBED.finditer(text):
-        target = lookup.get(found.group(1))
-        if target is not None and found.group(2) in target.fields and found.group(1) not in names:
-            names.append(found.group(1))
+        name = found.group(1)
+        if _embed_text(lookup.get(name), found.group(2)) is not None and name not in names:
+            names.append(name)
     return names
 
 
 def resolve_text(text: str, lookup: dict[str, Page]) -> str:
-    """Return text with each embed replaced by the field value it names in lookup."""
-
-    def value_text(match: re.Match[str]) -> str:
-        target = lookup.get(match.group(1))
-        if target is None or match.group(2) not in target.fields:
-            return ""
-        value = target.fields[match.group(2)]
-        if isinstance(value, str):
-            return value
-        if isinstance(value, bool):
-            return "true" if value else "false"
-        return "" if value is None else json.dumps(value, sort_keys=True, ensure_ascii=False)
-
-    return EMBED.sub(value_text, text)
+    """Return text with each embed replaced by the field or body it names in lookup."""
+    return EMBED.sub(lambda m: _embed_text(lookup.get(m.group(1)), m.group(2)) or "", text)
 
 
 def resolve(page: Page, lookup: dict[str, Page]) -> Page:

@@ -142,6 +142,18 @@ ok: 16 commits verified
 
 The reacting page here is a reflex, not a mind. It plays the same move whatever the screen says, which is why the journey is the dullest possible one. What the run shows is the mechanism: a program's screen becomes a page, a page's words become keys, and both directions pass through the same rules and the same history as any other write.
 
-A page that asks a model can play the same way once a provider is set up. It watches `screen`, asks the model what to type and writes the answer into `keys` together with the `turn` it answers. See [pages that ask a model](../reference/rules-and-reactions.md#asking-a-model) and [providers](../reference/providers.md). One gap remains: an embed reads a field of a page, and the screen text is the body of `screen`, so a prompt cannot yet embed what is on the screen. No model was called for this page, and no output of one is shown here.
+A page that asks a model can play the same way once a provider is set up. It watches `screen`, asks the model what to type and writes the answer into `keys` together with the `turn` it answers. See [pages that ask a model](../reference/rules-and-reactions.md#asking-a-model) and [providers](../reference/providers.md). The prompt embeds the screen text with `![[screen]]`, which reads the body of a page the way `![[screen#turn]]` reads a field:
+
+```yaml
+watch:
+- on: screen
+  when: "true"
+  ask:
+    provider: helper
+    prompt: "The program shows:\n![[screen]]\nWhich key should be typed next?"
+    into: keys
+```
+
+The model gets the new screen each turn, and the answer is asked again only when the screen text changed. A test with a stand-in provider checks this. No model was called for this page, and no output of one is shown here.
 
 A rule can also limit the hands. A rule on `hands`, or on a space it belongs to, that forbids a particular `keys` value turns that write away. The refusal is recorded in the history and the program never receives the key.
