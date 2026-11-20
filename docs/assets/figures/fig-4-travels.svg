@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 280" width="880" height="280" role="img" aria-labelledby="t">
 <title id="t">A vault travels alone</title>
 <style>
-:root{--ink:#1E1E1E;--acc:#F4C430}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
-:root[data-theme="dark"]{--ink:#EDEDED}
+:root{--ink:#1E1E1E;--tone:#E6E3DC;--acc:#F4C430}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED;--tone:#2B2F36}}
+:root[data-theme="dark"]{--ink:#EDEDED;--tone:#2B2F36}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
 .k{stroke:var(--ink);stroke-width:0.75}
@@ -12,28 +12,30 @@
 .z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
 .y{stroke:var(--acc);stroke-width:2.4;stroke-dasharray:6 6}
 .d{fill:var(--ink);stroke:none}
+.s{fill:var(--tone);stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.m{fill:var(--tone);stroke:var(--ink);stroke-width:0.75;stroke-linejoin:round}
 .t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 </style>
-<path class="k" d="M22 22H858V258H22Z"/>
-<path class="k" d="M580.39 236H858V258H580.39Z"/>
-<path class="k" d="M720.49 236L720.49 258"/>
-<text class="t b" x="589.39" y="251" font-size="11" text-anchor="start">FIG. 4  TRAVELS</text>
-<text class="t" x="729.49" y="250.5" font-size="8.5" text-anchor="start">SCHEMATIC, NOT DATA</text>
-<path class="i" d="M60 146V44Q60 38 68 38H140L154 56H330V146Z"/>
-<path class="i" d="M88 70H132L142 80V132H88Z"/>
+<path class="k" d="M26 22H854Q858 22 858 26V254Q858 258 854 258H26Q22 258 22 254V26Q22 22 26 22Z"/>
+<path class="m" d="M623.4 236H855Q858 236 858 239V255Q858 258 855 258H623.4Q620.4 258 620.4 255V239Q620.4 236 623.4 236Z"/>
+<path class="k" d="M738.52 236L738.52 258"/>
+<text class="t" x="628.4" y="250.5" font-size="9.2" text-anchor="start">FIG. 4  TRAVELS</text>
+<text class="t" x="746.52" y="250.5" font-size="7.36" text-anchor="start">SCHEMATIC, NOT DATA</text>
+<path class="s" d="M60 146V44Q60 38 68 38H140L154 56H330V146Z"/>
+<path class="s" d="M88 70H132L142 80V132H88Z"/>
 <path class="k" d="M132 70V80H142"/>
 <path class="k" d="M102 96L128 96"/>
 <path class="k" d="M102 112L128 112"/>
-<path class="i" d="M168 70H212L222 80V132H168Z"/>
+<path class="s" d="M168 70H212L222 80V132H168Z"/>
 <path class="k" d="M212 70V80H222"/>
 <path class="k" d="M182 96L208 96"/>
 <path class="k" d="M182 112L208 112"/>
-<path class="i" d="M248 70H292L302 80V132H248Z"/>
+<path class="s" d="M248 70H292L302 80V132H248Z"/>
 <path class="k" d="M292 70V80H302"/>
 <path class="k" d="M262 96L288 96"/>
 <path class="k" d="M262 112L288 112"/>
-<path class="i" d="M60 156H330V180H60Z"/>
+<path class="s" d="M60 156H330V180H60Z"/>
 <circle class="d" cx="82.5" cy="168" r="2.6"/>
 <path class="k" d="M105 156L105 180"/>
 <circle class="d" cx="127.5" cy="168" r="2.6"/>
@@ -45,20 +47,20 @@
 <circle class="d" cx="262.5" cy="168" r="2.6"/>
 <path class="k" d="M285 156L285 180"/>
 <circle class="d" cx="307.5" cy="168" r="2.6"/>
-<path class="i" d="M550 146V44Q550 38 558 38H630L644 56H820V146Z"/>
-<path class="i" d="M578 70H622L632 80V132H578Z"/>
+<path class="s" d="M550 146V44Q550 38 558 38H630L644 56H820V146Z"/>
+<path class="s" d="M578 70H622L632 80V132H578Z"/>
 <path class="k" d="M622 70V80H632"/>
 <path class="k" d="M592 96L618 96"/>
 <path class="k" d="M592 112L618 112"/>
-<path class="i" d="M658 70H702L712 80V132H658Z"/>
+<path class="s" d="M658 70H702L712 80V132H658Z"/>
 <path class="k" d="M702 70V80H712"/>
 <path class="k" d="M672 96L698 96"/>
 <path class="k" d="M672 112L698 112"/>
-<path class="i" d="M738 70H782L792 80V132H738Z"/>
+<path class="s" d="M738 70H782L792 80V132H738Z"/>
 <path class="k" d="M782 70V80H792"/>
 <path class="k" d="M752 96L778 96"/>
 <path class="k" d="M752 112L778 112"/>
-<path class="i" d="M550 156H820V180H550Z"/>
+<path class="s" d="M550 156H820V180H550Z"/>
 <circle class="d" cx="572.5" cy="168" r="2.6"/>
 <path class="k" d="M595 156L595 180"/>
 <circle class="d" cx="617.5" cy="168" r="2.6"/>
@@ -70,9 +72,9 @@
 <circle class="d" cx="752.5" cy="168" r="2.6"/>
 <path class="k" d="M775 156L775 180"/>
 <circle class="d" cx="797.5" cy="168" r="2.6"/>
-<text class="t" x="195" y="206" font-size="15" text-anchor="middle">HERE</text>
-<text class="t" x="685" y="206" font-size="15" text-anchor="middle">THERE</text>
-<text class="t" x="440" y="80" font-size="14" text-anchor="middle">COPY</text>
+<text class="t" x="195" y="206" font-size="13.8" text-anchor="middle">HERE</text>
+<text class="t" x="685" y="206" font-size="13.8" text-anchor="middle">THERE</text>
+<text class="t" x="440" y="80" font-size="12.88" text-anchor="middle">COPY</text>
 <path class="a" d="M344 100L530 100"/>
 <path class="i" d="M530 100L536 100"/>
 <path class="i" d="M530.81 96.49L538 100L530.81 103.51"/>
@@ -82,5 +84,5 @@
 <path class="z" d="M130 234L230 234"/>
 <path class="i" d="M224.81 230.49L232 234L224.81 237.51"/>
 <path class="a" d="M244 224L244 244"/>
-<text class="t" x="262" y="238" font-size="14" text-anchor="start">KEYS STAY</text>
+<text class="t" x="262" y="238" font-size="12.88" text-anchor="start">KEYS STAY</text>
 </svg>

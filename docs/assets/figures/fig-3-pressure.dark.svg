@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 272" width="880" height="272" role="img" aria-labelledby="t">
+<title id="t">A wall and pressure</title>
+<style>
+:root{--ink:#EDEDED;--tone:#2B2F36;--acc:#F4C430}
+.i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.i{stroke:var(--ink);stroke-width:1.2}
+.k{stroke:var(--ink);stroke-width:0.75}
+.a{stroke:var(--acc);stroke-width:2.4}
+.h{stroke:var(--ink);stroke-width:0.6}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
+.y{stroke:var(--acc);stroke-width:2.4;stroke-dasharray:6 6}
+.d{fill:var(--ink);stroke:none}
+.s{fill:var(--tone);stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.m{fill:var(--tone);stroke:var(--ink);stroke-width:0.75;stroke-linejoin:round}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.b{font-weight:700}
+</style>
+<path class="k" d="M26 22H854Q858 22 858 26V246Q858 250 854 250H26Q22 250 22 246V26Q22 22 26 22Z"/>
+<path class="m" d="M616.59 228H855Q858 228 858 231V247Q858 250 855 250H616.59Q613.59 250 613.59 247V231Q613.59 228 616.59 228Z"/>
+<path class="k" d="M738.52 228L738.52 250"/>
+<text class="t" x="621.59" y="242.5" font-size="9.2" text-anchor="start">FIG. 3  PRESSURE</text>
+<text class="t" x="746.52" y="242.5" font-size="7.36" text-anchor="start">SCHEMATIC, NOT DATA</text>
+<path class="k" d="M44 36H426Q430 36 430 40V214Q430 218 426 218H44Q40 218 40 214V40Q40 36 44 36Z"/>
+<path class="k" d="M454 36H836Q840 36 840 40V214Q840 218 836 218H454Q450 218 450 214V40Q450 36 454 36Z"/>
+<text class="t" x="58" y="62" font-size="12.88" text-anchor="start">WALL</text>
+<text class="t" x="468" y="62" font-size="12.88" text-anchor="start">PRESSURE</text>
+<path class="s" d="M72 96H128L142 110V192H72Z"/>
+<path class="k" d="M128 96V110H142"/>
+<path class="k" d="M86 130L128 130"/>
+<path class="k" d="M86 150L128 150"/>
+<path class="k" d="M86 170L128 170"/>
+<path class="i" d="M146 144L282 144"/>
+<path class="i" d="M276.81 140.49L284 144L276.81 147.51"/>
+<path class="s" d="M300 84H326V204H300Z"/>
+<path class="s" d="M470 96H526L540 110V192H470Z"/>
+<path class="k" d="M526 96V110H540"/>
+<path class="k" d="M484 130L526 130"/>
+<path class="k" d="M484 150L526 150"/>
+<path class="k" d="M484 170L526 170"/>
+<path class="k" d="M542 172L586 172"/>
+<path class="s" d="M586 172A54 54 0 0 1 694 172Z"/>
+<path class="k" d="M593 172L586 172"/>
+<path class="k" d="M606.77 138.77L601.82 133.82"/>
+<path class="k" d="M640 125L640 118"/>
+<path class="k" d="M673.23 138.77L678.18 133.82"/>
+<path class="k" d="M687 172L694 172"/>
+<path class="a" d="M669.7 142.3L686.67 125.33"/>
+<path class="i" d="M640 172L682.65 154.77"/>
+<circle class="d" cx="640" cy="172" r="3.5"/>
+<path class="z" d="M704 140L742 140"/>
+<path class="i" d="M736.81 136.49L744 140L736.81 143.51"/>
+<path class="s" d="M750 102H798L810 114V184H750Z"/>
+<path class="k" d="M798 102V114H810"/>
+<path class="k" d="M764 132L796 132"/>
+<path class="k" d="M764 150L796 150"/>
+<path class="k" d="M764 168L796 168"/>
+</svg>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 220" width="880" height="220" role="img" aria-labelledby="t">
+<title id="t">Every copy gets tested</title>
+<style>
+:root{--ink:#1E1E1E;--tone:#E6E3DC;--acc:#F4C430}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED;--tone:#2B2F36}}
+:root[data-theme="dark"]{--ink:#EDEDED;--tone:#2B2F36}
+.i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.i{stroke:var(--ink);stroke-width:1.2}
+.k{stroke:var(--ink);stroke-width:0.75}
+.a{stroke:var(--acc);stroke-width:2.4}
+.h{stroke:var(--ink);stroke-width:0.6}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
+.y{stroke:var(--acc);stroke-width:2.4;stroke-dasharray:6 6}
+.d{fill:var(--ink);stroke:none}
+.s{fill:var(--tone);stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.m{fill:var(--tone);stroke:var(--ink);stroke-width:0.75;stroke-linejoin:round}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.b{font-weight:700}
+</style>
+<path class="k" d="M26 22H854Q858 22 858 26V194Q858 198 854 198H26Q22 198 22 194V26Q22 22 26 22Z"/>
+<path class="m" d="M559.4 176H855Q858 176 858 179V195Q858 198 855 198H559.4Q556.4 198 556.4 195V179Q556.4 176 559.4 176Z"/>
+<path class="k" d="M722.18 176L722.18 198"/>
+<text class="t" x="564.4" y="190.5" font-size="9.2" text-anchor="start">FIG. 6  THE BLOOD TEST</text>
+<text class="t" x="730.18" y="190.5" font-size="7.36" text-anchor="start">ILLUSTRATION, NOT DATA</text>
+<path class="k" d="M50 119L830 119"/>
+<path class="s" d="M280 100V108A40 11 0 0 0 360 108V100A40 11 0 0 1 280 100Z"/>
+<ellipse class="s" cx="320" cy="100" rx="40" ry="11"/>
+<ellipse class="k" cx="320" cy="101" rx="26" ry="6"/>
+<text class="t" x="320" y="146" font-size="10.12" text-anchor="middle">ORIGINAL</text>
+<path class="s" d="M420 100V108A40 11 0 0 0 500 108V100A40 11 0 0 1 420 100Z"/>
+<ellipse class="s" cx="460" cy="100" rx="40" ry="11"/>
+<ellipse class="k" cx="460" cy="101" rx="26" ry="6"/>
+<text class="t" x="460" y="146" font-size="10.12" text-anchor="middle">COPY</text>
+<path class="a" d="M452 62L458 69L469 55"/>
+<path class="s" d="M560 100V108A40 11 0 0 0 640 108V100A40 11 0 0 1 560 100Z"/>
+<ellipse class="s" cx="600" cy="100" rx="40" ry="11"/>
+<ellipse class="k" cx="600" cy="101" rx="26" ry="6"/>
+<text class="t" x="600" y="146" font-size="10.12" text-anchor="middle">COPY</text>
+<path class="a" d="M592 62L598 69L609 55"/>
+<path class="s" d="M700 100V108A40 11 0 0 0 780 108V100A40 11 0 0 1 700 100Z"/>
+<ellipse class="s" cx="740" cy="100" rx="40" ry="11"/>
+<ellipse class="k" cx="740" cy="101" rx="26" ry="6"/>
+<text class="t" x="740" y="146" font-size="10.12" text-anchor="middle">COPY</text>
+<path class="a" d="M732 62L738 69L749 55"/>
+<path class="s" d="M55 68H107Q110 68 110 71V78Q110 81 107 81H55Q52 81 52 78V71Q52 68 55 68Z"/>
+<path class="i" d="M110 74L150 74"/>
+<path class="i" d="M150 74Q200 74 218 90L252 100"/>
+<circle class="d" cx="252" cy="100" r="2.4"/>
+<path class="k" d="M244 88q3-6 6 0t6 0"/>
+<path class="k" d="M236 77q3-6 6 0t6 0"/>
+<text class="t" x="44" y="192" font-size="11.04" text-anchor="start">EVERY COPY GETS TESTED. EVERY COPY HAS TO PASS.</text>
+</svg>

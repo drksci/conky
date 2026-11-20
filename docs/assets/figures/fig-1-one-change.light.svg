@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 256" width="880" height="256" role="img" aria-labelledby="t">
+<title id="t">One change, and what follows</title>
+<style>
+:root{--ink:#1E1E1E;--tone:#E6E3DC;--acc:#F4C430}
+.i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.i{stroke:var(--ink);stroke-width:1.2}
+.k{stroke:var(--ink);stroke-width:0.75}
+.a{stroke:var(--acc);stroke-width:2.4}
+.h{stroke:var(--ink);stroke-width:0.6}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
+.y{stroke:var(--acc);stroke-width:2.4;stroke-dasharray:6 6}
+.d{fill:var(--ink);stroke:none}
+.s{fill:var(--tone);stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.m{fill:var(--tone);stroke:var(--ink);stroke-width:0.75;stroke-linejoin:round}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.b{font-weight:700}
+</style>
+<path class="k" d="M26 22H854Q858 22 858 26V230Q858 234 854 234H26Q22 234 22 230V26Q22 22 26 22Z"/>
+<path class="m" d="M602.97 212H855Q858 212 858 215V231Q858 234 855 234H602.97Q599.97 234 599.97 231V215Q599.97 212 602.97 212Z"/>
+<path class="k" d="M738.52 212L738.52 234"/>
+<text class="t" x="607.97" y="226.5" font-size="9.2" text-anchor="start">FIG. 1  ONE CHANGE</text>
+<text class="t" x="746.52" y="226.5" font-size="7.36" text-anchor="start">SCHEMATIC, NOT DATA</text>
+<path class="s" d="M85 40H177L195 58V152H85Z"/>
+<path class="k" d="M177 40V58H195"/>
+<path class="k" d="M99 74L181 74"/>
+<path class="k" d="M99 94L181 94"/>
+<path class="k" d="M99 114L181 114"/>
+<path class="k" d="M99 134L144.1 134"/>
+<path class="i" d="M198 96L224 96"/>
+<path class="i" d="M218.81 92.49L226 96L218.81 99.51"/>
+<circle class="s" cx="244" cy="96" r="15"/>
+<path class="i" d="M238.3 96.3L242.8 100.8L250.3 91.2"/>
+<path class="i" d="M261 96L296 96"/>
+<path class="i" d="M290.81 92.49L298 96L290.81 99.51"/>
+<path class="s" d="M300 80H420V112H300Z"/>
+<circle class="d" cx="320" cy="96" r="2.6"/>
+<path class="k" d="M340 80L340 112"/>
+<circle class="d" cx="360" cy="96" r="2.6"/>
+<path class="k" d="M380 80L380 112"/>
+<circle class="d" cx="400" cy="96" r="2.6"/>
+<path class="i" d="M420 96L518 96"/>
+<path class="i" d="M518 58L518 134"/>
+<path class="i" d="M562 58L562 134"/>
+<path class="i" d="M512 58L568 58"/>
+<path class="y" d="M566 96L682 96"/>
+<path class="a" d="M676.81 92.49L684 96L676.81 99.51"/>
+<path class="s" d="M688 40H780L798 58V152H688Z"/>
+<path class="k" d="M780 40V58H798"/>
+<path class="k" d="M702 74L784 74"/>
+<path class="k" d="M702 94L784 94"/>
+<path class="k" d="M702 114L747.1 114"/>
+<path class="i" d="M706 100L711 105L720 92"/>
+<path class="a" d="M706 132L782 132"/>
+<text class="t" x="140" y="178" font-size="13.8" text-anchor="middle">STALL</text>
+<text class="t" x="360" y="178" font-size="13.8" text-anchor="middle">HISTORY</text>
+<text class="t" x="540" y="178" font-size="13.8" text-anchor="middle">RULES</text>
+<text class="t" x="743" y="178" font-size="13.8" text-anchor="middle">DEPOT</text>
+<text class="t" x="743" y="198" font-size="10.58" text-anchor="middle">NOBODY DECIDED</text>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-labelledby="t">
+<title id="t">A terminal running conky demo</title>
+<style>
+.win{fill:#0d1117;stroke:#30363d;stroke-width:1}
+.dot{fill:#30363d}
+.tx{fill:#e6edf3;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace;font-size:13.5px;white-space:pre}
+.dm{fill:#8b949e}
+.rd{fill:#f85149}
+.yl{fill:#F4C430}
+.bd{font-weight:700}
+.pr{fill:#8b949e}
+@keyframes k0{0%,3.409%{opacity:0}6.25%,96.591%{opacity:1}100%{opacity:0}}
+.l0{animation:k0 17.6s linear infinite}
+@keyframes k1{0%,14.773%{opacity:0}17.614%,96.591%{opacity:1}100%{opacity:0}}
+.l1{animation:k1 17.6s linear infinite}
+@keyframes k2{0%,20.455%{opacity:0}23.295%,96.591%{opacity:1}100%{opacity:0}}
+.l2{animation:k2 17.6s linear infinite}
+@keyframes k3{0%,24.432%{opacity:0}27.273%,96.591%{opacity:1}100%{opacity:0}}
+.l3{animation:k3 17.6s linear infinite}
+@keyframes k4{0%,28.125%{opacity:0}30.966%,96.591%{opacity:1}100%{opacity:0}}
+.l4{animation:k4 17.6s linear infinite}
+@keyframes k5{0%,32.102%{opacity:0}34.943%,96.591%{opacity:1}100%{opacity:0}}
+.l5{animation:k5 17.6s linear infinite}
+@keyframes k6{0%,35.795%{opacity:0}38.636%,96.591%{opacity:1}100%{opacity:0}}
+.l6{animation:k6 17.6s linear infinite}
+@keyframes k7{0%,39.773%{opacity:0}42.614%,96.591%{opacity:1}100%{opacity:0}}
+.l7{animation:k7 17.6s linear infinite}
+@keyframes k8{0%,43.466%{opacity:0}46.307%,96.591%{opacity:1}100%{opacity:0}}
+.l8{animation:k8 17.6s linear infinite}
+@keyframes k9{0%,47.443%{opacity:0}50.284%,96.591%{opacity:1}100%{opacity:0}}
+.l9{animation:k9 17.6s linear infinite}
+@keyframes k10{0%,51.136%{opacity:0}53.977%,96.591%{opacity:1}100%{opacity:0}}
+.l10{animation:k10 17.6s linear infinite}
+@keyframes k11{0%,55.114%{opacity:0}57.955%,96.591%{opacity:1}100%{opacity:0}}
+.l11{animation:k11 17.6s linear infinite}
+@keyframes k12{0%,58.807%{opacity:0}61.648%,96.591%{opacity:1}100%{opacity:0}}
+.l12{animation:k12 17.6s linear infinite}
+@keyframes k13{0%,62.784%{opacity:0}65.625%,96.591%{opacity:1}100%{opacity:0}}
+.l13{animation:k13 17.6s linear infinite}
+@keyframes k14{0%,66.477%{opacity:0}69.318%,96.591%{opacity:1}100%{opacity:0}}
+.l14{animation:k14 17.6s linear infinite}
+@keyframes k15{0%,70.455%{opacity:0}73.295%,96.591%{opacity:1}100%{opacity:0}}
+.l15{animation:k15 17.6s linear infinite}
+@media (prefers-reduced-motion:reduce){.ln{animation:none!important;opacity:1!important}}
+</style>
+<rect class="win" x="4" y="4" width="872" height="412" rx="10"/>
+<circle class="dot" cx="24" cy="22" r="5"/>
+<circle class="dot" cx="42" cy="22" r="5"/>
+<circle class="dot" cx="60" cy="22" r="5"/>
+<g class="ln l0"><text class="tx" x="28" y="60"><tspan class="pr">$ </tspan>uvx --from git+https://github.com/drksci/conky conky demo</text></g>
+<g class="ln l1"><text class="tx bd" x="28" y="90">A market stall</text></g>
+<g class="ln l2"><text class="tx" x="28" y="118">1. A market is a space. It carries one rule for everything inside it. Stock is never negative.</text></g>
+<g class="ln l3"><text class="tx" x="60" y="136"><tspan class="dm">-&gt; </tspan><tspan class="dm">written: market</tspan></text></g>
+<g class="ln l4"><text class="tx" x="28" y="161">2. A stall joins the market with 40 loaves in stock. It follows the market's rule from now on.</text></g>
+<g class="ln l5"><text class="tx" x="60" y="179"><tspan class="dm">-&gt; </tspan><tspan class="dm">written: stall</tspan></text></g>
+<g class="ln l6"><text class="tx" x="28" y="204">3. A depot page is set up to watch the stall. When stock falls below 10 it marks a reorder.</text></g>
+<g class="ln l7"><text class="tx" x="60" y="222"><tspan class="dm">-&gt; </tspan><tspan class="dm">written: depot</tspan></text></g>
+<g class="ln l8"><text class="tx" x="28" y="247">4. Someone tries to set the stall's stock to minus one. The market's rule forbids it.</text></g>
+<g class="ln l9"><text class="tx" x="60" y="265"><tspan class="dm">-&gt; </tspan><tspan class="dm"></tspan><tspan class="rd">refused</tspan><tspan class="dm">: stall, because rule: !has(page.stock) || page.stock &gt;= 0 (from market) is false</tspan></text></g>
+<g class="ln l10"><text class="tx" x="28" y="290">5. The stall sells down to 4 loaves. Nobody tells the depot, and it reacts on its own.</text></g>
+<g class="ln l11"><text class="tx" x="60" y="308"><tspan class="dm">-&gt; </tspan><tspan class="dm">written: stall. Then depot </tspan><tspan class="yl">changed by itself</tspan><tspan class="dm"></tspan></text></g>
+<g class="ln l12"><text class="tx" x="28" y="333">6. A journal page keeps a measure of its own size. A large entry is not refused...</text></g>
+<g class="ln l13"><text class="tx" x="60" y="351"><tspan class="dm">-&gt; </tspan><tspan class="dm">written: journal</tspan></text></g>
+<g class="ln l14"><text class="tx" x="28" y="376">7. A long entry goes into the journal, and the journal measures itself again.</text></g>
+<g class="ln l15"><text class="tx" x="60" y="394"><tspan class="dm">-&gt; </tspan><tspan class="dm">written: journal. Then journal </tspan><tspan class="yl">changed by itself</tspan><tspan class="dm"></tspan></text></g>
+</svg>
