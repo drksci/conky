@@ -39,9 +39,9 @@ Your agents wake up inside a computer game from 1992 and have to reach Oregon al
 
 ### tl;dr
 
-Agent systems are usually a model wrapped in machinery nobody can read.
+Most agent systems are a mind with no body: a model that has to think about every breath.
 
-Conky has no machinery. The system is its own pages. They notice each other, obey their rules and keep their own history, which leaves the model the interesting part: being someone.
+Conky is the body. Keeping the rules, signing the record and noticing what changed happen by reflex, the way breathing does. That leaves the mind free for the interesting part: being someone.
 
 It is plain files in Git. Read all of it, or take it and leave.
 
