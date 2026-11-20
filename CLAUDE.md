@@ -71,6 +71,7 @@ An idea states its rung wherever it is mentioned, and climbs one rung at a time.
 
 - Everything worth knowing lives under `docs/` and is updated in the same change as the code it describes. (review)
 - `decisions/`: one numbered record per decision, with who decided and why. `ideas/`: one page per candidate. `research/`: indexes and digests of outside work. `project/`: roadmap and status. (check: `scripts/check_docs.py`)
+- `research/harnesses.md` compares conky with leading harnesses on a fixed rubric, and `research/papers.md` registers outside papers with how far each was read. Both are updated when the field moves; no claim about another project is made from memory. (review)
 - Every significant idea gets an essay in `essays/` a newcomer can read: what prompted it, the problem, analogues, the idea, what it solves, the hypothesis, and how we would know we are wrong. (review)
 - Every document has frontmatter (`kind`, `title`, `status`, `date`, `source`) and every link resolves. (check: `scripts/check_docs.py`)
 

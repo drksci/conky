@@ -54,6 +54,8 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 ## Research
 
 - [research/dair-2026.md](research/dair-2026.md): DAIR.AI papers of the week, 2026: relevance index
+- [research/harnesses.md](research/harnesses.md): Agent harnesses compared
+- [research/papers.md](research/papers.md): Paper register
 
 ## Project
 
