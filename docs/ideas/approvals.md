@@ -57,6 +57,12 @@ A change that needs several parties to agree is a proposal page, signed agreemen
 
 The same shape serves an owner signing off, a practice promoted to a shared pattern ([patterns](patterns.md)) and a dispute being settled. It is a pattern, not a runtime feature ([decision 0009](../decisions/0009-patterns-not-features.md)). Nothing of this is built.
 
+## Somebody is told
+
+A page can be noticed by relation and not only by name. Two relations are built: a page written within, and a page that links. A third is a refusal: a write by a page, or to a page within it, was refused, with the reason in scope. A refused write is already an event in history, but nothing can react to it, so the author's space never learns it is stuck. A watch on the refusal relation lets an owner be told, lets a character learn from its own refusals between turns, and lets a stuck page be noticed rather than left. It is a relation for a watch, not a new kind of thing.
+
+The same relation serves an approval: a proposal refused for lack of a second signature tells the proposer why.
+
 ## Composes from
 
 Page, rule, watch, seal.
@@ -67,7 +73,7 @@ A separate approval subsystem.
 
 ## Falsifying test
 
-A change that needs two approvals cannot take effect with one, takes effect by itself on the second, and the history shows who approved.
+A change that needs two approvals cannot take effect with one, takes effect by itself on the second, and the history shows who approved. Separately, a write refused in a space is followed by a reaction of the owning page, with the refusal's reason readable, and a refusal in an unwatched space causes no reaction.
 
 ## Open questions
 

@@ -41,6 +41,10 @@ Page, space, rule, watch, and tables when they exist. Made patterns are pages in
 
 The ledger as a built-in, and any other domain feature that would otherwise enter the runtime.
 
+## An offer between neighbours
+
+A page that links to a peer is noticed by the built link watch. Taking the offer up is joining the peer's space, and the receiver's space may refuse the join like any write. Rising by use ([decision 0023](../decisions/0023-a-pattern-starts-private-and-rises-by-use.md)) is the count of such joinings, so sideways and upward are one motion counted two ways. No mechanism is added: the link, the join and the refusal all exist.
+
 ## What it exposes
 
 Expressing double-entry as a pattern shows what the ledger idea was hiding: a general need for one write to change several pages together, all or nothing, with rules able to see the whole group, so that what leaves one account arrives in another. Git can commit several files together ([decision 0002](../decisions/0002-git-is-the-store.md)), but a write changes one page per commit today. What remains to build is a write that changes several pages together, and rules that can see the whole group. Accounting is then only a pattern on top.
@@ -48,6 +52,8 @@ Expressing double-entry as a pattern shows what the ledger idea was hiding: a ge
 ## Falsifying test
 
 Given a golden of double-entry bookkeeping, the maker produces a pattern that, when applied, sets up accounts with conservation enforced and no accounting-specific code in the runtime. If it needs a runtime change, that change must be a general primitive usable by unrelated patterns.
+
+For offers: a page that links to a neighbour's pattern is noticed by that neighbour, an offer taken up appears as a join in history and one refused appears as a refusal, and the count of joinings is the only measure of rising. If a second mechanism is needed for sideways offers, the claim that the two motions are one is lost.
 
 ## Prior art
 

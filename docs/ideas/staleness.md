@@ -29,6 +29,8 @@ Every page can carry a measure of how long it has gone untouched, rising as the 
 
 This is pressure applied to age instead of size, and relief is the reaction that acts on either ([pressure, not walls](../essays/pressure-not-walls.md)). Nothing of this is built.
 
+Staleness is one case of [standing](standing.md). A page nobody uses fades from the ordered list of what is within a space and loses nothing: it stays readable, linkable and in history, and it returns to the top as soon as a write or a link uses it. Fading is a change of order, not a deletion.
+
 ## Composes from
 
 Watch (a measure), clock, rule.
@@ -39,7 +41,7 @@ Stale pages that accumulate unnoticed, and manual clean-up.
 
 ## Falsifying test
 
-In a long run no page stays untouched and unarchived past its limit, and the routine cases need no refusal or model call.
+In a long run no page stays untouched and unarchived past its limit, and the routine cases need no refusal or model call. A page that fell to the back of the list and is then linked to is back at the front on the next listing, with its body and history unchanged.
 
 ## Open questions
 

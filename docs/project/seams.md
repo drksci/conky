@@ -41,6 +41,9 @@ An entry earns its place only if ignoring it could cost a refactor or miss a dif
 | 23 | A core without Git | optional | exists |
 | 24 | Resume, benchmark and repeated runs | core | exists |
 | 25 | A second backend, a runtime planner, hosting | out of scope | none wanted |
+| 26 | Standing | core | new idea, strains the members list |
+| 27 | Being told | core | new idea, strains the watch relations |
+| 28 | Faculties | optional | new idea |
 
 Core means the design's claims depend on it. Optional means a vault works fully without it and gains when it is there. Out of scope means it is left out on purpose.
 
@@ -281,6 +284,35 @@ Core means the design's claims depend on it. Optional means a vault works fully 
 - **Placeholder.** R7, R8, R27.
 - **Refactor risk.** None in the runtime. The scenario format is not built, and no pass^k or failure-taxonomy measure exists.
 - **Standing.** Core.
+
+## Attention, notice and form
+
+### 26. Standing
+
+- **What.** A measure of how much each page matters now, and lists of what is within a space ordered by it. Nothing is declared by the page.
+- **Why.** Fading of unused pages, an allowance that follows use and a quiet reflection all need one ordering, and without it each is a separate mechanism.
+- **Seam.** The members embed and a measure that writes a field. Constrained by [decision 0008](../decisions/0008-measures-are-self-watches.md): the value is a recorded event.
+- **Placeholder.** [Standing](../ideas/standing.md), with [nothing goes stale](../ideas/staleness.md) and [background minds](../ideas/background-minds.md).
+- **Refactor risk.** `page._members_text` sorts names with `sorted(...)` and takes the first `MEMBERS_CAP`. Ordering by a field means the sort key and the cap are decided together, with a stated fallback to name order for pages that lack the field, so that a vault with no standing field lists as it does today. The line format `name: first line` must stay, since the cache key hashes the resolved text. Uptake is counted from links (`page.links`) and from joinings in history, so the change of `within` must stay in the record.
+- **Standing.** Core.
+
+### 27. Being told
+
+- **What.** A watch that fires when a write by a page, or to a page within it, was refused, with the reason readable.
+- **Why.** A refusal is an event in history that nothing can react to. The author's space never learns it is stuck.
+- **Seam.** A third relation for a watch beside `within` and `link`, a pattern like [approvals](../ideas/approvals.md). Constrained by [`law.refusal.record`](../reference/architecture.md#law.refusal.record).
+- **Placeholder.** [Approvals as a pattern](../ideas/approvals.md), and the offer between neighbours in [patterns](../ideas/patterns.md).
+- **Refactor risk.** `Vault._notices` matches `within` and `link` by name and falls through to a page name, and `page.RELATIONS` and `_check_watch` list the valid values of `on`. A refusal relation adds a value there. `Vault._refuse` returns a `Result` that is not ok and `Vault._react` runs only after a kept write, so a refusal has no path into the reactions today. The reason is in the commit trailers (`Trailer.REASON`) and would need to reach the reaction's scope. A refusal caused by a reaction must not trigger itself in a loop, so the existing depth limit has to cover it. A page named for the new relation is refused as `within` and `link` are, by the check in `Vault.write`.
+- **Standing.** Core.
+
+### 28. Faculties
+
+- **What.** A page that watches another and writes the form a sentence asks for, one kind that costs nothing and one that costs a small call.
+- **Why.** A thinking character should spend its context on what it wants, not on the syntax of rules and entries.
+- **Seam.** Watch, ask, an answer that is pages and the retry on a refused answer. Constrained by [`law.provider.page`](../reference/architecture.md#law.provider.page).
+- **Placeholder.** [Faculties](../ideas/faculties.md), with [auto-linking](../ideas/auto-linking.md) as the reflex case.
+- **Refactor risk.** Little is closed off today. An answer that is pages is written as a block of pages into a space, which may add rules to it, and that is the path a faculty uses. What must stay open is trying a written form aside before it binds, which needs the write path to judge without keeping (the same need as [dry run](../ideas/dry-run.md)), and a field or trailer by which a character is shown in words what a faculty did.
+- **Standing.** Optional.
 
 ## Out of scope
 

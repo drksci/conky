@@ -1310,6 +1310,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [direction-and-drift](../ideas/direction-and-drift.md) | idea | [`kind.goal`](#kind.goal), [`stage.attention.drift`](#stage.attention.drift) |
 | [dry-run](../ideas/dry-run.md) | idea | [`flow.write.try`](#flow.write.try) |
 | [energy-unit](../ideas/energy-unit.md) | idea | - |
+| [faculties](../ideas/faculties.md) | idea | - |
 | [felt-sense](../ideas/felt-sense.md) | idea | [`kind.codec`](#kind.codec) |
 | [gatekeeper](../ideas/gatekeeper.md) | idea | [`kind.gatekeeper`](#kind.gatekeeper) |
 | [habit](../ideas/habit.md) | idea | [`part.answer.cache`](#part.answer.cache), [`part.provider.detect`](#part.provider.detect), [`check.habit.keep`](#check.habit.keep), [`part.character.habit`](#part.character.habit) |
@@ -1329,6 +1330,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [reviewer](../ideas/reviewer.md) | idea | [`kind.reviewer`](#kind.reviewer) |
 | [seeds-and-faces](../ideas/seeds-and-faces.md) | idea | [`part.character.face`](#part.character.face) |
 | [staleness](../ideas/staleness.md) | idea | [`kind.archive`](#kind.archive), [`stage.attention.stale`](#stage.attention.stale) |
+| [standing](../ideas/standing.md) | idea | - |
 | [stepping](../ideas/stepping.md) | idea | [`law.vault.hold`](#law.vault.hold), [`kind.hold`](#kind.hold), [`flow.vault.step`](#flow.vault.step) |
 | [streaming](../ideas/streaming.md) | idea | [`part.screen.live`](#part.screen.live) |
 | [tables](../ideas/tables.md) | idea | [`data.file`](#data.file), [`data.table`](#data.table), [`data.engine`](#data.engine), [`data.stream.beside`](#data.stream.beside), [`flow.table.append`](#flow.table.append), [`flow.engine.query`](#flow.engine.query), [`flow.table.watch`](#flow.table.watch) |
@@ -1392,10 +1394,12 @@ Found in the documents and fitting no row above.
 | arcs | [arcs.md](../ideas/arcs.md) | A primary purpose with branches, each scored by its distance from it. Not yet worked out, and read as direction and drift. |
 | build on bedrock | [0031-build-on-bedrock.md](../decisions/0031-build-on-bedrock.md) | Walk a new layer one step at a time before building on it. A working rule whose check is the benchmark walkthrough. |
 | energy unit | [energy-unit.md](../ideas/energy-unit.md) | A unit of value flow that conserves only if its conversion is recorded. It waits on a grouped write and a measure of spend, and has no step of its own. |
+| faculties | [faculties.md](../ideas/faculties.md) | A page that watches another and writes the rule, entry or link a sentence asks for, tried aside before it binds. A reflex kind costs nothing and a thinking kind costs a small call. |
 | key rotation and revocation | [0002-git-is-the-store.md](../decisions/0002-git-is-the-store.md) | How keys are rotated and revoked is an open question with no idea or decision. |
 | learned reactions | [learned-reactions.md](../ideas/learned-reactions.md) | A repeated model answer becomes a reaction and the model is no longer asked. It is carried by the codec idea. |
 | ledger | [ledger.md](../ideas/ledger.md) | A built-in ledger was judged a bad idea. The need survives as a grouped write, in the patterns idea. |
 | results publish themselves | [0032-results-publish-themselves.md](../decisions/0032-results-publish-themselves.md) | A benchmark's charts, data, results page and README block are generated from the run files by one command and never edited by hand. |
 | rules outside conky | [0002-git-is-the-store.md](../decisions/0002-git-is-the-store.md) | Rules are not enforced on commits made outside conky, and removing the last commit is not detectable from one copy. Verify does not evaluate rules. |
+| standing | [standing.md](../ideas/standing.md) | A measure of how much each page matters now, which orders what is listed within a space. It needs the members list ordered by a field. |
 | the objective | [0001-objective.md](../decisions/0001-objective.md) | An organisation that runs, delivers and improves without its builders directing each step. It is an aim and prescribes no mechanism. |
 | write throughput | [0002-git-is-the-store.md](../decisions/0002-git-is-the-store.md) | One signed commit per write limits throughput to the order of tens a second. |
