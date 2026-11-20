@@ -1,0 +1,39 @@
+# A clerk answers each question in a fresh call. A reflex gathers what it put in bold into a field it reads next time, and a fact shown once is asked for three questions later.
+claim: what a character puts in bold is carried across fresh calls, so a fact shown once is still there three questions later
+forecast: a small model keeps the fact in bold through all three questions in 2 of 5 draws; where it drops it, it drops it at the first unrelated question
+par:
+  outcome: the code is given correctly at the end
+  structure: one short carried line, nothing else kept
+  cost: four calls, each as small as the first
+pages:
+  helper: {api: command, command: stand}
+  desk: {}
+  clerk:
+    carried: ""
+    said: ""
+    watch:
+      - on: desk
+        when: "true"
+        ask:
+          provider: helper
+          into: said
+          prompt: |
+            The desk says: ![[desk]]
+
+            What you carried from last time: ![[clerk#carried]]
+
+            Whatever you put in bold you will remember next time.
+      - on: clerk
+        when: "page.said != ''"
+        set:
+          carried: "page.said.capturesAll('\\*\\*(.+?)\\*\\*').join('; ')"
+steps:
+  - says: live
+  - write: {page: desk, fields: {}, body: "The safe's code is 4172."}
+  - says: live
+  - write: {page: desk, fields: {}, body: "Why is the window stuck?"}
+  - says: live
+  - write: {page: desk, fields: {}, body: "Is the lamp lit?"}
+  - says: live
+  - write: {page: desk, fields: {}, body: "What is the safe's code?"}
+  - expect: {answer: {clerk.said: "4172"}}

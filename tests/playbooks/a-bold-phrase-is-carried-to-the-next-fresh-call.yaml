@@ -1,0 +1,36 @@
+# What a character puts in bold is what it carries: a reflex gathers the bold phrases of its last answer into a field that the next question embeds, so a fact shown once is still there three questions later.
+pages:
+  helper: {api: command, command: stand}
+  desk: {}
+  clerk:
+    carried: ""
+    said: ""
+    watch:
+      - on: desk
+        when: "true"
+        ask:
+          provider: helper
+          into: said
+          prompt: |
+            The desk says: ![[desk]]
+
+            What you carried from last time: ![[clerk#carried]]
+
+            Whatever you put in bold you will remember next time.
+      - on: clerk
+        when: "page.said != ''"
+        set:
+          carried: "page.said.capturesAll('\\*\\*(.+?)\\*\\*').join('; ')"
+steps:
+  - says: "Noted: the safe's code is **4172**."
+  - write: {page: desk, fields: {}, body: "The safe's code is 4172."}
+  - expect: {fields: {clerk.carried: "4172"}}
+  - says: "The window is **stuck**; the code is **4172**."
+  - write: {page: desk, fields: {}, body: "Why is the window stuck?"}
+  - expect: {fields: {clerk.carried: "stuck; 4172"}}
+  - says: "The lamp is **out**; the code is **4172**."
+  - write: {page: desk, fields: {}, body: "Is the lamp lit?"}
+  - expect: {fields: {clerk.carried: "out; 4172"}}
+  - says: "The code is 4172."
+  - write: {page: desk, fields: {}, body: "What is the safe's code?"}
+  - expect: {answer: {clerk.said: "4172"}, model_calls: 4, verify: true}

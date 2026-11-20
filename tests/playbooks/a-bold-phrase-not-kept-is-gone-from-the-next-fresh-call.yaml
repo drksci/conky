@@ -1,0 +1,35 @@
+# The honest failure of carrying by bold: a phrase dropped from the bold of one answer is not in the field for the next, so the fact is gone by the end.
+pages:
+  helper: {api: command, command: stand}
+  desk: {}
+  clerk:
+    carried: ""
+    said: ""
+    watch:
+      - on: desk
+        when: "true"
+        ask:
+          provider: helper
+          into: said
+          prompt: |
+            The desk says: ![[desk]]
+
+            What you carried from last time: ![[clerk#carried]]
+
+            Whatever you put in bold you will remember next time.
+      - on: clerk
+        when: "page.said != ''"
+        set:
+          carried: "page.said.capturesAll('\\*\\*(.+?)\\*\\*').join('; ')"
+steps:
+  - says: "Noted: the safe's code is **4172**."
+  - write: {page: desk, fields: {}, body: "The safe's code is 4172."}
+  - expect: {fields: {clerk.carried: "4172"}}
+  - says: "The window is **stuck**."
+  - write: {page: desk, fields: {}, body: "Why is the window stuck?"}
+  - expect: {fields: {clerk.carried: "stuck"}}
+  - says: "The lamp is **out**."
+  - write: {page: desk, fields: {}, body: "Is the lamp lit?"}
+  - says: "I do not know the code."
+  - write: {page: desk, fields: {}, body: "What is the safe's code?"}
+  - expect: {answer: {clerk.said: "do not know"}, fields: {clerk.carried: ""}, model_calls: 4, verify: true}

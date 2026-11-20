@@ -13,11 +13,12 @@ from conky import arch
 MAX_TEXT = 65536
 MAX_PATTERN = 256
 
-
-# Text functions. The names and shapes of all but `captures` follow the CEL strings extension
-# (cel-go ext/README.md, "Strings"); `captures` is conky's own, because the standard regex
-# extension needs optional types and a single group. Each is pure and bounded by MAX_TEXT and
-# MAX_PATTERN; a failure raises ValueError, which evaluation turns into a RuleError.
+# Text functions. The names and shapes of all but `captures` and `capturesAll` follow the CEL
+# strings extension (cel-go ext/README.md, "Strings"); those two are conky's own, because the
+# standard regex extension (`regex.extract`, `regex.extractAll`) needs optional types, a single
+# group and a namespaced name that cel-python cannot register as a method. Each is pure and
+# bounded by MAX_TEXT and MAX_PATTERN; a failure raises ValueError, which evaluation turns into
+# a RuleError.
 
 _FUNCTIONS: dict[str, Any] = {}
 
@@ -103,18 +104,35 @@ def _join(items: list[str], sep: str = "") -> celtypes.StringType:
     return _str(out)
 
 
-@_function("captures", "The groups of the first match of a pattern, else an empty list.")
-def _captures(text: str, pattern: str) -> celtypes.ListType:
+def _search(text: str, pattern: str, first: bool) -> list[str]:
     _text(text)
     if len(pattern) > MAX_PATTERN:
         raise ValueError(f"pattern is longer than {MAX_PATTERN} characters")
     try:
-        found = re.search(pattern, text)
+        found = [re.search(pattern, text)] if first else list(re.finditer(pattern, text))
     except re.error as exc:
         raise ValueError(f"bad pattern: {exc}") from exc
-    if found is None:
-        return _strs([])
-    return _strs([g or "" for g in found.groups()] if found.re.groups else [found.group(0)])
+    out: list[str] = []
+    for m in found:
+        if m is None:
+            continue
+        if not m.re.groups:
+            out.append(m.group(0))
+        elif first:
+            out.extend(g or "" for g in m.groups())
+        else:
+            out.append(m.group(1) or "")
+    return out
+
+
+@_function("captures", "The groups of the first match of a pattern, else an empty list.")
+def _captures(text: str, pattern: str) -> celtypes.ListType:
+    return _strs(_search(text, pattern, True))
+
+
+@_function("capturesAll", "The first group of every match of a pattern, else an empty list.")
+def _captures_all(text: str, pattern: str) -> celtypes.ListType:
+    return _strs(_search(text, pattern, False))
 
 
 _ENV = celpy.Environment()

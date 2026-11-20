@@ -18,7 +18,7 @@ A rule or a `when` condition holds only if it evaluates to the boolean `true`. A
 
 ### Text functions
 
-An expression can take text apart with these functions. All but `captures` take their names and shapes from the strings extension of the CEL project ([cel-go `ext/README.md`](https://github.com/google/cel-go/blob/master/ext/README.md#strings), read 2026-11-20). Each can be called as a method (`text.split(',')`) or as a function (`split(text, ',')`). Positions count characters from zero.
+An expression can take text apart with these functions. All but `captures` and `capturesAll` take their names and shapes from the strings extension of the CEL project ([cel-go `ext/README.md`](https://github.com/google/cel-go/blob/master/ext/README.md#strings), read 2026-11-20). Each can be called as a method (`text.split(',')`) or as a function (`split(text, ',')`). Positions count characters from zero.
 
 | Function | Gives | Example |
 |---|---|---|
@@ -30,8 +30,9 @@ An expression can take text apart with these functions. All but `captures` take 
 | `replace(text, find, by)`, `replace(text, find, by, limit)` | The text with matches replaced. A limit of 0 replaces none. | `'hello hello'.replace('he', 'we', 1)` is `'wello hello'` |
 | `join(list)`, `join(list, sep)` | The list of text as one text. | `['a', 'b'].join('/')` is `'a/b'` |
 | `captures(text, pattern)` | The groups of the first match of a Python regular expression as a list of text, or the whole match when the pattern has no group, or an empty list when it does not match. Not in the standard. | `'x=1 y=2'.captures('x=(\\d+) y=(\\d+)')` is `['1', '2']` |
+| `capturesAll(text, pattern)` | The first group of every match of a Python regular expression as a list of text, or the whole match when the pattern has no group, or an empty list when nothing matches. Not in the standard. | `'**a** and **b**'.capturesAll('\\*\\*(.+?)\\*\\*')` is `['a', 'b']` |
 
-The standard has no `captures`. Its regular-expression extension has `regex.extract`, which needs optional values and allows one group, so `captures` stands in until a need for the standard form is shown. The standard `int('12')` and `double('1.5')` already turn captured text into a number, so `int(line.captures('n=(\\d+)')[0])` reads a number out of a line. A pattern that does not match gives an empty list, and indexing it is an evaluation error, so a rule that reads such a number refuses a line without one.
+The standard has no `captures`. Its regular-expression extension has `regex.extract` and `regex.extractAll`, which need optional values, allow one group and carry a namespaced name that cel-python cannot register as a method, so `captures` and `capturesAll` stand in until a need for the standard form is shown. The standard `int('12')` and `double('1.5')` already turn captured text into a number, so `int(line.captures('n=(\\d+)')[0])` reads a number out of a line. A pattern that does not match gives an empty list, and indexing it is an evaluation error, so a rule that reads such a number refuses a line without one.
 
 Every function is pure. Text over 65536 characters, a result over 65536 characters, or a pattern over 256 characters is an evaluation error, handled like any other failing expression ([Refusals](#refusals)). The limits bound the cost of a call but do not make every pattern fast: a pattern can still backtrack for a long time on an input under the limit.
 
