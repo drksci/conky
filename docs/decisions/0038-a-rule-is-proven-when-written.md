@@ -24,6 +24,8 @@ arch:
 - A reason says in plain words which field was read on which thing and, when another thing in scope has a field of that name, names it: `space.cash does not exist here: this page has cash, read it as page.cash`. The evaluator's exception text is no longer shown. The first word of a reason is unchanged.
 - `tests/invalid/` holds one small file for each wrong form, and `tests/test_invalid.py` fails if any is accepted.
 
+An `each` rule is judged only against pages that have every field it reads off `page`. Without that, the plainest statement of a limit on payments, `page.amount <= space.cash - 20`, would be refused the moment it was written wherever anything else lives in the same space, and a character would have to guard it with `has()`, which the trials showed small models do not write.
+
 ## Consequences
 
 - A rule that could never be evaluated cannot land. A small model that used the wrong name has the right one in the reason on its one retry.

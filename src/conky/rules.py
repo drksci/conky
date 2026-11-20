@@ -211,6 +211,17 @@ def reads(expression: str) -> tuple[set[str], list[tuple[str, str]]]:
     return names, fields
 
 
+def concerns(expression: str, scope: dict[str, Any]) -> bool:
+    """Say whether an `each` rule speaks about this page: the page has every field it reads.
+
+    A rule about payments reads `page.amount`. A page within the same space that has no amount
+    is not a payment, so the rule has nothing to say about it and is not judged against it.
+    """
+    _, fields = reads(expression)
+    page = scope.get("page", {})
+    return all(field in page for name, field in fields if name == "page")
+
+
 def check(expression: str, allowed: tuple[str, ...]) -> None:
     """Raise RuleError unless expression parses and reads only the names allowed."""
     names, _ = reads(expression)

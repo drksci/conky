@@ -1,0 +1,14 @@
+# A rule about payments reads page.amount. A page within the same space that has no amount is
+# not a payment: the rule is not judged against it, when the rule is written or afterwards.
+pages:
+  den: {cash: 80}
+  keeper: {within: den}
+steps:
+  - write: {page: den, fields: {rules: [{each: "page.amount <= space.cash - 20"}]}}
+  - expect: {fields: {den.cash: 80}, exists: [den]}
+  - write: {page: keeper, fields: {within: den, note: "still here"}}
+  - expect: {fields: {keeper.note: "still here"}}
+  - write: {page: baker, fields: {within: den, amount: 30}}
+  - expect: {exists: [baker]}
+  - write: {page: landlord, fields: {within: den, amount: 70}}
+  - expect: {refused: rule, missing: [landlord]}

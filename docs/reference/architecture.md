@@ -46,6 +46,7 @@ The capability and the three laws of [decision 0029](../decisions/0029-autonomy-
 | <a id="law.reflex.free"></a>`law.reflex.free` | Whatever follows from state is a reflex with no model call. | [0007-inference-for-real-thinking.md](../decisions/0007-inference-for-real-thinking.md) | `conky.vault.Vault._react` | `tests/test_laws.py::test_reaction_is_caused_by_and_signed_by_the_reacting_page`<br>`tests/test_model.py::test_every_failure_is_a_model_refusal_and_nothing_else_is_affected` | - | built |
 | <a id="law.refusal.record"></a>`law.refusal.record` | A refused write is recorded as an empty commit, never dropped. | [vault-format.md#a-refusal](vault-format.md#a-refusal) | `conky.vault.Vault._refuse` | `tests/test_laws.py::test_refused_write_is_an_empty_signed_commit` | - | built |
 | <a id="law.rule.never"></a>`law.rule.never` | Anything that must never happen is a rule the runtime evaluates. | [rules-and-reactions.md#expressions](rules-and-reactions.md#expressions) | `conky.rules.holds` | `tests/test_laws.py::test_rule_error_refuses`<br>`tests/test_laws.py::test_rule_inherited_through_two_level_chain`<br>`tests/test_laws.py::test_size_rule_in_a_space_refuses_an_oversized_member` | - | built |
+| <a id="law.rule.proven"></a>`law.rule.proven` | An `each` rule is tried on the pages already within when it is written, so it lands only if it can be evaluated and holds for them. | [rules-and-reactions.md#rules-and-spaces](rules-and-reactions.md#rules-and-spaces) | `conky.vault.Vault._each_reason` | review | - | built |
 | <a id="law.rule.pure"></a>`law.rule.pure` | Rules and measures are pure: no clock, randomness or input and output. | [rules-and-reactions.md#expressions](rules-and-reactions.md#expressions) | `conky.rules.evaluate` | review | - | built |
 | <a id="law.rule.tighten"></a>`law.rule.tighten` | A member adds a rule and cannot remove one or leave one behind. | [0022-leaving-a-space-is-a-write-the-space-can-refuse.md](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md) | `conky.vault.Vault._rule_reason` | `tests/test_laws.py::test_leaving_a_space_is_judged_by_the_rules_of_the_space_it_leaves`<br>`tests/test_laws.py::test_a_changed_space_field_refuses_the_next_member_write`<br>`tests/test_pages.py::test_a_rule_of_a_space_refuses_a_page_that_breaks_it`<br>`tests/test_pages.py::test_a_character_can_add_a_rule_to_a_space_it_made_and_the_rule_binds_a_later_write`<br>`tests/test_pages.py::test_an_answer_adds_a_rule_to_its_space_signed_by_the_asker` | R29 | built |
 | <a id="law.runtime.fixed"></a>`law.runtime.fixed` | The runtime is not a page, so no character can change it. | [0029-autonomy-inside-limits-that-hold.md](../decisions/0029-autonomy-inside-limits-that-hold.md) | `conky.vault.Vault._breach` | `tests/test_pages.py::test_a_character_cannot_write_a_secret_or_a_command_into_a_page` | - | built |
@@ -1215,6 +1216,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`law.reflex.free`](#law.reflex.free) | built | 2 | - |  |
 | [`law.refusal.record`](#law.refusal.record) | built | 1 | - |  |
 | [`law.rule.never`](#law.rule.never) | built | 3 | - |  |
+| [`law.rule.proven`](#law.rule.proven) | built | - | - | review only |
 | [`law.rule.pure`](#law.rule.pure) | built | - | - | review only |
 | [`law.rule.tighten`](#law.rule.tighten) | built | 5 | - |  |
 | [`law.runtime.fixed`](#law.runtime.fixed) | built | 1 | - |  |
@@ -1377,6 +1379,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0035-a-character-binds-its-own-space](../decisions/0035-a-character-binds-its-own-space.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`law.reach.down`](#law.reach.down), [`part.space`](#part.space) |
 | [0036-a-plain-rule-stays-with-its-page](../decisions/0036-a-plain-rule-stays-with-its-page.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`part.space`](#part.space) |
 | [0037-a-watch-can-fire-on-a-relation](../decisions/0037-a-watch-can-fire-on-a-relation.md) | accepted | [`part.watch`](#part.watch), [`stage.notice.relation`](#stage.notice.relation) |
+| [0038-a-rule-is-proven-when-written](../decisions/0038-a-rule-is-proven-when-written.md) | accepted | [`law.rule.proven`](#law.rule.proven) |
 
 ### Unplaced
 

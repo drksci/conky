@@ -30,7 +30,7 @@ from conky.page import (
     resolve_text,
     serialize,
 )
-from conky.rules import RuleError, evaluate, holds, missing
+from conky.rules import RuleError, concerns, evaluate, holds, missing
 
 MAX_DEPTH = 12
 KINDS = arch.constant(
@@ -551,6 +551,8 @@ class Vault:
                 continue
             scope = self._scope(member, held)
             for rule in rules:
+                if not concerns(rule, scope):
+                    continue
                 try:
                     ok = holds(rule, scope)
                     why = "is false"
@@ -704,6 +706,8 @@ class Vault:
                 elif owner == name:
                     rule = entry
                 else:
+                    continue
+                if isinstance(entry, dict) and not concerns(rule, scope):
                     continue
                 try:
                     held = holds(rule, scope)

@@ -74,6 +74,8 @@ Every page within the space is judged, including a space page that lies within i
 
 A write that changes the `within` of a page that already exists is judged twice: by the page's own rules and the `each` rules of the spaces it will be in, as above, and by the `each` rules of every space it was in before, evaluated against the page as it would be after the write ([decision 0022](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md)). A space that says nothing about leaving lets its members go. A space that wants to bind states it as a rule. A refusal by a space the page is leaving names that space, as any refusal from a space does.
 
+An `each` rule speaks only of the pages that have the fields it reads off `page`. A rule about payments reads `page.amount`; a page within the same space that has no `amount` is not a payment, and the rule is not judged against it, when the rule is written or afterwards. A field read off `space` must exist, and a plain rule must be able to read every field it names on its own page.
+
 ## Context from spaces
 
 A space hands down its fields as `space`. For a page, the runtime starts from the outermost space it is within and overlays the fields of each inner space in turn, ending with the nearest, so the nearest space wins a field of the same name. Reserved keys are not included, and a page within no space reads an empty map. `space` is available in rules (the page's own and the `each` rules of the spaces above, so a space's rule can speak about context set further in), in watch `when` conditions and in `set` values, where it is the watcher's.
