@@ -1,105 +1,59 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 410" width="880" height="410" role="img" aria-labelledby="t">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 256" width="880" height="256" role="img" aria-labelledby="t">
 <title id="t">One change, and what follows</title>
 <style>
 :root{--ink:#1E1E1E;--acc:#F4C430}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
 :root[data-theme="dark"]{--ink:#EDEDED}
-.i,.k,.a,.h,.z{fill:none;stroke-linecap:round;stroke-linejoin:round}
-.i{stroke:var(--ink);stroke-width:1.8}
-.k{stroke:var(--ink);stroke-width:1.1}
-.a{stroke:var(--acc);stroke-width:4}
-.h{stroke:var(--ink);stroke-width:1}
-.z{stroke:var(--ink);stroke-width:1.8;stroke-dasharray:8 8}
-.y{fill:none;stroke:var(--acc);stroke-width:4;stroke-linecap:round;stroke-dasharray:9 9}
+.i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.i{stroke:var(--ink);stroke-width:1.2}
+.k{stroke:var(--ink);stroke-width:0.75}
+.a{stroke:var(--acc);stroke-width:2.4}
+.h{stroke:var(--ink);stroke-width:0.6}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
+.y{stroke:var(--acc);stroke-width:2.4;stroke-dasharray:6 6}
 .d{fill:var(--ink);stroke:none}
-.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.12em}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 </style>
-<path class="k" d="M22 22H858V388H22Z"/>
-<circle class="k" cx="11" cy="11" r="4"/>
-<path class="k" d="M3 11L19 11"/>
-<path class="k" d="M11 3L11 19"/>
-<circle class="k" cx="11" cy="399" r="4"/>
-<path class="k" d="M3 399L19 399"/>
-<path class="k" d="M11 391L11 407"/>
-<circle class="k" cx="869" cy="11" r="4"/>
-<path class="k" d="M861 11L877 11"/>
-<path class="k" d="M869 3L869 19"/>
-<circle class="k" cx="869" cy="399" r="4"/>
-<path class="k" d="M861 399L877 399"/>
-<path class="k" d="M869 391L869 407"/>
-<path class="k" d="M247.6 356H858V388H247.6Z"/>
-<path class="k" d="M638.48 356L638.48 388"/>
-<text class="t" x="261.6" y="377" font-size="14" text-anchor="start">FIG. 1  ONE CHANGE, AND WHAT FOLLOWS</text>
-<text class="t" x="652.48" y="377" font-size="14" text-anchor="start">SCHEMATIC, NOT DATA</text>
-<circle class="i" cx="65" cy="150" r="13"/>
-<path class="i" d="M41 214Q41 177 65 177Q89 177 89 214"/>
-<path class="i" d="M93 190L113 190"/>
-<path class="i" d="M106.01 185.62L115 190L106.01 194.38"/>
-<path class="i" d="M120 100H230L250 120V250H120Z"/>
-<path class="k" d="M230 100V120H250"/>
-<path class="k" d="M134 140L236 140"/>
-<path class="k" d="M134 162L236 162"/>
-<path class="k" d="M134 184L236 184"/>
-<path class="k" d="M134 206L190.1 206"/>
-<circle class="d" cx="133" cy="184" r="3"/>
-<path class="i" d="M252 184L270 184"/>
-<path class="i" d="M263.01 179.62L272 184L263.01 188.38"/>
-<circle class="i" cx="292" cy="184" r="17"/>
-<circle class="k" cx="292" cy="184" r="12.24"/>
-<path class="i" d="M286.05 184.34L290.64 189.1L298.8 178.9"/>
-<path class="i" d="M311 184L326 184"/>
-<path class="i" d="M319.01 179.62L328 184L319.01 188.38"/>
-<path class="i" d="M330 164H490V204H330Z"/>
-<circle class="k" cx="341" cy="184" r="4"/>
-<path class="k" d="M350 184L362 184"/>
-<path class="k" d="M370 164L370 204"/>
-<circle class="k" cx="381" cy="184" r="4"/>
-<path class="k" d="M390 184L402 184"/>
-<path class="k" d="M410 164L410 204"/>
-<circle class="k" cx="421" cy="184" r="4"/>
-<path class="k" d="M430 184L442 184"/>
-<path class="k" d="M450 164L450 204"/>
-<circle class="k" cx="461" cy="184" r="4"/>
-<path class="k" d="M470 184L482 184"/>
-<path class="i" d="M490 184L566 184"/>
-<path class="i" d="M518 140L518 230"/>
-<path class="i" d="M562 140L562 230"/>
-<path class="i" d="M512 140L568 140"/>
-<path class="k" d="M518 152L525 152"/>
-<path class="k" d="M555 152L562 152"/>
-<path class="k" d="M518 162L525 162"/>
-<path class="k" d="M555 162L562 162"/>
-<path class="k" d="M518 172L525 172"/>
-<path class="k" d="M555 172L562 172"/>
-<path class="k" d="M518 182L525 182"/>
-<path class="k" d="M555 182L562 182"/>
-<path class="k" d="M518 192L525 192"/>
-<path class="k" d="M555 192L562 192"/>
-<path class="k" d="M518 202L525 202"/>
-<path class="k" d="M555 202L562 202"/>
-<path class="k" d="M518 212L525 212"/>
-<path class="k" d="M555 212L562 212"/>
-<path class="k" d="M518 222L525 222"/>
-<path class="k" d="M555 222L562 222"/>
-<path class="y" d="M574 184L695 184"/>
-<path class="i" d="M688.01 179.62L697 184L688.01 188.38"/>
-<path class="i" d="M700 100H810L830 120V250H700Z"/>
-<path class="k" d="M810 100V120H830"/>
-<path class="k" d="M714 140L816 140"/>
-<path class="k" d="M714 162L816 162"/>
-<path class="k" d="M714 206L770.1 206"/>
-<path class="i" d="M714 174H728V188H714Z"/>
-<path class="i" d="M717 181L721 185L726 177"/>
-<path class="a" d="M738 192L818 192"/>
-<text class="t b" x="185" y="285" font-size="18" text-anchor="middle">STALL</text>
-<text class="t b" x="410" y="285" font-size="18" text-anchor="middle">HISTORY</text>
-<text class="t b" x="540" y="285" font-size="18" text-anchor="middle">RULES</text>
-<text class="t b" x="765" y="285" font-size="18" text-anchor="middle">DEPOT</text>
-<text class="t" x="410" y="307" font-size="15" text-anchor="middle">SIGNED AND</text>
-<text class="t" x="410" y="324" font-size="15" text-anchor="middle">RECORDED</text>
-<text class="t" x="540" y="307" font-size="15" text-anchor="middle">CHECKED</text>
-<text class="t" x="540" y="324" font-size="15" text-anchor="middle">EVERY TIME</text>
-<text class="t" x="765" y="307" font-size="15" text-anchor="middle">NOBODY HAD</text>
-<text class="t" x="765" y="324" font-size="15" text-anchor="middle">TO DECIDE</text>
+<path class="k" d="M22 22H858V234H22Z"/>
+<path class="k" d="M555.97 212H858V234H555.97Z"/>
+<path class="k" d="M720.49 212L720.49 234"/>
+<text class="t b" x="564.97" y="227" font-size="11" text-anchor="start">FIG. 1  ONE CHANGE</text>
+<text class="t" x="729.49" y="226.5" font-size="8.5" text-anchor="start">SCHEMATIC, NOT DATA</text>
+<path class="i" d="M85 40H177L195 58V152H85Z"/>
+<path class="k" d="M177 40V58H195"/>
+<path class="k" d="M99 74L181 74"/>
+<path class="k" d="M99 94L181 94"/>
+<path class="k" d="M99 114L181 114"/>
+<path class="k" d="M99 134L144.1 134"/>
+<path class="i" d="M198 96L224 96"/>
+<path class="i" d="M218.81 92.49L226 96L218.81 99.51"/>
+<circle class="i" cx="244" cy="96" r="15"/>
+<path class="i" d="M238.3 96.3L242.8 100.8L250.3 91.2"/>
+<path class="i" d="M261 96L296 96"/>
+<path class="i" d="M290.81 92.49L298 96L290.81 99.51"/>
+<path class="i" d="M300 80H420V112H300Z"/>
+<circle class="d" cx="320" cy="96" r="2.6"/>
+<path class="k" d="M340 80L340 112"/>
+<circle class="d" cx="360" cy="96" r="2.6"/>
+<path class="k" d="M380 80L380 112"/>
+<circle class="d" cx="400" cy="96" r="2.6"/>
+<path class="i" d="M420 96L518 96"/>
+<path class="i" d="M518 58L518 134"/>
+<path class="i" d="M562 58L562 134"/>
+<path class="i" d="M512 58L568 58"/>
+<path class="y" d="M566 96L682 96"/>
+<path class="a" d="M676.81 92.49L684 96L676.81 99.51"/>
+<path class="i" d="M688 40H780L798 58V152H688Z"/>
+<path class="k" d="M780 40V58H798"/>
+<path class="k" d="M702 74L784 74"/>
+<path class="k" d="M702 94L784 94"/>
+<path class="k" d="M702 114L747.1 114"/>
+<path class="i" d="M706 100L711 105L720 92"/>
+<path class="a" d="M706 132L782 132"/>
+<text class="t" x="140" y="178" font-size="15" text-anchor="middle">STALL</text>
+<text class="t" x="360" y="178" font-size="15" text-anchor="middle">HISTORY</text>
+<text class="t" x="540" y="178" font-size="15" text-anchor="middle">RULES</text>
+<text class="t" x="743" y="178" font-size="15" text-anchor="middle">DEPOT</text>
+<text class="t" x="743" y="198" font-size="11.5" text-anchor="middle">NOBODY DECIDED</text>
 </svg>

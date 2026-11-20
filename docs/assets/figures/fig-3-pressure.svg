@@ -1,93 +1,73 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 390" width="880" height="390" role="img" aria-labelledby="t">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 272" width="880" height="272" role="img" aria-labelledby="t">
 <title id="t">A wall and pressure</title>
 <style>
 :root{--ink:#1E1E1E;--acc:#F4C430}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
 :root[data-theme="dark"]{--ink:#EDEDED}
-.i,.k,.a,.h,.z{fill:none;stroke-linecap:round;stroke-linejoin:round}
-.i{stroke:var(--ink);stroke-width:1.8}
-.k{stroke:var(--ink);stroke-width:1.1}
-.a{stroke:var(--acc);stroke-width:4}
-.h{stroke:var(--ink);stroke-width:1}
-.z{stroke:var(--ink);stroke-width:1.8;stroke-dasharray:8 8}
-.y{fill:none;stroke:var(--acc);stroke-width:4;stroke-linecap:round;stroke-dasharray:9 9}
+.i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.i{stroke:var(--ink);stroke-width:1.2}
+.k{stroke:var(--ink);stroke-width:0.75}
+.a{stroke:var(--acc);stroke-width:2.4}
+.h{stroke:var(--ink);stroke-width:0.6}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
+.y{stroke:var(--acc);stroke-width:2.4;stroke-dasharray:6 6}
 .d{fill:var(--ink);stroke:none}
-.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.12em}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 </style>
-<path class="k" d="M22 22H858V368H22Z"/>
-<circle class="k" cx="11" cy="11" r="4"/>
-<path class="k" d="M3 11L19 11"/>
-<path class="k" d="M11 3L11 19"/>
-<circle class="k" cx="11" cy="379" r="4"/>
-<path class="k" d="M3 379L19 379"/>
-<path class="k" d="M11 371L11 387"/>
-<circle class="k" cx="869" cy="11" r="4"/>
-<path class="k" d="M861 11L877 11"/>
-<path class="k" d="M869 3L869 19"/>
-<circle class="k" cx="869" cy="379" r="4"/>
-<path class="k" d="M861 379L877 379"/>
-<path class="k" d="M869 371L869 387"/>
-<path class="k" d="M187.12 336H858V368H187.12Z"/>
-<path class="k" d="M638.48 336L638.48 368"/>
-<text class="t" x="201.12" y="357" font-size="14" text-anchor="start">FIG. 3  A WALL STOPS WORK, PRESSURE NUDGES</text>
-<text class="t" x="652.48" y="357" font-size="14" text-anchor="start">SCHEMATIC, NOT DATA</text>
-<path class="k" d="M40 50H430V300H40Z"/>
-<path class="k" d="M450 50H840V300H450Z"/>
-<text class="t b" x="58" y="82" font-size="17" text-anchor="start">A WALL</text>
-<text class="t b" x="468" y="82" font-size="17" text-anchor="start">PRESSURE</text>
-<path class="i" d="M70 120H134L150 136V232H70Z"/>
-<path class="k" d="M134 120V136H150"/>
-<path class="k" d="M84 160L136 160"/>
-<path class="k" d="M84 182L136 182"/>
-<path class="k" d="M84 204L136 204"/>
-<path class="i" d="M154 176L282 176"/>
-<path class="i" d="M275.01 171.62L284 176L275.01 180.38"/>
-<path class="i" d="M300 110H326V242H300Z"/>
-<path class="h" d="M300 118L308 110"/>
-<path class="h" d="M300 126L316 110"/>
-<path class="h" d="M300 134L324 110"/>
-<path class="h" d="M300 142L326 116"/>
-<path class="h" d="M300 150L326 124"/>
-<path class="h" d="M300 158L326 132"/>
-<path class="h" d="M300 166L326 140"/>
+<path class="k" d="M22 22H858V250H22Z"/>
+<path class="k" d="M572.25 228H858V250H572.25Z"/>
+<path class="k" d="M720.49 228L720.49 250"/>
+<text class="t b" x="581.25" y="243" font-size="11" text-anchor="start">FIG. 3  PRESSURE</text>
+<text class="t" x="729.49" y="242.5" font-size="8.5" text-anchor="start">SCHEMATIC, NOT DATA</text>
+<path class="k" d="M40 36H430V218H40Z"/>
+<path class="k" d="M450 36H840V218H450Z"/>
+<text class="t" x="58" y="62" font-size="14" text-anchor="start">WALL</text>
+<text class="t" x="468" y="62" font-size="14" text-anchor="start">PRESSURE</text>
+<path class="i" d="M72 96H128L142 110V192H72Z"/>
+<path class="k" d="M128 96V110H142"/>
+<path class="k" d="M86 130L128 130"/>
+<path class="k" d="M86 150L128 150"/>
+<path class="k" d="M86 170L128 170"/>
+<path class="i" d="M146 144L282 144"/>
+<path class="i" d="M276.81 140.49L284 144L276.81 147.51"/>
+<path class="i" d="M300 84H326V204H300Z"/>
+<path class="h" d="M300 93L309 84"/>
+<path class="h" d="M300 102L318 84"/>
+<path class="h" d="M300 111L326 85"/>
+<path class="h" d="M300 120L326 94"/>
+<path class="h" d="M300 129L326 103"/>
+<path class="h" d="M300 138L326 112"/>
+<path class="h" d="M300 147L326 121"/>
+<path class="h" d="M300 156L326 130"/>
+<path class="h" d="M300 165L326 139"/>
 <path class="h" d="M300 174L326 148"/>
-<path class="h" d="M300 182L326 156"/>
-<path class="h" d="M300 190L326 164"/>
-<path class="h" d="M300 198L326 172"/>
-<path class="h" d="M300 206L326 180"/>
-<path class="h" d="M300 214L326 188"/>
-<path class="h" d="M300 222L326 196"/>
-<path class="h" d="M300 230L326 204"/>
-<path class="h" d="M300 238L326 212"/>
-<path class="h" d="M304 242L326 220"/>
-<path class="h" d="M312 242L326 228"/>
-<path class="h" d="M320 242L326 236"/>
-<text class="t" x="235" y="282" font-size="15" text-anchor="middle">WORK STOPS</text>
-<path class="i" d="M470 120H534L550 136V232H470Z"/>
-<path class="k" d="M534 120V136H550"/>
-<path class="k" d="M484 160L536 160"/>
-<path class="k" d="M484 182L536 182"/>
-<path class="k" d="M484 204L536 204"/>
-<path class="k" d="M552 215L591 215"/>
-<path class="i" d="M591 215A54 54 0 0 1 699 215Z"/>
-<path class="k" d="M598 215L591 215"/>
-<path class="k" d="M604.3 191.5L598.23 188"/>
-<path class="k" d="M621.5 174.3L618 168.23"/>
-<path class="k" d="M645 168L645 161"/>
-<path class="k" d="M668.5 174.3L672 168.23"/>
-<path class="k" d="M685.7 191.5L691.77 188"/>
-<path class="k" d="M692 215L699 215"/>
-<path class="a" d="M674.7 185.3L691.67 168.33"/>
-<path class="i" d="M645 215L687.65 197.77"/>
-<circle class="d" cx="645" cy="215" r="4"/>
-<path class="z" d="M700 164L739 164"/>
-<path class="i" d="M732.01 159.62L741 164L732.01 168.38"/>
-<path class="i" d="M745 125H801L815 139V217H745Z"/>
-<path class="k" d="M801 125V139H815"/>
-<path class="k" d="M759 159L801 159"/>
-<path class="k" d="M759 177L801 177"/>
-<path class="k" d="M759 195L801 195"/>
-<text class="t" x="780" y="242" font-size="15" text-anchor="middle">TIDY UP</text>
-<text class="t" x="645" y="282" font-size="15" text-anchor="middle">A NUDGE, WORK GOES ON</text>
+<path class="h" d="M300 183L326 157"/>
+<path class="h" d="M300 192L326 166"/>
+<path class="h" d="M300 201L326 175"/>
+<path class="h" d="M306 204L326 184"/>
+<path class="h" d="M315 204L326 193"/>
+<path class="h" d="M324 204L326 202"/>
+<path class="i" d="M470 96H526L540 110V192H470Z"/>
+<path class="k" d="M526 96V110H540"/>
+<path class="k" d="M484 130L526 130"/>
+<path class="k" d="M484 150L526 150"/>
+<path class="k" d="M484 170L526 170"/>
+<path class="k" d="M542 172L586 172"/>
+<path class="i" d="M586 172A54 54 0 0 1 694 172Z"/>
+<path class="k" d="M593 172L586 172"/>
+<path class="k" d="M606.77 138.77L601.82 133.82"/>
+<path class="k" d="M640 125L640 118"/>
+<path class="k" d="M673.23 138.77L678.18 133.82"/>
+<path class="k" d="M687 172L694 172"/>
+<path class="a" d="M669.7 142.3L686.67 125.33"/>
+<path class="i" d="M640 172L682.65 154.77"/>
+<circle class="d" cx="640" cy="172" r="3.5"/>
+<path class="z" d="M704 140L742 140"/>
+<path class="i" d="M736.81 136.49L744 140L736.81 143.51"/>
+<path class="i" d="M750 102H798L810 114V184H750Z"/>
+<path class="k" d="M798 102V114H810"/>
+<path class="k" d="M764 132L796 132"/>
+<path class="k" d="M764 150L796 150"/>
+<path class="k" d="M764 168L796 168"/>
 </svg>

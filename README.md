@@ -33,11 +33,9 @@ uvx --from git+https://github.com/drksci/conky conky demo
 
 Systems built around AI tend to keep their truth in a dozen places: prompts, settings, a database, glue code, and old versions of all four. They work. They grow. Then one day nobody can move them.
 
-<p align="center"><img src="docs/assets/figures/fig-5-too-big-to-move.svg" alt="A pen-plotter plate of a whale skeleton settled on the ground, labelled with the places state gets stuck. Beside it, much smaller, a folder of papers with a carry handle and a dashed yellow path leading away." width="800"></p>
+<p align="center"><img src="docs/assets/figures/fig-5-stay-or-go.svg" alt="Two pen-plotter panels side by side. Left, titled too big to move: a whale skeleton settled on the ground. Right, titled just walk out: a skeleton striding towards an open door with a folder under its arm, a dashed yellow path leading out." width="800"></p>
 
 conky keeps one thing: a folder of pages, and the history of how they got that way.
-
-<p align="center"><img src="docs/assets/figures/fig-6-walk-out.svg" alt="A pen-plotter drawing of a cheerful skeleton striding towards an open exit door, carrying a folder of papers by its handle. A dashed yellow path leads out through the door." width="800"></p>
 
 <p align="center"><em>If it stops serving you, walk out. The folder comes with you.</em></p>
 
