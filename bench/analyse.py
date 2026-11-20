@@ -44,6 +44,7 @@ METRICS = (
     "accountability",
 )
 STAND_INS = ("scripted", "adversary")
+UNMETERED = "unmetered control"
 
 
 class Refused(Exception):
@@ -87,6 +88,8 @@ def run_metrics(folder: Path) -> dict:
         ),
         "exit": record.get("exit"),
     }
+    if record.get("metered") is False:
+        metrics["calls"] = metrics["tokens"] = None  # the meter saw nothing: not zero
     for rule in score.RULES:
         metrics[f"violations.{rule}"] = found[f"violations.{rule}"]
     if record.get("probe") in ("resume", "portability"):
@@ -171,7 +174,13 @@ def summary(values: list[float]) -> dict:
 
 
 def result_class(backend: str, contrast: str) -> str:
-    """The class a number carries. No model involved: mechanism. Prompts compared: prompt."""
+    """The class a number carries. No model involved: mechanism. Prompts compared: prompt.
+
+    An unmetered control is its own class and, its backend being unique, is never paired with
+    a metered arm.
+    """
+    if backend == UNMETERED:
+        return UNMETERED
     if backend in MODEL_FREE:
         return "mechanism"
     return "prompt" if contrast in ("prompt", "interaction") else "harness"

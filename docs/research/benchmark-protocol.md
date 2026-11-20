@@ -84,7 +84,20 @@ Today the Conky character can only fill one field from each answer, so on this r
 | `floor-continue` | No model: the plainest valid answer to each question | none |
 | `floor-random` | No model: a seeded random valid answer to each question | none |
 
+| `cli` | A stock agent command line (default `claude -p`), run once with the task text, the helper `./game` and the shelf as files; an unmetered control | `session.jsonl`, `report.json` |
+
 Adapters for other harnesses follow `bench/adapters/README.md`. The external harness adapter for the OpenAI Agents SDK or LangGraph is not built.
+
+### The unmetered control
+
+The `cli` arm gets the identical task text and shelf, on the same model name, and is left to play however it likes. It differs from every other arm, and the differences are the reason it is a control and not a competitor:
+
+- Its model calls do not pass through the meter. Calls, tokens and cost are what the command line reports about itself (`self_reported` in `run.json`), are not checked, and appear in the analysis as unknown.
+- Its budget is a turn limit, counted as lines typed into the game, plus the command line's own dollar cap, not the meter's calls and tokens.
+- It does not resume: a command line run once keeps no state the runner can hand to a fresh process. The hostile-model probe does not apply, since no model call passes through a backend that could be hostile. The runner refuses both.
+- Its transcript is the game's own, as for every arm. Its session record (every line `./game` typed and every screen it printed) lets a run be replayed with no command line.
+
+It is reported beside the metered arms, labelled `unmetered control`, and never pooled with them or paired with them. The tests and the walk use a fake command line on a stand-in game; no test calls a live one. See `bench/adapters/cli/scaffold.md` for the command line and every added byte.
 
 ## The metering door
 

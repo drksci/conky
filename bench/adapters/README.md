@@ -86,6 +86,15 @@ last four keys are optional.
 | `loop` | Nothing. The loop, its prompt and its memory window are fixed. |
 | `conky` | Today, only the field its answer fills (`keys`), so nothing about its own structure. With `--answers pages` (`writes:` on an ask), pages in a space it may write: notes, new characters, its own prompt and rules. |
 | `floor-continue`, `floor-random` | Nothing; no agent. |
+| `cli` | Anything inside its own working directory, by its own tools; it is a control. |
+
+## An arm outside the meter
+
+An arm that cannot send its model calls through the meter, such as a stock agent command line
+that talks to its own provider, declares `"metered": false` and a `"control"` label in its
+manifest. The runner then records it as that control (never as a metered result), ignores the
+meter's budget for it, keeps what the arm says about its own usage, and refuses probes and
+resume for it. The analysis never pools it with a metered arm. The `cli` arm is the only one.
 
 ## Writing an adapter for another harness
 

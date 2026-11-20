@@ -18,6 +18,15 @@ backend; no model is called. The first stage fetches the game if it is not cache
 10. Conky arm only: the character answers with pages. It keeps a note, rewrites its own page
     with a case, and the case answers a later screen with no model call; every write stays in
     its space and the vault verifies.
+
+An arm that declares itself unmetered (the `cli` arm) walks a shorter way, on a stand-in game
+and a fake command line, never the fetched game and never a live command line:
+
+1. The arm plays the stand-in through the helper; each line it typed reached the game.
+2. The run record says it is an unmetered control and holds what the command line reported.
+3. A replay from the record alone gives the same transcript with no command line.
+4. The analysis labels it `unmetered control` and never pairs it with a metered arm.
+5. It has no probe and no resume.
 """
 
 from __future__ import annotations
@@ -167,6 +176,73 @@ def walk(arm: str, out: Path, seed: int, cache: Path | None) -> None:
         ok(f"the analysis refuses to report it: {str(exc).splitlines()[1].strip()}")
 
 
+STAND_IN = run.ROOT / "tests" / "games" / "stand_in.py"
+FAKE = run.BENCH / "adapters" / "cli" / "fake.py"
+
+
+def unmetered(arm: str, out: Path, seed: int) -> None:
+    agent = f"{sys.executable} {FAKE} 1 2 1 2 1"
+    budget = Budget(200, 10**6)
+
+    def play(label: str, **extra) -> Path:
+        plan = run.Plan(SCENARIO, arm, "full", seed, "scripted", "stand-in", budget, out,
+                        wall=120, stall=30, game=STAND_IN, **extra)  # fmt: skip
+        folder = out / label
+        record = run.Run(plan, folder).execute()
+        require(record["exit"] == "game-ended", f"{label}: the run ended: {record['exit']}")
+        return folder
+
+    stage(1, f"the {arm} arm plays the stand-in through the helper with a fake command line")
+    folder = play("run", agent=agent)
+    session = base.Notes(folder / "workdir" / "session.jsonl").read()
+    typed = [e["typed"] for e in session if e["typed"] is not None]
+    inputs = [e["line"] for e in textenv.read(folder / "transcript.jsonl") if e["kind"] == "in"]
+    show("\n".join(f"{e['seq']}: typed {e['typed']!r}, screen {e['screen'][-40:]!r}"
+                   for e in session[:3]))  # fmt: skip
+    require(typed == inputs == ["1", "2", "1", "2", "1"], f"the game received exactly {typed}")
+    require(session[0]["screen"] in textenv.text(textenv.read(folder / "transcript.jsonl")),
+            "the helper's first screen is the game's own")  # fmt: skip
+
+    stage(2, "the record says it is an unmetered control and keeps what the command line reported")
+    record = json.loads((folder / "run.json").read_text())
+    require(record["metered"] is False and record["control"] == "unmetered control",
+            f"metered {record['metered']}, control {record['control']!r}, backend "
+            f"{record['backend']!r}")  # fmt: skip
+    require(not (folder / "meter.jsonl").exists() or not (folder / "meter.jsonl").read_text(),
+            "the meter saw no call")  # fmt: skip
+    require(bool(record["self_reported"]), f"self-reported usage: {record['self_reported']}")
+
+    stage(3, "a replay from the record gives the same transcript with no command line")
+    again = play("replay", replay=folder)
+    same = textenv.text(textenv.read(again / "transcript.jsonl"))
+    require(same == textenv.text(textenv.read(folder / "transcript.jsonl")),
+            "the transcripts match")  # fmt: skip
+
+    stage(4, "the analysis labels it and never pairs it with a metered arm")
+    first = analyse.run_metrics(folder)
+    require(first["metrics"]["calls"] is None and first["metrics"]["tokens"] is None,
+            "calls and tokens are unknown, not zero")  # fmt: skip
+    try:
+        analyse.analyse([first])
+        raise Failed("the analysis made a table from a stand-in game")
+    except analyse.Refused:
+        ok("the analysis refuses a stand-in game")
+    first["record"]["stand_in_game"] = None
+    other = json.loads(json.dumps(first))
+    other["record"].update(arm="other", backend="conky-model", metered=True, control="")
+    result = analyse.analyse([first, other])
+    classes = {c["class"] for c in result["cells"] if c["arm"] == arm}
+    require(classes == {"unmetered control"} and not result["harness"],
+            f"cells labelled {classes}, no pairing with the metered arm")  # fmt: skip
+
+    stage(5, "it has no probe and no resume")
+    try:
+        run.resume_by_hand(folder, arm, out / "resumed", 60, 30, None, STAND_IN)
+        raise Failed("an unmetered arm was resumed")
+    except SystemExit as exc:
+        ok(f"resume is refused: {exc}")
+
+
 def pages(out: Path, seed: int, cache: Path | None, game: Path | None = None) -> None:
     stage(10, "the Conky character answers with pages: a note, a case, no model call for the case")
     plan = run.Plan(SCENARIO, "conky", "full", seed, "scripted", "stand-in", Budget(200, 10**6),
@@ -274,6 +350,10 @@ def main(argv: list[str] | None = None) -> int:
     if out.exists():
         parser.error(f"{out} exists: give a new folder")
     try:
+        if run.arms()[args.arm]["manifest"].get("metered", True) is False:
+            unmetered(args.arm, out, args.seed)
+            print("\nwalked: every stage held")
+            return 0
         if args.probe:
             constraint(out, args.seed, args.cache)
             print("\nwalked: every stage held")

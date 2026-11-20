@@ -19,6 +19,10 @@ Options for experiments and debugging:
 - `--step`: after each input, print the screen, the line typed and the model calls made for
   it, and wait for Enter. One run only.
 - `--probe resume|portability|constraint|overhead`: see `bench/probes/`.
+- `--agent COMMAND`, `--replay RUN_DIR`: for the `cli` arm only, a stock agent command line
+  outside the meter. `--agent` replaces its command line; `--replay` types the lines a finished
+  run recorded, with no command line at all. It has no probes and no resume, and its results are
+  never pooled with metered arms (see `bench/adapters/cli/README.md`).
 
 A stepped run, a run resumed by hand and a run on the `scripted` backend are marked in
 `run.json` and are never reported as results.
@@ -119,6 +123,8 @@ class Plan:
     cache_mode: str = ""
     replay_from: Path | None = None
     answers: str = "keys"
+    agent: str = ""
+    replay: Path | None = None
 
 
 class Run:
@@ -157,6 +163,10 @@ class Run:
         command += ["--tokens", str(self.plan.budget.tokens)]
         if self.plan.answers != "keys":
             command += ["--answers", self.plan.answers]
+        if self.plan.agent:
+            command += ["--agent", self.plan.agent]
+        if self.plan.replay:
+            command += ["--replay", str(self.plan.replay)]
         if self.shelf:
             command.append("--shelf")
         if resume:
@@ -281,7 +291,13 @@ class Run:
         backend = backends.make(backend_name, plan.recording)
         packs = [(self.prompts / n).read_text(encoding="utf-8") for n in ("task.md", "rules.md")]
         shelf_dir = plan.scenario / "shelf" if self.shelf else None
+        manifest = self.arm["manifest"]
+        control = manifest.get("control", "") if manifest.get("metered", True) is False else ""
+        if control:
+            backend_name = control
         mode = plan.cache_mode or ("off" if backend_name in backends.MODEL_FREE else "record")
+        if control:
+            mode = "off"
         meter = Meter(
             backend,
             plan.model,
@@ -322,6 +338,10 @@ class Run:
             "manual_resume": False,
             "stand_in_game": str(plan.game) if plan.game else None,
             "answers": plan.answers,
+            "metered": not control,
+            "control": control,
+            "agent": plan.agent,
+            "replay_session": str(plan.replay) if plan.replay else None,
             "cache_mode": mode,
             "replay_from": str(plan.replay_from) if plan.replay_from else None,
             "versions": {
@@ -370,6 +390,7 @@ class Run:
         self.record["exit"] = segments[-1]["exit"]
         self.record["end"] = now()
         self.record["accountability"] = self.accountability(workdir)
+        self.record["self_reported"] = self.self_reported(workdir) if control else None
         self.record["shelf_reads_recorded"] = self.shelf_reads(workdir)
         (self.dir / "run.json").write_text(json.dumps(self.record, indent=1, default=str))
         return self.record
@@ -431,6 +452,12 @@ class Run:
             "checked": checked,
         }
 
+    @staticmethod
+    def self_reported(workdir: Path) -> dict | None:
+        """What an unmetered arm's command line said about its own usage: never checked."""
+        path = workdir / "report.json"
+        return json.loads(path.read_text()).get("self_reported") if path.exists() else None
+
     def shelf_reads(self, workdir: Path) -> list:
         code, out = self.run_tool("shelf_reads", workdir)
         if code != 0 or not out:
@@ -482,6 +509,8 @@ def resume_by_hand(
     """Carry on a stopped run in a fresh process; marked as never a reported result."""
     old = json.loads((source / "run.json").read_text())
     arm = arm or old["arm"]
+    if arms()[arm]["manifest"].get("metered", True) is False:
+        raise SystemExit(f"arm {arm!r} is unmetered and cannot be resumed: replay it with --replay")
     plan = Plan(
         BENCH / "scenarios" / old["scenario"],
         arm,
@@ -588,6 +617,17 @@ def main(argv: list[str] | None = None) -> int:
         default="keys",
         help="for an arm that declares it: what an answer is, a line to type or a line and pages",
     )
+    parser.add_argument(
+        "--agent",
+        default="",
+        help="for an arm that declares it: the command line it runs, {model} filled in",
+    )
+    parser.add_argument(
+        "--replay",
+        type=Path,
+        default=None,
+        help="for an arm that declares it: type the lines a finished run recorded, no command line",
+    )
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
     out = args.out.resolve()
@@ -614,6 +654,12 @@ def main(argv: list[str] | None = None) -> int:
         for name in chosen:
             if args.answers not in known[name]["manifest"].get("answers", ["keys"]):
                 parser.error(f"arm {name!r} has no --answers {args.answers}")
+    for name in chosen:
+        manifest = known[name]["manifest"]
+        if (args.agent or args.replay) and not manifest.get("agent"):
+            parser.error(f"arm {name!r} takes no --agent or --replay")
+        if args.probe and manifest.get("metered", True) is False:
+            parser.error(f"arm {name!r} is unmetered: it has no --probe, see its README")
     cells = matrix(args.scenario, chosen, args.prompts.split(","), seeds(args.seeds))
     if args.step and len(cells) != 1:
         parser.error("--step runs exactly one run: give one arm, one prompt and one seed")
@@ -638,6 +684,8 @@ def main(argv: list[str] | None = None) -> int:
             args.game.resolve() if args.game else None,
             args.cache_mode,
             answers=args.answers,
+            agent=args.agent,
+            replay=args.replay.resolve() if args.replay else None,
         )
         label = f"{name}/{arm}/{prompt}/seed-{seed}" + (f"-{args.probe}" if args.probe else "")
         if args.replay_from:

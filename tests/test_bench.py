@@ -533,3 +533,94 @@ def test_the_loop_types_only_the_first_line_of_an_answer_and_keeps_the_whole(
     notes = base.Notes(work / "transcript.jsonl").read()
     assert len(notes) >= 5 and {e["typed"] for e in notes} == {"1"}
     assert all(e["answer"] == "1\nthen I would rest\nand keep notes" for e in notes)
+
+
+# The stock agent control arm: a fake command line, the helper, record and replay.
+
+FAKE = ROOT / "bench" / "adapters" / "cli" / "fake.py"
+GAME_HELPER = ROOT / "bench" / "adapters" / "cli" / "game.py"
+
+
+def fake_agent(*lines: str) -> str:
+    return " ".join([sys.executable, str(FAKE), *lines])
+
+
+@pytest.fixture(scope="module")
+def control(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    out = tmp_path_factory.mktemp("control")
+    argv = ["--arms", "cli", "--game", str(STAND_IN), "--stall", "15", "--wall", "60"]
+    assert run.main([*argv, "--agent", fake_agent("1", "2", "1", "2", "1"), "--out", str(out)]) == 0
+    return out / "trail" / "cli" / "full" / "seed-1"
+
+
+def test_the_control_arm_plays_through_the_helper_and_is_recorded(control: Path) -> None:
+    record = json.loads((control / "run.json").read_text())
+    assert record["exit"] == "game-ended" and record["metered"] is False
+    assert record["control"] == record["backend"] == "unmetered control"
+    assert record["self_reported"]["num_turns"] == 6
+    session = base.Notes(control / "workdir" / "session.jsonl").read()
+    typed = [e["typed"] for e in session if e["typed"] is not None]
+    inputs = [e["line"] for e in textenv.read(control / "transcript.jsonl") if e["kind"] == "in"]
+    assert typed == inputs == ["1", "2", "1", "2", "1"]
+    assert not (control / "meter.jsonl").exists() or not (control / "meter.jsonl").read_text()
+    assert (control / "workdir" / "agent" / "shelf" / "fables.md").exists()
+    assert record["accountability"]["answerable"] == record["accountability"]["sampled"] == 5
+
+
+def test_a_finished_session_replays_with_no_command_line(control: Path, tmp_path: Path) -> None:
+    argv = ["--arms", "cli", "--game", str(STAND_IN), "--stall", "15", "--wall", "60"]
+    assert run.main([*argv, "--replay", str(control), "--out", str(tmp_path)]) == 0
+    again = tmp_path / "trail" / "cli" / "full" / "seed-1"
+    one, two = (textenv.text(textenv.read(p / "transcript.jsonl")) for p in (control, again))
+    assert one == two
+    record = json.loads((again / "run.json").read_text())
+    assert record["replay_session"] == str(control) and record["agent"] == ""
+    assert not (again / "workdir" / "agent.out").exists()
+    first = json.loads((control / "run.json").read_text())
+    assert record["self_reported"] == first["self_reported"]
+
+
+def test_the_turn_limit_closes_the_game_and_the_helper_needs_one_line(tmp_path: Path) -> None:
+    from bench.adapters.cli import adapter
+
+    work = tmp_path / "work"
+    argv = ["--prompts", str(PACK), "--workdir", str(work), "--meter", "-", "--token", "t",
+            "--model", "m", "--scenario", str(SCENARIO), "--calls", "1", "--tokens", "1",
+            "--turn-limit", "2", "--agent", fake_agent("1", "1", "1", "1"),
+            "--", sys.executable, str(STAND_IN)]  # fmt: skip
+    assert adapter.main(argv) == 4
+    assert [e["typed"] for e in base.Notes(work / "session.jsonl").read()] == [None, "1", "1"]
+    report = json.loads((work / "report.json").read_text())
+    assert report["ended"] == "turn-limit" and report["lines_typed"] == 2
+    helper = work / "agent" / "game"
+    for args, code in ((["a", "b"], 2), ([], 1)):
+        done = subprocess.run([sys.executable, str(helper), *args], capture_output=True, text=True)
+        assert done.returncode == code and done.stderr.strip()
+
+
+def test_the_analysis_labels_the_control_and_never_pools_it(control: Path) -> None:
+    mine = analyse.run_metrics(control)
+    assert mine["metrics"]["calls"] is None and mine["metrics"]["tokens"] is None
+    with pytest.raises(analyse.Refused, match="stand-in game"):
+        analyse.analyse([mine])
+    mine["record"]["stand_in_game"] = None
+    other = json.loads(json.dumps(mine))
+    other["record"].update(arm="other", backend="conky-model", metered=True, control="")
+    result = analyse.analyse([mine, other])
+    assert {c["class"] for c in result["cells"] if c["arm"] == "cli"} == {"unmetered control"}
+    assert {c["class"] for c in result["cells"] if c["arm"] == "other"} == {"harness"}
+    assert result["harness"] == [] and result["interaction"] == []
+
+
+def test_an_unmetered_arm_has_no_probe_no_resume_and_others_take_no_agent(
+    control: Path, tmp_path: Path
+) -> None:
+    for argv in (["--arms", "cli", "--probe", "resume"], ["--arms", "loop", "--agent", "x"]):
+        with pytest.raises(SystemExit):
+            run.main([*argv, "--game", str(STAND_IN), "--out", str(tmp_path / "x")])
+    with pytest.raises(SystemExit, match="unmetered"):
+        run.resume_by_hand(control, "cli", tmp_path / "y", 60, 15, None, STAND_IN)
+
+
+def test_the_control_walk_holds_on_the_stand_in(tmp_path: Path) -> None:
+    assert walk.main(["--arm", "cli", "--out", str(tmp_path / "walk")]) == 0

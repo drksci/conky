@@ -1,0 +1,9 @@
+{
+  "arms": {"cli": ["{python}", "adapter.py", "--turn-limit", "150"]},
+  "uses_model": true,
+  "metered": false,
+  "control": "unmetered control",
+  "agent": true,
+  "state": ["session.jsonl", "report.json"],
+  "explain": ["{python}", "adapter.py", "--explain"]
+}
