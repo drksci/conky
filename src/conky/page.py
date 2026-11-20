@@ -9,11 +9,33 @@ from typing import Any
 
 import yaml
 
+from conky import arch
 from conky.errors import BadInput
 
-RESERVED = ("within", "rules", "watch")
-WATCH_KEYS = ("on", "when", "set", "ask")
-ASK_KEYS = ("prompt", "into", "provider", "otherwise", "writes")
+RESERVED = arch.constant(
+    ("within", "rules", "watch"),
+    "reserved key",
+    "conky.page.RESERVED",
+    "reserved keys",
+    "Keys of a page's frontmatter that are not fields.",
+    doc="vocabulary.md#reserved-keys",
+)
+WATCH_KEYS = arch.constant(
+    ("on", "when", "set", "ask"),
+    "watch key",
+    "conky.page.WATCH_KEYS",
+    "watch keys",
+    "Keys of a watch entry.",
+    doc="vocabulary.md#watch-keys",
+)
+ASK_KEYS = arch.constant(
+    ("prompt", "into", "provider", "otherwise", "writes"),
+    "ask key",
+    "conky.page.ASK_KEYS",
+    "ask keys",
+    "Keys of an ask.",
+    doc="vocabulary.md#ask-keys",
+)
 NAME = re.compile(r"^[a-z0-9][a-z0-9_-]{0,63}$")
 EMBED = re.compile(r"!\[\[([^\]#]+)(?:#([^\]]+))?\]\]")
 
@@ -46,6 +68,12 @@ class ShapeError(Exception):
     """A write would give a page a malformed reserved key or field."""
 
 
+@arch.part(
+    "page",
+    "history",
+    "Markdown with frontmatter, serialised the same way every time.",
+    doc="vault-format.md#pages",
+)
 @dataclass
 class Page:
     """One page: its space, rules, watches, own fields and body."""
@@ -101,6 +129,11 @@ def _ask_ok(value: Any) -> bool:
     )
 
 
+@arch.change(
+    "page",
+    "Fields, body, `within`, `rules` and `watch`, only by a write.",
+    doc="vault-format.md#pages",
+)
 def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
     """Return the page after changes and body, normalised through its serialised form."""
     within, rules, watch = page.within, list(page.rules), list(page.watch)
@@ -140,6 +173,16 @@ def _watch_head(entry: dict[str, Any]) -> dict[str, Any]:
     return head
 
 
+@arch.law(
+    "three-primitives",
+    "Data is a document, a table or a stream, and a change of shape is a forward re-projection.",
+    doc="../decisions/0010-no-debt-no-down-migrations.md",
+)
+@arch.data(
+    "document",
+    "A page: Markdown with frontmatter, small, in the present tense.",
+    doc="vault-format.md#pages",
+)
 def serialize(page: Page) -> str:
     """Return the page as Markdown: reserved keys, then fields by name, then the body."""
     head: dict[str, Any] = {}
@@ -205,6 +248,11 @@ def given(text: str) -> tuple[dict[str, Any], str | None]:
     return head, (body if body.strip() else None)
 
 
+@arch.law(
+    "golden-vault",
+    "The vault format is held stable by a golden vault that every version reads.",
+    doc="../decisions/0012-rust-core-planned.md",
+)
 def parse(text: str) -> Page:
     """Parse serialised Markdown into a page."""
     raw, body = _split(text)
@@ -243,11 +291,18 @@ def embedded(text: str, lookup: dict[str, Page]) -> list[str]:
     return names
 
 
+@arch.part(
+    "embed",
+    "history",
+    "`![[page]]` or `![[page#field]]`, resolved on read and in prompts.",
+    doc="vault-format.md#pages",
+)
 def resolve_text(text: str, lookup: dict[str, Page]) -> str:
     """Return text with each embed replaced by the field or body it names in lookup."""
     return EMBED.sub(lambda m: _embed_text(lookup.get(m.group(1)), m.group(2)) or "", text)
 
 
+@arch.step("read-a-page", 3, "Runtime", "Page", "replace each embed by the field or body it names")
 def resolve(page: Page, lookup: dict[str, Page]) -> Page:
     """Return a copy of page whose embeds are replaced by field values from lookup."""
     return Page(page.within, page.rules, page.watch, page.fields, resolve_text(page.body, lookup))

@@ -4,6 +4,11 @@ title: Leaving a space is a write the space can refuse
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - law:rules-only-tighten
+  - flow:join-and-leave
+  - part:space
 ---
 
 # 0022 Leaving a space is a write the space can refuse

@@ -4,6 +4,18 @@ title: Pages that ask a model
 status: enforced
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - flow:asking-a-model
+  - archetype:provider
+  - stage:ask
+  items:
+  - kind: stage
+    name: richer context and an unchecked claim
+    phase: think
+    text: Context richer than the embeds of one prompt, and a model's answer marked as an unchecked claim, are open questions.
+    state: idea
+    roadmap: R17
 ---
 
 # Pages that ask a model

@@ -4,6 +4,9 @@ title: What conky will not do
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - law:not-doing
 ---
 
 # 0018 What conky will not do

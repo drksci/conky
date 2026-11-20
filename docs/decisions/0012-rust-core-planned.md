@@ -4,6 +4,15 @@ title: Rust core planned
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - law:golden-vault
+  items:
+  - kind: part
+    name: rust-core
+    layer: git
+    text: A core in Rust, compiled natively and to WebAssembly, passing the same golden vault.
+    roadmap: R19
 ---
 
 # 0012 Rust core planned

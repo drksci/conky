@@ -16,7 +16,7 @@ from typing import Any
 
 import pytest
 
-from conky import Vault, model
+from conky import Vault, arch, model
 from conky.cli import main
 from conky.git import trailers
 
@@ -143,6 +143,7 @@ def last_refusal(vault: Vault, page: str = "desk") -> dict[str, str]:
     raise AssertionError(f"no refusal on {page}")
 
 
+@arch.holds("asking-a-model")
 def test_an_ask_entry_answers_as_a_signed_write_by_the_asking_page(
     vault: Vault, stand: Stand
 ) -> None:
@@ -178,6 +179,7 @@ def test_an_ask_entry_answers_as_a_signed_write_by_the_asking_page(
         ("anthropic", "/v1/messages", "x-api-key", SECRET),
     ],
 )
+@arch.holds("asking-a-model")
 def test_each_wire_format_sends_the_right_request_and_reads_the_answer(
     vault: Vault,
     stand: Stand,
@@ -207,6 +209,7 @@ def test_each_wire_format_sends_the_right_request_and_reads_the_answer(
     assert message(vault)[1]["Tokens-In"] == "11" and message(vault)[1]["Tokens-Out"] == "7"
 
 
+@arch.holds("asking-a-model")
 def test_the_answer_names_each_page_that_was_embedded_once_in_order(
     vault: Vault, stand: Stand
 ) -> None:
@@ -290,6 +293,7 @@ def test_an_answer_refused_by_a_rule_still_says_what_was_read(vault: Vault, stan
     assert last_refusal(vault)["Read"] == "ticket"
 
 
+@arch.holds("provider-is-a-page")
 def test_changing_provider_is_editing_one_page(vault: Vault, stand: Stand) -> None:
     provider(vault, stand)
     desk(vault)
@@ -344,6 +348,7 @@ def test_the_environment_wins_over_the_file(
     assert stand.requests[0]["headers"]["authorization"] == "Bearer from-the-environment"
 
 
+@arch.holds("provider-is-a-page")
 def test_a_secret_appears_nowhere_in_the_vault(
     vault: Vault, stand: Stand, keys_dir: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -375,6 +380,7 @@ def test_a_provider_without_a_secret_sends_no_credential(vault: Vault, stand: St
         assert "authorization" not in sent["headers"] and "x-api-key" not in sent["headers"]
 
 
+@arch.holds("asking-a-model")
 def test_a_settled_question_is_not_asked_twice_and_a_changed_one_is(
     vault: Vault, stand: Stand
 ) -> None:
@@ -453,6 +459,7 @@ def broken(stand: Stand, how: str, monkeypatch: pytest.MonkeyPatch) -> tuple[str
         "unreachable",
     ],
 )
+@arch.holds("reflexes-are-free", "asking-a-model")
 def test_every_failure_is_a_model_refusal_and_nothing_else_is_affected(
     vault: Vault, stand: Stand, monkeypatch: pytest.MonkeyPatch, how: str
 ) -> None:
@@ -483,6 +490,7 @@ def test_every_failure_is_a_model_refusal_and_nothing_else_is_affected(
     vault.verify()
 
 
+@arch.holds("clone-and-leave")
 def test_history_verifies_and_reads_with_no_network_and_no_secrets(
     vault: Vault, stand: Stand, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

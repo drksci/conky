@@ -4,6 +4,11 @@ title: Learned reactions
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: unplaced
+    name: learned reactions
+    text: A repeated model answer becomes a reaction and the model is no longer asked. It is carried by the lens idea.
 ---
 
 # Learned reactions

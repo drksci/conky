@@ -4,6 +4,14 @@ title: Permission that stays out of the way
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: archetype
+    name: gatekeeper
+    by: a person or a character
+    layer: spaces
+    text: A page a space names to answer a request for permission.
+    roadmap: R14
 ---
 
 # Permission that stays out of the way

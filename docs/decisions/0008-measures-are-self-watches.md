@@ -4,6 +4,10 @@ title: Measures are self-watches
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - law:measure-is-a-self-watch
+  - flow:measure-and-pressure
 ---
 
 # 0008 Measures are self-watches

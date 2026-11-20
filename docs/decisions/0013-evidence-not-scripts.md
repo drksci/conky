@@ -4,6 +4,13 @@ title: Evidence, not scripts
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: part
+    name: benchmark
+    layer: edge
+    text: Scenarios, adapters and raw traces, with the trail trial first. Results come only from unscripted runs.
+    roadmap: R8
 ---
 
 # 0013 Evidence, not scripts

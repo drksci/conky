@@ -8,6 +8,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
+from conky import arch
 from conky.errors import BadInput
 
 SIGNERS = "keys/allowed_signers"
@@ -37,6 +38,16 @@ def _run(
     return proc.stdout
 
 
+@arch.step(
+    "clone-and-leave", 1, "Person", "History", "the vault moves by plain Git: clone, push or bundle"
+)
+@arch.step(
+    "clone-and-leave",
+    2,
+    "History",
+    "Outside",
+    "pages, history and public keys travel, and private keys and secrets stay behind",
+)
 def run(
     args: list[str], cwd: Path, env: dict[str, str] | None = None, stdin: str | None = None
 ) -> str:
@@ -57,6 +68,11 @@ def require_tools() -> None:
         raise BadInput("git is older than 2.34: upgrade Git to 2.34 or newer")
 
 
+@arch.law(
+    "vault-travels-alone",
+    "A vault travels alone, verifies anywhere and holds no private key.",
+    doc="vault-format.md#reading-with-plain-git",
+)
 def init(path: Path) -> None:
     """Create a Git repository on main, set up for SSH signing."""
     path.mkdir(parents=True, exist_ok=True)
@@ -69,6 +85,24 @@ def init(path: Path) -> None:
         run(["config", key, value], path)
 
 
+@arch.part(
+    "key",
+    "git",
+    "A signing key of one actor, kept outside the vault.",
+    doc="vault-format.md#identity-and-signing",
+)
+@arch.change(
+    "beside",
+    "Private signing keys, in the key directory.",
+    doc="vault-format.md#identity-and-signing",
+)
+@arch.step(
+    "accepted-write",
+    6,
+    "Runtime",
+    "Outside",
+    "a first write by an actor makes its key in the key directory",
+)
 def register(keys_dir: Path, signers: Path, actor: str) -> tuple[Path, str | None]:
     """Return the actor's private key path, creating the key on first use.
 
@@ -92,6 +126,12 @@ def register(keys_dir: Path, signers: Path, actor: str) -> tuple[Path, str | Non
     return private, f'{actor}@conky namespaces="git" {kind} {blob}\n'
 
 
+@arch.part(
+    "seal",
+    "git",
+    "The signature on an event, made with Git's SSH signing.",
+    doc="vault-format.md#identity-and-signing",
+)
 def commit(
     cwd: Path,
     *,

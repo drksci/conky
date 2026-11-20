@@ -4,6 +4,14 @@ title: The history is the trace
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: stage
+    name: the activity strip
+    phase: attention
+    text: Plain-language notices for people, derived from Read, Cause and From trailers.
+    state: idea
+    roadmap: R11e
 ---
 
 # The history is the trace

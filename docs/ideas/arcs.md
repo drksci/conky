@@ -4,6 +4,11 @@ title: Arcs
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: unplaced
+    name: arcs
+    text: A primary purpose with branches, each scored by its distance from it. Not yet worked out, and read as direction and drift.
 ---
 
 # Arcs

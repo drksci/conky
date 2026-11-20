@@ -9,6 +9,13 @@ arch:
   - part:answer-cache
   - part:detection
   items:
+  - kind: judged
+    name: habit-is-faithful
+    question: State whether this written habit is a faithful summary of what thought decided.
+    evidence: The case on the page, and the answers it replaced, in the vault history.
+    scale: 1 misleading, 2 partial, 3 faithful, 4 faithful and sharper than the answers
+    checks: []
+    state: idea
   - kind: part
     name: habit
     layer: characters

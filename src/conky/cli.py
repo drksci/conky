@@ -9,7 +9,7 @@ from pathlib import Path
 
 import yaml
 
-from conky import assimilate, cache, connect, demo, model, present
+from conky import arch, assimilate, cache, connect, demo, model, present
 from conky.assimilate import INTO
 from conky.errors import BadInput, VerifyFailed
 from conky.page import load_value, serialize
@@ -255,6 +255,32 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
     return 0
 
 
+@arch.law(
+    "vocabulary-is-what-exists",
+    "The vocabulary is what exists, checked against the code both ways.",
+    doc="../decisions/0027-the-vocabulary-is-what-exists.md",
+)
+@arch.part(
+    "commands",
+    "edge",
+    "`init write ask model read log verify rebuild connect demo assimilate cache`.",
+    doc="cli.md#commands",
+)
+@arch.stage(
+    "stimulus",
+    "a person's write",
+    "`conky write` and `conky ask`.",
+    doc="cli.md#write",
+)
+@arch.change(
+    "runtime",
+    "Reading the clock, in this one place, to stamp each write.",
+    doc="cli.md#time",
+)
+@arch.step("accepted-write", 9, "Runtime", "Person", "written, with the commit id")
+@arch.step("refused-write", 8, "Runtime", "Person", "refused with the commit id and reason, exit 1")
+@arch.step("verify", 8, "Runtime", "Person", "ok, with the number of commits")
+@arch.step("rebuild", 6, "Runtime", "Person", "restored from the committed history")
 def main(argv: list[str] | None = None) -> int:
     """Run the command line and return the exit code."""
     args = _parser().parse_args(argv)

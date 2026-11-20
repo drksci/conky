@@ -16,6 +16,7 @@ from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
+from conky import arch
 from conky.errors import BadInput
 
 DIR_VARIABLE = "CONKY_CACHE_DIR"
@@ -58,6 +59,19 @@ class Stats:
     size: int
 
 
+@arch.part(
+    "answer-cache",
+    "characters",
+    "Model answers kept outside the history, keyed to the moment.",
+    doc="providers.md#cache",
+    roadmap="R30",
+)
+@arch.change(
+    "beside",
+    "Cached answers: derived data outside every vault, deletable.",
+    doc="providers.md#cache",
+    roadmap="R30",
+)
 @dataclass(frozen=True)
 class Cache:
     """A directory of entries, a mode and a size bound in bytes."""

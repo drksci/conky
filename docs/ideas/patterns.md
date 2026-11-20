@@ -4,6 +4,19 @@ title: Patterns
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: part
+    name: grouped-write
+    layer: history
+    text: Several pages changed in one commit, with rules that see the whole group.
+    roadmap: R24
+  - kind: archetype
+    name: pattern
+    by: a character, through the pattern maker
+    layer: spaces
+    text: A space made on demand from goldens, private at first and rising by use.
+    roadmap: R6
 ---
 
 # Patterns

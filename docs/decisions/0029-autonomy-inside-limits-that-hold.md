@@ -4,6 +4,42 @@ title: Autonomy inside limits that hold
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - law:pages-capability
+  - law:reach-flows-down
+  - law:rules-only-tighten
+  - law:runtime-is-not-a-page
+  items:
+  - kind: law
+    name: spending-is-conserved
+    statement: What a space may spend is shared among what is inside it, so making more characters divides a budget.
+    roadmap: R17
+  - kind: flow
+    name: spending-conserved
+    title: Spending conserved down a space
+    statement: A space's budget is shared among what lies within it, and a page stops at its budget.
+    rank: 3
+    steps:
+    - frm: Space
+      to: Page
+      text: a budget is shared among what is inside
+    - frm: Page
+      to: Runtime
+      text: ask, or make another character
+    - frm: Runtime
+      to: Provider
+      text: the call is made
+    - frm: Runtime
+      to: History
+      text: spend is kept as a field and recorded
+    - frm: Space
+      to: null
+      text: more characters divide the budget and never multiply it
+    - frm: Runtime
+      to: null
+      text: at the budget the page stops
+    roadmap: R17
 ---
 
 # 0029 Autonomy inside limits that hold

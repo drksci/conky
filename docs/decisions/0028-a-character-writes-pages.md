@@ -4,6 +4,12 @@ title: A character writes pages
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - law:pages-capability
+  - law:reach-flows-down
+  - flow:answer-is-pages
+  - part:answer-format
 ---
 
 # 0028 A character writes pages

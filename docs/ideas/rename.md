@@ -4,6 +4,14 @@ title: Renaming without breaking anything
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: part
+    name: rename
+    layer: history
+    text: One change that also rewrites every link and embed that points at a page.
+    state: idea
+    roadmap: R15
 ---
 
 # Renaming without breaking anything

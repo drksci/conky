@@ -4,6 +4,9 @@ title: It always works
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - law:always-works
 ---
 
 # 0026 It always works

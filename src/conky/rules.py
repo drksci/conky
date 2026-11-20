@@ -7,6 +7,8 @@ from typing import Any
 import celpy
 from celpy import celtypes
 
+from conky import arch
+
 _ENV = celpy.Environment()
 
 
@@ -32,6 +34,11 @@ def _plain(value: Any) -> Any:
     raise RuleError(f"result of type {type(value).__name__} cannot be stored")
 
 
+@arch.law(
+    "rules-are-pure",
+    "Rules and measures are pure: no clock, randomness or input and output.",
+    doc="rules-and-reactions.md#expressions",
+)
 def evaluate(expression: str, variables: dict[str, Any]) -> Any:
     """Evaluate expression with the given variables and return a plain Python value."""
     try:
@@ -42,6 +49,17 @@ def evaluate(expression: str, variables: dict[str, Any]) -> Any:
     return _plain(result)
 
 
+@arch.law(
+    "never-is-a-rule",
+    "Anything that must never happen is a rule the runtime evaluates.",
+    doc="rules-and-reactions.md#expressions",
+)
+@arch.part(
+    "rule",
+    "reflexes",
+    "A CEL expression judged before a write is kept.",
+    doc="rules-and-reactions.md#expressions",
+)
 def holds(expression: str, variables: dict[str, Any]) -> bool:
     """Return True only if expression evaluates to the boolean true."""
     return evaluate(expression, variables) is True

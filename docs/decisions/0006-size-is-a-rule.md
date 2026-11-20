@@ -4,6 +4,10 @@ title: Size is a rule
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - layer:reflexes
+  - archetype:space
 ---
 
 # 0006 Size is a rule

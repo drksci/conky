@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from conky import Vault, model
+from conky import Vault, arch, model
 from conky.cli import main
 from conky.git import trailers
 
@@ -220,6 +220,7 @@ def pages(found: model.Detected) -> list[str]:
     return [c.provider.page for c in found.choices]
 
 
+@arch.holds("always-works", "asking-a-model")
 def test_detection_lists_anthropic_then_openai_then_claude_then_codex(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -285,6 +286,7 @@ def test_an_ask_with_no_provider_runs_the_detected_command_and_records_it(
     assert found["Model"] == "detected:claude" and found["Model-Name"] == "claude"
 
 
+@arch.holds("always-works", "asking-a-model")
 def test_a_failing_detected_model_falls_to_the_next_and_then_to_a_sentence(
     vault: Vault, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -300,6 +302,7 @@ def test_a_failing_detected_model_falls_to_the_next_and_then_to_a_sentence(
     assert result.plain and head(vault)["Model"] == "none"
 
 
+@arch.holds("asking-a-model")
 def test_a_failing_named_page_is_recorded_and_the_detected_models_still_answer(
     vault: Vault, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -325,6 +328,7 @@ def test_a_broken_provider_page_is_recorded_and_the_asking_page_still_gets_a_sen
     vault.verify()
 
 
+@arch.holds("always-works")
 def test_with_no_model_an_ask_writes_a_sentence_that_names_the_question(
     vault: Vault,
 ) -> None:
@@ -359,6 +363,7 @@ def test_a_watch_entry_writes_its_otherwise_sentence_when_no_model_is_available(
     vault.verify()
 
 
+@arch.holds("asking-a-model")
 def test_a_sentence_is_not_a_settled_answer_so_a_later_model_replaces_it(
     vault: Vault, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

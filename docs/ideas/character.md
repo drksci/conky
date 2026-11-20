@@ -4,6 +4,13 @@ title: A page with a self
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: part
+    name: self
+    layer: characters
+    text: A seed, a face, a temperament and a voice for every page.
+    roadmap: R23
 ---
 
 # A page with a self

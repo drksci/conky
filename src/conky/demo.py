@@ -8,6 +8,7 @@ from importlib import resources
 from pathlib import Path
 from typing import Any
 
+from conky import arch
 from conky.errors import BadInput
 from conky.page import check_name, load_value
 from conky.present import Outcome, Plain
@@ -121,6 +122,13 @@ def run(
             out(line)
 
 
+@arch.part(
+    "demo",
+    "edge",
+    "A narrated example vault built with the real write path.",
+    doc="cli.md#demo",
+    roadmap="R20",
+)
 def build(
     name: str,
     into: Path,

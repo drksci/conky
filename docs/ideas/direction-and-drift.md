@@ -4,6 +4,20 @@ title: Direction and drift
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: archetype
+    name: goal
+    by: a person
+    layer: characters
+    text: What a page's activity is read against.
+    roadmap: R18
+  - kind: stage
+    name: direction and drift
+    phase: attention
+    text: Activity is read against a goal page as in phase, drifting or out of phase. The formula is not chosen.
+    state: idea
+    roadmap: R18
 ---
 
 # Direction and drift

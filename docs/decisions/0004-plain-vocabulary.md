@@ -4,6 +4,10 @@ title: Plain vocabulary
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - part:vault
+  - law:vocabulary-is-what-exists
 ---
 
 # 0004 Plain vocabulary

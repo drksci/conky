@@ -4,6 +4,39 @@ title: A pattern starts private and rises by use
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: flow
+    name: pattern-rises
+    title: A pattern rising by use
+    statement: A pattern is born private and rises one space at a time, by a measure of use and one write to within.
+    rank: 8
+    steps:
+    - frm: Page
+      to: Provider
+      text: the pattern maker is asked once, from goldens
+    - frm: Provider
+      to: Page
+      text: a space page, private to the space that made it
+    - frm: Page
+      to: Space
+      text: other pages join it
+    - frm: Page
+      to: Page
+      text: 'a measure of use: joins and distinct owners'
+    - frm: Runtime
+      to: Page
+      text: the measure passes the threshold of the space above
+    - frm: Page
+      to: Space
+      text: a reaction opens a proposal to move up one space
+    - frm: Space
+      to: Page
+      text: approval under that space's own rule
+    - frm: Runtime
+      to: History
+      text: one write to the pattern's within
+    roadmap: R6
 ---
 
 # 0023 A pattern starts private and rises by use

@@ -4,6 +4,52 @@ title: One step at a time
 status: idea
 date: 2026-11-20
 source: the owner's request for a step or breakpoint primitive, and the prior art below
+arch:
+  items:
+  - kind: law
+    name: a-person-can-hold-and-step
+    statement: A person can hold a vault and step it.
+    roadmap: R28
+  - kind: archetype
+    name: hold
+    by: a person
+    layer: edge
+    text: A field held on a page named hold.
+    roadmap: R28
+  - kind: flow
+    name: hold-and-step
+    title: Hold and step
+    statement: A held vault still writes and verifies, its reactions wait until asked, and stepping to the end and running freely give the same history.
+    rank: 4
+    steps:
+    - frm: Person
+      to: Runtime
+      text: write held on the page hold
+    - frm: Runtime
+      to: History
+      text: an ordinary event, so everyone sees it
+    - frm: Person
+      to: Runtime
+      text: write a page
+    - frm: Runtime
+      to: History
+      text: the write lands and reactions wait
+    - frm: Person
+      to: Runtime
+      text: step
+    - frm: Runtime
+      to: Page
+      text: run exactly one due reaction, in the usual order
+    - frm: Runtime
+      to: History
+      text: its event
+    - frm: Runtime
+      to: Provider
+      text: a held vault makes no model call
+    - frm: Runtime
+      to: null
+      text: a breakpoint expression holds the vault when true
+    roadmap: R28
 ---
 
 # One step at a time

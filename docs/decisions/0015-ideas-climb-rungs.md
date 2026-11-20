@@ -4,6 +4,9 @@ title: Ideas climb rungs
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - law:docs-are-checked
 ---
 
 # 0015 Ideas climb rungs

@@ -4,6 +4,47 @@ title: "A lens: think once, then keep up by reflex"
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: archetype
+    name: lens
+    by: a character
+    layer: characters
+    text: How one shape maps to another, written once by thought and revised on surprise.
+    state: idea
+    roadmap: R11g
+  - kind: flow
+    name: lens-revised
+    title: A lens written and revised on surprise
+    statement: A lens is applied by reflex and rewritten only when a measure says it has stopped explaining what it sees.
+    rank: 7
+    steps:
+    - frm: Outside
+      to: Connector
+      text: a raw surface changes
+    - frm: Connector
+      to: Page
+      text: the lens page maps it by reflex, with no model call
+    - frm: Page
+      to: Runtime
+      text: a measure of the share explained, written as an event
+    - frm: Runtime
+      to: Page
+      text: the share falls, so pressure rises
+    - frm: Runtime
+      to: Provider
+      text: a capable model is asked to revise the lens page
+    - frm: Provider
+      to: Runtime
+      text: a new lens
+    - frm: Runtime
+      to: History
+      text: the revision, an ordinary signed write
+    - frm: Page
+      to: null
+      text: steady state makes no model call
+    roadmap: R11g
+    state: idea
 ---
 
 # A lens: think once, then keep up by reflex

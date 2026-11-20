@@ -4,6 +4,40 @@ title: What a space hands down
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - part:space
+  items:
+  - kind: part
+    name: space-context
+    layer: spaces
+    text: A space handing down its context and its reactions, and a page within several spaces.
+    roadmap: R22
+  - kind: flow
+    name: space-hands-down
+    title: A space hands down context and reactions
+    statement: A space hands down its context and its reactions as well as its rules.
+    rank: 2
+    steps:
+    - frm: Person
+      to: Runtime
+      text: write a field on a space
+    - frm: Runtime
+      to: History
+      text: an ordinary event
+    - frm: Runtime
+      to: Space
+      text: its watch entries, and its fields as context
+    - frm: Runtime
+      to: Page
+      text: each member sees the context in rules, reactions and embeds
+    - frm: Runtime
+      to: Page
+      text: the space's reactions run for every member
+    - frm: Space
+      to: null
+      text: a page may join several spaces and the stricter rule wins
+    roadmap: R22
 ---
 
 # What a space hands down

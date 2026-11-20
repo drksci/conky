@@ -4,6 +4,11 @@ title: Energy unit
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: unplaced
+    name: energy unit
+    text: A unit of value flow that conserves only if its conversion is recorded. It waits on a grouped write and a measure of spend, and has no step of its own.
 ---
 
 # Energy unit

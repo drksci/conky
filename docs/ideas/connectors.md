@@ -4,6 +4,16 @@ title: "Connectors: every protocol is a door, not a room"
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - part:connector-terminal
+  - 'change:Connectors: processes that hold no state and write as their own actor.'
+  items:
+  - kind: part
+    name: protocol-connectors
+    layer: edge
+    text: Connectors for the protocols people already use, each a door and not a room.
+    roadmap: R25
 ---
 
 # Connectors: every protocol is a door, not a room

@@ -4,6 +4,11 @@ title: Ledger
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: unplaced
+    name: ledger
+    text: A built-in ledger was judged a bad idea. The need survives as a grouped write, in the patterns idea.
 ---
 
 # Ledger

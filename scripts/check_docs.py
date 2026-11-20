@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import importlib.util
 import re
 import sys
 from datetime import date
@@ -93,8 +94,18 @@ def check_roadmap(text: str) -> list[str]:
     return problems
 
 
+def architecture_problems() -> list[str]:
+    """Return a problem when the generated architecture index differs from the committed page."""
+    path = ROOT / "scripts" / "gen_architecture.py"
+    spec = importlib.util.spec_from_file_location("gen_architecture", path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules["gen_architecture"] = module
+    spec.loader.exec_module(module)
+    return module.check()
+
+
 def check() -> list[str]:
-    problems: list[str] = []
+    problems: list[str] = architecture_problems()
     documents = checked_documents()
     for path in documents:
         rel = path.relative_to(ROOT)

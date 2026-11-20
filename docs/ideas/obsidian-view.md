@@ -4,6 +4,11 @@ title: Obsidian view
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: unplaced
+    name: a generated index for a notes application
+    text: Derived data under R11. Nothing is designed beyond the idea.
 ---
 
 # Obsidian view

@@ -15,12 +15,20 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from conky import arch
 from conky.cache import Cache, Mode, digest
 from conky.page import NAME
 
 TIMEOUT = 60
 COMMAND_TIMEOUT = 120
-APIS = ("openai", "anthropic", "command")
+APIS = arch.constant(
+    ("openai", "anthropic", "command"),
+    "provider shape",
+    "conky.model.APIS",
+    "provider shapes",
+    "How a provider page says to reach a model.",
+    doc="providers.md#the-wire-formats",
+)
 ANTHROPIC_VERSION = "2023-06-01"
 ANTHROPIC_MAX_TOKENS = 1024
 ANTHROPIC_URL = "https://api.anthropic.com/v1/messages"
@@ -28,13 +36,27 @@ ANTHROPIC_DEFAULT_MODEL = "claude-sonnet-5-5"
 OPENAI_URL = "https://api.openai.com/v1/chat/completions"
 # No OpenAI model id has been verified, so a detected openai choice needs CONKY_MODEL.
 OPENAI_DEFAULT_MODEL: str | None = None
-BUILTIN_COMMANDS = {"claude": ["claude", "-p"], "codex": ["codex", "exec"]}
+BUILTIN_COMMANDS = arch.constant(
+    {"claude": ["claude", "-p"], "codex": ["codex", "exec"]},
+    "built-in command",
+    "conky.model.BUILTIN_COMMANDS",
+    "built-in commands",
+    "Programs a command provider can run with nothing set up.",
+    doc="providers.md#command",
+)
 PROVIDER_VARIABLE = "CONKY_PROVIDER"
 MODEL_VARIABLE = "CONKY_MODEL"
 KEY_VARIABLES = {"anthropic": "ANTHROPIC_API_KEY", "openai": "OPENAI_API_KEY"}
 SECRET_PREFIX = "CONKY_SECRET_"
 COMMAND_PREFIX = "CONKY_COMMAND_"
-CHOICES = ("anthropic", "openai", "claude", "codex", "none")
+CHOICES = arch.constant(
+    ("anthropic", "openai", "claude", "codex", "none"),
+    "provider choice",
+    "conky.model.CHOICES",
+    "provider choices",
+    "The models detection can choose, and none.",
+    doc="providers.md#detection",
+)
 WAYS = (
     "set ANTHROPIC_API_KEY, set OPENAI_API_KEY with CONKY_MODEL, "
     "put claude or codex on the PATH, or write a provider page and name it"
@@ -73,6 +95,32 @@ class Answer:
     cached: bool = False
 
 
+@arch.law(
+    "provider-is-a-page",
+    "A provider is a page, and a secret is never written to a vault.",
+    doc="../decisions/0019-providers-are-pages.md",
+    roadmap="R4",
+)
+@arch.archetype(
+    "provider",
+    "a person, or a character without a secret or a command",
+    "A page naming `api`, `url`, `model`, `secret` or `command`.",
+    doc="providers.md#the-provider-page",
+    roadmap="R4",
+)
+@arch.change(
+    "page",
+    "Provider fields, a connector's screen and hands, a measure's value.",
+    doc="providers.md#the-provider-page",
+)
+@arch.step(
+    "asking-a-model",
+    6,
+    "Runtime",
+    "History",
+    "a missing or malformed provider page is a model refusal",
+    refusal=True,
+)
 def provider(page: str, fields: dict[str, Any] | None) -> Provider:
     """Return the provider described by the fields of the page called page."""
     if fields is None:
@@ -118,6 +166,19 @@ def _read(path: Path) -> str:
         ) from exc
 
 
+@arch.change(
+    "beside",
+    "Secrets, by name, from the environment or the key directory.",
+    doc="providers.md#secrets",
+    roadmap="R4",
+)
+@arch.step(
+    "asking-a-model",
+    7,
+    "Runtime",
+    "Outside",
+    "find the secret by name: the environment, then the key directory",
+)
 def find_secret(name: str, keys_dir: Path) -> str:
     """Return the secret name, from CONKY_SECRET_<NAME> or else <name>.secret in keys_dir."""
     variable = f"{SECRET_PREFIX}{name.upper()}"
@@ -132,6 +193,12 @@ def find_secret(name: str, keys_dir: Path) -> str:
     return value
 
 
+@arch.change(
+    "beside",
+    "Command lines, from the environment or the key directory, never from a page.",
+    doc="providers.md#command",
+    roadmap="R26",
+)
 def find_command(name: str, keys_dir: Path) -> list[str]:
     """Return the argv for a command name, from outside the vault and never through a shell.
 
@@ -219,6 +286,29 @@ class Detected:
     notes: list[str]
 
 
+@arch.law(
+    "always-works",
+    "Everything works with nothing configured, and rules stay strict.",
+    doc="../decisions/0026-it-always-works.md",
+    roadmap="R26",
+)
+@arch.part(
+    "detection",
+    "characters",
+    "The models the environment offers, in the order to try them.",
+    doc="providers.md#detection",
+    roadmap="R26",
+)
+@arch.change(
+    "runtime", "Choosing a model when none is named.", doc="providers.md#detection", roadmap="R26"
+)
+@arch.step(
+    "asking-a-model",
+    11,
+    "Runtime",
+    "Outside",
+    "no answer yet: detect CONKY_PROVIDER, keys, then claude, then codex",
+)
 def detect() -> Detected:
     """List the models to try, from the environment and the PATH alone, never from a vault.
 
@@ -324,6 +414,13 @@ def _parse(found: Provider, data: Any) -> Answer:
     return Answer(text.strip(), _count(usage, names[0]), _count(usage, names[1]))
 
 
+@arch.step(
+    "asking-a-model",
+    9,
+    "Runtime",
+    "Provider",
+    "one call, no retry: an HTTP post or a local program",
+)
 def ask(found: Provider, secret: str | None, prompt: str, keys_dir: Path) -> Answer:
     """Send prompt to the provider once, with no retry, and return its answer."""
     where = f"provider {found.page!r}"
@@ -375,6 +472,13 @@ def moment_key(found: Provider, prompt: str, cause: str) -> str:
     )
 
 
+@arch.step(
+    "asking-a-model",
+    8,
+    "Runtime",
+    "Outside",
+    "look up the cache by the question and its moment, a hit skips the call",
+)
 def ask_once(
     cache: Cache,
     found: Provider,

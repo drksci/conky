@@ -4,6 +4,18 @@ title: Measures
 status: enforced
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - law:pressure-not-walls
+  - law:measure-is-a-self-watch
+  - flow:measure-and-pressure
+  - archetype:measure-bearing page
+  items:
+  - kind: stage
+    name: measures
+    phase: attention
+    text: One measure mechanism could serve attention, decay and metrics. Only pressure is built.
+    state: idea
 ---
 
 # Measures

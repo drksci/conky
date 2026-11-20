@@ -4,6 +4,21 @@ title: Nothing goes stale
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: archetype
+    name: archive
+    by: a character
+    layer: characters
+    text: An archived page stays readable and drops out of attention. Whether it is a field or a space is open.
+    state: idea
+    roadmap: R3
+  - kind: stage
+    name: staleness
+    phase: attention
+    text: A page can carry a measure of how long it has gone untouched. Past a threshold it is noticed, and an archived page drops out of what others attend to.
+    state: idea
+    roadmap: R3
 ---
 
 # Nothing goes stale

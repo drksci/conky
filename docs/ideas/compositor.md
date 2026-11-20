@@ -4,6 +4,19 @@ title: "The compositor: a screen that is asked for once"
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: archetype
+    name: layout
+    by: a character
+    layer: characters
+    text: How the screen is composed, asked for once.
+    roadmap: R11g
+  - kind: stage
+    name: a prompt control
+    phase: stimulus
+    text: A request typed at the screen becomes an ordinary write.
+    roadmap: R11f
 ---
 
 # The compositor: a screen that is asked for once

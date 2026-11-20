@@ -25,6 +25,7 @@ Every document starts with frontmatter (`kind`, `title`, `status`, `date`, `sour
 - [reference/providers.md](reference/providers.md): Providers
 - [reference/connectors.md](reference/connectors.md): Connectors
 - [reference/vocabulary.md](reference/vocabulary.md): Vocabulary
+- [reference/architecture.md](reference/architecture.md): Architecture index, generated from the code and the documents
 
 ### Design
 

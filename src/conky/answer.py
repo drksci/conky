@@ -4,12 +4,16 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from conky import arch
 from conky.page import NAME
 
 HEADER = "=== page:"
 END = "=== end ==="
 
 
+@arch.step(
+    "answer-is-pages", 2, "Runtime", "Provider", "the prompt plus the fixed page instruction"
+)
 def instruction(space: str) -> str:
     """Return the fixed text appended to a prompt that may write pages into space."""
     return (
@@ -43,6 +47,25 @@ def _header(line: str) -> tuple[str, str | None]:
     )
 
 
+@arch.part(
+    "answer-format",
+    "characters",
+    "The reply cut into plain text and page blocks.",
+    doc="rules-and-reactions.md#an-answer-that-is-pages",
+    roadmap="R29",
+)
+@arch.step(
+    "answer-is-pages", 3, "Runtime", None, "the reply is cut into plain text and page blocks"
+)
+@arch.judged(
+    "page-format-with-a-real-model",
+    "State whether a real model asked for pages follows the page format "
+    "and writes pages a person would keep.",
+    "The prompt as sent, the reply, the pages that landed and the refusals "
+    "recorded, in the vault history.",
+    "1 unusable, 2 needs repair, 3 usable, 4 good",
+    checks=["answer-is-pages"],
+)
 def split(reply: str) -> tuple[str, list[Block]]:
     """Return the plain text of a reply and its page blocks, in the order given."""
     plain: list[str] = []

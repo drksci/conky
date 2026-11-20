@@ -4,6 +4,14 @@ title: Taste is a page
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: archetype
+    name: taste
+    by: a person, or inferred by a model page
+    layer: spaces
+    text: How a vault looks and sounds, kept at the top space.
+    roadmap: R23
 ---
 
 # Taste is a page

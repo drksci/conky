@@ -4,6 +4,11 @@ title: Build on bedrock
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: unplaced
+    name: build on bedrock
+    text: Walk a new layer one step at a time before building on it. A working rule whose check is the benchmark walkthrough.
 ---
 
 # 0031 Build on bedrock

@@ -4,6 +4,65 @@ title: "The outside arrives as pages"
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: archetype
+    name: tool
+    by: a connector
+    layer: edge
+    text: One page per tool of a tool server. A call is a write to it.
+    roadmap: R25
+  - kind: archetype
+    name: shelf
+    by: a connector or a character
+    layer: spaces
+    text: A space of tool pages or of patterns.
+    roadmap: R25
+  - kind: archetype
+    name: go-between
+    by: a person or a character
+    layer: characters
+    text: A model page at a connector that turns raw pages into plain words and back.
+    roadmap: R25
+  - kind: stage
+    name: a tool call
+    phase: act
+    text: A write to a tool page that a connector performs.
+    roadmap: R25
+  - kind: flow
+    name: tool-call
+    title: A tool call through a connector space
+    statement: A tool is a page and a call is a write to it, and a go-between stands at the connector so characters never fill in forms.
+    rank: 6
+    steps:
+    - frm: Connector
+      to: Outside
+      text: ask the tool server what it offers
+    - frm: Connector
+      to: Runtime
+      text: one page per tool, into a shelf space
+    - frm: Page
+      to: Runtime
+      text: a go-between writes the request to a tool page
+    - frm: Runtime
+      to: Space
+      text: a rule may refuse it, and the server never receives it
+    - frm: Runtime
+      to: History
+      text: the signed request
+    - frm: Connector
+      to: History
+      text: sees the request
+    - frm: Connector
+      to: Outside
+      text: performs the call
+    - frm: Connector
+      to: Runtime
+      text: the result, onto the same page, caused by the request
+    - frm: Page
+      to: Page
+      text: the go-between turns the result into plain words
+    roadmap: R25
 ---
 
 # The outside arrives as pages

@@ -14,7 +14,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import TextIO
 
-from conky import style
+from conky import arch, style
 
 PLAIN_WIDTH = 78
 MAX_WIDTH = 88
@@ -333,6 +333,12 @@ class Styled(Plain):
 NO_COLOR = "NO_COLOR"
 
 
+@arch.part(
+    "presenters",
+    "edge",
+    "One result, two presenters: plain for scripts, styled for people.",
+    doc="cli.md#colour-and-styled-output",
+)
 def choose(mode: str, stream: TextIO, environ: Mapping[str, str] | None = None) -> Plain:
     """Return the presenter for stream: styled when asked, or when auto on a terminal.
 

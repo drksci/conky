@@ -4,6 +4,13 @@ title: A seed, an identity and a face
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: part
+    name: seed-and-face
+    layer: characters
+    text: A fixed phrase per page, a stable identifier and a drawn face.
+    roadmap: R23
 ---
 
 # A seed, an identity and a face

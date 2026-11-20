@@ -4,6 +4,12 @@ title: Derived data sits on top, never underneath
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: law
+    name: derived-data-is-deletable
+    statement: Derived data is optional, outside the history, rebuildable and safe to delete.
+    roadmap: R11
 ---
 
 # 0017 Derived data sits on top, never underneath

@@ -4,6 +4,13 @@ title: Patterns, not features
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: part
+    name: pattern-maker
+    layer: characters
+    text: Domain structures are never built in. A pattern maker makes them on demand from worked examples.
+    roadmap: R6
 ---
 
 # 0009 Patterns, not features

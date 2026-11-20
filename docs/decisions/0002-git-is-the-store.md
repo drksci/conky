@@ -4,6 +4,21 @@ title: Git is the store
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - layer:git
+  - law:only-writes-change-state
+  - flow:clone-and-leave
+  items:
+  - kind: unplaced
+    name: rules outside conky
+    text: Rules are not enforced on commits made outside conky, and removing the last commit is not detectable from one copy. Verify does not evaluate rules.
+  - kind: unplaced
+    name: key rotation and revocation
+    text: How keys are rotated and revoked is an open question with no idea or decision.
+  - kind: unplaced
+    name: write throughput
+    text: One signed commit per write limits throughput to the order of tens a second.
 ---
 
 # 0002 Git is the store

@@ -4,6 +4,14 @@ title: Auto-linking
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: part
+    name: link
+    layer: history
+    text: A page name written in a page so that one page points at another. No runtime code reads one, so it stays a convention.
+    state: idea
+    roadmap: R15
 ---
 
 # Auto-linking

@@ -4,6 +4,9 @@ title: The outside arrives as pages
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - flow:perception-in
 ---
 
 # 0021 The outside arrives as pages

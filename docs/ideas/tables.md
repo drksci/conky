@@ -4,6 +4,88 @@ title: Tables
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: data
+    name: file
+    text: 'Anything kept beside a page and named by it with a content hash: an image a connector captured, a download.'
+    roadmap: R1
+  - kind: data
+    name: table
+    text: Parquet parts in a folder beside a page. A write appends a part and never rewrites one, and the page carries the columns, the row count and the hash of each part.
+    roadmap: R1
+  - kind: data
+    name: engine
+    text: A query engine such as DuckDB is an optional reader beside the vault, reached like any tool. The core never embeds one and rules never read rows.
+    state: idea
+    roadmap: R1
+  - kind: data
+    name: stream beside a page
+    text: A table that only grows, read as it grows. The Git history is the one stream every vault already has.
+    roadmap: R1
+  - kind: flow
+    name: table-append
+    title: Appending to a table
+    statement: A write appends one Parquet part beside the page and never rewrites one.
+    rank: 12
+    steps:
+    - frm: Person
+      to: Runtime
+      text: write rows to a table
+    - frm: Runtime
+      to: Outside
+      text: a new Parquet part is written beside the page
+    - frm: Runtime
+      to: Space
+      text: rules judge the page's summary, never the rows
+    - frm: Runtime
+      to: History
+      text: one signed event that carries the part's hash
+    - frm: Runtime
+      to: Page
+      text: the page's columns, row count and part hashes are updated
+    roadmap: R1
+  - kind: flow
+    name: engine-query
+    title: A query through an engine
+    statement: A query engine reads the Parquet in place, and its result is a page or a new table.
+    rank: 13
+    steps:
+    - frm: Page
+      to: Connector
+      text: a request to query
+    - frm: Connector
+      to: Outside
+      text: the engine reads the parts in place
+    - frm: Connector
+      to: Runtime
+      text: the result, as a page or a new table, caused by the request
+    - frm: Runtime
+      to: History
+      text: a signed event by the connector
+    - frm: Runtime
+      to: null
+      text: the core never embeds an engine
+    roadmap: R1
+  - kind: flow
+    name: batch-watch
+    title: A watch firing on a batch
+    statement: A watch on a stream fires once for each new part, not for each row.
+    rank: 14
+    steps:
+    - frm: Runtime
+      to: History
+      text: a new part of a stream is committed
+    - frm: Runtime
+      to: Page
+      text: a watch entry on the stream's page fires once for the part
+    - frm: Runtime
+      to: History
+      text: the reaction, a signed event with Cause
+    - frm: Runtime
+      to: null
+      text: each row does not fire the watch
+    roadmap: R1
 ---
 
 # Tables

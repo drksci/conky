@@ -4,6 +4,9 @@ title: Docs live in the repository
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - law:docs-are-checked
 ---
 
 # 0016 Docs live in the repository

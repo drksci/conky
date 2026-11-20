@@ -4,6 +4,9 @@ title: Python reference implementation
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - part:vault
 ---
 
 # 0011 Python reference implementation

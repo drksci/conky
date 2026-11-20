@@ -4,6 +4,56 @@ title: A screen from the pages
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - part:presenters
+  items:
+  - kind: part
+    name: screen
+    layer: edge
+    text: A screen derived from the pages as A2UI messages, drawn by a renderer.
+    roadmap: R11b
+  - kind: part
+    name: screen-page
+    layer: edge
+    text: One static page that renders the messages, with no server.
+    roadmap: R11c
+  - kind: part
+    name: screen-updates
+    layer: edge
+    text: The screen updated as the history grows.
+    roadmap: R11d
+  - kind: flow
+    name: screen-and-prompt
+    title: The screen for people and a prompt coming back
+    statement: The screen is derived from the pages and can be deleted, and a request typed into it is an ordinary write.
+    rank: 10
+    steps:
+    - frm: Runtime
+      to: History
+      text: read pages and trailers
+    - frm: Runtime
+      to: Outside
+      text: 'derive the screen: a text outline, then A2UI messages, deletable'
+    - frm: Person
+      to: Outside
+      text: read the screen, with a prompt control at each corner
+    - frm: Person
+      to: Runtime
+      text: a typed request, an ordinary write under the same rules
+    - frm: Runtime
+      to: History
+      text: the request is recorded beside the layout it produced
+    - frm: Page
+      to: Provider
+      text: the compositor is asked once about layout
+    - frm: Provider
+      to: Page
+      text: a layout page
+    - frm: Runtime
+      to: Outside
+      text: redraw by reflex, with no model call
+    roadmap: R11a
 ---
 
 # A screen from the pages

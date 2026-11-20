@@ -4,6 +4,17 @@ title: Providers are pages
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - law:provider-is-a-page
+  - archetype:provider
+  - flow:asking-a-model
+  items:
+  - kind: stage
+    name: a budget
+    phase: think
+    text: A budget that stops spending. Token counts are recorded and nothing bounds them yet.
+    roadmap: R17
 ---
 
 # 0019 Providers are pages

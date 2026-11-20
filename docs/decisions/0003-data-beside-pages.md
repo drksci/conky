@@ -4,6 +4,9 @@ title: Data beside pages
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - data:table
 ---
 
 # 0003 Data beside pages

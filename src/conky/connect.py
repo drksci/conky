@@ -17,7 +17,7 @@ import time
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from conky import git, present
+from conky import arch, git, present
 from conky.errors import BadInput
 from conky.vault import Vault
 
@@ -48,6 +48,13 @@ class Settings:
     max_steps: int
 
 
+@arch.step(
+    "perception-in",
+    3,
+    "Connector",
+    None,
+    "wait for quiet, strip control sequences, keep the last 60 lines",
+)
 def plain(text: str) -> str:
     """Return text as a terminal would show it, with control sequences removed."""
     lines, col = [""], 0
@@ -67,6 +74,7 @@ def plain(text: str) -> str:
     return "\n".join(shown.split("\n")[-LINES:])
 
 
+@arch.step("perception-in", 2, "Outside", "Connector", "the program prints, in a pseudo-terminal")
 def _start(program: list[str]) -> tuple[int, subprocess.Popen[bytes]]:
     try:
         import fcntl
@@ -100,6 +108,9 @@ def _read(master: int) -> bytes:
         return b""
 
 
+@arch.step(
+    "action-out", 2, "Connector", "History", "poll for a new commit that touches the hands page"
+)
 def _last(vault: Vault, page: str) -> str:
     """Return the id of the latest commit that changed the page, or nothing."""
     return git.run(
@@ -107,6 +118,33 @@ def _last(vault: Vault, page: str) -> str:
     ).strip()
 
 
+@arch.archetype(
+    "hands",
+    "a person or a character writes it, the connector creates it",
+    "`keys`, `turn` and `enter`: what to type.",
+    doc="connectors.md#the-hands-page",
+)
+@arch.stage(
+    "act",
+    "the hands page",
+    "The connector types what a hands page says.",
+    doc="connectors.md#the-hands-page",
+)
+@arch.step(
+    "action-out",
+    1,
+    "Page",
+    "Runtime",
+    "write hands: keys and the turn it answers, and a rule may refuse it",
+)
+@arch.step("action-out", 3, "Connector", "Runtime", "read the hands page")
+@arch.step(
+    "action-out",
+    4,
+    "Connector",
+    None,
+    "keys must be text, the turn must equal the screen and not be answered",
+)
 def _typed(vault: Vault, hands: str, turn: int, answered: int) -> str | None:
     """Return what the hands page asks to type for the current screen, if it asks."""
     try:
@@ -119,6 +157,15 @@ def _typed(vault: Vault, hands: str, turn: int, answered: int) -> str | None:
     return keys if fields.get("enter") is False else keys + "\n"
 
 
+@arch.archetype(
+    "screen",
+    "a connector",
+    "What a program shows, with `turn` and `ended`.",
+    doc="connectors.md#the-screen-page",
+)
+@arch.step(
+    "perception-in", 1, "Connector", "Runtime", "create the screen and hands pages if missing"
+)
 def _prepare(vault: Vault, settings: Settings, now: Callable[[], str]) -> None:
     start = ((settings.screen, _SCREEN_BODY, {"turn": 0}), (settings.hands, _HANDS_BODY, {}))
     for page, body, fields in start:
@@ -142,6 +189,61 @@ def _stop(proc: subprocess.Popen[bytes]) -> int:
         return proc.wait()
 
 
+@arch.part(
+    "connector-terminal",
+    "edge",
+    "The terminal connector, eyes and hands on a program.",
+    doc="connectors.md#the-terminal-connector",
+)
+@arch.stage(
+    "stimulus",
+    "a connector's perception",
+    "The terminal connector writes the screen page.",
+    doc="connectors.md#the-screen-page",
+)
+@arch.change(
+    "beside",
+    "Connectors: processes that hold no state and write as their own actor.",
+    doc="connectors.md",
+)
+@arch.step(
+    "perception-in", 4, "Connector", None, "the text equals the last screen: nothing is written"
+)
+@arch.step(
+    "perception-in", 5, "Connector", "Runtime", "write screen: turn plus one, the body is the text"
+)
+@arch.step(
+    "perception-in",
+    6,
+    "Runtime",
+    "Page",
+    "a signed write by the connector, and the pages that watch screen react",
+)
+@arch.step(
+    "perception-in",
+    7,
+    "Runtime",
+    "Connector",
+    "refused: recorded, the connector prints it and goes on",
+    refusal=True,
+)
+@arch.step(
+    "perception-in",
+    8,
+    "Connector",
+    None,
+    "the run ends on exit, max steps or interrupt, and ended is written",
+)
+@arch.step(
+    "action-out", 5, "Connector", "Outside", "type the keys, with a newline unless enter is false"
+)
+@arch.step("action-out", 6, "Connector", None, "an old turn, or one already answered, is ignored")
+@arch.slot(
+    "terminal",
+    "connector kind",
+    "Eyes and hands on a terminal program.",
+    doc="connectors.md#the-terminal-connector",
+)
 def terminal(
     vault: Vault,
     program: list[str],

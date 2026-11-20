@@ -4,6 +4,9 @@ title: Context that flows down
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - part:space-context
 ---
 
 # Context that flows down

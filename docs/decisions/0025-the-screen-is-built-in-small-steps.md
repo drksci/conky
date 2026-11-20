@@ -4,6 +4,16 @@ title: The people's screen is built in small steps, and the trail is the first t
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - part:screen
+  - flow:screen-and-prompt
+  items:
+  - kind: part
+    name: trail-trial
+    layer: edge
+    text: 'The exploratory trail trial: a party plays a text Oregon Trail through the terminal connector, run by Conky and by a plain single-loop baseline.'
+    roadmap: R27
 ---
 
 # 0025 The people's screen is built in small steps, and the trail is the first trial

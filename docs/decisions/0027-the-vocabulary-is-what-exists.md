@@ -4,6 +4,10 @@ title: The vocabulary is what exists
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - law:vocabulary-is-what-exists
+  - part:commands
 ---
 
 # 0027 The vocabulary is what exists

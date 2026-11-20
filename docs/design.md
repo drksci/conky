@@ -7,7 +7,7 @@ source: maintainers
 ---
 # Design
 
-The technical model in short. The detail is in the reference pages and the decision records. For the ideas in plain language, start with [concepts](guide/concepts.md).
+The technical model in short. The index of everything is the [architecture index](reference/architecture.md), generated from the code and the documents. The detail is in the reference pages and the decision records. For the ideas in plain language, start with [concepts](guide/concepts.md).
 
 ## The model
 

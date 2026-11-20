@@ -4,6 +4,11 @@ title: Objective
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: unplaced
+    name: the objective
+    text: An organisation that runs, delivers and improves without its builders directing each step. It is an aim and prescribes no mechanism.
 ---
 
 # 0001 Objective

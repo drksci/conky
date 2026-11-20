@@ -29,13 +29,14 @@ From [design](../design.md) and the [reference](../reference/vault-format.md):
 - A vocabulary page that lists every name the runtime exposes, compared with the code in both directions by `tests/test_house.py`. The concept words are stated there and are not derived from code. The one check that cannot be derived, that wording stays plain, is held by review.
 - A cache for model answers ([decision 0030](../decisions/0030-pay-once.md)): derived data in `~/.conky/cache`, outside every vault, keyed to the provider, the whole prompt and the event that caused the question, with the modes `on`, `off`, `refresh` and `only`, a size bound and `conky cache`. A hit is recorded as `Cache: hit`. Tested with stand-in providers only. Only model answers are cached: no other step in the code downloads or recomputes anything large, and a new costly step is routed through the cache when it is added.
 - A golden vault under `tests/golden/` that every version must keep verifying and reading.
+- An architecture index generated from the code and the documents ([architecture index](../reference/architecture.md)): the built half from markers in `src/conky/` (`conky.arch`), the planned half from the `arch` frontmatter of ideas and decisions, and a Checks table that says for each law, flow and part whether a measured test, a judged check or nothing holds it. Judged checks are declared and their evidence bundle is written by `conky.arch.bundle`; no verdict has been recorded for any.
 - CI that runs `scripts/check` on every pull request and on pushes to `main`.
 
 ## Unverified
 
 - One live model call has been made, outside the test suite: a single ask through the built-in `claude` command provider in a throwaway vault, which returned `hello`, was written and passed `conky verify`. Nothing else was exercised live. The `openai` and `anthropic` HTTP shapes are tested only against stand-in servers that follow them as documented, so a real service may differ in ways the tests cannot show. The default Anthropic model id `claude-sonnet-5-5` was taken from the Claude API documentation and never called. No OpenAI default model id is known, so detection through `OPENAI_API_KEY` needs `CONKY_MODEL`. The `codex exec` form was not run because `codex` is not installed here, and detection by environment key, by `CONKY_PROVIDER` and by `codex` have only been run against fakes.
 - Cost is recorded as token counts when a provider reports them. Nothing bounds it, and a model's answer is stored like any other field, with nothing marking it as unchecked.
-- Nothing has been benchmarked. No claim here comes from an unscripted run, and none has been made.
+- Nothing has been benchmarked. No claim here comes from an unscripted run, and none has been made. The benchmark harness under `bench/` has run only against its scripted stand-in backend; its [protocol](../research/benchmark-protocol.md) is fixed before any live run.
 - Nothing in the project has been audited for security. See [SECURITY.md](../../SECURITY.md).
 
 ## Known gaps

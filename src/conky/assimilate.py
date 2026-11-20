@@ -11,7 +11,7 @@ from dataclasses import dataclass, replace
 from importlib import resources
 from pathlib import Path
 
-from conky import demo, git
+from conky import arch, demo, git
 from conky.errors import BadInput, VerifyFailed
 from conky.page import Page, check_name, load_value, parse
 from conky.present import Plain
@@ -49,6 +49,9 @@ def packaged_carry(actor: str) -> list[Carry]:
     return carried
 
 
+@arch.step(
+    "assimilate", 2, "Runtime", "Outside", "git clone into a new folder, and nothing else is copied"
+)
 def _take(source: str | None, into: Path) -> None:
     """Clone the source, or the built-in vault, into the new folder. Nothing else is copied."""
     into.parent.mkdir(parents=True, exist_ok=True)
@@ -89,6 +92,9 @@ def _facts(vault: Vault) -> str:
     return f"{counts}. Last change: {short}, {at}, by {actor}, {kind} {page}."
 
 
+@arch.step(
+    "assimilate", 5, "Runtime", "Page", "read each page: its space, its rules and what it watches"
+)
 def _room(vault: Vault) -> list[str]:
     """Describe each page from its file: its space, the rules that apply, and what it watches."""
     pages = _pages(vault)
@@ -109,6 +115,15 @@ def _room(vault: Vault) -> list[str]:
     return lines or ["no pages"]
 
 
+@arch.step("assimilate", 3, "Runtime", "History", "verify")
+@arch.step(
+    "assimilate",
+    4,
+    "Runtime",
+    "Person",
+    "verify fails: the first problem, nothing written, exit 1",
+    refusal=True,
+)
 def _problem(vault: Vault) -> str | None:
     try:
         vault.verify()
@@ -117,6 +132,9 @@ def _problem(vault: Vault) -> str | None:
     return None
 
 
+@arch.step(
+    "assimilate", 6, "Runtime", "Outside", "a new key for the newcomer, under a name that has none"
+)
 def _prepare(vault: Vault, actor: str, keys: Path) -> None:
     """Refuse an actor that is already in the vault or already has a key, so the key is new."""
     if (keys / actor).exists():
@@ -131,6 +149,12 @@ def _prepare(vault: Vault, actor: str, keys: Path) -> None:
         )
 
 
+@arch.step(
+    "assimilate", 7, "Runtime", "History", "the newcomer's writes, listed in its first commit"
+)
+@arch.step(
+    "assimilate", 8, "Runtime", "Page", "reactions follow, and a reacting page needs its own key"
+)
 def _carry_on(
     vault: Vault,
     carry: list[Carry],
@@ -158,6 +182,18 @@ def _carry_on(
     return True
 
 
+@arch.part(
+    "assimilate",
+    "edge",
+    "Take over a stopped vault from its folder alone.",
+    doc="cli.md#assimilate",
+    roadmap="R21",
+)
+@arch.step("assimilate", 1, "Person", "Runtime", "conky assimilate: a directory, a bundle or a URL")
+@arch.step("assimilate", 9, "Runtime", "History", "verify again, and list what was added")
+@arch.step(
+    "assimilate", 10, "Runtime", "Person", "what was shown and what was not: no model was involved"
+)
 def run(
     source: str | None,
     into: Path,

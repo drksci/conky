@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from conky import Vault
+from conky import Vault, arch
 from conky.answer import instruction
 from conky.cli import main
 from conky.errors import BadInput
@@ -108,6 +108,7 @@ Second note.
 """
 
 
+@arch.holds("pages-capability", "answer-is-pages")
 def test_an_answer_with_two_pages_writes_both_as_the_asker_caused_by_the_answer(
     den: Vault, stand: Stand
 ) -> None:
@@ -160,6 +161,7 @@ def test_a_settled_question_is_not_asked_again_and_a_changed_one_is(
     assert len(stand.prompts) == 2
 
 
+@arch.holds("reach-flows-down", "answer-is-pages")
 def test_a_page_outside_the_space_is_refused_and_recorded_and_the_others_land(
     den: Vault, stand: Stand
 ) -> None:
@@ -200,6 +202,7 @@ def test_a_page_inside_a_space_it_created_is_within_the_named_space(
     assert not refusals(den)
 
 
+@arch.holds("rules-only-tighten")
 def test_a_rule_of_a_space_refuses_a_page_that_breaks_it(den: Vault, stand: Stand) -> None:
     assert w(den, "shelf", {"within": "den", "rules": ["size <= 200"]}).ok
     stand.says(
@@ -214,6 +217,7 @@ def test_a_rule_of_a_space_refuses_a_page_that_breaks_it(den: Vault, stand: Stan
     den.verify()
 
 
+@arch.holds("rules-only-tighten")
 def test_a_character_can_add_a_rule_to_a_space_it_made_and_the_rule_binds_a_later_write(
     den: Vault, stand: Stand
 ) -> None:
@@ -247,6 +251,7 @@ def test_the_asker_can_rewrite_its_own_watch_and_it_takes_effect_on_the_next_wri
     den.verify()
 
 
+@arch.holds("reach-flows-down")
 def test_a_watch_entry_cannot_widen_where_a_character_may_write(den: Vault, stand: Stand) -> None:
     assert w(den, "lobby", {}).ok
     stand.says(
@@ -263,6 +268,7 @@ def test_a_watch_entry_cannot_widen_where_a_character_may_write(den: Vault, stan
     assert found["Reason"].startswith("limit: ")
 
 
+@arch.holds("runtime-is-not-a-page", "answer-is-pages")
 def test_a_character_cannot_write_a_secret_or_a_command_into_a_page(
     den: Vault, stand: Stand
 ) -> None:
@@ -281,6 +287,7 @@ def test_a_character_cannot_write_a_secret_or_a_command_into_a_page(
     assert all("secret or a command" in r["Reason"] for r in found)
 
 
+@arch.holds("answer-is-pages")
 def test_a_malformed_block_is_one_recorded_refusal_and_the_pages_around_it_still_apply(
     den: Vault, stand: Stand
 ) -> None:
@@ -346,6 +353,7 @@ def test_an_entry_with_only_writes_keeps_the_text_out_and_still_settles(
     assert len(stand.prompts) == 1
 
 
+@arch.holds("answer-is-pages")
 def test_a_character_writing_a_page_that_asks_again_stops_at_the_depth_cap(
     den: Vault, stand: Stand
 ) -> None:

@@ -4,6 +4,10 @@ title: Reflexes are free, so thought goes into character
 status: accepted
 date: 2026-11-20
 source: maintainers
+arch:
+  covers:
+  - law:reflexes-are-free
+  - stage:ask
 ---
 
 # 0007 Reflexes are free, so thought goes into character

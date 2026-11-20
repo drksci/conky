@@ -4,6 +4,30 @@ title: Trying a change first
 status: idea
 date: 2026-11-20
 source: maintainers
+arch:
+  items:
+  - kind: flow
+    name: dry-run
+    title: Dry run on a branch
+    statement: A change is applied on a throwaway branch, the consequences are reported and the branch is discarded.
+    rank: 5
+    steps:
+    - frm: Person
+      to: Runtime
+      text: what would this change do
+    - frm: Runtime
+      to: History
+      text: a throwaway branch
+    - frm: Runtime
+      to: Page
+      text: apply the change on the branch, with its reactions
+    - frm: Runtime
+      to: Person
+      text: the refusals and reactions that would follow
+    - frm: Runtime
+      to: History
+      text: discard the branch and record nothing
+    roadmap: R13
 ---
 
 # Trying a change first
