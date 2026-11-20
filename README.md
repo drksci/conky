@@ -9,6 +9,10 @@
 
 <p align="center">People, teams, tools and rules, as pages you can read.<br>Every change signed. Every rule enforced. Most of the work done by nobody in particular.</p>
 
+<p align="center"><a href="docs/guide/concepts.md">Concepts</a> &nbsp;·&nbsp; <a href="docs/guide/getting-started.md">Getting started</a> &nbsp;·&nbsp; <a href="docs/reference/vault-format.md">Reference</a> &nbsp;·&nbsp; <a href="docs/project/roadmap.md">Roadmap</a></p>
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/rule-tri.dark.svg"><img src="docs/assets/figures/rule-tri.light.svg" alt="" width="800"></picture></p>
+
 ```bash
 uvx --from git+https://github.com/drksci/conky conky demo
 ```
@@ -72,3 +76,7 @@ Early days, in other words. The parts marked as working are real and tested. The
 ## Licence
 
 [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), your pick. The puppet pictures belong to other people.
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/rule-tri.dark.svg"><img src="docs/assets/figures/rule-tri.light.svg" alt="" width="800"></picture></p>
+
+<p align="center"><sub>Made with the support of</sub><br><a href="https://drksci.com"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/mark-drksci.dark.svg"><img src="docs/assets/figures/mark-drksci.light.svg" alt="d/rksci" width="110"></picture></a></p>

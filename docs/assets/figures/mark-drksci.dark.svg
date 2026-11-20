@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 30" width="132" height="30" role="img" aria-labelledby="t">
+<title id="t">d/rksci</title>
+<style>
+:root{--ink:#EDEDED;--tone:#2B2F36;--acc:#F4C430}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+</style>
+<text class="t" x="2" y="22" font-size="20" font-weight="700" letter-spacing="1.5">d</text><path d="M25.00 6.00H29.50L27.17 11.67H22.67Z" fill="#FF00FF"/><path d="M22.67 11.67H27.17L24.83 17.33H20.33Z" fill="#00FFFF"/><path d="M20.33 17.33H24.83L22.50 23.00H18.00Z" fill="#6400FF"/><text class="t" x="34" y="22" font-size="20" font-weight="700" letter-spacing="1.5">rksci</text>
+</svg>
