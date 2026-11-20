@@ -93,7 +93,7 @@ def _words(text: str) -> int:
     return len(text.split())
 
 
-PAGES_ASK = re.compile(r"and (\S+) is a space you can write into\. ")
+PAGES_ASK = re.compile(r"\*\S+ can keep pages in (\S+)\. ")
 TURN = re.compile(r"The screen, turn (\d+):")
 
 

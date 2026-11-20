@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 import conky
-from conky import arch, cache, cli, connect, model, page, present
+from conky import arch, cache, cli, connect, model, page, present, voice
 from conky.vault import KINDS, Refusal, Trailer
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -193,3 +193,18 @@ def test_concepts_and_verbs_are_stated():
 def test_the_rules_point_at_the_page():
     text = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
     assert "docs/reference/vocabulary.md" in text, "CLAUDE.md must name the vocabulary page"
+
+
+def test_every_line_the_runtime_says_to_a_model_is_on_the_voice_page_and_used():
+    asked = set()
+    for path in (ROOT / "src" / "conky").glob("*.py"):
+        asked |= set(re.findall(r'voice\.(?:line|told)\(\s*"([a-z-]+)"', path.read_text("utf-8")))
+    held = voice.names()
+    assert not asked - held, f"the code asks voice.md for {sorted(asked - held)}: add a section"
+    assert not held - asked, f"voice.md holds {sorted(held - asked)}, which nothing says: remove it"
+    for key in held:
+        assert voice.line(key, **dict.fromkeys(FILLED, "x")), f"{key} is empty"
+    assert voice.line("plain") == model.PLAIN
+
+
+FILLED = ["page", "space", "reason", "shown", "entry", "root", "name", "where", "other"]

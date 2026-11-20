@@ -166,19 +166,21 @@ The commit records the question and the model ([vault format](vault-format.md#a-
 
 With `writes`, the answer may hold pages as well as text, so that a character can organise itself: make notes, other characters, spaces and rules. The key names a space, and the character may write only inside it. `writes` is the verb for what a page does to a space, as `watch` is for what it does to another page. Without the key an answer is text, as before.
 
-**The format.** The reply is cut into lines. A line that reads exactly `=== page: <name> ===` starts a page and names it. The page is Markdown with frontmatter, as in [vault format](vault-format.md#pages), and runs to the next header line or to a line that reads exactly `=== end ===`. Text before the first header, and text after an `=== end ===`, is the plain answer. If the entry has `into`, the plain text goes there, with the empty string when there is none. Leading and trailing blank lines of a page are ignored. This instruction is placed ahead of the prompt, so authors do not restate it. It is built from the same constants the parser cuts on, so the example page in it is one the parser accepts. `<page>` is the asking page, and the sentence about what the space holds is present only when the prompt itself embeds `![[<space>#members]]`:
+**The format.** The reply is cut into lines. A line that reads exactly `=== page: <name> ===` starts a page and names it. The page is Markdown with frontmatter, as in [vault format](vault-format.md#pages), and runs to the next header line or to a line that reads exactly `=== end ===`. Text before the first header, and text after an `=== end ===`, is the plain answer. If the entry has `into`, the plain text goes there, with the empty string when there is none. Leading and trailing blank lines of a page are ignored. This instruction is placed ahead of the prompt, so authors do not restate it. It is built from the same constants the parser cuts on, so the example page in it is one the parser accepts. The runtime is nobody, so these lines are narrated in the third person and shown in italics as stage directions: a page's own words, with their "I" and "you", always come from a page. The words live in `src/conky/voice.md`. `<page>` is the asking page, and the sentence about what the space holds is present only when the prompt itself embeds `![[<space>#members]]`:
 
 ```
-You are a page called <page>, and <space> is a space you can write into. Your reply is whatever you write outside a page. You may write pages into <space>, and they are kept. Write one like this:
+*<page> can keep pages in <space>. Whatever <page> writes outside a page is its reply. A page is kept when it is written like this:*
 
 === page: <name> ===
 ---
 within: <space>
 ---
-what you want to keep
+what is worth keeping
 === end ===
 
-A page can be a note to yourself, or it can carry a rule that must stay true from now on: a line under `rules:`, a CEL condition on `page.FIELD` or `space.FIELD`. To bind every page in <space> but not <space> itself, add `each` rules to <space> and nothing else, like this:
+*A page can be a note. It can also carry a rule that must stay true from now on. A rule is a line under `rules:` that says when the page is fine. It reads the page as page.FIELD and the space as space.FIELD.*
+
+*To bind every page in <space> but not <space> itself, <space> gets `each` rules and nothing else. It is written like this:*
 
 === page: <space> ===
 ---
@@ -187,7 +189,9 @@ rules:
 ---
 === end ===
 
-Each time you are asked, you are shown what <space> holds, so you will see what you kept. You cannot write anywhere else. Writing nothing more is fine.
+*Each time <page> is asked, it is shown what <space> holds, so it sees what it kept.*
+
+*<page> cannot write anywhere else. Writing nothing more is fine.*
 ```
 
 **How a page is applied.** The answer is written first, as today. If that write held, each page is applied in the order given as an ordinary write, one commit per page, by the actor that asked (the asking page, when a watch entry asked) and so signed by its key. Each carries `Cause`, the id of the commit of the answer. A page sets the keys its frontmatter names, and its body replaces the body when it has any text, as `conky write` does. A key it leaves out stays as it is, so a page can change its own `watch` and keep its `within`. If the answer write was refused nothing is applied, because the answer did not settle.
@@ -205,13 +209,13 @@ When no model answers, the plain sentence goes to `into` as today and no pages a
 
 ### When an answer is refused
 
-When a rule refuses the write of an answer, whether the write to `into` or a page the answer holds, the same question is sent once more. The second prompt is the first followed by a blank line and one fixed sentence, so it is the last thing the model reads:
+When a rule refuses the write of an answer, whether the write to `into` or a page the answer holds, the same question is sent once more. The second prompt is the first followed by a blank line and one fixed stage direction, so it is the last thing the model reads:
 
 ```
-Your last answer was refused: <reason> Answer again so that it holds.
+*<page>'s last answer was turned away: <reason> <page> may answer again so that it holds.*
 ```
 
-`<reason>` is the reason recorded on the refusal, for example `rule: page.said != 'no' (from camp) is false`. The history of a retried answer reads in this order: the write that triggered the entry, the refusal of the first answer, then the second answer, whose `Cause` is the refusal. The second ask is an ordinary recorded ask, and its prompt, which differs from the first, is a different moment for the cache, so it never hits the first answer. The field `<into>_asked` holds the digest of the entry's own prompt, so the question settles as if it had been asked once.
+`<page>` is the asking page. `<reason>` is the reason recorded on the refusal, ended with a full stop when it has none, for example `rule: page.said != 'no' (from camp) is false`. The history of a retried answer reads in this order: the write that triggered the entry, the refusal of the first answer, then the second answer, whose `Cause` is the refusal. The second ask is an ordinary recorded ask, and its prompt, which differs from the first, is a different moment for the cache, so it never hits the first answer. The field `<into>_asked` holds the digest of the entry's own prompt, so the question settles as if it had been asked once.
 
 The retry is one, and no more. When the second answer is refused by a rule too, the entry's `otherwise` text is written to `into` as an ordinary write that the rules judge, and when that is refused it is recorded and the asking stops. With no `otherwise` text, or no `into`, the asking stops with the second refusal recorded and the field keeps its value. A refusal with reason `shape`, `limit` or `cycle` is not retried, and neither is a failure to ask, which is covered below.
 

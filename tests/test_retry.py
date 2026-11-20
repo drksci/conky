@@ -5,9 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from conky import Vault
+from conky import Vault, voice
 from conky.git import trailers
-from conky.vault import RETRY
 
 from .conftest import git
 from .test_pages import Stand, w
@@ -33,8 +32,8 @@ def test_a_retried_answer_is_a_refusal_then_a_write_caused_by_it(
     assert w(vault, "gate", {"asks": "hunt"}).ok
     first, second = stand.prompts
     assert first == "Asked: hunt"
-    assert second.startswith("Asked: hunt\n\nYour last answer was refused: rule: ")
-    assert second.endswith(RETRY.split("{reason}")[1])
+    assert second.startswith("Asked: hunt\n\n*guide's last answer was turned away: rule: ")
+    assert second.endswith(voice.line("retry", page="guide", reason="\0").split("\0")[1] + "*")
     ids = git(vault.path, "log", "-3", "--format=%H").split()
     kinds = [trailers(git(vault.path, "log", "-1", "--format=%B", c)) for c in ids]
     assert kinds[1]["Reason"].startswith("rule:") and kinds[1]["Cause"] == ids[2]

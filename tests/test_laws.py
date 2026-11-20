@@ -1,5 +1,6 @@
 import json
 import subprocess
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -515,3 +516,71 @@ def test_a_refusal_can_be_noticed_and_stays_a_refusal(vault: Vault) -> None:
     vault.rebuild()
     vault.verify()
     assert pages(vault) == before
+
+
+MAKER = [
+    {
+        "on": "make",
+        "when": "true",
+        "ask": {"provider": "helper", "prompt": "make a note", "writes": "den"},
+    }
+]
+READER = [
+    {
+        "on": "bell",
+        "when": "true",
+        "ask": {
+            "provider": "helper",
+            "writes": "den",
+            "into": "said",
+            "prompt": "![[den#members]] | ![[note]] | ![[note#topic]]",
+        },
+    }
+]
+NOTE = {"within": "den", "topic": "one"}
+
+
+def _prompt_after(root: Path, by_model: bool, monkeypatch: pytest.MonkeyPatch) -> str:
+    """Return what a model is sent when a page that embeds a note asks, however the note came."""
+    stand = root / "stand"
+    stand.mkdir(parents=True)
+    program = stand / "model.py"
+    program.write_text(
+        "import pathlib, sys\n"
+        "here = pathlib.Path(__file__).parent\n"
+        "(here / 'asked.txt').write_text(sys.stdin.read())\n"
+        "print((here / 'answer.txt').read_text())\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("CONKY_COMMAND_STAND", f"{sys.executable} {program}")
+    vault = Vault.init(root / "vault", root / "keys")
+    assert w(vault, "helper", {"api": "command", "command": "stand"}).ok
+    assert w(vault, "den", {}).ok
+    assert w(vault, "make", {"n": 0}).ok
+    assert w(vault, "bell", {"n": 0}).ok
+    assert w(vault, "maker", {"within": "den", "watch": MAKER}).ok
+    assert w(vault, "reader", {"within": "den", "watch": READER}).ok
+    if by_model:
+        (stand / "answer.txt").write_text(
+            "=== page: note ===\n---\nwithin: den\ntopic: one\n---\nFirst note.\n=== end ===\n",
+            encoding="utf-8",
+        )
+        assert w(vault, "make", {"n": 1}).ok
+        assert "Model: helper" in git(vault.path, "log", "--format=%B")
+    else:
+        assert vault.write("note", NOTE, "First note.\n", actor="alice", at=AT).ok
+    (stand / "answer.txt").write_text("Nothing to add.", encoding="utf-8")
+    assert w(vault, "bell", {"n": 1}).ok
+    return (stand / "asked.txt").read_text(encoding="utf-8")
+
+
+@arch.holds("law.embed.anonymous")
+def test_nothing_a_model_is_shown_says_whether_a_page_was_written_by_a_person_or_a_model(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    person = _prompt_after(tmp_path / "person", False, monkeypatch)
+    model = _prompt_after(tmp_path / "model", True, monkeypatch)
+    assert "note: First note." in person and "| one" in person
+    assert person == model
+    for mark in ("Model", "Model-Name", "provider"):
+        assert mark not in person

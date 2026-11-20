@@ -149,7 +149,7 @@ def test_the_instruction_example_is_a_page_the_parser_cuts(den: Vault) -> None:
     plain, blocks = split("Done.\n" + example)
     assert plain == "Done."
     assert [(b.name, b.problem) for b in blocks] == [("note", None)]
-    assert "within: den" in blocks[0].text and "what you want to keep" in blocks[0].text
+    assert "within: den" in blocks[0].text and "what is worth keeping" in blocks[0].text
     assert "scribe" in text and "shown what den holds" in text
     assert "shown what" not in instruction("scribe", "den", False)
     assert w(den, "note", {"within": "den"}).ok

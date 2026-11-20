@@ -9,7 +9,7 @@ from typing import Any
 
 import yaml
 
-from conky import arch
+from conky import arch, voice
 from conky.errors import BadInput
 from conky.rules import RULE_NAMES, WATCH_NAMES, RuleError, check
 
@@ -114,11 +114,7 @@ def _check_watch(entry: Any) -> None:
         and (_set_ok(entry["set"]) if "set" in entry else _ask_ok(entry["ask"]))
     )
     if not ok:
-        raise ShapeError(
-            "watch entries need on (page name, within, link or refusal), when (text) and either "
-            "set (field: text) or ask (prompt, with into or writes or both, "
-            "and optional provider and otherwise)"
-        )
+        raise ShapeError(voice.line("watch-shape"))
     try:
         check(entry["when"], WATCH_NAMES)
         for value in entry.get("set", {}).values():
@@ -185,7 +181,7 @@ def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
                 _check_watch(entry)
             watch = value
         elif key == MEMBERS:
-            raise ShapeError("members is computed from the pages within a space: use another name")
+            raise ShapeError(voice.line("members-name"))
         else:
             fields[key] = value
     result = Page(within, rules, watch, fields, page.body if body is None else body)
@@ -197,10 +193,7 @@ def _check_rule(entry: Any) -> None:
     if isinstance(entry, dict) and set(entry) == {"each"}:
         entry = entry["each"]
     if not isinstance(entry, str):
-        raise ShapeError(
-            "a rule is a condition as text, or a mapping with the one key each whose value is a "
-            f"condition as text, not {entry!r}"
-        )
+        raise ShapeError(voice.line("rule-shape", entry=repr(entry)))
     try:
         check(entry, RULE_NAMES)
     except RuleError as exc:
@@ -376,6 +369,11 @@ def embedded(text: str, lookup: dict[str, Page]) -> list[str]:
     "part.embed",
     "layer.history",
     "`![[page]]`, `![[page#field]]` or `![[space#members]]`, resolved on read and in prompts.",
+    doc="vault-format.md#pages",
+)
+@arch.law(
+    "law.embed.anonymous",
+    "An embed shows a page's words and nothing about who wrote them.",
     doc="vault-format.md#pages",
 )
 def resolve_text(text: str, lookup: dict[str, Page]) -> str:

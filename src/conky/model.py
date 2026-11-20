@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from conky import arch
+from conky import arch, voice
 from conky.cache import Cache, Mode, digest
 from conky.page import NAME
 
@@ -39,10 +39,7 @@ OPENAI_URL = "https://api.openai.com/v1/chat/completions"
 OPENAI_DEFAULT_MODEL: str | None = None
 # What an agent program is told so that it answers as a model would: its own instructions
 # are replaced, so the prompt is the only thing it reads.
-PLAIN = (
-    "Answer the prompt you are given, in plain text. The prompt is all there is: there are no "
-    "tools and no files to consult, and nothing about where you run bears on the answer."
-)
+PLAIN = voice.line("plain")
 BUILTIN_COMMANDS = arch.constant(
     {
         "claude": [

@@ -8,7 +8,7 @@ from typing import Any
 import celpy
 from celpy import celtypes
 
-from conky import arch
+from conky import arch, voice
 
 MAX_TEXT = 65536
 MAX_PATTERN = 256
@@ -253,11 +253,11 @@ def missing(expressions: list[str], scope: dict[str, Any]) -> str:
             elsewhere = [r for r in _HERE if r != root and name in (scope.get(r) or {})]
             if elsewhere:
                 other = elsewhere[0]
-                hint = f"{_HERE[other]} has {name}, read it as {other}.{name}"
-            else:
-                hint = f"test for it first, as has({root}.{name})"
-            return f"{root}.{name} does not exist here: {hint}"
-    return "it could not be worked out for this page"
+                return voice.line(
+                    "missing-elsewhere", root=root, name=name, where=_HERE[other], other=other
+                )
+            return voice.line("missing-guard", root=root, name=name)
+    return voice.line("missing-unknown")
 
 
 @arch.law(

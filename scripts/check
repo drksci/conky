@@ -12,6 +12,6 @@ else
     pytest -q -n auto
 fi
 python scripts/check_docs.py
-vale --minAlertLevel=error README.md CHANGELOG.md CLAUDE.md .github/CONTRIBUTING.md .github/SECURITY.md docs
+vale --minAlertLevel=error README.md CHANGELOG.md CLAUDE.md .github/CONTRIBUTING.md .github/SECURITY.md docs src/conky/voice.md
 echo "prose: no house-style errors (vale, errors only)"
 python scripts/check_commits.py

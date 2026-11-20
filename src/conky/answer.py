@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from conky import arch
+from conky import arch, voice
 from conky.page import NAME
 
 HEADER = "=== page:"
@@ -25,24 +25,17 @@ def instruction(page: str, space: str, shown: bool) -> str:
 
     shown says the prompt embeds what space holds, which the text then tells the page.
     """
-    seen = (
-        f"Each time you are asked, you are shown what {space} holds, so you will see what "
-        "you kept. "
-        if shown
-        else ""
-    )
-    return (
-        f"You are a page called {page}, and {space} is a space you can write into. "
-        f"Your reply is whatever you write outside a page. You may write pages into {space}, "
-        f"and they are kept. Write one like this:\n\n{HEADER} <name> ===\n---\n"
-        f"within: {space}\n---\nwhat you want to keep\n{END}\n\n"
-        "A page can be a note to yourself, or it can carry a rule that must stay true from now "
-        "on: a line under `rules:`, a CEL condition on `page.FIELD` or `space.FIELD`. "
-        f"To bind every page in {space} but not {space} itself, add `each` rules to {space} "
-        f"and nothing else, like this:\n\n{HEADER} {space} ===\n---\n"
-        f"rules:\n  - each: page.FIELD < 50\n---\n{END}\n\n"
-        f"{seen}You cannot write anywhere else. Writing nothing more is fine.\n\n"
-    )
+    here = {"page": page, "space": space}
+    parts = [
+        voice.told("page-keeps", **here),
+        voice.line("page-example", **here),
+        voice.told("page-rule", **here),
+        voice.told("page-each", **here),
+        voice.line("page-each-example", **here),
+        voice.told("page-shown", **here) if shown else "",
+        voice.told("page-limits", **here),
+    ]
+    return "\n\n".join(p for p in parts if p) + "\n\n"
 
 
 @dataclass(frozen=True)
@@ -60,11 +53,7 @@ def _header(line: str) -> tuple[str, str | None]:
     name = rest[1:-4] if rest.startswith(" ") and rest.endswith(" ===") else ""
     if NAME.match(name):
         return name, None
-    shown = name or line
-    return name, (
-        f"the header {shown!r} does not name a page: write {HEADER} <name> === "
-        "with a name of lowercase letters, digits, '-' and '_'"
-    )
+    return name, voice.line("page-header", shown=repr(name or line))
 
 
 @arch.part(

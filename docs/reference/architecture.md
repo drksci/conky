@@ -35,6 +35,7 @@ The capability and the three laws of [decision 0029](../decisions/0029-autonomy-
 | <a id="law.data.three"></a>`law.data.three` | Data is a document, a table or a stream, and a change of shape is a forward re-projection. | [0010-no-debt-no-down-migrations.md](../decisions/0010-no-debt-no-down-migrations.md) | `conky.page.serialize` | `tests/test_laws.py::test_golden_vault_still_reads` | - | built |
 | <a id="law.debt.none"></a>`law.debt.none` | No fix-later notes, shims or dead code. | [0010-no-debt-no-down-migrations.md](../decisions/0010-no-debt-no-down-migrations.md) | `tests/test_house.py` | `tests/test_house.py::test_no_fix_later_notes` | - | built |
 | <a id="law.docs.check"></a>`law.docs.check` | Ideas climb rungs, and the documents, links and this index are checked. | [0015-ideas-climb-rungs.md](../decisions/0015-ideas-climb-rungs.md) | `scripts/check_docs.py` | `tests/test_docs.py::test_docs_pass_the_check` | - | built |
+| <a id="law.embed.anonymous"></a>`law.embed.anonymous` | An embed shows a page's words and nothing about who wrote them. | [vault-format.md#pages](vault-format.md#pages) | `conky.page.resolve_text` | `tests/test_laws.py::test_nothing_a_model_is_shown_says_whether_a_page_was_written_by_a_person_or_a_model` | - | built |
 | <a id="law.event.notice"></a>`law.event.notice` | Every recorded event can be noticed by the pages in relation to it, and the entry says what picks it up: a reflex, a faculty or the character. | [0039-an-event-can-be-noticed.md](../decisions/0039-an-event-can-be-noticed.md) | `conky.vault.Vault._tell` | `tests/test_laws.py::test_a_refusal_can_be_noticed_and_stays_a_refusal` | R38 | built |
 | <a id="law.event.seal"></a>`law.event.seal` | Every change is signed and says what caused it. | [vault-format.md#a-write](vault-format.md#a-write) | `conky.vault.Vault._record` | `tests/test_laws.py::test_write_is_a_signed_commit_with_trailers_and_dates`<br>`tests/test_laws.py::test_reaction_is_caused_by_and_signed_by_the_reacting_page` | - | built |
 | <a id="law.fallback.always"></a>`law.fallback.always` | Everything works with nothing configured, and rules stay strict. | [0026-it-always-works.md](../decisions/0026-it-always-works.md) | `conky.model.detect` | `tests/test_command.py::test_detection_lists_anthropic_then_openai_then_claude_then_codex`<br>`tests/test_command.py::test_a_failing_detected_model_falls_to_the_next_and_then_to_a_sentence`<br>`tests/test_command.py::test_with_no_model_an_ask_writes_a_sentence_that_names_the_question` | R26 | built |
@@ -1207,6 +1208,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`law.data.three`](#law.data.three) | built | 1 | - |  |
 | [`law.debt.none`](#law.debt.none) | built | 1 | - |  |
 | [`law.docs.check`](#law.docs.check) | built | 1 | - |  |
+| [`law.embed.anonymous`](#law.embed.anonymous) | built | 1 | - |  |
 | [`law.event.notice`](#law.event.notice) | built | 1 | - |  |
 | [`law.event.seal`](#law.event.seal) | built | 2 | - |  |
 | [`law.fallback.always`](#law.fallback.always) | built | 3 | - |  |
@@ -1387,6 +1389,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0037-a-watch-can-fire-on-a-relation](../decisions/0037-a-watch-can-fire-on-a-relation.md) | accepted | [`part.watch`](#part.watch), [`stage.notice.relation`](#stage.notice.relation) |
 | [0038-a-rule-is-proven-when-written](../decisions/0038-a-rule-is-proven-when-written.md) | accepted | [`law.rule.proven`](#law.rule.proven) |
 | [0039-an-event-can-be-noticed](../decisions/0039-an-event-can-be-noticed.md) | accepted | [`law.event.notice`](#law.event.notice), [`stage.notice.refusal`](#stage.notice.refusal) |
+| [0040-the-runtime-narrates-and-pages-speak](../decisions/0040-the-runtime-narrates-and-pages-speak.md) | accepted | [`law.embed.anonymous`](#law.embed.anonymous) |
 
 ### Unplaced
 

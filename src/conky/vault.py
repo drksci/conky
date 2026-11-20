@@ -10,7 +10,7 @@ from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
-from conky import answer, arch, git, model
+from conky import answer, arch, git, model, voice
 from conky.cache import Cache
 from conky.errors import BadInput, VerifyFailed
 from conky.page import (
@@ -82,7 +82,6 @@ class Refusal(StrEnum):
     LIMIT = "limit"
 
 
-RETRY = "Your last answer was refused: {reason} Answer again so that it holds."
 _CYCLE = f"{Refusal.CYCLE}: reactions nested deeper than {MAX_DEPTH}"
 
 
@@ -996,7 +995,7 @@ class Vault:
         refused = None if result is None or result.plain else _ruled(result)
         if refused is None:
             return result
-        note = RETRY.format(reason=" ".join((refused.reason or "").split()))
+        note = voice.told("retry", page=page, reason=_sentence(refused.reason))
         again = (page, actor, at, refused.id, depth)
         result = self._think(ask, pages, prompt, f"{prompt}\n\n{note}", again, False)
         refused = None if result is None or result.plain else _ruled(result)
@@ -1184,3 +1183,9 @@ class Vault:
         changes = {ask.into: text}
         result = self._write(page, changes, None, actor, at, cause, depth, (trailers, prompt))
         return Result(result.ok, result.id, result.reason, plain=True)
+
+
+def _sentence(reason: str | None) -> str:
+    """Return a refusal's reason on one line and ended, so a sentence can follow it."""
+    text = " ".join((reason or "").split())
+    return text if text.endswith((".", "!")) else f"{text}."
