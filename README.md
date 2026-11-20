@@ -20,13 +20,13 @@ A lemonade stand that minds its own business.
 
 ### Oregon Trail
 
-Your agents wake up inside a computer game from 1978 and have to reach Oregon alive.
+Your agents wake up inside a computer game from 1992 and have to reach Oregon alive.
 
 ```
 🛸 user@thething ❯ uvx --from git+https://github.com/drksci/conky conky assimilate
 ```
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-oregon-trail.dark.svg"><img src="docs/assets/figures/fig-oregon-trail.light.svg" alt="Left, real screens from the 1978 Oregon Trail game: buying supplies, riders ahead, a hunt, and running out of bullets. Right, a schematic of Conky beside it: a console where the party notices each screen, a house rule refuses a hunt and Ma says to push on, and below it the same moment composed as a screen with the four travellers and their supplies." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-oregon-trail.dark.svg"><img src="docs/assets/figures/fig-oregon-trail.light.svg" alt="Left, real screens from The Oregon Trail Deluxe (MECC, 1992): the title, the general store, the trail and a river crossing. Right, a schematic of Conky beside it: a console where the party notices each screen, a house rule refuses a hunt and Ma says to push on, and below it the same moment composed as a screen with the four travellers and their supplies." width="800"></picture></p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-composition.dark.svg"><img src="docs/assets/figures/fig-composition.light.svg" alt="An animated schematic graph of who noticed what: the screen reaches Ma and Jed, Ma reads The Art of War from the patterns shelf, Jed is stopped by the house rules, Ma speaks at the campfire, the hands type back to the game, and the diary gains a line." width="800"></picture></p>
 
