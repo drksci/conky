@@ -57,6 +57,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0023-a-pattern-starts-private-and-rises-by-use.md](decisions/0023-a-pattern-starts-private-and-rises-by-use.md): A pattern starts private and rises by use
 - [decisions/0024-a-model-is-reached-by-a-key-or-a-local-program.md](decisions/0024-a-model-is-reached-by-a-key-or-a-local-program.md): A model is reached by a key or by a program already on the machine
 - [decisions/0025-the-screen-is-built-in-small-steps.md](decisions/0025-the-screen-is-built-in-small-steps.md): The people's screen is built in small steps, and the trail is the first trial
+- [decisions/0026-it-always-works.md](decisions/0026-it-always-works.md): It always works
 
 ### Research
 

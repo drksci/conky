@@ -51,6 +51,7 @@ Run this before every push. CI runs the same command on every pull request.
 - A space hands down rules, context and reactions. Prefer handing something down a space to adding a mechanism. (review: only rules are built)
 - A page reads as if a person wrote it: reactions and model pages write sentences where a person would. (check: `tests/test_demo.py` for the example; review elsewhere)
 - Keep people, developers and agents on the easy path: one command to start, nothing to configure before the first write, and every error says what to do next. (review)
+- It always works. Every optional part has a default, and anything that can be missing or fail has a fallback that still does something useful. A missing or failing piece lowers the result and says so in the record; it never blocks a write, breaks a vault or stops a run. A fallback is tried in a stated order and ends in one that needs nothing. (check: each part's fallback tests, starting with `tests/test_model.py`; review elsewhere)
 - The first thing a newcomer sees is one command that works. The README opens with one line of what conky is, that command, then the five ideas. (review)
 
 ## Evidence
