@@ -83,6 +83,22 @@ An idea states its rung wherever it is mentioned, and climbs one rung at a time.
 - Resolve contradictions in writing before folding, not by keeping both. (review)
 - Invent freely, build methodically. Ideas are the project's own to make, and research informs them without ruling them: going against a finding or a convention is allowed, and the page says so as a bet with the test that would show the bet lost. Building is the opposite: one walked step at a time, on evidence, so that what is built is trusted and not reworked. (review)
 
+## Thinking an idea through
+
+Every new idea, need or surprise is walked through these steps, in order, before it is planned or specified. The answers are written down, a line each. (review)
+
+1. **The image.** Say what in the world it is like, and look far from software: a trade, a myth, a household chore, a play. A good image makes the idea obvious and a little funny.
+2. **The general case.** Name what it is an instance of. A request for a mailroom is a case of putting something between two things that already talk.
+3. **Existing words.** Say it with what the vocabulary already has, then count what is left over. One new thing can be right. Two means the general case has not been found yet.
+4. **The natural gesture.** Say what a person would do untaught: bold what matters, write a note that links, type in the editor already open. Prefer that to a mechanism.
+5. **Par.** Say what the best team of any kind would do, and which standard or professional form already holds it. Stand on that.
+6. **Who does it.** Ask whether a character could add it for itself when it needs it. If so, the runtime leaves room and builds nothing.
+7. **The trial.** Say what would show it wrong, as a small trial with one dial and a forecast written before it runs.
+8. **How it is seen.** Say how a person would watch it work, and whether watching is a pleasure.
+9. **The smallest step.** Place it: what is done next, what waits, and what today's work must not close off.
+
+Ideas that arrive faster than they can be built stop at step 9 and are recorded. Building follows the rules below, one walked step at a time.
+
 ## Docs
 
 - Published prose passes the house style in `.vale/styles/conky/`: no stock phrases, no hype, no first person plural, no em dashes, no rhetorical questions. Errors fail the check; warnings are read and judged. (check: `scripts/check`)
