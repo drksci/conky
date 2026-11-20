@@ -39,6 +39,10 @@ Most systems built around AI keep their truth in a dozen places at once: prompts
 
 conky keeps one thing: a folder of pages and the history of how they came to say what they say. Any tool that reads files can read it. Any place that holds a folder can hold it.
 
+<p align="center"><img src="docs/assets/figures/fig-6-walk-out.svg" alt="A pen-plotter drawing of a cheerful skeleton striding towards an open exit door, carrying a folder of papers by its handle. A pinned checklist reads: you can leave the tool, the host, the model, the runtime, even this one. A dashed yellow path leads out through the door." width="800"></p>
+
+<p align="center"><em>So if it stops serving you, walk out. The folder comes with you.</em></p>
+
 ## Where it stands
 
 Working today, with tests:
