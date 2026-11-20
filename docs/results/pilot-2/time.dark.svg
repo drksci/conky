@@ -8,7 +8,7 @@
 <text x="38.0" y="62.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" font-weight="normal" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">IN THE MODEL</text>
 <rect x="135.2" y="54.0" width="9" height="9" rx="1.5" fill="#5B6370"/>
 <text x="149.2" y="62.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" font-weight="normal" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">IN THE HARNESS</text>
-<text x="24.0" y="86.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="bold" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">LOOP</text>
+<text x="24.0" y="86.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="bold" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">BARE MODEL</text>
 <text x="696.0" y="86.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="end" fill="#EDEDED">239 seconds</text>
 <rect x="24.00" y="94.0" width="540.69" height="17.5" rx="1.5" fill="#C9CDD6"/>
 <text x="28.0" y="106.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#14161A">the run · 42 model calls</text>

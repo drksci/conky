@@ -21,9 +21,12 @@
     "--explain"
   ],
   "gloss": {
-    "cli": "a stock agent CLI, unmetered"
+    "cli": "the stock agent, left to it"
   },
   "shape": {
     "kind": "conversation"
+  },
+  "label": {
+    "cli": "claude code"
   }
 }

@@ -212,7 +212,7 @@ def reached(rows: list[dict], series: list[dict], progress: dict, kind: str, loo
     for i, h in enumerate(order):
         rs = arms[h]
         y = top + i * lane
-        s.caps(24, y + 14, h, colour(h), size=10.5, weight="bold")
+        s.caps(24, y + 14, record.label(h), colour(h), size=10.5, weight="bold")
         s.text(24, y + 29, rs[0]["gloss"], 9.5, "grey", SANS)
         first = y + (lane - 8 - len(rs) * (bar + gap) + gap) / 2
         for k, r in enumerate(rs):
@@ -303,7 +303,7 @@ def _flames(s: Sheet, trees: dict[str, tuple], accent: dict, unit: str) -> float
     y = 86.0
     for h, tree in trees.items():
         colour = "accent" if accent[h] else "ink"
-        s.caps(FLAME[0], y, h, colour, size=10.5, weight="bold")
+        s.caps(FLAME[0], y, record.label(h), colour, size=10.5, weight="bold")
         s.text(FLAME[1], y, f"{short(tree[1])} {unit}", 13, colour, SANS, "bold", "end")
         y = _frames(s, tree, FLAME[0], y + 8, scale) + 24
     return y - 12
@@ -467,7 +467,7 @@ def became(rows: list[dict], shapes: list[dict], look: str) -> str:
         colour = "accent" if accent[h] else "ink"
         x = 24 + i * (width + 28)
         shape = found.get((h, _median_run(arms[h], "chars")["seed"]))
-        s.caps(x, 62, h, colour, size=10.5, weight="bold")
+        s.caps(x, 62, record.label(h), colour, size=10.5, weight="bold")
         if shape is None:
             continue
         facts = {f["name"]: f["value"] for f in shape["facts"]}
@@ -567,7 +567,7 @@ def cost(rows: list[dict], series: list[dict], calls: list[dict], progress: dict
                 end_mark(s, end, last, r["ending"], colour)
         typical = statistics.median(worth(h, r, r["chars"]) for r in arms[h])
         s.text(right + 8, py(typical) + 4, show(typical), 13, colour, SANS, "bold")
-        s.caps(right + 8, py(typical) + 16, f"{h}, a run", colour, size=8)
+        s.caps(right + 8, py(typical) + 16, f"{record.label(h)}, a run", colour, size=8)
     return s.svg(bottom + 26, "What each run cost against progress made, one line for every run.")
 
 

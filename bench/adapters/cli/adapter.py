@@ -36,7 +36,7 @@ HERE = Path(__file__).resolve().parent
 SCENARIO_TURNS = 150
 DEFAULT_AGENT = (
     "claude -p --model {model} --output-format json --permission-mode dontAsk "
-    "--tools Bash,Read,Write,Edit --allowedTools Bash(./game),Bash(./game\\ *),Read,Write,Edit "
+    "--tools Bash,Read,Write,Edit --allowedTools Bash(./game:*),Read,Write,Edit "
     "--no-session-persistence --disable-slash-commands --max-budget-usd 5"
 )
 DECLARED = (
@@ -46,7 +46,7 @@ DECLARED = (
     "Files in your working directory are yours to read and write; the shelf, if there is one, is "
     "the folder shelf/ there."
 )
-GRACE = 5.0
+GRACE = 60.0  # seconds the command line gets to finish its last words once the game is over
 ENDED = "\n(the game has ended)\n"
 
 

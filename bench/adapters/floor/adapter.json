@@ -21,5 +21,9 @@
   },
   "shape": {
     "kind": "policy"
+  },
+  "label": {
+    "floor-continue": "no model, one key",
+    "floor-random": "no model, random keys"
   }
 }

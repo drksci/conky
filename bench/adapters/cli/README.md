@@ -35,7 +35,8 @@ A live session is paid for once. `session.jsonl` and `report.json` in its workin
 the whole record. A replay, a walk and any re-analysis run from them. The tests use `fake.py`,
 a stub that calls `./game` with given lines; no test runs a live command line.
 
-## Unbuilt
+## Walked
 
-A live run of the default command line has not been made, and its flags are read from
-`claude --help` only.
+The default command line has been run live once a step. The first walk typed nothing: the
+permission flags, read from `claude --help` only, denied the game helper. The form that works
+allows the helper by prefix, `Bash(./game:*)`, and is what the default now uses.

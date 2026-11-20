@@ -244,6 +244,11 @@ def comparable(rows: list[dict]) -> list[str]:
     return reasons
 
 
+def label(harness: str) -> str:
+    """The name a reader sees for a harness: its `adapter.json` label, or its own name."""
+    return manifest(harness).get("label", {}).get(harness, harness)
+
+
 def prices() -> dict:
     """The price list in `bench/prices.json`."""
     return json.loads((BENCH / "prices.json").read_text(encoding="utf-8"))

@@ -10,7 +10,7 @@ Default, `DEFAULT_AGENT` in `adapter.py` (230 bytes), with `{model}` filled in f
 ```
 claude -p --model {model} --output-format json --permission-mode dontAsk
   --tools Bash,Read,Write,Edit
-  --allowedTools "Bash(./game),Bash(./game *),Read,Write,Edit"
+  --allowedTools "Bash(./game:*),Read,Write,Edit"
   --no-session-persistence --disable-slash-commands --max-budget-usd 5
 ```
 

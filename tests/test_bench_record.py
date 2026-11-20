@@ -30,7 +30,7 @@ def test_the_row_has_the_standard_keys_and_values(tmp_path: Path) -> None:
         "scenario": "trail",
         "scenario_version": None,
         "harness": "loop",
-        "gloss": "one model in a plain loop",
+        "gloss": "the model alone, asked each turn",
         "model": "stand-in",
         "seed": 1,
         "commit": "",

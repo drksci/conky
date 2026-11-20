@@ -20,9 +20,12 @@
     "--explain"
   ],
   "gloss": {
-    "loop": "one model in a plain loop"
+    "loop": "the model alone, asked each turn"
   },
   "shape": {
     "kind": "conversation"
+  },
+  "label": {
+    "loop": "bare model"
   }
 }

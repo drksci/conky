@@ -129,7 +129,7 @@ def scores(f: dict, runs: list[charts.Run]) -> str:
         cost = statistics.median(p[0] for p in paid) if paid and all(paid) else None
         cells = (
             f["scenario"],
-            f"<b>{arm}</b>",
+            f"<b>{record.label(arm)}</b>",
             rs[0].row["model"],
             p["n"],
             f"<b>{p['arrived']} of {p['n']}</b>",
@@ -187,7 +187,7 @@ def story(kind: str, f: dict, runs: list[charts.Run]) -> str:
     if floors and not any(per[a]["arrived"] for a in floors):
         lines.append("Pressing keys gets nobody there.")
     if "loop" in per:
-        lines.append(f"A plain loop around the model arrived {per['loop']['arrived']} times.")
+        lines.append(f"The bare model, asked each turn, arrived {per['loop']['arrived']} times.")
     if "conky" in per:
         told = f"A Conky character arrived {per['conky']['arrived']} times"
         if "loop" in per:
