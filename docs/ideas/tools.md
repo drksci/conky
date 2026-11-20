@@ -35,7 +35,7 @@ The record already says who called what and why: a signed request and a signed r
 Writing arguments to a tool page is machine work. A character that has to do it stops being a character and starts filling in forms. So each connector space has a go-between: an ordinary model page, a [background mind](background-minds.md), that stands between the raw pages and everyone else.
 
 - Inwards, it watches what the connector perceives and writes what a person would take from it: a few plain sentences, or the same composed screen people get ([A2UI](a2ui.md), [the compositor](compositor.md)). Characters watch that page, not the raw one. Only the go-between needs a provider that can read images.
-- Outwards, it reads what a character said in its own words, such as "we push on", and writes the request the tool expects. The request is an ordinary signed write, so the translation is on the record and a rule can refuse it ([thought to change](thought-to-change.md)).
+- Outwards, it reads what a character said in its own words, such as "push on to the fort", and writes the request the tool expects. The request is an ordinary signed write, so the translation is on the record and a rule can refuse it ([thought to change](thought-to-change.md)).
 - Its provider is a list tried in order, from a capable model down to a small one. The last entry is no model at all: a reflex that writes a plain sentence such as "the screen changed", so the party is never blind and nothing stalls when a provider is down.
 
 Nothing new is added. The go-between is a page with watch entries, the order of providers is a field on it, and the raw pages stay readable for anyone who wants them.
