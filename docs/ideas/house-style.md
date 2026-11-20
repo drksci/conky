@@ -10,9 +10,13 @@ source: maintainers
 
 ## Idea
 
-How a vault looks and sounds is a matter of taste. That covers the flavour of the seed phrases (dry Western, or something else), the style of the drawn faces and icons, and the voice that generated sentences are written in. Taste is kept as ordinary fields on a page at the top space. Every page below inherits it and reads it the same way it reads any other shared context. Nothing is configured anywhere else.
+How a vault looks and sounds is kept as ordinary fields on a taste page at the top space, and every page below inherits it like any other shared context. That covers the flavour of the seed phrases (dry Western, or something else), the style of the drawn faces and icons, and the voice generated sentences are written in. Nothing is configured anywhere else.
 
-There are three ways the taste page gets written, in order of effort. In the first, the page is left alone and sensible defaults apply. In the second, the page is inferred when a vault is started from a prompt: a model page reads the prompt and proposes the taste as an ordinary change that can be seen and edited. In the third, the owner runs an optional `conky howdy`. It asks a handful of quick either-or questions, for example which of two sample seed phrases is preferred and which of two sample faces, and writes the answers to the page.
+The page gets written in one of three ways, in order of effort:
+
+- Left alone, so sensible defaults apply.
+- Inferred when a vault is started from a prompt: a model page reads the prompt and proposes the taste as an ordinary change that can be seen and edited.
+- Asked for by the owner with an optional `conky howdy`, which poses a handful of either-or questions, such as which of two sample seed phrases or faces is preferred, and writes the answers to the page.
 
 Changing taste later is an edit to that page. Things already made keep their seed and identifier. Only how they are drawn and described changes.
 

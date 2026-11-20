@@ -10,14 +10,14 @@ source: maintainers
 
 ## Idea
 
-Cheap [model pages](model-pages.md) with a declared budget. They are parts of a character's inner life, not housekeeping services: the doubting, curiosity, tidying and orientation that a page does when nobody is asking it for anything. See [a page with a self](character.md). The four minds are:
+Cheap [model pages](model-pages.md) with a declared budget do a character's quiet thinking: the doubting, curiosity, tidying and orientation a page does when nobody is asking it for anything. They belong to its inner life, not to housekeeping. See [a page with a self](character.md). The four minds are:
 
 - Doubt: review what was done.
 - Curiosity: notice something nearby worth a look.
 - Tidying: relief for crowded or stale pages ([staleness](staleness.md)).
 - Orientation: a short summary of what matters now, for an actor about to act.
 
-Each is an ordinary page inside the actor's space that watches and writes. Each has a measure of what it has spent and stops at its budget, as the rule for anything that runs in the background requires. Nothing of this is built.
+Each is an ordinary page in the actor's space that watches and writes. Each has a measure of what it has spent and stops at its budget, as the rule for anything that runs in the background requires. Nothing of this is built.
 
 ## Composes from
 

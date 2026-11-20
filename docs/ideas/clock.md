@@ -10,7 +10,7 @@ source: maintainers
 
 ## Idea
 
-There is no hidden timer. Time passes when a clock page is written, and anything that depends on time watches that page. This keeps time visible in history and makes time-dependent behaviour reproducible. It also gives [measures](measures.md) the notion of time passing that they lack. Nothing of this is built.
+Time passes when a clock page is written, and anything that depends on time watches that page. There is no hidden timer, so time shows in history and time-dependent behaviour can be replayed. It also gives [measures](measures.md) the sense of time passing that they lack. Nothing of this is built.
 
 ## Composes from
 

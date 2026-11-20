@@ -10,9 +10,9 @@ source: maintainers
 
 ## Idea
 
-Some changes need more than one party to agree. This needs no new mechanism. A proposal is a page that describes the change. Approvers record their agreement on it as signed changes. A rule states how many approvals, and whose, are needed. A reaction applies the change when the rule is met.
+A change that needs several parties to agree is a proposal page, signed agreement from each approver, a rule that counts them, and a reaction that applies the change once the rule is met.
 
-The same shape serves an owner signing off, a practice being promoted to a shared pattern ([patterns](patterns.md)), and a dispute being settled. This is a pattern, not a runtime feature ([decision 0009](../decisions/0009-patterns-not-features.md)). Nothing of this is built.
+The same shape serves an owner signing off, a practice promoted to a shared pattern ([patterns](patterns.md)) and a dispute being settled. It is a pattern, not a runtime feature ([decision 0009](../decisions/0009-patterns-not-features.md)). Nothing of this is built.
 
 ## Composes from
 

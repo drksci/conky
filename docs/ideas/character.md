@@ -10,11 +10,11 @@ source: maintainers
 
 ## Idea
 
-Any page may carry a self: its seed and face (see [seeds and faces](seeds-and-faces.md)), a few words of temperament, and a voice. Examples of temperament are "weary but reliable" and "smug about being right".
+Any page may carry a self: a seed and face (see [seeds and faces](seeds-and-faces.md)), a few words of temperament such as "weary but reliable" or "smug about being right", and a voice. When it writes, the words are its own, so the supplier's order sounds like the supplier.
 
-When the page writes, whether by reaction or by asking a model, the words are its own: the supplier's order is in the supplier's manner. With a model available, the page's temperament and recent history are given to the model as context and the sentence is written fresh. Without one, a plain sentence is used, so nothing breaks.
+With a model available, the page's temperament and recent history go to the model as context and the sentence is written fresh. Without one, a plain sentence is used and nothing breaks.
 
-Temperament is context a model reads. It is never a means of control and never a way round a rule. A vault's general manner comes from its taste page ([house-style](house-style.md)), and a page's own temperament sits within it. The premise is recorded in [decision 0020](../decisions/0020-everything-is-somebody.md).
+Temperament is context a model reads. It never controls anything and never gets round a rule. A vault's general manner comes from its taste page ([house-style](house-style.md)), and a page's own temperament sits within it. The premise is recorded in [decision 0020](../decisions/0020-everything-is-somebody.md).
 
 Nothing of this is built. Pages in the example vault carry human-written content, a page can ask a model, and no page has a generated temperament or voice.
 

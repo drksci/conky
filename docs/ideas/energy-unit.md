@@ -10,9 +10,9 @@ source: maintainers
 
 ## Idea
 
-A synthetic unit of value flow. It only conserves if the conversion into it is itself recorded.
+A synthetic unit of value flow, which conserves only if the conversion into it is itself recorded.
 
-Energy and cost become measures recorded once [model pages](model-pages.md) report them. Token counts are recorded on each model answer; nothing yet turns them into a measure. The unit stays a pattern over the ledger, not a runtime feature.
+Energy and cost become measures once [model pages](model-pages.md) report them. Token counts are recorded on each model answer, but nothing yet turns them into a measure. The unit stays a pattern over the ledger, not a runtime feature.
 
 ## Composes from
 

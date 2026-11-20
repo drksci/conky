@@ -10,15 +10,13 @@ source: maintainers
 
 ## Idea
 
-The whole vault can be shown as one composed screen, through an interface protocol such as A2UI. See [a screen from the pages](a2ui.md) and the [protocol research](../research/protocols.md).
+A compositor is a page that asks a model once how a page should be laid out, records the answer as a layout page, and from then on draws the screen from the layout with no model call. The vault can then be shown as one composed screen through an interface protocol such as A2UI. See [a screen from the pages](a2ui.md) and the [protocol research](../research/protocols.md).
 
-Deciding how pages become a screen is a matter of judgement, so a compositor does it. A compositor is a page that asks a model how a given page should be laid out and writes the answer down as a layout, itself an ordinary page. From then on the screen is drawn from the layout with no model call, on every change. The model is asked again only when the shape of a page changes or a person asks for something different.
+The model is asked again only when the shape of a page changes or a person asks for something different. This is the same move as elsewhere in Conky: think once, record the result, then let it happen. See [learned reactions](learned-reactions.md).
 
-This is the same move as elsewhere in Conky: think once, record the result, then let it happen. See [learned reactions](learned-reactions.md).
+A person changes the screen by asking. Each window and element has a small prompt control at its corner that opens a box to type into, for example "show the cooler as a big number with a bar". The request goes to the compositor as an ordinary change, under the same rules and the same gatekeeper, and is recorded in the history beside the layout it produced.
 
-A person can change the screen by asking. Each window and each element carries a small prompt control at its corner. Using it opens a box to type into, for example "show the cooler as a big number with a bar". The request goes to the compositor as an ordinary change, subject to the same rules and the same gatekeeper, and is recorded in the history beside the layout it produced.
-
-The words shown on the screen are the pages' own words. With no model available the screen falls back to a plain default layout that always works.
+The screen shows the pages' own words. With no model available it falls back to a plain default layout that always works.
 
 A strip of plain-language notices of what the pages did, derived from the history, could sit beside the layout: see [an activity strip](trace.md#an-activity-strip).
 

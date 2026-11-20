@@ -10,13 +10,15 @@ source: maintainers
 
 ## Idea
 
-Hand a fresh consumer only a stopped vault and score whether it resumes correctly. The vault is handed over with `git clone` or a bundle. It is a scenario in the benchmark described in [decision 0014](../decisions/0014-benchmark-shape.md).
+Hand a fresh consumer only a stopped vault, by `git clone` or a bundle, and score whether it resumes correctly. It is a scenario in the benchmark described in [decision 0014](../decisions/0014-benchmark-shape.md).
 
 ## What was built
 
-The mechanical form exists as `conky assimilate` ([command line reference](../reference/cli.md#assimilate)). It takes a stopped vault from its folder alone, by directory, bundle or URL, checks it with `verify`, reads the pages and their rules and watches from the files, and carries on as a new actor with a new key. Without a source it uses a small stopped vault that ships in the package. No model is involved, so it is a mechanism result: it shows that the state travels and resumes, not that anything behaves intelligently. It scores state continuity only.
+The mechanical form exists as `conky assimilate` ([command line reference](../reference/cli.md#assimilate)). It takes a stopped vault from its folder alone, by directory, bundle or URL, checks it with `verify`, reads the pages and their rules and watches from the files, and carries on as a new actor with a new key. Without a source it uses a small stopped vault that ships in the package.
 
-The model-backed form is not built: handing a fresh model-driven consumer only the stopped vault and scoring whether it resumes correctly, with behavioural continuity scored apart from state continuity.
+No model is involved, so this is a mechanism result. It shows that state travels and resumes, not that anything behaves intelligently, and it scores state continuity only.
+
+The model-backed form is not built: a fresh model-driven consumer handed only the stopped vault, with behavioural continuity scored apart from state continuity.
 
 ## Composes from
 

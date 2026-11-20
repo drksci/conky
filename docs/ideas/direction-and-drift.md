@@ -10,9 +10,9 @@ source: maintainers
 
 ## Idea
 
-A goal is a page. Any page's recent activity can be read against it as one of three plain states: in phase (effort is adding up), drifting (busy without direction), or out of phase (something important is unattended).
+A goal is a page, and any page's recent activity can be read against it as in phase (effort is adding up), drifting (busy without direction) or out of phase (something important is unattended).
 
-A reading is not a grade. It always comes with the smallest correction, and drift that persists is raised to a slower review rather than repeated daily. Nothing of this is built.
+A reading is not a grade. It comes with the smallest correction, and drift that persists goes to a slower review instead of being repeated daily. Nothing of this is built.
 
 ## Composes from
 
