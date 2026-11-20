@@ -63,6 +63,22 @@ also walks without a model: `python -m bench.walk --probe constraint --out DIR`.
 `--answers pages` (the Conky arm only) lets the character answer with pages as well as a line;
 `python -m bench.walk --arm conky --out DIR` walks it as stage 10.
 
+## Charts
+
+```
+python -m bench.charts /tmp/bench-results --out /tmp/bench-charts
+```
+
+Reads a results directory and writes five charts, each as `NAME.light.svg` and `NAME.dark.svg`
+(880 units wide, transparent background, one ink): `progress` (miles left to Oregon against turn),
+`spend` (cumulative calls and tokens against the budget), `where` (bytes sent per call, split into
+task text, screen, scaffolding and other, for one median run per arm), `rules` (house rules broken
+by turn, one strip per run) and `board` (one row per arm, one column per measure). Each carries
+`DATA` or `SCRIPTED: NOT A RESULT` bottom right, from the runs' backend, and the scenario, model,
+seeds and date bottom left. Unlike the analysis, it draws scripted runs, labelled as such, so the
+charts can be checked before any live run. Where tokens are unknown the token panel plots
+characters and says so on its axis.
+
 ## Layout
 
 - `envs/oregon_trail_1975/`: fetch, launcher (pins, transcript, stops, replay), parser.
