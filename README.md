@@ -106,22 +106,9 @@ Every system ends up as one of these two.
 <br>
 
 
-### How far along
-
-Early. Working and tested: pages, spaces, rules, reactions, measures, signed history, asking a model, and the demo. Still to come: a sense of time, tidying up, approvals, background minds, patterns, tables, a core that runs in a browser, and the test that matters most. Unlike in a certain Antarctic film, every copy gets the blood test.
-
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-6-blood-test.dark.svg"><img src="docs/assets/figures/fig-6-blood-test.light.svg" alt="A row of four dishes on a bench, tagged original, copy, copy, copy, with a hot wire reaching towards them and a yellow tick above each copy." width="800"></picture></p>
-
-<p align="center"><sub><i>Every copy gets tested. Every copy has to pass.</i></sub></p>
-
-The model part has only met stand-in servers so far, and nothing here has been measured against anything else yet. The [roadmap](docs/project/roadmap.md) has the order, and the [evaluation plan](docs/research/evaluation-plan.md) says how the measuring will be done.
-
-<br>
-
-
 [Concepts](docs/guide/concepts.md) &nbsp;·&nbsp; [Getting started](docs/guide/getting-started.md) &nbsp;·&nbsp; [Reference](docs/reference/vault-format.md) &nbsp;·&nbsp; [Design](docs/design.md) &nbsp;·&nbsp; [Decisions](docs/decisions/0001-objective.md) &nbsp;·&nbsp; [Research](docs/research/harnesses.md) &nbsp;·&nbsp; [Contributing](CONTRIBUTING.md)
 
-<sub>[MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), your pick. The puppet pictures belong to other people. &nbsp; [![CI](https://github.com/drksci/conky/actions/workflows/ci.yml/badge.svg)](https://github.com/drksci/conky/actions/workflows/ci.yml)</sub>
+<sub>Early days: the [roadmap](docs/project/roadmap.md) says what works and what is still to come. &nbsp; [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), your pick. The puppet pictures belong to other people. &nbsp; [![CI](https://github.com/drksci/conky/actions/workflows/ci.yml/badge.svg)](https://github.com/drksci/conky/actions/workflows/ci.yml)</sub>
 
 <br>
 
