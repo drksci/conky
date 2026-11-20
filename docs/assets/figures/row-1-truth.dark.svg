@@ -21,12 +21,12 @@
 .pt{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:9px;opacity:.6;text-decoration:underline;text-decoration-thickness:.75px;text-underline-offset:2px}
 </style>
 <text class="t" x="424" y="11" font-size="9.24" fill-opacity="1" text-anchor="end">USUALLY</text>
-<text class="pt" x="24" y="154" text-anchor="start">LangGraph checkpointer</text>
-<text class="pt" x="24" y="165" text-anchor="start">CrewAI @persist</text>
-<text class="pt" x="24" y="176" text-anchor="start">OpenAI Agents sessions</text>
+<text class="pt" x="424" y="154" text-anchor="end">LangGraph checkpointer</text>
+<text class="pt" x="424" y="165" text-anchor="end">CrewAI @persist</text>
+<text class="pt" x="424" y="176" text-anchor="end">OpenAI Agents sessions</text>
 <text class="t" x="456" y="11" font-size="9.24" fill-opacity="1" text-anchor="start">CONKY</text>
-<text class="pt" x="856" y="154" text-anchor="end">page</text>
-<text class="pt" x="856" y="165" text-anchor="end">history</text>
+<text class="pt" x="456" y="154" text-anchor="start">page</text>
+<text class="pt" x="456" y="165" text-anchor="start">history</text>
 <g transform="translate(42 26)">
 <g transform="rotate(-8 22 28)"><path class="s" d="M4 6H30L40 16V52H4Z"/>
 <path class="k" d="M30 6V16H40"/>

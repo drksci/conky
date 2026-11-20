@@ -23,11 +23,11 @@
 .pt{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:9px;opacity:.6;text-decoration:underline;text-decoration-thickness:.75px;text-underline-offset:2px}
 </style>
 <text class="t" x="424" y="11" font-size="9.24" fill-opacity="1" text-anchor="end">USUALLY</text>
-<text class="pt" x="24" y="154" text-anchor="start">CrewAI task guardrails</text>
-<text class="pt" x="24" y="165" text-anchor="start">OpenAI Agents guardrails</text>
-<text class="pt" x="24" y="176" text-anchor="start">Claude Agent SDK hooks</text>
+<text class="pt" x="424" y="154" text-anchor="end">CrewAI task guardrails</text>
+<text class="pt" x="424" y="165" text-anchor="end">OpenAI Agents guardrails</text>
+<text class="pt" x="424" y="176" text-anchor="end">Claude Agent SDK hooks</text>
 <text class="t" x="456" y="11" font-size="9.24" fill-opacity="1" text-anchor="start">CONKY</text>
-<text class="pt" x="856" y="154" text-anchor="end">rule</text>
+<text class="pt" x="456" y="154" text-anchor="start">rule</text>
 <g transform="translate(42 26)">
 <path class="s" d="M7 6H61Q68 6 68 13V45Q68 52 61 52H25L16 62L18 52H7Q0 52 0 45V13Q0 6 7 6Z"/>
 <path class="k" d="M11 20L56 20"/>
