@@ -1,24 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img" aria-labelledby="t">
 <title id="t">A folder leaving along a path</title>
 <style>
-:root{--ink:#1E1E1E;--tone:#E6E3DC;--acc:#F4C430}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED;--tone:#2B2F36}}
-:root[data-theme="dark"]{--ink:#EDEDED;--tone:#2B2F36}
+:root{--ink:#1E1E1E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
+:root[data-theme="dark"]{--ink:#EDEDED}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:3.0}
 .k{stroke:var(--ink);stroke-width:2.2}
-.a{stroke:var(--acc);stroke-width:3.8}
+.a{stroke:var(--ink);stroke-width:4.5}
 .h{stroke:var(--ink);stroke-width:1.2}
 .z{stroke:var(--ink);stroke-width:3.0;stroke-dasharray:4 6}
-.y{stroke:var(--acc);stroke-width:3.8;stroke-dasharray:3 7}
+.y{stroke:var(--ink);stroke-width:4.5;stroke-dasharray:1 9}
 .d{fill:var(--ink);stroke:none}
-.s{fill:var(--tone);stroke:var(--ink);stroke-width:3.0;stroke-linecap:round;stroke-linejoin:round}
-.m{fill:var(--tone);stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round}
+.s{fill:none;stroke:var(--ink);stroke-width:3.0;stroke-linecap:round;stroke-linejoin:round}
+.f12,.f25,.f50{stroke:none;fill-rule:evenodd}
+.f12{fill:url(#d12)}
+.f25{fill:url(#d25)}
+.f50{fill:url(#d50)}
 .t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 </style>
+<defs><pattern id="d50" width="6" height="6" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h3v3h-3zM3 3h3v3h-3z"/></pattern></defs>
+<path class="f50" d="M8 82V44Q8 38 14 38H28L36 48H58V82Z"/>
 <path class="s" d="M8 82V44Q8 38 14 38H28L36 48H58V82Z"/>
 <path class="i" d="M40 48V42Q40 38 44 38H50Q54 38 54 42V48"/>
-<path class="y" d="M66 70C76 70 80 62 86 50"/>
-<path class="a" d="M80.72 50.29L88 45L87.69 53.99"/>
+<path class="y" d="M66 70C74 70 78 66 80 60"/>
+<path class="a" d="M78.29 52.05L88 45L87.58 56.99"/>
 </svg>

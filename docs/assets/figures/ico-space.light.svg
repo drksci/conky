@@ -1,20 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img" aria-labelledby="t">
 <title id="t">A space with pages inside</title>
 <style>
-:root{--ink:#1E1E1E;--tone:#E6E3DC;--acc:#F4C430}
+:root{--ink:#1E1E1E}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:3.0}
 .k{stroke:var(--ink);stroke-width:2.2}
-.a{stroke:var(--acc);stroke-width:3.8}
+.a{stroke:var(--ink);stroke-width:4.5}
 .h{stroke:var(--ink);stroke-width:1.2}
 .z{stroke:var(--ink);stroke-width:3.0;stroke-dasharray:4 6}
-.y{stroke:var(--acc);stroke-width:3.8;stroke-dasharray:3 7}
+.y{stroke:var(--ink);stroke-width:4.5;stroke-dasharray:1 9}
 .d{fill:var(--ink);stroke:none}
-.s{fill:var(--tone);stroke:var(--ink);stroke-width:3.0;stroke-linecap:round;stroke-linejoin:round}
-.m{fill:var(--tone);stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round}
+.s{fill:none;stroke:var(--ink);stroke-width:3.0;stroke-linecap:round;stroke-linejoin:round}
+.f12,.f25,.f50{stroke:none;fill-rule:evenodd}
+.f12{fill:url(#d12)}
+.f25{fill:url(#d25)}
+.f50{fill:url(#d50)}
 .t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 </style>
+
 <path class="s" d="M8 8H70L88 26V88H8Z"/>
 <path class="k" d="M70 8V26H88"/>
 <path class="s" d="M18 38H37L46 47V80H18Z"/>

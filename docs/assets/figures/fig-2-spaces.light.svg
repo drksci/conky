@@ -1,25 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 244.4" width="880" height="244.4" role="img" aria-labelledby="t">
 <title id="t">A rule reaches every page</title>
 <style>
-:root{--ink:#1E1E1E;--tone:#E6E3DC;--acc:#F4C430}
+:root{--ink:#1E1E1E}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
 .k{stroke:var(--ink);stroke-width:0.75}
-.a{stroke:var(--acc);stroke-width:2.4}
+.a{stroke:var(--ink);stroke-width:2.4}
 .h{stroke:var(--ink);stroke-width:0.6}
 .z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
-.y{stroke:var(--acc);stroke-width:2.4;stroke-dasharray:6 6}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
 .d{fill:var(--ink);stroke:none}
-.s{fill:var(--tone);stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
-.m{fill:var(--tone);stroke:var(--ink);stroke-width:0.75;stroke-linejoin:round}
+.s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.f12,.f25,.f50{stroke:none;fill-rule:evenodd}
+.f12{fill:url(#d12)}
+.f25{fill:url(#d25)}
+.f50{fill:url(#d50)}
 .t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 </style>
+<defs><pattern id="d12" width="8" height="8" x="0" y="0.8" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern></defs>
 <g transform="translate(0 -16.8)">
+<path class="f12" d="M50 34H806L830 58V244H50ZM330 116H770L790 136V232H330ZM90 132H156L170 146V226H90ZM200 132H266L280 146V226H200ZM68 54H126V72H68ZM417 47H463V64H417Z"/>
 <path class="s" d="M50 34H806L830 58V244H50Z"/>
 <path class="k" d="M806 34V58H830"/>
-<text class="t" x="74" y="66" font-size="11.76" fill-opacity="0.8" text-anchor="start">SPACE</text>
-<text class="t" x="440" y="60" font-size="11.76" fill-opacity="0.8" text-anchor="middle">RULE</text>
+<text class="t" x="74" y="66" font-size="11.76" fill-opacity="1" text-anchor="start">SPACE</text>
+<text class="t" x="440" y="60" font-size="11.76" fill-opacity="1" text-anchor="middle">RULE</text>
 <path class="a" d="M360 72L520 72"/>
 <path class="k" d="M440 72L440 90"/>
 <path class="k" d="M130 90L560 90"/>
@@ -41,7 +46,7 @@
 <path class="k" d="M214 202L266 202"/>
 <path class="s" d="M330 116H770L790 136V232H330Z"/>
 <path class="k" d="M770 116V136H790"/>
-<text class="t" x="352" y="142" font-size="11.76" fill-opacity="0.8" text-anchor="start">SPACE</text>
+<text class="t" x="352" y="142" font-size="11.76" fill-opacity="1" text-anchor="start">SPACE</text>
 <path class="k" d="M560 116L560 156"/>
 <path class="k" d="M495 156L625 156"/>
 <path class="k" d="M495 156L495 168"/>

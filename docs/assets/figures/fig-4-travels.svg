@@ -1,23 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 240.2" width="880" height="240.2" role="img" aria-labelledby="t">
 <title id="t">A vault travels alone</title>
 <style>
-:root{--ink:#1E1E1E;--tone:#E6E3DC;--acc:#F4C430}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED;--tone:#2B2F36}}
-:root[data-theme="dark"]{--ink:#EDEDED;--tone:#2B2F36}
+:root{--ink:#1E1E1E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
+:root[data-theme="dark"]{--ink:#EDEDED}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
 .k{stroke:var(--ink);stroke-width:0.75}
-.a{stroke:var(--acc);stroke-width:2.4}
+.a{stroke:var(--ink);stroke-width:2.4}
 .h{stroke:var(--ink);stroke-width:0.6}
 .z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
-.y{stroke:var(--acc);stroke-width:2.4;stroke-dasharray:6 6}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
 .d{fill:var(--ink);stroke:none}
-.s{fill:var(--tone);stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
-.m{fill:var(--tone);stroke:var(--ink);stroke-width:0.75;stroke-linejoin:round}
+.s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.f12,.f25,.f50{stroke:none;fill-rule:evenodd}
+.f12{fill:url(#d12)}
+.f25{fill:url(#d25)}
+.f50{fill:url(#d50)}
 .t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 </style>
+<defs><pattern id="d12" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d25" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern></defs>
 <g transform="translate(0 -21)">
+<path class="f12" d="M60 146V44Q60 38 68 38H140L154 56H330V146ZM88 70H132L142 80V132H88ZM168 70H212L222 80V132H168ZM248 70H292L302 80V132H248Z"/>
 <path class="s" d="M60 146V44Q60 38 68 38H140L154 56H330V146Z"/>
 <path class="s" d="M88 70H132L142 80V132H88Z"/>
 <path class="k" d="M132 70V80H142"/>
@@ -31,6 +36,7 @@
 <path class="k" d="M292 70V80H302"/>
 <path class="k" d="M262 96L288 96"/>
 <path class="k" d="M262 112L288 112"/>
+<path class="f25" d="M60 156H330V180H60ZM75.5 168a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM120.5 168a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM165.5 168a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM210.5 168a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM255.5 168a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM300.5 168a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z"/>
 <path class="s" d="M60 156H330V180H60Z"/>
 <circle class="d" cx="82.5" cy="168" r="2.6"/>
 <path class="k" d="M105 156L105 180"/>
@@ -43,6 +49,7 @@
 <circle class="d" cx="262.5" cy="168" r="2.6"/>
 <path class="k" d="M285 156L285 180"/>
 <circle class="d" cx="307.5" cy="168" r="2.6"/>
+<path class="f12" d="M550 146V44Q550 38 558 38H630L644 56H820V146ZM578 70H622L632 80V132H578ZM658 70H702L712 80V132H658ZM738 70H782L792 80V132H738Z"/>
 <path class="s" d="M550 146V44Q550 38 558 38H630L644 56H820V146Z"/>
 <path class="s" d="M578 70H622L632 80V132H578Z"/>
 <path class="k" d="M622 70V80H632"/>
@@ -56,6 +63,7 @@
 <path class="k" d="M782 70V80H792"/>
 <path class="k" d="M752 96L778 96"/>
 <path class="k" d="M752 112L778 112"/>
+<path class="f25" d="M550 156H820V180H550ZM565.5 168a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM610.5 168a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM655.5 168a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM700.5 168a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM745.5 168a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM790.5 168a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z"/>
 <path class="s" d="M550 156H820V180H550Z"/>
 <circle class="d" cx="572.5" cy="168" r="2.6"/>
 <path class="k" d="M595 156L595 180"/>
@@ -68,9 +76,9 @@
 <circle class="d" cx="752.5" cy="168" r="2.6"/>
 <path class="k" d="M775 156L775 180"/>
 <circle class="d" cx="797.5" cy="168" r="2.6"/>
-<text class="t" x="195" y="206" font-size="12.6" fill-opacity="0.8" text-anchor="middle">HERE</text>
-<text class="t" x="685" y="206" font-size="12.6" fill-opacity="0.8" text-anchor="middle">THERE</text>
-<text class="t" x="440" y="80" font-size="11.76" fill-opacity="0.8" text-anchor="middle">COPY</text>
+<text class="t" x="195" y="206" font-size="12.6" fill-opacity="1" text-anchor="middle">HERE</text>
+<text class="t" x="685" y="206" font-size="12.6" fill-opacity="1" text-anchor="middle">THERE</text>
+<text class="t" x="440" y="80" font-size="11.76" fill-opacity="1" text-anchor="middle">COPY</text>
 <path class="a" d="M344 100L530 100"/>
 <path class="i" d="M530 100L536 100"/>
 <path class="i" d="M530.81 96.49L538 100L530.81 103.51"/>
@@ -80,6 +88,6 @@
 <path class="z" d="M130 234L230 234"/>
 <path class="i" d="M224.81 230.49L232 234L224.81 237.51"/>
 <path class="a" d="M244 224L244 244"/>
-<text class="t" x="262" y="238" font-size="12.6" fill-opacity="0.8" text-anchor="start">KEYS STAY</text>
+<text class="t" x="262" y="238" font-size="12.6" fill-opacity="1" text-anchor="start">KEYS STAY</text>
 </g>
 </svg>

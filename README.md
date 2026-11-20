@@ -43,6 +43,10 @@ That's it. Files and Git. If you ever hate it, clone the folder and leave.
 
 ### Why it is not another harness
 
+You have seen the bug. The prompt says one thing, the config says another, the database remembers a third, and the agent does a fourth. Everyone asks which one is right. Conky asks why there were four.
+
+So there is one. The state, the rules and the instructions are the same living pages, and nothing else gets a vote.
+
 <p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-reaction.dark.svg"><img src="docs/assets/figures/ico-reaction.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>Nothing is in charge.</b><br>There is no orchestrator and no main loop. Pages notice each other and respond, the way a low stock level leads to a reorder. The system is what the pages do.</p>
 
 <p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-rule.dark.svg"><img src="docs/assets/figures/ico-rule.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>A model cannot talk its way past a rule.</b><br>Rules live in the pages and are checked on every change, by software, not by asking nicely in a prompt. A refusal is recorded like anything else.</p>

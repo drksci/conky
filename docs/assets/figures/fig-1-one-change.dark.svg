@@ -1,20 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 191.7" width="880" height="191.7" role="img" aria-labelledby="t">
 <title id="t">One change, and what follows</title>
 <style>
-:root{--ink:#EDEDED;--tone:#2B2F36;--acc:#F4C430}
+:root{--ink:#EDEDED}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
 .k{stroke:var(--ink);stroke-width:0.75}
-.a{stroke:var(--acc);stroke-width:2.4}
+.a{stroke:var(--ink);stroke-width:2.4}
 .h{stroke:var(--ink);stroke-width:0.6}
 .z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
-.y{stroke:var(--acc);stroke-width:2.4;stroke-dasharray:6 6}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
 .d{fill:var(--ink);stroke:none}
-.s{fill:var(--tone);stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
-.m{fill:var(--tone);stroke:var(--ink);stroke-width:0.75;stroke-linejoin:round}
+.s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.f12,.f25,.f50{stroke:none;fill-rule:evenodd}
+.f12{fill:url(#d12)}
+.f25{fill:url(#d25)}
+.f50{fill:url(#d50)}
 .t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 </style>
+<defs><pattern id="d25" width="8" height="8" x="0.15" y="0.8" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern></defs>
 <g transform="translate(-2.15 -22.8)">
 <path class="s" d="M85 40H177L195 58V152H85Z"/>
 <path class="k" d="M177 40V58H195"/>
@@ -28,6 +32,7 @@
 <path class="i" d="M238.3 96.3L242.8 100.8L250.3 91.2"/>
 <path class="i" d="M261 96L296 96"/>
 <path class="i" d="M290.81 92.49L298 96L290.81 99.51"/>
+<path class="f25" d="M300 80H420V112H300ZM313 96a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM353 96a7 7 0 1 0 14 0a7 7 0 1 0 -14 0ZM393 96a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z"/>
 <path class="s" d="M300 80H420V112H300Z"/>
 <circle class="d" cx="320" cy="96" r="2.6"/>
 <path class="k" d="M340 80L340 112"/>
@@ -47,10 +52,10 @@
 <path class="k" d="M702 114L747.1 114"/>
 <path class="i" d="M706 100L711 105L720 92"/>
 <path class="a" d="M706 132L782 132"/>
-<text class="t" x="140" y="178" font-size="12.6" fill-opacity="0.8" text-anchor="middle">STALL</text>
-<text class="t" x="360" y="178" font-size="12.6" fill-opacity="0.8" text-anchor="middle">HISTORY</text>
-<text class="t" x="540" y="178" font-size="12.6" fill-opacity="0.8" text-anchor="middle">RULES</text>
-<text class="t" x="743" y="178" font-size="12.6" fill-opacity="0.8" text-anchor="middle">DEPOT</text>
-<text class="t" x="743" y="198" font-size="10.92" fill-opacity="0.8" text-anchor="middle">NOBODY DECIDED</text>
+<text class="t" x="140" y="178" font-size="12.6" fill-opacity="1" text-anchor="middle">STALL</text>
+<text class="t" x="360" y="178" font-size="12.6" fill-opacity="1" text-anchor="middle">HISTORY</text>
+<text class="t" x="540" y="178" font-size="12.6" fill-opacity="1" text-anchor="middle">RULES</text>
+<text class="t" x="743" y="178" font-size="12.6" fill-opacity="1" text-anchor="middle">DEPOT</text>
+<text class="t" x="743" y="198" font-size="10.92" fill-opacity="1" text-anchor="middle">NOBODY DECIDED</text>
 </g>
 </svg>

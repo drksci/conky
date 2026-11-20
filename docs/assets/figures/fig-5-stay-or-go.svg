@@ -1,19 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 243.7" width="880" height="243.7" role="img" aria-labelledby="t">
 <title id="t">Stay or go</title>
 <style>
-:root{--ink:#1E1E1E;--tone:#E6E3DC;--acc:#F4C430}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED;--tone:#2B2F36}}
-:root[data-theme="dark"]{--ink:#EDEDED;--tone:#2B2F36}
+:root{--ink:#1E1E1E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
+:root[data-theme="dark"]{--ink:#EDEDED}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
 .k{stroke:var(--ink);stroke-width:0.75}
-.a{stroke:var(--acc);stroke-width:2.4}
+.a{stroke:var(--ink);stroke-width:2.4}
 .h{stroke:var(--ink);stroke-width:0.6}
 .z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
-.y{stroke:var(--acc);stroke-width:2.4;stroke-dasharray:6 6}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
 .d{fill:var(--ink);stroke:none}
-.s{fill:var(--tone);stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
-.m{fill:var(--tone);stroke:var(--ink);stroke-width:0.75;stroke-linejoin:round}
+.s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.f12,.f25,.f50{stroke:none;fill-rule:evenodd}
+.f12{fill:url(#d12)}
+.f25{fill:url(#d25)}
+.f50{fill:url(#d50)}
 .t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 .w .i{stroke-width:2.41}
@@ -21,6 +24,9 @@
 .w .h{stroke-width:1.21}
 .w .a{stroke-width:4.82}
 .w .s{stroke-width:2.41}
+.w .f12{fill:url(#d12-w)}
+.w .f25{fill:url(#d25-w)}
+.w .f50{fill:url(#d50-w)}
 .w .z{stroke-width:2.41;stroke-dasharray:12.06 12.06}
 .w .y{stroke-width:4.82;stroke-dasharray:12.06 12.06}
 .p .i{stroke-width:2.82}
@@ -28,9 +34,13 @@
 .p .h{stroke-width:1.41}
 .p .a{stroke-width:5.63}
 .p .s{stroke-width:2.82}
+.p .f12{fill:url(#d12-p)}
+.p .f25{fill:url(#d25-p)}
+.p .f50{fill:url(#d50-p)}
 .p .z{stroke-width:2.82;stroke-dasharray:14.08 14.08}
 .p .y{stroke-width:5.63;stroke-dasharray:14.08 14.08}
 </style>
+<defs><pattern id="d12" width="8" height="8" x="0.6" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d12-w" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(2.00990)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d12-p" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(2.34617)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d25" width="8" height="8" x="0.6" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d25-w" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(2.00990)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d25-p" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(2.34617)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern></defs>
 <g transform="translate(14.4 -31)">
 <g class="w" transform="translate(23.08 116.67) scale(0.5)">
 <path class="i" d="M284.04 170.72L295.01 167.52L290.81 153.12L279.84 156.32Z"/>
@@ -81,7 +91,7 @@
 <path class="i" d="M359 259Q379.91 251.69 398.55 239.71Q377.63 247.02 359 259Z"/>
 <path class="i" d="M34 272L846 272"/>
 </g>
-<text class="t" x="40" y="167.44" font-size="13.44" fill-opacity="0.92" text-anchor="start">TOO BIG TO MOVE</text>
+<text class="t" x="40" y="167.44" font-size="13.44" fill-opacity="1" text-anchor="start">TOO BIG TO MOVE</text>
 <g class="p" transform="translate(449.91 21.84) scale(0.43)">
 <path class="k" d="M416.82 341.64Q429.99 393.48 469 430.07Q455.83 378.23 416.82 341.64Z"/>
 <path class="k" d="M469 430.07Q475.72 481.05 504.84 523.43Q498.12 472.45 469 430.07Z"/>
@@ -122,6 +132,7 @@
 <path class="i" d="M494.89 285.53Q523.29 297.56 553.57 291.69Q525.17 279.66 494.89 285.53Z"/>
 <circle class="i" cx="494.89" cy="285.53" r="3.8"/>
 <g transform="rotate(7 561.52 298.53)">
+<path class="f12" d="M503.52 363.53V309.53Q503.52 303.53 510.52 303.53H533.52L543.52 317.53H595.52V363.53Z"/>
 <path class="s" d="M503.52 363.53V309.53Q503.52 303.53 510.52 303.53H533.52L543.52 317.53H595.52V363.53Z"/>
 <path class="i" d="M547.52 317.53V305.53Q547.52 293.53 554.52 293.53H568.52Q575.52 293.53 575.52 305.53V317.53"/>
 <path class="a" d="M511.52 351.53L587.52 351.53"/>
@@ -131,10 +142,11 @@
 <path class="i" d="M668 190L668 540"/>
 <path class="i" d="M788 190L788 540"/>
 <path class="i" d="M668 190L788 190"/>
+<path class="f25" d="M788 190L828 182L828 548L788 540Z"/>
 <path class="s" d="M788 190L828 182L828 548L788 540Z"/>
 <path class="y" d="M612 532C658 532 708 500 736 280"/>
 </g>
-<text class="t" x="542" y="56" font-size="13.44" fill-opacity="0.92" text-anchor="start">JUST WALK OUT</text>
-<text class="t" x="542" y="78" font-size="11.34" fill-opacity="0.8" text-anchor="start">THE FOLDER COMES WITH YOU</text>
+<text class="t" x="542" y="56" font-size="13.44" fill-opacity="1" text-anchor="start">JUST WALK OUT</text>
+<text class="t" x="542" y="78" font-size="11.34" fill-opacity="1" text-anchor="start">THE FOLDER COMES WITH YOU</text>
 </g>
 </svg>

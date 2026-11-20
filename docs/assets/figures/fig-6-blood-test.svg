@@ -1,43 +1,52 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 125.2" width="880" height="125.2" role="img" aria-labelledby="t">
 <title id="t">Every copy gets tested</title>
 <style>
-:root{--ink:#1E1E1E;--tone:#E6E3DC;--acc:#F4C430}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED;--tone:#2B2F36}}
-:root[data-theme="dark"]{--ink:#EDEDED;--tone:#2B2F36}
+:root{--ink:#1E1E1E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
+:root[data-theme="dark"]{--ink:#EDEDED}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
 .k{stroke:var(--ink);stroke-width:0.75}
-.a{stroke:var(--acc);stroke-width:2.4}
+.a{stroke:var(--ink);stroke-width:2.4}
 .h{stroke:var(--ink);stroke-width:0.6}
 .z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
-.y{stroke:var(--acc);stroke-width:2.4;stroke-dasharray:6 6}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
 .d{fill:var(--ink);stroke:none}
-.s{fill:var(--tone);stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
-.m{fill:var(--tone);stroke:var(--ink);stroke-width:0.75;stroke-linejoin:round}
+.s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.f12,.f25,.f50{stroke:none;fill-rule:evenodd}
+.f12{fill:url(#d12)}
+.f25{fill:url(#d25)}
+.f50{fill:url(#d50)}
 .t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 </style>
+<defs><pattern id="d25" width="8" height="8" x="0" y="0.8" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern></defs>
 <g transform="translate(0 -37.8)">
 <path class="k" d="M50 119L830 119"/>
-<path class="s" d="M280 100V108A40 11 0 0 0 360 108V100A40 11 0 0 1 280 100Z"/>
+<path class="f25" d="M280 100V108A40 11 0 0 0 360 108V100A40 11 0 0 0 280 100Z"/>
+<path class="s" d="M280 100V108A40 11 0 0 0 360 108V100A40 11 0 0 0 280 100Z"/>
 <ellipse class="s" cx="320" cy="100" rx="40" ry="11"/>
 <ellipse class="k" cx="320" cy="101" rx="26" ry="6"/>
-<text class="t" x="320" y="146" font-size="10.92" fill-opacity="0.8" text-anchor="middle">ORIGINAL</text>
-<path class="s" d="M420 100V108A40 11 0 0 0 500 108V100A40 11 0 0 1 420 100Z"/>
+<text class="t" x="320" y="146" font-size="10.92" fill-opacity="1" text-anchor="middle">ORIGINAL</text>
+<path class="f25" d="M420 100V108A40 11 0 0 0 500 108V100A40 11 0 0 0 420 100Z"/>
+<path class="s" d="M420 100V108A40 11 0 0 0 500 108V100A40 11 0 0 0 420 100Z"/>
 <ellipse class="s" cx="460" cy="100" rx="40" ry="11"/>
 <ellipse class="k" cx="460" cy="101" rx="26" ry="6"/>
-<text class="t" x="460" y="146" font-size="10.92" fill-opacity="0.8" text-anchor="middle">COPY</text>
+<text class="t" x="460" y="146" font-size="10.92" fill-opacity="1" text-anchor="middle">COPY</text>
 <path class="a" d="M452 62L458 69L469 55"/>
-<path class="s" d="M560 100V108A40 11 0 0 0 640 108V100A40 11 0 0 1 560 100Z"/>
+<path class="f25" d="M560 100V108A40 11 0 0 0 640 108V100A40 11 0 0 0 560 100Z"/>
+<path class="s" d="M560 100V108A40 11 0 0 0 640 108V100A40 11 0 0 0 560 100Z"/>
 <ellipse class="s" cx="600" cy="100" rx="40" ry="11"/>
 <ellipse class="k" cx="600" cy="101" rx="26" ry="6"/>
-<text class="t" x="600" y="146" font-size="10.92" fill-opacity="0.8" text-anchor="middle">COPY</text>
+<text class="t" x="600" y="146" font-size="10.92" fill-opacity="1" text-anchor="middle">COPY</text>
 <path class="a" d="M592 62L598 69L609 55"/>
-<path class="s" d="M700 100V108A40 11 0 0 0 780 108V100A40 11 0 0 1 700 100Z"/>
+<path class="f25" d="M700 100V108A40 11 0 0 0 780 108V100A40 11 0 0 0 700 100Z"/>
+<path class="s" d="M700 100V108A40 11 0 0 0 780 108V100A40 11 0 0 0 700 100Z"/>
 <ellipse class="s" cx="740" cy="100" rx="40" ry="11"/>
 <ellipse class="k" cx="740" cy="101" rx="26" ry="6"/>
-<text class="t" x="740" y="146" font-size="10.92" fill-opacity="0.8" text-anchor="middle">COPY</text>
+<text class="t" x="740" y="146" font-size="10.92" fill-opacity="1" text-anchor="middle">COPY</text>
 <path class="a" d="M732 62L738 69L749 55"/>
+<path class="f25" d="M55 68H107Q110 68 110 71V78Q110 81 107 81H55Q52 81 52 78V71Q52 68 55 68Z"/>
 <path class="s" d="M55 68H107Q110 68 110 71V78Q110 81 107 81H55Q52 81 52 78V71Q52 68 55 68Z"/>
 <path class="i" d="M110 74L150 74"/>
 <path class="i" d="M150 74Q200 74 218 90L252 100"/>
