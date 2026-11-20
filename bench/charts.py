@@ -2,7 +2,8 @@
 
     python -m bench.charts RESULTS_DIR --out DIR
 
-Writes `plate` (the front-page printout, drawn by `bench/plate.py`) and `progress`, `spend`,
+Writes the front-page plates `reached`, `text` and `time` (drawn by `bench/plate.py`) and
+`progress`, `spend`,
 `where`, `rules` and `board`, each as `NAME.light.svg` (ink on transparent, for light pages) and
 `NAME.dark.svg`. Arms are told apart by line style and direct labels. Every chart carries, bottom
 right, `DATA` or `SCRIPTED: NOT A RESULT` from the runs' backend, and bottom left the scenario,
@@ -651,10 +652,17 @@ def render(runs: list[Run], out: Path, kind: str = "runs") -> list[Path]:
     ordered = sorted(runs, key=lambda r: (r.arm, r.seed))
     rows = [r.row for r in ordered]
     series = [{"harness": r.arm, "seed": r.seed, "series": r.series} for r in ordered]
+    made = [{"harness": r.arm, "seed": r.seed, "calls": r.calls} for r in ordered]
     for look in INKS:
-        path = out / f"plate.{look}.svg"
-        path.write_text(plate.plate(rows, series, runs[0].progress, kind, look), encoding="utf-8")
-        written.append(path)
+        drawn = {
+            "reached": plate.reached(rows, series, runs[0].progress, kind, look),
+            "text": plate.text(rows, made, look),
+            "time": plate.time(rows, made, look),
+        }
+        for name, svg in drawn.items():
+            path = out / f"{name}.{look}.svg"
+            path.write_text(svg, encoding="utf-8")
+            written.append(path)
     for name, draw in CHARTS.items():
         for look, ink in INKS.items():
             path = out / f"{name}.{look}.svg"

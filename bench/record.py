@@ -95,12 +95,17 @@ def calls(folder: Path) -> list[dict]:
     """The model calls that were answered, each with the step it belongs to."""
     found = steps(folder)
     out = []
-    for c in _jsonl(folder / "meter.jsonl"):
-        if c.get("status") != 200:
-            continue
+    answered = [c for c in _jsonl(folder / "meter.jsonl") if c.get("status") == 200]
+    began = answered[0]["t_start"] if answered else 0.0
+    for c in answered:
         out.append(
             {
                 "step": _step_of(found, c["t_start"]),
+                "at": round(c["t_start"] - began, 3),
+                "seconds": round(
+                    c.get("latency_s") or c.get("t_end", c["t_start"]) - c["t_start"], 3
+                ),
+                "answer": c.get("chars_out", 0),
                 "task": c.get("pack_bytes", 0),
                 "screen": c.get("screen_bytes", 0),
                 "scaffold": c.get("scaffold_bytes", 0),

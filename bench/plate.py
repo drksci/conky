@@ -1,4 +1,4 @@
-"""The front-page plate: one printout that says who got there, what it cost and what was equal.
+"""The front-page plates: who got there, where the text went and where the time went.
 
 Drawn from the standard record alone (`bench/record.py`), so it names no scenario and no harness.
 The look is a pen-plotter printout: one ink, grey for what is secondary, dot textures where a
@@ -110,25 +110,52 @@ def short(number: float) -> str:
     return f"{number / 1000:,.0f}k" if number >= 1000 else f"{number:,.0f}"
 
 
-def plate(rows: list[dict], series: list[dict], progress: dict, kind: str, look: str) -> str:
-    """The whole plate as SVG text. rows and series are the standard record of one set of runs."""
-    s = Sheet(look)
-    goal, unit = progress["goal"], progress["unit"]
-    steps = {(e["harness"], e["seed"]): e["series"] for e in series}
+def _setup(rows: list[dict]) -> tuple[list[str], dict, dict, list[str]]:
+    """Harnesses in drawing order (no model first, the accent arm last), their rows, who is
+    accented, and which use a model."""
     order: list[str] = []
     for uses in (False, True):
         for row in rows:
             if (row["model"] != "none") == uses and row["harness"] not in order:
                 order.append(row["harness"])
-    order.sort(key=lambda h: bool(record.manifest(h).get("accent")))  # the accent arm goes last
+    accent = {h: bool(record.manifest(h).get("accent")) for h in order}
+    order.sort(key=lambda h: accent[h])
     arms = {
         h: sorted((r for r in rows if r["harness"] == h), key=lambda r: r["seed"]) for h in order
     }
-    accent = {h: bool(record.manifest(h).get("accent")) for h in order}
-    thinking = [h for h in order if arms[h][0]["model"] != "none"]
-    seeds = sorted({r["seed"] for r in rows})
-    reasons = record.comparable(rows)
+    return order, arms, accent, [h for h in order if arms[h][0]["model"] != "none"]
+
+
+def _head(s: Sheet, title: str, right: str = "") -> None:
+    s.text(24, 28, title, 15, "ink", SANS, "bold")
+    if right:
+        s.caps(WIDTH - 24, 28, right, "grey", "end")
+    s.line(24, 40, WIDTH - 24, 40)
+
+
+def _state(rows: list[dict], words: str) -> str:
+    """The right-hand note, led by the warning when the runs used a scripted stand-in."""
     scripted = any(r["backend"] == "scripted" for r in rows)
+    return f"scripted: not a result · {words}" if scripted else words
+
+
+def _median_run(rs: list[dict], key: str) -> dict:
+    """The run nearest the median on key, among those that reached the goal when any did."""
+    pool = [r for r in rs if r["ending"] == "reached"] or rs
+    middle = statistics.median(r[key] for r in pool)
+    return min(pool, key=lambda r: abs(r[key] - middle))
+
+
+def reached(rows: list[dict], series: list[dict], progress: dict, kind: str, look: str) -> str:
+    """Who got there: what was held equal, then every run as a bar from start to goal."""
+    s = Sheet(look)
+    goal, unit = progress["goal"], progress["unit"]
+    steps = {(e["harness"], e["seed"]): e["series"] for e in series}
+    order, arms, accent, thinking = _setup(rows)
+    seeds = sorted({r["seed"] for r in rows})
+    scripted = any(r["backend"] == "scripted" for r in rows)
+    state = "scripted: not a result" if scripted else kind
+    _head(s, "Who got there", f"{rows[0]['scenario']} · {state} · {rows[0]['date']}")
 
     def colour(h: str) -> str:
         return "accent" if accent[h] else "ink"
@@ -141,14 +168,6 @@ def plate(rows: list[dict], series: list[dict], progress: dict, kind: str, look:
     def px(value: float) -> float:
         return X0 + (X1 - X0) * min(max(value, 0.0), goal) / goal
 
-    # ---- heading
-    s.text(24, 30, "Who got there", 16, "ink", SANS, "bold")
-    state = "scripted: not a result" if scripted else kind
-    s.caps(24, 46, f"{rows[0]['scenario']} · {state}")
-    s.caps(WIDTH - 24, 30, rows[0]["date"], "grey", "end")
-    s.line(24, 58, WIDTH - 24, 58)
-
-    # ---- what was held equal
     models = sorted({r["model"] for r in rows if r["model"] != "none"}) or ["none"]
     commits = sorted({r["commit"][:7] for r in rows if r["commit"]}) or ["unrecorded"]
     span = f"{seeds[0]} to {seeds[-1]}" if len(seeds) > 1 else f"{seeds[0]}"
@@ -158,17 +177,15 @@ def plate(rows: list[dict], series: list[dict], progress: dict, kind: str, look:
         ("budget", f"{max(r['budget_calls'] for r in rows)} calls a run"),
         ("commit", ", ".join(commits)),
     ]
+    reasons = record.comparable(rows)
     if reasons:
         facts.append(("not like for like", reasons[0]))
     cell = (WIDTH - 48) / max(len(facts), 4)
     for i, (name, value) in enumerate(facts):
-        x = 24 + i * cell
-        s.caps(x, 78, name)
-        s.text(x, 96, value, 13, "ink", SANS, "bold")
+        s.caps(24 + i * cell, 60, name)
+        s.text(24 + i * cell, 77, value, 12.5, "ink", SANS, "bold")
 
-    # ---- every run, as a bar along the way
-    top = 136.0
-    bar, gap = 5.0, 3.0
+    top, bar, gap = 116.0, 5.0, 3.0
     lane = max(len(seeds) * (bar + gap) + 14, 50.0)
     s.caps(X0, top - 10, progress["start"])
     s.caps(X1, top - 10, progress["end"], anchor="end")
@@ -199,79 +216,129 @@ def plate(rows: list[dict], series: list[dict], progress: dict, kind: str, look:
         for k, r in enumerate(rs):
             end_mark(s, SIDE + 4 + k * 12, mid - 8, r["ending"], colour(h))
         s.text(SIDE, mid + 14, f"{got} of {len(rs)}", 14, colour(h), SANS, "bold")
+        broken = sum(r["violations"] for r in rs)
+        if broken:
+            s.text(WIDTH - 24, mid + 14, f"{broken}", 14, "mark", SANS, "bold", "end")
+            s.caps(WIDTH - 24, mid - 5, "rules broken", anchor="end")
+        if rs[0]["kept"] is not None:
+            s.text(
+                WIDTH - 24,
+                mid + 14,
+                f"{sum(r['kept'] or 0 for r in rs)}",
+                14,
+                colour(h),
+                SANS,
+                "bold",
+                "end",
+            )
+            s.caps(WIDTH - 24, mid - 5, "pages kept", anchor="end")
+    return s.svg(bottom + 26, "Every run drawn as a bar from start to goal, one band per harness.")
 
-    # ---- what it cost
-    ptop = bottom + 44
-    height = 118.0
-    s.text(24, ptop + 2, "Text sent", 12, "ink", SANS, "bold")
-    sent = {h: statistics.median(r["chars"] for r in arms[h]) for h in thinking}
-    if thinking:
-        most = max(r["chars"] for h in thinking for r in arms[h]) or 1
 
-        def py(value: float) -> float:
-            return ptop + height - height * value / most
+SHARES = (
+    ("task", "task"),
+    ("screen", "screen"),
+    ("scaffold", "scaffolding"),
+    ("answer", "answers"),
+)
 
-        s.line(X0, ptop + height, X1, ptop + height, 1.2)
-        for h in sorted(thinking, key=lambda h: -sent[h]):
-            best = min(arms[h], key=lambda r: abs(r["chars"] - sent[h]))
-            points = steps.get((h, best["seed"]), [])
-            if not points:
-                continue
-            d = f"M{X0:.1f},{ptop + height:.1f}"
-            last = ptop + height
-            for point in points:
-                at, up = px(point["progress"] * goal), py(point["chars"])
-                d += f" L{at:.1f},{last:.1f} L{at:.1f},{up:.1f}"
-                last = up
-            end = px(points[-1]["progress"] * goal)
-            s.path(d + f" L{end:.1f},{ptop + height:.1f} Z", fill(h), "none")
-            s.path(d.replace(f"M{X0:.1f},{ptop + height:.1f} L", "M", 1), "none", colour(h), 1.4)
-            s.text(end + 5, last + 4, short(best["chars"]), 10, colour(h), SANS, "bold")
-        if len(thinking) == 2 and any(accent[h] for h in thinking):
-            ours = next(h for h in thinking if accent[h])
-            other = next(h for h in thinking if h != ours)
-            change = round(100 * (sent[ours] / sent[other] - 1)) if sent[other] else 0
-            if change:
-                s.text(24, ptop + 44, f"{abs(change)}%", 26, "accent", SANS, "bold")
-                word = "less" if change < 0 else "more"
-                s.text(24, ptop + 60, f"{word} than {other}", 8.5, "grey", SANS)
 
-        # ---- seed by seed
-        s.text(SIDE, ptop + 2, "Seed by seed", 12, "ink", SANS, "bold")
-        room = WIDTH - 24 - SIDE - 22
-        thick = min(7.0, (height - 16) / (len(seeds) * (len(thinking) + 0.6)))
-        y = ptop + 18
-        for seed in seeds:
-            s.caps(SIDE, y + thick * len(thinking) / 2 + 3, seed)
-            for h in thinking:
-                r = next((r for r in arms[h] if r["seed"] == seed), None)
-                if r is not None:
-                    w = room * r["chars"] / most
-                    s.box(SIDE + 14, y, max(w, 0.5), thick, fill(h), colour(h))
-                    if r["ending"] != "reached":
-                        end_mark(s, SIDE + 14 + w + 7, y + thick / 2, r["ending"], colour(h))
-                y += thick
-            y += thick * 0.6
+def text(rows: list[dict], calls: list[dict], look: str) -> str:
+    """Where the text went: one bar a harness, cut by where each character came from."""
+    s = Sheet(look)
+    order, arms, accent, thinking = _setup(rows)
+    made = {(e["harness"], e["seed"]): e["calls"] for e in calls}
+    _head(s, "Where the text went", _state(rows, "characters, median run"))
+    picks = {h: _median_run(arms[h], "chars") for h in thinking}
+    totals = {
+        h: {k: sum(c.get(k, 0) for c in made.get((h, picks[h]["seed"]), [])) for k, _ in SHARES}
+        for h in thinking
+    }
+    most = max((sum(t.values()) for t in totals.values()), default=1) or 1
+    fills = {"task": "none", "screen": "url(#dots)", "scaffold": "url(#dense)", "answer": "ink"}
+    y = 62.0
+    named: set[str] = set()
+    for h in thinking:
+        colour = "accent" if accent[h] else "ink"
+        s.caps(24, y + 16, h, colour, size=9.5, weight="bold")
+        x = X0
+        for key, word in SHARES:
+            amount = totals[h][key]
+            w = (X1 - X0) * amount / most
+            paint = fills[key]
+            if accent[h]:
+                paint = {"url(#dense)": "url(#dense-accent)", "ink": "accent"}.get(paint, paint)
+            s.box(x, y, max(w, 0.5), 24, paint, colour, 1.0)
+            if w > 24:
+                s.text(x + 4, y + 38, short(amount), 9.5, "ink", SANS, "bold")
+            if w > len(word) * 5.6 and key not in named:
+                s.caps(x + 4, y - 7, word)
+                named.add(key)
+            x += w
+        s.text(x + 10, y + 17, short(sum(totals[h].values())), 14, colour, SANS, "bold")
+        y += 62
+    if len(thinking) == 2 and any(accent[h] for h in thinking):
+        ours = next(h for h in thinking if accent[h])
+        other = next(h for h in thinking if h != ours)
+        a, b = sum(totals[ours].values()), sum(totals[other].values())
+        if b and a != b:
+            change = round(100 * (a / b - 1))
+            s.text(SIDE + 60, 96, f"{abs(change)}%", 30, "accent", SANS, "bold")
+            s.text(
+                SIDE + 60, 114, f"{'less' if change < 0 else 'more'} than {other}", 9, "grey", SANS
+            )
+    return s.svg(y - 6, "Text sent in the median run of each harness, cut by where it came from.")
 
-    # ---- what it kept, the key and the stamp
-    base = ptop + height + 30
-    x = 24.0
-    for h in order:
-        if arms[h][0]["kept"] is not None:
-            count = sum(r["kept"] or 0 for r in arms[h])
-            s.text(x, base + 4, f"{count}", 14, colour(h), SANS, "bold")
-            s.text(x + 16 + 8 * (len(str(count)) - 1), base + 4, "pages kept", 8.5, "grey", SANS)
-            x += 110
-    key = WIDTH - 24.0
-    for word, ending in (("did not", "lost"), ("reached", "reached")):
-        s.caps(key, base + 3, word, anchor="end")
-        key -= len(word) * 5.7 + 8
-        end_mark(s, key, base, ending, "ink")
-        key -= 14
-    s.caps(key, base + 3, "rule broken", anchor="end")
-    key -= 11 * 5.7 + 6
-    s.path(f"M{key - 2.5:.1f},{base + 3:.1f} h5 l-2.5,-4.5 Z", "mark", "none")
+
+def time(rows: list[dict], calls: list[dict], look: str) -> str:
+    """Where the time went: the median run of each harness as a flame, steps over calls."""
+    s = Sheet(look)
+    order, arms, accent, thinking = _setup(rows)
+    made = {(e["harness"], e["seed"]): e["calls"] for e in calls}
+    _head(s, "Where the time went", _state(rows, "seconds, median run · steps over model calls"))
+    picks = {h: _median_run(arms[h], "wall_s") for h in thinking}
+    runs = {h: made.get((h, picks[h]["seed"]), []) for h in thinking}
+    longest = max((c["at"] + c["seconds"] for cs in runs.values() for c in cs), default=1) or 1
+
+    def px(seconds: float) -> float:
+        return X0 + (X1 - X0) * seconds / longest
+
+    y = 60.0
+    for h in thinking:
+        colour = "accent" if accent[h] else "ink"
+        paint = "url(#dense-accent)" if accent[h] else "url(#dense)"
+        cs = runs[h]
+        s.caps(24, y + 16, h, colour, size=9.5, weight="bold")
+        spans: dict[int, list[float]] = {}
+        for c in cs:
+            lo, hi = spans.setdefault(c["step"], [c["at"], c["at"] + c["seconds"]])
+            spans[c["step"]] = [min(lo, c["at"]), max(hi, c["at"] + c["seconds"])]
+        for step, (lo, hi) in sorted(spans.items()):
+            s.box(px(lo), y, max(px(hi) - px(lo), 0.5), 10, "none", colour, 1.0)
+            if px(hi) - px(lo) > 14:
+                s.caps(px(lo) + 3, y + 8, step, colour, size=6.5)
+        for c in cs:
+            s.box(
+                px(c["at"]),
+                y + 12,
+                max(px(c["at"] + c["seconds"]) - px(c["at"]) - 1, 0.5),
+                12,
+                paint,
+                colour,
+                0.75,
+            )
+        end = cs[-1]["at"] + cs[-1]["seconds"] if cs else 0
+        thinking_time = sum(c["seconds"] for c in cs)
+        s.text(px(end) + 10, y + 17, f"{end:,.0f} s", 14, colour, SANS, "bold")
+        s.caps(
+            24,
+            y + 30,
+            f"{len(cs)} calls · {100 * thinking_time / end:.0f}% in the model" if end else "",
+        )
+        y += 56
+    for tick in range(0, int(longest) + 1, 60):
+        s.line(px(tick), 52, px(tick), y - 22, 0.75, "grey", "1 4")
+        s.caps(px(tick), y - 10, f"{tick}", anchor="middle")
     return s.svg(
-        base + 20,
-        TITLE,
+        y + 2, "The median run of each harness along a time axis: steps above, model calls below."
     )

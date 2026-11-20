@@ -25,10 +25,13 @@ ROOT = Path(__file__).resolve().parent.parent
 REPOSITORY = "https://github.com/drksci/conky"
 PAGE = "docs/research/results.md"
 START, END = "<!-- bench:start -->", "<!-- bench:end -->"
-SHOWN = ("plate", "progress", "spend", "rules", "board")
+PLATES = ("reached", "text", "time")
+SHOWN = (*PLATES, "progress", "spend", "rules", "board")
 ALT = {
-    "plate": "Every run drawn as a bar from {start} to {end}, one band per harness, with what "
-    "was held equal above and the text each sent below.",
+    "reached": "Every run drawn as a bar from {start} to {end}, one band per harness, under "
+    "the model, seeds, budget and commit that were held equal.",
+    "text": "The text each harness sent in its median run, cut by where it came from.",
+    "time": "The median run of each harness along a time axis: steps above, model calls below.",
     "progress": "{unit} left to {end} against turn, one line per arm.",
     "spend": "Model calls and text sent against turn, one line per arm.",
     "rules": "House rules broken in the game, by turn, for each run.",
@@ -154,18 +157,22 @@ def story(kind: str, f: dict, runs: list[charts.Run]) -> str:
         lines.append(f"A plain loop around the model arrived {per['loop']['arrived']} times.")
     if "conky" in per:
         told = f"A Conky character arrived {per['conky']['arrived']} times"
-        sent = {
-            arm: statistics.median(sum(c["chars"] for c in r.calls) for r in runs if r.arm == arm)
-            for arm in ("loop", "conky")
-            if arm in per
-        }
-        if sent.get("loop") and sent.get("conky"):
-            change = round(100 * (sent["conky"] / sent["loop"] - 1))
-            if change:
-                told += f", sending {abs(change)}% {'less' if change < 0 else 'more'} text"
+        if "loop" in per:
+            for key, less, more in (
+                ("chars", "sent {n}% less text", "sent {n}% more text"),
+                ("wall_s", "took {n}% less time", "took {n}% longer"),
+            ):
+                both = {
+                    arm: statistics.median(r.row[key] for r in runs if r.arm == arm)
+                    for arm in ("loop", "conky")
+                }
+                if both["loop"]:
+                    change = round(100 * (both["conky"] / both["loop"] - 1))
+                    if change:
+                        told += ", " + (less if change < 0 else more).format(n=abs(change))
         kept = sum(r.kept or 0 for r in runs if r.arm == "conky")
         if kept:
-            told += f" and keeping {kept} pages of its own notes"
+            told += f" and kept {kept} pages of its own notes"
         lines.append(told + ".")
     if f["scripted"]:
         lines.append("These runs used a scripted stand-in for the model, so none of it counts.")
@@ -177,22 +184,31 @@ def story(kind: str, f: dict, runs: list[charts.Run]) -> str:
 def readme_block(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
     folder = f"docs/results/{name}"
     commit = f["commit"].removesuffix("+changes")
-    link = f"[`{short(f['commit'])}`]({REPOSITORY}/commit/{commit})" if commit else "unknown"
+    code = (
+        f'&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{REPOSITORY}/commit/{commit}">the code that ran</a>'
+        if commit
+        else ""
+    )
     return "\n".join(
         [
             START,
             "### Benchmark",
             "",
-            f"Model `{', '.join(f['models'])}`, commit {link}.",
-            "",
             story(kind, f, runs),
             "",
-            f'<p align="center"><a href="{PAGE}">{picture(folder, "plate", f)}</a></p>',
+            *(
+                line
+                for name in PLATES
+                for line in (
+                    f'<p align="center"><a href="{PAGE}">{picture(folder, name, f)}</a></p>',
+                    "",
+                )
+            ),
             "",
             f'<p align="center"><a href="{PAGE}">Method and every chart</a>'
             f'&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{folder}/runs.csv">the data</a>'
             f'&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/research/benchmark-protocol.md">'
-            f"the protocol</a></p>",
+            f"the protocol</a>{code}</p>",
             "",
             "<br>",
             END,

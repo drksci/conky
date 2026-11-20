@@ -12,7 +12,7 @@ This page is generated from the run files by `bench/publish.py`. Nobody edits it
 
 ## Summary
 
-5 trips each to Oregon: same game, same small model, same luck, same prompt. Pressing keys gets nobody there. A plain loop around the model arrived 4 times. A Conky character arrived 4 times, sending 29% less text and keeping 3 pages of its own notes. It is a pilot: too few trips to call a winner, so none is called.
+5 trips each to Oregon: same game, same small model, same luck, same prompt. Pressing keys gets nobody there. A plain loop around the model arrived 4 times. A Conky character arrived 4 times, sent 29% less text, took 24% longer and kept 3 pages of its own notes. It is a pilot: too few trips to call a winner, so none is called.
 
 This is a pilot: 5 seeds, one scenario and one model. It shows that the apparatus runs end to end and what a result will look like. It supports no claim that one arm is better than another.
 
@@ -42,7 +42,11 @@ Counts are runs. Other columns are the median over seeds.
 | `conky` | one character in a vault | 4 of 5 | 2,040 | 42 | 0 | 298 |
 | `loop` | one model in a plain loop | 4 of 5 | 2,040 | 42 | 0 | 240 |
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/plate.dark.svg"><img src="../results/pilot-2/plate.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, with what was held equal above and the text each sent below." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/reached.dark.svg"><img src="../results/pilot-2/reached.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, under the model, seeds, budget and commit that were held equal." width="800"></picture></p>
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/text.dark.svg"><img src="../results/pilot-2/text.light.svg" alt="The text each harness sent in its median run, cut by where it came from." width="800"></picture></p>
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/time.dark.svg"><img src="../results/pilot-2/time.light.svg" alt="The median run of each harness along a time axis: steps above, model calls below." width="800"></picture></p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/progress.dark.svg"><img src="../results/pilot-2/progress.light.svg" alt="miles left to Oregon against turn, one line per arm." width="800"></picture></p>
 
