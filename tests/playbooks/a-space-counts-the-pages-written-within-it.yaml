@@ -1,0 +1,15 @@
+# on: within makes a space notice what is written within it.
+pages:
+  den:
+    count: 0
+    watch:
+      - on: within
+        when: "true"
+        set: {count: "page.count + 1"}
+steps:
+  - write: {page: note-a, fields: {within: den}}
+  - expect: {fields: {den.count: 1}}
+  - write: {page: note-b, fields: {within: den}}
+  - expect: {fields: {den.count: 2}, verify: true}
+  - write: {page: elsewhere, fields: {}}
+  - expect: {fields: {den.count: 2}}

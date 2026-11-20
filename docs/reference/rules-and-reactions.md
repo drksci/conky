@@ -51,6 +51,7 @@ Every function is pure. Text over 65536 characters, a result over 65536 characte
 | Watch | `other_text` | The body of the page that was just written. |
 | Watch | `other` | The fields of the page that was just written. |
 | Watch | `other_size` | The byte length of the page that was just written. |
+| Watch | `other_name` | The name of the page that was just written. |
 | Watch | `event` | The id of the change being reacted to. A case can keep it in a field to mark what it has met, then test `page.met != event`. |
 
 A field is read as `page.cups`. The runtime has no size limit of its own: `size <= 2000` is an ordinary rule ([decision 0006](../decisions/0006-size-is-a-rule.md)).
@@ -106,7 +107,9 @@ watch:
     ordered: "true"
 ```
 
-After a write is committed, the runtime visits every page in order of name, looking for entries whose `on` is the page just written. For each one whose `when` is true it evaluates the `set` expressions and writes the results to the watching page. That write:
+`on` can also name a relation instead of a page ([decision 0037](../decisions/0037-a-watch-can-fire-on-a-relation.md)). `on: within` reacts to a write of any page within the watching page, at any depth. `on: link` reacts to a write of a page whose body or text fields contain a link `[[NAME]]` to the watching page. A page never reacts to its own write through a relation, and a page may not be named `within` or `link`, which is refused with reason `shape`. `other_name` says which page was written.
+
+After a write is committed, the runtime visits every page in order of name, looking for entries whose `on` is the page just written or names a relation that the write satisfies. For each one whose `when` is true it evaluates the `set` expressions and writes the results to the watching page. That write:
 
 - is signed by the watching page's own key, created on first use;
 - carries `Cause`, the id of the commit that triggered it;

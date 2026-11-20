@@ -1,0 +1,13 @@
+# on: link fires for a page whose body links to the watcher, and not for one that does not.
+pages:
+  inbox:
+    last: ""
+    watch:
+      - on: link
+        when: "true"
+        set: {last: "other_name"}
+steps:
+  - write: {page: plain, body: "nothing here"}
+  - expect: {fields: {inbox.last: ""}}
+  - write: {page: letter, body: "to [[inbox]] with thanks"}
+  - expect: {fields: {inbox.last: letter}, verify: true}

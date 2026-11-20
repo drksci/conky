@@ -138,6 +138,7 @@ def code() -> dict[str, set[str]]:
         "Connectors": set(subparsers(subparsers(parser)["connect"])),
         "Reserved keys": set(page.RESERVED),
         "Watch keys": set(page.WATCH_KEYS),
+        "Watch relations": set(page.RELATIONS),
         "Ask keys": set(page.ASK_KEYS),
         "Trailer keys": {str(key) for key in Trailer},
         "Kinds": set(KINDS),

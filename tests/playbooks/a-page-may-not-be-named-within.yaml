@@ -1,0 +1,8 @@
+# within and link name watch relations, so a page may not be named so.
+pages:
+  den: {}
+steps:
+  - write: {page: within, fields: {a: 1}}
+  - expect: {refused: shape, missing: [within]}
+  - write: {page: link, fields: {a: 1}}
+  - expect: {refused: shape, missing: [link]}

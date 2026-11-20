@@ -26,7 +26,7 @@ Private keys are never inside the vault. They live in a key directory (see [Iden
 
 A page is a `---` line, YAML frontmatter, a `---` line, then a Markdown body. A page name is 1 to 64 characters: lowercase letters, digits, `-` and `_`, starting with a letter or a digit.
 
-Three frontmatter keys are reserved: `within` (the name of a space), `rules` (a list of expressions, each as text or as a mapping with the one key `each`) and `watch` (a list of watch entries). Every other key is a field. Keys are written in a fixed order, reserved keys first and then fields sorted by name, so the same content always produces the same file. The meaning of the reserved keys is in [rules and reactions](rules-and-reactions.md).
+Three frontmatter keys are reserved: `within` (the name of a space), `rules` (a list of expressions, each as text or as a mapping with the one key `each`) and `watch` (a list of watch entries, each with `on` naming a page, `within` or `link`). The page names `within` and `link` are not allowed. Every other key is a field. Keys are written in a fixed order, reserved keys first and then fields sorted by name, so the same content always produces the same file. The meaning of the reserved keys is in [rules and reactions](rules-and-reactions.md).
 
 A body may contain an embed, resolved when the page is read and never when it is stored. The stored file keeps the embed text.
 

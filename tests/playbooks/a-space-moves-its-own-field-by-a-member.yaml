@@ -1,0 +1,11 @@
+# A space moves its own cash by the amount of a payment written within it.
+pages:
+  den:
+    cash: 80
+    watch:
+      - on: within
+        when: "other.amount > 0"
+        set: {cash: "page.cash - other.amount"}
+steps:
+  - write: {page: pay-a, fields: {within: den, amount: 30}}
+  - expect: {fields: {den.cash: 50}, verify: true}

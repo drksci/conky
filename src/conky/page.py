@@ -28,6 +28,15 @@ WATCH_KEYS = arch.constant(
     "Keys of a watch entry.",
     doc="vocabulary.md#watch-keys",
 )
+RELATIONS = arch.constant(
+    ("within", "link"),
+    "watch relation",
+    "conky.page.RELATIONS",
+    "slot.watch",
+    "Words for `on` that name a relation in place of a page.",
+    doc="vocabulary.md#watch-relations",
+)
+LINK = re.compile(r"(?<!!)\[\[([^\]#|]+)(?:[#|][^\]]*)?\]\]")
 ASK_KEYS = arch.constant(
     ("prompt", "into", "provider", "otherwise", "writes"),
     "ask key",
@@ -99,15 +108,22 @@ def _check_watch(entry: Any) -> None:
         and len(set(entry) & {"set", "ask"}) == 1
         and set(entry) <= set(WATCH_KEYS)
         and isinstance(entry["on"], str)
-        and NAME.match(entry["on"])
+        and (entry["on"] in RELATIONS or NAME.match(entry["on"]))
         and isinstance(entry["when"], str)
         and (_set_ok(entry["set"]) if "set" in entry else _ask_ok(entry["ask"]))
     )
     if not ok:
         raise ShapeError(
-            "watch entries need on (page name), when (text) and either set (field: text) "
-            "or ask (prompt, with into or writes or both, and optional provider and otherwise)"
+            "watch entries need on (page name, within or link), when (text) and either "
+            "set (field: text) or ask (prompt, with into or writes or both, "
+            "and optional provider and otherwise)"
         )
+
+
+def links(page: Page) -> set[str]:
+    """Return the names the body and the text fields of a page link to."""
+    texts = [page.body, *(v for v in page.fields.values() if isinstance(v, str))]
+    return {found.group(1).strip() for text in texts for found in LINK.finditer(text)}
 
 
 def _set_ok(value: Any) -> bool:

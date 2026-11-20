@@ -104,10 +104,17 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 
 | Name | Meaning |
 |---|---|
-| `on` | The page whose writes this entry reacts to. |
+| `on` | The page whose writes this entry reacts to, or a relation. |
 | `when` | The expression that must hold for the entry to act. |
 | `set` | Fields to write, each from an expression. |
 | `ask` | A question to put to a model, in place of `set`. |
+
+## Watch relations
+
+| Name | Meaning |
+|---|---|
+| `within` | Reacts to a write of any page within the watching page, at any depth. |
+| `link` | Reacts to a write of a page whose text links to the watching page. |
 
 ## Ask keys
 

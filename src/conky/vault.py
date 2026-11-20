@@ -17,12 +17,14 @@ from conky.page import (
     EMBED,
     MEMBERS,
     NAME,
+    RELATIONS,
     Page,
     ShapeError,
     apply,
     check_name,
     embedded,
     given,
+    links,
     parse,
     resolve,
     resolve_text,
@@ -483,6 +485,8 @@ class Vault:
 
         if depth > MAX_DEPTH:
             return refuse(_CYCLE)
+        if page in RELATIONS:
+            return refuse(f"{Refusal.SHAPE}: {page} names a watch relation: use another page name")
         before = self._load(page)
         applied = changes
         if bound is not None and page == bound:
@@ -684,6 +688,14 @@ class Vault:
                 return f"{Refusal.RULE}: space {owner} does not exist", name
             space = found
 
+    def _notices(self, on: str, watcher: str, source: str, written: Page) -> bool:
+        """Return whether a watch entry's `on` matches the page just written."""
+        if on == "within":
+            return source != watcher and self._inside(written.within, watcher)
+        if on == "link":
+            return source != watcher and watcher in links(written)
+        return on == source
+
     @arch.law(
         "law.pressure.notice",
         "Anything to be noticed is a pressure that triggers a reaction, not a wall.",
@@ -735,6 +747,12 @@ class Vault:
     )
     @arch.stage(
         "notice",
+        "stage.notice.relation",
+        "`on: within` and `on: link` notice a write by its place or its links, not its name.",
+        doc="rules-and-reactions.md#reactions",
+    )
+    @arch.stage(
+        "notice",
         "stage.notice.pressure",
         "A second self-watch entry whose `when` reads the number crossing a threshold.",
         doc="rules-and-reactions.md#measures",
@@ -761,11 +779,12 @@ class Vault:
     def _react(self, source: str, written: Page, commit: str, at: str, depth: int) -> None:
         for watcher in sorted(p.stem for p in self.pages_dir.glob("*.md")):
             for entry in (self._load(watcher) or Page()).watch:
-                if entry["on"] != source:
+                if not self._notices(entry["on"], watcher, source, written):
                     continue
                 current = self._load(watcher) or Page()
                 scope = {
                     "other": written.fields,
+                    "other_name": source,
                     "page": current.fields,
                     "space": self._context(watcher, current.within),
                     "other_size": _size(written),

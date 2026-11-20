@@ -72,6 +72,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0034-a-rule-for-the-pages-within.md](decisions/0034-a-rule-for-the-pages-within.md): A rule for the pages within
 - [decisions/0035-a-character-binds-its-own-space.md](decisions/0035-a-character-binds-its-own-space.md): A character binds its own space
 - [decisions/0036-a-plain-rule-stays-with-its-page.md](decisions/0036-a-plain-rule-stays-with-its-page.md): A plain rule stays with its page
+- [decisions/0037-a-watch-can-fire-on-a-relation.md](decisions/0037-a-watch-can-fire-on-a-relation.md): A watch can fire on a relation
 
 ### Research
 

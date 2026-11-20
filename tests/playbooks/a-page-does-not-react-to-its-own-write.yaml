@@ -1,0 +1,11 @@
+# A page that links to itself does not trigger its own link watch.
+pages:
+  den:
+    count: 0
+    watch:
+      - on: link
+        when: "true"
+        set: {count: "page.count + 100"}
+steps:
+  - write: {page: den, fields: {note: "x"}, body: "see [[den]]"}
+  - expect: {fields: {den.count: 0}, verify: true}

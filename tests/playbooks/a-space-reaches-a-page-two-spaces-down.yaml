@@ -1,0 +1,15 @@
+# on: within notices a page at any depth below the watching page.
+pages:
+  den:
+    seen: ""
+    watch:
+      - on: within
+        when: "true"
+        set: {seen: "other_name"}
+  shelf:
+    within: den
+  drawer:
+    within: shelf
+steps:
+  - write: {page: pay-a, fields: {within: drawer}}
+  - expect: {fields: {den.seen: pay-a}, verify: true}
