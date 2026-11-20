@@ -8,15 +8,15 @@ source: maintainers
 
 # Playing a program
 
-A connector gives a vault eyes and hands on a terminal program. The program's screen is written to a page, and what a second page says to type is typed into the program. Every screen and every key press is a signed change in the vault's history. This page runs one for real. The pieces are described in [connectors](../reference/connectors.md) and the options in the [command line reference](../reference/cli.md#connect-terminal).
+A connector gives a vault eyes and hands on a terminal program: the screen is written to one page, and whatever a second page says to type is typed back. Every screen and key press is a signed change in the history. This page runs one for real. See [connectors](../reference/connectors.md) and the [command line reference](../reference/cli.md#connect-terminal).
 
-The connector needs a POSIX system, such as Linux or macOS. The program here is a small trail game in `tests/games/trail.py`: five stretches of road, a few numbered choices at each, and no randomness. It reads a line at a time and prints to standard output.
+The connector needs a POSIX system such as Linux or macOS. The program is a small trail game in `tests/games/trail.py`: five stretches of road, a few numbered choices at each, no randomness. It reads a line at a time and prints to standard output.
 
-The output below was produced by running these commands for real, from a folder that holds a copy of `tests/games`, with `HOME` set to an empty scratch directory. Commit ids and times differ on every run.
+The output below comes from running these commands for real, from a folder that holds a copy of `tests/games`, with `HOME` set to an empty scratch directory. Commit ids and times differ on every run.
 
 ## A reflex that always pushes on
 
-The page `hands` says what to type. Its one watch entry reacts to every write to `screen` by setting `keys` to `1`, which is the first choice at every stretch, and `turn` to the number of the screen it is answering. The reflex is a plain reaction, not a mind: it never reads the screen and would type `1` whatever the game showed.
+The page `hands` says what to type. Its one watch entry reacts to every write to `screen` by setting `keys` to `1`, the first choice at every stretch, and `turn` to the number of the screen it is answering. It is a reflex, not a mind: it never reads the screen and would type `1` whatever the game showed.
 
 ```console
 $ conky init ../trail-vault
@@ -27,7 +27,7 @@ written (commit 8a81c65)
 
 ## Starting the connector
 
-Everything after `--` is the program. The connector creates the `screen` page, starts the game and writes a screen each time the game goes quiet. Each write to `screen` triggers the reflex, which writes `hands`, and the connector types the keys. It prints one line for each screen and each set of keys.
+Everything after `--` is the program. The connector creates the `screen` page, starts the game and writes a screen each time the game goes quiet. Each screen triggers the reflex, which writes `hands`, and the connector types the keys. It prints a line for each screen and each set of keys.
 
 ```console
 $ conky --vault ../trail-vault connect terminal -- python tests/games/trail.py
@@ -45,11 +45,11 @@ screen 6 written (commit e8d03eb)
 ended: the program exited with status 0
 ```
 
-The game ends after the fifth stretch, so the program exits and the connector writes `ended` to the screen page. The first screen comes from the opening text, and each later screen answers one set of keys.
+The game ends after the fifth stretch, so the program exits and the connector writes `ended` to the screen page. The first screen is the opening text, and each later screen answers one set of keys.
 
 ## The history
 
-Each screen is a write by `terminal`, the connector's actor. Each reply is a write by `hands`, and it names the screen that caused it. The first screen write, before any keys, is the connector creating the page. The reflex answers it as well, with turn 0. That answer belongs to no screen, so nothing is typed.
+Each screen is a write by `terminal`, the connector's actor. Each reply is a write by `hands` and names the screen that caused it. The first screen write, before any keys, is the connector creating the page. The reflex answers that too, with turn 0. It belongs to no screen, so nothing is typed.
 
 ```console
 $ conky --vault ../trail-vault log
@@ -71,11 +71,11 @@ fa3ae22 2026-11-20T15:15:46Z hands write hands cause e8d03eb
 4da1c92 2026-11-20T15:15:46Z terminal write screen
 ```
 
-The last line is the `ended` write. The reflex wrote `hands` once more for the final screen, after the program had gone, and nothing read it.
+The last line is the `ended` write. The reflex answered the final screen after the program had gone, and nothing read it.
 
 ## The final screen
 
-The screen page holds the end of the game: the body is the text the program last showed, and the fields say which screen it is and why the run ended.
+The body is the text the program last showed. The fields say which screen it is and why the run ended.
 
 ```console
 $ conky --vault ../trail-vault read screen
@@ -131,7 +131,7 @@ The party arrived on time and fed. The oxen expect a raise.
 The journal reads: push on, push on, ford the river, push on, push on.
 ```
 
-The vault is an ordinary vault, so `conky verify` passes on it and a clone of it verifies.
+It is an ordinary vault, so `verify` passes on it, and on a clone of it.
 
 ```console
 $ conky --vault ../trail-vault verify
@@ -140,9 +140,9 @@ ok: 16 commits verified
 
 ## What this shows and what it does not
 
-The reacting page here is a reflex, not a mind. It plays the same move whatever the screen says, which is why the journey is the dullest possible one. What the run shows is the mechanism: a program's screen becomes a page, a page's words become keys, and both directions pass through the same rules and the same history as any other write.
+The reacting page is a reflex, so it plays the same move whatever the screen says, which makes the dullest possible journey. What the run shows is the mechanism: a program's screen becomes a page, a page's words become keys, and both directions pass through the same rules and history as any other write.
 
-A page that asks a model can play the same way once a provider is set up. It watches `screen`, asks the model what to type and writes the answer into `keys` together with the `turn` it answers. See [pages that ask a model](../reference/rules-and-reactions.md#asking-a-model) and [providers](../reference/providers.md). The prompt embeds the screen text with `![[screen]]`, which reads the body of a page the way `![[screen#turn]]` reads a field:
+A page that asks a model can play the same way once a provider is set up. It watches `screen`, asks the model what to type and writes the answer into `keys` with the `turn` it answers. See [pages that ask a model](../reference/rules-and-reactions.md#asking-a-model) and [providers](../reference/providers.md). The prompt embeds the screen text with `![[screen]]`, which reads the body of a page the way `![[screen#turn]]` reads a field:
 
 ```yaml
 watch:
@@ -154,6 +154,6 @@ watch:
     into: keys
 ```
 
-The model gets the new screen each turn, and the answer is asked again only when the screen text changed. A test with a stand-in provider checks this. No model was called for this page, and no output of one is shown here.
+The model sees each new screen, and is asked again only when the screen text changed. A test with a stand-in provider checks this. No model was called for this page, and no output of one is shown.
 
-A rule can also limit the hands. A rule on `hands`, or on a space it belongs to, that forbids a particular `keys` value turns that write away. The refusal is recorded in the history and the program never receives the key.
+A rule can also limit the hands. A rule on `hands`, or on a space it belongs to, that forbids a particular `keys` value turns that write away. The refusal is recorded and the program never receives the key.

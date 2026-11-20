@@ -8,25 +8,23 @@ source: maintainers
 
 # Concepts
 
-The ideas behind conky in plain language. Each section ends with a link to the technical page for that idea. For a hands-on version, see [getting started](getting-started.md).
+A vault is a folder of living pages, held together by a body that never has to think. Each section links to its technical page. For the hands-on version, see [getting started](getting-started.md).
 
 ## Everything is somebody
 
-Every page in a vault is a character, not a record. It has an identity, a temperament and a voice of its own, and it notices things, takes an interest and writes in its own words. That liveliness is what the AI is for. The fixed parts (signed history, rules and reactions) are the body: reflexes and physics that a living creature never has to think about, so that a character can be odd without breaking a house rule. Today the example vaults hold human-written content, a page can ask a model, and no page yet has a generated temperament or voice.
+Every page is a character, not a record, with an identity, a temperament and a voice. The signed history, the rules and the reactions are its body: reflexes it never thinks about, so a character can be odd without breaking a house rule. Today the example vaults hold human-written content and a page can ask a model. No page yet has a generated temperament or voice.
 
 In detail: [everything is somebody](../decisions/0020-everything-is-somebody.md) and [a page with a self](../ideas/character.md).
 
 ## Pages
 
-A page is a short document with a few labelled facts at the top and ordinary text underneath. Think of an index card: a title, some fields filled in, and a note. A page can stand for anything the system contains: a person, a team, a tool, a process, a store of data, a set of rules.
-
-Everything is a page, so everything can be opened and read in the same way. No database is hidden, and no part of the system can be seen only by a program.
+A page is an index card: a title, a few labelled facts and ordinary text underneath. It can be a person, a tool, a store of data or a set of rules. Everything is a page, so everything reads the same way and nothing is visible only to a program.
 
 In detail: [vault format](../reference/vault-format.md#pages).
 
 ## Spaces
 
-A space is a page that other pages belong to. A page names its space, and the page then follows the space's rules, much as the cooler and the daybook at a lemonade stand follow the stand's rules. A space can itself belong to a larger space, and a page follows the rules of every space above it.
+A space is a page that other pages belong to. Its members follow its rules, as the cooler and the daybook follow the stand's, and a space can belong to a larger space.
 
 <p align="center"><img src="../assets/figures/fig-2-spaces.svg" alt="A large sheet labelled space holds two pages and a smaller space, which holds two pages of its own. A rule is written once at the top of the large sheet, and thin lines carry it down to every page, including the pages in the smaller space." width="800"></p>
 
@@ -36,29 +34,29 @@ In detail: [rules and spaces](../reference/rules-and-reactions.md#rules-and-spac
 
 ## Rules
 
-A rule is a statement that must be true after every change, such as "the cooler never holds less than nothing". It is checked by the system each time, not left to the good behaviour of whoever is making the change. A change that would break a rule is refused. The refusal is recorded, and nothing else changes.
+A rule is a statement that must be true after every change, such as "the cooler never holds less than nothing". A change that would break it is refused, and the refusal is recorded.
 
-This is the difference between a rule and a request. A request in a note on the wall depends on people remembering it. A rule is like a turnstile: it does not argue and it does not need reminding.
+A note on the wall depends on people remembering it. A rule is a turnstile: it does not argue and needs no reminding.
 
 In detail: [rules and refusals](../reference/rules-and-reactions.md#refusals).
 
 ## Reactions
 
-A page can be set to watch another page. When the watched page changes and a stated condition is true, the watching page updates itself. The cups in a cooler fall below a threshold, and the supplier's page writes an order, with nobody deciding to. This works like a spreadsheet, where changing one cell updates the cells that depend on it.
+A page can watch another. When the watched page changes and a stated condition holds, the watcher updates itself: the cups fall below a threshold and the supplier writes an order, with nobody deciding to. It works like a spreadsheet, where one cell changing updates the cells that depend on it.
 
-A reaction is a reflex: it needs no thinking, by a person or by an AI model, so no thought is spent on it. The thought goes into what a reflex cannot do, such as judgement, curiosity and a page's own manner, and a page can ask a model for those (see [Asking a model](#asking-a-model)).
+A reaction is a reflex, so no one spends thought on it, person or model. The thought goes to what a reflex cannot do: judgement, curiosity and a page's own manner (see [Asking a model](#asking-a-model)).
 
-Reactions can set off further reactions. A limit stops this from running forever, and a reaction that would change nothing is skipped.
+Reactions can set off further reactions. A limit stops a loop, and a reaction that would change nothing is skipped.
 
 In detail: [reactions](../reference/rules-and-reactions.md#reactions).
 
 ## Asking a model
 
-Some questions cannot be answered from the facts in the pages, such as a one-sentence summary of a request, or how a tired supplier would word an order. Asking a model is how a page thinks, and it is not a last resort. A page can ask an AI model such a question and keep the answer in one of its own fields. The question is written in a watch entry or given with `conky ask`.
+Asking a model is how a page thinks, for questions the facts cannot answer, such as how a tired supplier would word an order. The question is written in a watch entry or given with `conky ask`, and the answer lands in one of the page's own fields.
 
-The answer is recorded and checked like any other change. It is signed by the page that asked and is subject to that page's rules. The history keeps the question beside it, with the name of the model and the number of tokens used when the provider reports them. A refused answer is recorded with its reason. Reading the history never calls a model.
+The page that asked signs the answer, and its rules apply. The history keeps the question beside it, with the model's name and the tokens used when the provider reports them. A refused answer is recorded with its reason. Reading the history never calls a model.
 
-Which model answers is one page: a provider page that holds an address, a model name and the name of a secret. Changing provider means editing that page. The secret itself is never stored in the vault, in the way private keys are not. If the provider cannot be reached, the failure is recorded on the asking page and nothing else is affected.
+Which model answers is one provider page, holding an address, a model name and the name of a secret. Changing provider means editing that page. The secret is never stored in the vault. If the provider cannot be reached, the failure is recorded on the asking page and nothing else is affected.
 
 This works against stand-in servers in the tests. It has not been run against a live provider.
 
@@ -66,9 +64,9 @@ In detail: [asking a model](../reference/rules-and-reactions.md#asking-a-model) 
 
 ## Measures and pressure
 
-A measure is a page that watches itself and keeps a number up to date, such as how large it has grown. It is the same idea as a reaction, applied to the page's own state.
+A measure is a page watching itself and keeping a number up to date, such as how large it has grown.
 
-Pressure is a measure of how crowded something is. A hard limit stops work at the worst moment. Pressure only rises, like a clutter that nudges someone to tidy up, and other pages can react when it passes a threshold. Hard rules stay for what must never happen. Nothing yet acts to relieve the pressure; today it is recorded and noticed.
+Pressure is a measure of how crowded something is. A hard limit stops work at the worst moment. Pressure only rises, like clutter nudging someone to tidy up, and other pages can react when it passes a threshold. Hard rules stay for what must never happen. Nothing yet relieves pressure: today it is recorded and noticed.
 
 <p align="center"><img src="../assets/figures/fig-3-pressure.svg" alt="Two panels. In the first, a page meets a wall and work stops. In the second, a page has a gauge that rises past a marked level, and a dashed line then sets off a tidy-up while work goes on." width="800"></p>
 
@@ -78,17 +76,15 @@ In detail: [measures](../reference/rules-and-reactions.md#measures).
 
 ## History
 
-Every change is kept as an entry in a history. An entry says what changed, who changed it and when. A refused change is kept too, with the reason. Nothing is edited in place and nothing is rewritten, so the pages are only the latest view of the history.
+Every change is an entry: what changed, who changed it and when. A refused change is kept too, with the reason. Nothing is edited in place, so the pages are only the latest view, and a deleted or damaged page can be restored exactly.
 
-This gives two things. Anyone can see who changed what and why. And any page can be put back as it was: if the pages are deleted or damaged, they can be restored from the history exactly.
-
-The history is an ordinary Git history, readable with the tools that already exist for it. The pages must be changed through conky, not by hand. A hand edit is noticed, and it blocks the next change until it is discarded.
+The history is ordinary Git. Pages must be changed through conky, not by hand: a hand edit is noticed and blocks the next change until it is discarded.
 
 In detail: [vault format](../reference/vault-format.md#commits).
 
 ## Keys and signatures
 
-Each author of a change, whether a person or a page that reacts, has a key: a private half that stays with its owner and a public half that is kept in the vault. Every entry in the history is signed with the author's private key. Anyone holding the vault can check the signature against the public half, so a signature shows who made the change and that the entry has not been altered since. It works like a signature on a paper form, checked against a specimen on file.
+Each author, a person or a reacting page, has a key: a private half that stays with its owner and a public half kept in the vault. Every entry is signed with the private half. Anyone holding the vault can check the signature against the public half, like a signature on a paper form checked against a specimen on file. It shows who made the change and that it has not been altered since.
 
 Private keys are never stored in the vault. By default they live in a folder in the user's home directory.
 
@@ -96,11 +92,11 @@ In detail: [identity and signing](../reference/vault-format.md#identity-and-sign
 
 ## What moving a vault means
 
-A vault is an ordinary folder of ordinary files under version control. It can be copied, sent as a single file, or placed on a Git host, and it can be read on the other side with tools that are already installed. The copy carries its history and the public keys, so it can be checked for tampering without asking the original.
+A vault is an ordinary folder under version control. Copy it, send it as a single file or put it on a Git host, and read it on the other side with tools already installed. The copy carries its history and the public keys, so it can be checked for tampering without asking the original.
 
-A copy does not carry private keys. To keep writing as the same author in a new place, the author's private key has to be present there too.
+It does not carry private keys. To keep writing as the same author somewhere new, bring that author's private key too.
 
-One limit applies. Removing the most recent entries from a single copy cannot be detected by that copy alone. It shows up when compared with another copy.
+One limit: removing the most recent entries from a single copy cannot be detected by that copy alone. It shows up when compared with another copy.
 
 <p align="center"><img src="../assets/figures/fig-4-travels.svg" alt="A vault, a folder of pages with its history tape, is copied whole to another place, where it is identical. A dashed line shows the private keys stopped at a bar: they stay behind." width="800"></p>
 

@@ -1,12 +1,12 @@
 # Documentation
 
-The documentation has three layers. Read down only as far as needed.
+Three layers. Read down only as far as you need.
 
-1. **The [README](../README.md)** is for anyone. It has no jargon and nothing technical.
-2. **The guide** in `guide/` explains the ideas in plain language, then walks through the command line.
+1. **The [README](../README.md)** is for anyone, with no jargon.
+2. **The guide** in `guide/` explains the ideas plainly, then walks through the command line.
 3. **The technical layer** is the reference in `reference/`, [design.md](design.md), the decision records in `decisions/` and the research in `research/`.
 
-Each document below starts with frontmatter (`kind`, `title`, `status`, `date`, `source`). `scripts/check_docs.py` checks it and every link.
+Every document starts with frontmatter (`kind`, `title`, `status`, `date`, `source`). `scripts/check_docs.py` checks it and every link.
 
 ## Layer 2: the guide
 
@@ -26,11 +26,11 @@ Each document below starts with frontmatter (`kind`, `title`, `status`, `date`, 
 
 ### Design
 
-- [design.md](design.md): the short technical overview
+- [design.md](design.md): the technical model in short
 
 ### Decisions
 
-One record per decision, each with context, decision and consequences.
+One record per decision: context, decision, consequences.
 
 - [decisions/0001-objective.md](decisions/0001-objective.md): Objective
 - [decisions/0002-git-is-the-store.md](decisions/0002-git-is-the-store.md): Git is the store
@@ -70,7 +70,7 @@ Outside work, compared on a fixed basis, with the depth of reading stated.
 
 ### Essays
 
-Longer pieces that make the case for one idea each and stand alone.
+One idea per essay, each able to stand alone.
 
 - [essays/pressure-not-walls.md](essays/pressure-not-walls.md): Pressure, not walls
 - [essays/rules-not-requests.md](essays/rules-not-requests.md): Rules, not requests
@@ -79,7 +79,7 @@ Longer pieces that make the case for one idea each and stand alone.
 
 ### Ideas
 
-Candidates that are not yet requirements. Each states its rung.
+Candidates, not requirements. Each states its rung.
 
 - [ideas/a2ui.md](ideas/a2ui.md): A screen from the pages
 - [ideas/approvals.md](ideas/approvals.md): Approvals as a pattern
