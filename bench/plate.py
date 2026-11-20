@@ -349,3 +349,125 @@ def time(rows: list[dict], calls: list[dict], look: str) -> str:
             s.box(px(c["at"]), y + 2 * ROW, max(w - 1, 0.3), ROW - 8, paint, colour, 0.75)
         y += 3 * ROW + 18
     return s.svg(y - 12, "The median run of each harness: the run, its steps, each model call.")
+
+
+def _vault(s: Sheet, x: float, y: float, w: float, shape: dict, colour: str) -> None:
+    """A vault's end state: spaces as frames holding their pages, loose pages above, links."""
+    end, start = shape["end"], {n["id"] for n in shape["start"]["nodes"]}
+    inside: dict[str, list[dict]] = {}
+    by_id = {n["id"]: n for n in end["nodes"]}
+    homed = set()
+    for e in end["edges"]:
+        if e["kind"] == "within" and e["to"] in by_id and e["from"] in by_id:
+            inside.setdefault(e["to"], []).append(by_id[e["from"]])
+            homed.add(e["from"])
+    spaces = [n for n in end["nodes"] if n["kind"] == "space"]
+    loose = [n for n in end["nodes"] if n["id"] not in homed and n["kind"] != "space"]
+    at: dict[str, tuple[float, float]] = {}
+
+    def page(n: dict, px_: float, py_: float, named: bool, drop: float = 17) -> None:
+        fresh = n["id"] not in start
+        ink = "accent" if fresh else "ink"
+        side = 12 if n["kind"] == "character" else 9
+        paint = (
+            ink if n["kind"] == "character" else ("url(#dense-accent)" if fresh else "url(#dots)")
+        )
+        if n["kind"] == "provider":
+            s.path(f"M{px_:.1f},{py_ - 6:.1f} l6,6 l-6,6 l-6,-6 Z", "none", ink, 1.0)
+        else:
+            s.box(px_ - side / 2, py_ - side / 2, side, side, paint, ink, 1.0)
+        at[n["id"]] = (px_, py_)
+        if named or fresh or n["kind"] != "page":
+            tone = "accent" if fresh else "grey"
+            s.caps(px_ - 5, py_ + drop, n["id"][:16], tone, "start", 7.5)
+
+    gap = w / (len(loose) + 1)
+    for i, n in enumerate(sorted(loose, key=lambda n: (n["kind"] != "character", n["id"]))):
+        page(n, x + gap * (i + 1), y + 14, True)
+    sx = x
+    each = (w - 12 * (len(spaces) - 1)) / max(len(spaces), 1)
+    for space in spaces:
+        s.add(
+            f'<rect x="{sx:.1f}" y="{y + 56:.1f}" width="{each:.1f}" height="64" rx="6" '
+            f'fill="none" stroke="{s.c["ink"]}" stroke-width="1" stroke-dasharray="1 4" '
+            f'stroke-linecap="round"/>'
+        )
+        s.caps(sx + 8, y + 70, space["id"], "ink", size=8, weight="bold")
+        at[space["id"]] = (sx + each / 2, y + 56)
+        members = sorted(inside.get(space["id"], []), key=lambda n: n["id"])
+        step = min(22.0, (each - 16) / max(len(members), 1))
+        for i, n in enumerate(members):
+            page(n, sx + 14 + i * step, y + 86, False, 16 + 10 * (i % 2))
+        sx += each + 12
+    for e in end["edges"]:
+        if e["kind"] != "within" and e["from"] in at and e["to"] in at:
+            (ax, ay), (bx, by) = at[e["from"]], at[e["to"]]
+            s.line(
+                ax,
+                ay + 7,
+                bx,
+                by - (0 if e["to"] in {n["id"] for n in spaces} else 7),
+                0.9,
+                colour,
+                "1 3",
+            )
+
+
+def _conversation(s: Sheet, x: float, y: float, w: float, shape: dict, facts: dict) -> None:
+    """A conversation's end state: a model and the one list that grew, a line a message."""
+    s.add(
+        f'<circle cx="{x + 20:.1f}" cy="{y + 60:.1f}" r="11" fill="none" stroke="{s.c["ink"]}" '
+        f'stroke-width="1"/>'
+    )
+    s.caps(x + 20, y + 84, "model", anchor="middle", size=7.5)
+    left, right = x + 56, x + w - 8
+    s.box(left, y + 6, right - left, 110, "none", "ink", 1.0)
+    s.line(x + 31, y + 60, left, y + 60, 0.9, "ink", "1 3")
+    lines = int(facts.get("messages", 0)) or 1
+    step = min(4.0, 100.0 / lines)
+    for i in range(lines):
+        ly = y + 12 + i * step
+        s.line(
+            left + 6,
+            ly,
+            left + 6 + (right - left - 12) * (0.35 + 0.65 * ((i * 37) % 10) / 10),
+            ly,
+            0.9,
+        )
+    s.caps((left + right) / 2, y + 130, "one conversation", anchor="middle", size=7.5)
+
+
+def became(rows: list[dict], shapes: list[dict], look: str) -> str:
+    """What each harness had become when its median run stopped, with what the run says of it."""
+    s = Sheet(look)
+    order, arms, accent, thinking = _setup(rows)
+    found = {(e["harness"], e["seed"]): e for e in shapes}
+    _head(s, "What it became", _state(rows, "the parts at the end of a run"))
+    width = (WIDTH - 48 - 28 * (len(thinking) - 1)) / max(len(thinking), 1)
+    for i, h in enumerate(thinking):
+        colour = "accent" if accent[h] else "ink"
+        x = 24 + i * (width + 28)
+        shape = found.get((h, _median_run(arms[h], "chars")["seed"]))
+        s.caps(x, 62, h, colour, size=10.5, weight="bold")
+        if shape is None:
+            continue
+        facts = {f["name"]: f["value"] for f in shape["facts"]}
+        if shape["kind"] == "vault":
+            _vault(s, x, 76, width, shape, colour)
+        elif shape["kind"] == "conversation":
+            _conversation(s, x, 76, width, shape, facts)
+        shown = list(facts.items())[:4]
+        for k, (name, value) in enumerate(shown):
+            fx = x + k * width / len(shown)
+            number = f"{value:,}" if isinstance(value, int) else str(value)
+            s.text(fx, 238, number, 14, colour, SANS, "bold")
+            line, lines = "", []
+            for word in str(name).split(" "):
+                if line and len(line) + len(word) > 15:
+                    lines.append(line)
+                    line = word
+                else:
+                    line = f"{line} {word}".strip()
+            for j, part in enumerate([*lines, line][:2]):
+                s.text(fx, 252 + j * 11, part, 8.5, "grey", SANS)
+    return s.svg(276, "The parts each harness was made of when its median run stopped.")

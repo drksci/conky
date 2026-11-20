@@ -658,6 +658,7 @@ def render(runs: list[Run], out: Path, kind: str = "runs") -> list[Path]:
     for look in INKS:
         drawn = {
             "reached": plate.reached(rows, series, runs[0].progress, kind, look),
+            "became": plate.became(rows, [shape.shape(r.folder) for r in ordered], look),
             "text": plate.text(rows, made, look),
             "time": plate.time(rows, made, look),
         }

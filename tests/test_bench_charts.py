@@ -129,7 +129,7 @@ def test_every_chart_renders_light_and_dark(results: Path, tmp_path: Path) -> No
     drawn = [p for p in written if p.suffix == ".svg"]
     assert sorted(p.name for p in drawn) == sorted(
         f"{name}.{look}.svg"
-        for name in ("reached", "text", "time", *charts.CHARTS)
+        for name in ("reached", "became", "text", "time", *charts.CHARTS)
         for look in ("light", "dark")
     )
     assert sorted(p.name for p in written if p not in drawn) == [
@@ -207,7 +207,7 @@ def test_the_command_writes_every_chart_and_refuses_an_empty_directory(
 ) -> None:
     out_dir = tmp_path / "charts"
     assert charts.main([str(results), "--out", str(out_dir)]) == 0
-    assert len(list(out_dir.glob("*.svg"))) == 2 * (len(charts.CHARTS) + 3)
+    assert len(list(out_dir.glob("*.svg"))) == 2 * (len(charts.CHARTS) + 4)
     empty = tmp_path / "none"
     empty.mkdir()
     assert charts.main([str(empty), "--out", str(out_dir)]) == 1
