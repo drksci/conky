@@ -8,6 +8,12 @@
 uvx --from git+https://github.com/drksci/conky conky demo
 ```
 
+<img src="docs/assets/figures/chip-assimilate.svg" alt="Assimilation" height="22">
+
+```bash
+uvx --from git+https://github.com/drksci/conky conky assimilate
+```
+
 <p align="center">
   <img src="docs/assets/conky-hero.jpg" alt="A ventriloquist puppet in a sweater that reads conky, with the caption: You just remember I call the shots here, Bubbles." width="800">
 </p>
@@ -19,9 +25,9 @@ uvx --from git+https://github.com/drksci/conky conky demo
 
 <p align="center"><a href="docs/guide/concepts.md">Concepts</a> &nbsp;·&nbsp; <a href="docs/guide/getting-started.md">Getting started</a> &nbsp;·&nbsp; <a href="docs/reference/vault-format.md">Reference</a> &nbsp;·&nbsp; <a href="docs/project/roadmap.md">Roadmap</a></p>
 
-<p align="center"><img src="docs/assets/figures/demo.svg" alt="A terminal playing the demo: a market is set up with one rule, a stall joins, a change that breaks the rule is refused, stock runs low and the depot reorders by itself." width="800"></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/demo.dark.svg"><img src="docs/assets/figures/demo.light.svg" alt="Left, a terminal playing the demo: a market gets one rule, a stall joins, a change that breaks the rule is refused, stock runs low and the depot reorders by itself. Right, a wireframe of the same thing as a screen: a stock level, a reorder indicator flipping to yes, the rule, a pressure gauge and a history list, updating in step." width="800"></picture></p>
 
-<p align="center"><sub>Needs <a href="https://docs.astral.sh/uv/">uv</a>, Git and ssh-keygen. Builds a tiny market in a folder and leaves it to get on with things.</sub></p>
+<p align="center"><sub>Both need <a href="https://docs.astral.sh/uv/">uv</a>, Git and ssh-keygen. The first builds a tiny market and leaves it to run itself. The second hands a stopped one to a stranger and watches it carry on.</sub></p>
 
 <br>
 
@@ -34,18 +40,19 @@ Conky does it backwards. The whole system is a folder of Markdown files in Git. 
 
 That's it. Files and Git. If you ever hate it, clone the folder and leave.
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-1-one-change.dark.svg"><img src="docs/assets/figures/fig-1-one-change.light.svg" alt="A flat line drawing, left to right: the stall's page, a stamp, a strip of history, a gate marked rules, then a dashed yellow arrow to the depot's page, which has marked a reorder." width="800"></picture></p>
-
-<p align="center"><sub><i>Stock runs low. The change is signed, recorded and checked, and the depot reorders. Nobody decided to.</i></sub></p>
-
 <br>
 
-
-### Why it is not another harness
+### Not another harness
 
 You have seen the bug. The prompt says one thing, the config says another, the database remembers a third, and the agent does a fourth. Everyone asks which one is right. Conky asks why there were four.
 
 So there is one. The state, the rules and the instructions are the same living pages, and nothing else gets a vote.
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/row-1-truth.dark.svg"><img src="docs/assets/figures/row-1-truth.light.svg" alt="Usually the truth is spread across code, prompts, a database, and Dave. With Conky the truth is the pages, and there is nowhere else to look." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/row-2-rules.dark.svg"><img src="docs/assets/figures/row-2-rules.light.svg" alt="Usually rules are a strongly worded prompt, and hope. With Conky rules are checked on every change, and a model cannot talk its way past one." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/row-3-in-charge.dark.svg"><img src="docs/assets/figures/row-3-in-charge.light.svg" alt="Usually one loop runs everything and calls the model for all of it. With Conky nothing is in charge: pages notice each other and respond." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/row-4-history.dark.svg"><img src="docs/assets/figures/row-4-history.light.svg" alt="Usually, to learn why it did that, you grep the logs and pray. With Conky every change is signed and says what caused it, so you can blame an agent." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/row-5-leaving.dark.svg"><img src="docs/assets/figures/row-5-leaving.light.svg" alt="Usually it grew until it could not be moved. With Conky it is a folder and its history: pick it up and go." width="800"></picture></p>
 
 <details>
 <summary>The ten parts, with what works today</summary>
@@ -76,21 +83,6 @@ So there is one. The state, the rules and the instructions are the same living p
 </details>
 
 <br>
-
-### The whale and the door
-
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-5-stay-or-go.dark.svg"><img src="docs/assets/figures/fig-5-stay-or-go.light.svg" alt="Two drawings side by side. Left, too big to move: a whale skeleton settled on the ground. Right, just walk out: a skeleton striding to an open door with a folder under its arm." width="800"></picture></p>
-
-Every system ends up as one of these two.
-
-**Where the truth lives.** Usually in code, prompts, a database, and Dave. Here, in pages.
-
-**"Why did it do that."** Usually you grep the logs and pray. Here there is a signed history, with causes.
-
-**What leaving costs.** Usually a migration project and a quarter. Here, `git clone`.
-
-<br>
-
 
 [Concepts](docs/guide/concepts.md) &nbsp;·&nbsp; [Getting started](docs/guide/getting-started.md) &nbsp;·&nbsp; [Reference](docs/reference/vault-format.md) &nbsp;·&nbsp; [Design](docs/design.md) &nbsp;·&nbsp; [Decisions](docs/decisions/0001-objective.md) &nbsp;·&nbsp; [Research](docs/research/harnesses.md) &nbsp;·&nbsp; [Contributing](CONTRIBUTING.md)
 

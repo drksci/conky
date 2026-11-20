@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 150" width="880" height="150" role="img" aria-labelledby="t">
+<title id="t">Usually: The truth is spread across code, prompts, a database, and Dave. Conky: The truth is the pages. There is nowhere else to look.</title>
+<style>
+:root{--ink:#1E1E1E}
+.i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.i{stroke:var(--ink);stroke-width:1.2}
+.k{stroke:var(--ink);stroke-width:0.75}
+.a{stroke:var(--ink);stroke-width:2.4}
+.h{stroke:var(--ink);stroke-width:0.6}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
+.d{fill:var(--ink);stroke:none}
+.s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.f12,.f25,.f50{stroke:none;fill-rule:evenodd}
+.f12{fill:url(#d12)}
+.f25{fill:url(#d25)}
+.f50{fill:url(#d50)}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.b{font-weight:700}
+.u{fill:var(--ink);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:15px;font-weight:400}
+</style>
+<text class="t" x="24" y="20" font-size="10.08" fill-opacity="1" text-anchor="start">USUALLY</text>
+<text class="t" x="464" y="20" font-size="10.08" fill-opacity="1" text-anchor="start">CONKY</text>
+<g transform="translate(42 32)">
+<g transform="rotate(-8 22 28)"><path class="s" d="M4 6H30L40 16V52H4Z"/>
+<path class="k" d="M30 6V16H40"/>
+<path class="k" d="M18 24L26 24"/>
+<path class="k" d="M18 36L26 36"/>
+<path class="k" d="M18 46L22.4 46"/></g>
+<path class="s" d="M111 12V44A19 6 0 0 0 149 44V12"/>
+<ellipse class="s" cx="130" cy="12" rx="19" ry="6"/>
+<path class="k" d="M111 28A19 6 0 0 0 149 28"/>
+<g transform="rotate(4 34 78)"><path class="s" d="M15 64H53Q60 64 60 71V83Q60 90 53 90H31L22 100L24 90H15Q8 90 8 83V71Q8 64 15 64Z"/><path class="k" d="M17 74L50 74"/><path class="k" d="M17 82L38 82"/></g>
+<circle class="s" cx="124" cy="69" r="5"/>
+<path class="i" d="M124 74L124 94"/>
+<path class="i" d="M114 83L134 83"/>
+<path class="i" d="M124 94L117 108"/>
+<path class="i" d="M124 94L131 108"/>
+<path class="k" d="M40 26C70 58 92 4 112 30"/>
+<path class="k" d="M20 52C40 96 96 40 119 80"/>
+<path class="k" d="M52 64C70 24 100 74 122 48"/>
+<path class="k" d="M60 80C86 56 98 104 114 88"/>
+<path class="k" d="M30 52C64 40 42 74 58 70"/>
+</g>
+<g transform="translate(482 32)">
+<path class="s" d="M6 18H38L50 30V92H6Z"/>
+<path class="k" d="M38 18V30H50"/>
+<path class="k" d="M20 42L36 42"/>
+<path class="k" d="M20 56L36 56"/>
+<path class="k" d="M20 70L36 70"/>
+<path class="k" d="M20 84L28.8 84"/>
+<path class="s" d="M60 18H92L104 30V92H60Z"/>
+<path class="k" d="M92 18V30H104"/>
+<path class="k" d="M74 42L90 42"/>
+<path class="k" d="M74 56L90 56"/>
+<path class="k" d="M74 70L90 70"/>
+<path class="k" d="M74 84L82.8 84"/>
+<path class="s" d="M114 18H146L158 30V92H114Z"/>
+<path class="k" d="M146 18V30H158"/>
+<path class="k" d="M128 42L144 42"/>
+<path class="k" d="M128 56L144 56"/>
+<path class="k" d="M128 70L144 70"/>
+<path class="k" d="M128 84L136.8 84"/>
+</g>
+<text class="u"><tspan x="240" y="72">The truth is spread</tspan><tspan x="240" y="92">across code, prompts, a</tspan><tspan x="240" y="112">database, and Dave.</tspan></text>
+<text class="u"><tspan x="680" y="72">The truth is the pages.</tspan><tspan x="680" y="92">There is nowhere else to</tspan><tspan x="680" y="112">look.</tspan></text>
+</svg>

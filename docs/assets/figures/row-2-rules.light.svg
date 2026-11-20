@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 150" width="880" height="150" role="img" aria-labelledby="t">
+<title id="t">Usually: Rules are a strongly worded prompt, and hope. Conky: Rules are checked on every change. A model cannot talk its way past one.</title>
+<style>
+:root{--ink:#1E1E1E}
+.i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.i{stroke:var(--ink);stroke-width:1.2}
+.k{stroke:var(--ink);stroke-width:0.75}
+.a{stroke:var(--ink);stroke-width:2.4}
+.h{stroke:var(--ink);stroke-width:0.6}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
+.d{fill:var(--ink);stroke:none}
+.s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.f12,.f25,.f50{stroke:none;fill-rule:evenodd}
+.f12{fill:url(#d12)}
+.f25{fill:url(#d25)}
+.f50{fill:url(#d50)}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.b{font-weight:700}
+.u{fill:var(--ink);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:15px;font-weight:400}
+</style>
+<text class="t" x="24" y="20" font-size="10.08" fill-opacity="1" text-anchor="start">USUALLY</text>
+<text class="t" x="464" y="20" font-size="10.08" fill-opacity="1" text-anchor="start">CONKY</text>
+<g transform="translate(42 32)">
+<path class="s" d="M7 6H61Q68 6 68 13V45Q68 52 61 52H25L16 62L18 52H7Q0 52 0 45V13Q0 6 7 6Z"/>
+<path class="k" d="M11 20L56 20"/>
+<path class="k" d="M11 30L56 30"/>
+<path class="k" d="M11 40L38 40"/>
+<path class="s" d="M108 8H144L156 20V74H108Z"/>
+<path class="k" d="M144 8V20H156"/>
+<path class="k" d="M122 32L142 32"/>
+<path class="k" d="M122 46L142 46"/>
+<path class="k" d="M122 60L142 60"/>
+<path class="i" d="M72 28C94 28 100 48 102 68C104 90 116 98 134 98H150"/>
+<path class="i" d="M153.71 94.93L160 98L153.71 101.07"/>
+</g>
+<g transform="translate(482 32)">
+<path class="s" d="M0 16H32L44 28V80H0Z"/>
+<path class="k" d="M32 16V28H44"/>
+<path class="k" d="M14 38L30 38"/>
+<path class="k" d="M14 50L30 50"/>
+<path class="k" d="M14 62L30 62"/>
+<path class="i" d="M82 22L82 78"/>
+<path class="i" d="M118 22L118 78"/>
+<path class="i" d="M76 22L124 22"/>
+<path class="i" d="M50 56L126 56"/>
+<path class="i" d="M119.71 52.93L126 56L119.71 59.07"/>
+<path class="a" d="M132 54L141 65L160 38"/>
+</g>
+<text class="u"><tspan x="240" y="82">Rules are a strongly</tspan><tspan x="240" y="102">worded prompt, and hope.</tspan></text>
+<text class="u"><tspan x="680" y="62">Rules are checked on</tspan><tspan x="680" y="82">every change. A model</tspan><tspan x="680" y="102">cannot talk its way past</tspan><tspan x="680" y="122">one.</tspan></text>
+</svg>

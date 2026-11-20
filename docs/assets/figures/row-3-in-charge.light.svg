@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 150" width="880" height="150" role="img" aria-labelledby="t">
+<title id="t">Usually: One loop runs everything, and calls the model for all of it. Conky: Nothing is in charge. Pages notice each other and respond.</title>
+<style>
+:root{--ink:#1E1E1E}
+.i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.i{stroke:var(--ink);stroke-width:1.2}
+.k{stroke:var(--ink);stroke-width:0.75}
+.a{stroke:var(--ink);stroke-width:2.4}
+.h{stroke:var(--ink);stroke-width:0.6}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
+.d{fill:var(--ink);stroke:none}
+.s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.f12,.f25,.f50{stroke:none;fill-rule:evenodd}
+.f12{fill:url(#d12)}
+.f25{fill:url(#d25)}
+.f50{fill:url(#d50)}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.b{font-weight:700}
+.u{fill:var(--ink);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:15px;font-weight:400}
+</style>
+<text class="t" x="24" y="20" font-size="10.08" fill-opacity="1" text-anchor="start">USUALLY</text>
+<text class="t" x="464" y="20" font-size="10.08" fill-opacity="1" text-anchor="start">CONKY</text>
+<g transform="translate(42 32)">
+<circle class="s" cx="82" cy="55" r="17"/>
+<path class="k" d="M75 52L89 52"/>
+<path class="k" d="M75 59L85 59"/>
+<path class="i" d="M7 6H29V22H7Z"/>
+<path class="k" d="M67.94 41.72L31.31 18.25"/>
+<path class="k" d="M33.91 22.52L31.31 18.25L36.28 18.83"/>
+<path class="k" d="M27.43 24.31L64.06 47.78"/>
+<path class="k" d="M61.46 43.51L64.06 47.78L59.09 47.2"/>
+<path class="i" d="M71 -2H93V14H71Z"/>
+<path class="k" d="M85.6 36L85.6 16.5"/>
+<path class="k" d="M83.41 20.99L85.6 16.5L87.79 20.99"/>
+<path class="k" d="M78.4 16.5L78.4 36"/>
+<path class="k" d="M80.59 31.51L78.4 36L76.21 31.51"/>
+<path class="i" d="M135 6H157V22H135Z"/>
+<path class="k" d="M99.94 47.78L136.57 24.31"/>
+<path class="k" d="M131.61 24.89L136.57 24.31L133.97 28.58"/>
+<path class="k" d="M132.69 18.25L96.06 41.72"/>
+<path class="k" d="M101.02 41.14L96.06 41.72L98.66 37.45"/>
+<path class="i" d="M3 47H25V63H3Z"/>
+<path class="k" d="M63 51.4L27.5 51.4"/>
+<path class="k" d="M31.99 53.59L27.5 51.4L31.99 49.21"/>
+<path class="k" d="M27.5 58.6L63 58.6"/>
+<path class="k" d="M58.51 56.41L63 58.6L58.51 60.79"/>
+<path class="i" d="M139 47H161V63H139Z"/>
+<path class="k" d="M101 58.6L136.5 58.6"/>
+<path class="k" d="M132.01 56.41L136.5 58.6L132.01 60.79"/>
+<path class="k" d="M136.5 51.4L101 51.4"/>
+<path class="k" d="M105.49 53.59L101 51.4L105.49 49.21"/>
+<path class="i" d="M7 88H29V104H7Z"/>
+<path class="k" d="M64.06 62.22L27.43 85.69"/>
+<path class="k" d="M32.39 85.11L27.43 85.69L30.03 81.42"/>
+<path class="k" d="M31.31 91.75L67.94 68.28"/>
+<path class="k" d="M62.98 68.86L67.94 68.28L65.34 72.55"/>
+<path class="i" d="M71 96H93V112H71Z"/>
+<path class="k" d="M78.4 74L78.4 93.5"/>
+<path class="k" d="M80.59 89.01L78.4 93.5L76.21 89.01"/>
+<path class="k" d="M85.6 93.5L85.6 74"/>
+<path class="k" d="M83.41 78.49L85.6 74L87.79 78.49"/>
+<path class="i" d="M135 88H157V104H135Z"/>
+<path class="k" d="M96.06 68.28L132.69 91.75"/>
+<path class="k" d="M130.09 87.48L132.69 91.75L127.72 91.17"/>
+<path class="k" d="M136.57 85.69L99.94 62.22"/>
+<path class="k" d="M102.54 66.49L99.94 62.22L104.91 62.8"/>
+</g>
+<g transform="translate(482 32)">
+<path class="s" d="M0 28H24L34 38V84H0Z"/>
+<path class="k" d="M24 28V38H34"/>
+<path class="k" d="M14 48L20 48"/>
+<path class="k" d="M14 60L20 60"/>
+<path class="k" d="M14 72L20 72"/>
+<path class="s" d="M70 28H94L104 38V84H70Z"/>
+<path class="k" d="M94 28V38H104"/>
+<path class="k" d="M84 48L90 48"/>
+<path class="k" d="M84 60L90 60"/>
+<path class="k" d="M84 72L90 72"/>
+<path class="s" d="M138 28H162L172 38V84H138Z"/>
+<path class="k" d="M162 28V38H172"/>
+<path class="k" d="M152 48L158 48"/>
+<path class="k" d="M152 60L158 60"/>
+<path class="k" d="M152 72L158 72"/>
+<path class="y" d="M38 56L62 56"/>
+<path class="a" d="M60.81 52.49L68 56L60.81 59.51"/>
+</g>
+<text class="u"><tspan x="240" y="72">One loop runs everything,</tspan><tspan x="240" y="92">and calls the model for</tspan><tspan x="240" y="112">all of it.</tspan></text>
+<text class="u"><tspan x="680" y="72">Nothing is in charge.</tspan><tspan x="680" y="92">Pages notice each other</tspan><tspan x="680" y="112">and respond.</tspan></text>
+</svg>

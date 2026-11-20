@@ -1,66 +1,145 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" role="img" aria-labelledby="t">
-<title id="t">A terminal running conky demo</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400" role="img" aria-labelledby="t">
+<title id="t">A terminal running conky demo beside a wireframe of the screen it produces: stock, depot, rules, journal and history</title>
 <style>
-.win{fill:#0d1117;stroke:#30363d;stroke-width:1}
-.dot{fill:#30363d}
-.tx{fill:#e6edf3;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace;font-size:13.5px;white-space:pre}
-.dm{fill:#8b949e}
-.rd{fill:#f85149}
-.yl{fill:#F4C430}
+:root{--ink:#1E1E1E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
+:root[data-theme="dark"]{--ink:#EDEDED}
+.i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.i{stroke:var(--ink);stroke-width:1.2}
+.k{stroke:var(--ink);stroke-width:0.75}
+.a{stroke:var(--ink);stroke-width:2.4}
+.h{stroke:var(--ink);stroke-width:0.6}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
+.d{fill:var(--ink);stroke:none}
+.s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.f12,.f25,.f50{stroke:none;fill-rule:evenodd}
+.f12{fill:url(#d12)}
+.f25{fill:url(#d25)}
+.f50{fill:url(#d50)}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.b{font-weight:700}
+.tx{fill:#e6edf3;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace;font-size:11px}
 .bd{font-weight:700}
-.pr{fill:#8b949e}
-@keyframes k0{0%,3.409%{opacity:0}6.25%,96.591%{opacity:1}100%{opacity:0}}
-.l0{animation:k0 17.6s linear infinite}
-@keyframes k1{0%,14.773%{opacity:0}17.614%,96.591%{opacity:1}100%{opacity:0}}
-.l1{animation:k1 17.6s linear infinite}
-@keyframes k2{0%,20.455%{opacity:0}23.295%,96.591%{opacity:1}100%{opacity:0}}
-.l2{animation:k2 17.6s linear infinite}
-@keyframes k3{0%,24.432%{opacity:0}27.273%,96.591%{opacity:1}100%{opacity:0}}
-.l3{animation:k3 17.6s linear infinite}
-@keyframes k4{0%,28.125%{opacity:0}30.966%,96.591%{opacity:1}100%{opacity:0}}
-.l4{animation:k4 17.6s linear infinite}
-@keyframes k5{0%,32.102%{opacity:0}34.943%,96.591%{opacity:1}100%{opacity:0}}
-.l5{animation:k5 17.6s linear infinite}
-@keyframes k6{0%,35.795%{opacity:0}38.636%,96.591%{opacity:1}100%{opacity:0}}
-.l6{animation:k6 17.6s linear infinite}
-@keyframes k7{0%,39.773%{opacity:0}42.614%,96.591%{opacity:1}100%{opacity:0}}
-.l7{animation:k7 17.6s linear infinite}
-@keyframes k8{0%,43.466%{opacity:0}46.307%,96.591%{opacity:1}100%{opacity:0}}
-.l8{animation:k8 17.6s linear infinite}
-@keyframes k9{0%,47.443%{opacity:0}50.284%,96.591%{opacity:1}100%{opacity:0}}
-.l9{animation:k9 17.6s linear infinite}
-@keyframes k10{0%,51.136%{opacity:0}53.977%,96.591%{opacity:1}100%{opacity:0}}
-.l10{animation:k10 17.6s linear infinite}
-@keyframes k11{0%,55.114%{opacity:0}57.955%,96.591%{opacity:1}100%{opacity:0}}
-.l11{animation:k11 17.6s linear infinite}
-@keyframes k12{0%,58.807%{opacity:0}61.648%,96.591%{opacity:1}100%{opacity:0}}
-.l12{animation:k12 17.6s linear infinite}
-@keyframes k13{0%,62.784%{opacity:0}65.625%,96.591%{opacity:1}100%{opacity:0}}
-.l13{animation:k13 17.6s linear infinite}
-@keyframes k14{0%,66.477%{opacity:0}69.318%,96.591%{opacity:1}100%{opacity:0}}
-.l14{animation:k14 17.6s linear infinite}
-@keyframes k15{0%,70.455%{opacity:0}73.295%,96.591%{opacity:1}100%{opacity:0}}
-.l15{animation:k15 17.6s linear infinite}
-@media (prefers-reduced-motion:reduce){.ln{animation:none!important;opacity:1!important}}
+.m{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace;font-size:10px}
+.big{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace;font-size:46px}
+.b{font-weight:700}
+.mt{fill:#000;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace;letter-spacing:.14em}
+.x{opacity:0}
+@keyframes a0{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a0{animation:a0 20s linear infinite}
+@keyframes a1{0%{opacity:0}3%{opacity:0}4.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a1{animation:a1 20s linear infinite}
+@keyframes a2{0%{opacity:0}7%{opacity:0}8.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a2{animation:a2 20s linear infinite}
+@keyframes a3{0%{opacity:0}11%{opacity:0}12.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a3{animation:a3 20s linear infinite}
+@keyframes a4{0%{opacity:0}15%{opacity:0}16.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a4{animation:a4 20s linear infinite}
+@keyframes a5{0%{opacity:0}19%{opacity:0}20.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a5{animation:a5 20s linear infinite}
+@keyframes a6{0%{opacity:0}23%{opacity:0}24.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a6{animation:a6 20s linear infinite}
+@keyframes a7{0%{opacity:0}27%{opacity:0}28.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a7{animation:a7 20s linear infinite}
+@keyframes a8{0%{opacity:0}32%{opacity:0}33.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a8{animation:a8 20s linear infinite}
+@keyframes a9{0%{opacity:0}32%{opacity:0}33.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a9{animation:a9 20s linear infinite}
+@keyframes a10{0%{opacity:0}39%{opacity:0}40.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a10{animation:a10 20s linear infinite}
+@keyframes a11{0%{opacity:0}45%{opacity:0}46.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a11{animation:a11 20s linear infinite}
+@keyframes a12{0%{opacity:0}49%{opacity:0}50.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a12{animation:a12 20s linear infinite}
+@keyframes a13{0%{opacity:0}61%{opacity:0}62.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a13{animation:a13 20s linear infinite}
+@keyframes a14{0%{opacity:0}68%{opacity:0}69.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a14{animation:a14 20s linear infinite}
+@keyframes a15{0%{opacity:0}74%{opacity:0}75.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a15{animation:a15 20s linear infinite}
+@keyframes a16{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}15%{opacity:1}16.5%{opacity:0}100%{opacity:0}}.a16{animation:a16 20s linear infinite}
+@keyframes a17{0%{opacity:0}15%{opacity:0}16.5%{opacity:1}45%{opacity:1}46.5%{opacity:0}100%{opacity:0}}.a17{animation:a17 20s linear infinite}
+@keyframes a18{0%{opacity:0}45%{opacity:0}46.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a18{animation:a18 20s linear infinite}
+@keyframes a19{0%{opacity:0}15%{opacity:0}16.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a19{animation:a19 20s linear infinite}
+@keyframes a20{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}23%{opacity:1}24.5%{opacity:0}100%{opacity:0}}.a20{animation:a20 20s linear infinite}
+@keyframes a21{0%{opacity:0}23%{opacity:0}24.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a21{animation:a21 20s linear infinite}
+@keyframes a22{0%{opacity:0}23%{opacity:0}24.5%{opacity:1}49%{opacity:1}50.5%{opacity:0}100%{opacity:0}}.a22{animation:a22 20s linear infinite}
+@keyframes a23{0%{opacity:0}49%{opacity:0}50.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a23{animation:a23 20s linear infinite}
+@keyframes a24{0%{opacity:0}49%{opacity:0}50.5%{opacity:1}55.5%{opacity:1}57%{opacity:0}100%{opacity:0}}.a24{animation:a24 20s linear infinite}
+@keyframes a25{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}7%{opacity:1}8.5%{opacity:0}100%{opacity:0}}.a25{animation:a25 20s linear infinite}
+@keyframes a26{0%{opacity:0}7%{opacity:0}8.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a26{animation:a26 20s linear infinite}
+@keyframes a27{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}56%{opacity:1}57.5%{opacity:0}100%{opacity:0}}.a27{animation:a27 20s linear infinite}
+@keyframes r28{0%,74%{transform:rotate(-90deg)}78%,97.5%{transform:rotate(0deg)}100%{transform:rotate(-90deg)}}.r28{animation:r28 20s ease-in-out infinite}
+@keyframes a29{0%{opacity:0}56%{opacity:0}57.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a29{animation:a29 20s linear infinite}
+@keyframes a30{0%{opacity:0}56%{opacity:0}57.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a30{animation:a30 20s linear infinite}
+@keyframes a31{0%{opacity:0}56%{opacity:0}57.5%{opacity:1}74%{opacity:1}75.5%{opacity:0}100%{opacity:0}}.a31{animation:a31 20s linear infinite}
+@keyframes a32{0%{opacity:0}74%{opacity:0}75.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a32{animation:a32 20s linear infinite}
+@keyframes a33{0%{opacity:0}7%{opacity:0}8.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a33{animation:a33 20s linear infinite}
+@keyframes a34{0%{opacity:0}15%{opacity:0}16.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a34{animation:a34 20s linear infinite}
+@keyframes a35{0%{opacity:0}23%{opacity:0}24.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a35{animation:a35 20s linear infinite}
+@keyframes a36{0%{opacity:0}32%{opacity:0}33.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a36{animation:a36 20s linear infinite}
+@keyframes a37{0%{opacity:0}45%{opacity:0}46.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a37{animation:a37 20s linear infinite}
+@keyframes a38{0%{opacity:0}49%{opacity:0}50.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a38{animation:a38 20s linear infinite}
+@keyframes a39{0%{opacity:0}56%{opacity:0}57.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a39{animation:a39 20s linear infinite}
+@keyframes a40{0%{opacity:0}68%{opacity:0}69.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a40{animation:a40 20s linear infinite}
+@keyframes a41{0%{opacity:0}74%{opacity:0}75.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a41{animation:a41 20s linear infinite}
+@keyframes s42{0%{transform:translateY(-104px)}7%{transform:translateY(-104px)}8.5%{transform:translateY(-104px)}15%{transform:translateY(-104px)}16.5%{transform:translateY(-91px)}23%{transform:translateY(-91px)}24.5%{transform:translateY(-78px)}32%{transform:translateY(-78px)}33.5%{transform:translateY(-65px)}45%{transform:translateY(-65px)}46.5%{transform:translateY(-52px)}49%{transform:translateY(-52px)}50.5%{transform:translateY(-39px)}56%{transform:translateY(-39px)}57.5%{transform:translateY(-26px)}68%{transform:translateY(-26px)}69.5%{transform:translateY(-13px)}74%{transform:translateY(-13px)}75.5%{transform:translateY(0px)}97.5%{transform:translateY(0px)}100%{transform:translateY(-104px)}}.s42{animation:s42 20s linear infinite}
+@keyframes a43{0%{opacity:0;transform:translateY(-14px)}32%{opacity:0;transform:translateY(-14px)}33.5%{opacity:1;transform:translateY(0px)}42%{opacity:1;transform:translateY(0px)}43.5%{opacity:0;transform:translateY(-14px)}100%{opacity:0;transform:translateY(-14px)}}.a43{animation:a43 20s linear infinite}
+@media (prefers-reduced-motion:reduce){.an{animation:none!important}}
 </style>
-<rect class="win" x="4" y="4" width="872" height="412" rx="10"/>
-<circle class="dot" cx="24" cy="22" r="5"/>
-<circle class="dot" cx="42" cy="22" r="5"/>
-<circle class="dot" cx="60" cy="22" r="5"/>
-<g class="ln l0"><text class="tx" x="28" y="60"><tspan class="pr">$ </tspan>uvx --from git+https://github.com/drksci/conky conky demo</text></g>
-<g class="ln l1"><text class="tx bd" x="28" y="90">A market stall</text></g>
-<g class="ln l2"><text class="tx" x="28" y="118">1. A market is a space. It carries one rule for everything inside it. Stock is never negative.</text></g>
-<g class="ln l3"><text class="tx" x="60" y="136"><tspan class="dm">-&gt; </tspan><tspan class="dm">written: market</tspan></text></g>
-<g class="ln l4"><text class="tx" x="28" y="161">2. A stall joins the market with 40 loaves in stock. It follows the market's rule from now on.</text></g>
-<g class="ln l5"><text class="tx" x="60" y="179"><tspan class="dm">-&gt; </tspan><tspan class="dm">written: stall</tspan></text></g>
-<g class="ln l6"><text class="tx" x="28" y="204">3. A depot page is set up to watch the stall. When stock falls below 10 it marks a reorder.</text></g>
-<g class="ln l7"><text class="tx" x="60" y="222"><tspan class="dm">-&gt; </tspan><tspan class="dm">written: depot</tspan></text></g>
-<g class="ln l8"><text class="tx" x="28" y="247">4. Someone tries to set the stall's stock to minus one. The market's rule forbids it.</text></g>
-<g class="ln l9"><text class="tx" x="60" y="265"><tspan class="dm">-&gt; </tspan><tspan class="dm"></tspan><tspan class="rd">refused</tspan><tspan class="dm">: stall, because rule: !has(page.stock) || page.stock &gt;= 0 (from market) is false</tspan></text></g>
-<g class="ln l10"><text class="tx" x="28" y="290">5. The stall sells down to 4 loaves. Nobody tells the depot, and it reacts on its own.</text></g>
-<g class="ln l11"><text class="tx" x="60" y="308"><tspan class="dm">-&gt; </tspan><tspan class="dm">written: stall. Then depot </tspan><tspan class="yl">changed by itself</tspan><tspan class="dm"></tspan></text></g>
-<g class="ln l12"><text class="tx" x="28" y="333">6. A journal page keeps a measure of its own size. A large entry is not refused...</text></g>
-<g class="ln l13"><text class="tx" x="60" y="351"><tspan class="dm">-&gt; </tspan><tspan class="dm">written: journal</tspan></text></g>
-<g class="ln l14"><text class="tx" x="28" y="376">7. A long entry goes into the journal, and the journal measures itself again.</text></g>
-<g class="ln l15"><text class="tx" x="60" y="394"><tspan class="dm">-&gt; </tspan><tspan class="dm">written: journal. Then journal </tspan><tspan class="yl">changed by itself</tspan><tspan class="dm"></tspan></text></g>
+<defs><pattern id="d25" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d50" width="4" height="4" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM2 2h2v2h-2z"/></pattern></defs>
+<rect x="4" y="4" width="412" height="392" rx="10" fill="#0d1117" stroke="#30363d"/>
+<circle cx="22" cy="19" r="4.5" fill="#484f58"/>
+<circle cx="38" cy="19" r="4.5" fill="#484f58"/>
+<circle cx="54" cy="19" r="4.5" fill="#484f58"/>
+<text class="tx" x="74" y="22.5" fill="#6C6C6C">$ conky demo</text>
+<g class="a0 an"><rect x="20.5" y="34.5" width="383" height="24" rx="6" fill="none" stroke="#874BFD"/><text class="tx bd" x="31" y="50.5" fill="#FF5FAF">A market stall</text></g>
+<g class="a1 an"><rect x="20" y="68" width="19.86" height="13.4" rx="2" fill="#874BFD"/><text class="tx bd" x="29.93" y="78" fill="#EEEEEE" text-anchor="middle">1</text><text class="tx" x="46.48" y="78">A market is a space. It carries one rule for</text><text class="tx" x="46.48" y="91.4">everything inside it. Stock is never negative.</text></g>
+<g class="a2 an"><rect x="46.48" y="94.8" width="72.82" height="13.4" fill="#04B575"/><text class="tx bd" x="53.1" y="104.8" fill="#000" textLength="59.58" lengthAdjust="spacing">✓ written</text><text class="tx" x="132.54" y="104.8" fill="#EEEEEE">market</text></g>
+<g class="a3 an"><rect x="20" y="113.7" width="19.86" height="13.4" rx="2" fill="#874BFD"/><text class="tx bd" x="29.93" y="123.7" fill="#EEEEEE" text-anchor="middle">2</text><text class="tx" x="46.48" y="123.7">A stall joins the market with 40 loaves in stock. It</text><text class="tx" x="46.48" y="137.1">follows the market's rule from now on.</text></g>
+<g class="a4 an"><rect x="46.48" y="140.5" width="72.82" height="13.4" fill="#04B575"/><text class="tx bd" x="53.1" y="150.5" fill="#000" textLength="59.58" lengthAdjust="spacing">✓ written</text><text class="tx" x="132.54" y="150.5" fill="#EEEEEE">stall</text></g>
+<g class="a5 an"><rect x="20" y="159.4" width="19.86" height="13.4" rx="2" fill="#874BFD"/><text class="tx bd" x="29.93" y="169.4" fill="#EEEEEE" text-anchor="middle">3</text><text class="tx" x="46.48" y="169.4">A depot page is set up to watch the stall. When</text><text class="tx" x="46.48" y="182.8">stock falls below 10 it marks a reorder.</text></g>
+<g class="a6 an"><rect x="46.48" y="186.2" width="72.82" height="13.4" fill="#04B575"/><text class="tx bd" x="53.1" y="196.2" fill="#000" textLength="59.58" lengthAdjust="spacing">✓ written</text><text class="tx" x="132.54" y="196.2" fill="#EEEEEE">depot</text></g>
+<g class="a7 an"><rect x="20" y="205.1" width="19.86" height="13.4" rx="2" fill="#874BFD"/><text class="tx bd" x="29.93" y="215.1" fill="#EEEEEE" text-anchor="middle">4</text><text class="tx" x="46.48" y="215.1">Someone tries to set the stall's stock to minus one.</text><text class="tx" x="46.48" y="228.5">The market's rule forbids it.</text></g>
+<g class="a8 an"><rect x="46.48" y="231.9" width="72.82" height="13.4" fill="#FF5F87"/><text class="tx bd" x="53.1" y="241.9" fill="#000" textLength="59.58" lengthAdjust="spacing">✗ refused</text><text class="tx" x="132.54" y="241.9" fill="#EEEEEE">stall</text></g>
+<g class="a9 an"><text class="tx" x="59.72" y="255.3" fill="#6C6C6C">because rule: !has(page.stock) || page.stock &gt;= 0</text><text class="tx" x="59.72" y="268.7" fill="#6C6C6C">(from market) is false</text></g>
+<g class="a10 an"><rect x="20" y="277.6" width="19.86" height="13.4" rx="2" fill="#874BFD"/><text class="tx bd" x="29.93" y="287.6" fill="#EEEEEE" text-anchor="middle">5</text><text class="tx" x="46.48" y="287.6">The stall sells down to 4 loaves. Nobody tells the</text><text class="tx" x="46.48" y="301">depot, and it reacts on its own.</text></g>
+<g class="a11 an"><rect x="46.48" y="304.4" width="72.82" height="13.4" fill="#04B575"/><text class="tx bd" x="53.1" y="314.4" fill="#000" textLength="59.58" lengthAdjust="spacing">✓ written</text><text class="tx" x="132.54" y="314.4" fill="#EEEEEE">stall</text></g>
+<g class="a12 an"><text class="tx" x="53.1" y="327.8"><tspan fill="#6C6C6C">↳ </tspan><tspan fill="#FFB454">depot</tspan><tspan fill="#6C6C6C"> changed by itself</tspan></text></g>
+<g class="a13 an"><rect x="20" y="336.7" width="19.86" height="13.4" rx="2" fill="#874BFD"/><text class="tx bd" x="29.93" y="346.7" fill="#EEEEEE" text-anchor="middle">7</text><text class="tx" x="46.48" y="346.7">A long entry goes into the journal, and the journal</text><text class="tx" x="46.48" y="360.1">measures itself again.</text></g>
+<g class="a14 an"><rect x="46.48" y="363.5" width="72.82" height="13.4" fill="#04B575"/><text class="tx bd" x="53.1" y="373.5" fill="#000" textLength="59.58" lengthAdjust="spacing">✓ written</text><text class="tx" x="132.54" y="373.5" fill="#EEEEEE">journal</text></g>
+<g class="a15 an"><text class="tx" x="53.1" y="386.9"><tspan fill="#6C6C6C">↳ </tspan><tspan fill="#FFB454">journal</tspan><tspan fill="#6C6C6C"> changed by itself</tspan></text></g>
+<text class="t" x="464" y="22" font-size="10.08" fill-opacity="1" text-anchor="start">THE SAME THING, AS A SCREEN</text>
+<text class="t" x="876" y="22" font-size="8.4" fill-opacity="1" text-anchor="end">WIREFRAME</text>
+<path class="f50" d="M468 378H880V38H876V378Z"/>
+<path class="i" d="M464 34H876V378H464Z"/>
+<path class="i" d="M464 54L876 54"/>
+<path class="k" d="M472 39H482V49H472Z"/>
+<path class="h" d="M488 38.5L617.24 38.5"/>
+<path class="h" d="M722.76 38.5L870 38.5"/>
+<path class="h" d="M488 41.5L617.24 41.5"/>
+<path class="h" d="M722.76 41.5L870 41.5"/>
+<path class="h" d="M488 44.5L617.24 44.5"/>
+<path class="h" d="M722.76 44.5L870 44.5"/>
+<path class="h" d="M488 47.5L617.24 47.5"/>
+<path class="h" d="M722.76 47.5L870 47.5"/>
+<path class="h" d="M488 50.5L617.24 50.5"/>
+<path class="h" d="M722.76 50.5L870 50.5"/>
+<text class="t" x="670" y="48.5" font-size="10.08" fill-opacity="1" text-anchor="middle">MARKET STALL</text>
+<path class="k" d="M476 92H666V204H476Z"/>
+<text class="t" x="486" y="110" font-size="9.24" fill-opacity="1" text-anchor="start">STOCK</text>
+<g class="a16 an x"><path class="k" d="M476 116L666 204"/><path class="k" d="M666 116L476 204"/><path class="k" d="M476 116L666 116"/></g>
+<g class="a17 an x"><text class="big" x="486" y="158">40</text><path class="f25" d="M486 170H622V184H486Z"/>
+<path class="s" d="M486 170H622V184H486Z"/></g>
+<g class="a18 an"><text class="big b" x="486" y="158">4</text><path class="f25" d="M486 170H499.6V184H486Z"/>
+<path class="s" d="M486 170H499.6V184H486Z"/></g>
+<g class="a19 an"><path class="k" d="M486 170H656V184H486Z"/><path class="a" d="M520 164L520 189"/><text class="t" x="520" y="197" font-size="7.56" fill-opacity="1" text-anchor="middle">LOW</text></g>
+<path class="k" d="M674 92H864V146H674Z"/>
+<text class="t" x="684" y="110" font-size="9.24" fill-opacity="1" text-anchor="start">DEPOT</text>
+<g class="a20 an x"><path class="k" d="M674 116L864 146"/><path class="k" d="M864 116L674 146"/><path class="k" d="M674 116L864 116"/></g>
+<g class="a21 an"><text class="t" x="684" y="134" font-size="10.08" fill-opacity="1" text-anchor="start">REORDER</text></g>
+<g class="a22 an x"><path class="i" d="M796 119H840Q850 119 850 129V129Q850 139 840 139H796Q786 139 786 129V129Q786 119 796 119Z"/><text class="t" x="818" y="133" font-size="10.08" fill-opacity="1" text-anchor="middle">NO</text></g>
+<mask id="yes" maskUnits="userSpaceOnUse" x="784" y="117" width="68" height="24"><rect x="784" y="117" width="68" height="24" fill="#fff"/><text class="mt" x="818" y="133" font-size="10.08" fill-opacity="1" text-anchor="middle">YES</text></mask>
+<g class="a23 an"><path class="d" mask="url(#yes)" d="M796 119H840Q850 119 850 129V129Q850 139 840 139H796Q786 139 786 129V129Q786 119 796 119Z"/></g>
+<g class="a24 an x"><path class="a" d="M671 89H867V149H671Z"/></g>
+<path class="k" d="M674 152H864V204H674Z"/>
+<text class="t" x="684" y="170" font-size="9.24" fill-opacity="1" text-anchor="start">RULES</text>
+<g class="a25 an x"><path class="k" d="M674 176L864 204"/><path class="k" d="M864 176L674 204"/><path class="k" d="M674 176L864 176"/></g>
+<g class="a26 an"><path class="k" d="M684 180H694V190H684Z"/><path class="i" d="M686 185L689 188L694 178"/><text class="m" x="702" y="189">stock is never negative</text></g>
+<path class="k" d="M476 212H666V370H476Z"/>
+<text class="t" x="486" y="230" font-size="9.24" fill-opacity="1" text-anchor="start">JOURNAL</text>
+<g class="a27 an x"><path class="k" d="M476 236L666 370"/><path class="k" d="M666 236L476 370"/><path class="k" d="M476 236L666 236"/></g>
+<g class="a29 an"><path class="k" d="M519 304A52 52 0 0 1 623 304Z"/><path class="k" d="M527 304L519 304"/><path class="k" d="M539.89 272.89L534.23 267.23"/><path class="k" d="M571 260L571 252"/><path class="k" d="M602.11 272.89L607.77 267.23"/><path class="k" d="M615 304L623 304"/><circle class="d" cx="571" cy="304" r="3.5"/><text class="t" x="571" y="363" font-size="9.24" fill-opacity="1" text-anchor="middle">PRESSURE</text></g>
+<g class="a30 an"><g class="r28 an" style="transform-origin:571px 304px"><path class="a" d="M571 304L571 262"/></g></g>
+<g class="a31 an x"><text class="big" x="571" y="346" text-anchor="middle" font-size="26">0</text></g>
+<g class="a32 an"><text class="big b" x="571" y="346" text-anchor="middle" font-size="26">2</text></g>
+<path class="k" d="M674 212H864V370H674Z"/>
+<text class="t" x="684" y="230" font-size="9.24" fill-opacity="1" text-anchor="start">HISTORY</text>
+<g class="s42 an"><g class="a33 an"><circle class="d" cx="688" cy="354.6" r="2.4"/><text class="m" x="698" y="358">wrote market</text></g><g class="a34 an"><circle class="d" cx="688" cy="341.6" r="2.4"/><text class="m" x="698" y="345">wrote stall</text></g><g class="a35 an"><circle class="d" cx="688" cy="328.6" r="2.4"/><text class="m" x="698" y="332">wrote depot</text></g><g class="a36 an"><circle class="k" cx="688" cy="315.6" r="2.6"/><text class="m" x="698" y="319">refused: stall</text></g><g class="a37 an"><circle class="d" cx="688" cy="302.6" r="2.4"/><text class="m" x="698" y="306">wrote stall</text></g><g class="a38 an"><circle class="d" cx="688" cy="289.6" r="2.4"/><text class="m" x="698" y="293">depot reacted</text></g><g class="a39 an"><circle class="d" cx="688" cy="276.6" r="2.4"/><text class="m" x="698" y="280">wrote journal</text></g><g class="a40 an"><circle class="d" cx="688" cy="263.6" r="2.4"/><text class="m" x="698" y="267">wrote journal: long entry</text></g><g class="a41 an"><circle class="d" cx="688" cy="250.6" r="2.4"/><text class="m" x="698" y="254">journal reacted</text></g></g>
+<g class="a43 an x"><path class="a" d="M476 60H864V84H476Z"/><text class="t" x="670" y="76" font-size="10.08" fill-opacity="1" text-anchor="middle">REFUSED: STOCK -1</text></g>
 </svg>
