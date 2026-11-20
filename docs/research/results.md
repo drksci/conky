@@ -12,7 +12,7 @@ This page is generated from the run files by `bench/publish.py`. Nobody edits it
 
 ## Summary
 
-5 trips each to Oregon: same game, same small model, same luck, same prompt. Pressing keys gets nobody there. The bare model, asked each turn, arrived 4 times. A Conky character arrived 4 times, sent 29% less text, took 24% longer and kept 3 pages of its own notes. It is a pilot: too few trips to call a winner, so none is called.
+5 trips each to Oregon: same game, same small model, same luck, same prompt. Pressing keys gets nobody there. The bare model, asked each turn, arrived 4 times. A Conky character arrived 4 times, sent 29% less text, took 24% longer and kept 3 pages of its own notes. It is a pilot: too few trips to call a winner, so none is called. This game is a worked example, kept for fun: it fits in one conversation and has one thing to manage, so it shows the apparatus working and not what a harness is for.
 
 This is a pilot: 5 seeds, one scenario and one model. It shows that the apparatus runs end to end and what a result will look like. It supports no claim that one arm is better than another.
 

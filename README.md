@@ -60,7 +60,7 @@ Conky is... different, for many reasons, but here are some:
 <!-- bench:start -->
 ### Benchmark
 
-5 trips each to Oregon: same game, same small model, same luck, same prompt. Pressing keys gets nobody there. The bare model, asked each turn, arrived 4 times. A Conky character arrived 4 times, sent 29% less text, took 24% longer and kept 3 pages of its own notes. It is a pilot: too few trips to call a winner, so none is called.
+5 trips each to Oregon: same game, same small model, same luck, same prompt. Pressing keys gets nobody there. The bare model, asked each turn, arrived 4 times. A Conky character arrived 4 times, sent 29% less text, took 24% longer and kept 3 pages of its own notes. It is a pilot: too few trips to call a winner, so none is called. This game is a worked example, kept for fun: it fits in one conversation and has one thing to manage, so it shows the apparatus working and not what a harness is for.
 
 <p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/reached.dark.svg"><img src="docs/results/pilot-2/reached.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, under the model, seeds, budget and commit that were held equal." width="720"></picture></a></p>
 

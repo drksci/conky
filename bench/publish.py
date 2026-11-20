@@ -80,6 +80,7 @@ def facts(runs: list[charts.Run]) -> dict:
         "models": sorted({r.model for r in runs if r.model != "none"}) or ["none"],
         "progress": runs[0].progress,
         "summary": record.scenario_config(runs[0].scenario).get("summary", ""),
+        "standing": record.scenario_config(runs[0].scenario).get("standing", ""),
         "scenario_version": runs[0].row["scenario_version"],
         "prompt": runs[0].row["prompt"],
         "prompt_sha": runs[0].row["prompt_sha"],
@@ -260,6 +261,8 @@ def story(kind: str, f: dict, runs: list[charts.Run]) -> str:
         lines.append("These runs used a scripted stand-in for the model, so none of it counts.")
     elif kind == "pilot":
         lines.append("It is a pilot: too few trips to call a winner, so none is called.")
+    if f.get("standing"):
+        lines.append(f["standing"])
     return " ".join(lines)
 
 
