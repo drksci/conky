@@ -10,11 +10,11 @@ source: operator, this session
 
 ## Idea
 
-Hand a fresh consumer only a stopped vault and score whether it resumes correctly. It is a scenario in the benchmark described in [decision 0011](../decisions/0011-benchmark-shape.md).
+Hand a fresh consumer only a stopped vault and score whether it resumes correctly. The vault is handed over with `git clone` or a bundle. It is a scenario in the benchmark described in [decision 0011](../decisions/0011-benchmark-shape.md).
 
 ## Composes from
 
-The vault travels alone (a vault is a directory); `verify` and `rebuild`.
+The vault travels alone (a vault is a Git repository, moved by clone or bundle); `verify` and `rebuild`.
 
 ## Removes
 

@@ -30,9 +30,9 @@ def _parser() -> argparse.ArgumentParser:
     write.add_argument("--as", dest="actor", required=True)
     read = sub.add_parser("read", help="print a page with embeds resolved")
     read.add_argument("page")
-    sub.add_parser("log", help="print the event log")
-    sub.add_parser("verify", help="check the chain, the seals and the pages")
-    sub.add_parser("rebuild", help="regenerate pages/ from the log")
+    sub.add_parser("log", help="print the history, oldest first")
+    sub.add_parser("verify", help="check the tree, the objects, the seals and the history")
+    sub.add_parser("rebuild", help="restore the working tree to the committed state")
     return parser
 
 
@@ -59,20 +59,20 @@ def _run(args: argparse.Namespace) -> int:
         at = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
         result = vault.write(args.page, _fields(args.fields), args.body, actor=args.actor, at=at)
         if not result.ok:
-            print(f"refused (seq {result.seq}): {result.reason}", file=sys.stderr)
+            print(f"refused (commit {result.id[:7]}): {result.reason}", file=sys.stderr)
             return 1
-        print(f"written (seq {result.seq})")
+        print(f"written (commit {result.id[:7]})")
     elif args.command == "read":
         print(serialize(vault.read(args.page)), end="")
     elif args.command == "log":
-        for line in vault.log.lines():
+        for line in vault.log():
             print(line)
     elif args.command == "verify":
         vault.verify()
-        print(f"ok: {len(vault.log.lines())} events verified")
+        print(f"ok: {len(vault.log())} commits verified")
     else:
         vault.rebuild()
-        print("rebuilt pages/ from the log")
+        print("restored the working tree from the committed history")
     return 0
 
 

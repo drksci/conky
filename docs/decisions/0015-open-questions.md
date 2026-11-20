@@ -17,7 +17,7 @@ Two design questions are known and unresolved. No answer is proposed here.
 Architect, recorded plainly so they are not forgotten.
 
 - (a) Rules on a space currently apply to the space page itself as well as to its members, which forces a space to carry fields its rules mention.
-- (b) Removing the final event of the log is not detected when that event is a refusal, since a refusal changes no page and nothing follows it.
+- (b) With Git, removing the last commit is still not detectable from one copy alone, but it is visible against any other clone or remote.
 
 ## Consequences
 

@@ -28,6 +28,8 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 - [decisions/0018-patterns-not-features.md](decisions/0018-patterns-not-features.md): Patterns, not features
 - [decisions/0019-measures-are-self-watches.md](decisions/0019-measures-are-self-watches.md): Measures are self-watches
 - [decisions/0020-design-authority.md](decisions/0020-design-authority.md): Design authority
+- [decisions/0021-git-is-the-store.md](decisions/0021-git-is-the-store.md): Git is the store
+- [decisions/0022-data-beside-pages.md](decisions/0022-data-beside-pages.md): Data beside pages
 
 ## Ideas
 

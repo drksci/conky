@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT OR Apache-2.0"
 license-files = ["LICENSE-MIT", "LICENSE-APACHE"]
-dependencies = ["pyyaml>=6", "cryptography>=42", "cel-python>=0.2"]
+dependencies = ["pyyaml>=6", "cel-python>=0.2"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.6"]

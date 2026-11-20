@@ -1,6 +1,6 @@
 # conky
 
-A Python runtime (`src/conky/`) where every actor is a living Markdown page and the event log is the authority. Pre-alpha.
+A Python runtime (`src/conky/`) where every actor is a living Markdown page and the vault's Git history is the authority. Pre-alpha.
 
 ## How these rules work
 
@@ -21,30 +21,31 @@ Run this before every push. There is no hosted CI yet; see `docs/decisions/0017-
 
 ## The model
 
-- State changes only through a write appended to the log. A change that is not in the log did not happen. (check: `tests/test_laws.py`)
-- Pages are projections of the log. Never edit `pages/` by hand. (check: `conky verify`)
-- A refused write is recorded, never dropped. (check: `tests/test_laws.py`)
+- State changes only through a write committed to the vault's Git history. A change that is not in the history did not happen. (check: `tests/test_laws.py`)
+- Pages are the committed files. Never edit `pages/` by hand: a stray edit is refused by the next write or discarded by `conky rebuild`. (check: `conky verify`)
+- A refused write is recorded as an empty commit, never dropped. (check: `tests/test_laws.py`)
 - Anything that must never happen is a rule the runtime evaluates. Never ask a model to obey a constraint. (check: `tests/test_laws.py`)
 - Anything that should be noticed rather than forbidden is a pressure that triggers a reaction, not a wall that stops work. (check: `tests/test_laws.py`)
-- A measure is a page watching itself. Its value is written as a recorded event, so replay never evaluates an expression. (check: `tests/test_laws.py`)
+- A measure is a page watching itself. Its value is written as a recorded event, so reading history never evaluates an expression. (check: `tests/test_laws.py`)
 - Whatever follows from state happens as a reaction, with no model call. Ask a model only what state cannot answer. (review)
 - Rules and measures are pure: no clock, randomness or I/O inside them. (review)
-- A vault travels alone: copied anywhere, it verifies and rebuilds, and it holds no private key. (check: `tests/test_laws.py`)
+- A vault travels alone: cloned or bundled anywhere, it verifies, and it holds no private key. (check: `tests/test_laws.py`)
 - Data lives in three primitives in open formats: document (Markdown with frontmatter), table (Parquet), stream (append-only log). A change of shape is a forward re-projection. Never write a down-migration or a migration ladder. (review)
 - Anything that runs in the background declares a budget and is metered. (review: not built)
-- Runtime output never enters this repository. (check: `.gitignore`)
+- Runtime output never enters this repository, except the golden vault fixture under `tests/golden/`. (check: `.gitignore`)
 
 ## Design
 
 - Build a new concept from existing words or remove one. If it does neither, it does not land. (review)
 - Domain structures (accounting, stock, approvals) are patterns made on demand from goldens and composed from existing words, never runtime features or a shipped catalogue. The runtime gains only general primitives. (review)
-- One plain word per concept: `vault page key link embed rule event seal space error`, verbs `read write watch`. A rename is atomic everywhere. (check: `tests/test_house.py`)
+- One plain word per concept: `vault page key link embed rule event seal space error`, verbs `read write watch`. An event is a commit and a seal is its signature. A rename is atomic everywhere. (check: `tests/test_house.py`)
 - Nothing already built has to stay. Existing code is reference, not an obligation. (review)
 - No debt: no shims, deprecated aliases, dead code or fix-later notes. Replacing something removes the old thing in the same change. (check: `tests/test_house.py` for fix-later notes; review for the rest)
 - No stub passes as real. Name it `stub` and say so where it is defined. (review)
 - Build nothing before something consumes it. (review)
 - Look for prior art and standards before inventing, and cite what you found in the decision. (review)
 - A page reads as if a person wrote it. (review)
+- Keep people, developers and agents on the easy path: one command to start, nothing to configure before the first write, and every error says what to do next. (review)
 
 ## Evidence
 
