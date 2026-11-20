@@ -46,6 +46,8 @@ Counts are runs. Other columns are the median over seeds.
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/became.dark.svg"><img src="../results/pilot-2/became.light.svg" alt="The parts each harness was made of when its median run stopped." width="720"></picture></p>
 
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/cost.dark.svg"><img src="../results/pilot-2/cost.light.svg" alt="Text sent against progress made, one line for every run." width="720"></picture></p>
+
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/time.dark.svg"><img src="../results/pilot-2/time.light.svg" alt="The median run of each harness along a time axis: steps above, model calls below." width="720"></picture></p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/text.dark.svg"><img src="../results/pilot-2/text.light.svg" alt="The text each harness sent in its median run, cut by where it came from." width="720"></picture></p>

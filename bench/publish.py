@@ -25,12 +25,13 @@ ROOT = Path(__file__).resolve().parent.parent
 REPOSITORY = "https://github.com/drksci/conky"
 PAGE = "docs/research/results.md"
 START, END = "<!-- bench:start -->", "<!-- bench:end -->"
-PLATES = ("reached", "became", "time", "text")
+PLATES = ("reached", "became", "cost", "time", "text")
 SHOWN = (*PLATES, "progress", "spend", "rules", "board")
 ALT = {
     "reached": "Every run drawn as a bar from {start} to {end}, one band per harness, under "
     "the model, seeds, budget and commit that were held equal.",
     "became": "The parts each harness was made of when its median run stopped.",
+    "cost": "Text sent against progress made, one line for every run.",
     "text": "The text each harness sent in its median run, cut by where it came from.",
     "time": "The median run of each harness along a time axis: steps above, model calls below.",
     "progress": "{unit} left to {end} against turn, one line per arm.",
@@ -112,6 +113,34 @@ def table(f: dict) -> str:
             f"{p['value']:,.0f} | {p['calls']:,.0f} | {p['broken']:,.0f} | {p['wall']:,.0f} |\n"
         )
     return head + body
+
+
+def scores(f: dict, runs: list[charts.Run]) -> str:
+    """The scores as one small table for the front page: a row a harness, medians over seeds."""
+    heads = ("benchmark", "harness", "model", "runs", "reached", f["progress"]["unit"], "calls")
+    heads += ("text sent", "seconds", "rules broken", "pages kept")
+    out = ["<table>", "<tr>" + "".join(f"<th><sub>{h}</sub></th>" for h in heads) + "</tr>"]
+    for arm in f["order"]:
+        rs = [r for r in runs if r.arm == arm]
+        p = f["per"][arm]
+        kept = [r.kept for r in rs if r.kept is not None]
+        sent = statistics.median(r.row["chars"] for r in rs)
+        cells = (
+            f["scenario"],
+            f"<b>{arm}</b>",
+            rs[0].row["model"],
+            p["n"],
+            f"<b>{p['arrived']} of {p['n']}</b>",
+            f"{p['value']:,.0f}",
+            f"{p['calls']:,.0f}",
+            f"{sent:,.0f}" if sent else "0",
+            f"{p['wall']:,.0f}",
+            sum(len(r.breaks) for r in rs),
+            sum(kept) if kept else "",
+        )
+        out.append("<tr>" + "".join(f"<td><sub>{c}</sub></td>" for c in cells) + "</tr>")
+    out.append("</table>")
+    return "\n".join(out)
 
 
 def setup(f: dict) -> str:
@@ -196,6 +225,8 @@ def readme_block(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
             "### Benchmark",
             "",
             story(kind, f, runs),
+            "",
+            scores(f, runs),
             "",
             *(
                 line

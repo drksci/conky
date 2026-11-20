@@ -489,3 +489,48 @@ def became(rows: list[dict], shapes: list[dict], look: str) -> str:
             for j, part in enumerate([*lines, line][:2]):
                 s.text(fx, 252 + j * 11, part, 8.5, "grey", SANS)
     return s.svg(276, "The parts each harness was made of when its median run stopped.")
+
+
+def cost(rows: list[dict], series: list[dict], progress: dict, look: str) -> str:
+    """What it cost to get this far: text sent against progress, a line a run."""
+    s = Sheet(look)
+    order, arms, accent, thinking = _setup(rows)
+    goal, unit = progress["goal"], progress["unit"]
+    steps = {(e["harness"], e["seed"]): e["series"] for e in series}
+    _head(s, "What it cost", _state(rows, f"characters sent, by {unit} covered · every run"))
+    left, right, top, bottom = 64.0, WIDTH - 84.0, 62.0, 232.0
+    most = max((r["chars"] for h in thinking for r in arms[h]), default=1) or 1
+    ceiling = 50_000 * (int(most // 50_000) + 1)
+
+    def px(value: float) -> float:
+        return left + (right - left) * min(max(value, 0.0), goal) / goal
+
+    def py(chars: float) -> float:
+        return bottom - (bottom - top) * chars / ceiling
+
+    for level in range(0, ceiling + 1, 50_000):
+        s.line(left, py(level), right, py(level), 0.75, "grey", "1 4")
+        s.caps(left - 8, py(level) + 3, short(level) if level else "0", anchor="end")
+    for tick in sorted({0.0, goal, *(m["at"] for m in progress.get("milestones", []))}):
+        s.caps(px(tick), bottom + 14, f"{tick:,.0f}", anchor="middle")
+    s.caps(left - 8, bottom + 14, unit, anchor="end")
+    for h in thinking:
+        colour = "accent" if accent[h] else "ink"
+        middle = _median_run(arms[h], "chars")["seed"]
+        for r in arms[h]:
+            points = steps.get((h, r["seed"]), [])
+            if not points:
+                continue
+            d, last = f"M{px(0):.1f},{py(0):.1f}", py(0)
+            for point in points:
+                at, up = px(point["progress"] * goal), py(point["chars"])
+                d += f" L{at:.1f},{last:.1f} L{at:.1f},{up:.1f}"
+                last = up
+            end = px(points[-1]["progress"] * goal)
+            s.path(d, "none", colour, 2.0 if r["seed"] == middle else 0.8)
+            if r["ending"] != "reached":
+                end_mark(s, end, last, r["ending"], colour)
+        typical = statistics.median(r["chars"] for r in arms[h])
+        s.text(right + 8, py(typical) + 4, short(typical), 13, colour, SANS, "bold")
+        s.caps(right + 8, py(typical) + 16, h, colour, size=8)
+    return s.svg(bottom + 26, "Text sent against progress made, one line for every run.")
