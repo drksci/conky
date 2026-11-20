@@ -1,16 +1,14 @@
-<h1 align="center"><img src="docs/assets/conky-mark.png" alt="" width="48" height="48" align="absmiddle">&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/name.dark.svg"><img src="docs/assets/figures/name.light.svg" alt="Conky" height="48" align="absmiddle"></picture></h1>
+<h3 align="center"><img src="docs/assets/conky-mark.png" alt="" width="48" height="48" align="absmiddle">&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/name.dark.svg"><img src="docs/assets/figures/name.light.svg" alt="Conky" height="48" align="absmiddle"></picture></h3>
 
-<h2 align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/tagline.dark.svg"><img src="docs/assets/figures/tagline.light.svg" alt="The unharnessed harness" height="30" align="absmiddle"></picture></h2>
-
-<img src="docs/assets/figures/chip-lemonade.svg" alt="Lemonade stand:" height="26" align="left" vspace="13" hspace="6">
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/tagline.dark.svg"><img src="docs/assets/figures/tagline.light.svg" alt="The unharnessed harness" height="30" align="absmiddle"></picture></p>
 
 ```bash
+# 🍋 maya@lemonade-stand ❯ build one and watch it run itself
 uvx --from git+https://github.com/drksci/conky conky demo
 ```
 
-<img src="docs/assets/figures/chip-assimilate.svg" alt="The thing:" height="26" align="left" vspace="13" hspace="6">
-
 ```bash
+# 🛸 stranger@the-thing ❯ hand a stopped one to a stranger
 uvx --from git+https://github.com/drksci/conky conky assimilate
 ```
 
