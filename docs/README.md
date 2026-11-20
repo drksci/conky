@@ -85,6 +85,7 @@ Outside work, compared on a fixed basis, with the depth of reading stated.
 - [research/where-am-i.md](research/where-am-i.md): MARCO: a shared word for where an agent is
 - [research/benchmarks.md](research/benchmarks.md): Benchmarks and evaluations for agent harnesses
 - [research/evaluation-plan.md](research/evaluation-plan.md): Evaluation plan (draft): three kinds of result kept apart, and steps from cheapest first
+- [research/results.md](research/results.md): Benchmark results, generated from the run files
 - [research/benchmark-protocol.md](research/benchmark-protocol.md): Benchmark protocol (draft): the trail, fixed before any live run
 
 ## Beyond the layers

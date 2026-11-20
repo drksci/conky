@@ -23,7 +23,7 @@ arch:
 
 ## Decision
 
-An `ask` entry gains one optional key, `writes`, naming a space. When it is present the answer is read as plain text plus zero or more pages. Each page is introduced by a header line `=== page: <name> ===` and given in Conky's page format. The fixed instruction for this format is appended to the prompt by the runtime. The plain text goes to `into`, when there is one.
+An `ask` entry gains one optional key, `writes`, naming a space. When it is present the answer is read as plain text plus zero or more pages. Each page is introduced by a header line `=== page: <name> ===` and given in Conky's page format. The fixed instruction for this format is placed ahead of the prompt by the runtime, so the question is read last. The plain text goes to `into`, when there is one.
 
 - The key is `writes`: the verbs of the vocabulary are `read`, `write` and `watch`, a page `watch`es another page and `write`s into a space, and `into` already names a field.
 - Each page is an ordinary write by the asking page, one commit each, in order, caused by the answer. The write path, the rules and the history are unchanged.

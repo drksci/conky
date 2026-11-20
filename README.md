@@ -57,6 +57,22 @@ Conky is... different, for many reasons, but here are some:
 
 <br>
 
+<!-- bench:start -->
+### Benchmark
+
+Same game, same model, same luck, same opening prompt. Each row is a way of playing.
+
+<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-1/trail.dark.svg"><img src="docs/results/pilot-1/trail.light.svg" alt="Where each run ended on the road to Oregon, one row per way of playing." width="800"></picture></a></p>
+
+**Pilot, 2026-11-20.** Scenario `trail`, the 1975 text Oregon Trail, fetched at run time. Seeds 1 to 3, the same for every arm, so runs are paired. Model `haiku` for every arm that uses one, at most 70 model calls a run. Every arm starts from one agent and the same opening prompt. Run on 2026-11-20.
+
+`loop` (one model in a plain loop) arrived in 3 of 3 runs with 39 model calls and 0 rules broken at the median; `conky` (one character in a vault) arrived in 1 of 3 runs with 2 model calls and 0 rules broken at the median. The two floors use no model and never arrive, so the game is not won by pressing keys. This is a pilot: 3 seeds, one scenario and one model. It shows that the apparatus runs end to end and what a result will look like. It supports no claim that one arm is better than another.
+
+<p align="center"><a href="docs/research/results.md">Method and every chart</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/results/pilot-1/runs.csv">the data</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/research/benchmark-protocol.md">the protocol</a></p>
+
+<br>
+<!-- bench:end -->
+
 ### Topology
 
 A few parts, wrapped in layers, with the world plugging in at the edge. Solid is built, dotted is planned. The complete inventory, with a swimlane for every flow, is the <a href="docs/reference/architecture.md">architecture index</a>.

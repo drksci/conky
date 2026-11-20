@@ -776,7 +776,7 @@ class Vault:
                 (found.group(1), found.group(2)) == (ask.writes, MEMBERS)
                 for found in EMBED.finditer(ask.prompt)
             )
-            prompt += answer.instruction(page, ask.writes, shown)
+            prompt = answer.instruction(page, ask.writes, shown) + prompt
         current = (self._load(page) or Page()).fields
         if (
             skip_settled

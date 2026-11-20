@@ -128,11 +128,13 @@ def test_an_answer_with_two_pages_writes_both_as_the_asker_caused_by_the_answer(
     den.verify()
 
 
-def test_the_instruction_is_appended_to_what_is_sent_and_recorded(den: Vault, stand: Stand) -> None:
+def test_the_instruction_comes_before_the_prompt_in_what_is_sent_and_recorded(
+    den: Vault, stand: Stand
+) -> None:
     stand.says("Nothing to add.")
     trigger(den, "one")
     sent = stand.prompts[-1]
-    assert sent == "Tidy up after one" + instruction("scribe", "den", False)
+    assert sent == instruction("scribe", "den", False) + "Tidy up after one"
     assert "=== page: <name> ===" in sent and "within: den" in sent
     body = git(den.path, "log", "-1", "--format=%B")
     assert sent in body

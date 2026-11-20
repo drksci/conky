@@ -126,10 +126,15 @@ def test_load_reads_plain_series(results: Path) -> None:
 
 def test_every_chart_renders_light_and_dark(results: Path, tmp_path: Path) -> None:
     written = charts.render(charts.load(results), tmp_path / "svg")
-    assert sorted(p.name for p in written) == sorted(
+    drawn = [p for p in written if p.suffix == ".svg"]
+    assert sorted(p.name for p in drawn) == sorted(
         f"{name}.{look}.svg" for name in charts.CHARTS for look in ("light", "dark")
     )
-    for path in written:
+    assert sorted(p.name for p in written if p not in drawn) == ["runs.csv", "runs.json"]
+    table = (tmp_path / "svg" / "runs.csv").read_text(encoding="utf-8").splitlines()
+    assert table[0] == ",".join(charts.FIELDS)
+    assert len(table) == 1 + len(charts.load(results))
+    for path in drawn:
         svg = parsed(path)
         assert "SCRIPTED: NOT A RESULT" in svg
         assert "trail / model stand-in / seeds 1 / 2026-11-20" in svg
@@ -189,12 +194,12 @@ def test_board_places_the_dot_on_its_own_scale(results: Path) -> None:
     assert "3 OF 3" not in svg and "1 OF 1" in svg
 
 
-def test_the_command_writes_ten_files_and_refuses_an_empty_directory(
+def test_the_command_writes_every_chart_and_refuses_an_empty_directory(
     results: Path, tmp_path: Path, capsys: pytest.CaptureFixture
 ) -> None:
     out_dir = tmp_path / "charts"
     assert charts.main([str(results), "--out", str(out_dir)]) == 0
-    assert len(list(out_dir.glob("*.svg"))) == 10
+    assert len(list(out_dir.glob("*.svg"))) == 2 * len(charts.CHARTS)
     empty = tmp_path / "none"
     empty.mkdir()
     assert charts.main([str(empty), "--out", str(out_dir)]) == 1

@@ -18,7 +18,7 @@ scripts/check
 
 The pre-push hook runs it and blocks the push on failure. CI runs it on every pull request and on pushes to `main`. The hook is local configuration and is not cloned, so each clone enables it once.
 
-`scripts/check` runs six things: `ruff check`, `ruff format --check`, the tests, `scripts/check_docs.py`, the prose check below and `scripts/check_commits.py`. Ruff selects the rule sets E, F, I, B, UP and SIM with a line length of 100.
+`scripts/check quick` runs only the tests that the code changed since its last run can affect, for use while working. `scripts/check` runs six things: `ruff check`, `ruff format --check`, the tests, `scripts/check_docs.py`, the prose check below and `scripts/check_commits.py`. Ruff selects the rule sets E, F, I, B, UP and SIM with a line length of 100.
 
 ## Prose
 

@@ -6,6 +6,9 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ### Added
 
+- The instruction for an ask that may write pages now comes before the prompt, so the author's question is the last thing the model reads. A pilot run showed a small model answering the wrong question when the instruction came last.
+- `bench/publish.py` turns a results directory into the charts, the data behind them (`runs.csv`, `runs.json`), the results page and the Benchmark block of the README, with nothing edited by hand. `bench/charts.py` gains the `trail` chart.
+- `scripts/check` runs the tests in parallel, and `scripts/check quick` runs only the tests that the changed code can affect.
 - Text functions in expressions: `split`, `substring`, `indexOf`, `trim`, `lowerAscii`, `replace` and `join` after the CEL strings extension, and `captures`, which returns the groups of a regular expression match as a list. Text and patterns are bounded at 65536 and 256 characters ([rules and reactions](docs/reference/rules-and-reactions.md#text-functions)).
 - `space` in expressions: the fields of the spaces a page is within, the outermost first and the nearest overriding, readable in rules (including those handed down), watch conditions and `set` values. A page within no space reads an empty map, and a missing field is a failed evaluation to guard with `has`. Changing a space does not re-judge its members.
 - The instruction appended to an ask that may write pages is now a short description of what the page can do: its name, its space, how a page is written (built from the constants the parser uses), that a page can be a note or carry a rule, and that it cannot write elsewhere. It says the space's members are shown to the page only when the prompt embeds `![[space#members]]`. The Conky benchmark arm's pages prompt embeds its space that way ([scaffold](bench/adapters/conky/scaffold.md)).

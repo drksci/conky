@@ -1,10 +1,16 @@
 #!/bin/sh
 # Run every check. Run before each push; the pre-push hook does it too.
+#   scripts/check         everything, tests in parallel
+#   scripts/check quick   only the tests that the code changed since the last run can affect
 set -e
 cd "$(dirname "$0")/.."
 ruff check .
 ruff format --check .
-pytest -q
+if [ "$1" = quick ]; then
+    pytest -q --testmon
+else
+    pytest -q -n auto
+fi
 python scripts/check_docs.py
 vale --minAlertLevel=error README.md CONTRIBUTING.md CHANGELOG.md SECURITY.md CLAUDE.md docs
 echo "prose: no house-style errors (vale, errors only)"

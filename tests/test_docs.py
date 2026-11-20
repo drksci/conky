@@ -81,7 +81,7 @@ def test_the_generator_names_what_to_fix():
     with pytest.raises(gen.ArchitectureError, match="is done, so this is built"):
         gen.state_of("R2", None, "a row", False)
     with pytest.raises(gen.ArchitectureError, match="says is later"):
-        gen.state_of("R22", None, "a marker", True)
+        gen.state_of("R23", None, "a marker", True)
     with pytest.raises(gen.ArchitectureError, match="is not in docs/project/roadmap.md"):
         gen.state_of("R999", None, "a row", False)
 

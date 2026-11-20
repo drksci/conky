@@ -468,7 +468,7 @@ sequenceDiagram
     participant lane.provider
     participant lane.outside
     lane.page->>lane.runtime: an ask entry with writes names a space
-    lane.runtime->>lane.provider: the prompt plus the fixed page instruction
+    lane.runtime->>lane.provider: the fixed page instruction, then the prompt
     Note over lane.runtime: the reply is cut into plain text and page blocks
     lane.runtime->>lane.history: the answer is written first, by the asking page, and a refused answer applies no page
     alt refusal

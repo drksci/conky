@@ -1,17 +1,20 @@
-"""Draw a benchmark results directory as five SVG charts, standard library only.
+"""Draw a benchmark results directory as six SVG charts, with the data behind them.
 
     python -m bench.charts RESULTS_DIR --out DIR
 
-Writes `progress`, `spend`, `where`, `rules` and `board`, each as `NAME.light.svg` (ink on
-transparent, for light pages) and `NAME.dark.svg`. One ink, one yellow accent (only on `rules`),
-arms told apart by line style and direct labels. Every chart carries, bottom right, `DATA` or
-`SCRIPTED: NOT A RESULT` from the runs' backend, and bottom left the scenario, model, seeds and
-date. It reads the run files (run.json, meter.jsonl, transcript.jsonl) that bench.run writes.
+Writes `trail`, `progress`, `spend`, `where`, `rules` and `board`, each as `NAME.light.svg` (ink on
+transparent, for light pages) and `NAME.dark.svg`. One ink, one yellow accent (the Conky row of
+`trail`, and `rules`), arms told apart by line style and direct labels. Every chart carries, bottom
+right, `DATA` or `SCRIPTED: NOT A RESULT` from the runs' backend, and bottom left the scenario,
+model, seeds and date. Beside them it writes `runs.csv` and `runs.json`, one row per run, so the
+same data can be drawn another way. It reads the run files (run.json, meter.jsonl,
+transcript.jsonl) that bench.run writes. Standard library only.
 """
 
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import statistics
 import sys
@@ -649,7 +652,66 @@ def draw_board(runs: list[Run], ink: str) -> Canvas:
     return c
 
 
+GLOSS = {
+    "floor-continue": "always presses continue",
+    "floor-random": "presses keys at random",
+    "loop": "one model in a plain loop",
+    "cli": "a stock agent CLI, unmetered",
+    "conky": "one character in a vault",
+}
+
+
+def draw_trail(runs: list[Run], ink: str) -> Canvas:
+    """The one-glance chart: each run is a mark on the road, placed where it ended."""
+    arms = by_arm(runs)
+    order = [a for a in GLOSS if a in arms] + [a for a in arms if a not in GLOSS]
+    row = 52
+    height = 96 + row * len(order) + 40
+    c = frame(
+        height,
+        ink,
+        "Who reached Oregon",
+        "ONE MARK PER RUN, PLACED WHERE IT ENDED | LINE: MEDIAN | " + MARK_KEY,
+        runs,
+    )
+    x0, x1, top = 232, WIDTH - 280, 84
+    cols = ((WIDTH - 196, "ARRIVED"), (WIDTH - 110, "MODEL CALLS"), (WIDTH - 24, "RULES BROKEN"))
+
+    def px(miles: float) -> float:
+        return x0 + (x1 - x0) * min(max(miles, 0.0), GOAL) / GOAL
+
+    for x, head in cols:
+        c.text(x, top - 14, head, 8, anchor="end", opacity=0.65)
+    c.text(x0, top - 14, "INDEPENDENCE", 8, opacity=0.65)
+    c.text(x1, top - 14, "OREGON", 8, anchor="end", opacity=0.65)
+    bottom = top + row * len(order)
+    for miles in (0, 500, 1000, 1500, GOAL):
+        c.line(px(miles), top - 6, px(miles), bottom - 8, 0.5, dash="1 4", opacity=0.35)
+        c.text(px(miles), bottom + 6, f"{miles:,}", 8, anchor="middle", opacity=0.65)
+    c.text((x0 + x1) / 2, bottom + 20, "MILES", 8, anchor="middle", opacity=0.5)
+    for i, arm in enumerate(order):
+        rs = arms[arm]
+        y = top + 18 + i * row
+        accent = YELLOW if arm == "conky" else None
+        c.text(24, y - 1, arm.upper(), 11, weight="bold", fill=accent)
+        c.text(24, y + 13, GLOSS.get(arm, ""), 9, opacity=0.65)
+        c.line(x0, y, x1, y, 0.6, opacity=0.25)
+        c.line(x0, y, px(statistics.median(r.miles for r in rs)), y, 2.2, color=accent)
+        spread = 9.0 if len(rs) > 1 else 0.0
+        for k, r in enumerate(rs):
+            dy = (k - (len(rs) - 1) / 2) * spread / max(len(rs) - 1, 1) * 2
+            mark(c, px(r.miles), y + dy, r.ending)
+        arrived = sum(r.ending == "arrived" for r in rs)
+        calls = statistics.median(len(r.calls) for r in rs)
+        broken = statistics.median(len(r.breaks) for r in rs)
+        values = (f"{arrived} of {len(rs)}", f"{calls:,.0f}", f"{broken:,.0f}")
+        for (x, _), value in zip(cols, values, strict=True):
+            c.text(x, y + 4, value, 11, anchor="end", weight="bold", fill=accent)
+    return c
+
+
 CHARTS = {
+    "trail": draw_trail,
     "progress": draw_progress,
     "spend": draw_spend,
     "where": draw_where,
@@ -658,6 +720,7 @@ CHARTS = {
 }
 
 TITLES = {
+    "trail": "Where each run ended on the road to Oregon, one row per arm",
     "progress": "Miles left to Oregon against turn, one line per arm",
     "spend": "Cumulative model calls and tokens against turn, one line per arm",
     "where": "Bytes sent per call, split by source, one median run per arm",
@@ -674,7 +737,62 @@ def render(runs: list[Run], out: Path) -> list[Path]:
             path = out / f"{name}.{look}.svg"
             path.write_text(draw(runs, ink).svg(TITLES[name]), encoding="utf-8")
             written.append(path)
+    written += export(runs, out)
     return written
+
+
+FIELDS = (
+    "scenario",
+    "arm",
+    "seed",
+    "model",
+    "backend",
+    "date",
+    "ending",
+    "miles",
+    "turns",
+    "model_calls",
+    "tokens",
+    "chars",
+    "wall_s",
+    "rules_broken",
+)
+
+
+def rows(runs: list[Run]) -> list[dict]:
+    """One plain row per run: everything the charts draw, so they can be drawn another way."""
+    return [
+        {
+            "scenario": r.scenario,
+            "arm": r.arm,
+            "seed": r.seed,
+            "model": r.model,
+            "backend": r.backend,
+            "date": r.date,
+            "ending": r.ending,
+            "miles": round(r.miles, 1),
+            "turns": r.turns,
+            "model_calls": len(r.calls),
+            "tokens": sum(c["tokens"] for c in r.calls) if r.tokens_known else None,
+            "chars": sum(c["chars"] for c in r.calls),
+            "wall_s": round(r.wall, 1),
+            "rules_broken": len(r.breaks),
+        }
+        for r in sorted(runs, key=lambda r: (r.arm, r.seed))
+    ]
+
+
+def export(runs: list[Run], out: Path) -> list[Path]:
+    """Write the data behind the charts as `runs.csv` and `runs.json`."""
+    data = rows(runs)
+    table = out / "runs.csv"
+    with table.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, FIELDS, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(data)
+    tree = out / "runs.json"
+    tree.write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8")
+    return [table, tree]
 
 
 def main(argv: list[str] | None = None) -> int:

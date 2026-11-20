@@ -16,10 +16,12 @@ END = "=== end ==="
     2,
     "lane.runtime",
     "lane.provider",
-    "the prompt plus the fixed page instruction",
+    "the fixed page instruction, then the prompt",
 )
 def instruction(page: str, space: str, shown: bool) -> str:
-    """Return the fixed text appended to a prompt that lets page write pages into space.
+    """Return the fixed text placed ahead of a prompt that lets page write pages into space.
+
+    It comes first so that the author's own question is the last thing the model reads.
 
     shown says the prompt embeds what space holds, which the text then tells the page.
     """
@@ -30,13 +32,13 @@ def instruction(page: str, space: str, shown: bool) -> str:
         else ""
     )
     return (
-        f"\n\nYou are a page called {page}, and {space} is a space you can write into. "
+        f"You are a page called {page}, and {space} is a space you can write into. "
         f"Your reply is whatever you write outside a page. You may write pages into {space}, "
         f"and they are kept. Write one like this:\n\n{HEADER} <name> ===\n---\n"
         f"within: {space}\n---\nwhat you want to keep\n{END}\n\n"
         "A page can be a note to yourself, or it can carry a rule that must stay true from now "
         "on: a line under `rules:`, a CEL condition on `page.FIELD`. "
-        f"{seen}You cannot write anywhere else. Writing nothing more is fine."
+        f"{seen}You cannot write anywhere else. Writing nothing more is fine.\n\n"
     )
 
 
