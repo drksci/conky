@@ -609,6 +609,19 @@ def flows_section(rows: dict[str, Row], steps: list[arch.Entry], flows: dict[str
                 f"{entry.ref}: step of flow {entry.facts['flow']!r}, which conky.arch.FLOWS "
                 "does not declare"
             )
+    from conky.vault import Vault
+
+    named = {e.ref for e in steps}
+    for attr, value in vars(Vault).items():
+        if (
+            callable(value)
+            and not attr.startswith("_")
+            and f"conky.vault.Vault.{attr}" not in named
+        ):
+            raise ArchitectureError(
+                f"conky.vault.Vault.{attr} is on the write path but in no flow: add a row to "
+                "conky.arch.VAULT_STEPS"
+            )
     for flow in arch.FLOWS:
         mine = sorted(
             (e for e in steps if e.facts["flow"] == flow.name), key=lambda e: e.facts["order"]

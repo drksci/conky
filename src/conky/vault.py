@@ -156,11 +156,6 @@ class Vault:
         "Return a page with its embeds resolved.",
         doc="cli.md#read",
     )
-    @arch.step("read-a-page", 1, "Person", "Runtime", "conky read page")
-    @arch.step("read-a-page", 2, "Runtime", "Page", "load the stored page")
-    @arch.step(
-        "read-a-page", 4, "Runtime", "Person", "the page, and a missing target gives nothing"
-    )
     def read(self, page: str) -> Page:
         """Return the page with its embeds resolved."""
         found = self._load(check_name(page))
@@ -179,13 +174,6 @@ class Vault:
         "Commit a change to a page, or commit its refusal.",
         doc="cli.md#write",
     )
-    @arch.step("accepted-write", 1, "Person", "Runtime", "write page, fields and body, as an actor")
-    @arch.step("accepted-write", 2, "Runtime", "History", "is the working tree clean")
-    @arch.step("refused-write", 1, "Person", "Runtime", "a write that breaks a rule")
-    @arch.step(
-        "measure-and-pressure", 1, "Person", "Runtime", "a large write to a page with no size rule"
-    )
-    @arch.step("join-and-leave", 1, "Person", "Runtime", "write within: a space name, or nothing")
     def write(
         self,
         page: str,
@@ -207,7 +195,6 @@ class Vault:
             raise BadInput(self._dirty_message())
         return self._write(page, dict(set), body, actor, at, cause, 0)
 
-    @arch.step("asking-a-model", 2, "Person", "Runtime", "or a person runs conky ask")
     def ask(
         self,
         page: str,
@@ -246,19 +233,6 @@ class Vault:
         "The Git history, the one stream every vault already has, read oldest first.",
         doc="vault-format.md#commits",
     )
-    @arch.step(
-        "measure-and-pressure",
-        8,
-        "Runtime",
-        None,
-        "reading history evaluates nothing, and nothing yet relieves pressure",
-    )
-    @arch.step("read-a-page", 5, "Person", "Runtime", "conky log")
-    @arch.step("read-a-page", 6, "Runtime", "History", "commits oldest first")
-    @arch.step(
-        "read-a-page", 7, "Runtime", "Person", "one line each, with cause, model, read and from"
-    )
-    @arch.step("read-a-page", 8, "Runtime", None, "no model is called and no event is made")
     def log(self) -> list[str]:
         """Return the history oldest first, one line per commit."""
         if not self._has_commits():
@@ -301,12 +275,6 @@ class Vault:
         "Checking the history, never changing it.",
         doc="vault-format.md#what-verify-checks",
     )
-    @arch.step("verify", 1, "Person", "Runtime", "conky verify")
-    @arch.step("verify", 2, "Runtime", "History", "is the working tree clean")
-    @arch.step("verify", 3, "Runtime", "Outside", "git fsck strict")
-    @arch.step("verify", 9, "Runtime", None, "rules are not evaluated and page content is not read")
-    @arch.step("clone-and-leave", 3, "Person", "Runtime", "verify, with Git and ssh-keygen only")
-    @arch.step("clone-and-leave", 5, "Runtime", "Person", "ok, and no private key was needed")
     def verify(self) -> None:
         """Raise VerifyFailed naming the first problem in the tree, the objects or the history."""
         if self._dirty():
@@ -328,34 +296,12 @@ class Vault:
         "Restoring the working tree from the history.",
         doc="vault-format.md#rebuild",
     )
-    @arch.step("rebuild", 3, "Person", "Runtime", "conky rebuild")
-    @arch.step("rebuild", 4, "Runtime", "History", "reset hard to main")
-    @arch.step("rebuild", 5, "Runtime", "Page", "remove untracked files under pages and keys")
     def rebuild(self) -> None:
         """Restore the working tree to the committed state, discarding stray changes."""
         if self._has_commits():
             git.run(["reset", "-q", "--hard", "main"], self.path)
         git.run(["clean", "-fdq", "--", "pages", "keys"], self.path)
 
-    @arch.step(
-        "verify",
-        4,
-        "Runtime",
-        "History",
-        "each commit, oldest first: a good signature from a listed key",
-    )
-    @arch.step("verify", 5, "Runtime", "History", "Kind is write or refused")
-    @arch.step(
-        "verify",
-        6,
-        "Runtime",
-        "History",
-        "a write touches only pages and allowed_signers, a refusal only allowed_signers",
-    )
-    @arch.step(
-        "verify", 7, "Runtime", "Person", "the first problem is an error, exit 1", refusal=True
-    )
-    @arch.step("clone-and-leave", 4, "Runtime", "History", "every seal against allowed_signers")
     def _check_commit(
         self, short: str, signature: str, found: dict[str, str], files: list[str]
     ) -> None:
@@ -391,13 +337,9 @@ class Vault:
     def _has_commits(self) -> bool:
         return bool(git.run(["branch", "--list", "main"], self.path).strip())
 
-    @arch.step("rebuild", 1, "Person", "Page", "a page is edited by hand, so the tree is dirty")
     def _dirty(self) -> bool:
         return bool(git.run(["status", "--porcelain"], self.path).strip())
 
-    @arch.step(
-        "rebuild", 2, "Runtime", "Person", "verify or the next write: an error naming the fix"
-    )
     def _dirty_message(self) -> str:
         return (
             "the working tree has changes that were not made through conky: "
@@ -433,30 +375,6 @@ class Vault:
         "Signing every event and recording every refusal.",
         doc="vault-format.md#commits",
     )
-    @arch.step(
-        "accepted-write", 7, "Runtime", "History", "one signed commit with Kind, Page and Cause"
-    )
-    @arch.step(
-        "refused-write",
-        6,
-        "Runtime",
-        "History",
-        "an empty signed commit, Kind refused, no page changed",
-    )
-    @arch.step(
-        "reaction-cascade",
-        6,
-        "Runtime",
-        "History",
-        "a signed commit by the watching page, with Cause",
-    )
-    @arch.step(
-        "measure-and-pressure", 2, "Runtime", "History", "the write is kept, with no refusal"
-    )
-    @arch.step(
-        "measure-and-pressure", 4, "Runtime", "History", "the number is its own signed event"
-    )
-    @arch.step("join-and-leave", 6, "Runtime", "History", "every rule holds: a signed write")
     def _record(
         self,
         kind: str,
@@ -499,21 +417,6 @@ class Vault:
         "A refused write is recorded as an empty commit, never dropped.",
         doc="vault-format.md#a-refusal",
     )
-    @arch.step(
-        "refused-write",
-        5,
-        "Runtime",
-        None,
-        "reason, attempt, body size, and From when a space refused",
-    )
-    @arch.step(
-        "join-and-leave",
-        7,
-        "Runtime",
-        "History",
-        "a rule is false or a space is missing: a refusal naming that space in From",
-        refusal=True,
-    )
     def _refuse(
         self,
         page: str,
@@ -538,37 +441,6 @@ class Vault:
         "Judging rules, shape and limits before a write is kept.",
         doc="rules-and-reactions.md#refusals",
     )
-    @arch.step(
-        "accepted-write", 3, "Runtime", "Page", "load the page as it is and apply the changes"
-    )
-    @arch.step(
-        "refused-write",
-        2,
-        "Runtime",
-        "Page",
-        "apply the changes, a malformed key is a shape refusal",
-    )
-    @arch.step("refused-write", 7, "Runtime", "Page", "no reactions run, because nothing changed")
-    @arch.step(
-        "reaction-cascade", 5, "Runtime", "Page", "write as the watching page, one level deeper"
-    )
-    @arch.step(
-        "reaction-cascade",
-        8,
-        "Runtime",
-        "History",
-        "deeper than 12: a cycle refusal, and nothing deeper runs",
-        refusal=True,
-    )
-    @arch.step(
-        "answer-is-pages",
-        8,
-        "Runtime",
-        "History",
-        "a limit or a rule is broken: a recorded refusal",
-        refusal=True,
-    )
-    @arch.step("join-and-leave", 2, "Runtime", "Page", "the page as it would be after the write")
     def _write(
         self,
         page: str,
@@ -633,13 +505,6 @@ class Vault:
         doc="rules-and-reactions.md#an-answer-that-is-pages",
         roadmap="R29",
     )
-    @arch.step(
-        "answer-is-pages",
-        6,
-        "Runtime",
-        "Space",
-        "within the named space before and after, no secret or command, no wider watch",
-    )
     def _breach(self, name: str, before: Page | None, page: Page, space: str) -> str | None:
         """Return the limit a page written by an answer breaks, if any.
 
@@ -668,29 +533,6 @@ class Vault:
         "A member adds a rule and cannot remove one or leave one behind.",
         doc="../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md",
         roadmap="R29",
-    )
-    @arch.step("accepted-write", 4, "Runtime", "Page", "judge its own rules, with size in scope")
-    @arch.step("refused-write", 3, "Runtime", "Page", "judge its own rules")
-    @arch.step(
-        "answer-is-pages",
-        7,
-        "Runtime",
-        "Space",
-        "the rules of every space involved, including a space it leaves",
-    )
-    @arch.step(
-        "join-and-leave",
-        3,
-        "Runtime",
-        "Space",
-        "the rules of the page and of every space it will be in",
-    )
-    @arch.step(
-        "join-and-leave",
-        4,
-        "Runtime",
-        "Space",
-        "if it was in a space: that space's rules, against the page after",
     )
     def _rule_reason(
         self, name: str, page: Page, before: Page | None = None
@@ -723,17 +565,6 @@ class Vault:
         doc="rules-and-reactions.md#rules-and-spaces",
         roadmap="R29",
     )
-    @arch.step(
-        "accepted-write", 5, "Runtime", "Space", "judge the rules of each space up the chain"
-    )
-    @arch.step(
-        "refused-write",
-        4,
-        "Runtime",
-        "Space",
-        "judge each space up the chain: a rule is false, fails or loops",
-    )
-    @arch.step("join-and-leave", 5, "Space", None, "a space that says nothing lets its members go")
     def _walk(
         self, name: str, space: Page, owner: str, scope: dict[str, Any]
     ) -> tuple[str, str] | None:
@@ -825,66 +656,6 @@ class Vault:
         "Running reactions after a write, depth first, bounded at 12.",
         doc="rules-and-reactions.md#reactions",
     )
-    @arch.step(
-        "accepted-write", 8, "Runtime", "Page", "run every watcher, see the reaction cascade"
-    )
-    @arch.step(
-        "reaction-cascade",
-        1,
-        "Runtime",
-        "Page",
-        "visit every page in order of name for watch entries on the page just written",
-    )
-    @arch.step(
-        "reaction-cascade",
-        2,
-        "Runtime",
-        "Page",
-        "evaluate when, with page, other, size and other_size",
-    )
-    @arch.step(
-        "reaction-cascade",
-        3,
-        "Runtime",
-        "History",
-        "when or a set expression fails: a watch refusal on the watching page",
-        refusal=True,
-    )
-    @arch.step(
-        "reaction-cascade",
-        4,
-        "Runtime",
-        None,
-        "when is false, or the change leaves the page as it is: skipped",
-    )
-    @arch.step(
-        "reaction-cascade", 7, "Runtime", "Page", "its own watchers react in turn, depth first"
-    )
-    @arch.step(
-        "measure-and-pressure",
-        3,
-        "Runtime",
-        "Page",
-        "self-watch: on itself, set pressure from size",
-    )
-    @arch.step(
-        "measure-and-pressure",
-        5,
-        "Runtime",
-        "Page",
-        "second entry: when pressure passes the threshold a state is set",
-    )
-    @arch.step("measure-and-pressure", 6, "Runtime", "Page", "pages that watch that state react")
-    @arch.step(
-        "measure-and-pressure",
-        7,
-        "Runtime",
-        None,
-        "unchanged values are skipped, so the chain settles",
-    )
-    @arch.step("asking-a-model", 1, "Page", "Runtime", "an ask entry fires")
-    @arch.step("answer-is-pages", 1, "Page", "Runtime", "an ask entry with writes names a space")
-    @arch.step("answer-is-pages", 10, "Runtime", "Page", "reactions, one level deeper each")
     def _react(self, source: str, written: Page, commit: str, at: str, depth: int) -> None:
         for watcher in sorted(p.stem for p in self.pages_dir.glob("*.md")):
             for entry in (self._load(watcher) or Page()).watch:
@@ -931,36 +702,6 @@ class Vault:
         "A named page first, then detection, then a plain sentence.",
         doc="providers.md#when-no-model-answers",
         roadmap="R26",
-    )
-    @arch.step(
-        "asking-a-model",
-        3,
-        "Runtime",
-        "Page",
-        "resolve embeds in the prompt, and add the page instruction when writes is set",
-    )
-    @arch.step(
-        "asking-a-model",
-        4,
-        "Runtime",
-        None,
-        "skip when into_asked already holds this prompt's digest",
-    )
-    @arch.step("asking-a-model", 5, "Runtime", "Page", "a provider page is named: read it")
-    @arch.step(
-        "asking-a-model",
-        10,
-        "Runtime",
-        "History",
-        "the named provider failed: a model refusal on the asking page",
-        refusal=True,
-    )
-    @arch.step(
-        "asking-a-model",
-        12,
-        "Runtime",
-        "Provider",
-        "each detected model in order, a failure goes on to the next",
     )
     def _ask(
         self,
@@ -1032,20 +773,6 @@ class Vault:
         doc="rules-and-reactions.md#asking-a-model",
         roadmap="R4",
     )
-    @arch.step(
-        "asking-a-model",
-        13,
-        "Runtime",
-        "History",
-        "a signed write by the asking page, with Model, tokens, Read and the prompt",
-    )
-    @arch.step(
-        "answer-is-pages",
-        4,
-        "Runtime",
-        "History",
-        "the answer is written first, by the asking page, and a refused answer applies no page",
-    )
     def _answered(
         self,
         found: model.Provider,
@@ -1096,21 +823,6 @@ class Vault:
         doc="rules-and-reactions.md#an-answer-that-is-pages",
         roadmap="R29",
     )
-    @arch.step(
-        "answer-is-pages",
-        5,
-        "Runtime",
-        "History",
-        "a header with no name or a malformed page: one shape refusal, the rest still apply",
-        refusal=True,
-    )
-    @arch.step(
-        "answer-is-pages",
-        9,
-        "Runtime",
-        "History",
-        "a signed write by the asker, caused by the answer",
-    )
     @arch.judged(
         "character-organised-itself",
         "State, after a live run, whether the single character organised itself "
@@ -1152,13 +864,6 @@ class Vault:
         "Writing a plain sentence when no model answers.",
         doc="providers.md#when-no-model-answers",
         roadmap="R26",
-    )
-    @arch.step(
-        "asking-a-model",
-        14,
-        "Runtime",
-        "History",
-        "none answered: a plain sentence, Model none, no marker, so a later model replaces it",
     )
     def _plain(
         self,
