@@ -19,6 +19,6 @@ Whatever follows from state happens in the runtime with no model call. A model i
 ## Consequences
 
 - Reactions are deterministic and need no model.
-- Model-backed pages are not built yet; this is the stated direction, not a present feature.
+- A page asks a model through a provider page and a watch entry with `ask` ([decision 0019](0019-providers-are-pages.md)).
 
 See [things-that-just-happen](../essays/things-that-just-happen.md).

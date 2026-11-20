@@ -37,7 +37,7 @@ Each event is one commit. Every commit has:
 - author and committer name `<actor>` and email `<actor>@conky`;
 - both dates equal to the instant the caller supplied (the command line uses the current time in UTC, to the second);
 - a signature made with the actor's key;
-- a subject, and a body that is a list of trailers.
+- a subject, then a body that is a list of trailers. A model answer also has a note between the subject and the trailers (see [A model answer](#a-model-answer)).
 
 ### A write
 
@@ -48,6 +48,21 @@ A write commit changes one page. It has subject `write <page>` and these trailer
 | `Kind` | `write` |
 | `Page` | the page name |
 | `Cause` | the full id of the triggering commit, only when the write is a reaction |
+
+### A model answer
+
+An answer from a model is a write ([rules and reactions](rules-and-reactions.md#asking-a-model)) by the page that asked. It has the trailers of a write, including `Cause` when a watch entry asked, and these:
+
+| Trailer | Value |
+|---|---|
+| `Model` | the name of the provider page |
+| `Model-Name` | the `model` field of that page, as sent |
+| `Tokens-In` | prompt tokens, only when the provider reported them |
+| `Tokens-Out` | completion tokens, only when the provider reported them |
+
+Between the subject and the trailers sits the resolved prompt, exactly as it was sent, so the question is in the history beside its answer. The trailers are always the last paragraph of the message. A refusal of an answer that broke a rule carries the same trailers and note.
+
+The answer is a field of the page like any other. The secret used to reach the provider is never written to the vault, in a page, a trailer or a message. See [providers](providers.md#secrets).
 
 ### A refusal
 
@@ -62,7 +77,7 @@ A refused write is an empty commit, signed the same way. It changes no page. It 
 | `Body-Bytes` | the length of the supplied body in bytes, only when a body was supplied |
 | `Cause` | the triggering commit, only when the refused write was a reaction |
 
-The reasons begin with `shape`, `rule`, `cycle` or `watch`; see [rules and reactions](rules-and-reactions.md#refusals).
+The reasons begin with `shape`, `rule`, `cycle`, `watch` or `model`; see [rules and reactions](rules-and-reactions.md#refusals).
 
 ## Identity and signing
 
@@ -89,7 +104,7 @@ The private key of each actor is an OpenSSH ed25519 key file named after the act
 1. The working tree is clean. A change made outside conky is a failure.
 2. `git fsck --strict` passes.
 3. Every commit on `main` has a good signature from a key in `keys/allowed_signers`.
-4. Every commit has a `Kind` trailer of `write` or `refused`.
+4. Every commit has a `Kind` trailer of `write` or `refused`. Other trailers, such as those of a model answer, are not checked.
 5. A write changes only files under `pages/` and `keys/allowed_signers`.
 6. A refusal changes nothing except `keys/allowed_signers`, which it changes only in an actor's first commit.
 

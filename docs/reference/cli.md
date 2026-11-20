@@ -8,7 +8,7 @@ source: maintainers
 
 # Command line
 
-`conky` is installed by `pip install -e '.[dev]'`. The walkthrough in [getting started](../guide/getting-started.md) uses every command except `demo`, which has its own first section there.
+`conky` is installed by `pip install -e '.[dev]'`. The walkthrough in [getting started](../guide/getting-started.md) uses every command except `demo`, which has its own first section there, and `ask`, which needs a provider.
 
 ```
 conky [--vault DIR] [--keys DIR] <command> ...
@@ -67,6 +67,18 @@ Writes fields and a body to a page and makes one signed commit as `actor`. `--as
 
 On success it prints `written (commit <id>)`, where the id is the short commit id. If rules refuse the write it prints `refused (commit <id>): <reason>` on standard error, exits 1, and the refusal is still committed. Reactions that follow a write are committed too and are not printed; see `conky log`.
 
+### ask
+
+```
+conky ask <page> <into-field> --provider <provider page> --prompt TEXT --as <actor>
+```
+
+Asks a model one question and writes the answer to the field `into-field` of `page`, as a signed commit by `actor`. It takes the same path as a watch entry with `ask` ([rules and reactions](rules-and-reactions.md#asking-a-model)). Embeds in the prompt are resolved, and the provider page named by `--provider` says how to reach the model ([providers](providers.md)). The commit records the question and the model ([vault format](vault-format.md#a-model-answer)). `--provider`, `--prompt` and `--as` are required.
+
+The skip rule does not apply: the question is asked every time. The answer is written together with the field `<into-field>_asked`, which later watch entries use to skip a question they would repeat.
+
+On success it prints `written (commit <id>)`. If the answer breaks a rule, or the model cannot be asked, it prints `refused (commit <id>): <reason>` on standard error and exits 1. The refusal is committed, and its reason starts with `model:` when the cause is the provider, the secret or the network. A write by the actor needs the actor's key, as for `write`.
+
 ### read
 
 ```
@@ -81,7 +93,7 @@ Prints the page as stored, with embeds resolved. It is an error if the page does
 conky log
 ```
 
-Prints the history, oldest first, one line per commit: short id, instant in UTC, actor, kind, page, then the reason for a refusal or `cause <id>` for a reaction. An empty vault prints nothing.
+Prints the history, oldest first, one line per commit: short id, instant in UTC, actor, kind, page, then the reason for a refusal or `cause <id>` for a reaction. A line for a model answer ends with `model <provider page>`. An empty vault prints nothing.
 
 ### verify
 

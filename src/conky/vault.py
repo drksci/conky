@@ -2,18 +2,29 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from conky import git
+from conky import git, model
 from conky.errors import BadInput, VerifyFailed
-from conky.page import Page, ShapeError, apply, check_name, parse, resolve, serialize
+from conky.page import (
+    Page,
+    ShapeError,
+    apply,
+    check_name,
+    parse,
+    resolve,
+    resolve_text,
+    serialize,
+)
 from conky.rules import RuleError, evaluate, holds
 
 MAX_DEPTH = 12
+_CYCLE = f"cycle: reactions nested deeper than {MAX_DEPTH}"
 KINDS = ("write", "refused")
 
 
@@ -85,6 +96,27 @@ class Vault:
             raise BadInput(self._dirty_message())
         return self._write(page, dict(set), body, actor, at, cause, 0)
 
+    def ask(
+        self,
+        page: str,
+        into: str,
+        *,
+        provider: str,
+        prompt: str,
+        actor: str,
+        at: str,
+        cause: str | None = None,
+    ) -> Result:
+        """Ask a model once and write the answer to a field of the page, or record why not."""
+        check_name(page)
+        check_name(actor)
+        check_name(provider)
+        if not into:
+            raise BadInput("the field to write the answer to must be a non-empty name")
+        if self._dirty():
+            raise BadInput(self._dirty_message())
+        return self._ask(page, into, provider, prompt, actor, at, cause, 0, skip_settled=False)
+
     def log(self) -> list[str]:
         """Return the history oldest first, one line per commit."""
         if not self._has_commits():
@@ -100,6 +132,8 @@ class Vault:
             detail = found.get("Reason") or (
                 f"cause {found['Cause'][:7]}" if "Cause" in found else ""
             )
+            if "Model" in found:
+                detail = f"{detail} model {found['Model']}".strip()
             fields = [short, at, actor, found.get("Kind", "-"), found.get("Page", "-"), detail]
             lines.append(" ".join(fields).rstrip())
         return lines
@@ -182,6 +216,7 @@ class Vault:
         cause: str | None,
         extra: list[tuple[str, str]],
         content: Page | None,
+        note: str = "",
     ) -> str:
         """Make one signed commit; store content as the page file when it is given."""
         key, line = git.register(self.keys_dir, self.signers, actor)
@@ -206,6 +241,7 @@ class Vault:
             subject=f"{kind} {page}",
             trailers=trailers,
             paths=paths,
+            body=note,
         )
 
     def _refuse(
@@ -217,11 +253,15 @@ class Vault:
         at: str,
         cause: str | None,
         reason: str,
+        asked: tuple[list[tuple[str, str]], str] = ([], ""),
     ) -> Result:
         extra = [("Reason", " ".join(reason.split())), ("Attempt", _compact(changes))]
         if body is not None:
             extra.append(("Body-Bytes", str(len(body.encode("utf-8")))))
-        return Result(False, self._record("refused", page, actor, at, cause, extra, None), reason)
+        extra += asked[0]
+        return Result(
+            False, self._record("refused", page, actor, at, cause, extra, None, asked[1]), reason
+        )
 
     def _write(
         self,
@@ -232,12 +272,13 @@ class Vault:
         at: str,
         cause: str | None,
         depth: int,
+        asked: tuple[list[tuple[str, str]], str] = ([], ""),
     ) -> Result:
         def refuse(reason: str) -> Result:
-            return self._refuse(page, changes, body, actor, at, cause, reason)
+            return self._refuse(page, changes, body, actor, at, cause, reason, asked)
 
         if depth > MAX_DEPTH:
-            return refuse(f"cycle: reactions nested deeper than {MAX_DEPTH}")
+            return refuse(_CYCLE)
         try:
             result = apply(self._load(page) or Page(), changes, body)
         except ShapeError as exc:
@@ -245,7 +286,7 @@ class Vault:
         reason = self._rule_reason(page, result)
         if reason:
             return refuse(reason)
-        commit = self._record("write", page, actor, at, cause, [], result)
+        commit = self._record("write", page, actor, at, cause, asked[0], result, asked[1])
         self._react(page, result, commit, at, depth)
         return Result(True, commit)
 
@@ -287,11 +328,56 @@ class Vault:
                 try:
                     if not holds(entry["when"], scope):
                         continue
-                    changes = {k: evaluate(v, scope) for k, v in entry["set"].items()}
+                    changes = {k: evaluate(v, scope) for k, v in entry.get("set", {}).items()}
                     unchanged = serialize(apply(current, changes, None)) == serialize(current)
                 except (RuleError, ShapeError) as exc:
                     reason = f"watch: {entry['when']} (on {watcher}) failed: {exc}"
                     self._refuse(watcher, {}, None, watcher, at, commit, reason)
                     continue
-                if not unchanged:
+                if "ask" in entry:
+                    ask = entry["ask"]
+                    args = (ask["into"], ask["provider"], ask["prompt"], watcher, at, commit)
+                    self._ask(watcher, *args, depth + 1, skip_settled=True)
+                elif not unchanged:
                     self._write(watcher, changes, None, watcher, at, commit, depth + 1)
+
+    def _ask(
+        self,
+        page: str,
+        into: str,
+        provider: str,
+        template: str,
+        actor: str,
+        at: str,
+        cause: str | None,
+        depth: int,
+        *,
+        skip_settled: bool,
+    ) -> Result | None:
+        """Ask the provider page's model and write the answer to a field of page.
+
+        Returns None when the question is skipped because its answer is already recorded.
+        A failure to ask is recorded as a refusal whose reason starts with `model:`.
+        """
+        if depth > MAX_DEPTH:
+            return self._refuse(page, {}, None, actor, at, cause, _CYCLE)
+        prompt = resolve_text(template, self._all())
+        digest = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
+        marker = f"{into}_asked"
+        current = (self._load(page) or Page()).fields
+        if skip_settled and into in current and current.get(marker) == digest:
+            return None
+        try:
+            loaded = self._load(provider)
+            found = model.provider(provider, None if loaded is None else loaded.fields)
+            secret = model.find_secret(found.secret, self.keys_dir) if found.secret else None
+            answer = model.ask(found, secret, prompt)
+        except model.ModelError as exc:
+            return self._refuse(page, {}, None, actor, at, cause, f"model: {exc}")
+        trailers = [("Model", provider), ("Model-Name", found.model)]
+        if answer.tokens_in is not None:
+            trailers.append(("Tokens-In", str(answer.tokens_in)))
+        if answer.tokens_out is not None:
+            trailers.append(("Tokens-Out", str(answer.tokens_out)))
+        changes = {into: answer.text, marker: digest}
+        return self._write(page, changes, None, actor, at, cause, depth, (trailers, prompt))

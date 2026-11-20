@@ -40,11 +40,23 @@ In detail: [rules and refusals](../reference/rules-and-reactions.md#refusals).
 
 A page can be set to watch another page. When the watched page changes and a stated condition is true, the watching page updates itself. A stall's stock falls below a threshold, and the depot's page marks a reorder, with nobody deciding to. This works like a spreadsheet, where changing one cell updates the cells that depend on it.
 
-Reactions need no thinking, by a person or by an AI model. Thinking is meant for the questions that state cannot answer. That part is not built yet: no page can ask a model anything today.
+Reactions need no thinking, by a person or by an AI model. Thinking is for the questions that state cannot answer, and a page can ask a model for those (see [Asking a model](#asking-a-model)).
 
 Reactions can set off further reactions. A limit stops this from running forever, and a reaction that would change nothing is skipped.
 
 In detail: [reactions](../reference/rules-and-reactions.md#reactions).
+
+## Asking a model
+
+Some questions cannot be answered from the facts in the pages, such as a one-sentence summary of a request. A page can ask an AI model such a question and keep the answer in one of its own fields. The question is written in a watch entry or given with `conky ask`.
+
+The answer is recorded and checked like any other change. It is signed by the page that asked and is subject to that page's rules. The history keeps the question beside it, with the name of the model and the number of tokens used when the provider reports them. A refused answer is recorded with its reason. Reading the history never calls a model.
+
+Which model answers is one page: a provider page that holds an address, a model name and the name of a secret. Changing provider means editing that page. The secret itself is never stored in the vault, in the way private keys are not. If the provider cannot be reached, the failure is recorded on the asking page and nothing else is affected.
+
+This works against stand-in servers in the tests. It has not been run against a live provider.
+
+In detail: [asking a model](../reference/rules-and-reactions.md#asking-a-model) and [providers](../reference/providers.md).
 
 ## Measures and pressure
 

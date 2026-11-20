@@ -101,6 +101,18 @@ pressure: 2
 ---
 ```
 
+## Asking a model
+
+This part needs a provider and a secret, and nothing above does. Without them the rest of the vault works as shown. A provider is a page that says where a model is and which one to use. The page names a secret, never the secret itself. The secret is read from the environment variable `CONKY_SECRET_<NAME>`, or from `<name>.secret` in the key directory. The values below are placeholders to replace with those of a real service. See [providers](../reference/providers.md).
+
+```console
+$ conky write helper api=openai url=https://api.example.com/v1/chat/completions model=model-name secret=example --as alice
+$ export CONKY_SECRET_EXAMPLE=the-secret-from-the-provider
+$ conky ask stall note --provider helper --prompt 'Describe this stall in one sentence: ![[stall#stock]] loaves left.' --as alice
+```
+
+The `ask` command resolves the embed, sends the prompt to the provider once, and writes the answer to the `note` field of `stall` as a commit signed by `alice`. The commit holds the resolved prompt, the name of the provider page and the model, and the token counts when the provider reports them. If the secret is missing or the provider cannot be reached, nothing is written to `note`, and a refusal is recorded with a reason that starts `model:` and says what to do next. A watch entry with `ask` does the same when a page changes; see [asking a model](../reference/rules-and-reactions.md#asking-a-model).
+
 ## The history
 
 `conky log` prints the history, oldest first. Lines for a reaction end with `cause` and the id of the commit that triggered them. The `depot` commit is by `depot`, and the `journal` commit is by `journal`. The refusal is in the history with its reason.

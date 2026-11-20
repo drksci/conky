@@ -29,6 +29,12 @@ def _parser() -> argparse.ArgumentParser:
     write.add_argument("fields", nargs="*", metavar="field=value")
     write.add_argument("--body", default=None)
     write.add_argument("--as", dest="actor", required=True)
+    ask = sub.add_parser("ask", help="ask a model and write the answer to a field of a page")
+    ask.add_argument("page")
+    ask.add_argument("into", metavar="into-field")
+    ask.add_argument("--provider", required=True, help="the page that describes the model")
+    ask.add_argument("--prompt", required=True)
+    ask.add_argument("--as", dest="actor", required=True)
     read = sub.add_parser("read", help="print a page with embeds resolved")
     read.add_argument("page")
     sub.add_parser("log", help="print the history, oldest first")
@@ -74,10 +80,20 @@ def _run(args: argparse.Namespace) -> int:
         print(f"initialised {args.path}")
         return 0
     vault = Vault(Path(args.vault), args.keys)
-    if args.command == "write":
-        result = vault.write(
-            args.page, _fields(args.fields), args.body, actor=args.actor, at=_now()
-        )
+    if args.command in ("write", "ask"):
+        if args.command == "write":
+            result = vault.write(
+                args.page, _fields(args.fields), args.body, actor=args.actor, at=_now()
+            )
+        else:
+            result = vault.ask(
+                args.page,
+                args.into,
+                provider=args.provider,
+                prompt=args.prompt,
+                actor=args.actor,
+                at=_now(),
+            )
         if not result.ok:
             print(f"refused (commit {result.id[:7]}): {result.reason}", file=sys.stderr)
             return 1

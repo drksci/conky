@@ -65,15 +65,35 @@ def check_name(name: str) -> str:
 def _check_watch(entry: Any) -> None:
     ok = (
         isinstance(entry, dict)
-        and set(entry) == {"on", "when", "set"}
+        and {"on", "when"} <= set(entry)
+        and len(set(entry) & {"set", "ask"}) == 1
+        and set(entry) <= {"on", "when", "set", "ask"}
         and isinstance(entry["on"], str)
         and NAME.match(entry["on"])
         and isinstance(entry["when"], str)
-        and isinstance(entry["set"], dict)
-        and all(isinstance(k, str) and isinstance(v, str) for k, v in entry["set"].items())
+        and (_set_ok(entry["set"]) if "set" in entry else _ask_ok(entry["ask"]))
     )
     if not ok:
-        raise ShapeError("watch entries need on (page name), when (text) and set (field: text)")
+        raise ShapeError(
+            "watch entries need on (page name), when (text) and either set (field: text) "
+            "or ask (provider, prompt, into)"
+        )
+
+
+def _set_ok(value: Any) -> bool:
+    return isinstance(value, dict) and all(
+        isinstance(k, str) and isinstance(v, str) for k, v in value.items()
+    )
+
+
+def _ask_ok(value: Any) -> bool:
+    return (
+        isinstance(value, dict)
+        and set(value) == {"provider", "prompt", "into"}
+        and all(isinstance(v, str) for v in value.values())
+        and bool(NAME.match(value["provider"]))
+        and bool(value["into"])
+    )
 
 
 def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
@@ -107,6 +127,14 @@ def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
     return parse(serialize(result))
 
 
+def _watch_head(entry: dict[str, Any]) -> dict[str, Any]:
+    head = {"on": entry["on"], "when": entry["when"]}
+    for part in ("set", "ask"):
+        if part in entry:
+            head[part] = dict(sorted(entry[part].items()))
+    return head
+
+
 def serialize(page: Page) -> str:
     """Return the page as Markdown: reserved keys, then fields by name, then the body."""
     head: dict[str, Any] = {}
@@ -115,10 +143,7 @@ def serialize(page: Page) -> str:
     if page.rules:
         head["rules"] = page.rules
     if page.watch:
-        head["watch"] = [
-            {"on": w["on"], "when": w["when"], "set": dict(sorted(w["set"].items()))}
-            for w in page.watch
-        ]
+        head["watch"] = [_watch_head(w) for w in page.watch]
     for key in sorted(page.fields):
         head[key] = page.fields[key]
     text = ""
@@ -154,10 +179,10 @@ def parse(text: str) -> Page:
     return Page(head.get("within"), head.get("rules") or [], head.get("watch") or [], fields, body)
 
 
-def resolve(page: Page, lookup: dict[str, Page]) -> Page:
-    """Return a copy of page whose embeds are replaced by field values from lookup."""
+def resolve_text(text: str, lookup: dict[str, Page]) -> str:
+    """Return text with each embed replaced by the field value it names in lookup."""
 
-    def text(match: re.Match[str]) -> str:
+    def value_text(match: re.Match[str]) -> str:
         target = lookup.get(match.group(1))
         if target is None or match.group(2) not in target.fields:
             return ""
@@ -168,4 +193,9 @@ def resolve(page: Page, lookup: dict[str, Page]) -> Page:
             return "true" if value else "false"
         return "" if value is None else json.dumps(value, sort_keys=True, ensure_ascii=False)
 
-    return Page(page.within, page.rules, page.watch, page.fields, EMBED.sub(text, page.body))
+    return EMBED.sub(value_text, text)
+
+
+def resolve(page: Page, lookup: dict[str, Page]) -> Page:
+    """Return a copy of page whose embeds are replaced by field values from lookup."""
+    return Page(page.within, page.rules, page.watch, page.fields, resolve_text(page.body, lookup))

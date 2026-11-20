@@ -24,7 +24,7 @@ Compilers and type systems refuse programs that break the rules; nobody relies o
 
 In conky a rule is a pure boolean expression, written in CEL, attached to a page. A space is a page whose rules its members inherit down a `within` chain. On every write the runtime evaluates the rules of the page and of every space above it, against the resulting page and its byte size. If any is false the write is refused, nothing changes, and the refusal is recorded in the history. The actor needs no instructions about the rule, and cannot talk its way past it.
 
-This is built. A space might say `page.stock >= 0` and `size <= 2000`; a member write that breaks either is refused with the reason. What is not built is any model-backed actor to test this against; today the actors are people and scripts using the command line.
+This is built. A space might say `page.stock >= 0` and `size <= 2000`; a member write that breaks either is refused with the reason. A page can now ask a model, and its answer is checked by the same rules as any write. No run against a live model has been made, so this is tested only against stand-in servers.
 
 The same thinking applies to claims about the system. A rule is real only if a test fails when the rule is removed. A benchmark number is real only if it came from an unscripted run with the run count and traces kept ([decision 0013](../decisions/0013-evidence-not-scripts.md)).
 

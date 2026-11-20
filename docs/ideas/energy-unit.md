@@ -12,7 +12,7 @@ source: maintainers
 
 A synthetic unit of value flow. It only conserves if the conversion into it is itself recorded.
 
-Energy and cost become measures recorded once [model pages](model-pages.md) exist; until then there is nothing to measure. The unit stays a pattern over the ledger, not a runtime feature.
+Energy and cost become measures recorded once [model pages](model-pages.md) report them. Token counts are recorded on each model answer; nothing yet turns them into a measure. The unit stays a pattern over the ledger, not a runtime feature.
 
 ## Composes from
 

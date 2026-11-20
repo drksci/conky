@@ -14,7 +14,7 @@ The official documentation pages listed under [Sources](#sources) and, for a few
 
 The harnesses are LangGraph, CrewAI, AutoGen (archived) with its successors AG2 and Microsoft Agent Framework, the OpenAI Agents SDK, the Claude Agent SDK, Letta, and Temporal used as a durable-execution layer for agents. Temporal and Microsoft Agent Framework are the "up to three more" and were chosen because the OpenAI Agents SDK documentation lists Temporal among its durable-execution integrations, and because Microsoft's documentation names Agent Framework as the direct successor of AutoGen. No other harness was researched; a file-first harness beyond Letta's git-backed memory was not examined.
 
-conky is described from its own documents ([design](../design.md), [status](../project/status.md)). It is pre-alpha, has no model attached, and has no benchmark results. Nothing here says conky performs better than anything else.
+conky is described from its own documents ([design](../design.md), [status](../project/status.md)). It is pre-alpha, has only been run against stand-in model servers, and has no benchmark results. Nothing here says conky performs better than anything else.
 
 ## The rubric
 
@@ -103,7 +103,7 @@ Sources: [workflows](https://docs.temporal.io/workflows), [AI cookbook](https://
 
 ## Where conky differs, and why
 
-conky has no results and no model attached, so none of the following is a claim that its choice is better. Each paragraph says what the other approach gets right.
+conky has no results, so none of the following is a claim that its choice is better. Each paragraph says what the other approach gets right.
 
 **The authority is a signed log, and pages are rebuilt from it.** In the harnesses read, state is held as checkpoints, sessions or snapshots (LangGraph, CrewAI, Microsoft Agent Framework, OpenAI Agents SDK), or as a transcript (Claude Agent SDK). Temporal and AG2 name an event history or write-ahead log, but the first re-runs code against it. conky makes every change a signed, hash-chained event and lets `verify` replay the log to reproduce every page byte for byte, so no stored state can disagree with its history. The reasoning is in [decision 0002](../decisions/0002-git-is-the-store.md) and the essay [The log is the truth](../essays/the-log-is-the-truth.md). What the checkpoint approach gets right: a snapshot resumes quickly and needs no replay, and checkpoint tools are mature and run today. conky gives up cheap snapshotting and pays for replay.
 
@@ -119,7 +119,7 @@ conky has no results and no model attached, so none of the following is a claim 
 
 ### Where conky is behind
 
-- No model is attached and model-backed pages are not built, so it cannot do anything a model is needed for. All the harnesses read run models today.
+- Pages that ask a model exist but have only been tested against stand-in servers, not a live provider. All the harnesses read run models today.
 - Cost bounding is not built. Anything that runs in the background is meant to declare a budget and be metered (see [Background minds](../ideas/background-minds.md)); no such mechanism exists. Several harnesses read ship turn and budget caps.
 - No benchmark has been run, so no comparison on outcomes is possible; see [decision 0014](../decisions/0014-benchmark-shape.md).
 - The resume test is not built, so "a vault travels alone" is verified only as far as `verify` and `rebuild`.

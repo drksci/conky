@@ -41,16 +41,17 @@ A write that cannot hold is refused. The refusal is recorded as an empty signed 
 
 | Reason | When |
 |---|---|
-| `shape` | A reserved key or field is malformed: `within` is not a page name, `rules` is not a list of text, `watch` is not a list of entries with exactly `on`, `when` and `set`, or a field name is not text. |
+| `shape` | A reserved key or field is malformed: `within` is not a page name, `rules` is not a list of text, `watch` is not a list of entries with `on`, `when` and exactly one of `set` or `ask` (an `ask` has exactly `provider`, `prompt` and `into`), or a field name is not text. |
 | `rule` | A rule is false, fails to evaluate, or cannot be reached: the `within` chain loops back on itself, or names a space that does not exist. The reason names the rule and the space it came from. |
 | `cycle` | Reactions are nested deeper than 12. |
 | `watch` | A watch condition or value failed to evaluate. The refusal is recorded against the watching page. |
+| `model` | A question to a model could not be asked or was not answered. The refusal is recorded against the asking page. See [Asking a model](#asking-a-model). |
 
 Values given to a write must be plain data (text, numbers, booleans, lists, maps). Anything else is rejected before a commit is made.
 
 ## Reactions
 
-A page watches another page, or itself, through entries in `watch`. Each entry has three parts:
+A page watches another page, or itself, through entries in `watch`. Each entry has a page to watch (`on`), a condition (`when`) and one action, either `set` or `ask`. An entry with `set` has three parts:
 
 ```yaml
 watch:
@@ -72,6 +73,35 @@ A reaction that would leave the watching page unchanged is skipped. This is what
 Reactions nest to a depth of 12. A reaction that would nest deeper is refused with reason `cycle`.
 
 A refused write triggers no reactions, because nothing changed.
+
+## Asking a model
+
+A watch entry may carry `ask` in place of `set`. It poses a question to a model that state cannot answer, and writes the answer back as an ordinary change ([decision 0019](../decisions/0019-providers-are-pages.md)).
+
+```yaml
+watch:
+- on: ticket
+  when: "other.status == 'new'"
+  ask:
+    provider: helper        # the name of a provider page
+    prompt: "Summarise this request in one sentence: ![[ticket#text]]"
+    into: summary           # the field on this page that receives the answer
+```
+
+An entry has either `set` or `ask`, never both. An `ask` has exactly `provider`, `prompt` and `into`, all text, and `provider` is a page name. Anything else is refused with reason `shape`.
+
+When the entry fires, in order:
+
+1. Embeds in `prompt` are resolved as they are when a page is read ([vault format](vault-format.md#pages)).
+2. The skip rule applies. The watching page keeps a field named `<into>_asked` that holds the SHA-256 hex digest of the resolved prompt it last got an answer for. If `into` is present and `<into>_asked` matches the resolved prompt, nothing is asked and nothing is written. This keeps a settled question from being asked twice and lets a loop settle. The reaction depth limit of 12 still applies, and is checked before the model is called.
+3. The provider page is read ([providers](providers.md)) and the model is called once.
+4. The answer text, trimmed, is written to `into`, together with `<into>_asked`, in one write by the watching page. It carries `Cause` like any reaction, is checked against the page's rules and its spaces' rules, and can be refused. A refused answer is recorded as a refusal and the field keeps its value.
+
+The commit for an answer records the question and the model ([vault format](vault-format.md#a-model-answer)). Reading the history needs no model call.
+
+### When asking fails
+
+A missing or malformed provider page, a secret that cannot be found, a connection that fails, an HTTP error, a reply that holds no answer text, and no reply within 60 seconds are each recorded as a refusal on the asking page. The reason starts with `model:` and says what to do next, for example `model: secret 'openrouter' not found: set CONKY_SECRET_OPENROUTER or put it in openrouter.secret in the key directory`. There are no retries. The write that triggered the entry stands, and every other reaction runs. Everything that needs no model works with no network.
 
 ## Measures
 

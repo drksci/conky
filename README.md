@@ -43,7 +43,7 @@ conky keeps one thing: a folder of pages, and the history of how they got that w
 
 [![CI](https://github.com/drksci/conky/actions/workflows/ci.yml/badge.svg)](https://github.com/drksci/conky/actions/workflows/ci.yml)
 
-Early days. Working and tested today: pages, rules, a signed history, pages that respond to each other, and the demo above. Not built yet: asking an AI model anything, a sense of time, tidying up after itself, tables of data, and any proof that it beats the alternatives. The [roadmap](docs/project/roadmap.md) has the order.
+Early days. Working and tested today: pages, rules, a signed history, pages that respond to each other, pages that ask an AI model a question and keep the answer in the history, and the demo above. The model part has been tested against stand-in servers on the same machine, not a live provider. Not built yet: a sense of time, tidying up after itself, tables of data, and any proof that it beats the alternatives. The [roadmap](docs/project/roadmap.md) has the order.
 
 ## Go deeper
 

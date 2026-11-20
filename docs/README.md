@@ -20,6 +20,7 @@ Each document below starts with frontmatter (`kind`, `title`, `status`, `date`, 
 - [reference/vault-format.md](reference/vault-format.md): Vault format
 - [reference/cli.md](reference/cli.md): Command line
 - [reference/rules-and-reactions.md](reference/rules-and-reactions.md): Rules and reactions
+- [reference/providers.md](reference/providers.md): Providers
 
 ### Design
 
@@ -47,6 +48,7 @@ One record per decision, each with context, decision and consequences.
 - [decisions/0016-docs-in-repo.md](decisions/0016-docs-in-repo.md): Docs live in the repository
 - [decisions/0017-derived-data.md](decisions/0017-derived-data.md): Derived data sits on top, never underneath
 - [decisions/0018-not-doing.md](decisions/0018-not-doing.md): What conky will not do
+- [decisions/0019-providers-are-pages.md](decisions/0019-providers-are-pages.md): Providers are pages
 
 ### Research
 
@@ -55,6 +57,8 @@ Outside work, compared on a fixed basis, with the depth of reading stated.
 - [research/dair-2026.md](research/dair-2026.md): DAIR.AI papers of the week, 2026: relevance index
 - [research/harnesses.md](research/harnesses.md): Agent harnesses compared
 - [research/papers.md](research/papers.md): Paper register
+- [research/benchmarks.md](research/benchmarks.md): Benchmarks and evaluations for agent harnesses
+- [research/evaluation-plan.md](research/evaluation-plan.md): Evaluation plan (draft): three kinds of result kept apart, and steps from cheapest first
 
 ## Beyond the layers
 

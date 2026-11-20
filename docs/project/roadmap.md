@@ -10,8 +10,7 @@ source: maintainers
 
 Steps are listed in order, first to last; ids are stable labels, not positions. Each with a stable id and a state: `done`, `next` or `later`. Exactly one step is `next`; `scripts/check_docs.py` checks it. Steps are unbuilt unless `done`; see [status](status.md) for what exists. This page is the single tracker for work.
 
-- R4 (next): Model pages and provider pages: a page that asks a question state cannot answer, with the provider named by a page. Idea: [model-pages](../ideas/model-pages.md). Decision: [0007](../decisions/0007-inference-for-real-thinking.md). Related: [learned-reactions](../ideas/learned-reactions.md).
-- R12 (later): The clock: time passes as an ordinary write to a clock page. Idea: [clock](../ideas/clock.md).
+- R12 (next): The clock: time passes as an ordinary write to a clock page. Idea: [clock](../ideas/clock.md).
 - R3 (later): Staleness and relief: something that acts on pressure from size or age (split, summarise or archive). Ideas: [staleness](../ideas/staleness.md), [measures](../ideas/measures.md). Essay: [pressure-not-walls](../essays/pressure-not-walls.md).
 - R13 (later): Dry run: ask what a change would do on a throwaway branch of the history. Idea: [dry-run](../ideas/dry-run.md). Decision: [0002](../decisions/0002-git-is-the-store.md).
 - R14 (later): Approvals as a pattern, with rules that can see who signed a change. Idea: [approvals](../ideas/approvals.md). Decision: [0009](../decisions/0009-patterns-not-features.md).
@@ -27,4 +26,5 @@ Steps are listed in order, first to last; ids are stable labels, not positions. 
 - R10 (later): Vault splitting: a space becomes its own vault when a vault grows too large or too busy. Idea: [vault-splitting](../ideas/vault-splitting.md). Decision: [0002](../decisions/0002-git-is-the-store.md).
 - R19 (later): The Rust core and the browser. Decision: [0012](../decisions/0012-rust-core-planned.md).
 - R2 (done): First slice of measures as self-watches, with pressure as the first use. Idea: [measures](../ideas/measures.md). Decision: [0008](../decisions/0008-measures-are-self-watches.md). Related: [0006](../decisions/0006-size-is-a-rule.md).
+- R4 (done): Model pages and provider pages: a page that asks a question state cannot answer, with the provider named by a page. Tested against stand-in servers, not a live provider. Idea: [model-pages](../ideas/model-pages.md). Decisions: [0007](../decisions/0007-inference-for-real-thinking.md), [0019](../decisions/0019-providers-are-pages.md). Related: [learned-reactions](../ideas/learned-reactions.md).
 - R20 (done): `conky demo`, a narrated example vault built with the real write path. See [status](status.md).

@@ -24,7 +24,7 @@ Spreadsheets recalculate dependent cells when an input changes, and no one asks 
 
 A conky page can watch another page. When the watched page changes and a `when` expression is true, the runtime writes the watching page, signed by that page's own key, and records the triggering event as the cause. Reactions cascade to a depth of 12 and are then refused as a cycle; a reaction that would change nothing is skipped, so stable states end. No model is called.
 
-This is built and shown in the [getting started](../guide/getting-started.md) walkthrough: writing a stall with stock below 10 makes the depot change by itself. Inference is meant to be reserved for pages that pose a question state cannot answer. That part is not built: model-backed pages are on the [roadmap](../project/roadmap.md).
+This is built and shown in the [getting started](../guide/getting-started.md) walkthrough: writing a stall with stock below 10 makes the depot change by itself. Inference is reserved for pages that pose a question state cannot answer. A watch entry can ask a model through a provider page ([providers](../reference/providers.md)), and the answer is recorded as an ordinary write. That has been tested against stand-in servers, not a live provider.
 
 ## What it solves
 

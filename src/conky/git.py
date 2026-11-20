@@ -101,15 +101,21 @@ def commit(
     subject: str,
     trailers: list[tuple[str, str]],
     paths: list[str],
+    body: str = "",
 ) -> str:
-    """Stage paths and make one signed commit by actor at the instant at; return its id."""
+    """Stage paths and make one signed commit by actor at the instant at; return its id.
+
+    The body, when given, sits between the subject and the trailers exactly as supplied.
+    """
     who = {"NAME": actor, "EMAIL": f"{actor}@conky", "DATE": at}
     env = {f"GIT_{role}_{k}": v for role in ("AUTHOR", "COMMITTER") for k, v in who.items()}
     if paths:
         run(["add", "--", *paths], cwd)
-    message = subject + "\n\n" + "".join(f"{k}: {v}\n" for k, v in trailers)
+    message = subject + "\n\n" + (body + "\n\n" if body else "")
+    message += "".join(f"{k}: {v}\n" for k, v in trailers)
     run(
-        ["-c", f"user.signingkey={key}", "commit", "-q", "-S", "--allow-empty", "-F", "-"],
+        ["-c", f"user.signingkey={key}", "commit", "-q", "-S", "--allow-empty"]
+        + ["--cleanup=verbatim", "-F", "-"],
         cwd,
         env,
         message,
