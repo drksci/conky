@@ -6,9 +6,9 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - layer:git
-  - law:only-writes-change-state
-  - flow:clone-and-leave
+  - layer.git
+  - law.write.only
+  - flow.vault.clone
   items:
   - kind: unplaced
     name: rules outside conky

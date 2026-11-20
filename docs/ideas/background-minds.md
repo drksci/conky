@@ -7,17 +7,17 @@ source: maintainers
 arch:
   items:
   - kind: law
-    name: background-is-metered
+    name: law.spend.meter
     statement: Anything that runs in the background declares a budget and is metered.
     roadmap: R17
   - kind: archetype
-    name: background-mind
+    name: kind.mind
     by: a character
-    layer: characters
+    layer: layer.character
     text: Doubt, curiosity, tidying and orientation, each a budgeted model page.
     roadmap: R17
   - kind: stage
-    name: background minds
+    name: stage.attention.mind
     phase: attention
     text: 'Four budgeted pages: doubt reviews what was done, curiosity notices something nearby worth a look, tidying relieves crowded or stale pages, orientation summarises what matters now for an actor about to act.'
     state: idea

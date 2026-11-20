@@ -50,7 +50,11 @@ def packaged_carry(actor: str) -> list[Carry]:
 
 
 @arch.step(
-    "assimilate", 2, "Runtime", "Outside", "git clone into a new folder, and nothing else is copied"
+    "flow.vault.assimilate",
+    2,
+    "lane.runtime",
+    "lane.outside",
+    "git clone into a new folder, and nothing else is copied",
 )
 def _take(source: str | None, into: Path) -> None:
     """Clone the source, or the built-in vault, into the new folder. Nothing else is copied."""
@@ -93,7 +97,11 @@ def _facts(vault: Vault) -> str:
 
 
 @arch.step(
-    "assimilate", 5, "Runtime", "Page", "read each page: its space, its rules and what it watches"
+    "flow.vault.assimilate",
+    5,
+    "lane.runtime",
+    "lane.page",
+    "read each page: its space, its rules and what it watches",
 )
 def _room(vault: Vault) -> list[str]:
     """Describe each page from its file: its space, the rules that apply, and what it watches."""
@@ -115,12 +123,12 @@ def _room(vault: Vault) -> list[str]:
     return lines or ["no pages"]
 
 
-@arch.step("assimilate", 3, "Runtime", "History", "verify")
+@arch.step("flow.vault.assimilate", 3, "lane.runtime", "lane.history", "verify")
 @arch.step(
-    "assimilate",
+    "flow.vault.assimilate",
     4,
-    "Runtime",
-    "Person",
+    "lane.runtime",
+    "lane.person",
     "verify fails: the first problem, nothing written, exit 1",
     refusal=True,
 )
@@ -133,7 +141,11 @@ def _problem(vault: Vault) -> str | None:
 
 
 @arch.step(
-    "assimilate", 6, "Runtime", "Outside", "a new key for the newcomer, under a name that has none"
+    "flow.vault.assimilate",
+    6,
+    "lane.runtime",
+    "lane.outside",
+    "a new key for the newcomer, under a name that has none",
 )
 def _prepare(vault: Vault, actor: str, keys: Path) -> None:
     """Refuse an actor that is already in the vault or already has a key, so the key is new."""
@@ -150,10 +162,18 @@ def _prepare(vault: Vault, actor: str, keys: Path) -> None:
 
 
 @arch.step(
-    "assimilate", 7, "Runtime", "History", "the newcomer's writes, listed in its first commit"
+    "flow.vault.assimilate",
+    7,
+    "lane.runtime",
+    "lane.history",
+    "the newcomer's writes, listed in its first commit",
 )
 @arch.step(
-    "assimilate", 8, "Runtime", "Page", "reactions follow, and a reacting page needs its own key"
+    "flow.vault.assimilate",
+    8,
+    "lane.runtime",
+    "lane.page",
+    "reactions follow, and a reacting page needs its own key",
 )
 def _carry_on(
     vault: Vault,
@@ -183,16 +203,32 @@ def _carry_on(
 
 
 @arch.part(
-    "assimilate",
-    "edge",
+    "part.vault.assimilate",
+    "layer.edge",
     "Take over a stopped vault from its folder alone.",
     doc="cli.md#assimilate",
     roadmap="R21",
 )
-@arch.step("assimilate", 1, "Person", "Runtime", "conky assimilate: a directory, a bundle or a URL")
-@arch.step("assimilate", 9, "Runtime", "History", "verify again, and list what was added")
 @arch.step(
-    "assimilate", 10, "Runtime", "Person", "what was shown and what was not: no model was involved"
+    "flow.vault.assimilate",
+    1,
+    "lane.person",
+    "lane.runtime",
+    "conky assimilate: a directory, a bundle or a URL",
+)
+@arch.step(
+    "flow.vault.assimilate",
+    9,
+    "lane.runtime",
+    "lane.history",
+    "verify again, and list what was added",
+)
+@arch.step(
+    "flow.vault.assimilate",
+    10,
+    "lane.runtime",
+    "lane.person",
+    "what was shown and what was not: no model was involved",
 )
 def run(
     source: str | None,

@@ -6,9 +6,9 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - part:detection
-  - change:Choosing a model when none is named.
-  - flow:asking-a-model
+  - part.provider.detect
+  - place.runtime.detect
+  - flow.ask.model
 ---
 
 # 0024 A model is reached by a key or by a program already on the machine

@@ -334,8 +334,8 @@ NO_COLOR = "NO_COLOR"
 
 
 @arch.part(
-    "presenters",
-    "edge",
+    "part.cli.present",
+    "layer.edge",
     "One result, two presenters: plain for scripts, styled for people.",
     doc="cli.md#colour-and-styled-output",
 )

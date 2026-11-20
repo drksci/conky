@@ -6,7 +6,7 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - flow:perception-in
+  - flow.connect.sense
 ---
 
 # 0021 The outside arrives as pages

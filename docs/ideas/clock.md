@@ -7,35 +7,35 @@ source: maintainers
 arch:
   items:
   - kind: archetype
-    name: clock
+    name: kind.clock
     by: undecided, a connector is the shape the documents give it
-    layer: edge
+    layer: layer.edge
     text: A page written as time passes, watched by anything that depends on time.
     roadmap: R12
   - kind: stage
-    name: a clock tick
+    name: stage.stimulus.clock
     phase: stimulus
     text: A write to a clock page. Nothing writes one yet.
     roadmap: R12
   - kind: flow
-    name: clock-tick
+    name: flow.clock.tick
     title: A clock tick
     statement: Time passes when a clock page is written, and anything that depends on time watches it.
     rank: 1
     steps:
-    - frm: Outside
-      to: Connector
+    - frm: lane.outside
+      to: lane.connector
       text: time passes
-    - frm: Connector
-      to: Runtime
+    - frm: lane.connector
+      to: lane.runtime
       text: write the clock page, in coarse steps
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: an ordinary signed event
-    - frm: Runtime
-      to: Page
+    - frm: lane.runtime
+      to: lane.page
       text: pages that depend on time react and a staleness measure rises
-    - frm: Runtime
+    - frm: lane.runtime
       to: null
       text: who writes the clock and how often is open
     roadmap: R12

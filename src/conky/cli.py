@@ -256,31 +256,39 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
 
 
 @arch.law(
-    "vocabulary-is-what-exists",
+    "law.word.exist",
     "The vocabulary is what exists, checked against the code both ways.",
     doc="../decisions/0027-the-vocabulary-is-what-exists.md",
 )
 @arch.part(
-    "commands",
-    "edge",
+    "part.cli.command",
+    "layer.edge",
     "`init write ask model read log verify rebuild connect demo assimilate cache`.",
     doc="cli.md#commands",
 )
 @arch.stage(
     "stimulus",
-    "a person's write",
+    "stage.stimulus.person",
     "`conky write` and `conky ask`.",
     doc="cli.md#write",
 )
 @arch.change(
-    "runtime",
+    "place.runtime.clock",
     "Reading the clock, in this one place, to stamp each write.",
     doc="cli.md#time",
 )
-@arch.step("accepted-write", 9, "Runtime", "Person", "written, with the commit id")
-@arch.step("refused-write", 8, "Runtime", "Person", "refused with the commit id and reason, exit 1")
-@arch.step("verify", 8, "Runtime", "Person", "ok, with the number of commits")
-@arch.step("rebuild", 6, "Runtime", "Person", "restored from the committed history")
+@arch.step("flow.write.accept", 9, "lane.runtime", "lane.person", "written, with the commit id")
+@arch.step(
+    "flow.write.refuse",
+    8,
+    "lane.runtime",
+    "lane.person",
+    "refused with the commit id and reason, exit 1",
+)
+@arch.step("flow.vault.verify", 8, "lane.runtime", "lane.person", "ok, with the number of commits")
+@arch.step(
+    "flow.vault.rebuild", 6, "lane.runtime", "lane.person", "restored from the committed history"
+)
 def main(argv: list[str] | None = None) -> int:
     """Run the command line and return the exit code."""
     args = _parser().parse_args(argv)

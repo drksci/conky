@@ -7,9 +7,9 @@ source: maintainers
 arch:
   items:
   - kind: archetype
-    name: gatekeeper
+    name: kind.gatekeeper
     by: a person or a character
-    layer: spaces
+    layer: layer.space
     text: A page a space names to answer a request for permission.
     roadmap: R14
 ---

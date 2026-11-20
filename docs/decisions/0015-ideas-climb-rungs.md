@@ -6,7 +6,7 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - law:docs-are-checked
+  - law.docs.check
 ---
 
 # 0015 Ideas climb rungs

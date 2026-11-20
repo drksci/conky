@@ -6,13 +6,13 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - law:pressure-not-walls
-  - law:measure-is-a-self-watch
-  - flow:measure-and-pressure
-  - archetype:measure-bearing page
+  - law.pressure.notice
+  - law.measure.watch
+  - flow.watch.measure
+  - kind.measure
   items:
   - kind: stage
-    name: measures
+    name: stage.attention.measure
     phase: attention
     text: One measure mechanism could serve attention, decay and metrics. Only pressure is built.
     state: idea

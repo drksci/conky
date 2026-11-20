@@ -6,7 +6,7 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - archetype:character
+  - kind.character
 ---
 
 # 0020 Everything is somebody

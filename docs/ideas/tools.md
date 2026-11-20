@@ -7,60 +7,60 @@ source: maintainers
 arch:
   items:
   - kind: archetype
-    name: tool
+    name: kind.tool
     by: a connector
-    layer: edge
+    layer: layer.edge
     text: One page per tool of a tool server. A call is a write to it.
     roadmap: R25
   - kind: archetype
-    name: shelf
+    name: kind.shelf
     by: a connector or a character
-    layer: spaces
+    layer: layer.space
     text: A space of tool pages or of patterns.
     roadmap: R25
   - kind: archetype
-    name: go-between
+    name: kind.interpreter
     by: a person or a character
-    layer: characters
+    layer: layer.character
     text: A model page at a connector that turns raw pages into plain words and back.
     roadmap: R25
   - kind: stage
-    name: a tool call
+    name: stage.act.tool
     phase: act
     text: A write to a tool page that a connector performs.
     roadmap: R25
   - kind: flow
-    name: tool-call
+    name: flow.tool.call
     title: A tool call through a connector space
     statement: A tool is a page and a call is a write to it, and a go-between stands at the connector so characters never fill in forms.
     rank: 6
     steps:
-    - frm: Connector
-      to: Outside
+    - frm: lane.connector
+      to: lane.outside
       text: ask the tool server what it offers
-    - frm: Connector
-      to: Runtime
+    - frm: lane.connector
+      to: lane.runtime
       text: one page per tool, into a shelf space
-    - frm: Page
-      to: Runtime
+    - frm: lane.page
+      to: lane.runtime
       text: a go-between writes the request to a tool page
-    - frm: Runtime
-      to: Space
+    - frm: lane.runtime
+      to: lane.space
       text: a rule may refuse it, and the server never receives it
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: the signed request
-    - frm: Connector
-      to: History
+    - frm: lane.connector
+      to: lane.history
       text: sees the request
-    - frm: Connector
-      to: Outside
+    - frm: lane.connector
+      to: lane.outside
       text: performs the call
-    - frm: Connector
-      to: Runtime
+    - frm: lane.connector
+      to: lane.runtime
       text: the result, onto the same page, caused by the request
-    - frm: Page
-      to: Page
+    - frm: lane.page
+      to: lane.page
       text: the go-between turns the result into plain words
     roadmap: R25
 ---

@@ -6,10 +6,10 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - law:pages-capability
-  - law:reach-flows-down
-  - flow:answer-is-pages
-  - part:answer-format
+  - law.answer.pages
+  - law.reach.down
+  - flow.ask.pages
+  - part.answer.format
 ---
 
 # 0028 A character writes pages

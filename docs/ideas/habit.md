@@ -6,19 +6,19 @@ date: 2026-11-20
 source: "maintainers; the owner's pages on Telos, anxiety kernels and MARCO, digested under research/"
 arch:
   covers:
-  - part:answer-cache
-  - part:detection
+  - part.answer.cache
+  - part.provider.detect
   items:
   - kind: judged
-    name: habit-is-faithful
+    name: check.habit.keep
     question: State whether this written habit is a faithful summary of what thought decided.
     evidence: The case on the page, and the answers it replaced, in the vault history.
     scale: 1 misleading, 2 partial, 3 faithful, 4 faithful and sharper than the answers
     checks: []
     state: idea
   - kind: part
-    name: habit
-    layer: characters
+    name: part.character.habit
+    layer: layer.character
     text: 'A kept conclusion on a page: when a guard holds, then a response, because of a source, expecting what should follow.'
     state: idea
 ---

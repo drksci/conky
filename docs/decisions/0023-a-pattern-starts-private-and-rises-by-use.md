@@ -7,34 +7,34 @@ source: maintainers
 arch:
   items:
   - kind: flow
-    name: pattern-rises
+    name: flow.pattern.rise
     title: A pattern rising by use
     statement: A pattern is born private and rises one space at a time, by a measure of use and one write to within.
     rank: 8
     steps:
-    - frm: Page
-      to: Provider
+    - frm: lane.page
+      to: lane.provider
       text: the pattern maker is asked once, from goldens
-    - frm: Provider
-      to: Page
+    - frm: lane.provider
+      to: lane.page
       text: a space page, private to the space that made it
-    - frm: Page
-      to: Space
+    - frm: lane.page
+      to: lane.space
       text: other pages join it
-    - frm: Page
-      to: Page
+    - frm: lane.page
+      to: lane.page
       text: 'a measure of use: joins and distinct owners'
-    - frm: Runtime
-      to: Page
+    - frm: lane.runtime
+      to: lane.page
       text: the measure passes the threshold of the space above
-    - frm: Page
-      to: Space
+    - frm: lane.page
+      to: lane.space
       text: a reaction opens a proposal to move up one space
-    - frm: Space
-      to: Page
+    - frm: lane.space
+      to: lane.page
       text: approval under that space's own rule
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: one write to the pattern's within
     roadmap: R6
 ---

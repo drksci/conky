@@ -6,8 +6,8 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - law:measure-is-a-self-watch
-  - flow:measure-and-pressure
+  - law.measure.watch
+  - flow.watch.measure
 ---
 
 # 0008 Measures are self-watches

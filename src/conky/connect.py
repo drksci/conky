@@ -49,9 +49,9 @@ class Settings:
 
 
 @arch.step(
-    "perception-in",
+    "flow.connect.sense",
     3,
-    "Connector",
+    "lane.connector",
     None,
     "wait for quiet, strip control sequences, keep the last 60 lines",
 )
@@ -74,7 +74,13 @@ def plain(text: str) -> str:
     return "\n".join(shown.split("\n")[-LINES:])
 
 
-@arch.step("perception-in", 2, "Outside", "Connector", "the program prints, in a pseudo-terminal")
+@arch.step(
+    "flow.connect.sense",
+    2,
+    "lane.outside",
+    "lane.connector",
+    "the program prints, in a pseudo-terminal",
+)
 def _start(program: list[str]) -> tuple[int, subprocess.Popen[bytes]]:
     try:
         import fcntl
@@ -109,7 +115,11 @@ def _read(master: int) -> bytes:
 
 
 @arch.step(
-    "action-out", 2, "Connector", "History", "poll for a new commit that touches the hands page"
+    "flow.connect.act",
+    2,
+    "lane.connector",
+    "lane.history",
+    "poll for a new commit that touches the hands page",
 )
 def _last(vault: Vault, page: str) -> str:
     """Return the id of the latest commit that changed the page, or nothing."""
@@ -119,29 +129,29 @@ def _last(vault: Vault, page: str) -> str:
 
 
 @arch.archetype(
-    "hands",
+    "kind.hands",
     "a person or a character writes it, the connector creates it",
     "`keys`, `turn` and `enter`: what to type.",
     doc="connectors.md#the-hands-page",
 )
 @arch.stage(
     "act",
-    "the hands page",
+    "stage.act.hands",
     "The connector types what a hands page says.",
     doc="connectors.md#the-hands-page",
 )
 @arch.step(
-    "action-out",
+    "flow.connect.act",
     1,
-    "Page",
-    "Runtime",
+    "lane.page",
+    "lane.runtime",
     "write hands: keys and the turn it answers, and a rule may refuse it",
 )
-@arch.step("action-out", 3, "Connector", "Runtime", "read the hands page")
+@arch.step("flow.connect.act", 3, "lane.connector", "lane.runtime", "read the hands page")
 @arch.step(
-    "action-out",
+    "flow.connect.act",
     4,
-    "Connector",
+    "lane.connector",
     None,
     "keys must be text, the turn must equal the screen and not be answered",
 )
@@ -158,13 +168,17 @@ def _typed(vault: Vault, hands: str, turn: int, answered: int) -> str | None:
 
 
 @arch.archetype(
-    "screen",
+    "kind.screen",
     "a connector",
     "What a program shows, with `turn` and `ended`.",
     doc="connectors.md#the-screen-page",
 )
 @arch.step(
-    "perception-in", 1, "Connector", "Runtime", "create the screen and hands pages if missing"
+    "flow.connect.sense",
+    1,
+    "lane.connector",
+    "lane.runtime",
+    "create the screen and hands pages if missing",
 )
 def _prepare(vault: Vault, settings: Settings, now: Callable[[], str]) -> None:
     start = ((settings.screen, _SCREEN_BODY, {"turn": 0}), (settings.hands, _HANDS_BODY, {}))
@@ -190,56 +204,74 @@ def _stop(proc: subprocess.Popen[bytes]) -> int:
 
 
 @arch.part(
-    "connector-terminal",
-    "edge",
+    "part.connect.terminal",
+    "layer.edge",
     "The terminal connector, eyes and hands on a program.",
     doc="connectors.md#the-terminal-connector",
 )
 @arch.stage(
     "stimulus",
-    "a connector's perception",
+    "stage.stimulus.connector",
     "The terminal connector writes the screen page.",
     doc="connectors.md#the-screen-page",
 )
 @arch.change(
-    "beside",
+    "place.beside.connector",
     "Connectors: processes that hold no state and write as their own actor.",
     doc="connectors.md",
 )
 @arch.step(
-    "perception-in", 4, "Connector", None, "the text equals the last screen: nothing is written"
+    "flow.connect.sense",
+    4,
+    "lane.connector",
+    None,
+    "the text equals the last screen: nothing is written",
 )
 @arch.step(
-    "perception-in", 5, "Connector", "Runtime", "write screen: turn plus one, the body is the text"
+    "flow.connect.sense",
+    5,
+    "lane.connector",
+    "lane.runtime",
+    "write screen: turn plus one, the body is the text",
 )
 @arch.step(
-    "perception-in",
+    "flow.connect.sense",
     6,
-    "Runtime",
-    "Page",
+    "lane.runtime",
+    "lane.page",
     "a signed write by the connector, and the pages that watch screen react",
 )
 @arch.step(
-    "perception-in",
+    "flow.connect.sense",
     7,
-    "Runtime",
-    "Connector",
+    "lane.runtime",
+    "lane.connector",
     "refused: recorded, the connector prints it and goes on",
     refusal=True,
 )
 @arch.step(
-    "perception-in",
+    "flow.connect.sense",
     8,
-    "Connector",
+    "lane.connector",
     None,
     "the run ends on exit, max steps or interrupt, and ended is written",
 )
 @arch.step(
-    "action-out", 5, "Connector", "Outside", "type the keys, with a newline unless enter is false"
+    "flow.connect.act",
+    5,
+    "lane.connector",
+    "lane.outside",
+    "type the keys, with a newline unless enter is false",
 )
-@arch.step("action-out", 6, "Connector", None, "an old turn, or one already answered, is ignored")
+@arch.step(
+    "flow.connect.act",
+    6,
+    "lane.connector",
+    None,
+    "an old turn, or one already answered, is ignored",
+)
 @arch.slot(
-    "terminal",
+    "slot.connector",
     "connector kind",
     "Eyes and hands on a terminal program.",
     doc="connectors.md#the-terminal-connector",

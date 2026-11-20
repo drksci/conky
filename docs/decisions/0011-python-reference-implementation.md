@@ -6,7 +6,7 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - part:vault
+  - part.vault
 ---
 
 # 0011 Python reference implementation

@@ -6,37 +6,37 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - law:pages-capability
-  - law:reach-flows-down
-  - law:rules-only-tighten
-  - law:runtime-is-not-a-page
+  - law.answer.pages
+  - law.reach.down
+  - law.rule.tighten
+  - law.runtime.fixed
   items:
   - kind: law
-    name: spending-is-conserved
+    name: law.spend.conserve
     statement: What a space may spend is shared among what is inside it, so making more characters divides a budget.
     roadmap: R17
   - kind: flow
-    name: spending-conserved
+    name: flow.spend.conserve
     title: Spending conserved down a space
     statement: A space's budget is shared among what lies within it, and a page stops at its budget.
     rank: 3
     steps:
-    - frm: Space
-      to: Page
+    - frm: lane.space
+      to: lane.page
       text: a budget is shared among what is inside
-    - frm: Page
-      to: Runtime
+    - frm: lane.page
+      to: lane.runtime
       text: ask, or make another character
-    - frm: Runtime
-      to: Provider
+    - frm: lane.runtime
+      to: lane.provider
       text: the call is made
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: spend is kept as a field and recorded
-    - frm: Space
+    - frm: lane.space
       to: null
       text: more characters divide the budget and never multiply it
-    - frm: Runtime
+    - frm: lane.runtime
       to: null
       text: at the budget the page stops
     roadmap: R17

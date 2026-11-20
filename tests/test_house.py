@@ -41,7 +41,7 @@ def find(pattern: re.Pattern[str], files: list[Path]) -> list[str]:
     return found
 
 
-@arch.holds("no-debt")
+@arch.holds("law.debt.none")
 def test_no_fix_later_notes():
     pattern = re.compile(r"\b(" + "|".join(MARKERS) + r")\b")
     assert find(pattern, marker_files()) == []
@@ -168,7 +168,7 @@ def test_every_table_is_checked_or_stated():
     assert not unknown, f"{PAGE} has a table the code is not compared with: {sorted(unknown)}"
 
 
-@arch.holds("vocabulary-is-what-exists")
+@arch.holds("law.word.exist")
 @pytest.mark.parametrize("heading", sorted(code()))
 def test_vocabulary_agrees_with_the_code(heading):
     listed = vocabulary().get(heading, [])

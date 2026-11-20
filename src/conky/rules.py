@@ -35,7 +35,7 @@ def _plain(value: Any) -> Any:
 
 
 @arch.law(
-    "rules-are-pure",
+    "law.rule.pure",
     "Rules and measures are pure: no clock, randomness or input and output.",
     doc="rules-and-reactions.md#expressions",
 )
@@ -50,13 +50,13 @@ def evaluate(expression: str, variables: dict[str, Any]) -> Any:
 
 
 @arch.law(
-    "never-is-a-rule",
+    "law.rule.never",
     "Anything that must never happen is a rule the runtime evaluates.",
     doc="rules-and-reactions.md#expressions",
 )
 @arch.part(
-    "rule",
-    "reflexes",
+    "part.rule",
+    "layer.reflex",
     "A CEL expression judged before a write is kept.",
     doc="rules-and-reactions.md#expressions",
 )

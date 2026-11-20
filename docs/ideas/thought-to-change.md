@@ -6,8 +6,8 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - flow:answer-is-pages
-  - law:pages-capability
+  - flow.ask.pages
+  - law.answer.pages
 ---
 
 # Thought to change

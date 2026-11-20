@@ -7,46 +7,46 @@ source: the owner's request for a step or breakpoint primitive, and the prior ar
 arch:
   items:
   - kind: law
-    name: a-person-can-hold-and-step
+    name: law.vault.hold
     statement: A person can hold a vault and step it.
     roadmap: R28
   - kind: archetype
-    name: hold
+    name: kind.hold
     by: a person
-    layer: edge
+    layer: layer.edge
     text: A field held on a page named hold.
     roadmap: R28
   - kind: flow
-    name: hold-and-step
+    name: flow.vault.step
     title: Hold and step
     statement: A held vault still writes and verifies, its reactions wait until asked, and stepping to the end and running freely give the same history.
     rank: 4
     steps:
-    - frm: Person
-      to: Runtime
+    - frm: lane.person
+      to: lane.runtime
       text: write held on the page hold
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: an ordinary event, so everyone sees it
-    - frm: Person
-      to: Runtime
+    - frm: lane.person
+      to: lane.runtime
       text: write a page
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: the write lands and reactions wait
-    - frm: Person
-      to: Runtime
+    - frm: lane.person
+      to: lane.runtime
       text: step
-    - frm: Runtime
-      to: Page
+    - frm: lane.runtime
+      to: lane.page
       text: run exactly one due reaction, in the usual order
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: its event
-    - frm: Runtime
-      to: Provider
+    - frm: lane.runtime
+      to: lane.provider
       text: a held vault makes no model call
-    - frm: Runtime
+    - frm: lane.runtime
       to: null
       text: a breakpoint expression holds the vault when true
     roadmap: R28

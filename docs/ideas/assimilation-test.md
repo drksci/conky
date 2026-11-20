@@ -6,12 +6,12 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - flow:assimilate
-  - part:assimilate
+  - flow.vault.assimilate
+  - part.vault.assimilate
   items:
   - kind: part
-    name: resume-test
-    layer: edge
+    name: part.test.resume
+    layer: layer.edge
     text: 'The model-backed resume test: a fresh model-driven consumer handed only a stopped vault, with behavioural continuity scored apart from state continuity.'
     roadmap: R7
 ---

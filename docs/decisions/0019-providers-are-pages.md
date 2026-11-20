@@ -6,12 +6,12 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - law:provider-is-a-page
-  - archetype:provider
-  - flow:asking-a-model
+  - law.provider.page
+  - kind.provider
+  - flow.ask.model
   items:
   - kind: stage
-    name: a budget
+    name: stage.think.budget
     phase: think
     text: A budget that stops spending. Token counts are recorded and nothing bounds them yet.
     roadmap: R17

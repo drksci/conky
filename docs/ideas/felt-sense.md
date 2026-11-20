@@ -6,7 +6,7 @@ date: 2026-11-20
 source: the owner's request for a shared way to feel time, severity and impact, and the digest in research/where-am-i.md
 arch:
   covers:
-  - archetype:lens
+  - kind.lens
 ---
 
 # A felt sense of magnitude

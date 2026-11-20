@@ -25,7 +25,7 @@ APIS = arch.constant(
     ("openai", "anthropic", "command"),
     "provider shape",
     "conky.model.APIS",
-    "provider shapes",
+    "slot.shape",
     "How a provider page says to reach a model.",
     doc="providers.md#the-wire-formats",
 )
@@ -40,7 +40,7 @@ BUILTIN_COMMANDS = arch.constant(
     {"claude": ["claude", "-p"], "codex": ["codex", "exec"]},
     "built-in command",
     "conky.model.BUILTIN_COMMANDS",
-    "built-in commands",
+    "slot.command",
     "Programs a command provider can run with nothing set up.",
     doc="providers.md#command",
 )
@@ -53,7 +53,7 @@ CHOICES = arch.constant(
     ("anthropic", "openai", "claude", "codex", "none"),
     "provider choice",
     "conky.model.CHOICES",
-    "provider choices",
+    "slot.choice",
     "The models detection can choose, and none.",
     doc="providers.md#detection",
 )
@@ -96,28 +96,28 @@ class Answer:
 
 
 @arch.law(
-    "provider-is-a-page",
+    "law.provider.page",
     "A provider is a page, and a secret is never written to a vault.",
     doc="../decisions/0019-providers-are-pages.md",
     roadmap="R4",
 )
 @arch.archetype(
-    "provider",
+    "kind.provider",
     "a person, or a character without a secret or a command",
     "A page naming `api`, `url`, `model`, `secret` or `command`.",
     doc="providers.md#the-provider-page",
     roadmap="R4",
 )
 @arch.change(
-    "page",
+    "place.page.known",
     "Provider fields, a connector's screen and hands, a measure's value.",
     doc="providers.md#the-provider-page",
 )
 @arch.step(
-    "asking-a-model",
+    "flow.ask.model",
     6,
-    "Runtime",
-    "History",
+    "lane.runtime",
+    "lane.history",
     "a missing or malformed provider page is a model refusal",
     refusal=True,
 )
@@ -167,16 +167,16 @@ def _read(path: Path) -> str:
 
 
 @arch.change(
-    "beside",
+    "place.beside.secret",
     "Secrets, by name, from the environment or the key directory.",
     doc="providers.md#secrets",
     roadmap="R4",
 )
 @arch.step(
-    "asking-a-model",
+    "flow.ask.model",
     7,
-    "Runtime",
-    "Outside",
+    "lane.runtime",
+    "lane.outside",
     "find the secret by name: the environment, then the key directory",
 )
 def find_secret(name: str, keys_dir: Path) -> str:
@@ -194,7 +194,7 @@ def find_secret(name: str, keys_dir: Path) -> str:
 
 
 @arch.change(
-    "beside",
+    "place.beside.command",
     "Command lines, from the environment or the key directory, never from a page.",
     doc="providers.md#command",
     roadmap="R26",
@@ -287,26 +287,29 @@ class Detected:
 
 
 @arch.law(
-    "always-works",
+    "law.fallback.always",
     "Everything works with nothing configured, and rules stay strict.",
     doc="../decisions/0026-it-always-works.md",
     roadmap="R26",
 )
 @arch.part(
-    "detection",
-    "characters",
+    "part.provider.detect",
+    "layer.character",
     "The models the environment offers, in the order to try them.",
     doc="providers.md#detection",
     roadmap="R26",
 )
 @arch.change(
-    "runtime", "Choosing a model when none is named.", doc="providers.md#detection", roadmap="R26"
+    "place.runtime.detect",
+    "Choosing a model when none is named.",
+    doc="providers.md#detection",
+    roadmap="R26",
 )
 @arch.step(
-    "asking-a-model",
+    "flow.ask.model",
     11,
-    "Runtime",
-    "Outside",
+    "lane.runtime",
+    "lane.outside",
     "no answer yet: detect CONKY_PROVIDER, keys, then claude, then codex",
 )
 def detect() -> Detected:
@@ -415,10 +418,10 @@ def _parse(found: Provider, data: Any) -> Answer:
 
 
 @arch.step(
-    "asking-a-model",
+    "flow.ask.model",
     9,
-    "Runtime",
-    "Provider",
+    "lane.runtime",
+    "lane.provider",
     "one call, no retry: an HTTP post or a local program",
 )
 def ask(found: Provider, secret: str | None, prompt: str, keys_dir: Path) -> Answer:
@@ -473,10 +476,10 @@ def moment_key(found: Provider, prompt: str, cause: str) -> str:
 
 
 @arch.step(
-    "asking-a-model",
+    "flow.ask.model",
     8,
-    "Runtime",
-    "Outside",
+    "lane.runtime",
+    "lane.outside",
     "look up the cache by the question and its moment, a hit skips the call",
 )
 def ask_once(

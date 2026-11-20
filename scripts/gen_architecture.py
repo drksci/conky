@@ -7,10 +7,10 @@ idea comes from the `arch` key in the frontmatter of the pages in `docs/ideas/` 
 
 Each frontmatter `arch` is a mapping with two optional keys:
 
-    covers: [kind:name, ...]      built or planned rows this document is carried by
+    covers: [name, ...]           built or planned rows this document is carried by
     items:                        facts this document holds
-      - kind: law|part|archetype|stage|change|data|flow|unplaced
-        name: ...
+      - kind: law|part|archetype|stage|change|data|flow|judged|unplaced
+        name: kind.subject.aspect   the dotted name, which starts with the word of the kind
         roadmap: R12              the step that delivers it, which decides the state
         state: idea               only for an idea with no step, or to say it is still an idea
         text / statement / by / layer / phase / where / title / rank / steps ...
@@ -46,6 +46,22 @@ PHASE_TITLES = {
     "record": "Record",
 }
 KINDS = ("law", "part", "archetype", "stage", "change", "data", "flow", "judged", "unplaced")
+# The first segment of a dotted name, by the kind of the row that holds it. A row named without one
+# is unplaced and has no dotted name.
+KIND_WORD = {
+    "layer": "layer",
+    "law": "law",
+    "part": "part",
+    "archetype": "kind",
+    "slot": "slot",
+    "data": "data",
+    "change": "place",
+    "stage": "stage",
+    "flow": "flow",
+    "judged": "check",
+}
+NAME_WORDS = (*KIND_WORD.values(), "lane")
+MENTION = re.compile(r"`((?:" + "|".join(NAME_WORDS) + r")\.[a-z0-9.]+(?:#\d+)?)`")
 
 
 class ArchitectureError(Exception):
@@ -70,7 +86,30 @@ class Row:
 
     @property
     def key(self) -> str:
-        return f"{self.kind}:{self.name}"
+        return self.name
+
+
+def check_name(kind: str, name: str, where: str) -> None:
+    """Fail unless a name is dotted, lower case and starts with the word of its kind."""
+    word = KIND_WORD[kind]
+    if not re.fullmatch(rf"{word}(\.[a-z0-9]+){{1,2}}", name):
+        raise ArchitectureError(
+            f"{where}: {name!r} is not a dotted name of the form {word}.subject.aspect: rename it"
+        )
+
+
+def aid(name: str) -> str:
+    """Return the anchor of an entry, equal to its name, so no link depends on a heading."""
+    return f'<a id="{name}"></a>'
+
+
+def label(name: str) -> str:
+    return f"{aid(name)}`{name}`"
+
+
+def ref(name: str) -> str:
+    """Return an in-page link to the entry of that name."""
+    return f"[`{name}`](#{name})"
 
 
 def slug(heading: str) -> str:
@@ -194,6 +233,11 @@ def code_rows() -> tuple[dict[str, Row], list[arch.Entry]]:
             continue
         name = facts["name"]
         where = f"{entry.ref} ({entry.kind} {name})"
+        check_name(entry.kind, name, where)
+        if entry.kind == "stage" and name.split(".")[1] != facts["phase"]:
+            raise ArchitectureError(
+                f"{where}: the second segment must be the phase {facts['phase']}"
+            )
         resolve(entry.ref)
         check_link(facts["doc"], where)
         row = Row(
@@ -202,9 +246,7 @@ def code_rows() -> tuple[dict[str, Row], list[arch.Entry]]:
             facts.get("statement") or facts.get("text") or "",
             facts["doc"],
             roadmap=facts.get("roadmap"),
-            extra={
-                k: v for k, v in facts.items() if k in ("layer", "by", "phase", "where", "slot")
-            },
+            extra={k: v for k, v in facts.items() if k in ("layer", "by", "phase", "slot")},
         )
         row.state = state_of(row.roadmap, None, where, True)
         old = rows.get(row.key)
@@ -242,6 +284,7 @@ def doc_rows() -> tuple[dict[str, Row], list[tuple[Path, dict]], dict[str, dict]
                 if kind == "unplaced":
                     row = Row(kind, name, item.get("text", ""), link, state="idea", source=link)
                 else:
+                    check_name(kind, name, where)
                     row = Row(
                         kind,
                         name,
@@ -258,7 +301,6 @@ def doc_rows() -> tuple[dict[str, Row], list[tuple[Path, dict]], dict[str, dict]
                                 "layer",
                                 "by",
                                 "phase",
-                                "where",
                                 "rank",
                                 "title",
                                 "steps",
@@ -294,7 +336,8 @@ def build_rows() -> tuple[
         )
     rows = {**code, **planned}
     for layer_row in arch.LAYERS:
-        rows[f"layer:{layer_row.id}"] = Row("layer", layer_row.id, layer_row.holds)
+        check_name("layer", layer_row.id, f"conky.arch.LAYERS ({layer_row.id})")
+        rows[layer_row.id] = Row("layer", layer_row.id, layer_row.holds)
     marks = test_marks()
     names = {r.name for r in rows.values() if r.kind == "law"} | {f.name for f in arch.FLOWS}
     names |= set(flows)
@@ -308,9 +351,11 @@ def build_rows() -> tuple[
             row.tests = marks.get(row.name, [])
             if row.state == "built" and not row.tests:
                 row.tests = ["review"]
+    for flow in arch.FLOWS:
+        check_name("flow", flow.name, f"conky.arch.FLOWS ({flow.name})")
     for row in rows.values():
         layer = row.extra.get("layer")
-        if layer and f"layer:{layer}" not in rows:
+        if layer and layer not in rows:
             raise ArchitectureError(
                 f"{row.key}: layer {layer!r} is not one of the layers in conky.arch"
             )
@@ -320,7 +365,7 @@ def build_rows() -> tuple[
 def check_coverage(rows: dict[str, Row], docs: list[tuple[Path, dict]], flows: dict) -> None:
     for path, meta in docs:
         for ref in meta["arch"].get("covers") or []:
-            if ref not in rows and not any(f"flow:{f.name}" == ref for f in arch.FLOWS):
+            if ref not in rows and ref not in {f.name for f in arch.FLOWS}:
                 raise ArchitectureError(
                     f"{path.relative_to(ROOT)}: covers {ref}, which is no row: correct the name"
                 )
@@ -375,7 +420,7 @@ def doc_label(row: Row) -> str:
 def sections_laws(rows: dict[str, Row]) -> str:
     body = [
         [
-            r.name,
+            label(r.name),
             r.text,
             doc_label(r),
             cell_code(r.code),
@@ -392,12 +437,16 @@ def sections_parts(rows: dict[str, Row]) -> str:
     layers = [layer.id for layer in arch.LAYERS]
     parts = sorted(
         of(rows, "part"),
-        key=lambda r: (layers.index(r.extra.get("layer", "git")), STATES.index(r.state), r.name),
+        key=lambda r: (
+            layers.index(r.extra.get("layer", "layer.git")),
+            STATES.index(r.state),
+            r.name,
+        ),
     )
     body = [
         [
-            p.name,
-            p.extra.get("layer", "-"),
+            label(p.name),
+            ref(p.extra["layer"]) if p.extra.get("layer") else "-",
             p.text,
             doc_label(p),
             cell_code(p.code),
@@ -413,16 +462,16 @@ def sections_layers(rows: dict[str, Row]) -> str:
     body = []
     for layer in arch.LAYERS:
         here = [r for r in of(rows, "part") if r.extra.get("layer") == layer.id]
-        have = ", ".join(f"`{r.name}`" for r in ordered(here) if r.state in ("built", "building"))
-        plan = ", ".join(f"`{r.name}`" for r in ordered(here) if r.state in ("planned", "idea"))
-        body.append([f"{layer.name} (`{layer.id}`)", layer.holds, have or "-", plan or "-"])
+        have = ", ".join(ref(r.name) for r in ordered(here) if r.state in ("built", "building"))
+        plan = ", ".join(ref(r.name) for r in ordered(here) if r.state in ("planned", "idea"))
+        body.append([f"{layer.name} ({label(layer.id)})", layer.holds, have or "-", plan or "-"])
     return table(["Layer, from the store upwards", "Holds", "Built parts", "Planned parts"], body)
 
 
 def sections_archetypes(rows: dict[str, Row]) -> str:
     body = [
         [
-            a.name,
+            label(a.name),
             a.extra.get("by", "-"),
             a.text,
             doc_label(a),
@@ -435,8 +484,16 @@ def sections_archetypes(rows: dict[str, Row]) -> str:
     return table(["Kind of page", "Made by", "What", "Defined", "Code", "Step", "State"], body)
 
 
-def members(ref: str) -> str:
-    found = resolve(ref)
+def member_id(slot: str, wire: str) -> str:
+    """Return the id of a member of a slot: the slot name and the wire name, plain and lower case.
+
+    The wire name itself is never changed, so the id is only a handle for links and mentions.
+    """
+    return f"{slot}.{wire.lower().replace('-', '')}"
+
+
+def members(slot: str, code: str) -> str:
+    found = resolve(code)
     if isinstance(found, type) and issubclass(found, __import__("enum").Enum):
         names = [str(m.value) for m in found]
     elif isinstance(found, dict):
@@ -445,15 +502,15 @@ def members(ref: str) -> str:
         names = [str(v) for v in found]
     else:
         names = [getattr(found, "__name__", str(found))]
-    return ", ".join(f"`{n}`" for n in names)
+    return ", ".join(f"{aid(member_id(slot, n))}`{n}`" for n in names)
 
 
 def sections_slots(rows: dict[str, Row]) -> str:
     body = [
         [
-            s.name,
+            label(s.name),
             s.extra.get("slot", "-"),
-            members(s.code[0]),
+            members(s.name, s.code[0]),
             doc_label(s),
             cell_code(s.code),
         ]
@@ -465,29 +522,38 @@ def sections_slots(rows: dict[str, Row]) -> str:
 def sections_data(rows: dict[str, Row]) -> str:
     order = {k: i for i, k in enumerate(arch.DATA_KINDS)}
     body = [
-        [d.name, d.text, doc_label(d), cell_code(d.code), d.roadmap or "-", d.state]
-        for d in sorted(of(rows, "data"), key=lambda r: (order.get(r.name.split()[0], 9), r.name))
+        [label(d.name), d.text, doc_label(d), cell_code(d.code), d.roadmap or "-", d.state]
+        for d in sorted(
+            of(rows, "data"), key=lambda r: (order.get(r.name.split(".")[1], 9), r.name)
+        )
     ]
     return table(["Data kind", "What", "Defined", "Code", "Step", "State"], body)
 
 
 def sections_changes(rows: dict[str, Row]) -> str:
     places = {p: i for i, p in enumerate(arch.CHANGE_PLACES)}
-    body = [
-        [
-            c.extra.get("where", "-"),
-            c.name,
-            doc_label(c),
-            cell_code(c.code),
-            c.roadmap or "-",
-            c.state,
-        ]
-        for c in sorted(
-            of(rows, "change"),
-            key=lambda r: (places[r.extra["where"]], STATES.index(r.state), r.name),
+    body = []
+    first = set(places)
+    for c in sorted(
+        of(rows, "change"),
+        key=lambda r: (places[r.name.split(".")[1]], STATES.index(r.state), r.name),
+    ):
+        group = f"place.{c.name.split('.')[1]}"
+        cell = label(group) if c.name.split(".")[1] in first else f"`{group}`"
+        first.discard(c.name.split(".")[1])
+        body.append(
+            [
+                cell,
+                label(c.name),
+                c.text,
+                doc_label(c),
+                cell_code(c.code),
+                c.roadmap or "-",
+                c.state,
+            ]
         )
-    ]
-    return table(["Where", "What changes it or does it", "Defined", "Code", "Step", "State"], body)
+    head = ["Where", "Change", "What changes it or does it", "Defined", "Code", "Step", "State"]
+    return table(head, body)
 
 
 def sections_stages(rows: dict[str, Row]) -> str:
@@ -499,7 +565,7 @@ def sections_stages(rows: dict[str, Row]) -> str:
         body.append(
             [
                 PHASE_TITLES[s.extra["phase"]],
-                s.name,
+                label(s.name),
                 s.text,
                 doc_label(s),
                 cell_code(s.code),
@@ -532,7 +598,7 @@ def sections_checks(rows: dict[str, Row]) -> str:
     things += [("flow", f.name, None) for f in arch.FLOWS]
     things += [("flow", n, r) for n, r in ((r.name, r) for r in of(rows, "flow"))]
     things += [("part", r.name, r) for r in of(rows, "part")]
-    for kind, name, row in sorted(things, key=lambda t: (t[0], t[1])):
+    for _kind, name, row in sorted(things, key=lambda t: t[1]):
         state = row.state if row else "built"
         measured = marks.get(name, [])
         if row is not None and row.state not in ("built", "building"):
@@ -545,12 +611,18 @@ def sections_checks(rows: dict[str, Row]) -> str:
                 ", ".join(judged_for.get(name, [])) or "-",
                 "" if measured or judged_for.get(name) else "none",
             ]
-        body.append([f"{kind} `{name}`", state, *cell])
+        body.append([ref(name), state, *cell])
     head = ["Thing", "State", "Measured tests", "Judged checks", "No check"]
     out = table(head, body)
     if judged:
         rows_ = [
-            [j["name"], j["question"], j["evidence"], j["scale"], ", ".join(j.get("checks") or [])]
+            [
+                label(j["name"]),
+                j["question"],
+                j["evidence"],
+                j["scale"],
+                ", ".join(ref(c) for c in j.get("checks") or []),
+            ]
             for j in sorted(judged, key=lambda j: j["name"])
         ]
         out += "\n\n" + table(["Judged check", "Question", "Evidence", "Scale", "Checks"], rows_)
@@ -652,7 +724,7 @@ def flows_section(rows: dict[str, Row], steps: list[arch.Entry], flows: dict[str
             )
         )
     for name, item in sorted(flows.items(), key=lambda kv: kv[1].get("rank", 99)):
-        row = rows[f"flow:{name}"]
+        row = rows[name]
         out.append(
             render_flow(
                 item["title"],
@@ -670,12 +742,14 @@ def flows_section(rows: dict[str, Row], steps: list[arch.Entry], flows: dict[str
 
 
 def render_flow(title, statement, name, state, doc, code, tests, step, steps) -> str:
-    head = diagram(f"{title}", state, steps, f"flow {name}")
+    numbers = [s.get("order", i) for i, s in enumerate(steps, 1)]
+    anchors = "".join(aid(f"{name}#{n}") for n in numbers)
+    head = anchors + "\n\n" + diagram(f"{title}", state, steps, f"flow {name}")
     note = table(
         ["Flow", "Doc", "Code", "Test", "Step", "State"],
         [
             [
-                name,
+                label(name),
                 f"[{doc.rsplit('/', 1)[-1]}]({doc})",
                 cell_code(code),
                 cell_tests(tests),
@@ -690,17 +764,17 @@ def render_flow(title, statement, name, state, doc, code, tests, step, steps) ->
 FLOWCHART = """```mermaid
 flowchart LR
     subgraph stimulus [Stimulus]
-        S1["{accepted-write}"]
-        S2["{perception-in}"]
-        S3["{clock-tick}"]
-        S4["{reaction-cascade}"]
-        S5["{measure-and-pressure}"]
+        S1["{flow.write.accept}"]
+        S2["{flow.connect.sense}"]
+        S3["{flow.clock.tick}"]
+        S4["{flow.watch.react}"]
+        S5["{flow.watch.measure}"]
     end
     N["Notice: watch on and when, pressure, skip when unchanged"]
-    T["Think: {asking-a-model}"]
-    A["Act: field, {answer-is-pages}, {action-out}, {tool-call}"]
-    R["Record: signed event or refusal, {refused-write}"]
-    G{{"Rules of the page and its spaces, {join-and-leave}"}}
+    T["Think: {flow.ask.model}"]
+    A["Act: field, {flow.ask.pages}, {flow.connect.act}, {flow.tool.call}"]
+    R["Record: signed event or refusal, {flow.write.refuse}"]
+    G{{"Rules of the page and its spaces, {flow.space.move}"}}
     S1 --> G
     S2 --> G
     S3 --> G
@@ -720,7 +794,7 @@ def flowchart(rows: dict[str, Row], flows: dict[str, dict]) -> str:
     titles = {f.name: f"{f.title}" for f in arch.FLOWS}
     for name, item in flows.items():
         titles[name] = f"{item['title']} (planned)"
-    needed = re.findall(r"\{([a-z-]+)\}", FLOWCHART)
+    needed = re.findall(r"\{([a-z.]+)\}", FLOWCHART)
     for name in needed:
         if name not in titles:
             raise ArchitectureError(f"the overview names flow {name}, which does not exist")
@@ -733,12 +807,8 @@ def flowchart(rows: dict[str, Row], flows: dict[str, dict]) -> str:
 def coverage(docs: list[tuple[Path, dict]], rows: dict[str, Row]) -> str:
     def carried(meta: dict) -> str:
         names = list(meta["arch"].get("covers") or [])
-        names += [
-            f"{i['kind']}:{i['name']}"
-            for i in meta["arch"].get("items") or []
-            if i["kind"] != "unplaced"
-        ]
-        return ", ".join(f"`{n}`" for n in names) or "-"
+        names += [i["name"] for i in meta["arch"].get("items") or [] if i["kind"] != "unplaced"]
+        return ", ".join(ref(n) for n in names) or "-"
 
     parts = []
     for folder, head, column in (
@@ -777,6 +847,8 @@ source: maintainers
 This page is the complete inventory of Conky's architecture, generated from markers in the code (what is built) and from the frontmatter of the ideas and decisions (what is planned). Every law, part, layer, kind of page, slot, kind of data, change of state, stage of attention and flow is a row. A figure or a document that shows something this page does not list is incomplete, and the fix is to mark the code, or add to the document's `arch`, and run `python scripts/gen_architecture.py`. The words are in [vocabulary](vocabulary.md), and the model in short is [design](../design.md).
 
 `scripts/check_docs.py` fails when this page differs from what the generator makes. Nobody edits it by hand.
+
+Every entry has a dotted name of the form `kind.subject.aspect`, and an anchor equal to that name, so a link never depends on a heading. A step of a flow is the name of the flow, then `#` and its number, as in `flow.write.accept#3`. The generator fails when a backticked name that starts with one of these kinds appears anywhere under `docs/` and names no entry.
 
 ## States
 
@@ -866,7 +938,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 def build() -> str:
     rows, steps, docs, flows = build_rows()
     check_coverage(rows, docs, flows)
-    lanes = table(["Lane", "Is"], [[lane, arch.LANE_MEANING[lane]] for lane in arch.LANES])
+    lanes = table(["Lane", "Is"], [[label(lane), arch.LANE_MEANING[lane]] for lane in arch.LANES])
     text = TEMPLATE.format(
         laws=sections_laws(rows),
         parts=sections_parts(rows),
@@ -882,7 +954,51 @@ def build() -> str:
         checks=sections_checks(rows),
         coverage=coverage(docs, rows),
     )
-    return text.rstrip("\n") + "\n"
+    text = text.rstrip("\n") + "\n"
+    problems = [*link_problems(text), *mention_problems(rows, steps, flows)]
+    if problems:
+        raise ArchitectureError(problems[0])
+    return text
+
+
+def known_names(rows: dict[str, Row], steps: list[arch.Entry], flows: dict[str, dict]) -> set[str]:
+    """Return every dotted name the registry holds: rows, lanes, flows, steps and slot members."""
+    known = set(rows) | set(arch.LANES) | {f.name for f in arch.FLOWS} | set(flows)
+    known |= {f"place.{place}" for place in arch.CHANGE_PLACES}
+    for entry in steps:
+        known.add(f"{entry.facts['flow']}#{entry.facts['order']}")
+    for name, item in flows.items():
+        known |= {f"{name}#{n}" for n in range(1, len(item["steps"]) + 1)}
+    for row in rows.values():
+        if row.kind == "slot":
+            found = members(row.name, row.code[0])
+            known |= set(re.findall(r'<a id="([^"]+)">', found))
+    return known
+
+
+def mention_problems(rows, steps, flows) -> list[str]:
+    """Return a problem for each dotted name in backticks under docs/ that the registry lacks."""
+    known = known_names(rows, steps, flows)
+    problems = []
+    for path in sorted(DOCS.rglob("*.md")):
+        if path == PAGE:
+            continue
+        for name in MENTION.findall(path.read_text(encoding="utf-8")):
+            if name not in known:
+                problems.append(
+                    f"{path.relative_to(ROOT)}: `{name}` is no name in the registry: "
+                    "correct it, or register what it names"
+                )
+    return problems
+
+
+def link_problems(text: str) -> list[str]:
+    """Return a problem for each in-page link of the page that has no anchor."""
+    anchors_here = set(re.findall(r'<a id="([^"]+)">', text))
+    return [
+        f"docs/reference/architecture.md: the link #{target} has no anchor"
+        for target in sorted(set(re.findall(r"\]\(#([^)]+)\)", text)) - anchors_here)
+    ]
 
 
 def check() -> list[str]:

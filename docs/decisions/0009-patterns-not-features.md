@@ -7,8 +7,8 @@ source: maintainers
 arch:
   items:
   - kind: part
-    name: pattern-maker
-    layer: characters
+    name: part.pattern.make
+    layer: layer.character
     text: Domain structures are never built in. A pattern maker makes them on demand from worked examples.
     roadmap: R6
 ---

@@ -6,12 +6,12 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - part:screen
-  - flow:screen-and-prompt
+  - part.screen
+  - flow.screen.prompt
   items:
   - kind: part
-    name: trail-trial
-    layer: edge
+    name: part.test.trial
+    layer: layer.edge
     text: 'The exploratory trail trial: a party plays a text Oregon Trail through the terminal connector, run by Conky and by a plain single-loop baseline.'
     roadmap: R27
 ---

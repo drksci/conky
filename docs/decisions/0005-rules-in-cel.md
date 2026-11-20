@@ -6,9 +6,9 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - law:never-is-a-rule
-  - part:rule
-  - layer:reflexes
+  - law.rule.never
+  - part.rule
+  - layer.reflex
 ---
 
 # 0005 Rules in CEL

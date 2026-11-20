@@ -28,7 +28,7 @@ def pages(vault: Vault) -> dict[str, bytes]:
     return {p.name: p.read_bytes() for p in sorted(vault.pages_dir.glob("*.md"))}
 
 
-@arch.holds("only-writes-change-state", "every-change-is-signed", "accepted-write")
+@arch.holds("law.write.only", "law.event.seal", "flow.write.accept")
 def test_write_is_a_signed_commit_with_trailers_and_dates(vault: Vault) -> None:
     result = w(vault, "cooler", {"stock": 40}, "Fresh bread.")
     assert result.ok and result.id == commits(vault)[-1]
@@ -43,7 +43,7 @@ def test_write_is_a_signed_commit_with_trailers_and_dates(vault: Vault) -> None:
     vault.verify()
 
 
-@arch.holds("accepted-write")
+@arch.holds("flow.write.accept")
 def test_first_write_registers_the_key_in_the_same_commit(vault: Vault) -> None:
     w(vault, "cooler", {"stock": 1})
     w(vault, "cooler", {"stock": 2})
@@ -55,7 +55,7 @@ def test_first_write_registers_the_key_in_the_same_commit(vault: Vault) -> None:
     assert line.startswith('alice@conky namespaces="git" ssh-ed25519 ')
 
 
-@arch.holds("vault-travels-alone")
+@arch.holds("law.vault.travel")
 def test_init_sets_the_repository_up_for_plain_git(vault: Vault) -> None:
     w(vault, "cooler", {"stock": 1})
     assert git(vault.path, "config", "--get", "gpg.format").strip() == "ssh"
@@ -65,7 +65,7 @@ def test_init_sets_the_repository_up_for_plain_git(vault: Vault) -> None:
     assert 'Good "git" signature for alice@conky' in out
 
 
-@arch.holds("refusal-is-recorded", "refused-write")
+@arch.holds("law.refusal.record", "flow.write.refuse")
 def test_refused_write_is_an_empty_signed_commit(vault: Vault) -> None:
     assert w(vault, "cooler", {"rules": ["page.stock >= 0"], "stock": 5}).ok
     before = pages(vault)
@@ -81,7 +81,7 @@ def test_refused_write_is_an_empty_signed_commit(vault: Vault) -> None:
     vault.verify()
 
 
-@arch.holds("refused-write")
+@arch.holds("flow.write.refuse")
 def test_refusal_by_a_new_actor_registers_its_key(vault: Vault) -> None:
     result = w(vault, "supplier", {"watch": [{"on": "cooler"}]}, actor="carol")
     assert not result.ok and result.reason.startswith("shape")
@@ -89,13 +89,13 @@ def test_refusal_by_a_new_actor_registers_its_key(vault: Vault) -> None:
     vault.verify()
 
 
-@arch.holds("never-is-a-rule", "refused-write")
+@arch.holds("law.rule.never", "flow.write.refuse")
 def test_rule_error_refuses(vault: Vault) -> None:
     result = w(vault, "cooler", {"rules": ["page.missing > 0"]})
     assert not result.ok and result.reason.startswith("rule")
 
 
-@arch.holds("never-is-a-rule")
+@arch.holds("law.rule.never")
 def test_rule_inherited_through_two_level_chain(vault: Vault) -> None:
     w(vault, "stand", {"rules": ["page.price >= 0"], "price": 0})
     w(vault, "bazaar", {"within": "stand", "price": 0})
@@ -106,7 +106,7 @@ def test_rule_inherited_through_two_level_chain(vault: Vault) -> None:
     assert vault.read("cooler").fields["price"] == 3
 
 
-@arch.holds("refused-write")
+@arch.holds("flow.write.refuse")
 def test_a_refusal_by_a_rule_from_a_space_names_that_space(vault: Vault) -> None:
     w(vault, "stand", {"rules": ["!has(page.price) || page.price >= 0"]})
     w(vault, "bazaar", {"within": "stand"})
@@ -122,7 +122,7 @@ def test_a_refusal_by_a_rule_from_a_space_names_that_space(vault: Vault) -> None
     vault.verify()
 
 
-@arch.holds("rules-only-tighten", "join-and-leave")
+@arch.holds("law.rule.tighten", "flow.space.move")
 def test_leaving_a_space_is_judged_by_the_rules_of_the_space_it_leaves(vault: Vault) -> None:
     w(vault, "club", {"rules": ["size <= 200"]})
     w(vault, "street", {})
@@ -137,7 +137,7 @@ def test_leaving_a_space_is_judged_by_the_rules_of_the_space_it_leaves(vault: Va
     vault.verify()
 
 
-@arch.holds("never-is-a-rule")
+@arch.holds("law.rule.never")
 def test_size_rule_in_a_space_refuses_an_oversized_member(vault: Vault) -> None:
     w(vault, "tight", {"rules": ["size <= 300"]})
     assert w(vault, "note", {"within": "tight"}, "short").ok
@@ -148,13 +148,13 @@ def test_size_rule_in_a_space_refuses_an_oversized_member(vault: Vault) -> None:
     assert pages(vault) == before
 
 
-@arch.holds("pressure-not-walls")
+@arch.holds("law.pressure.notice")
 def test_page_without_a_size_rule_accepts_a_large_body(vault: Vault) -> None:
     assert w(vault, "note", {}, "x" * 100_000).ok
     assert len(vault.read("note").body) == 100_001
 
 
-@arch.holds("refused-write")
+@arch.holds("flow.write.refuse")
 def test_malformed_watch_is_refused(vault: Vault) -> None:
     result = w(vault, "supplier", {"watch": [{"on": "cooler"}]})
     assert not result.ok and result.reason.startswith("shape")
@@ -172,7 +172,7 @@ def watch_pair(vault: Vault) -> None:
     )
 
 
-@arch.holds("every-change-is-signed", "reflexes-are-free", "reaction-cascade")
+@arch.holds("law.event.seal", "law.reflex.free", "flow.watch.react")
 def test_reaction_is_caused_by_and_signed_by_the_reacting_page(vault: Vault) -> None:
     watch_pair(vault)
     first = w(vault, "cooler", {"stock": 4})
@@ -184,7 +184,7 @@ def test_reaction_is_caused_by_and_signed_by_the_reacting_page(vault: Vault) -> 
     vault.verify()
 
 
-@arch.holds("reaction-cascade")
+@arch.holds("flow.watch.react")
 def test_reaction_that_changes_nothing_is_skipped(vault: Vault) -> None:
     watch_pair(vault)
     w(vault, "cooler", {"stock": 4})
@@ -193,7 +193,7 @@ def test_reaction_that_changes_nothing_is_skipped(vault: Vault) -> None:
     assert len(commits(vault)) == count + 1
 
 
-@arch.holds("reaction-cascade")
+@arch.holds("flow.watch.react")
 def test_reaction_cycle_stops_at_depth_12(vault: Vault) -> None:
     for me, other in (("a", "b"), ("b", "a")):
         w(
@@ -209,7 +209,7 @@ def test_reaction_cycle_stops_at_depth_12(vault: Vault) -> None:
     vault.verify()
 
 
-@arch.holds("reaction-cascade")
+@arch.holds("flow.watch.react")
 def test_watch_key_on_is_plain_text_in_frontmatter(vault: Vault) -> None:
     watch_pair(vault)
     assert "- on: cooler\n" in (vault.pages_dir / "supplier.md").read_text()
@@ -232,7 +232,7 @@ def pressure_sequence(vault: Vault):
     return w(vault, "ledger", {}, "x" * 1000)
 
 
-@arch.holds("pressure-not-walls", "measure-and-pressure")
+@arch.holds("law.pressure.notice", "flow.watch.measure")
 def test_pressure_rises_without_refusing_work(vault: Vault) -> None:
     w(vault, "ledger", {"pressure": 0, "watch": MEASURE[:1]})
     result = w(vault, "ledger", {}, "x" * 100_000)
@@ -244,7 +244,7 @@ def test_pressure_rises_without_refusing_work(vault: Vault) -> None:
     vault.verify()
 
 
-@arch.holds("pressure-not-walls", "measure-and-pressure")
+@arch.holds("law.pressure.notice", "flow.watch.measure")
 def test_threshold_fires_a_reaction_and_the_sequence_settles(
     vault: Vault, tmp_path: Path, keys_dir: Path
 ) -> None:
@@ -258,7 +258,7 @@ def test_threshold_fires_a_reaction_and_the_sequence_settles(
     vault.verify()
 
 
-@arch.holds("measure-is-a-self-watch")
+@arch.holds("law.measure.watch")
 def test_other_size_is_visible_to_a_watcher(vault: Vault) -> None:
     w(vault, "gauge", {"watch": [{"on": "cooler", "when": "true", "set": {"seen": "other_size"}}]})
     w(vault, "cooler", {}, "x" * 500)
@@ -272,7 +272,7 @@ def make_history(vault: Vault) -> None:
     w(vault, "cooler", {"stock": 7})
 
 
-@arch.holds("pages-are-the-committed-files", "rebuild")
+@arch.holds("law.page.commit", "flow.vault.rebuild")
 def test_hand_edited_page_fails_verify_and_blocks_writes(vault: Vault) -> None:
     make_history(vault)
     vault.verify()
@@ -288,7 +288,7 @@ def test_hand_edited_page_fails_verify_and_blocks_writes(vault: Vault) -> None:
     assert w(vault, "cooler", {"stock": 9}).ok
 
 
-@arch.holds("pages-are-the-committed-files", "rebuild")
+@arch.holds("law.page.commit", "flow.vault.rebuild")
 def test_rebuild_discards_stray_files(vault: Vault) -> None:
     make_history(vault)
     before = pages(vault)
@@ -299,7 +299,7 @@ def test_rebuild_discards_stray_files(vault: Vault) -> None:
     vault.verify()
 
 
-@arch.holds("verify")
+@arch.holds("flow.vault.verify")
 def test_unsigned_commit_fails_verify(vault: Vault) -> None:
     make_history(vault)
     page = vault.pages_dir / "cooler.md"
@@ -309,7 +309,7 @@ def test_unsigned_commit_fails_verify(vault: Vault) -> None:
         vault.verify()
 
 
-@arch.holds("verify")
+@arch.holds("flow.vault.verify")
 def test_commit_signed_by_an_unlisted_key_fails_verify(vault: Vault, tmp_path: Path) -> None:
     make_history(vault)
     stranger = tmp_path / "stranger"
@@ -328,7 +328,7 @@ def test_commit_signed_by_an_unlisted_key_fails_verify(vault: Vault, tmp_path: P
         vault.verify()
 
 
-@arch.holds("verify")
+@arch.holds("flow.vault.verify")
 def test_commit_without_a_kind_trailer_fails_verify(vault: Vault) -> None:
     make_history(vault)
     git(
@@ -345,7 +345,7 @@ def test_commit_without_a_kind_trailer_fails_verify(vault: Vault) -> None:
         vault.verify()
 
 
-@arch.holds("verify")
+@arch.holds("flow.vault.verify")
 def test_write_commit_touching_other_files_fails_verify(vault: Vault) -> None:
     make_history(vault)
     (vault.path / "notes.txt").write_text("x")
@@ -363,7 +363,7 @@ def test_write_commit_touching_other_files_fails_verify(vault: Vault) -> None:
         vault.verify()
 
 
-@arch.holds("verify")
+@arch.holds("flow.vault.verify")
 def test_refused_commit_that_changes_a_page_fails_verify(vault: Vault) -> None:
     make_history(vault)
     page = vault.pages_dir / "cooler.md"
@@ -383,7 +383,7 @@ def test_refused_commit_that_changes_a_page_fails_verify(vault: Vault) -> None:
         vault.verify()
 
 
-@arch.holds("vault-travels-alone", "clone-and-leave")
+@arch.holds("law.vault.travel", "flow.vault.clone")
 def test_vault_travels_alone_by_clone_and_by_bundle(vault: Vault, tmp_path: Path) -> None:
     make_history(vault)
     nowhere = tmp_path / "no-such-keys"
@@ -401,7 +401,7 @@ def test_vault_travels_alone_by_clone_and_by_bundle(vault: Vault, tmp_path: Path
     assert not nowhere.exists()
 
 
-@arch.holds("vault-travels-alone")
+@arch.holds("law.vault.travel")
 def test_no_private_key_material_under_the_vault(vault: Vault, keys_dir: Path) -> None:
     make_history(vault)
     private = (keys_dir / "alice").read_text()
@@ -416,7 +416,7 @@ def test_no_private_key_material_under_the_vault(vault: Vault, keys_dir: Path) -
     assert not [p for p in vault.path.rglob("*") if p.name == "alice"]
 
 
-@arch.holds("read-a-page")
+@arch.holds("flow.page.read")
 def test_embeds_resolve_on_read(vault: Vault) -> None:
     w(vault, "cooler", {"stock": 40})
     w(vault, "sign", {}, "We hold ![[cooler#stock]] cups.")
@@ -426,14 +426,14 @@ def test_embeds_resolve_on_read(vault: Vault) -> None:
     assert vault.read("sign").body == "We hold 12 cups.\n"
 
 
-@arch.holds("read-a-page")
+@arch.holds("flow.page.read")
 def test_missing_embed_target_resolves_to_empty(vault: Vault) -> None:
     w(vault, "cooler", {"stock": 1})
     w(vault, "sign", {}, "a ![[nowhere#x]] b ![[cooler#nofield]] c")
     assert vault.read("sign").body == "a  b  c\n"
 
 
-@arch.holds("measure-is-a-self-watch", "measure-and-pressure")
+@arch.holds("law.measure.watch", "flow.watch.measure")
 def test_history_needs_no_expressions(
     vault: Vault, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -456,7 +456,7 @@ def test_history_needs_no_expressions(
     assert copy.read("ledger").fields["state"] == "crowded"
 
 
-@arch.holds("read-a-page")
+@arch.holds("flow.page.read")
 def test_log_lists_history_oldest_first(vault: Vault) -> None:
     first = w(vault, "cooler", {"rules": ["page.stock >= 0"], "stock": 5})
     w(vault, "cooler", {"stock": -1})
@@ -474,7 +474,7 @@ def test_opening_a_directory_that_is_not_a_vault_says_how_to_create_one(tmp_path
 GOLDEN = Path(__file__).parent / "golden"
 
 
-@arch.holds("golden-vault", "three-primitives")
+@arch.holds("law.vault.golden", "law.data.three")
 def test_golden_vault_still_reads(tmp_path: Path) -> None:
     git(tmp_path, "clone", "-q", str(GOLDEN / "v1.bundle"), "golden")
     golden = Vault(tmp_path / "golden", tmp_path / "no-such-keys")

@@ -11,7 +11,7 @@ from conky import arch
 SCRIPT = Path(__file__).resolve().parent.parent / "scripts" / "check_docs.py"
 
 
-@arch.holds("docs-are-checked")
+@arch.holds("law.docs.check")
 def test_docs_pass_the_check():
     spec = importlib.util.spec_from_file_location("check_docs", SCRIPT)
     module = importlib.util.module_from_spec(spec)

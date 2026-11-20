@@ -6,8 +6,8 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - law:vocabulary-is-what-exists
-  - part:commands
+  - law.word.exist
+  - part.cli.command
 ---
 
 # 0027 The vocabulary is what exists

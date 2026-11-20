@@ -6,7 +6,7 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - part:benchmark
+  - part.test.bench
 ---
 
 # 0014 Benchmark shape

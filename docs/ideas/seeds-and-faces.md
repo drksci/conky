@@ -7,8 +7,8 @@ source: maintainers
 arch:
   items:
   - kind: part
-    name: seed-and-face
-    layer: characters
+    name: part.character.face
+    layer: layer.character
     text: A fixed phrase per page, a stable identifier and a drawn face.
     roadmap: R23
 ---

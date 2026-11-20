@@ -33,7 +33,7 @@ KINDS = arch.constant(
     ("write", "refused"),
     "event kind",
     "conky.vault.KINDS",
-    "event kinds",
+    "slot.event",
     "What an event is: a write or a refusal.",
     doc="vault-format.md#commits",
 )
@@ -41,7 +41,7 @@ CACHE_HIT = "hit"
 
 
 @arch.slot(
-    "trailer key", "trailer", "A key of a commit's trailer block.", doc="vault-format.md#commits"
+    "slot.trailer", "trailer", "A key of a commit's trailer block.", doc="vault-format.md#commits"
 )
 class Trailer(StrEnum):
     """The keys of a commit's trailer block."""
@@ -62,7 +62,7 @@ class Trailer(StrEnum):
 
 
 @arch.slot(
-    "refusal",
+    "slot.refusal",
     "refusal",
     "The word a refusal's reason starts with.",
     doc="rules-and-reactions.md#refusals",
@@ -119,8 +119,8 @@ class Ask:
 
 
 @arch.part(
-    "vault",
-    "history",
+    "part.vault",
+    "layer.history",
     "A Git repository whose commits are the history.",
     doc="vault-format.md#layout",
 )
@@ -151,8 +151,8 @@ class Vault:
         return cls(path, keys_dir, cache)
 
     @arch.part(
-        "read",
-        "history",
+        "part.read",
+        "layer.history",
         "Return a page with its embeds resolved.",
         doc="cli.md#read",
     )
@@ -164,13 +164,13 @@ class Vault:
         return resolve(found, self._all())
 
     @arch.law(
-        "only-writes-change-state",
+        "law.write.only",
         "State changes only through a write committed to the history.",
         doc="../decisions/0002-git-is-the-store.md",
     )
     @arch.part(
-        "write",
-        "history",
+        "part.write",
+        "layer.history",
         "Commit a change to a page, or commit its refusal.",
         doc="cli.md#write",
     )
@@ -229,7 +229,7 @@ class Vault:
         return self._ask(page, ask, actor, at, cause, 0, skip_settled=False)
 
     @arch.data(
-        "stream",
+        "data.stream",
         "The Git history, the one stream every vault already has, read oldest first.",
         doc="vault-format.md#commits",
     )
@@ -266,12 +266,12 @@ class Vault:
         return lines
 
     @arch.law(
-        "pages-are-the-committed-files",
+        "law.page.commit",
         "Pages are the committed files, and a stray edit is refused or discarded.",
         doc="vault-format.md#what-verify-checks",
     )
     @arch.change(
-        "runtime",
+        "place.runtime.verify",
         "Checking the history, never changing it.",
         doc="vault-format.md#what-verify-checks",
     )
@@ -292,7 +292,7 @@ class Vault:
             self._check_commit(commit[:7], signature, git.trailers(message), files[commit])
 
     @arch.change(
-        "runtime",
+        "place.runtime.rebuild",
         "Restoring the working tree from the history.",
         doc="vault-format.md#rebuild",
     )
@@ -354,24 +354,24 @@ class Vault:
         return {p.stem: parse(p.read_text(encoding="utf-8")) for p in self.pages_dir.glob("*.md")}
 
     @arch.law(
-        "every-change-is-signed",
+        "law.event.seal",
         "Every change is signed and says what caused it.",
         doc="vault-format.md#a-write",
     )
     @arch.part(
-        "event",
-        "history",
+        "part.event",
+        "layer.history",
         "A commit: one write or one refusal.",
         doc="vault-format.md#commits",
     )
     @arch.stage(
         "record",
-        "a signed event with its cause",
+        "stage.record.event",
         "Every stimulus and every action is an event, or a refusal.",
         doc="vault-format.md#commits",
     )
     @arch.change(
-        "runtime",
+        "place.runtime.record",
         "Signing every event and recording every refusal.",
         doc="vault-format.md#commits",
     )
@@ -413,7 +413,7 @@ class Vault:
         )
 
     @arch.law(
-        "refusal-is-recorded",
+        "law.refusal.record",
         "A refused write is recorded as an empty commit, never dropped.",
         doc="vault-format.md#a-refusal",
     )
@@ -437,7 +437,7 @@ class Vault:
         )
 
     @arch.change(
-        "runtime",
+        "place.runtime.judge",
         "Judging rules, shape and limits before a write is kept.",
         doc="rules-and-reactions.md#refusals",
     )
@@ -489,18 +489,18 @@ class Vault:
         return False
 
     @arch.law(
-        "reach-flows-down",
+        "law.reach.down",
         "A character writes only inside the space it was given, and creates nothing wider.",
         doc="../decisions/0029-autonomy-inside-limits-that-hold.md",
         roadmap="R29",
     )
     @arch.law(
-        "runtime-is-not-a-page",
+        "law.runtime.fixed",
         "The runtime is not a page, so no character can change it.",
         doc="../decisions/0029-autonomy-inside-limits-that-hold.md",
     )
     @arch.change(
-        "runtime",
+        "place.runtime.limit",
         "Enforcing the limits of an answer that is pages.",
         doc="rules-and-reactions.md#an-answer-that-is-pages",
         roadmap="R29",
@@ -529,7 +529,7 @@ class Vault:
         return None
 
     @arch.law(
-        "rules-only-tighten",
+        "law.rule.tighten",
         "A member adds a rule and cannot remove one or leave one behind.",
         doc="../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md",
         roadmap="R29",
@@ -552,14 +552,14 @@ class Vault:
         return self._walk(name, left, before.within, scope)
 
     @arch.part(
-        "space",
-        "spaces",
+        "part.space",
+        "layer.space",
         "A page that others lie within, handing down its rules, with leaving judged.",
         doc="rules-and-reactions.md#rules-and-spaces",
         roadmap="R29",
     )
     @arch.archetype(
-        "space",
+        "kind.space",
         "a person or a character",
         "A page others name in `within`, with `rules`.",
         doc="rules-and-reactions.md#rules-and-spaces",
@@ -590,37 +590,37 @@ class Vault:
             space = found
 
     @arch.law(
-        "pressure-not-walls",
+        "law.pressure.notice",
         "Anything to be noticed is a pressure that triggers a reaction, not a wall.",
         doc="rules-and-reactions.md#measures",
         roadmap="R2",
     )
     @arch.law(
-        "measure-is-a-self-watch",
+        "law.measure.watch",
         "A measure is a page watching itself, and its value is a recorded event.",
         doc="../decisions/0008-measures-are-self-watches.md",
         roadmap="R2",
     )
     @arch.law(
-        "reflexes-are-free",
+        "law.reflex.free",
         "Whatever follows from state is a reflex with no model call.",
         doc="../decisions/0007-inference-for-real-thinking.md",
     )
     @arch.part(
-        "watch",
-        "reflexes",
+        "part.watch",
+        "layer.reflex",
         "Name a page whose writes make this page react.",
         doc="rules-and-reactions.md#reactions",
     )
     @arch.archetype(
-        "character",
+        "kind.character",
         "a person or a character",
         "Any page with `watch` entries or an `ask`.",
         doc="../decisions/0020-everything-is-somebody.md",
         roadmap="R4",
     )
     @arch.archetype(
-        "measure-bearing page",
+        "kind.measure",
         "a person or a character",
         "A diary, a counter or any page with a self-watch.",
         doc="rules-and-reactions.md#measures",
@@ -628,31 +628,31 @@ class Vault:
     )
     @arch.stage(
         "stimulus",
-        "another page's write",
+        "stage.stimulus.page",
         "Every write, a reaction included, is the stimulus for the pages that watch it.",
         doc="rules-and-reactions.md#reactions",
     )
     @arch.stage(
         "notice",
-        "a watch entry's `on` and `when`",
+        "stage.notice.watch",
         "`on` names the page and `when` must be the boolean true.",
         doc="rules-and-reactions.md#reactions",
     )
     @arch.stage(
         "notice",
-        "pressure",
+        "stage.notice.pressure",
         "A second self-watch entry whose `when` reads the number crossing a threshold.",
         doc="rules-and-reactions.md#measures",
         roadmap="R2",
     )
     @arch.stage(
         "notice",
-        "skipped when nothing changed",
+        "stage.notice.unchanged",
         "A reaction that leaves the page unchanged is not written.",
         doc="rules-and-reactions.md#reactions",
     )
     @arch.change(
-        "runtime",
+        "place.runtime.react",
         "Running reactions after a write, depth first, bounded at 12.",
         doc="rules-and-reactions.md#reactions",
     )
@@ -685,20 +685,20 @@ class Vault:
 
     @arch.stage(
         "notice",
-        "a settled question is skipped",
+        "stage.notice.settled",
         "A recorded answer for the same resolved prompt is never asked twice.",
         doc="rules-and-reactions.md#asking-a-model",
     )
     @arch.stage(
         "think",
-        "ask",
+        "stage.think.ask",
         "A prompt whose embeds are resolved and recorded as `Read`.",
         doc="rules-and-reactions.md#asking-a-model",
         roadmap="R4",
     )
     @arch.stage(
         "think",
-        "providers in order",
+        "stage.think.provider",
         "A named page first, then detection, then a plain sentence.",
         doc="providers.md#when-no-model-answers",
         roadmap="R26",
@@ -768,7 +768,7 @@ class Vault:
 
     @arch.stage(
         "act",
-        "a field of the asking page",
+        "stage.act.field",
         "The answer is written to `into` by the asking page.",
         doc="rules-and-reactions.md#asking-a-model",
         roadmap="R4",
@@ -811,26 +811,26 @@ class Vault:
         return Result(True, result.id, pages=landed)
 
     @arch.law(
-        "pages-capability",
+        "law.answer.pages",
         "An answer is pages, so a character can make notes, characters, spaces and rules.",
         doc="rules-and-reactions.md#an-answer-that-is-pages",
         roadmap="R29",
     )
     @arch.stage(
         "act",
-        "pages through writes",
+        "stage.act.page",
         "Each page is a write by the asker inside the named space.",
         doc="rules-and-reactions.md#an-answer-that-is-pages",
         roadmap="R29",
     )
     @arch.judged(
-        "character-organised-itself",
+        "check.character.organise",
         "State, after a live run, whether the single character organised itself "
         "in a way that helped the task or only looked busy.",
         "The vault's pages and its history: which pages it wrote, which rules "
         "and watch entries it added, and what each was caused by.",
         "1 hurt, 2 no effect, 3 helped, 4 helped and is worth keeping",
-        checks=["pages-capability", "answer-is-pages"],
+        checks=["law.answer.pages", "flow.ask.pages"],
     )
     def _land(
         self,
@@ -860,7 +860,7 @@ class Vault:
         return tuple(landed)
 
     @arch.change(
-        "runtime",
+        "place.runtime.plain",
         "Writing a plain sentence when no model answers.",
         doc="providers.md#when-no-model-answers",
         roadmap="R26",

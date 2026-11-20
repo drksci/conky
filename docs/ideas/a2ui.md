@@ -6,52 +6,52 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - part:presenters
+  - part.cli.present
   items:
   - kind: part
-    name: screen
-    layer: edge
+    name: part.screen
+    layer: layer.edge
     text: A screen derived from the pages as A2UI messages, drawn by a renderer.
     roadmap: R11b
   - kind: part
-    name: screen-page
-    layer: edge
+    name: part.screen.page
+    layer: layer.edge
     text: One static page that renders the messages, with no server.
     roadmap: R11c
   - kind: part
-    name: screen-updates
-    layer: edge
+    name: part.screen.update
+    layer: layer.edge
     text: The screen updated as the history grows.
     roadmap: R11d
   - kind: flow
-    name: screen-and-prompt
+    name: flow.screen.prompt
     title: The screen for people and a prompt coming back
     statement: The screen is derived from the pages and can be deleted, and a request typed into it is an ordinary write.
     rank: 10
     steps:
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: read pages and trailers
-    - frm: Runtime
-      to: Outside
+    - frm: lane.runtime
+      to: lane.outside
       text: 'derive the screen: a text outline, then A2UI messages, deletable'
-    - frm: Person
-      to: Outside
+    - frm: lane.person
+      to: lane.outside
       text: read the screen, with a prompt control at each corner
-    - frm: Person
-      to: Runtime
+    - frm: lane.person
+      to: lane.runtime
       text: a typed request, an ordinary write under the same rules
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: the request is recorded beside the layout it produced
-    - frm: Page
-      to: Provider
+    - frm: lane.page
+      to: lane.provider
       text: the compositor is asked once about layout
-    - frm: Provider
-      to: Page
+    - frm: lane.provider
+      to: lane.page
       text: a layout page
-    - frm: Runtime
-      to: Outside
+    - frm: lane.runtime
+      to: lane.outside
       text: redraw by reflex, with no model call
     roadmap: R11a
 ---

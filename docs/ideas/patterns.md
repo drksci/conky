@@ -7,14 +7,14 @@ source: maintainers
 arch:
   items:
   - kind: part
-    name: grouped-write
-    layer: history
+    name: part.write.group
+    layer: layer.history
     text: Several pages changed in one commit, with rules that see the whole group.
     roadmap: R24
   - kind: archetype
-    name: pattern
+    name: kind.pattern
     by: a character, through the pattern maker
-    layer: spaces
+    layer: layer.space
     text: A space made on demand from goldens, private at first and rising by use.
     roadmap: R6
 ---

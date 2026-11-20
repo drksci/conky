@@ -6,7 +6,7 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - part:answer-cache
+  - part.answer.cache
 ---
 
 # 0030 Pay once

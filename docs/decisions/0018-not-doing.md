@@ -6,7 +6,7 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - law:not-doing
+  - law.scope.out
 ---
 
 # 0018 What conky will not do

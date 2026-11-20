@@ -4,8 +4,8 @@ from conky import arch
 
 
 @arch.part(
-    "error",
-    "history",
+    "part.error",
+    "layer.history",
     "A message that says what went wrong and what to do next.",
     doc="cli.md#errors",
 )

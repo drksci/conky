@@ -7,8 +7,8 @@ source: maintainers
 arch:
   items:
   - kind: part
-    name: rename
-    layer: history
+    name: part.rename
+    layer: layer.history
     text: One change that also rewrites every link and embed that points at a page.
     state: idea
     roadmap: R15

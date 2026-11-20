@@ -7,25 +7,25 @@ source: maintainers
 arch:
   items:
   - kind: flow
-    name: dry-run
+    name: flow.write.try
     title: Dry run on a branch
     statement: A change is applied on a throwaway branch, the consequences are reported and the branch is discarded.
     rank: 5
     steps:
-    - frm: Person
-      to: Runtime
+    - frm: lane.person
+      to: lane.runtime
       text: what would this change do
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: a throwaway branch
-    - frm: Runtime
-      to: Page
+    - frm: lane.runtime
+      to: lane.page
       text: apply the change on the branch, with its reactions
-    - frm: Runtime
-      to: Person
+    - frm: lane.runtime
+      to: lane.person
       text: the refusals and reactions that would follow
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: discard the branch and record nothing
     roadmap: R13
 ---

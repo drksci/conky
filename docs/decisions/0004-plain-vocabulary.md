@@ -6,8 +6,8 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - part:vault
-  - law:vocabulary-is-what-exists
+  - part.vault
+  - law.word.exist
 ---
 
 # 0004 Plain vocabulary

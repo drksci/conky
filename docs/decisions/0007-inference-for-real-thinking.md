@@ -6,8 +6,8 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - law:reflexes-are-free
-  - stage:ask
+  - law.reflex.free
+  - stage.think.ask
 ---
 
 # 0007 Reflexes are free, so thought goes into character

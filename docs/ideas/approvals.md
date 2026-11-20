@@ -6,44 +6,44 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - part:who-signed
+  - part.seal.signer
   items:
   - kind: part
-    name: who-signed
-    layer: reflexes
+    name: part.seal.signer
+    layer: layer.reflex
     text: Rules that can see who signed a change and how it arose.
     roadmap: R14
   - kind: archetype
-    name: proposal
+    name: kind.proposal
     by: a character or a person
-    layer: characters
+    layer: layer.character
     text: A page that gathers approvals, with a reaction that applies the change.
     roadmap: R14
   - kind: flow
-    name: approval
+    name: flow.proposal.approve
     title: Approval of a proposal
     statement: A change that needs several parties is a proposal, signed approvals, a rule that counts them and a reaction that applies it.
     rank: 12
     steps:
-    - frm: Page
-      to: Runtime
+    - frm: lane.page
+      to: lane.runtime
       text: a proposal page names the change
-    - frm: Person
-      to: Runtime
+    - frm: lane.person
+      to: lane.runtime
       text: an approval, signed by the approver
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: the approval is an event with its signer
-    - frm: Space
-      to: Runtime
+    - frm: lane.space
+      to: lane.runtime
       text: a rule counts the approvals and can see who signed
-    - frm: Runtime
-      to: Page
+    - frm: lane.runtime
+      to: lane.page
       text: a reaction applies the change once the rule is met
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: the change, caused by the last approval
-    - frm: Space
+    - frm: lane.space
       to: null
       text: one approval is refused where two are needed
     roadmap: R14

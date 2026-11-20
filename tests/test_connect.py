@@ -100,7 +100,7 @@ def stand() -> Iterator[Stand]:
     found.stop()
 
 
-@arch.holds("perception-in")
+@arch.holds("flow.connect.sense")
 def test_the_first_screen_is_a_signed_write_by_the_connector(vault: Vault) -> None:
     assert connect(vault, "--max-steps", "1") == 0
     first = [c for c, tags in history(vault, "screen") if tags["Kind"] == "write"][1]
@@ -114,7 +114,7 @@ def test_the_first_screen_is_a_signed_write_by_the_connector(vault: Vault) -> No
     vault.verify()
 
 
-@arch.holds("action-out", "perception-in")
+@arch.holds("flow.connect.act", "flow.connect.sense")
 def test_a_reacting_page_plays_the_game_to_its_end(vault: Vault) -> None:
     reflex(vault)
     assert connect(vault) == 0
@@ -133,7 +133,7 @@ def test_a_reacting_page_plays_the_game_to_its_end(vault: Vault) -> None:
         assert any(tags["Cause"] == commit for tags in hands)
 
 
-@arch.holds("action-out")
+@arch.holds("flow.connect.act")
 def test_a_hands_write_for_an_old_turn_is_ignored(vault: Vault) -> None:
     running = Running(vault, "--max-steps", "2")
     wait_for(vault, 1)
@@ -146,7 +146,7 @@ def test_a_hands_write_for_an_old_turn_is_ignored(vault: Vault) -> None:
     assert "Rest a day." in body and "Hunt. Two rabbits" not in body
 
 
-@arch.holds("action-out")
+@arch.holds("flow.connect.act")
 @pytest.mark.parametrize("house_rule", [True, False])
 def test_a_rule_can_keep_a_key_from_the_program(vault: Vault, house_rule: bool) -> None:
     if house_rule:
@@ -168,7 +168,7 @@ def test_a_rule_can_keep_a_key_from_the_program(vault: Vault, house_rule: bool) 
     assert ("Push on." in body) is house_rule
 
 
-@arch.holds("perception-in")
+@arch.holds("flow.connect.sense")
 def test_max_steps_stops_a_run_and_records_why(vault: Vault) -> None:
     reflex(vault)
     assert connect(vault, "--max-steps", "2") == 0
@@ -177,7 +177,7 @@ def test_max_steps_stops_a_run_and_records_why(vault: Vault) -> None:
     assert "Stretch 3 of 5" not in page.body
 
 
-@arch.holds("perception-in")
+@arch.holds("flow.connect.sense")
 def test_control_sequences_do_not_reach_the_page(vault: Vault) -> None:
     shown = "import time; print('\\x1b[31mred\\x1b[0m \\x1b]0;title\\x07plain \\x1b[2Kdone'); "
     shown += "print('abc\\rXY'); time.sleep(10)"
@@ -187,7 +187,7 @@ def test_control_sequences_do_not_reach_the_page(vault: Vault) -> None:
     assert body.strip() == "red plain done\nXYc"
 
 
-@arch.holds("perception-in")
+@arch.holds("flow.connect.sense")
 def test_plain_text_keeps_the_last_sixty_lines() -> None:
     text = "".join(f"line {n}\r\n" for n in range(100))
     lines = plain(text).splitlines()

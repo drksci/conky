@@ -123,8 +123,8 @@ def run(
 
 
 @arch.part(
-    "demo",
-    "edge",
+    "part.cli.demo",
+    "layer.edge",
     "A narrated example vault built with the real write path.",
     doc="cli.md#demo",
     roadmap="R20",

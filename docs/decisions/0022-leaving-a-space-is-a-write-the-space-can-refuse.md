@@ -6,9 +6,9 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - law:rules-only-tighten
-  - flow:join-and-leave
-  - part:space
+  - law.rule.tighten
+  - flow.space.move
+  - part.space
 ---
 
 # 0022 Leaving a space is a write the space can refuse

@@ -39,13 +39,17 @@ def _run(
 
 
 @arch.step(
-    "clone-and-leave", 1, "Person", "History", "the vault moves by plain Git: clone, push or bundle"
+    "flow.vault.clone",
+    1,
+    "lane.person",
+    "lane.history",
+    "the vault moves by plain Git: clone, push or bundle",
 )
 @arch.step(
-    "clone-and-leave",
+    "flow.vault.clone",
     2,
-    "History",
-    "Outside",
+    "lane.history",
+    "lane.outside",
     "pages, history and public keys travel, and private keys and secrets stay behind",
 )
 def run(
@@ -69,7 +73,7 @@ def require_tools() -> None:
 
 
 @arch.law(
-    "vault-travels-alone",
+    "law.vault.travel",
     "A vault travels alone, verifies anywhere and holds no private key.",
     doc="vault-format.md#reading-with-plain-git",
 )
@@ -86,21 +90,21 @@ def init(path: Path) -> None:
 
 
 @arch.part(
-    "key",
-    "git",
+    "part.key",
+    "layer.git",
     "A signing key of one actor, kept outside the vault.",
     doc="vault-format.md#identity-and-signing",
 )
 @arch.change(
-    "beside",
+    "place.beside.key",
     "Private signing keys, in the key directory.",
     doc="vault-format.md#identity-and-signing",
 )
 @arch.step(
-    "accepted-write",
+    "flow.write.accept",
     6,
-    "Runtime",
-    "Outside",
+    "lane.runtime",
+    "lane.outside",
     "a first write by an actor makes its key in the key directory",
 )
 def register(keys_dir: Path, signers: Path, actor: str) -> tuple[Path, str | None]:
@@ -127,8 +131,8 @@ def register(keys_dir: Path, signers: Path, actor: str) -> tuple[Path, str | Non
 
 
 @arch.part(
-    "seal",
-    "git",
+    "part.seal",
+    "layer.git",
     "The signature on an event, made with Git's SSH signing.",
     doc="vault-format.md#identity-and-signing",
 )

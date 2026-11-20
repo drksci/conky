@@ -6,35 +6,35 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - part:space
+  - part.space
   items:
   - kind: part
-    name: space-context
-    layer: spaces
+    name: part.space.context
+    layer: layer.space
     text: A space handing down its context and its reactions, and a page within several spaces.
     roadmap: R22
   - kind: flow
-    name: space-hands-down
+    name: flow.space.inherit
     title: A space hands down context and reactions
     statement: A space hands down its context and its reactions as well as its rules.
     rank: 2
     steps:
-    - frm: Person
-      to: Runtime
+    - frm: lane.person
+      to: lane.runtime
       text: write a field on a space
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: an ordinary event
-    - frm: Runtime
-      to: Space
+    - frm: lane.runtime
+      to: lane.space
       text: its watch entries, and its fields as context
-    - frm: Runtime
-      to: Page
+    - frm: lane.runtime
+      to: lane.page
       text: each member sees the context in rules, reactions and embeds
-    - frm: Runtime
-      to: Page
+    - frm: lane.runtime
+      to: lane.page
       text: the space's reactions run for every member
-    - frm: Space
+    - frm: lane.space
       to: null
       text: a page may join several spaces and the stricter rule wins
     roadmap: R22

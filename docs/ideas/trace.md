@@ -7,7 +7,7 @@ source: maintainers
 arch:
   items:
   - kind: stage
-    name: the activity strip
+    name: stage.attention.strip
     phase: attention
     text: Plain-language notices for people, derived from Read, Cause and From trailers.
     state: idea

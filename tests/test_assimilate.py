@@ -26,7 +26,7 @@ def stopped_copy(tmp_path: Path, name: str = "source") -> Path:
     return tmp_path / name
 
 
-@arch.holds("assimilate")
+@arch.holds("flow.vault.assimilate")
 def test_bare_command_takes_checks_carries_on_and_checks_again(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
@@ -50,7 +50,7 @@ def test_bare_command_takes_checks_carries_on_and_checks_again(
     assert "\x1b" not in out
 
 
-@arch.holds("assimilate")
+@arch.holds("flow.vault.assimilate")
 def test_no_key_of_the_original_author_is_needed_and_the_newcomer_is_listed_at_once(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -78,7 +78,7 @@ def test_no_key_of_the_original_author_is_needed_and_the_newcomer_is_listed_at_o
     assert git(vault, "log", "-1", "--format=%an", "HEAD~1").strip() == "newcomer"
 
 
-@arch.holds("assimilate")
+@arch.holds("flow.vault.assimilate")
 @pytest.mark.parametrize("form", ["directory", "bundle", "url"])
 def test_the_source_can_be_a_directory_a_bundle_or_a_url(
     tmp_path: Path, form: str, capsys: pytest.CaptureFixture[str]
@@ -115,7 +115,7 @@ def test_without_then_it_stops_after_reading_and_says_how_to_continue(
     assert not (tmp_path / "k").exists()
 
 
-@arch.holds("assimilate")
+@arch.holds("flow.vault.assimilate")
 def test_a_tampered_source_fails_at_the_check_and_names_the_problem(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:

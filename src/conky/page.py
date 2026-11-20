@@ -16,7 +16,7 @@ RESERVED = arch.constant(
     ("within", "rules", "watch"),
     "reserved key",
     "conky.page.RESERVED",
-    "reserved keys",
+    "slot.key",
     "Keys of a page's frontmatter that are not fields.",
     doc="vocabulary.md#reserved-keys",
 )
@@ -24,7 +24,7 @@ WATCH_KEYS = arch.constant(
     ("on", "when", "set", "ask"),
     "watch key",
     "conky.page.WATCH_KEYS",
-    "watch keys",
+    "slot.watch",
     "Keys of a watch entry.",
     doc="vocabulary.md#watch-keys",
 )
@@ -32,7 +32,7 @@ ASK_KEYS = arch.constant(
     ("prompt", "into", "provider", "otherwise", "writes"),
     "ask key",
     "conky.page.ASK_KEYS",
-    "ask keys",
+    "slot.ask",
     "Keys of an ask.",
     doc="vocabulary.md#ask-keys",
 )
@@ -69,8 +69,8 @@ class ShapeError(Exception):
 
 
 @arch.part(
-    "page",
-    "history",
+    "part.page",
+    "layer.history",
     "Markdown with frontmatter, serialised the same way every time.",
     doc="vault-format.md#pages",
 )
@@ -130,7 +130,7 @@ def _ask_ok(value: Any) -> bool:
 
 
 @arch.change(
-    "page",
+    "place.page.field",
     "Fields, body, `within`, `rules` and `watch`, only by a write.",
     doc="vault-format.md#pages",
 )
@@ -174,12 +174,12 @@ def _watch_head(entry: dict[str, Any]) -> dict[str, Any]:
 
 
 @arch.law(
-    "three-primitives",
+    "law.data.three",
     "Data is a document, a table or a stream, and a change of shape is a forward re-projection.",
     doc="../decisions/0010-no-debt-no-down-migrations.md",
 )
 @arch.data(
-    "document",
+    "data.document",
     "A page: Markdown with frontmatter, small, in the present tense.",
     doc="vault-format.md#pages",
 )
@@ -249,7 +249,7 @@ def given(text: str) -> tuple[dict[str, Any], str | None]:
 
 
 @arch.law(
-    "golden-vault",
+    "law.vault.golden",
     "The vault format is held stable by a golden vault that every version reads.",
     doc="../decisions/0012-rust-core-planned.md",
 )
@@ -292,8 +292,8 @@ def embedded(text: str, lookup: dict[str, Page]) -> list[str]:
 
 
 @arch.part(
-    "embed",
-    "history",
+    "part.embed",
+    "layer.history",
     "`![[page]]` or `![[page#field]]`, resolved on read and in prompts.",
     doc="vault-format.md#pages",
 )
@@ -302,7 +302,13 @@ def resolve_text(text: str, lookup: dict[str, Page]) -> str:
     return EMBED.sub(lambda m: _embed_text(lookup.get(m.group(1)), m.group(2)) or "", text)
 
 
-@arch.step("read-a-page", 3, "Runtime", "Page", "replace each embed by the field or body it names")
+@arch.step(
+    "flow.page.read",
+    3,
+    "lane.runtime",
+    "lane.page",
+    "replace each embed by the field or body it names",
+)
 def resolve(page: Page, lookup: dict[str, Page]) -> Page:
     """Return a copy of page whose embeds are replaced by field values from lookup."""
     return Page(page.within, page.rules, page.watch, page.fields, resolve_text(page.body, lookup))

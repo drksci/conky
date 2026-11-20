@@ -7,7 +7,7 @@ source: maintainers
 arch:
   items:
   - kind: law
-    name: derived-data-is-deletable
+    name: law.data.derived
     statement: Derived data is optional, outside the history, rebuildable and safe to delete.
     roadmap: R11
 ---

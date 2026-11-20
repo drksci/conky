@@ -7,21 +7,21 @@ source: maintainers
 arch:
   items:
   - kind: flow
-    name: two-vaults-joined
+    name: flow.vault.link
     title: Two vaults joined
     statement: A space that grows too large becomes its own vault that the parent links to.
     rank: 11
     steps:
-    - frm: Space
-      to: Outside
+    - frm: lane.space
+      to: lane.outside
       text: a space becomes its own vault
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: history divides along the space
-    - frm: Page
-      to: Outside
+    - frm: lane.page
+      to: lane.outside
       text: the parent keeps a link to it
-    - frm: Space
+    - frm: lane.space
       to: null
       text: rules and reactions across the boundary are not worked out
     roadmap: R10

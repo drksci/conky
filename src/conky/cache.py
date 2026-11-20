@@ -60,14 +60,14 @@ class Stats:
 
 
 @arch.part(
-    "answer-cache",
-    "characters",
+    "part.answer.cache",
+    "layer.character",
     "Model answers kept outside the history, keyed to the moment.",
     doc="providers.md#cache",
     roadmap="R30",
 )
 @arch.change(
-    "beside",
+    "place.beside.cache",
     "Cached answers: derived data outside every vault, deletable.",
     doc="providers.md#cache",
     roadmap="R30",

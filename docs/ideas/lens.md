@@ -7,40 +7,40 @@ source: maintainers
 arch:
   items:
   - kind: archetype
-    name: lens
+    name: kind.lens
     by: a character
-    layer: characters
+    layer: layer.character
     text: How one shape maps to another, written once by thought and revised on surprise.
     state: idea
     roadmap: R11g
   - kind: flow
-    name: lens-revised
+    name: flow.lens.revise
     title: A lens written and revised on surprise
     statement: A lens is applied by reflex and rewritten only when a measure says it has stopped explaining what it sees.
     rank: 7
     steps:
-    - frm: Outside
-      to: Connector
+    - frm: lane.outside
+      to: lane.connector
       text: a raw surface changes
-    - frm: Connector
-      to: Page
+    - frm: lane.connector
+      to: lane.page
       text: the lens page maps it by reflex, with no model call
-    - frm: Page
-      to: Runtime
+    - frm: lane.page
+      to: lane.runtime
       text: a measure of the share explained, written as an event
-    - frm: Runtime
-      to: Page
+    - frm: lane.runtime
+      to: lane.page
       text: the share falls, so pressure rises
-    - frm: Runtime
-      to: Provider
+    - frm: lane.runtime
+      to: lane.provider
       text: a capable model is asked to revise the lens page
-    - frm: Provider
-      to: Runtime
+    - frm: lane.provider
+      to: lane.runtime
       text: a new lens
-    - frm: Runtime
-      to: History
+    - frm: lane.runtime
+      to: lane.history
       text: the revision, an ordinary signed write
-    - frm: Page
+    - frm: lane.page
       to: null
       text: steady state makes no model call
     roadmap: R11g

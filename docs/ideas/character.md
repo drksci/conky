@@ -7,8 +7,8 @@ source: maintainers
 arch:
   items:
   - kind: part
-    name: self
-    layer: characters
+    name: part.character.self
+    layer: layer.character
     text: A seed, a face, a temperament and a voice for every page.
     roadmap: R23
 ---

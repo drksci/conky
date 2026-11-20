@@ -7,13 +7,13 @@ source: maintainers
 arch:
   items:
   - kind: archetype
-    name: layout
+    name: kind.layout
     by: a character
-    layer: characters
+    layer: layer.character
     text: How the screen is composed, asked for once.
     roadmap: R11g
   - kind: stage
-    name: a prompt control
+    name: stage.stimulus.prompt
     phase: stimulus
     text: A request typed at the screen becomes an ordinary write.
     roadmap: R11f

@@ -7,13 +7,13 @@ source: maintainers
 arch:
   items:
   - kind: archetype
-    name: goal
+    name: kind.goal
     by: a person
-    layer: characters
+    layer: layer.character
     text: What a page's activity is read against.
     roadmap: R18
   - kind: stage
-    name: direction and drift
+    name: stage.attention.drift
     phase: attention
     text: Activity is read against a goal page as in phase, drifting or out of phase. The formula is not chosen.
     state: idea

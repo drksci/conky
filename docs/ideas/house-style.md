@@ -7,9 +7,9 @@ source: maintainers
 arch:
   items:
   - kind: archetype
-    name: taste
+    name: kind.taste
     by: a person, or inferred by a model page
-    layer: spaces
+    layer: layer.space
     text: How a vault looks and sounds, kept at the top space.
     roadmap: R23
 ---

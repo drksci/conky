@@ -6,11 +6,11 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - law:golden-vault
+  - law.vault.golden
   items:
   - kind: part
-    name: rust-core
-    layer: git
+    name: part.core.rust
+    layer: layer.git
     text: A core in Rust, compiled natively and to WebAssembly, passing the same golden vault.
     roadmap: R19
 ---

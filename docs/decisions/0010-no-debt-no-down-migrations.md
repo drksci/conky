@@ -6,9 +6,9 @@ date: 2026-11-20
 source: maintainers
 arch:
   covers:
-  - law:three-primitives
-  - law:no-debt
-  - data:document
+  - law.data.three
+  - law.debt.none
+  - data.document
 ---
 
 # 0010 No debt, no down-migrations
