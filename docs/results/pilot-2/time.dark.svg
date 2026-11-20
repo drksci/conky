@@ -1,156 +1,156 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="174" viewBox="0 0 720 174" role="img" aria-label="The median run of each harness along a time axis: steps above, model calls below.">
-<title>The median run of each harness along a time axis: steps above, model calls below.</title>
-<defs><pattern id="dots" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1z" fill="#EDEDED" shape-rendering="crispEdges"/></pattern><pattern id="dense" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#EDEDED" shape-rendering="crispEdges"/></pattern><pattern id="dense-accent" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#FF3DF2" shape-rendering="crispEdges"/></pattern></defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="226" viewBox="0 0 720 226" role="img" aria-label="The median run of each harness: the run, its steps, each model call.">
+<title>The median run of each harness: the run, its steps, each model call.</title>
+<defs><pattern id="dots" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1z" fill="#EDEDED" shape-rendering="crispEdges"/></pattern><pattern id="dense" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#EDEDED" shape-rendering="crispEdges"/></pattern><pattern id="dense-accent" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#FFE066" shape-rendering="crispEdges"/></pattern></defs>
 <text x="24.0" y="28.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start" fill="#EDEDED">Where the time went</text>
-<text x="696.0" y="28.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="end" fill="#8E949C" letter-spacing="0.14em">SECONDS, MEDIAN RUN · STEPS OVER MODEL CALLS</text>
+<text x="696.0" y="28.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" font-weight="normal" text-anchor="end" fill="#9AA0A8" letter-spacing="0.14em">SECONDS · RUN, STEP, MODEL CALL</text>
 <line x1="24.0" y1="40.0" x2="696.0" y2="40.0" stroke="#EDEDED" stroke-width="0.75" stroke-linecap="round"/>
-<text x="24.0" y="76.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">LOOP</text>
-<rect x="172.0" y="60.0" width="34.4" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="175.0" y="68.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">0</text>
-<rect x="206.7" y="60.0" width="17.1" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="209.7" y="68.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">1</text>
-<rect x="224.1" y="60.0" width="21.4" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="227.1" y="68.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">2</text>
-<rect x="245.7" y="60.0" width="9.6" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<rect x="255.6" y="60.0" width="11.0" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<rect x="266.9" y="60.0" width="11.0" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<rect x="278.2" y="60.0" width="50.2" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="281.2" y="68.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">6</text>
-<rect x="328.6" y="60.0" width="10.6" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<rect x="339.6" y="60.0" width="18.8" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="342.6" y="68.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">8</text>
-<rect x="358.7" y="60.0" width="12.2" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<rect x="371.2" y="60.0" width="16.4" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="374.2" y="68.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">10</text>
-<rect x="387.9" y="60.0" width="12.1" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<rect x="400.3" y="60.0" width="20.6" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="403.3" y="68.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">12</text>
-<rect x="421.2" y="60.0" width="31.4" height="10.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="424.2" y="68.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">13</text>
-<rect x="172.0" y="72.0" width="5.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="178.5" y="72.0" width="6.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="185.9" y="72.0" width="6.3" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="193.5" y="72.0" width="4.9" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="199.7" y="72.0" width="5.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="206.7" y="72.0" width="5.3" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="213.3" y="72.0" width="3.5" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="218.0" y="72.0" width="4.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="224.1" y="72.0" width="9.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="234.4" y="72.0" width="3.5" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="239.2" y="72.0" width="5.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="245.7" y="72.0" width="4.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="251.0" y="72.0" width="3.3" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="255.6" y="72.0" width="5.3" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="262.2" y="72.0" width="3.4" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="266.9" y="72.0" width="4.4" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="272.6" y="72.0" width="4.3" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="278.2" y="72.0" width="5.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="284.5" y="72.0" width="7.8" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="293.6" y="72.0" width="7.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="302.1" y="72.0" width="11.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="314.5" y="72.0" width="4.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="320.5" y="72.0" width="6.9" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="328.6" y="72.0" width="3.8" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="333.7" y="72.0" width="4.6" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="339.6" y="72.0" width="3.5" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="344.4" y="72.0" width="7.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="352.6" y="72.0" width="4.8" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="358.7" y="72.0" width="5.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="365.1" y="72.0" width="4.8" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="371.2" y="72.0" width="9.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="381.6" y="72.0" width="5.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="387.9" y="72.0" width="5.9" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="395.1" y="72.0" width="3.9" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="400.3" y="72.0" width="6.9" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="408.5" y="72.0" width="5.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="414.8" y="72.0" width="5.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="421.2" y="72.0" width="4.3" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="426.7" y="72.0" width="4.5" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="432.6" y="72.0" width="4.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="438.6" y="72.0" width="6.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="445.8" y="72.0" width="5.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<text x="462.5" y="77.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#EDEDED">239 s</text>
-<text x="24.0" y="90.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="start" fill="#8E949C" letter-spacing="0.14em">42 CALLS</text>
-<text x="24.0" y="132.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" font-weight="bold" text-anchor="start" fill="#FF3DF2" letter-spacing="0.14em">CONKY</text>
-<rect x="172.0" y="116.0" width="44.3" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<text x="175.0" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#FF3DF2" letter-spacing="0.14em">0</text>
-<rect x="216.9" y="116.0" width="12.1" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<rect x="229.5" y="116.0" width="12.7" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<rect x="242.7" y="116.0" width="38.6" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<text x="245.7" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#FF3DF2" letter-spacing="0.14em">3</text>
-<rect x="281.8" y="116.0" width="14.3" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<text x="284.8" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#FF3DF2" letter-spacing="0.14em">4</text>
-<rect x="296.6" y="116.0" width="28.1" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<text x="299.6" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#FF3DF2" letter-spacing="0.14em">5</text>
-<rect x="325.3" y="116.0" width="20.7" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<text x="328.3" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#FF3DF2" letter-spacing="0.14em">6</text>
-<rect x="346.5" y="116.0" width="15.1" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<text x="349.5" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#FF3DF2" letter-spacing="0.14em">7</text>
-<rect x="362.3" y="116.0" width="14.1" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<text x="365.3" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#FF3DF2" letter-spacing="0.14em">8</text>
-<rect x="376.9" y="116.0" width="14.4" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<text x="379.9" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#FF3DF2" letter-spacing="0.14em">9</text>
-<rect x="391.9" y="116.0" width="14.9" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<text x="394.9" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#FF3DF2" letter-spacing="0.14em">10</text>
-<rect x="407.3" y="116.0" width="26.4" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<text x="410.3" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#FF3DF2" letter-spacing="0.14em">11</text>
-<rect x="434.3" y="116.0" width="59.6" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<text x="437.3" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#FF3DF2" letter-spacing="0.14em">12</text>
-<rect x="494.4" y="116.0" width="25.6" height="10.0" fill="none" stroke="#FF3DF2" stroke-width="1.0"/>
-<text x="497.4" y="124.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="6.5" font-weight="normal" text-anchor="start" fill="#FF3DF2" letter-spacing="0.14em">13</text>
-<rect x="172.0" y="128.0" width="8.7" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="182.3" y="128.0" width="6.9" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="190.7" y="128.0" width="6.7" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="198.9" y="128.0" width="8.3" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="208.7" y="128.0" width="6.6" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="216.9" y="128.0" width="4.9" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="223.3" y="128.0" width="4.7" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="229.5" y="128.0" width="4.5" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="235.5" y="128.0" width="5.7" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="242.7" y="128.0" width="7.8" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="252.1" y="128.0" width="5.3" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="258.8" y="128.0" width="4.0" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="264.4" y="128.0" width="9.3" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="275.2" y="128.0" width="5.1" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="281.8" y="128.0" width="6.7" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="290.0" y="128.0" width="5.1" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="296.6" y="128.0" width="5.6" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="303.8" y="128.0" width="5.7" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="311.0" y="128.0" width="5.4" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="318.0" y="128.0" width="5.8" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="325.3" y="128.0" width="6.6" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="333.4" y="128.0" width="4.4" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="339.3" y="128.0" width="5.7" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="346.5" y="128.0" width="5.9" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="354.0" y="128.0" width="6.6" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="362.3" y="128.0" width="5.9" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="369.7" y="128.0" width="5.7" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="376.9" y="128.0" width="7.2" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="385.6" y="128.0" width="4.6" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="391.9" y="128.0" width="7.7" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="401.1" y="128.0" width="4.6" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="407.3" y="128.0" width="6.3" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="415.1" y="128.0" width="6.8" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="423.5" y="128.0" width="9.3" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="434.3" y="128.0" width="6.0" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="441.9" y="128.0" width="9.1" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="452.5" y="128.0" width="8.6" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="462.6" y="128.0" width="8.5" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="472.7" y="128.0" width="11.1" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="485.2" y="128.0" width="7.6" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="494.4" y="128.0" width="6.5" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="502.4" y="128.0" width="6.2" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<rect x="509.7" y="128.0" width="9.3" height="12.0" fill="url(#dense-accent)" stroke="#FF3DF2" stroke-width="0.75"/>
-<text x="530.0" y="133.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#FF3DF2">297 s</text>
-<text x="24.0" y="146.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="start" fill="#8E949C" letter-spacing="0.14em">43 CALLS</text>
-<line x1="172.0" y1="52.0" x2="172.0" y2="150.0" stroke="#8E949C" stroke-width="0.75" stroke-linecap="round" stroke-dasharray="1 4"/>
-<text x="172.0" y="162.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="middle" fill="#8E949C" letter-spacing="0.14em">0</text>
-<line x1="242.4" y1="52.0" x2="242.4" y2="150.0" stroke="#8E949C" stroke-width="0.75" stroke-linecap="round" stroke-dasharray="1 4"/>
-<text x="242.4" y="162.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="middle" fill="#8E949C" letter-spacing="0.14em">60</text>
-<line x1="312.8" y1="52.0" x2="312.8" y2="150.0" stroke="#8E949C" stroke-width="0.75" stroke-linecap="round" stroke-dasharray="1 4"/>
-<text x="312.8" y="162.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="middle" fill="#8E949C" letter-spacing="0.14em">120</text>
-<line x1="383.2" y1="52.0" x2="383.2" y2="150.0" stroke="#8E949C" stroke-width="0.75" stroke-linecap="round" stroke-dasharray="1 4"/>
-<text x="383.2" y="162.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="middle" fill="#8E949C" letter-spacing="0.14em">180</text>
-<line x1="453.7" y1="52.0" x2="453.7" y2="150.0" stroke="#8E949C" stroke-width="0.75" stroke-linecap="round" stroke-dasharray="1 4"/>
-<text x="453.7" y="162.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="middle" fill="#8E949C" letter-spacing="0.14em">240</text>
+<text x="24.0" y="66.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="bold" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">LOOP</text>
+<text x="696.0" y="66.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="end" fill="#EDEDED">239 seconds</text>
+<rect x="24.0" y="74.0" width="540.7" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="29.0" y="86.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">the run · 42 model calls</text>
+<rect x="24.0" y="94.0" width="65.4" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="29.0" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">0</text>
+<rect x="91.0" y="94.0" width="32.0" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="96.0" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">1</text>
+<rect x="124.5" y="94.0" width="40.3" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="129.5" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">2</text>
+<rect x="166.4" y="94.0" width="17.5" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="171.4" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">3</text>
+<rect x="185.4" y="94.0" width="20.2" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="190.4" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">4</text>
+<rect x="207.2" y="94.0" width="20.2" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="212.2" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">5</text>
+<rect x="229.0" y="94.0" width="95.9" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="234.0" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">6</text>
+<rect x="326.5" y="94.0" width="19.6" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="331.5" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">7</text>
+<rect x="347.6" y="94.0" width="35.3" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="352.6" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">8</text>
+<rect x="384.5" y="94.0" width="22.6" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="389.5" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">9</text>
+<rect x="408.7" y="94.0" width="30.6" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="413.7" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">10</text>
+<rect x="440.9" y="94.0" width="22.3" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="445.9" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">11</text>
+<rect x="464.8" y="94.0" width="38.8" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="469.8" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">12</text>
+<rect x="505.2" y="94.0" width="59.6" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
+<text x="510.2" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">13</text>
+<rect x="24.0" y="114.0" width="11.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="36.6" y="114.0" width="12.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="50.9" y="114.0" width="13.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="65.5" y="114.0" width="10.4" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="77.5" y="114.0" width="11.9" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="91.0" y="114.0" width="11.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="103.7" y="114.0" width="7.6" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="112.9" y="114.0" width="10.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="124.5" y="114.0" width="18.3" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="144.5" y="114.0" width="7.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="153.8" y="114.0" width="11.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="166.4" y="114.0" width="8.6" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="176.5" y="114.0" width="7.3" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="185.4" y="114.0" width="11.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="198.2" y="114.0" width="7.5" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="207.2" y="114.0" width="9.5" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="218.3" y="114.0" width="9.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="229.0" y="114.0" width="10.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="241.3" y="114.0" width="16.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="258.9" y="114.0" width="14.8" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="275.2" y="114.0" width="22.4" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="299.2" y="114.0" width="9.9" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="310.7" y="114.0" width="14.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="326.5" y="114.0" width="8.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="336.3" y="114.0" width="9.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="347.6" y="114.0" width="7.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="356.9" y="114.0" width="14.4" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="372.8" y="114.0" width="10.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="384.5" y="114.0" width="10.8" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="396.9" y="114.0" width="10.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="408.7" y="114.0" width="18.4" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="428.7" y="114.0" width="10.6" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="440.9" y="114.0" width="12.3" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="454.7" y="114.0" width="8.5" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="464.8" y="114.0" width="14.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="480.6" y="114.0" width="10.6" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="492.8" y="114.0" width="10.8" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="505.2" y="114.0" width="9.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="515.9" y="114.0" width="9.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="527.2" y="114.0" width="9.9" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="538.8" y="114.0" width="13.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<rect x="552.8" y="114.0" width="11.9" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
+<text x="24.0" y="152.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="bold" text-anchor="start" fill="#FFE066" letter-spacing="0.14em">CONKY</text>
+<text x="696.0" y="152.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="end" fill="#FFE066">297 seconds</text>
+<rect x="24.0" y="160.0" width="671.0" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="29.0" y="172.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">the run · 43 model calls</text>
+<rect x="24.0" y="180.0" width="84.6" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="29.0" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">0</text>
+<rect x="110.7" y="180.0" width="22.3" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="115.7" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">1</text>
+<rect x="135.0" y="180.0" width="23.6" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="140.0" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">2</text>
+<rect x="160.6" y="180.0" width="73.5" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="165.6" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">3</text>
+<rect x="236.1" y="180.0" width="26.6" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="241.1" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">4</text>
+<rect x="264.7" y="180.0" width="53.3" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="269.7" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">5</text>
+<rect x="320.0" y="180.0" width="38.9" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="325.0" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">6</text>
+<rect x="361.0" y="180.0" width="28.1" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="366.0" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">7</text>
+<rect x="391.4" y="180.0" width="26.2" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="396.4" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">8</text>
+<rect x="419.6" y="180.0" width="26.7" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="424.6" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">9</text>
+<rect x="448.6" y="180.0" width="27.7" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="453.6" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">10</text>
+<rect x="478.4" y="180.0" width="50.1" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="483.4" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">11</text>
+<rect x="530.5" y="180.0" width="114.1" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="535.5" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">12</text>
+<rect x="646.6" y="180.0" width="48.4" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
+<text x="651.6" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">13</text>
+<rect x="24.0" y="200.0" width="17.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="43.8" y="200.0" width="14.2" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="60.1" y="200.0" width="13.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="75.9" y="200.0" width="17.0" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="94.9" y="200.0" width="13.7" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="110.7" y="200.0" width="10.4" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="123.1" y="200.0" width="9.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="135.0" y="200.0" width="9.5" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="146.5" y="200.0" width="12.0" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="160.6" y="200.0" width="16.0" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="178.6" y="200.0" width="11.1" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="191.7" y="200.0" width="8.7" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="202.4" y="200.0" width="18.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="223.3" y="200.0" width="10.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="236.1" y="200.0" width="13.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="251.9" y="200.0" width="10.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="264.7" y="200.0" width="11.7" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="278.4" y="200.0" width="12.0" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="292.4" y="200.0" width="11.4" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="305.9" y="200.0" width="12.2" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="320.0" y="200.0" width="13.7" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="335.7" y="200.0" width="9.4" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="347.1" y="200.0" width="11.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="361.0" y="200.0" width="12.3" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="375.4" y="200.0" width="13.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="391.4" y="200.0" width="12.2" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="405.7" y="200.0" width="11.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="419.6" y="200.0" width="14.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="436.5" y="200.0" width="9.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="448.6" y="200.0" width="15.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="466.5" y="200.0" width="9.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="478.4" y="200.0" width="13.0" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="493.5" y="200.0" width="14.1" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="509.6" y="200.0" width="18.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="530.5" y="200.0" width="12.6" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="545.1" y="200.0" width="18.5" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="565.7" y="200.0" width="17.5" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="585.2" y="200.0" width="17.4" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="604.6" y="200.0" width="22.3" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="628.9" y="200.0" width="15.7" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="646.6" y="200.0" width="13.4" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="662.0" y="200.0" width="12.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="676.1" y="200.0" width="18.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
 </svg>

@@ -1,29 +1,143 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="180" viewBox="0 0 720 180" role="img" aria-label="Text sent in the median run of each harness, cut by where it came from.">
-<title>Text sent in the median run of each harness, cut by where it came from.</title>
-<defs><pattern id="dots" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1z" fill="#1E1E1E" shape-rendering="crispEdges"/></pattern><pattern id="dense" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#1E1E1E" shape-rendering="crispEdges"/></pattern><pattern id="dense-accent" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#E600E6" shape-rendering="crispEdges"/></pattern></defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="226" viewBox="0 0 720 226" role="img" aria-label="Text sent in the median run of each harness: the run, its sources, each step.">
+<title>Text sent in the median run of each harness: the run, its sources, each step.</title>
+<defs><pattern id="dots" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1z" fill="#1E1E1E" shape-rendering="crispEdges"/></pattern><pattern id="dense" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#1E1E1E" shape-rendering="crispEdges"/></pattern><pattern id="dense-accent" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#C99A00" shape-rendering="crispEdges"/></pattern></defs>
 <text x="24.0" y="28.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start" fill="#1E1E1E">Where the text went</text>
-<text x="696.0" y="28.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="end" fill="#8A8A86" letter-spacing="0.14em">CHARACTERS, MEDIAN RUN</text>
+<text x="696.0" y="28.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" font-weight="normal" text-anchor="end" fill="#77777A" letter-spacing="0.14em">CHARACTERS · RUN, SOURCE, STEP</text>
 <line x1="24.0" y1="40.0" x2="696.0" y2="40.0" stroke="#1E1E1E" stroke-width="0.75" stroke-linecap="round"/>
-<text x="24.0" y="78.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E" letter-spacing="0.14em">LOOP</text>
-<rect x="172.0" y="62.0" width="56.5" height="24.0" fill="none" stroke="#1E1E1E" stroke-width="1.0"/>
-<text x="176.0" y="100.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">38k</text>
-<text x="176.0" y="55.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="start" fill="#8A8A86" letter-spacing="0.14em">TASK</text>
-<rect x="228.5" y="62.0" width="262.0" height="24.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="1.0"/>
-<text x="232.5" y="100.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">175k</text>
-<text x="232.5" y="55.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="start" fill="#8A8A86" letter-spacing="0.14em">SCREEN</text>
-<rect x="490.4" y="62.0" width="25.5" height="24.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="1.0"/>
-<text x="494.4" y="100.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">17k</text>
-<rect x="515.9" y="62.0" width="4.1" height="24.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="1.0"/>
-<text x="530.0" y="79.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#1E1E1E">232k</text>
-<text x="24.0" y="140.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" font-weight="bold" text-anchor="start" fill="#E600E6" letter-spacing="0.14em">CONKY</text>
-<rect x="172.0" y="124.0" width="57.8" height="24.0" fill="none" stroke="#E600E6" stroke-width="1.0"/>
-<text x="176.0" y="162.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">39k</text>
-<rect x="229.8" y="124.0" width="121.0" height="24.0" fill="url(#dots)" stroke="#E600E6" stroke-width="1.0"/>
-<text x="233.8" y="162.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">81k</text>
-<rect x="350.9" y="124.0" width="53.5" height="24.0" fill="url(#dense-accent)" stroke="#E600E6" stroke-width="1.0"/>
-<text x="354.9" y="162.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">36k</text>
-<rect x="404.4" y="124.0" width="2.1" height="24.0" fill="#E600E6" stroke="#E600E6" stroke-width="1.0"/>
-<text x="416.4" y="141.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#E600E6">157k</text>
-<text x="604.0" y="96.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="start" fill="#E600E6">29%</text>
-<text x="604.0" y="114.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9" font-weight="normal" text-anchor="start" fill="#8A8A86">less than loop</text>
+<text x="24.0" y="66.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="bold" text-anchor="start" fill="#1E1E1E" letter-spacing="0.14em">LOOP</text>
+<text x="696.0" y="66.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="end" fill="#1E1E1E">232k characters</text>
+<rect x="24.0" y="74.0" width="671.0" height="18.0" fill="none" stroke="#1E1E1E" stroke-width="1.0"/>
+<text x="29.0" y="86.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">the run</text>
+<rect x="24.0" y="94.0" width="108.1" height="18.0" fill="none" stroke="#1E1E1E" stroke-width="1.0"/>
+<text x="29.0" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">task 38k</text>
+<rect x="24.0" y="114.0" width="12.0" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="37.0" y="114.0" width="6.8" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="44.8" y="114.0" width="6.8" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="52.6" y="114.0" width="4.2" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="57.8" y="114.0" width="4.2" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="63.0" y="114.0" width="4.2" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="68.1" y="114.0" width="14.6" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="83.7" y="114.0" width="4.2" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="88.9" y="114.0" width="6.8" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="96.7" y="114.0" width="4.2" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="101.9" y="114.0" width="4.2" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="107.1" y="114.0" width="4.2" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="112.3" y="114.0" width="6.8" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="120.1" y="114.0" width="12.0" height="12.0" fill="none" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="133.1" y="94.0" width="504.9" height="18.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="1.0"/>
+<rect x="136.1" y="97.0" width="65.6" height="12.0" fill="#FFFFFF" stroke="none" stroke-width="0.75"/>
+<text x="138.1" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">screen 175k</text>
+<rect x="133.1" y="114.0" width="36.1" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="170.1" y="114.0" width="25.2" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="196.3" y="114.0" width="30.0" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="227.3" y="114.0" width="22.2" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="250.5" y="114.0" width="24.0" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="275.6" y="114.0" width="25.6" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="302.2" y="114.0" width="87.6" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="390.8" y="114.0" width="30.5" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="422.3" y="114.0" width="34.8" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="458.1" y="114.0" width="20.4" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="479.4" y="114.0" width="22.1" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="502.5" y="114.0" width="24.0" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="527.5" y="114.0" width="39.6" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="568.1" y="114.0" width="69.8" height="12.0" fill="url(#dots)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="638.9" y="94.0" width="48.2" height="18.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="1.0"/>
+<rect x="638.9" y="114.0" width="2.3" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="642.2" y="114.0" width="1.3" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="644.5" y="114.0" width="1.6" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="647.1" y="114.0" width="0.9" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="649.0" y="114.0" width="1.0" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="651.0" y="114.0" width="1.1" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="653.1" y="114.0" width="6.0" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="660.1" y="114.0" width="1.6" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="662.7" y="114.0" width="3.0" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="666.7" y="114.0" width="1.8" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="669.5" y="114.0" width="1.9" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="672.5" y="114.0" width="2.0" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="675.5" y="114.0" width="3.8" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="680.3" y="114.0" width="6.8" height="12.0" fill="url(#dense)" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="688.1" y="94.0" width="6.9" height="18.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="1.0"/>
+<rect x="688.1" y="114.0" width="0.6" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="689.7" y="114.0" width="0.3" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="690.3" y="114.0" width="0.3" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="690.9" y="114.0" width="0.3" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="690.9" y="114.0" width="0.3" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="691.3" y="114.0" width="0.3" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="691.3" y="114.0" width="0.3" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="691.9" y="114.0" width="0.3" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="692.5" y="114.0" width="0.3" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="693.2" y="114.0" width="0.3" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="693.6" y="114.0" width="0.3" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="694.2" y="114.0" width="0.3" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="694.3" y="114.0" width="0.3" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<rect x="694.3" y="114.0" width="0.7" height="12.0" fill="#1E1E1E" stroke="#1E1E1E" stroke-width="0.75"/>
+<text x="24.0" y="152.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="bold" text-anchor="start" fill="#C99A00" letter-spacing="0.14em">CONKY</text>
+<text x="696.0" y="152.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="end" fill="#C99A00">157k characters</text>
+<rect x="24.0" y="160.0" width="451.7" height="18.0" fill="none" stroke="#C99A00" stroke-width="1.0"/>
+<text x="29.0" y="172.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">the run</text>
+<rect x="24.0" y="180.0" width="110.7" height="18.0" fill="none" stroke="#C99A00" stroke-width="1.0"/>
+<text x="29.0" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">task 39k</text>
+<rect x="24.0" y="200.0" width="12.0" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="37.0" y="200.0" width="4.2" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="42.2" y="200.0" width="4.2" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="47.4" y="200.0" width="12.0" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="60.4" y="200.0" width="4.2" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="65.5" y="200.0" width="9.4" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="75.9" y="200.0" width="6.8" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="83.7" y="200.0" width="4.2" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="88.9" y="200.0" width="4.2" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="94.1" y="200.0" width="4.2" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="99.3" y="200.0" width="4.2" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="104.5" y="200.0" width="6.8" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="112.3" y="200.0" width="14.6" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="127.9" y="200.0" width="6.8" height="12.0" fill="none" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="135.7" y="180.0" width="232.7" height="18.0" fill="url(#dots)" stroke="#C99A00" stroke-width="1.0"/>
+<rect x="138.7" y="183.0" width="60.0" height="12.0" fill="#FFFFFF" stroke="none" stroke-width="0.75"/>
+<text x="140.7" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">screen 81k</text>
+<rect x="135.7" y="200.0" width="36.1" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="172.7" y="200.0" width="11.1" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="184.8" y="200.0" width="10.8" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="196.6" y="200.0" width="25.7" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="223.3" y="200.0" width="8.9" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="233.2" y="200.0" width="18.7" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="252.9" y="200.0" width="13.8" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="267.7" y="200.0" width="8.8" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="277.5" y="200.0" width="9.1" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="287.6" y="200.0" width="8.9" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="297.5" y="200.0" width="9.0" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="307.6" y="200.0" width="14.3" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="322.9" y="200.0" width="30.2" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="354.1" y="200.0" width="14.3" height="12.0" fill="url(#dots)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="369.4" y="180.0" width="102.3" height="18.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="1.0"/>
+<rect x="372.4" y="183.0" width="88.0" height="12.0" fill="#FFFFFF" stroke="none" stroke-width="0.75"/>
+<text x="374.4" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#1E1E1E">scaffolding 36k</text>
+<rect x="369.4" y="200.0" width="11.0" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="381.4" y="200.0" width="3.8" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="386.2" y="200.0" width="3.8" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="391.0" y="200.0" width="11.0" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="403.0" y="200.0" width="3.8" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="407.8" y="200.0" width="8.6" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="417.4" y="200.0" width="6.2" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="424.6" y="200.0" width="3.8" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="429.5" y="200.0" width="3.8" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="434.3" y="200.0" width="3.8" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="439.1" y="200.0" width="3.8" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="443.9" y="200.0" width="6.2" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="451.1" y="200.0" width="13.4" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="465.5" y="200.0" width="6.2" height="12.0" fill="url(#dense-accent)" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="472.7" y="180.0" width="3.0" height="18.0" fill="#C99A00" stroke="#C99A00" stroke-width="1.0"/>
+<rect x="472.7" y="200.0" width="0.3" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="473.2" y="200.0" width="0.3" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="473.2" y="200.0" width="0.3" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="473.8" y="200.0" width="0.3" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="473.8" y="200.0" width="0.3" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="474.1" y="200.0" width="0.3" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="474.2" y="200.0" width="0.3" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="474.2" y="200.0" width="0.3" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="474.2" y="200.0" width="0.3" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="474.2" y="200.0" width="0.3" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="474.2" y="200.0" width="0.3" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="474.2" y="200.0" width="0.3" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="474.6" y="200.0" width="0.3" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
+<rect x="475.3" y="200.0" width="0.4" height="12.0" fill="#C99A00" stroke="#C99A00" stroke-width="0.75"/>
 </svg>

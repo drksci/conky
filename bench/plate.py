@@ -2,7 +2,7 @@
 
 Drawn from the standard record alone (`bench/record.py`), so it names no scenario and no harness.
 The look is a pen-plotter printout: one ink, grey for what is secondary, dot textures where a
-tone is wanted, filled and hollow squares for marks. Colour is two neon pens and no more: one
+tone is wanted, filled and hollow squares for marks. Colour is two soft neon pens and no more: one
 for the harness whose `adapter.json` says `accent`, one for a broken rule.
 """
 
@@ -17,8 +17,20 @@ WIDTH = 720
 MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
 LOOKS = {
-    "light": {"ink": "#1E1E1E", "grey": "#8A8A86", "accent": "#E600E6", "mark": "#6400FF"},
-    "dark": {"ink": "#EDEDED", "grey": "#8E949C", "accent": "#FF3DF2", "mark": "#00FFFF"},
+    "light": {
+        "ink": "#1E1E1E",
+        "grey": "#77777A",
+        "accent": "#C99A00",
+        "mark": "#0097A7",
+        "paper": "#FFFFFF",
+    },
+    "dark": {
+        "ink": "#EDEDED",
+        "grey": "#9AA0A8",
+        "accent": "#FFE066",
+        "mark": "#7DF9FF",
+        "paper": "#0D1117",
+    },
 }
 TITLE = (
     "Every run drawn as a bar from start to goal, one band per harness, "
@@ -48,7 +60,7 @@ class Sheet:
             f"{escape(str(s))}</text>"
         )
 
-    def caps(self, x, y, s, fill="grey", anchor="start", size=7.5, weight="normal"):
+    def caps(self, x, y, s, fill="grey", anchor="start", size=8.5, weight="normal"):
         self.text(x, y, str(s).upper(), size, fill, MONO, weight, anchor, 0.14)
 
     def line(self, x1, y1, x2, y2, width=0.75, stroke="ink", dash=""):
@@ -199,8 +211,8 @@ def reached(rows: list[dict], series: list[dict], progress: dict, kind: str, loo
     for i, h in enumerate(order):
         rs = arms[h]
         y = top + i * lane
-        s.caps(24, y + 14, h, colour(h), size=9.5, weight="bold")
-        s.text(24, y + 28, rs[0]["gloss"], 8.5, "grey", SANS)
+        s.caps(24, y + 14, h, colour(h), size=10.5, weight="bold")
+        s.text(24, y + 29, rs[0]["gloss"], 9.5, "grey", SANS)
         first = y + (lane - 8 - len(rs) * (bar + gap) + gap) / 2
         for k, r in enumerate(rs):
             by = first + k * (bar + gap)
@@ -241,99 +253,99 @@ SHARES = (
     ("scaffold", "scaffolding"),
     ("answer", "answers"),
 )
+FLAME = (24.0, WIDTH - 24.0)  # a flame takes the full width, its harness named above it
+ROW = 20.0
+
+
+def _flame_head(s: Sheet, y: float, name: str, total: str, colour: str) -> None:
+    s.caps(FLAME[0], y, name, colour, size=10.5, weight="bold")
+    s.text(FLAME[1], y, total, 14, colour, SANS, "bold", "end")
+
+
+def _cell(s: Sheet, x, y, w, paint, colour, label="", fill_text="ink") -> None:
+    """One box of a flame, with its label inside when it fits."""
+    s.box(x, y, max(w - 1, 0.5), ROW - 2, paint, colour, 1.0)
+    if label and w > len(label) * 5.6 + 8:
+        if paint != "none":
+            s.box(x + 3, y + 3, len(label) * 5.6 + 4, ROW - 8, "paper", "none")
+        s.text(x + 5, y + ROW - 7.5, label, 9.5, fill_text, SANS, "bold")
 
 
 def text(rows: list[dict], calls: list[dict], look: str) -> str:
-    """Where the text went: one bar a harness, cut by where each character came from."""
+    """Where the text went: a flame a harness. The run, then where it came from, then each step."""
     s = Sheet(look)
     order, arms, accent, thinking = _setup(rows)
     made = {(e["harness"], e["seed"]): e["calls"] for e in calls}
-    _head(s, "Where the text went", _state(rows, "characters, median run"))
+    _head(s, "Where the text went", _state(rows, "characters · run, source, step"))
     picks = {h: _median_run(arms[h], "chars") for h in thinking}
-    totals = {
-        h: {k: sum(c.get(k, 0) for c in made.get((h, picks[h]["seed"]), [])) for k, _ in SHARES}
-        for h in thinking
-    }
+    runs = {h: made.get((h, picks[h]["seed"]), []) for h in thinking}
+    totals = {h: {k: sum(c.get(k, 0) for c in runs[h]) for k, _ in SHARES} for h in thinking}
     most = max((sum(t.values()) for t in totals.values()), default=1) or 1
     fills = {"task": "none", "screen": "url(#dots)", "scaffold": "url(#dense)", "answer": "ink"}
-    y = 62.0
-    named: set[str] = set()
+    span = FLAME[1] - FLAME[0]
+    y = 66.0
     for h in thinking:
         colour = "accent" if accent[h] else "ink"
-        s.caps(24, y + 16, h, colour, size=9.5, weight="bold")
-        x = X0
+        whole = sum(totals[h].values())
+        _flame_head(s, y, h, f"{short(whole)} characters", colour)
+        y += 8
+        _cell(s, FLAME[0], y, span * whole / most, "none", colour, "the run")
+        x = FLAME[0]
         for key, word in SHARES:
             amount = totals[h][key]
-            w = (X1 - X0) * amount / most
+            w = span * amount / most
             paint = fills[key]
             if accent[h]:
                 paint = {"url(#dense)": "url(#dense-accent)", "ink": "accent"}.get(paint, paint)
-            s.box(x, y, max(w, 0.5), 24, paint, colour, 1.0)
-            if w > 24:
-                s.text(x + 4, y + 38, short(amount), 9.5, "ink", SANS, "bold")
-            if w > len(word) * 5.6 and key not in named:
-                s.caps(x + 4, y - 7, word)
-                named.add(key)
+            _cell(s, x, y + ROW, w, paint, colour, f"{word} {short(amount)}")
+            inner = x
+            by_step: dict[int, int] = {}
+            for c in runs[h]:
+                by_step[c["step"]] = by_step.get(c["step"], 0) + c.get(key, 0)
+            for _, part in sorted(by_step.items()):
+                pw = span * part / most
+                s.box(inner, y + 2 * ROW, max(pw - 1, 0.3), ROW - 8, paint, colour, 0.75)
+                inner += pw
             x += w
-        s.text(x + 10, y + 17, short(sum(totals[h].values())), 14, colour, SANS, "bold")
-        y += 62
-    if len(thinking) == 2 and any(accent[h] for h in thinking):
-        ours = next(h for h in thinking if accent[h])
-        other = next(h for h in thinking if h != ours)
-        a, b = (statistics.median(r["chars"] for r in arms[h]) for h in (ours, other))
-        if b and a != b:
-            change = round(100 * (a / b - 1))
-            s.text(SIDE + 56, 96, f"{abs(change)}%", 30, "accent", SANS, "bold")
-            s.text(
-                SIDE + 56, 114, f"{'less' if change < 0 else 'more'} than {other}", 9, "grey", SANS
-            )
-    return s.svg(y - 6, "Text sent in the median run of each harness, cut by where it came from.")
+        y += 3 * ROW + 18
+    return s.svg(
+        y - 12, "Text sent in the median run of each harness: the run, its sources, each step."
+    )
 
 
 def time(rows: list[dict], calls: list[dict], look: str) -> str:
-    """Where the time went: the median run of each harness as a flame, steps over calls."""
+    """Where the time went: a flame a harness. The run, then each step, then each model call."""
     s = Sheet(look)
     order, arms, accent, thinking = _setup(rows)
     made = {(e["harness"], e["seed"]): e["calls"] for e in calls}
-    _head(s, "Where the time went", _state(rows, "seconds, median run · steps over model calls"))
+    _head(s, "Where the time went", _state(rows, "seconds · run, step, model call"))
     picks = {h: _median_run(arms[h], "wall_s") for h in thinking}
     runs = {h: made.get((h, picks[h]["seed"]), []) for h in thinking}
     longest = max((c["at"] + c["seconds"] for cs in runs.values() for c in cs), default=1) or 1
+    span = FLAME[1] - FLAME[0]
 
     def px(seconds: float) -> float:
-        return X0 + (X1 - X0) * seconds / longest
+        return FLAME[0] + span * seconds / longest
 
-    y = 60.0
+    y = 66.0
     for h in thinking:
         colour = "accent" if accent[h] else "ink"
         paint = "url(#dense-accent)" if accent[h] else "url(#dense)"
         cs = runs[h]
-        s.caps(24, y + 16, h, colour, size=9.5, weight="bold")
+        end = cs[-1]["at"] + cs[-1]["seconds"] if cs else 0
+        _flame_head(s, y, h, f"{end:,.0f} seconds", colour)
+        y += 8
+        _cell(
+            s, FLAME[0], y, px(end) - FLAME[0], "none", colour, f"the run · {len(cs)} model calls"
+        )
         spans: dict[int, list[float]] = {}
         for c in cs:
             lo, hi = spans.setdefault(c["step"], [c["at"], c["at"] + c["seconds"]])
             spans[c["step"]] = [min(lo, c["at"]), max(hi, c["at"] + c["seconds"])]
         for step, (lo, hi) in sorted(spans.items()):
-            s.box(px(lo), y, max(px(hi) - px(lo), 0.5), 10, "none", colour, 1.0)
-            if px(hi) - px(lo) > 14:
-                s.caps(px(lo) + 3, y + 8, step, colour, size=6.5)
+            _cell(s, px(lo), y + ROW, px(hi) - px(lo), "none", colour, f"{step}")
         for c in cs:
-            s.box(
-                px(c["at"]),
-                y + 12,
-                max(px(c["at"] + c["seconds"]) - px(c["at"]) - 1, 0.5),
-                12,
-                paint,
-                colour,
-                0.75,
-            )
-        end = cs[-1]["at"] + cs[-1]["seconds"] if cs else 0
-        s.text(px(end) + 10, y + 17, f"{end:,.0f} s", 14, colour, SANS, "bold")
-        s.caps(24, y + 30, f"{len(cs)} calls")
-        y += 56
-    for tick in range(0, int(longest) + 1, 60):
-        s.line(px(tick), 52, px(tick), y - 22, 0.75, "grey", "1 4")
-        s.caps(px(tick), y - 10, f"{tick}", anchor="middle")
-    return s.svg(
-        y + 2, "The median run of each harness along a time axis: steps above, model calls below."
-    )
+            w = px(c["at"] + c["seconds"]) - px(c["at"])
+            s.box(px(c["at"]), y + 2 * ROW, max(w - 1, 0.3), ROW - 8, paint, colour, 0.75)
+        y += 3 * ROW + 18
+    return s.svg(y - 12, "The median run of each harness: the run, its steps, each model call.")
