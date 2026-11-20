@@ -1,0 +1,1586 @@
+[
+ {
+  "harness": "conky",
+  "seed": 1,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 5,
+    "chars": 18958,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 7,
+    "chars": 26598,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.09754901960784314,
+    "calls": 9,
+    "chars": 34319,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.19901960784313724,
+    "calls": 14,
+    "chars": 52204,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.2754901960784314,
+    "calls": 16,
+    "chars": 59204,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.3784313725490196,
+    "calls": 20,
+    "chars": 72940,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.4549019607843137,
+    "calls": 23,
+    "chars": 83246,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.5558823529411765,
+    "calls": 25,
+    "chars": 90084,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.615686274509804,
+    "calls": 27,
+    "chars": 97042,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.7161764705882353,
+    "calls": 29,
+    "chars": 103942,
+    "violations": []
+   },
+   {
+    "step": 10,
+    "progress": 0.8166666666666667,
+    "calls": 31,
+    "chars": 110877,
+    "violations": []
+   },
+   {
+    "step": 11,
+    "progress": 0.8313725490196079,
+    "calls": 34,
+    "chars": 121506,
+    "violations": []
+   },
+   {
+    "step": 12,
+    "progress": 0.8980392156862745,
+    "calls": 40,
+    "chars": 142878,
+    "violations": []
+   },
+   {
+    "step": 13,
+    "progress": 1.0,
+    "calls": 43,
+    "chars": 153865,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "conky",
+  "seed": 2,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 5,
+    "chars": 18790,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 8,
+    "chars": 30179,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.0965686274509804,
+    "calls": 11,
+    "chars": 42398,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.19705882352941176,
+    "calls": 13,
+    "chars": 50417,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.2980392156862745,
+    "calls": 15,
+    "chars": 58363,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.39656862745098037,
+    "calls": 17,
+    "chars": 65735,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.46568627450980393,
+    "calls": 23,
+    "chars": 88330,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.5426470588235294,
+    "calls": 25,
+    "chars": 95488,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.6441176470588236,
+    "calls": 28,
+    "chars": 106401,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.6916666666666667,
+    "calls": 30,
+    "chars": 113717,
+    "violations": []
+   },
+   {
+    "step": 10,
+    "progress": 0.7926470588235294,
+    "calls": 32,
+    "chars": 120834,
+    "violations": []
+   },
+   {
+    "step": 11,
+    "progress": 0.8539215686274509,
+    "calls": 34,
+    "chars": 128001,
+    "violations": []
+   },
+   {
+    "step": 12,
+    "progress": 0.9205882352941176,
+    "calls": 37,
+    "chars": 138791,
+    "violations": []
+   },
+   {
+    "step": 13,
+    "progress": 1.0,
+    "calls": 42,
+    "chars": 157023,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "conky",
+  "seed": 3,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 5,
+    "chars": 18861,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 7,
+    "chars": 26501,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.10245098039215686,
+    "calls": 9,
+    "chars": 34077,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.2019607843137255,
+    "calls": 13,
+    "chars": 48952,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.2950980392156863,
+    "calls": 15,
+    "chars": 55952,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.39509803921568626,
+    "calls": 17,
+    "chars": 62864,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.46568627450980393,
+    "calls": 23,
+    "chars": 84189,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.5524509803921569,
+    "calls": 26,
+    "chars": 94734,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.6313725490196078,
+    "calls": 29,
+    "chars": 105155,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.675,
+    "calls": 31,
+    "chars": 112045,
+    "violations": []
+   },
+   {
+    "step": 10,
+    "progress": 0.7784313725490196,
+    "calls": 33,
+    "chars": 118881,
+    "violations": []
+   },
+   {
+    "step": 11,
+    "progress": 0.8808823529411764,
+    "calls": 35,
+    "chars": 125732,
+    "violations": []
+   },
+   {
+    "step": 12,
+    "progress": 1.0,
+    "calls": 38,
+    "chars": 136337,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "conky",
+  "seed": 4,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 5,
+    "chars": 18853,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 7,
+    "chars": 26491,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.10245098039215686,
+    "calls": 9,
+    "chars": 34199,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.19558823529411765,
+    "calls": 13,
+    "chars": 49313,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.2774509803921569,
+    "calls": 19,
+    "chars": 70751,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.3799019607843137,
+    "calls": 23,
+    "chars": 84560,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.46078431372549017,
+    "calls": 26,
+    "chars": 94587,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.4843137254901961,
+    "calls": 28,
+    "chars": 101432,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.5377450980392157,
+    "calls": 30,
+    "chars": 108218,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.6102941176470589,
+    "calls": 33,
+    "chars": 118460,
+    "violations": []
+   },
+   {
+    "step": 10,
+    "progress": 0.678921568627451,
+    "calls": 38,
+    "chars": 139258,
+    "violations": []
+   },
+   {
+    "step": 11,
+    "progress": 0.746078431372549,
+    "calls": 40,
+    "chars": 147775,
+    "violations": []
+   },
+   {
+    "step": 12,
+    "progress": 0.8220588235294117,
+    "calls": 42,
+    "chars": 156229,
+    "violations": []
+   },
+   {
+    "step": 13,
+    "progress": 0.9112745098039216,
+    "calls": 46,
+    "chars": 173450,
+    "violations": []
+   },
+   {
+    "step": 14,
+    "progress": 1.0,
+    "calls": 50,
+    "chars": 189744,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "conky",
+  "seed": 5,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 2,
+    "chars": 7429,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "floor-continue",
+  "seed": 1,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.09754901960784314,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.19901960784313724,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.29558823529411765,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.3985294117647059,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.47401960784313724,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.5431372549019607,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "floor-continue",
+  "seed": 2,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.0965686274509804,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.19950980392156864,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.30049019607843136,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.3990196078431373,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.46568627450980393,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "pass-fort-hungry"
+    ]
+   }
+  ]
+ },
+ {
+  "harness": "floor-continue",
+  "seed": 3,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.10245098039215686,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.2019607843137255,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.2901960784313726,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.3926470588235294,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.46568627450980393,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "pass-fort-hungry"
+    ]
+   }
+  ]
+ },
+ {
+  "harness": "floor-continue",
+  "seed": 4,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.10245098039215686,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.19558823529411765,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.2897058823529412,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "pass-fort-hungry"
+    ]
+   },
+   {
+    "step": 5,
+    "progress": 0.39215686274509803,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "floor-continue",
+  "seed": 5,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.10294117647058823,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.20049019607843138,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.2995098039215686,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "pass-fort-hungry"
+    ]
+   },
+   {
+    "step": 5,
+    "progress": 0.40098039215686276,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.46568627450980393,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "pass-fort-hungry"
+    ]
+   }
+  ]
+ },
+ {
+  "harness": "floor-random",
+  "seed": 1,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "eat-poorly"
+    ]
+   },
+   {
+    "step": 2,
+    "progress": 0.09686274509803922,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.19519607843137254,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.273921568627451,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.3492156862745098,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "eat-poorly"
+    ]
+   },
+   {
+    "step": 6,
+    "progress": 0.42205882352941176,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "eat-poorly"
+    ]
+   },
+   {
+    "step": 7,
+    "progress": 0.49931372549019604,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.5401960784313725,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "eat-poorly"
+    ]
+   },
+   {
+    "step": 9,
+    "progress": 0.6488235294117647,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 10,
+    "progress": 0.7447058823529411,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 11,
+    "progress": 0.8185294117647057,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 12,
+    "progress": 0.8549019607843137,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "eat-poorly"
+    ]
+   },
+   {
+    "step": 13,
+    "progress": 0.9215686274509803,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 14,
+    "progress": 0.946078431372549,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "eat-poorly"
+    ]
+   },
+   {
+    "step": 15,
+    "progress": 0.946078431372549,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "floor-random",
+  "seed": 2,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.09843137254901961,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.19343137254901963,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.2766666666666667,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.3770588235294118,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.45931372549019606,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.5185294117647059,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.5602941176470588,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.6680392156862744,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 10,
+    "progress": 0.7703921568627451,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "floor-random",
+  "seed": 3,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "eat-poorly"
+    ]
+   },
+   {
+    "step": 2,
+    "progress": 0.06264705882352942,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "eat-poorly"
+    ]
+   },
+   {
+    "step": 3,
+    "progress": 0.16254901960784315,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "eat-poorly"
+    ]
+   },
+   {
+    "step": 4,
+    "progress": 0.2737254901960785,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "eat-poorly"
+    ]
+   },
+   {
+    "step": 5,
+    "progress": 0.37411764705882355,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.4568627450980392,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.46568627450980393,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.5537254901960784,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "floor-random",
+  "seed": 4,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.08166666666666667,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "pass-fort-hungry"
+    ]
+   },
+   {
+    "step": 3,
+    "progress": 0.16578431372549018,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "eat-poorly"
+    ]
+   },
+   {
+    "step": 4,
+    "progress": 0.2753921568627451,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.3918627450980392,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.45931372549019606,
+    "calls": 0,
+    "chars": 0,
+    "violations": [
+     "eat-poorly"
+    ]
+   },
+   {
+    "step": 7,
+    "progress": 0.5191176470588236,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.5924509803921568,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "floor-random",
+  "seed": 5,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.11029411764705882,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "loop",
+  "seed": 1,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 5,
+    "chars": 16026,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 7,
+    "chars": 23346,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.09754901960784314,
+    "calls": 9,
+    "chars": 31249,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.19901960784313724,
+    "calls": 13,
+    "chars": 49020,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.3014705882352941,
+    "calls": 20,
+    "chars": 84848,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.4024509803921569,
+    "calls": 22,
+    "chars": 95749,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.46568627450980393,
+    "calls": 29,
+    "chars": 138590,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.5480392156862746,
+    "calls": 32,
+    "chars": 154275,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.6284313725490196,
+    "calls": 35,
+    "chars": 169182,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.7107843137254902,
+    "calls": 37,
+    "chars": 179895,
+    "violations": []
+   },
+   {
+    "step": 10,
+    "progress": 0.7970588235294118,
+    "calls": 39,
+    "chars": 191581,
+    "violations": []
+   },
+   {
+    "step": 11,
+    "progress": 0.8960784313725491,
+    "calls": 42,
+    "chars": 209710,
+    "violations": []
+   },
+   {
+    "step": 12,
+    "progress": 1.0,
+    "calls": 46,
+    "chars": 235066,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "loop",
+  "seed": 2,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 5,
+    "chars": 16313,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 8,
+    "chars": 27455,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.0965686274509804,
+    "calls": 11,
+    "chars": 40372,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.19705882352941176,
+    "calls": 13,
+    "chars": 49789,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.2980392156862745,
+    "calls": 15,
+    "chars": 60007,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.39656862745098037,
+    "calls": 17,
+    "chars": 70672,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.46568627450980393,
+    "calls": 23,
+    "chars": 106110,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.5426470588235294,
+    "calls": 25,
+    "chars": 118838,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.6441176470588236,
+    "calls": 28,
+    "chars": 135009,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.6916666666666667,
+    "calls": 30,
+    "chars": 145306,
+    "violations": []
+   },
+   {
+    "step": 10,
+    "progress": 0.7926470588235294,
+    "calls": 32,
+    "chars": 156345,
+    "violations": []
+   },
+   {
+    "step": 11,
+    "progress": 0.8539215686274509,
+    "calls": 34,
+    "chars": 167838,
+    "violations": []
+   },
+   {
+    "step": 12,
+    "progress": 0.9205882352941176,
+    "calls": 37,
+    "chars": 186244,
+    "violations": []
+   },
+   {
+    "step": 13,
+    "progress": 1.0,
+    "calls": 42,
+    "chars": 218529,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "loop",
+  "seed": 3,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 5,
+    "chars": 16139,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 7,
+    "chars": 23282,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.10147058823529412,
+    "calls": 9,
+    "chars": 31139,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.2,
+    "calls": 13,
+    "chars": 48691,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.3044117647058823,
+    "calls": 15,
+    "chars": 58464,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.4034313725490196,
+    "calls": 17,
+    "chars": 68893,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.46568627450980393,
+    "calls": 20,
+    "chars": 85847,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.5034313725490196,
+    "calls": 22,
+    "chars": 98067,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.6029411764705882,
+    "calls": 24,
+    "chars": 110967,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.6676470588235294,
+    "calls": 27,
+    "chars": 127407,
+    "violations": []
+   },
+   {
+    "step": 10,
+    "progress": 0.746078431372549,
+    "calls": 33,
+    "chars": 159657,
+    "violations": []
+   },
+   {
+    "step": 11,
+    "progress": 0.8215686274509804,
+    "calls": 35,
+    "chars": 170978,
+    "violations": []
+   },
+   {
+    "step": 12,
+    "progress": 0.9240196078431373,
+    "calls": 38,
+    "chars": 189123,
+    "violations": []
+   },
+   {
+    "step": 13,
+    "progress": 1.0,
+    "calls": 41,
+    "chars": 208517,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "loop",
+  "seed": 4,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 5,
+    "chars": 16091,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 7,
+    "chars": 23236,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.10245098039215686,
+    "calls": 9,
+    "chars": 31157,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.19558823529411765,
+    "calls": 13,
+    "chars": 48800,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.2897058823529412,
+    "calls": 19,
+    "chars": 79024,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.39215686274509803,
+    "calls": 23,
+    "chars": 100782,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.4730392156862745,
+    "calls": 26,
+    "chars": 118601,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.5171568627450981,
+    "calls": 29,
+    "chars": 137665,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.5504901960784314,
+    "calls": 31,
+    "chars": 147384,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.6529411764705882,
+    "calls": 34,
+    "chars": 163002,
+    "violations": []
+   },
+   {
+    "step": 10,
+    "progress": 0.7573529411764706,
+    "calls": 37,
+    "chars": 179955,
+    "violations": []
+   },
+   {
+    "step": 11,
+    "progress": 0.8333333333333334,
+    "calls": 39,
+    "chars": 192283,
+    "violations": []
+   },
+   {
+    "step": 12,
+    "progress": 1.0,
+    "calls": 43,
+    "chars": 218005,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "loop",
+  "seed": 5,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 5,
+    "chars": 16101,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 7,
+    "chars": 23244,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.10784313725490197,
+    "calls": 12,
+    "chars": 43870,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.21764705882352942,
+    "calls": 15,
+    "chars": 58043,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.3235294117647059,
+    "calls": 18,
+    "chars": 73681,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.42990196078431375,
+    "calls": 20,
+    "chars": 84860,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.49558823529411766,
+    "calls": 23,
+    "chars": 102980,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.525,
+    "calls": 26,
+    "chars": 122199,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.5769607843137254,
+    "calls": 32,
+    "chars": 152695,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.5769607843137254,
+    "calls": 36,
+    "chars": 175540,
+    "violations": []
+   }
+  ]
+ }
+]

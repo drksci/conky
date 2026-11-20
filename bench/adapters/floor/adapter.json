@@ -1,8 +1,22 @@
 {
   "arms": {
-    "floor-continue": ["{python}", "adapter.py", "--policy", "continue"],
-    "floor-random": ["{python}", "adapter.py", "--policy", "random"]
+    "floor-continue": [
+      "{python}",
+      "adapter.py",
+      "--policy",
+      "continue"
+    ],
+    "floor-random": [
+      "{python}",
+      "adapter.py",
+      "--policy",
+      "random"
+    ]
   },
   "uses_model": false,
-  "state": []
+  "state": [],
+  "gloss": {
+    "floor-continue": "always presses continue",
+    "floor-random": "presses keys at random"
+  }
 }

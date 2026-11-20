@@ -60,6 +60,8 @@ Conky is... different, for many reasons, but here are some:
 <!-- bench:start -->
 ### Benchmark
 
+Model `haiku`, commit [`a4d3201a64`](https://github.com/drksci/conky/commit/a4d3201a64686303a7b4b02713b9444c4c263779).
+
 5 trips each to Oregon: same game, same small model, same luck, same prompt. Pressing keys gets nobody there. A plain loop around the model arrived 4 times. A Conky character arrived 4 times, sending 29% less text and keeping 3 pages of its own notes. It is a pilot: too few trips to call a winner, so none is called.
 
 <p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/trail.dark.svg"><img src="docs/results/pilot-2/trail.light.svg" alt="Every run drawn as a journey from Independence to Oregon, one band per way of playing, with arrivals, model calls, text sent, rules broken and pages kept beside it." width="800"></picture></a></p>

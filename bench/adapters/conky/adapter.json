@@ -1,9 +1,42 @@
 {
-  "arms": {"conky": ["{python}", "adapter.py"]},
+  "arms": {
+    "conky": [
+      "{python}",
+      "adapter.py"
+    ]
+  },
   "uses_model": true,
-  "answers": ["keys", "pages"],
-  "state": ["vault", "keys"],
-  "verify": ["{python}", "adapter.py", "--verify"],
-  "explain": ["{python}", "adapter.py", "--explain"],
-  "shelf_reads": ["{python}", "adapter.py", "--shelf-reads"]
+  "answers": [
+    "keys",
+    "pages"
+  ],
+  "state": [
+    "vault",
+    "keys"
+  ],
+  "verify": [
+    "{python}",
+    "adapter.py",
+    "--verify"
+  ],
+  "explain": [
+    "{python}",
+    "adapter.py",
+    "--explain"
+  ],
+  "shelf_reads": [
+    "{python}",
+    "adapter.py",
+    "--shelf-reads"
+  ],
+  "gloss": {
+    "conky": "one character in a vault"
+  },
+  "kept": {
+    "glob": "workdir/vault/pages/*.md",
+    "contains": "\nwithin: den\n",
+    "except": [
+      "traveller"
+    ]
+  }
 }

@@ -99,6 +99,14 @@ The `cli` arm gets the identical task text and shelf, on the same model name, an
 
 It is reported beside the metered arms, labelled `unmetered control`, and never pooled with them or paired with them. The tests and the walk use a fake command line on a stand-in game; no test calls a live one. See `bench/adapters/cli/scaffold.md` for the command line and every added byte.
 
+## The standard run record
+
+Every run, of any scenario and any harness, is reduced by `bench/record.py` to one row and one series. The charts, the analysis of results and the publisher read only these, so nothing in them names a scenario or a harness. The row has the keys `scenario`, `scenario_version`, `harness`, `gloss`, `model` (`none` when the harness uses no model), `seed`, `commit` (with `+changes` when the tree was dirty), `prompt`, `prompt_sha`, `budget_calls`, `backend`, `date`, `ending` (`reached`, `lost`, `capped` or `broke`), `progress` (0 to 1), `value` (progress in the scenario's unit), `steps`, `calls`, `chars`, `tokens` (empty when the backend reported none), `wall_s`, `violations`, `kept` (empty when the harness declares nothing to count) and `tape` (the first twelve hex digits of the transcript's SHA-256). The series has one entry a step: `step`, `progress`, `calls` and `chars` so far, and the rules broken at that step.
+
+A scenario declares what is its own in `scenario.json` (`progress`: the unit, the goal, the names of the start and the end, and milestones) and in its score module (`steps` and `result`). A harness declares what is its own in `adapter.json` (`gloss`, and `kept`: a glob, a text the page must contain and the page names to leave out).
+
+`comparable(rows)` lists why the arms of a set are not comparable: the arms that use a model use different ones, the arms were not run on the same seeds, or the runs differ in prompt hash, call budget, scenario version, backend or commit, or one was made with uncommitted changes. A page published as a result refuses a set with any reason; a pilot publishes and says so. The published page lists the model, seeds, prompt, budget, commit and scenario version under "Compared like for like".
+
 ## The metering door
 
 Every model call of every arm goes through one local server, `bench/meter.py`, in the OpenAI chat-completions shape or the Anthropic messages shape, text and images. For every run it checks the run's token, refuses any request naming another model than the run's (so every arm uses the same model), enforces the same budget (calls and tokens; when spent it answers HTTP 429 and the runner ends the run), strips the markers around prompt-pack text and screen text and counts the bytes of each origin, and appends each request and answer with times, latency and token counts to the run's trace. When a backend reports no tokens, tokens are recorded as unknown and characters are kept; nothing is estimated.

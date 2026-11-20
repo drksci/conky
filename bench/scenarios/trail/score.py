@@ -74,6 +74,33 @@ def outcome(events: list[dict]) -> dict:
     return result
 
 
+def steps(events: list[dict]) -> list[dict]:
+    """One entry per decision the player made: its turn, when it was typed, the miles travelled
+    when it was typed and the house rule it broke, if any (the standard record's step source)."""
+    decisions, _, _ = parse.walk(events)
+    decisions = [d for d in decisions if d.get("by") != "opening"]
+    at = {e["n"]: e["t"] for e in events if e["kind"] == "in"}
+    return [
+        {
+            "step": d["state"]["turn"],
+            "t": at.get(d["n"], 0.0),
+            "value": float(d["state"]["mileage"] or 0),
+            "violations": [rule] if (rule := broken(d["state"], d["prompt"], d["line"])) else [],
+        }
+        for d in decisions
+    ]
+
+
+def result(events: list[dict]) -> dict:
+    """Where the game stands at the end of the transcript, in the standard record's terms:
+    the miles travelled, the last turn and `reached`, `lost`, `broke` or empty for an unfinished
+    game."""
+    found = outcome(events)
+    ending = {"arrived": "reached", "died": "lost", "crashed": "broke"}.get(found["outcome"], "")
+    miles = float(GOAL_MILES if found["arrived"] else found["mileage"] or 0)
+    return {"value": miles, "steps": found["turns"], "ending": ending}
+
+
 def outcome_of(path: Path) -> dict:
     return outcome(textenv.read(path))
 

@@ -1,7 +1,25 @@
 {
-  "arms": {"loop": ["{python}", "adapter.py"]},
+  "arms": {
+    "loop": [
+      "{python}",
+      "adapter.py"
+    ]
+  },
   "uses_model": true,
-  "state": ["transcript.jsonl"],
-  "verify": ["{python}", "adapter.py", "--verify"],
-  "explain": ["{python}", "adapter.py", "--explain"]
+  "state": [
+    "transcript.jsonl"
+  ],
+  "verify": [
+    "{python}",
+    "adapter.py",
+    "--verify"
+  ],
+  "explain": [
+    "{python}",
+    "adapter.py",
+    "--explain"
+  ],
+  "gloss": {
+    "loop": "one model in a plain loop"
+  }
 }

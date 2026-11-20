@@ -20,6 +20,17 @@ This is a pilot: 5 seeds, one scenario and one model. It shows that the apparatu
 
 Scenario `trail`, the 1975 text Oregon Trail, fetched at run time. Seeds 1 to 5, the same for every arm, so runs are paired. Model `haiku` for every arm that uses one, at most 70 model calls a run. Every arm starts from one agent and the same opening prompt. The measures and how they are scored are stated in the [benchmark protocol](benchmark-protocol.md).
 
+## Compared like for like
+
+- Model: `haiku`
+- Seeds: 1 to 5
+- Prompt: `full`, hash `e177d18b1efb3296bfe47373ef1a65a6`
+- Budget: at most 70 model calls a run
+- Commit: `a4d3201a64`
+- Scenario version: 1
+
+Nothing differs among the arms but the arm.
+
 ## Results
 
 Counts are runs. Other columns are the median over seeds.
@@ -28,12 +39,12 @@ Counts are runs. Other columns are the median over seeds.
 |---|---|---|---|---|---|---|
 | `floor-continue` | always presses continue | 0 of 5 | 950 | 0 | 1 | 5 |
 | `floor-random` | presses keys at random | 0 of 5 | 1,209 | 0 | 3 | 13 |
-| `loop` | one model in a plain loop | 4 of 5 | 2,040 | 42 | 0 | 239 |
 | `conky` | one character in a vault | 4 of 5 | 2,040 | 42 | 0 | 298 |
+| `loop` | one model in a plain loop | 4 of 5 | 2,040 | 42 | 0 | 240 |
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/trail.dark.svg"><img src="../results/pilot-2/trail.light.svg" alt="Every run drawn as a journey from Independence to Oregon, one band per way of playing, with arrivals, model calls, text sent, rules broken and pages kept beside it." width="800"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/progress.dark.svg"><img src="../results/pilot-2/progress.light.svg" alt="Miles left to Oregon against turn, one line per arm." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/progress.dark.svg"><img src="../results/pilot-2/progress.light.svg" alt="miles left to Oregon against turn, one line per arm." width="800"></picture></p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/spend.dark.svg"><img src="../results/pilot-2/spend.light.svg" alt="Model calls and text sent against turn, one line per arm." width="800"></picture></p>
 

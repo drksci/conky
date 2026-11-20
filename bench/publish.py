@@ -19,41 +19,48 @@ import statistics
 import sys
 from pathlib import Path
 
-from bench import charts
+from bench import charts, record
 
 ROOT = Path(__file__).resolve().parent.parent
+REPOSITORY = "https://github.com/drksci/conky"
 PAGE = "docs/research/results.md"
 START, END = "<!-- bench:start -->", "<!-- bench:end -->"
 SHOWN = ("trail", "progress", "spend", "rules", "board")
 ALT = {
-    "trail": "Every run drawn as a journey from Independence to Oregon, one band per way of "
+    "trail": "Every run drawn as a journey from {start} to {end}, one band per way of "
     "playing, with arrivals, model calls, text sent, rules broken and pages kept beside it.",
-    "progress": "Miles left to Oregon against turn, one line per arm.",
+    "progress": "{unit} left to {end} against turn, one line per arm.",
     "spend": "Model calls and text sent against turn, one line per arm.",
     "rules": "House rules broken in the game, by turn, for each run.",
     "board": "Every measure for every arm on one board.",
 }
 
 
-def picture(folder: str, name: str, width: int = 800) -> str:
+def picture(folder: str, name: str, f: dict, width: int = 800) -> str:
     return (
         f'<picture><source media="(prefers-color-scheme: dark)" '
         f'srcset="{folder}/{name}.dark.svg"><img src="{folder}/{name}.light.svg" '
-        f'alt="{ALT[name]}" width="{width}"></picture>'
+        f'alt="{ALT[name].format(**f["progress"])}" width="{width}"></picture>'
     )
+
+
+def short(commit: str) -> str:
+    """The first ten characters of a commit, with `+changes` kept when the tree was dirty."""
+    return commit[:10] + ("+changes" if commit.endswith("+changes") else "")
 
 
 def facts(runs: list[charts.Run]) -> dict:
     arms = charts.by_arm(runs)
-    order = [a for a in charts.GLOSS if a in arms] + [a for a in arms if a not in charts.GLOSS]
+    order = charts.arm_order(arms)
     seeds = sorted({r.seed for r in runs})
     per = {}
     for arm in order:
         rs = arms[arm]
         per[arm] = {
             "n": len(rs),
-            "arrived": sum(r.ending == "arrived" for r in rs),
-            "miles": statistics.median(r.miles for r in rs),
+            "arrived": sum(r.ending == "reached" for r in rs),
+            "value": statistics.median(r.value for r in rs),
+            "gloss": rs[0].row["gloss"],
             "calls": statistics.median(len(r.calls) for r in rs),
             "broken": statistics.median(len(r.breaks) for r in rs),
             "wall": statistics.median(r.wall for r in rs),
@@ -62,7 +69,14 @@ def facts(runs: list[charts.Run]) -> dict:
         "order": order,
         "per": per,
         "seeds": seeds,
-        "models": sorted({r.model for r in runs}),
+        "models": sorted({r.model for r in runs if r.model != "none"}) or ["none"],
+        "progress": runs[0].progress,
+        "summary": record.scenario_config(runs[0].scenario).get("summary", ""),
+        "scenario_version": runs[0].row["scenario_version"],
+        "prompt": runs[0].row["prompt"],
+        "prompt_sha": runs[0].row["prompt_sha"],
+        "commit": runs[0].row["commit"],
+        "reasons": record.comparable([r.row for r in runs]),
         "date": max(r.date for r in runs),
         "budget": max(r.budget_calls for r in runs),
         "scenario": runs[0].scenario,
@@ -83,14 +97,15 @@ def limits(kind: str, f: dict) -> str:
 
 
 def table(f: dict) -> str:
-    head = "| Arm | What it is | Arrived | Miles | Model calls | Rules broken | Seconds |\n"
+    unit = f["progress"]["unit"].capitalize()
+    head = f"| Arm | What it is | Arrived | {unit} | Model calls | Rules broken | Seconds |\n"
     head += "|---|---|---|---|---|---|---|\n"
     body = ""
     for arm in f["order"]:
         p = f["per"][arm]
         body += (
-            f"| `{arm}` | {charts.GLOSS.get(arm, '')} | {p['arrived']} of {p['n']} | "
-            f"{p['miles']:,.0f} | {p['calls']:,.0f} | {p['broken']:,.0f} | {p['wall']:,.0f} |\n"
+            f"| `{arm}` | {p['gloss']} | {p['arrived']} of {p['n']} | "
+            f"{p['value']:,.0f} | {p['calls']:,.0f} | {p['broken']:,.0f} | {p['wall']:,.0f} |\n"
         )
     return head + body
 
@@ -99,7 +114,7 @@ def setup(f: dict) -> str:
     seeds = f["seeds"]
     span = f"{seeds[0]} to {seeds[-1]}" if len(seeds) > 1 else f"{seeds[0]}"
     return (
-        f"Scenario `{f['scenario']}`, the 1975 text Oregon Trail, fetched at run time. "
+        f"Scenario `{f['scenario']}`, {f['summary']}. "
         f"Seeds {span}, the same for every arm, so runs are paired. "
         f"Model `{', '.join(f['models'])}` "
         f"for every arm that uses one, at most {f['budget']} model calls a run. "
@@ -107,11 +122,31 @@ def setup(f: dict) -> str:
     )
 
 
+def like(f: dict) -> str:
+    seeds = f["seeds"]
+    span = f"{seeds[0]} to {seeds[-1]}" if len(seeds) > 1 else f"{seeds[0]}"
+    lines = [
+        f"- Model: `{', '.join(f['models'])}`",
+        f"- Seeds: {span}",
+        f"- Prompt: `{f['prompt']}`, hash `{f['prompt_sha']}`",
+        f"- Budget: at most {f['budget']} model calls a run",
+        f"- Commit: `{short(f['commit']) or 'unknown'}`",
+        f"- Scenario version: {f['scenario_version']}",
+    ]
+    if f["reasons"]:
+        lines += ["", "These runs are not comparable, because:", ""]
+        lines += [f"- {reason}" for reason in f["reasons"]]
+    else:
+        lines += ["", "Nothing differs among the arms but the arm."]
+    return "\n".join(lines)
+
+
 def story(kind: str, f: dict, runs: list[charts.Run]) -> str:
     """Two or three plain sentences for the front page, every number taken from the runs."""
     n = len(f["seeds"])
     per = f["per"]
-    lines = [f"{n} trips each to Oregon: same game, same small model, same luck, same prompt."]
+    end = f["progress"]["end"]
+    lines = [f"{n} trips each to {end}: same game, same small model, same luck, same prompt."]
     floors = [a for a in f["order"] if not per[a]["calls"]]
     if floors and not any(per[a]["arrived"] for a in floors):
         lines.append("Pressing keys gets nobody there.")
@@ -128,7 +163,7 @@ def story(kind: str, f: dict, runs: list[charts.Run]) -> str:
             change = round(100 * (sent["conky"] / sent["loop"] - 1))
             if change:
                 told += f", sending {abs(change)}% {'less' if change < 0 else 'more'} text"
-        kept = sum(r.kept for r in runs if r.arm == "conky")
+        kept = sum(r.kept or 0 for r in runs if r.arm == "conky")
         if kept:
             told += f" and keeping {kept} pages of its own notes"
         lines.append(told + ".")
@@ -141,14 +176,18 @@ def story(kind: str, f: dict, runs: list[charts.Run]) -> str:
 
 def readme_block(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
     folder = f"docs/results/{name}"
+    commit = f["commit"].removesuffix("+changes")
+    link = f"[`{short(f['commit'])}`]({REPOSITORY}/commit/{commit})" if commit else "unknown"
     return "\n".join(
         [
             START,
             "### Benchmark",
             "",
+            f"Model `{', '.join(f['models'])}`, commit {link}.",
+            "",
             story(kind, f, runs),
             "",
-            f'<p align="center"><a href="{PAGE}">{picture(folder, "trail")}</a></p>',
+            f'<p align="center"><a href="{PAGE}">{picture(folder, "trail", f)}</a></p>',
             "",
             f'<p align="center"><a href="{PAGE}">Method and every chart</a>'
             f'&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{folder}/runs.csv">the data</a>'
@@ -188,6 +227,10 @@ def page(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
         setup(f) + " The measures and how they are scored are stated in the "
         "[benchmark protocol](benchmark-protocol.md).",
         "",
+        "## Compared like for like",
+        "",
+        like(f),
+        "",
         "## Results",
         "",
         "Counts are runs. Other columns are the median over seeds.",
@@ -195,7 +238,7 @@ def page(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
         table(f),
     ]
     for chart in SHOWN:
-        parts += [f'<p align="center">{picture(folder, chart)}</p>', ""]
+        parts += [f'<p align="center">{picture(folder, chart, f)}</p>', ""]
     parts += [
         "## Data",
         "",
@@ -213,6 +256,11 @@ def publish(results: Path, name: str, kind: str, root: Path = ROOT) -> list[Path
     if not runs:
         raise SystemExit(f"no runs under {results}: run bench.run first, or point at its --out")
     f = facts(runs)
+    if f["reasons"]:
+        why = "; ".join(f["reasons"])
+        if kind == "result":
+            raise SystemExit(f"these runs cannot be published as a result: {why}")
+        print(f"not comparable: {why}", file=sys.stderr)
     out = root / "docs" / "results" / name
     written = [
         p for p in charts.render(runs, out) if p.suffix != ".svg" or p.name.split(".")[0] in SHOWN

@@ -20,5 +20,18 @@
   "opening": [
     "YES"
   ],
-  "opening_note": "The environment answers the instructions question with YES, so every player starts at the first purchase with the game's own instructions on screen."
+  "opening_note": "The environment answers the instructions question with YES, so every player starts at the first purchase with the game's own instructions on screen.",
+  "progress": {
+    "unit": "miles",
+    "goal": 2040,
+    "start": "Independence",
+    "end": "Oregon",
+    "milestones": [
+      {
+        "at": 950,
+        "name": "South Pass"
+      }
+    ]
+  },
+  "summary": "the 1975 text Oregon Trail, fetched at run time"
 }

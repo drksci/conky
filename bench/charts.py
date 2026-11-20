@@ -7,9 +7,10 @@ transparent, for light pages) and `NAME.dark.svg`. One ink and one yellow accent
 the front-page plate, which takes the d/rksci band colours. Arms are told apart by line style
 and direct labels. Every chart carries, bottom
 right, `DATA` or `SCRIPTED: NOT A RESULT` from the runs' backend, and bottom left the scenario,
-model, seeds and date. Beside them it writes `runs.csv` and `runs.json`, one row per run, so the
-same data can be drawn another way. It reads the run files (run.json, meter.jsonl,
-transcript.jsonl) that bench.run writes. Standard library only.
+model, seeds and date. Beside them it writes `runs.csv` and `runs.json` (the standard record of
+each run, see `bench/record.py`) and `series.json` (its series), so the same data can be drawn
+another way. It reads the run files that bench.run writes, through `bench/record.py`. Standard
+library only.
 """
 
 from __future__ import annotations
@@ -23,23 +24,19 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from xml.sax.saxutils import escape
 
-from bench.envs import textenv
-from bench.envs.oregon_trail_1975 import parse
-from bench.scenarios.trail import score
+from bench import record
 
 WIDTH = 880
-GOAL = score.GOAL_MILES
 YELLOW = "#F4C430"
 INKS = {"light": "#1E1E1E", "dark": "#EDEDED"}
 # The d/rksci bands, used by the front-page plate: one hue an arm that thinks, one for a broken
 # rule, one for the grid. The light look takes deeper shades of the same hues to stay readable.
 BANDS = {
-    "#EDEDED": {"loop": "#00FFFF", "conky": YELLOW, "broken": "#FF00FF", "grid": "#8F5BFF"},
-    "#1E1E1E": {"loop": "#008C9E", "conky": "#C79A00", "broken": "#D100D1", "grid": "#6400FF"},
+    "#EDEDED": {"arms": ("#00FFFF", YELLOW), "broken": "#FF00FF", "grid": "#8F5BFF"},
+    "#1E1E1E": {"arms": ("#008C9E", "#C79A00"), "broken": "#D100D1", "grid": "#6400FF"},
 }
 FONT = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 DASHES = ("", "7 3", "1.5 3", "7 3 1.5 3")
-BUDGET_EXITS = ("budget-exhausted", "wall-clock", "stalled", "stopped")
 LAYERS = (
     ("task", "TASK TEXT"),
     ("screen", "SCREEN"),
@@ -50,7 +47,7 @@ LAYERS = (
 
 @dataclass
 class Run:
-    """One run, as plain turn-indexed series read from its files."""
+    """One run, as plain step-indexed series read from its standard record."""
 
     arm: str
     seed: int
@@ -59,92 +56,48 @@ class Run:
     scenario: str
     date: str
     budget_calls: int
-    ending: str  # arrived, lost, budget, crashed or the raw exit
+    ending: str  # reached, lost, capped or broke
     turns: int
-    miles: float
-    left: dict[int, float]  # turn -> miles left to the goal, at the end of that turn
-    calls: list[dict] = field(default_factory=list)  # turn, bytes by layer, chars, tokens
+    value: float  # progress in the scenario's unit
+    left: dict[int, float]  # step -> what is left to the goal, at the end of that step
+    progress: dict  # the scenario's declaration: unit, goal, start, end, milestones
+    row: dict  # the standard record, as written to runs.csv
+    series: list[dict]
+    calls: list[dict] = field(default_factory=list)  # step, bytes by layer, chars, tokens
     breaks: list[tuple[int, str]] = field(default_factory=list)
     proposed: list[tuple[int, str]] = field(default_factory=list)
     wall: float = 0.0
     tokens_known: bool = True
-    kept: int = 0  # pages a character wrote for itself
-
-
-def _jsonl(path: Path) -> list[dict]:
-    if not path.exists():
-        return []
-    return [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x]
+    kept: int | None = None  # pages a character wrote for itself, None when not counted
 
 
 def load_run(folder: Path) -> Run:
-    record = json.loads((folder / "run.json").read_text(encoding="utf-8"))
-    events = textenv.read(folder / "transcript.jsonl")
-    decisions, _, ended = parse.walk(events)
-    decisions = [d for d in decisions if d.get("by") != "opening"]
-    found = score.outcome(events)
-    at = {e["n"]: e["t"] for e in events if e["kind"] == "in"}
-    times = [(at.get(d["n"], 0.0), d["state"]["turn"]) for d in decisions]
-    arrived = found["arrived"]
-    miles = float(GOAL if arrived else found["mileage"])
-    left: dict[int, float] = {}
-    for d in decisions:
-        left[d["state"]["turn"]] = max(0.0, GOAL - float(d["state"]["mileage"] or 0))
-    left[found["turns"]] = 0.0 if arrived else max(0.0, GOAL - miles)
-    exit_ = record.get("exit") or ""
-    if arrived:
-        ending = "arrived"
-    elif ended.get("outcome") == "crashed" or exit_ == "crashed":
-        ending = "crashed"
-    elif exit_ in BUDGET_EXITS:
-        ending = "budget"
-    elif found["outcome"] == "died":
-        ending = "lost"
-    else:
-        ending = exit_ or found["outcome"]
-    calls = []
-    proposed = []
-    for c in _jsonl(folder / "meter.jsonl"):
-        if c.get("status") != 200:
-            continue
-        # a call belongs to the turn of the decision its answer was typed for
-        later = [turn for t, turn in times if t >= c["t_start"]]
-        turn = later[0] if later else (times[-1][1] if times else 0)
-        known = bool(c.get("tokens_known"))
-        calls.append(
-            {
-                "turn": turn,
-                "task": c.get("pack_bytes", 0),
-                "screen": c.get("screen_bytes", 0),
-                "scaffold": c.get("scaffold_bytes", 0),
-                "other": c.get("image_bytes", 0),
-                "chars": c.get("chars_in", 0) + c.get("chars_out", 0),
-                "tokens": (c.get("tokens_in") or 0) + (c.get("tokens_out") or 0),
-                "tokens_known": known,
-            }
-        )
-        if (c.get("note") or {}).get("proposed"):
-            proposed.append((turn, c["note"]["proposed"]))
-    breaks = [(v["turn"], v["rule"]) for v in score.violations(decisions)]
-    start = record.get("start", "")
+    standard = record.row(folder)
+    steps = record.series(folder)
+    made = [{**c, "turn": c["step"]} for c in record.calls(folder)]
+    progress = record.scenario_config(standard["scenario"])["progress"]
+    goal = progress["goal"]
     return Run(
-        arm=record["arm"],
-        seed=record["seed"],
-        backend=record.get("backend", "?"),
-        model=record.get("model", "?"),
-        scenario=record.get("scenario", "?"),
-        date=start[:10],
-        budget_calls=(record.get("budget") or {}).get("calls", 0),
-        ending=ending,
-        turns=found["turns"],
-        miles=miles,
-        left=left,
-        calls=calls,
-        breaks=breaks,
-        proposed=proposed,
-        wall=sum(s["end"] - s["start"] for s in record.get("segments", []) if "end" in s),
-        tokens_known=all(c["tokens_known"] for c in calls),
-        kept=kept_pages(folder),
+        arm=standard["harness"],
+        seed=standard["seed"],
+        backend=standard["backend"],
+        model=standard["model"],
+        scenario=standard["scenario"],
+        date=standard["date"],
+        budget_calls=standard["budget_calls"],
+        ending=standard["ending"],
+        turns=standard["steps"],
+        value=standard["value"],
+        left={s["step"]: round(goal * (1 - s["progress"]), 6) for s in steps},
+        progress=progress,
+        row=standard,
+        series=steps,
+        calls=made,
+        breaks=[(s["step"], rule) for s in steps for rule in s["violations"]],
+        proposed=[(c["turn"], c["proposed"]) for c in made if c["proposed"]],
+        wall=standard["wall_s"],
+        tokens_known=all(c["tokens_known"] for c in made),
+        kept=standard["kept"],
     )
 
 
@@ -182,7 +135,23 @@ def total(run: Run, key: str) -> float:
 
 def left_at(run: Run, turn: int) -> float:
     known = [t for t in run.left if t <= turn]
-    return run.left[max(known)] if known else float(GOAL)
+    return run.left[max(known)] if known else float(run.progress["goal"])
+
+
+def modelled(arms: dict[str, list[Run]], order: list[str]) -> list[str]:
+    """The arms that use a model, in drawing order: each takes a band hue."""
+    return [a for a in order if arms[a][0].model != "none"]
+
+
+def arm_order(arms: dict[str, list[Run]]) -> list[str]:
+    """Arms that use no model first, then the rest by name."""
+    return sorted(arms, key=lambda a: (arms[a][0].model != "none", a))
+
+
+def goal_ticks(goal: float) -> list[float]:
+    """Round ticks from zero up to the goal, with the goal itself last."""
+    step = nice(goal / 5)
+    return [*(k * step for k in range(int(goal * 0.9 / step) + 1)), goal]
 
 
 # ---------------------------------------------------------------- drawing
@@ -250,7 +219,7 @@ def stamp(runs: list[Run]) -> tuple[str, str]:
     """The footer: scenario, model, seeds and date on the left; the data class on the right."""
     seeds = sorted({r.seed for r in runs})
     span = f"{seeds[0]}-{seeds[-1]}" if len(seeds) > 1 else f"{seeds[0]}"
-    models = ",".join(sorted({r.model for r in runs}))
+    models = ",".join(sorted({r.model for r in runs if r.model != "none"})) or "none"
     date = max(r.date for r in runs)
     left = f"{runs[0].scenario} / model {models} / seeds {span} / {date}"
     stand_in = any(r.backend == "scripted" for r in runs)
@@ -323,12 +292,12 @@ def dodge(ys: list[float], gap: float, low: float, high: float) -> list[float]:
 
 def mark(c: Canvas, x, y, ending: str) -> None:
     """The small mark that says why a run ended."""
-    if ending == "arrived":
+    if ending == "reached":
         c.circle(x, y, 3.2)
     elif ending == "lost":
         c.line(x - 3, y - 3, x + 3, y + 3, 1.4)
         c.line(x - 3, y + 3, x + 3, y - 3, 1.4)
-    elif ending == "budget":
+    elif ending == "capped":
         c.line(x, y - 4, x, y + 4, 1.6)
         c.line(x - 3, y - 4, x + 3, y - 4, 1.6)
     else:
@@ -367,24 +336,25 @@ def line_chart(c, arms, box, xmax, ymax, value, label, ends=False) -> None:
 
 def draw_progress(runs: list[Run], ink: str) -> Canvas:
     arms = by_arm(runs)
+    goal, unit, end = runs[0].progress["goal"], runs[0].progress["unit"], runs[0].progress["end"]
     c = frame(
         340,
         ink,
-        "Progress: miles left to Oregon",
+        f"Progress: {unit} left to {end}",
         "MEDIAN OF SEEDS, BAND LOWEST TO HIGHEST  |  " + MARK_KEY,
         runs,
     )
     x0, x1, y0, y1 = 70, 690, 78, 280
     xmax = max(max(r.turns for r in rs) for rs in arms.values()) or 1
-    axes(c, x0, x1, y0, y1, xmax, GOAL, "miles left", "turn", [0, 500, 1000, 1500, GOAL])
+    axes(c, x0, x1, y0, y1, xmax, goal, f"{unit} left", "turn", goal_ticks(goal))
     line_chart(
         c,
         arms,
         (x0, x1, y0, y1),
         xmax,
-        GOAL,
+        goal,
         left_at,
-        lambda name, rs: f"{name} {sum(r.ending == 'arrived' for r in rs)}/{len(rs)} arrived",
+        lambda name, rs: f"{name} {sum(r.ending == 'reached' for r in rs)}/{len(rs)} arrived",
         ends=True,
     )
     return c
@@ -572,7 +542,7 @@ def draw_rules(runs: list[Run], ink: str) -> Canvas:
 COLUMNS = (
     # key, header, best direction
     ("outcome", "ARRIVED", "high"),
-    ("miles", "MILES", "high"),
+    ("value", "PROGRESS", "high"),
     ("turns", "TURNS", "low"),
     ("calls", "CALLS", "low"),
     ("tokens", "TOKENS", "low"),
@@ -584,8 +554,8 @@ COLUMNS = (
 def board_values(rs: list[Run]) -> dict[str, list[float]]:
     known = all(r.tokens_known for r in rs if r.calls)
     return {
-        "outcome": [1.0 if r.ending == "arrived" else 0.0 for r in rs],
-        "miles": [r.miles for r in rs],
+        "outcome": [1.0 if r.ending == "reached" else 0.0 for r in rs],
+        "value": [r.value for r in rs],
         "turns": [float(r.turns) for r in rs],
         "calls": [float(len(r.calls)) for r in rs],
         "tokens": [float(sum(c["tokens" if known else "chars"] for c in r.calls)) for r in rs],
@@ -619,6 +589,8 @@ def draw_board(runs: list[Run], ink: str) -> Canvas:
     for j, (key, head, _) in enumerate(COLUMNS):
         x = 150 + j * colw
         title = "CHARS" if key == "tokens" and not known else head
+        if key == "value":
+            title = runs[0].progress["unit"].upper()
         c.text(x + 6, top, title, 9, weight="bold")
     for i, (arm, d) in enumerate(data.items()):
         y = top + 16 + i * 46
@@ -639,8 +611,8 @@ def draw_board(runs: list[Run], ink: str) -> Canvas:
                     c.rect(x - 4, y + 21, 46, 12, "none", stroke=c.ink, sw=0.9)
                 continue
             cap = (
-                float(GOAL)
-                if key == "miles"
+                float(runs[0].progress["goal"])
+                if key == "value"
                 else max(max(x_ for x_ in dd[key]) for dd in data.values()) or 1.0
             )
 
@@ -662,27 +634,6 @@ def draw_board(runs: list[Run], ink: str) -> Canvas:
     return c
 
 
-GLOSS = {
-    "floor-continue": "always presses continue",
-    "floor-random": "presses keys at random",
-    "loop": "one model in a plain loop",
-    "cli": "a stock agent CLI, unmetered",
-    "conky": "one character in a vault",
-}
-
-
-def kept_pages(folder: Path) -> int:
-    """Pages a Conky character wrote into its own space, counted from the vault it left behind."""
-    pages = folder / "workdir" / "vault" / "pages"
-    if not pages.is_dir():
-        return 0
-    return sum(
-        1
-        for page in pages.glob("*.md")
-        if page.stem != "traveller" and "\nwithin: den\n" in page.read_text(encoding="utf-8")
-    )
-
-
 DITHER = (
     '<defs><pattern id="half" width="4" height="4" patternUnits="userSpaceOnUse">'
     '<path d="M0 0h2v2h-2zM2 2h2v2h-2z" fill="{ink}" shape-rendering="crispEdges"/>'
@@ -702,16 +653,19 @@ def draw_trail(runs: list[Run], ink: str) -> Canvas:
     and one for the grid.
     """
     arms = by_arm(runs)
-    order = [a for a in GLOSS if a in arms] + [a for a in arms if a not in GLOSS]
+    order = arm_order(arms)
+    goal, unit = runs[0].progress["goal"], runs[0].progress["unit"]
+    named = runs[0].progress["start"], runs[0].progress["end"]
     most = max(len(rs) for rs in arms.values())
     bands = BANDS.get(ink, BANDS["#EDEDED"])
+    hues = {a: bands["arms"][n % len(bands["arms"])] for n, a in enumerate(modelled(arms, order))}
     pitch = 7.0
     row = max(58.0, most * pitch + 26)
     top = 104.0
     height = int(top + row * len(order) + 62)
     c = Canvas(height, ink)
     c.add(DITHER.format(ink=ink))
-    c.text(24, 28, "WHO REACHED OREGON", 14, weight="bold")
+    c.text(24, 28, f"WHO REACHED {named[1].upper()}", 14, weight="bold")
     c.text(24, 46, TRAIL_KEY, 8)
     c.text(24, 59, TRAIL_KEY_2, 8)
     left, right = stamp(runs)
@@ -729,48 +683,48 @@ def draw_trail(runs: list[Run], ink: str) -> Canvas:
     )
     for x, head, anchor in heads:
         c.text(x, top - 14, head, 7.5, anchor=anchor, weight="bold")
-    c.text(x0, top - 14, "INDEPENDENCE", 7.5, weight="bold")
-    c.text(x1, top - 14, "OREGON", 7.5, anchor="end", weight="bold")
+    c.text(x0, top - 14, named[0].upper(), 7.5, weight="bold")
+    c.text(x1, top - 14, named[1].upper(), 7.5, anchor="end", weight="bold")
     bottom = top + row * len(order)
 
-    def px(miles: float) -> float:
-        return x0 + (x1 - x0) * min(max(miles, 0.0), GOAL) / GOAL
+    def px(at: float) -> float:
+        return x0 + (x1 - x0) * min(max(at, 0.0), goal) / goal
 
-    for miles in (0, 500, 1000, 1500, GOAL):
-        c.line(px(miles), top - 6, px(miles), bottom - 4, 0.75, dash="1 5", color=bands["grid"])
-        c.text(px(miles), bottom + 10, f"{miles:,}", 7.5, anchor="middle")
-    c.text((x0 + x1) / 2, bottom + 24, "MILES", 7.5, anchor="middle", weight="bold")
+    for at in goal_ticks(goal):
+        c.line(px(at), top - 6, px(at), bottom - 4, 0.75, dash="1 5", color=bands["grid"])
+        c.text(px(at), bottom + 10, f"{at:,.0f}", 7.5, anchor="middle")
+    c.text((x0 + x1) / 2, bottom + 24, unit.upper(), 7.5, anchor="middle", weight="bold")
     most_text = max((sum(k["chars"] for k in r.calls) for r in runs), default=0) or 1
     for i, arm in enumerate(order):
         rs = arms[arm]
         y = top + i * row
-        accent = bands.get(arm)
+        accent = hues.get(arm)
         colour = accent or ink
         c.line(24, y - 4 + row, WIDTH - 24, y - 4 + row, 0.6, dash="1 5")
         c.text(24, y + 18, arm.upper(), 10.5, weight="bold", fill=accent)
-        gloss = GLOSS.get(arm, "")
+        gloss = rs[0].row["gloss"]
         cut = gloss.rfind(" ", 0, 20) if len(gloss) > 20 else len(gloss)
         c.text(24, y + 32, gloss[:cut], 8)
         c.text(24, y + 43, gloss[cut:].strip(), 8)
         first = y + (row - 4 - (len(rs) - 1) * pitch) / 2
         for k, r in enumerate(rs):
             ry = first + k * pitch
-            end = px(r.miles)
+            end = px(r.value)
             c.line(x0, ry, end, ry, 1.2, color=colour)
-            for turn, left_miles in sorted(r.left.items()):
-                tx = px(GOAL - left_miles)
+            for turn, left_over in sorted(r.left.items()):
+                tx = px(goal - left_over)
                 if turn > 0 and x0 + 2 < tx < end - 4:
                     c.line(tx, ry - 2, tx, ry + 2, 0.75, color=colour)
             for turn, _rule in r.breaks:
-                bx = px(GOAL - left_at(r, turn))
+                bx = px(goal - left_at(r, turn))
                 c.add(
                     f'<path d="M{bx - 3:.1f},{ry - 3:.1f} h6 l-3,-5.5 Z" fill="{bands["broken"]}" '
                     f'stroke="none"/>'
                 )
-            mark(c, end + (5 if r.ending != "arrived" else 0), ry, r.ending)
+            mark(c, end + (5 if r.ending != "reached" else 0), ry, r.ending)
         mid = y + row / 2 + 1
         for k, r in enumerate(rs):
-            fill = colour if r.ending == "arrived" else "none"
+            fill = colour if r.ending == "reached" else "none"
             c.add(
                 f'<circle cx="{cols["arrived"] + 4 + k * 11:.1f}" cy="{mid - 3:.1f}" r="3.6" '
                 f'fill="{fill}" stroke="{colour}" stroke-width="1.2"/>'
@@ -778,7 +732,8 @@ def draw_trail(runs: list[Run], ink: str) -> Canvas:
         calls = statistics.median(len(r.calls) for r in rs)
         sent = statistics.median(sum(k["chars"] for k in r.calls) for r in rs)
         broken = sum(len(r.breaks) for r in rs)
-        kept = sum(r.kept for r in rs)
+        counted = rs[0].kept is not None
+        kept = sum(r.kept or 0 for r in rs)
         c.text(cols["calls"] + 22, mid, f"{calls:,.0f}", 10.5, anchor="end", weight="bold")
         width = 62 * sent / most_text
         if sent:
@@ -798,7 +753,7 @@ def draw_trail(runs: list[Run], ink: str) -> Canvas:
         c.text(
             cols["kept"],
             mid,
-            f"{kept}" if kept or arm == "conky" else "-",
+            f"{kept}" if counted else "-",
             10.5,
             anchor="end",
             weight="bold",
@@ -817,8 +772,8 @@ CHARTS = {
 }
 
 TITLES = {
-    "trail": "Where each run ended on the road to Oregon, one row per arm",
-    "progress": "Miles left to Oregon against turn, one line per arm",
+    "trail": "Where each run ended on the way to {end}, one row per arm",
+    "progress": "{unit} left to {end} against turn, one line per arm",
     "spend": "Cumulative model calls and tokens against turn, one line per arm",
     "where": "Bytes sent per call, split by source, one median run per arm",
     "rules": "House rules broken in the game, by turn, per run",
@@ -832,66 +787,36 @@ def render(runs: list[Run], out: Path) -> list[Path]:
     for name, draw in CHARTS.items():
         for look, ink in INKS.items():
             path = out / f"{name}.{look}.svg"
-            path.write_text(draw(runs, ink).svg(TITLES[name]), encoding="utf-8")
+            title = TITLES[name].format(**runs[0].progress)
+            path.write_text(draw(runs, ink).svg(title), encoding="utf-8")
             written.append(path)
     written += export(runs, out)
     return written
 
 
-FIELDS = (
-    "scenario",
-    "arm",
-    "seed",
-    "model",
-    "backend",
-    "date",
-    "ending",
-    "miles",
-    "turns",
-    "model_calls",
-    "tokens",
-    "chars",
-    "wall_s",
-    "rules_broken",
-    "pages_kept",
-)
-
-
-def rows(runs: list[Run]) -> list[dict]:
-    """One plain row per run: everything the charts draw, so they can be drawn another way."""
-    return [
-        {
-            "scenario": r.scenario,
-            "arm": r.arm,
-            "seed": r.seed,
-            "model": r.model,
-            "backend": r.backend,
-            "date": r.date,
-            "ending": r.ending,
-            "miles": round(r.miles, 1),
-            "turns": r.turns,
-            "model_calls": len(r.calls),
-            "tokens": sum(c["tokens"] for c in r.calls) if r.tokens_known else None,
-            "chars": sum(c["chars"] for c in r.calls),
-            "wall_s": round(r.wall, 1),
-            "rules_broken": len(r.breaks),
-            "pages_kept": r.kept,
-        }
-        for r in sorted(runs, key=lambda r: (r.arm, r.seed))
-    ]
-
-
 def export(runs: list[Run], out: Path) -> list[Path]:
-    """Write the data behind the charts as `runs.csv` and `runs.json`."""
-    data = rows(runs)
+    """Write the standard rows as `runs.csv` and `runs.json`, and their series as `series.json`."""
+    data = [r.row for r in sorted(runs, key=lambda r: (r.arm, r.seed))]
     table = out / "runs.csv"
     with table.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, FIELDS, lineterminator="\n")
+        writer = csv.DictWriter(handle, record.KEYS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(data)
     tree = out / "runs.json"
     tree.write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8")
-    return [table, tree]
+    per = out / "series.json"
+    per.write_text(
+        json.dumps(
+            [
+                {"harness": r.arm, "seed": r.seed, "series": r.series}
+                for r in sorted(runs, key=lambda r: (r.arm, r.seed))
+            ],
+            indent=1,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return [table, tree, per]
 
 
 def main(argv: list[str] | None = None) -> int:

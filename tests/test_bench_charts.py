@@ -13,7 +13,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import pytest
-from bench import charts
+from bench import charts, record
 
 HEADER = "FOOD, BULLETS, CLOTHING, SUPPLIES, CASH\n 100 50 50 50 100\n"
 ACTION = "DO YOU WANT TO (1) HUNT, (2) CONTINUE"
@@ -107,7 +107,7 @@ def test_load_reads_plain_series(results: Path) -> None:
     arms = charts.by_arm(charts.load(results))
     assert list(arms) == ["floor-random", "loop"]
     loop = arms["loop"][0]
-    assert (loop.ending, loop.turns, loop.miles) == ("arrived", 3, 2040.0)
+    assert (loop.ending, loop.turns, loop.value) == ("reached", 3, 2040.0)
     assert loop.left == {1: 2040.0, 2: 1740.0, 3: 0.0}
     assert [c["turn"] for c in loop.calls] == [1, 1, 2]
     assert [c["screen"] for c in loop.calls] == [200, 300, 400]
@@ -130,9 +130,13 @@ def test_every_chart_renders_light_and_dark(results: Path, tmp_path: Path) -> No
     assert sorted(p.name for p in drawn) == sorted(
         f"{name}.{look}.svg" for name in charts.CHARTS for look in ("light", "dark")
     )
-    assert sorted(p.name for p in written if p not in drawn) == ["runs.csv", "runs.json"]
+    assert sorted(p.name for p in written if p not in drawn) == [
+        "runs.csv",
+        "runs.json",
+        "series.json",
+    ]
     table = (tmp_path / "svg" / "runs.csv").read_text(encoding="utf-8").splitlines()
-    assert table[0] == ",".join(charts.FIELDS)
+    assert table[0] == ",".join(record.KEYS)
     assert len(table) == 1 + len(charts.load(results))
     for path in drawn:
         svg = parsed(path)
@@ -224,8 +228,26 @@ def test_publishing_writes_the_page_the_data_and_the_readme_block_and_is_repeata
     page = (root / "docs" / "research" / "results.md").read_text(encoding="utf-8")
     assert page.startswith("---\nkind: research\n") and "status: draft" in page
     assert (root / "docs" / "results" / "sample" / "runs.csv").exists()
+    assert "## Compared like for like" in page and "Model `stand-in`, commit unknown." in text
     publish.publish(results, "sample", "pilot", root)
     assert {p: p.read_bytes() for p in written} == first
     readme.write_text("no markers", encoding="utf-8")
     with pytest.raises(SystemExit, match="markers"):
         publish.publish(results, "sample", "pilot", root)
+
+
+def test_a_result_is_refused_when_the_arms_are_not_comparable(tmp_path: Path) -> None:
+    from bench import publish
+
+    root = build(tmp_path / "mixed", "scripted")
+    meta = root / "trail" / "loop" / "full" / "seed-1" / "run.json"
+    record_ = json.loads(meta.read_text())
+    record_["model"] = "other"
+    meta.write_text(json.dumps(record_), encoding="utf-8")
+    repo = tmp_path / "repo"
+    (repo / "docs" / "research").mkdir(parents=True)
+    (repo / "README.md").write_text(f"{publish.START}\n{publish.END}\n", encoding="utf-8")
+    with pytest.raises(SystemExit, match="different ones"):
+        publish.publish(root, "mixed", "result", repo)
+    publish.publish(root, "mixed", "pilot", repo)
+    assert "not comparable" in (repo / "docs" / "research" / "results.md").read_text()

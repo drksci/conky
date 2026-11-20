@@ -6,6 +6,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ### Added
 
+- `bench/record.py`: every benchmark run reduces to one standard row (scenario, harness, model, seed, commit, prompt hash, budget, ending, progress, calls, chars, tokens, violations, kept, tape) and one series, and `comparable` says why a set of arms cannot be compared (different models, seeds, prompts, budgets, commits, scenario versions or backends). What is specific to a scenario now lives in its `scenario.json` and score module, and what is specific to a harness in its `adapter.json`. `runs.csv` and `runs.json` are the standard rows, `series.json` is written beside them, the published page gains a "Compared like for like" section, the README block names the model and the commit, and `bench.publish --kind result` refuses a set that is not comparable ([protocol](docs/research/benchmark-protocol.md#the-standard-run-record)).
 - The instruction for an ask that may write pages now comes before the prompt, so the author's question is the last thing the model reads. A pilot run showed a small model answering the wrong question when the instruction came last.
 - `bench/publish.py` turns a results directory into the charts, the data behind them (`runs.csv`, `runs.json`), the results page and the Benchmark block of the README, with nothing edited by hand. `bench/charts.py` gains the `trail` chart.
 - `scripts/check` runs the tests in parallel, and `scripts/check quick` runs only the tests that the changed code can affect.
