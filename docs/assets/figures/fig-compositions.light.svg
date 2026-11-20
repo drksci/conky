@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 272" width="880" height="272" role="img" aria-labelledby="t">
-<title id="t">Plate 5, compositions: a pattern is a space plus rules plus watches; an approval is a proposal page plus seals, a rule and a watch; a budget is a measure plus a rule; a go-between is a page, a watch, a lens and providers in order; a character is a page plus a seed, a voice and asking; a breakpoint is a condition plus a hold. Each is made by a character from the same parts.</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 312" width="880" height="312" role="img" aria-labelledby="t">
+<title id="t">Plate 5, compositions: a pattern is a space plus rules plus watches; an approval is a proposal page plus seals, a rule and a watch; a budget is a measure plus a rule; a go-between is a page, a watch, a lens and providers in order; a character is a page plus a seed, a voice and asking; a breakpoint is a condition plus a hold; a habit is a case, a case and thinking when none fits, a case being when, then, because and expect; a warning is a watch, a price, an owner and a hold. Each is made by a character from the same parts.</title>
 <style>
 :root{--ink:#1E1E1E}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
@@ -22,117 +22,162 @@
 .x1{fill:none;stroke:#1E1E1E;stroke-width:1.6;stroke-linecap:round}
 </style>
 <text class="t" x="24" y="30" font-size="9.24" fill-opacity="1" text-anchor="start">5 · COMPOSITIONS</text>
-<path class="i" d="M24 250h16v9h-16Z"/>
-<text class="t" x="48" y="258" font-size="7.14" fill-opacity="1" text-anchor="start">BUILT</text>
-<path class="pl" d="M104 250h16v9h-16Z"/>
-<text class="t" x="128" y="258" font-size="7.14" fill-opacity="1" text-anchor="start">PLANNED</text>
-<text class="t" x="856" y="258" font-size="6.72" fill-opacity="1" text-anchor="end">SCHEMATIC</text>
+<path class="i" d="M24 290h16v9h-16Z"/>
+<text class="t" x="48" y="298" font-size="7.14" fill-opacity="1" text-anchor="start">BUILT</text>
+<path class="pl" d="M104 290h16v9h-16Z"/>
+<text class="t" x="128" y="298" font-size="7.14" fill-opacity="1" text-anchor="start">PLANNED</text>
+<text class="t" x="856" y="298" font-size="6.72" fill-opacity="1" text-anchor="end">SCHEMATIC</text>
 <text class="m" x="214" y="30" font-size="9" text-anchor="start" xml:space="preserve">made by characters, from the same parts</text>
 <path class="k" d="M24 44L288 44"/>
-<path class="k" d="M55.38 80L55.41 80.43L55.4 80.87L55.35 81.31L55.27 81.74L55.14 82.17L54.98 82.59L54.77 83.01L54.53 83.41L54.25 83.8L53.94 84.17L53.6 84.53L53.22 84.87L52.82 85.19L52.39 85.5L51.94 85.78L51.47 86.04L50.99 86.27L50.48 86.49L49.97 86.69L49.45 86.86L48.92 87.02L48.38 87.16L47.84 87.27L47.29 87.37L46.75 87.46L46.2 87.52L45.65 87.58L45.1 87.61L44.55 87.63L44 87.64L43.45 87.63L42.9 87.61L42.35 87.57L41.81 87.51L41.26 87.44L40.72 87.35L40.18 87.24L39.64 87.12L39.12 86.97L38.6 86.81L38.09 86.62L37.59 86.42L37.1 86.19L36.63 85.95L36.18 85.68L35.75 85.4L35.35 85.1L34.97 84.77L34.61 84.43L34.28 84.08L33.99 83.71L33.72 83.33L33.49 82.93L33.29 82.53L33.12 82.12L32.99 81.7L32.89 81.28L32.82 80.85L32.79 80.43L32.79 80L32.82 79.57L32.89 79.15L32.98 78.73L33.1 78.32L33.25 77.91L33.43 77.5L33.64 77.11L33.87 76.72L34.13 76.34L34.41 75.97L34.72 75.62L35.05 75.27L35.4 74.94L35.78 74.61L36.17 74.31L36.59 74.02L37.03 73.74L37.49 73.49L37.97 73.25L38.47 73.03L38.98 72.83L39.5 72.65L40.04 72.5L40.59 72.36L41.15 72.26L41.71 72.17L42.28 72.11L42.85 72.07L43.43 72.06L44 72.07L44.57 72.1L45.13 72.15L45.69 72.23L46.24 72.33L46.78 72.45L47.31 72.58L47.83 72.74L48.34 72.91L48.84 73.1L49.32 73.3L49.79 73.52L50.24 73.75L50.69 74L51.11 74.25L51.53 74.52L51.93 74.81L52.31 75.1L52.68 75.41L53.03 75.73L53.37 76.07L53.68 76.41L53.98 76.77L54.25 77.14L54.5 77.52L54.72 77.91L54.91 78.31L55.08 78.72L55.21 79.14L55.31 79.57L55.38 80Z"/>
-<text class="m" x="44" y="110" font-size="8.5" text-anchor="middle" xml:space="preserve">space</text>
-<path class="k" d="M74 73.5H98V86.5H74Z"/>
-<path class="k" d="M78.8 78.05L93.2 78.05"/>
-<path class="k" d="M78.8 82.86L88.88 82.86"/>
-<text class="m" x="86" y="110" font-size="8.5" text-anchor="middle" xml:space="preserve">rule</text>
-<text class="m" x="65" y="84" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
-<path class="k" d="M115 75H119L123 79V85H115Z"/>
-<path class="k" d="M133 75H137L141 79V85H133Z"/>
-<path class="k" d="M124 80Q128 72 133 80"/>
-<circle class="d" cx="133" cy="80" r="2.3"/>
-<text class="m" x="128" y="110" font-size="8.5" text-anchor="middle" xml:space="preserve">watch</text>
-<text class="m" x="107" y="84" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
-<text class="m" x="202" y="84" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
-<text class="t" x="218" y="83" font-size="7.56" fill-opacity="1" text-anchor="start">PATTERN</text>
-<text class="m" x="24" y="134" font-size="8.5" text-anchor="start" xml:space="preserve">double-entry accounts</text>
+<path class="k" d="M55.38 76L55.41 76.43L55.4 76.87L55.35 77.31L55.27 77.74L55.14 78.17L54.98 78.59L54.77 79.01L54.53 79.41L54.25 79.8L53.94 80.17L53.6 80.53L53.22 80.87L52.82 81.19L52.39 81.5L51.94 81.78L51.47 82.04L50.99 82.27L50.48 82.49L49.97 82.69L49.45 82.86L48.92 83.02L48.38 83.16L47.84 83.27L47.29 83.37L46.75 83.46L46.2 83.52L45.65 83.58L45.1 83.61L44.55 83.63L44 83.64L43.45 83.63L42.9 83.61L42.35 83.57L41.81 83.51L41.26 83.44L40.72 83.35L40.18 83.24L39.64 83.12L39.12 82.97L38.6 82.81L38.09 82.62L37.59 82.42L37.1 82.19L36.63 81.95L36.18 81.68L35.75 81.4L35.35 81.1L34.97 80.77L34.61 80.43L34.28 80.08L33.99 79.71L33.72 79.33L33.49 78.93L33.29 78.53L33.12 78.12L32.99 77.7L32.89 77.28L32.82 76.85L32.79 76.43L32.79 76L32.82 75.57L32.89 75.15L32.98 74.73L33.1 74.32L33.25 73.91L33.43 73.5L33.64 73.11L33.87 72.72L34.13 72.34L34.41 71.97L34.72 71.62L35.05 71.27L35.4 70.94L35.78 70.61L36.17 70.31L36.59 70.02L37.03 69.74L37.49 69.49L37.97 69.25L38.47 69.03L38.98 68.83L39.5 68.65L40.04 68.5L40.59 68.36L41.15 68.26L41.71 68.17L42.28 68.11L42.85 68.07L43.43 68.06L44 68.07L44.57 68.1L45.13 68.15L45.69 68.23L46.24 68.33L46.78 68.45L47.31 68.58L47.83 68.74L48.34 68.91L48.84 69.1L49.32 69.3L49.79 69.52L50.24 69.75L50.69 70L51.11 70.25L51.53 70.52L51.93 70.81L52.31 71.1L52.68 71.41L53.03 71.73L53.37 72.07L53.68 72.41L53.98 72.77L54.25 73.14L54.5 73.52L54.72 73.91L54.91 74.31L55.08 74.72L55.21 75.14L55.31 75.57L55.38 76Z"/>
+<text class="m" x="44" y="98" font-size="8.5" text-anchor="middle" xml:space="preserve">space</text>
+<path class="k" d="M74 69.5H98V82.5H74Z"/>
+<path class="k" d="M78.8 74.05L93.2 74.05"/>
+<path class="k" d="M78.8 78.86L88.88 78.86"/>
+<text class="m" x="86" y="98" font-size="8.5" text-anchor="middle" xml:space="preserve">rule</text>
+<text class="m" x="65" y="80" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<path class="k" d="M115 71H119L123 75V81H115Z"/>
+<path class="k" d="M133 71H137L141 75V81H133Z"/>
+<path class="k" d="M124 76Q128 68 133 76"/>
+<circle class="d" cx="133" cy="76" r="2.3"/>
+<text class="m" x="128" y="98" font-size="8.5" text-anchor="middle" xml:space="preserve">watch</text>
+<text class="m" x="107" y="80" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<text class="m" x="202" y="80" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
+<text class="t" x="218" y="79" font-size="7.56" fill-opacity="1" text-anchor="start">PATTERN</text>
+<text class="m" x="24" y="116" font-size="8.5" text-anchor="start" xml:space="preserve">double-entry accounts</text>
 <path class="k" d="M308 44L572 44"/>
-<path class="k" d="M320.5 70.5H331.09L335.5 74.91V89.5H320.5Z"/>
-<path class="k" d="M323.5 80.38L332.5 80.38"/>
-<path class="k" d="M323.5 84.75L329.5 84.75"/>
-<text class="m" x="328" y="110" font-size="8.5" text-anchor="middle" xml:space="preserve">proposal</text>
-<path class="i" d="M363.4 80L367.8 85.28L377.48 74.28"/>
-<text class="m" x="370" y="110" font-size="8.5" text-anchor="middle" xml:space="preserve">seal</text>
-<text class="m" x="349" y="84" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
-<path class="k" d="M400 73.5H424V86.5H400Z"/>
-<path class="k" d="M404.8 78.05L419.2 78.05"/>
-<path class="k" d="M404.8 82.86L414.88 82.86"/>
-<text class="m" x="412" y="110" font-size="8.5" text-anchor="middle" xml:space="preserve">rule</text>
-<text class="m" x="391" y="84" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
-<path class="k" d="M441 75H445L449 79V85H441Z"/>
-<path class="k" d="M459 75H463L467 79V85H459Z"/>
-<path class="k" d="M450 80Q454 72 459 80"/>
-<circle class="d" cx="459" cy="80" r="2.3"/>
-<text class="m" x="454" y="110" font-size="8.5" text-anchor="middle" xml:space="preserve">watch</text>
-<text class="m" x="433" y="84" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
-<text class="m" x="486" y="84" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
-<text class="t" x="502" y="83" font-size="7.56" fill-opacity="1" text-anchor="start">APPROVAL</text>
-<text class="m" x="308" y="134" font-size="8.5" text-anchor="start" xml:space="preserve">owner signs off</text>
+<path class="k" d="M320.5 66.5H331.09L335.5 70.91V85.5H320.5Z"/>
+<path class="k" d="M323.5 76.38L332.5 76.38"/>
+<path class="k" d="M323.5 80.75L329.5 80.75"/>
+<text class="m" x="328" y="98" font-size="8.5" text-anchor="middle" xml:space="preserve">proposal</text>
+<path class="i" d="M363.4 76L367.8 81.28L377.48 70.28"/>
+<text class="m" x="370" y="98" font-size="8.5" text-anchor="middle" xml:space="preserve">seal</text>
+<text class="m" x="349" y="80" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<path class="k" d="M400 69.5H424V82.5H400Z"/>
+<path class="k" d="M404.8 74.05L419.2 74.05"/>
+<path class="k" d="M404.8 78.86L414.88 78.86"/>
+<text class="m" x="412" y="98" font-size="8.5" text-anchor="middle" xml:space="preserve">rule</text>
+<text class="m" x="391" y="80" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<path class="k" d="M441 71H445L449 75V81H441Z"/>
+<path class="k" d="M459 71H463L467 75V81H459Z"/>
+<path class="k" d="M450 76Q454 68 459 76"/>
+<circle class="d" cx="459" cy="76" r="2.3"/>
+<text class="m" x="454" y="98" font-size="8.5" text-anchor="middle" xml:space="preserve">watch</text>
+<text class="m" x="433" y="80" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<text class="m" x="486" y="80" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
+<text class="t" x="502" y="79" font-size="7.56" fill-opacity="1" text-anchor="start">APPROVAL</text>
+<text class="m" x="308" y="116" font-size="8.5" text-anchor="start" xml:space="preserve">owner signs off</text>
 <path class="k" d="M592 44L856 44"/>
-<circle class="d" cx="604" cy="84" r="2.3"/>
-<path class="k" d="M604 74C626 66 626 92 604 84"/>
-<path class="k" d="M604 74L604 84"/>
-<text class="m" x="612" y="110" font-size="8.5" text-anchor="middle" xml:space="preserve">measure</text>
-<path class="k" d="M642 73.5H666V86.5H642Z"/>
-<path class="k" d="M646.8 78.05L661.2 78.05"/>
-<path class="k" d="M646.8 82.86L656.88 82.86"/>
-<text class="m" x="654" y="110" font-size="8.5" text-anchor="middle" xml:space="preserve">rule</text>
-<text class="m" x="633" y="84" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
-<text class="m" x="770" y="84" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
-<text class="t" x="786" y="83" font-size="7.56" fill-opacity="1" text-anchor="start">BUDGET</text>
-<text class="m" x="592" y="134" font-size="8.5" text-anchor="start" xml:space="preserve">stop at the limit</text>
-<path class="k" d="M24 152L288 152"/>
-<path class="k" d="M36.5 178.5H47.09L51.5 182.91V197.5H36.5Z"/>
-<path class="k" d="M39.5 188.38L48.5 188.38"/>
-<path class="k" d="M39.5 192.75L45.5 192.75"/>
-<text class="m" x="44" y="218" font-size="8.5" text-anchor="middle" xml:space="preserve">page</text>
-<path class="k" d="M73 183H77L81 187V193H73Z"/>
-<path class="k" d="M91 183H95L99 187V193H91Z"/>
-<path class="k" d="M82 188Q86 180 91 188"/>
-<circle class="d" cx="91" cy="188" r="2.3"/>
-<text class="m" x="86" y="218" font-size="8.5" text-anchor="middle" xml:space="preserve">watch</text>
-<text class="m" x="65" y="192" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
-<path class="pl" d="M116 188Q128 174.8 140 188Q128 201.2 116 188Z"/>
-<circle class="pl" cx="128" cy="188" r="3.12"/>
-<text class="m" x="128" y="218" font-size="8.5" text-anchor="middle" xml:space="preserve">lens</text>
-<text class="m" x="107" y="192" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
-<g transform="translate(170 180) scale(.7)"><path class="d" d="M-8 -5H5Q7 -5 7 -3V3Q7 5 5 5H-8Z"/></g>
-<g transform="translate(170 188) scale(.7)"><path class="d" d="M-8 -5H5Q7 -5 7 -3V3Q7 5 5 5H-8Z"/></g>
-<g transform="translate(170 196) scale(.7)"><path class="d" d="M-8 -5H5Q7 -5 7 -3V3Q7 5 5 5H-8Z"/></g>
-<text class="m" x="170" y="218" font-size="8.5" text-anchor="middle" xml:space="preserve">provider</text>
-<text class="m" x="149" y="192" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
-<text class="m" x="202" y="192" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
-<text class="t" x="218" y="191" font-size="7.56" fill-opacity="1" text-anchor="start">GO-BETWEEN</text>
-<text class="m" x="24" y="242" font-size="8.5" text-anchor="start" xml:space="preserve">screen into sentences</text>
-<path class="k" d="M308 152L572 152"/>
-<path class="k" d="M320.5 178.5H331.09L335.5 182.91V197.5H320.5Z"/>
-<path class="k" d="M323.5 188.38L332.5 188.38"/>
-<path class="k" d="M323.5 192.75L329.5 192.75"/>
-<text class="m" x="328" y="218" font-size="8.5" text-anchor="middle" xml:space="preserve">page</text>
-<circle class="pl" cx="370" cy="188" r="6"/>
-<circle class="pl" cx="370" cy="188" r="1.6"/>
-<text class="m" x="370" y="218" font-size="8.5" text-anchor="middle" xml:space="preserve">seed</text>
-<text class="m" x="349" y="192" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
-<path class="pl" d="M405 183H419V192H411L408 196V192H405Z"/>
-<text class="m" x="412" y="218" font-size="8.5" text-anchor="middle" xml:space="preserve">voice</text>
-<text class="m" x="391" y="192" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
-<circle class="k" cx="450" cy="192" r="1.1"/>
-<circle class="k" cx="452.5" cy="189" r="1.8"/>
-<circle class="k" cx="457" cy="184.5" r="3.4"/>
-<text class="m" x="454" y="218" font-size="8.5" text-anchor="middle" xml:space="preserve">ask</text>
-<text class="m" x="433" y="192" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
-<text class="m" x="486" y="192" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
-<text class="t" x="502" y="191" font-size="7.56" fill-opacity="1" text-anchor="start">CHARACTER</text>
-<text class="m" x="308" y="242" font-size="8.5" text-anchor="start" xml:space="preserve">weary but reliable</text>
-<path class="k" d="M592 152L856 152"/>
-<path class="k" d="M600 181.5H624V194.5H600Z"/>
-<path class="k" d="M604.8 186.05L619.2 186.05"/>
-<path class="k" d="M604.8 190.86L614.88 190.86"/>
-<text class="m" x="612" y="218" font-size="8.5" text-anchor="middle" xml:space="preserve">condition</text>
-<path class="pl" d="M651.4 182L651.4 194"/>
-<path class="pl" d="M656.6 182L656.6 194"/>
-<text class="m" x="654" y="218" font-size="8.5" text-anchor="middle" xml:space="preserve">hold</text>
-<text class="m" x="633" y="192" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
-<text class="m" x="770" y="192" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
-<text class="t" x="786" y="191" font-size="7.56" fill-opacity="1" text-anchor="start">BREAKPOINT</text>
-<text class="m" x="592" y="242" font-size="8.5" text-anchor="start" xml:space="preserve">pause, then step</text>
+<circle class="d" cx="604" cy="80" r="2.3"/>
+<path class="k" d="M604 70C626 62 626 88 604 80"/>
+<path class="k" d="M604 70L604 80"/>
+<text class="m" x="612" y="98" font-size="8.5" text-anchor="middle" xml:space="preserve">measure</text>
+<path class="k" d="M642 69.5H666V82.5H642Z"/>
+<path class="k" d="M646.8 74.05L661.2 74.05"/>
+<path class="k" d="M646.8 78.86L656.88 78.86"/>
+<text class="m" x="654" y="98" font-size="8.5" text-anchor="middle" xml:space="preserve">rule</text>
+<text class="m" x="633" y="80" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<text class="m" x="770" y="80" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
+<text class="t" x="786" y="79" font-size="7.56" fill-opacity="1" text-anchor="start">BUDGET</text>
+<text class="m" x="592" y="116" font-size="8.5" text-anchor="start" xml:space="preserve">stop at the limit</text>
+<path class="k" d="M24 124L288 124"/>
+<path class="k" d="M36.5 146.5H47.09L51.5 150.91V165.5H36.5Z"/>
+<path class="k" d="M39.5 156.38L48.5 156.38"/>
+<path class="k" d="M39.5 160.75L45.5 160.75"/>
+<text class="m" x="44" y="178" font-size="8.5" text-anchor="middle" xml:space="preserve">page</text>
+<path class="k" d="M73 151H77L81 155V161H73Z"/>
+<path class="k" d="M91 151H95L99 155V161H91Z"/>
+<path class="k" d="M82 156Q86 148 91 156"/>
+<circle class="d" cx="91" cy="156" r="2.3"/>
+<text class="m" x="86" y="178" font-size="8.5" text-anchor="middle" xml:space="preserve">watch</text>
+<text class="m" x="65" y="160" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<path class="pl" d="M116 156Q128 142.8 140 156Q128 169.2 116 156Z"/>
+<circle class="pl" cx="128" cy="156" r="3.12"/>
+<text class="m" x="128" y="178" font-size="8.5" text-anchor="middle" xml:space="preserve">lens</text>
+<text class="m" x="107" y="160" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<g transform="translate(170 148) scale(.7)"><path class="d" d="M-8 -5H5Q7 -5 7 -3V3Q7 5 5 5H-8Z"/></g>
+<g transform="translate(170 156) scale(.7)"><path class="d" d="M-8 -5H5Q7 -5 7 -3V3Q7 5 5 5H-8Z"/></g>
+<g transform="translate(170 164) scale(.7)"><path class="d" d="M-8 -5H5Q7 -5 7 -3V3Q7 5 5 5H-8Z"/></g>
+<text class="m" x="170" y="178" font-size="8.5" text-anchor="middle" xml:space="preserve">provider</text>
+<text class="m" x="149" y="160" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<text class="m" x="202" y="160" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
+<text class="t" x="218" y="159" font-size="7.56" fill-opacity="1" text-anchor="start">GO-BETWEEN</text>
+<text class="m" x="24" y="196" font-size="8.5" text-anchor="start" xml:space="preserve">screen into sentences</text>
+<path class="k" d="M308 124L572 124"/>
+<path class="k" d="M320.5 146.5H331.09L335.5 150.91V165.5H320.5Z"/>
+<path class="k" d="M323.5 156.38L332.5 156.38"/>
+<path class="k" d="M323.5 160.75L329.5 160.75"/>
+<text class="m" x="328" y="178" font-size="8.5" text-anchor="middle" xml:space="preserve">page</text>
+<circle class="pl" cx="370" cy="156" r="6"/>
+<circle class="pl" cx="370" cy="156" r="1.6"/>
+<text class="m" x="370" y="178" font-size="8.5" text-anchor="middle" xml:space="preserve">seed</text>
+<text class="m" x="349" y="160" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<path class="pl" d="M405 151H419V160H411L408 164V160H405Z"/>
+<text class="m" x="412" y="178" font-size="8.5" text-anchor="middle" xml:space="preserve">voice</text>
+<text class="m" x="391" y="160" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<circle class="k" cx="450" cy="160" r="1.1"/>
+<circle class="k" cx="452.5" cy="157" r="1.8"/>
+<circle class="k" cx="457" cy="152.5" r="3.4"/>
+<text class="m" x="454" y="178" font-size="8.5" text-anchor="middle" xml:space="preserve">ask</text>
+<text class="m" x="433" y="160" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<text class="m" x="486" y="160" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
+<text class="t" x="502" y="159" font-size="7.56" fill-opacity="1" text-anchor="start">CHARACTER</text>
+<text class="m" x="308" y="196" font-size="8.5" text-anchor="start" xml:space="preserve">weary but reliable</text>
+<path class="k" d="M592 124L856 124"/>
+<path class="k" d="M600 149.5H624V162.5H600Z"/>
+<path class="k" d="M604.8 154.05L619.2 154.05"/>
+<path class="k" d="M604.8 158.86L614.88 158.86"/>
+<text class="m" x="612" y="178" font-size="8.5" text-anchor="middle" xml:space="preserve">condition</text>
+<path class="pl" d="M651.4 150L651.4 162"/>
+<path class="pl" d="M656.6 150L656.6 162"/>
+<text class="m" x="654" y="178" font-size="8.5" text-anchor="middle" xml:space="preserve">hold</text>
+<text class="m" x="633" y="160" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<text class="m" x="770" y="160" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
+<text class="t" x="786" y="159" font-size="7.56" fill-opacity="1" text-anchor="start">BREAKPOINT</text>
+<text class="m" x="592" y="196" font-size="8.5" text-anchor="start" xml:space="preserve">pause, then step</text>
+<path class="k" d="M24 204L288 204"/>
+<path class="pl" d="M36 225.5H47.29L52 230.21V246.5H36Z"/>
+<path class="pl" d="M39 230L45 230"/>
+<path class="pl" d="M39 234L44 234"/>
+<path class="pl" d="M39 238L45 238"/>
+<path class="pl" d="M39 242L43 242"/>
+<text class="m" x="44" y="258" font-size="8.5" text-anchor="middle" xml:space="preserve">case</text>
+<path class="pl" d="M78 225.5H89.29L94 230.21V246.5H78Z"/>
+<path class="pl" d="M81 230L87 230"/>
+<path class="pl" d="M81 234L86 234"/>
+<path class="pl" d="M81 238L87 238"/>
+<path class="pl" d="M81 242L85 242"/>
+<text class="m" x="86" y="258" font-size="8.5" text-anchor="middle" xml:space="preserve">case</text>
+<text class="m" x="65" y="240" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<circle class="k" cx="124" cy="240" r="1.1"/>
+<circle class="k" cx="126.5" cy="237" r="1.8"/>
+<circle class="k" cx="131" cy="232.5" r="3.4"/>
+<text class="m" x="128" y="258" font-size="8.5" text-anchor="middle" xml:space="preserve">think</text>
+<text class="m" x="107" y="240" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<text class="m" x="202" y="240" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
+<text class="t" x="218" y="239" font-size="7.56" fill-opacity="1" text-anchor="start">HABIT</text>
+<text class="m" x="24" y="276" font-size="8.5" text-anchor="start" xml:space="preserve">when, then, because, expect</text>
+<path class="k" d="M308 204L572 204"/>
+<path class="k" d="M315 231H319L323 235V241H315Z"/>
+<path class="k" d="M333 231H337L341 235V241H333Z"/>
+<path class="k" d="M324 236Q328 228 333 236"/>
+<circle class="d" cx="333" cy="236" r="2.3"/>
+<text class="m" x="328" y="258" font-size="8.5" text-anchor="middle" xml:space="preserve">watch</text>
+<circle class="pl" cx="370" cy="236" r="7"/>
+<path class="pl" d="M366.5 236L373.5 236"/>
+<text class="m" x="370" y="258" font-size="8.5" text-anchor="middle" xml:space="preserve">price</text>
+<text class="m" x="349" y="240" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<circle class="pl" cx="412" cy="236" r="7"/>
+<circle class="d" cx="409.34" cy="235.16" r="0.9"/>
+<circle class="d" cx="414.66" cy="235.16" r="0.9"/>
+<path class="pl" d="M409.76 238.66Q412 240.34 414.24 238.66"/>
+<text class="m" x="412" y="258" font-size="8.5" text-anchor="middle" xml:space="preserve">owner</text>
+<text class="m" x="391" y="240" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<path class="pl" d="M451.4 230L451.4 242"/>
+<path class="pl" d="M456.6 230L456.6 242"/>
+<text class="m" x="454" y="258" font-size="8.5" text-anchor="middle" xml:space="preserve">hold</text>
+<text class="m" x="433" y="240" font-size="11" text-anchor="middle" xml:space="preserve">+</text>
+<text class="m" x="486" y="240" font-size="11" text-anchor="middle" xml:space="preserve">=</text>
+<text class="t" x="502" y="239" font-size="7.56" fill-opacity="1" text-anchor="start">WARNING</text>
+<text class="m" x="308" y="276" font-size="8.5" text-anchor="start" xml:space="preserve">open until its owner acts</text>
 </svg>

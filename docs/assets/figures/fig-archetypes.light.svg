@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 290" width="880" height="290" role="img" aria-labelledby="t">
-<title id="t">Plate 2, archetypes: everything is a page. One page glyph wears twelve hats: character, space, provider, screen, hands and daybook are built; tool and clock are planned; team, pattern, lens and go-between are made by a character from pages.</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 330" width="880" height="330" role="img" aria-labelledby="t">
+<title id="t">Plate 2, archetypes: everything is a page. One page glyph wears fifteen hats: character, space, provider, screen, hands and daybook are built; tool, clock, file, table and stream are planned; team, pattern, lens and go-between are made by a character from pages.</title>
 <style>
 :root{--ink:#1E1E1E}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
@@ -22,91 +22,117 @@
 .x1{fill:none;stroke:#1E1E1E;stroke-width:1.6;stroke-linecap:round}
 </style>
 <text class="t" x="24" y="30" font-size="9.24" fill-opacity="1" text-anchor="start">2 · ARCHETYPES</text>
-<path class="i" d="M24 268h16v9h-16Z"/>
-<text class="t" x="48" y="276" font-size="7.14" fill-opacity="1" text-anchor="start">BUILT</text>
-<path class="pl" d="M104 268h16v9h-16Z"/>
-<text class="t" x="128" y="276" font-size="7.14" fill-opacity="1" text-anchor="start">PLANNED</text>
-<text class="t" x="856" y="276" font-size="6.72" fill-opacity="1" text-anchor="end">SCHEMATIC</text>
+<path class="i" d="M24 308h16v9h-16Z"/>
+<text class="t" x="48" y="316" font-size="7.14" fill-opacity="1" text-anchor="start">BUILT</text>
+<path class="pl" d="M104 308h16v9h-16Z"/>
+<text class="t" x="128" y="316" font-size="7.14" fill-opacity="1" text-anchor="start">PLANNED</text>
+<text class="t" x="856" y="316" font-size="6.72" fill-opacity="1" text-anchor="end">SCHEMATIC</text>
 <text class="m" x="174" y="30" font-size="9" text-anchor="start" xml:space="preserve">everything is a page: one shape, many hats</text>
-<path class="k" d="M76.3 52H100.3L110.3 62V92H76.3Z"/>
-<circle class="k" cx="85.3" cy="85" r="1.8"/>
-<circle class="k" cx="88.3" cy="80" r="3"/>
-<circle class="k" cx="94.3" cy="72" r="6.5"/>
-<text class="m" x="93.3" y="112" font-size="10" text-anchor="middle" xml:space="preserve">character</text>
-<text class="m" x="93.3" y="125" font-size="8.5" text-anchor="middle" xml:space="preserve">asks a model</text>
-<text class="m" x="93.3" y="136" font-size="8.5" text-anchor="middle" xml:space="preserve">and writes the answer</text>
-<path class="k" d="M215 52H239L249 62V92H215Z"/>
-<path class="k" d="M241.35 77L241.37 77.38L241.36 77.76L241.32 78.14L241.24 78.52L241.13 78.9L240.98 79.27L240.79 79.63L240.57 79.98L240.32 80.32L240.04 80.65L239.72 80.97L239.38 81.26L239.02 81.55L238.63 81.81L238.22 82.05L237.79 82.28L237.35 82.49L236.9 82.68L236.43 82.85L235.95 83.01L235.47 83.14L234.98 83.26L234.49 83.36L234 83.45L233.5 83.53L233 83.58L232.5 83.63L232 83.66L231.5 83.68L231 83.68L230.5 83.68L230 83.65L229.5 83.62L229 83.57L228.51 83.51L228.02 83.43L227.53 83.34L227.04 83.23L226.56 83.1L226.09 82.96L225.62 82.8L225.17 82.62L224.73 82.42L224.3 82.21L223.89 81.97L223.5 81.72L223.13 81.46L222.79 81.18L222.46 80.88L222.17 80.57L221.9 80.25L221.66 79.91L221.44 79.57L221.26 79.21L221.11 78.85L220.99 78.49L220.9 78.12L220.84 77.75L220.81 77.37L220.81 77L220.84 76.63L220.9 76.26L220.98 75.89L221.09 75.53L221.23 75.17L221.39 74.81L221.58 74.47L221.79 74.13L222.02 73.8L222.28 73.48L222.56 73.16L222.86 72.86L223.18 72.57L223.52 72.29L223.89 72.02L224.27 71.77L224.67 71.53L225.08 71.3L225.52 71.09L225.97 70.9L226.43 70.73L226.91 70.57L227.4 70.44L227.9 70.32L228.41 70.22L228.92 70.15L229.44 70.09L229.96 70.06L230.48 70.05L231 70.06L231.52 70.09L232.03 70.13L232.54 70.2L233.04 70.29L233.53 70.39L234.01 70.51L234.48 70.64L234.95 70.8L235.4 70.96L235.84 71.14L236.26 71.33L236.68 71.53L237.08 71.75L237.47 71.97L237.84 72.21L238.21 72.46L238.56 72.72L238.89 72.99L239.21 73.27L239.51 73.56L239.8 73.86L240.07 74.17L240.32 74.5L240.54 74.83L240.74 75.17L240.92 75.52L241.07 75.88L241.19 76.25L241.29 76.62L241.35 77Z"/>
-<text class="m" x="232" y="112" font-size="10" text-anchor="middle" xml:space="preserve">space</text>
-<text class="m" x="232" y="125" font-size="8.5" text-anchor="middle" xml:space="preserve">pages lie within it,</text>
-<text class="m" x="232" y="136" font-size="8.5" text-anchor="middle" xml:space="preserve">it hands rules down</text>
-<path class="k" d="M353.7 52H377.7L387.7 62V92H353.7Z"/>
-<g transform="translate(369.7 77)"><path class="d" d="M-8 -5H5Q7 -5 7 -3V3Q7 5 5 5H-8Z"/></g>
-<text class="m" x="370.7" y="112" font-size="10" text-anchor="middle" xml:space="preserve">provider</text>
-<text class="m" x="370.7" y="125" font-size="8.5" text-anchor="middle" xml:space="preserve">how to reach a model:</text>
-<text class="m" x="370.7" y="136" font-size="8.5" text-anchor="middle" xml:space="preserve">a key or a local program</text>
-<path class="k" d="M492.4 52H516.4L526.4 62V92H492.4Z"/>
-<path class="k" d="M499.4 70H517.4V83H499.4Z"/>
-<path class="k" d="M502.4 74L514.4 74"/>
-<path class="k" d="M502.4 78L510.4 78"/>
-<text class="m" x="509.4" y="112" font-size="10" text-anchor="middle" xml:space="preserve">screen</text>
-<text class="m" x="509.4" y="125" font-size="8.5" text-anchor="middle" xml:space="preserve">what a connector</text>
-<text class="m" x="509.4" y="136" font-size="8.5" text-anchor="middle" xml:space="preserve">perceives, as text</text>
-<path class="k" d="M631.1 52H655.1L665.1 62V92H631.1Z"/>
-<path class="k" d="M638.1 71H642.6V75.5H638.1Z"/>
-<path class="k" d="M638.1 78H642.6V82.5H638.1Z"/>
-<path class="k" d="M645.1 71H649.6V75.5H645.1Z"/>
-<path class="k" d="M645.1 78H649.6V82.5H645.1Z"/>
-<path class="k" d="M652.1 71H656.6V75.5H652.1Z"/>
-<path class="k" d="M652.1 78H656.6V82.5H652.1Z"/>
-<text class="m" x="648.1" y="112" font-size="10" text-anchor="middle" xml:space="preserve">hands</text>
-<text class="m" x="648.1" y="125" font-size="8.5" text-anchor="middle" xml:space="preserve">what a connector</text>
-<text class="m" x="648.1" y="136" font-size="8.5" text-anchor="middle" xml:space="preserve">types, as keys</text>
-<path class="k" d="M769.8 52H793.8L803.8 62V92H769.8Z"/>
-<circle class="d" cx="778.8" cy="81" r="2.3"/>
-<path class="k" d="M778.8 71C801.8 62 801.8 90 778.8 81"/>
-<path class="k" d="M778.8 71L778.8 81"/>
-<text class="m" x="786.8" y="112" font-size="10" text-anchor="middle" xml:space="preserve">daybook</text>
-<text class="m" x="786.8" y="125" font-size="8.5" text-anchor="middle" xml:space="preserve">a page that watches</text>
-<text class="m" x="786.8" y="136" font-size="8.5" text-anchor="middle" xml:space="preserve">itself: a measure</text>
-<path class="pl" d="M76.3 170H100.3L110.3 180V210H76.3Z"/>
-<path class="pl" d="M100.3 185H90.3Q83.3 185 83.3 190V198Q83.3 203 90.3 203H100.3"/>
-<text class="m" x="93.3" y="230" font-size="10" text-anchor="middle" xml:space="preserve">tool</text>
-<text class="m" x="93.3" y="243" font-size="8.5" text-anchor="middle" xml:space="preserve">something to do:</text>
-<text class="m" x="93.3" y="254" font-size="8.5" text-anchor="middle" xml:space="preserve">a call is a write</text>
-<path class="pl" d="M215 170H239L249 180V210H215Z"/>
-<circle class="pl" cx="231" cy="195" r="8"/>
-<path class="pl" d="M231 195L231 190"/>
-<path class="pl" d="M231 195L234.5 196.5"/>
-<text class="m" x="232" y="230" font-size="10" text-anchor="middle" xml:space="preserve">clock</text>
-<text class="m" x="232" y="243" font-size="8.5" text-anchor="middle" xml:space="preserve">time passes when</text>
-<text class="m" x="232" y="254" font-size="8.5" text-anchor="middle" xml:space="preserve">this page is written</text>
-<path class="pl" d="M353.7 170H377.7L387.7 180V210H353.7Z"/>
-<path class="pl" d="M381.08 195L381.11 195.43L381.1 195.87L381.05 196.31L380.97 196.74L380.84 197.17L380.68 197.59L380.47 198.01L380.23 198.41L379.95 198.8L379.64 199.17L379.3 199.53L378.92 199.87L378.52 200.19L378.09 200.5L377.64 200.78L377.17 201.04L376.69 201.27L376.18 201.49L375.67 201.69L375.15 201.86L374.62 202.02L374.08 202.16L373.54 202.27L372.99 202.37L372.45 202.46L371.9 202.52L371.35 202.58L370.8 202.61L370.25 202.63L369.7 202.64L369.15 202.63L368.6 202.61L368.05 202.57L367.51 202.51L366.96 202.44L366.42 202.35L365.88 202.24L365.34 202.12L364.82 201.97L364.3 201.81L363.79 201.62L363.29 201.42L362.8 201.19L362.33 200.95L361.88 200.68L361.45 200.4L361.05 200.1L360.67 199.77L360.31 199.43L359.98 199.08L359.69 198.71L359.42 198.33L359.19 197.93L358.99 197.53L358.82 197.12L358.69 196.7L358.59 196.28L358.52 195.85L358.49 195.43L358.49 195L358.52 194.57L358.59 194.15L358.68 193.73L358.8 193.32L358.95 192.91L359.13 192.5L359.34 192.11L359.57 191.72L359.83 191.34L360.11 190.97L360.42 190.62L360.75 190.27L361.1 189.94L361.48 189.61L361.87 189.31L362.29 189.02L362.73 188.74L363.19 188.49L363.67 188.25L364.17 188.03L364.68 187.83L365.2 187.65L365.74 187.5L366.29 187.36L366.85 187.26L367.41 187.17L367.98 187.11L368.55 187.07L369.13 187.06L369.7 187.07L370.27 187.1L370.83 187.15L371.39 187.23L371.94 187.33L372.48 187.45L373.01 187.58L373.53 187.74L374.04 187.91L374.54 188.1L375.02 188.3L375.49 188.52L375.94 188.75L376.39 189L376.81 189.25L377.23 189.52L377.63 189.81L378.01 190.1L378.38 190.41L378.73 190.73L379.07 191.07L379.38 191.41L379.68 191.77L379.95 192.14L380.2 192.52L380.42 192.91L380.61 193.31L380.78 193.72L380.91 194.14L381.01 194.57L381.08 195Z"/>
-<path class="pl" d="M363.2 191.5H364.2L368.2 195.5V198.5H363.2Z"/>
-<path class="pl" d="M371.2 191.5H372.2L376.2 195.5V198.5H371.2Z"/>
-<text class="m" x="370.7" y="230" font-size="10" text-anchor="middle" xml:space="preserve">team</text>
-<text class="m" x="370.7" y="243" font-size="8.5" text-anchor="middle" xml:space="preserve">a space a character</text>
-<text class="m" x="370.7" y="254" font-size="8.5" text-anchor="middle" xml:space="preserve">made for its members</text>
-<path class="pl" d="M492.4 170H516.4L526.4 180V210H492.4Z"/>
-<path class="pl" d="M518.75 195L518.77 195.38L518.76 195.76L518.72 196.14L518.64 196.52L518.53 196.9L518.38 197.27L518.19 197.63L517.97 197.98L517.72 198.32L517.44 198.65L517.12 198.97L516.78 199.26L516.42 199.55L516.03 199.81L515.62 200.05L515.19 200.28L514.75 200.49L514.3 200.68L513.83 200.85L513.35 201.01L512.87 201.14L512.38 201.26L511.89 201.36L511.4 201.45L510.9 201.53L510.4 201.58L509.9 201.63L509.4 201.66L508.9 201.68L508.4 201.68L507.9 201.68L507.4 201.65L506.9 201.62L506.4 201.57L505.91 201.51L505.42 201.43L504.93 201.34L504.44 201.23L503.96 201.1L503.49 200.96L503.02 200.8L502.57 200.62L502.13 200.42L501.7 200.21L501.29 199.97L500.9 199.72L500.53 199.46L500.19 199.18L499.86 198.88L499.57 198.57L499.3 198.25L499.06 197.91L498.84 197.57L498.66 197.21L498.51 196.85L498.39 196.49L498.3 196.12L498.24 195.75L498.21 195.37L498.21 195L498.24 194.63L498.3 194.26L498.38 193.89L498.49 193.53L498.63 193.17L498.79 192.81L498.98 192.47L499.19 192.13L499.42 191.8L499.68 191.48L499.96 191.16L500.26 190.86L500.58 190.57L500.92 190.29L501.29 190.02L501.67 189.77L502.07 189.53L502.48 189.3L502.92 189.09L503.37 188.9L503.83 188.73L504.31 188.57L504.8 188.44L505.3 188.32L505.81 188.22L506.32 188.15L506.84 188.09L507.36 188.06L507.88 188.05L508.4 188.06L508.92 188.09L509.43 188.13L509.94 188.2L510.44 188.29L510.93 188.39L511.41 188.51L511.88 188.64L512.35 188.8L512.8 188.96L513.24 189.14L513.66 189.33L514.08 189.53L514.48 189.75L514.87 189.97L515.24 190.21L515.61 190.46L515.96 190.72L516.29 190.99L516.61 191.27L516.91 191.56L517.2 191.86L517.47 192.17L517.72 192.5L517.94 192.83L518.14 193.17L518.32 193.52L518.47 193.88L518.59 194.25L518.69 194.62L518.75 195Z"/>
-<text class="m" x="509.4" y="230" font-size="10" text-anchor="middle" xml:space="preserve">pattern</text>
-<text class="m" x="509.4" y="243" font-size="8.5" text-anchor="middle" xml:space="preserve">a space others chose</text>
-<text class="m" x="509.4" y="254" font-size="8.5" text-anchor="middle" xml:space="preserve">to join, rising by use</text>
-<path class="pl" d="M631.1 170H655.1L665.1 180V210H631.1Z"/>
-<path class="pl" d="M637.1 195Q647.1 184 657.1 195Q647.1 206 637.1 195Z"/>
-<circle class="pl" cx="647.1" cy="195" r="2.6"/>
-<text class="m" x="648.1" y="230" font-size="10" text-anchor="middle" xml:space="preserve">lens</text>
-<text class="m" x="648.1" y="243" font-size="8.5" text-anchor="middle" xml:space="preserve">how to read something,</text>
-<text class="m" x="648.1" y="254" font-size="8.5" text-anchor="middle" xml:space="preserve">a page a character keeps</text>
-<path class="pl" d="M769.8 170H793.8L803.8 180V210H769.8Z"/>
-<path class="pl" d="M774.3 192.5H777.3L781.3 196.5V201.5H774.3Z"/>
-<path class="pl" d="M791.3 192.5H794.3L798.3 196.5V201.5H791.3Z"/>
-<path class="pl" d="M781.8 197Q786.8 187 790.8 197"/>
-<circle class="d" cx="790.8" cy="197" r="2.3"/>
-<text class="m" x="786.8" y="230" font-size="10" text-anchor="middle" xml:space="preserve">go-between</text>
-<text class="m" x="786.8" y="243" font-size="8.5" text-anchor="middle" xml:space="preserve">turns what a connector</text>
-<text class="m" x="786.8" y="254" font-size="8.5" text-anchor="middle" xml:space="preserve">sees into sentences</text>
-<path class="k" d="M318.7 164L838.8 164"/>
-<text class="m" x="578.75" y="159" font-size="8.5" text-anchor="middle" xml:space="preserve">made by a character, from pages</text>
+<path class="k" d="M78.3 43H99.48L108.3 51.82V77H78.3Z"/>
+<circle class="k" cx="85.3" cy="73" r="1.8"/>
+<circle class="k" cx="88.3" cy="68" r="3"/>
+<circle class="k" cx="94.3" cy="60" r="6.5"/>
+<text class="m" x="93.3" y="94" font-size="10" text-anchor="middle" xml:space="preserve">character</text>
+<text class="m" x="93.3" y="106" font-size="8.5" text-anchor="middle" xml:space="preserve">asks a model</text>
+<text class="m" x="93.3" y="117" font-size="8.5" text-anchor="middle" xml:space="preserve">and writes the answer</text>
+<path class="k" d="M217 43H238.18L247 51.82V77H217Z"/>
+<path class="k" d="M241.35 65L241.37 65.38L241.36 65.76L241.32 66.14L241.24 66.52L241.13 66.9L240.98 67.27L240.79 67.63L240.57 67.98L240.32 68.32L240.04 68.65L239.72 68.97L239.38 69.26L239.02 69.55L238.63 69.81L238.22 70.05L237.79 70.28L237.35 70.49L236.9 70.68L236.43 70.85L235.95 71.01L235.47 71.14L234.98 71.26L234.49 71.36L234 71.45L233.5 71.53L233 71.58L232.5 71.63L232 71.66L231.5 71.68L231 71.68L230.5 71.68L230 71.65L229.5 71.62L229 71.57L228.51 71.51L228.02 71.43L227.53 71.34L227.04 71.23L226.56 71.1L226.09 70.96L225.62 70.8L225.17 70.62L224.73 70.42L224.3 70.21L223.89 69.97L223.5 69.72L223.13 69.46L222.79 69.18L222.46 68.88L222.17 68.57L221.9 68.25L221.66 67.91L221.44 67.57L221.26 67.21L221.11 66.85L220.99 66.49L220.9 66.12L220.84 65.75L220.81 65.37L220.81 65L220.84 64.63L220.9 64.26L220.98 63.89L221.09 63.53L221.23 63.17L221.39 62.81L221.58 62.47L221.79 62.13L222.02 61.8L222.28 61.48L222.56 61.16L222.86 60.86L223.18 60.57L223.52 60.29L223.89 60.02L224.27 59.77L224.67 59.53L225.08 59.3L225.52 59.09L225.97 58.9L226.43 58.73L226.91 58.57L227.4 58.44L227.9 58.32L228.41 58.22L228.92 58.15L229.44 58.09L229.96 58.06L230.48 58.05L231 58.06L231.52 58.09L232.03 58.13L232.54 58.2L233.04 58.29L233.53 58.39L234.01 58.51L234.48 58.64L234.95 58.8L235.4 58.96L235.84 59.14L236.26 59.33L236.68 59.53L237.08 59.75L237.47 59.97L237.84 60.21L238.21 60.46L238.56 60.72L238.89 60.99L239.21 61.27L239.51 61.56L239.8 61.86L240.07 62.17L240.32 62.5L240.54 62.83L240.74 63.17L240.92 63.52L241.07 63.88L241.19 64.25L241.29 64.62L241.35 65Z"/>
+<text class="m" x="232" y="94" font-size="10" text-anchor="middle" xml:space="preserve">space</text>
+<text class="m" x="232" y="106" font-size="8.5" text-anchor="middle" xml:space="preserve">pages lie within it,</text>
+<text class="m" x="232" y="117" font-size="8.5" text-anchor="middle" xml:space="preserve">it hands rules down</text>
+<path class="k" d="M355.7 43H376.88L385.7 51.82V77H355.7Z"/>
+<g transform="translate(369.7 65)"><path class="d" d="M-8 -5H5Q7 -5 7 -3V3Q7 5 5 5H-8Z"/></g>
+<text class="m" x="370.7" y="94" font-size="10" text-anchor="middle" xml:space="preserve">provider</text>
+<text class="m" x="370.7" y="106" font-size="8.5" text-anchor="middle" xml:space="preserve">how to reach a model:</text>
+<text class="m" x="370.7" y="117" font-size="8.5" text-anchor="middle" xml:space="preserve">a key or a local program</text>
+<path class="k" d="M494.4 43H515.58L524.4 51.82V77H494.4Z"/>
+<path class="k" d="M499.4 58H517.4V71H499.4Z"/>
+<path class="k" d="M502.4 62L514.4 62"/>
+<path class="k" d="M502.4 66L510.4 66"/>
+<text class="m" x="509.4" y="94" font-size="10" text-anchor="middle" xml:space="preserve">screen</text>
+<text class="m" x="509.4" y="106" font-size="8.5" text-anchor="middle" xml:space="preserve">what a connector</text>
+<text class="m" x="509.4" y="117" font-size="8.5" text-anchor="middle" xml:space="preserve">perceives, as text</text>
+<path class="k" d="M633.1 43H654.28L663.1 51.82V77H633.1Z"/>
+<path class="k" d="M638.1 59H642.6V63.5H638.1Z"/>
+<path class="k" d="M638.1 66H642.6V70.5H638.1Z"/>
+<path class="k" d="M645.1 59H649.6V63.5H645.1Z"/>
+<path class="k" d="M645.1 66H649.6V70.5H645.1Z"/>
+<path class="k" d="M652.1 59H656.6V63.5H652.1Z"/>
+<path class="k" d="M652.1 66H656.6V70.5H652.1Z"/>
+<text class="m" x="648.1" y="94" font-size="10" text-anchor="middle" xml:space="preserve">hands</text>
+<text class="m" x="648.1" y="106" font-size="8.5" text-anchor="middle" xml:space="preserve">what a connector</text>
+<text class="m" x="648.1" y="117" font-size="8.5" text-anchor="middle" xml:space="preserve">types, as keys</text>
+<path class="k" d="M771.8 43H792.98L801.8 51.82V77H771.8Z"/>
+<circle class="d" cx="778.8" cy="69" r="2.3"/>
+<path class="k" d="M778.8 59C801.8 50 801.8 78 778.8 69"/>
+<path class="k" d="M778.8 59L778.8 69"/>
+<text class="m" x="786.8" y="94" font-size="10" text-anchor="middle" xml:space="preserve">daybook</text>
+<text class="m" x="786.8" y="106" font-size="8.5" text-anchor="middle" xml:space="preserve">a page that watches</text>
+<text class="m" x="786.8" y="117" font-size="8.5" text-anchor="middle" xml:space="preserve">itself: a measure</text>
+<path class="pl" d="M78.3 131H99.48L108.3 139.82V165H78.3Z"/>
+<path class="pl" d="M100.3 143H90.3Q83.3 143 83.3 148V156Q83.3 161 90.3 161H100.3"/>
+<text class="m" x="93.3" y="182" font-size="10" text-anchor="middle" xml:space="preserve">tool</text>
+<text class="m" x="93.3" y="194" font-size="8.5" text-anchor="middle" xml:space="preserve">something to do:</text>
+<text class="m" x="93.3" y="205" font-size="8.5" text-anchor="middle" xml:space="preserve">a call is a write</text>
+<path class="pl" d="M217 131H238.18L247 139.82V165H217Z"/>
+<circle class="pl" cx="231" cy="153" r="8"/>
+<path class="pl" d="M231 153L231 148"/>
+<path class="pl" d="M231 153L234.5 154.5"/>
+<text class="m" x="232" y="182" font-size="10" text-anchor="middle" xml:space="preserve">clock</text>
+<text class="m" x="232" y="194" font-size="8.5" text-anchor="middle" xml:space="preserve">time passes when</text>
+<text class="m" x="232" y="205" font-size="8.5" text-anchor="middle" xml:space="preserve">this page is written</text>
+<path class="pl" d="M355.7 131H376.88L385.7 139.82V165H355.7Z"/>
+<path class="pl" d="M366.7 145L364.7 159"/>
+<path class="pl" d="M373.7 145L371.7 159"/>
+<path class="pl" d="M361.7 150L377.7 150"/>
+<path class="pl" d="M361.7 155L377.7 155"/>
+<text class="m" x="370.7" y="182" font-size="10" text-anchor="middle" xml:space="preserve">file</text>
+<text class="m" x="370.7" y="194" font-size="8.5" text-anchor="middle" xml:space="preserve">kept beside a page,</text>
+<text class="m" x="370.7" y="205" font-size="8.5" text-anchor="middle" xml:space="preserve">named with a hash</text>
+<path class="pl" d="M494.4 131H515.58L524.4 139.82V165H494.4Z"/>
+<path class="pl" d="M499.4 144H517.4V148H499.4Z"/>
+<path class="pl" d="M499.4 150H517.4V154H499.4Z"/>
+<path class="pl" d="M499.4 156H517.4V160H499.4Z"/>
+<text class="m" x="509.4" y="182" font-size="10" text-anchor="middle" xml:space="preserve">table</text>
+<text class="m" x="509.4" y="194" font-size="8.5" text-anchor="middle" xml:space="preserve">Parquet parts beside</text>
+<text class="m" x="509.4" y="205" font-size="8.5" text-anchor="middle" xml:space="preserve">a page; a write adds one</text>
+<path class="pl" d="M633.1 131H654.28L663.1 139.82V165H633.1Z"/>
+<path class="pl" d="M637.1 149H642.1V156H637.1Z"/>
+<path class="pl" d="M644.1 149H649.1V156H644.1Z"/>
+<path class="pl" d="M651.1 149H656.1V156H651.1Z"/>
+<path class="pl" d="M659.1 152L662.1 152"/>
+<path class="pl" d="M660.5 150.25L664.1 152L660.5 153.75"/>
+<text class="m" x="648.1" y="182" font-size="10" text-anchor="middle" xml:space="preserve">stream</text>
+<text class="m" x="648.1" y="194" font-size="8.5" text-anchor="middle" xml:space="preserve">a table that only grows,</text>
+<text class="m" x="648.1" y="205" font-size="8.5" text-anchor="middle" xml:space="preserve">read as it grows</text>
+<path class="pl" d="M78.3 219H99.48L108.3 227.82V253H78.3Z"/>
+<path class="pl" d="M103.68 241L103.71 241.43L103.7 241.87L103.65 242.31L103.57 242.74L103.44 243.17L103.28 243.59L103.07 244.01L102.83 244.41L102.55 244.8L102.24 245.17L101.9 245.53L101.52 245.87L101.12 246.19L100.69 246.5L100.24 246.78L99.77 247.04L99.29 247.27L98.78 247.49L98.27 247.69L97.75 247.86L97.22 248.02L96.68 248.16L96.14 248.27L95.59 248.37L95.05 248.46L94.5 248.52L93.95 248.58L93.4 248.61L92.85 248.63L92.3 248.64L91.75 248.63L91.2 248.61L90.65 248.57L90.11 248.51L89.56 248.44L89.02 248.35L88.48 248.24L87.94 248.12L87.42 247.97L86.9 247.81L86.39 247.62L85.89 247.42L85.4 247.19L84.93 246.95L84.48 246.68L84.05 246.4L83.65 246.1L83.27 245.77L82.91 245.43L82.58 245.08L82.29 244.71L82.02 244.33L81.79 243.93L81.59 243.53L81.42 243.12L81.29 242.7L81.19 242.28L81.12 241.85L81.09 241.43L81.09 241L81.12 240.57L81.19 240.15L81.28 239.73L81.4 239.32L81.55 238.91L81.73 238.5L81.94 238.11L82.17 237.72L82.43 237.34L82.71 236.97L83.02 236.62L83.35 236.27L83.7 235.94L84.08 235.61L84.47 235.31L84.89 235.02L85.33 234.74L85.79 234.49L86.27 234.25L86.77 234.03L87.28 233.83L87.8 233.65L88.34 233.5L88.89 233.36L89.45 233.26L90.01 233.17L90.58 233.11L91.15 233.07L91.73 233.06L92.3 233.07L92.87 233.1L93.43 233.15L93.99 233.23L94.54 233.33L95.08 233.45L95.61 233.58L96.13 233.74L96.64 233.91L97.14 234.1L97.62 234.3L98.09 234.52L98.54 234.75L98.99 235L99.41 235.25L99.83 235.52L100.23 235.81L100.61 236.1L100.98 236.41L101.33 236.73L101.67 237.07L101.98 237.41L102.28 237.77L102.55 238.14L102.8 238.52L103.02 238.91L103.21 239.31L103.38 239.72L103.51 240.14L103.61 240.57L103.68 241Z"/>
+<path class="pl" d="M85.8 237.5H86.8L90.8 241.5V244.5H85.8Z"/>
+<path class="pl" d="M93.8 237.5H94.8L98.8 241.5V244.5H93.8Z"/>
+<text class="m" x="93.3" y="270" font-size="10" text-anchor="middle" xml:space="preserve">team</text>
+<text class="m" x="93.3" y="282" font-size="8.5" text-anchor="middle" xml:space="preserve">a space a character</text>
+<text class="m" x="93.3" y="293" font-size="8.5" text-anchor="middle" xml:space="preserve">made for its members</text>
+<path class="pl" d="M217 219H238.18L247 227.82V253H217Z"/>
+<path class="pl" d="M241.35 241L241.37 241.38L241.36 241.76L241.32 242.14L241.24 242.52L241.13 242.9L240.98 243.27L240.79 243.63L240.57 243.98L240.32 244.32L240.04 244.65L239.72 244.97L239.38 245.26L239.02 245.55L238.63 245.81L238.22 246.05L237.79 246.28L237.35 246.49L236.9 246.68L236.43 246.85L235.95 247.01L235.47 247.14L234.98 247.26L234.49 247.36L234 247.45L233.5 247.53L233 247.58L232.5 247.63L232 247.66L231.5 247.68L231 247.68L230.5 247.68L230 247.65L229.5 247.62L229 247.57L228.51 247.51L228.02 247.43L227.53 247.34L227.04 247.23L226.56 247.1L226.09 246.96L225.62 246.8L225.17 246.62L224.73 246.42L224.3 246.21L223.89 245.97L223.5 245.72L223.13 245.46L222.79 245.18L222.46 244.88L222.17 244.57L221.9 244.25L221.66 243.91L221.44 243.57L221.26 243.21L221.11 242.85L220.99 242.49L220.9 242.12L220.84 241.75L220.81 241.37L220.81 241L220.84 240.63L220.9 240.26L220.98 239.89L221.09 239.53L221.23 239.17L221.39 238.81L221.58 238.47L221.79 238.13L222.02 237.8L222.28 237.48L222.56 237.16L222.86 236.86L223.18 236.57L223.52 236.29L223.89 236.02L224.27 235.77L224.67 235.53L225.08 235.3L225.52 235.09L225.97 234.9L226.43 234.73L226.91 234.57L227.4 234.44L227.9 234.32L228.41 234.22L228.92 234.15L229.44 234.09L229.96 234.06L230.48 234.05L231 234.06L231.52 234.09L232.03 234.13L232.54 234.2L233.04 234.29L233.53 234.39L234.01 234.51L234.48 234.64L234.95 234.8L235.4 234.96L235.84 235.14L236.26 235.33L236.68 235.53L237.08 235.75L237.47 235.97L237.84 236.21L238.21 236.46L238.56 236.72L238.89 236.99L239.21 237.27L239.51 237.56L239.8 237.86L240.07 238.17L240.32 238.5L240.54 238.83L240.74 239.17L240.92 239.52L241.07 239.88L241.19 240.25L241.29 240.62L241.35 241Z"/>
+<text class="m" x="232" y="270" font-size="10" text-anchor="middle" xml:space="preserve">pattern</text>
+<text class="m" x="232" y="282" font-size="8.5" text-anchor="middle" xml:space="preserve">a space others chose</text>
+<text class="m" x="232" y="293" font-size="8.5" text-anchor="middle" xml:space="preserve">to join, rising by use</text>
+<path class="pl" d="M355.7 219H376.88L385.7 227.82V253H355.7Z"/>
+<path class="pl" d="M359.7 241Q369.7 230 379.7 241Q369.7 252 359.7 241Z"/>
+<circle class="pl" cx="369.7" cy="241" r="2.6"/>
+<text class="m" x="370.7" y="270" font-size="10" text-anchor="middle" xml:space="preserve">lens</text>
+<text class="m" x="370.7" y="282" font-size="8.5" text-anchor="middle" xml:space="preserve">how to read something,</text>
+<text class="m" x="370.7" y="293" font-size="8.5" text-anchor="middle" xml:space="preserve">a page a character keeps</text>
+<path class="pl" d="M494.4 219H515.58L524.4 227.82V253H494.4Z"/>
+<path class="pl" d="M496.9 238.5H499.9L503.9 242.5V247.5H496.9Z"/>
+<path class="pl" d="M513.9 238.5H516.9L520.9 242.5V247.5H513.9Z"/>
+<path class="pl" d="M504.4 243Q509.4 233 513.4 243"/>
+<circle class="d" cx="513.4" cy="243" r="2.3"/>
+<text class="m" x="509.4" y="270" font-size="10" text-anchor="middle" xml:space="preserve">go-between</text>
+<text class="m" x="509.4" y="282" font-size="8.5" text-anchor="middle" xml:space="preserve">turns what a connector</text>
+<text class="m" x="509.4" y="293" font-size="8.5" text-anchor="middle" xml:space="preserve">sees into sentences</text>
+<path class="k" d="M559.4 240L614.1 240"/>
+<path class="k" d="M561.89 242.19L557.4 240L561.89 237.81"/>
+<text class="m" x="620.1" y="238" font-size="8.5" text-anchor="start" xml:space="preserve">made by a character,</text>
+<text class="m" x="620.1" y="249" font-size="8.5" text-anchor="start" xml:space="preserve">from pages</text>
 </svg>
