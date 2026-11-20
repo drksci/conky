@@ -1,22 +1,27 @@
 """Draw a card: a playbook whose `says: live` steps are answered by a real model, N times.
 
-    python -m bench.cards CARD.yaml --draws N [--model M] [--out DIR] [--cap CALLS]
+    python -m bench.cards CARD.yaml --draws N [--model M] [--out DIR] [--cap CALLS] [--jobs N]
+    python -m bench.cards --read DIR
 
 A card is a playbook (docs/reference/playbooks.md#cards). Each draw is a fresh vault in its own
 folder. A live step is answered through conky's own provider detection, the path an ask without
 a provider takes, and the command provider runs `relay` below so that every model call is counted
-and kept. One row a draw goes to `rows.jsonl`; reports and figures are made later from the rows.
+and kept. Draws run in parallel worker processes and share one call count. One row a draw goes
+to `rows.jsonl` and one line of what the draw did, read from its vault, to `observations.jsonl`;
+`--read` prints a plain summary of the two.
 """
 
 from __future__ import annotations
 
 import argparse
+import fcntl
 import json
 import os
 import shlex
 import subprocess
 import sys
 import time
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -26,19 +31,26 @@ from tests import playbook  # noqa: E402
 from tests.test_pages import Stand  # noqa: E402
 
 from conky import Vault, model  # noqa: E402
+from conky import git as vault_git  # noqa: E402
 from conky.cache import Cache, Mode  # noqa: E402
 from conky.page import load_value  # noqa: E402
 
 DEFAULT_CAP = 40
+MOST_JOBS = 8
+ASKS = 2
+HEAD = 200
 CALLS = "calls.jsonl"
 BUDGET = "budget.txt"
+ROWS = "rows.jsonl"
+OBSERVATIONS = "observations.jsonl"
 
 
-def relay(folder: Path) -> int:
+def relay(folder: Path, budget: Path) -> int:
     """Answer one ask for the stand provider: live when the stand says so, else as the stand does.
 
     The prompt arrives on standard input and the answer leaves on standard output. Each call is
-    appended to calls.jsonl in folder. A live call spends one of the calls left in budget.txt.
+    appended to calls.jsonl in folder. A live call spends one of the calls left in the shared
+    count at budget, which every draw of a run takes from under a lock.
     """
     prompt = sys.stdin.read()
     if (folder / "answer.txt").read_text(encoding="utf-8").strip() != playbook.LIVE:
@@ -52,11 +64,9 @@ def relay(folder: Path) -> int:
         _keep(folder, False, "stand", prompt, done.stdout, 0.0)
         sys.stdout.write(done.stdout)
         return done.returncode
-    left = int((folder / BUDGET).read_text(encoding="utf-8"))
-    if left <= 0:
+    if not _spend(budget):
         print("the card's call cap is spent: raise --cap or draw fewer times", file=sys.stderr)
         return 1
-    (folder / BUDGET).write_text(str(left - 1), encoding="utf-8")
     found = model.detect()
     keys = Path.home() / ".conky" / "keys"
     for choice in found.choices:
@@ -74,9 +84,22 @@ def relay(folder: Path) -> int:
     return 1
 
 
+def _spend(budget: Path) -> bool:
+    """Take one call from the shared count in budget and return whether one was left."""
+    with budget.open("r+", encoding="utf-8") as handle:
+        fcntl.flock(handle, fcntl.LOCK_EX)
+        left = int(handle.read())
+        if left > 0:
+            handle.seek(0)
+            handle.truncate()
+            handle.write(str(left - 1))
+        return left > 0
+
+
 def _keep(folder: Path, live: bool, name: str, sent: str, received: str, seconds: float) -> None:
     row = {"live": live, "model": name, "sent": len(sent), "received": len(received)}
     row["seconds"] = round(seconds, 3)
+    row["head"] = received.strip()[:HEAD]
     with (folder / CALLS).open("a", encoding="utf-8") as log:
         log.write(json.dumps(row) + "\n")
 
@@ -87,16 +110,18 @@ def calls(folder: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text().splitlines()] if path.exists() else []
 
 
-def draw(card: Path, number: int, folder: Path, left: int) -> dict:
-    """Play the card once in a fresh vault under folder and return its row.
+def draw(card: Path, number: int, folder: Path, budget: Path) -> tuple[dict, dict]:
+    """Play the card once in a fresh vault under folder and return its row and observation.
 
-    left is how many live calls the draw may still make.
+    Live calls are taken from the shared count at budget.
     """
     folder.mkdir(parents=True)
     stand = Stand(folder / "stand")
-    (stand.folder / BUDGET).write_text(str(left), encoding="utf-8")
     here = shlex.quote(str(Path(__file__).resolve()))
-    command = f"{shlex.quote(sys.executable)} {here} relay {shlex.quote(str(stand.folder))}"
+    command = (
+        f"{shlex.quote(sys.executable)} {here} relay "
+        f"{shlex.quote(str(stand.folder))} {shlex.quote(str(budget))}"
+    )
     expects: list[dict] = []
     error = None
     saved = os.environ.get("CONKY_COMMAND_STAND")
@@ -127,7 +152,31 @@ def draw(card: Path, number: int, folder: Path, left: int) -> dict:
     }
     if error:
         row["error"] = error
-    return row
+    return row, observe(card, number, folder / "vault", [c["head"] for c in made])
+
+
+def observe(card: Path, number: int, vault: Path, answers: list[str]) -> dict:
+    """Return what a draw left in its vault, read with no model call and with no verdict.
+
+    The pages that exist and were not the card's starting pages, the rules each page carries as
+    written, every refusal in the history with its reason, and the start of each live answer.
+    """
+    start = set(load_value(card.read_text(encoding="utf-8")).get("pages", {}))
+    found = Vault(vault, vault.parent / "keys")
+    names = sorted(p.stem for p in found.pages_dir.glob("*.md"))
+    log = vault_git.run(["log", "--reverse", "--format=%x1e%B", "main"], vault)
+    refusals = []
+    for record in log.split("\x1e")[1:]:
+        tags = vault_git.trailers(record)
+        if tags.get("Kind") == "refused":
+            refusals.append({"page": tags.get("Page"), "reason": tags.get("Reason")})
+    return {
+        "draw": number,
+        "new_pages": [n for n in names if n not in start],
+        "rules": {n: found.read(n).rules for n in names if found.read(n).rules},
+        "refusals": refusals,
+        "answers": answers,
+    }
 
 
 def passed(row: dict) -> bool:
@@ -135,12 +184,74 @@ def passed(row: dict) -> bool:
     return "error" not in row and not any(e["failed"] for e in row["expects"])
 
 
+def lines(path: Path) -> list[dict]:
+    """Return the rows of a jsonl file, or none when it is not there."""
+    if not path.exists():
+        return []
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+
+
+def trim(text: object, width: int = 90) -> str:
+    """Return text on one line, cut to width."""
+    line = " ".join(str(text).split())
+    return line if len(line) <= width else line[: width - 3] + "..."
+
+
+def read(out: Path) -> int:
+    """Print a plain summary of a run from its rows and observations."""
+    rows = lines(out / ROWS)
+    if not rows:
+        print(f"no rows in {out}: draw a card first, python -m bench.cards CARD.yaml --draws 1")
+        return 1
+    for key in ("claim", "forecast", "par"):
+        text = rows[0].get(key)
+        if isinstance(text, dict):
+            for part, line in text.items():
+                print(f"{key} {part}: {line}")
+        elif text is not None:
+            print(f"{key}: {text}")
+    seen = {o["draw"]: o for o in lines(out / OBSERVATIONS)}
+    print(f"passed {sum(map(passed, rows))} of {len(rows)}")
+    for row in rows:
+        did = seen.get(row["draw"], {})
+        parts = [
+            f"rule on {page}: {trim(rule.get('each', rule) if isinstance(rule, dict) else rule)}"
+            for page, rules in did.get("rules", {}).items()
+            for rule in rules
+        ]
+        parts += [f"refused {r['page']}: {trim(r['reason'])}" for r in did.get("refusals", [])]
+        if "error" in row:
+            parts.append(trim(row["error"]))
+        print(f"draw {row['draw']}: {'passed' if passed(row) else 'failed'}; " + "; ".join(parts))
+    return 0
+
+
+def worst(plan: dict, draws: int, cap: int) -> str | None:
+    """Return why the draws could pass the cap in the worst case, or None when they cannot."""
+    asks = max(sum(1 for step in plan["steps"] if step.get("says") == playbook.LIVE), 1)
+    each = asks * ASKS
+    if draws * each <= cap:
+        return None
+    return (
+        f"{draws} draws may take up to {draws} x {each} = {draws * each} calls "
+        f"({asks} live steps x {ASKS} asks, as an answer a rule refuses is asked "
+        f"again once) and the cap is {cap}: raise --cap to {draws * each} or draw fewer times"
+    )
+
+
 def main(argv: list[str]) -> int:
     if argv[:1] == ["relay"]:
-        return relay(Path(argv[1]))
+        return relay(Path(argv[1]), Path(argv[2]))
     ask = argparse.ArgumentParser(prog="python -m bench.cards", description=__doc__)
-    ask.add_argument("card", type=Path)
-    ask.add_argument("--draws", type=int, required=True, help="how many times to draw the card")
+    ask.add_argument("card", type=Path, nargs="?")
+    ask.add_argument("--draws", type=int, help="how many times to draw the card")
+    ask.add_argument("--read", type=Path, metavar="DIR", help="summarise the run kept in DIR")
+    ask.add_argument(
+        "--jobs",
+        type=int,
+        default=None,
+        help=f"draws run at once (default the draws, at most {MOST_JOBS})",
+    )
     ask.add_argument(
         "--model",
         default=None,
@@ -152,10 +263,19 @@ def main(argv: list[str]) -> int:
     )
     ask.add_argument("--cap", type=int, default=DEFAULT_CAP, help="most live model calls in all")
     args = ask.parse_args(argv)
+    if args.read:
+        return read(args.read)
+    if args.card is None or args.draws is None:
+        ask.error("draw a card with CARD.yaml and --draws N, or read a run with --read DIR")
     plan = load_value(args.card.read_text(encoding="utf-8"))
     stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     out = args.out or Path.home() / ".conky" / "runs" / "cards" / f"{args.card.stem}-{stamp}"
+    why = worst(plan, args.draws, args.cap)
+    if why:
+        print(f"refused: {why}")
+        return 1
     out.mkdir(parents=True, exist_ok=True)
+    (out / BUDGET).write_text(str(args.cap), encoding="utf-8")
     if args.model:
         os.environ[model.MODEL_VARIABLE] = args.model
     notes = {key: plan[key] for key in ("claim", "forecast", "par") if key in plan}
@@ -165,29 +285,33 @@ def main(argv: list[str]) -> int:
                 print(f"{key} {part}: {line}")
         else:
             print(f"{key}: {text}")
-    used, widest, wins, drawn = 0, 0, 0, 0
-    for number in range(1, args.draws + 1):
-        if used + widest > args.cap:
+    jobs = args.jobs or min(args.draws, MOST_JOBS)
+    done: dict[int, tuple[dict, dict]] = {}
+    with ProcessPoolExecutor(max_workers=jobs) as pool:
+        waiting = [
+            pool.submit(draw, args.card, n, out / f"draw-{n}", out / BUDGET)
+            for n in range(1, args.draws + 1)
+        ]
+        for future in as_completed(waiting):
+            row, seen = future.result()
+            done[row["draw"]] = (row, seen)
+            held = sum(not e["failed"] for e in row["expects"])
             print(
-                f"stopped before draw {number}: it may take {widest} calls and "
-                f"{used} of the cap {args.cap} are spent; raise --cap"
+                f"draw {row['draw']}: {'passed' if passed(row) else 'failed'}, {held} of "
+                f"{len(row['expects'])} expects held, {row['calls']} calls, {row['seconds']}s",
+                flush=True,
             )
-            break
-        made = draw(args.card, number, out / f"draw-{number}", args.cap - used)
-        row = {"card": args.card.stem, **({} if number > 1 else notes), **made}
-        with (out / "rows.jsonl").open("a", encoding="utf-8") as log:
-            log.write(json.dumps(row) + "\n")
-        drawn, used, widest, wins = (
-            number,
-            used + row["calls"],
-            max(widest, row["calls"]),
-            wins + passed(row),
-        )
-        held = sum(not e["failed"] for e in row["expects"])
-        print(
-            f"draw {number}: {'passed' if passed(row) else 'failed'}, {held} of "
-            f"{len(row['expects'])} expects held, {row['calls']} calls, {row['seconds']}s"
-        )
+    with (out / ROWS).open("a", encoding="utf-8") as log:
+        for number in sorted(done):
+            first = {} if number > 1 else notes
+            log.write(json.dumps({"card": args.card.stem, **first, **done[number][0]}) + "\n")
+    with (out / OBSERVATIONS).open("a", encoding="utf-8") as log:
+        for number in sorted(done):
+            log.write(json.dumps(done[number][1]) + "\n")
+    wins = sum(passed(row) for row, _ in done.values())
+    drawn = len(done)
+    if int((out / BUDGET).read_text(encoding="utf-8")) <= 0:
+        print(f"the cap of {args.cap} calls is spent: later calls were refused")
     print(f"passed {wins} of {drawn}")
     return 0
 

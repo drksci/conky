@@ -78,15 +78,73 @@ def test_says_live_in_an_ordinary_playbook_is_refused_with_what_to_do(
         playbook.run(CARD, vault, Stand(tmp_path / "stand"))
 
 
-def test_the_cap_stops_a_run_before_a_draw_that_would_pass_it(
+def test_the_cap_refuses_a_run_whose_draws_could_pass_it_and_says_the_sum(
     canned: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     canned.write_text(GOOD)
     out = tmp_path / "out"
-    cards.main([str(CARD), "--draws", "3", "--out", str(out), "--cap", "1"])
-    assert len(rows(out)) == 1
-    said = capsys.readouterr().out
-    assert "stopped before draw 2" in said and said.splitlines()[-1] == "passed 1 of 1"
+    assert cards.main([str(CARD), "--draws", "3", "--out", str(out), "--cap", "5"]) == 1
+    assert "3 x 2 = 6 calls" in capsys.readouterr().out
+    assert not (out / "rows.jsonl").exists()
+    assert cards.main([str(CARD), "--draws", "3", "--out", str(out), "--cap", "6"]) == 0
+
+
+def test_the_shared_count_gives_out_no_more_calls_than_it_holds(tmp_path: Path) -> None:
+    budget = tmp_path / "budget.txt"
+    budget.write_text("2")
+    assert [cards._spend(budget) for _ in range(3)] == [True, True, False]
+    assert budget.read_text() == "0"
+
+
+def test_parallel_draws_give_the_same_rows_and_observations_as_serial_ones(
+    canned: Path, tmp_path: Path
+) -> None:
+    canned.write_text(GOOD)
+    for jobs in (1, 3):
+        out = tmp_path / f"jobs-{jobs}"
+        assert cards.main([str(CARD), "--draws", "3", "--out", str(out), "--jobs", str(jobs)]) == 0
+
+    def bare(out: Path) -> list[dict]:
+        return [
+            {k: v for k, v in row.items() if k not in ("seconds", "vault")} for row in rows(out)
+        ]
+
+    assert bare(tmp_path / "jobs-1") == bare(tmp_path / "jobs-3")
+    assert [r["draw"] for r in rows(tmp_path / "jobs-3")] == [1, 2, 3]
+    assert observations(tmp_path / "jobs-1") == observations(tmp_path / "jobs-3")
+
+
+def observations(out: Path) -> list[dict]:
+    return [json.loads(line) for line in (out / "observations.jsonl").read_text().splitlines()]
+
+
+def test_observations_hold_the_new_pages_the_rules_and_the_refusal_reasons(
+    canned: Path, tmp_path: Path
+) -> None:
+    canned.write_text(GOOD)
+    out = tmp_path / "out"
+    cards.main([str(CARD), "--draws", "1", "--out", str(out)])
+    (seen,) = observations(out)
+    assert seen["draw"] == 1 and seen["new_pages"] == ["baker"]
+    assert seen["rules"] == {"den": [{"each": RULE}]}
+    (refusal,) = seen["refusals"]
+    assert refusal["page"] == "landlord-payment" and refusal["reason"].startswith("rule")
+    assert seen["answers"] == [GOOD.strip()[:200]]
+
+
+def test_read_prints_the_claim_the_pass_count_and_what_each_draw_did(
+    canned: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    canned.write_text(GOOD)
+    out = tmp_path / "out"
+    cards.main([str(CARD), "--draws", "2", "--out", str(out)])
+    capsys.readouterr()
+    assert cards.main(["--read", str(out)]) == 0
+    said = capsys.readouterr().out.splitlines()
+    assert said[0].startswith("claim: ") and any(x.startswith("par outcome: ") for x in said)
+    assert "passed 2 of 2" in said
+    draw = next(x for x in said if x.startswith("draw 2:"))
+    assert f"rule on den: {RULE}" in draw and "refused landlord-payment: rule" in draw
 
 
 def test_a_rule_on_a_page_within_the_den_does_not_refuse_a_payment_written_directly_in_it(

@@ -67,9 +67,11 @@ python -m bench.cards bench/cards/a-keeper-binds-itself.yaml --draws 5 --model c
 
 Each draw is a fresh vault in its own folder, `draw-K/`, under the output directory (`--out`, default `~/.conky/runs/cards/<card>-<time>/`). A live step is answered through the same detection an ask without a provider uses (`CONKY_PROVIDER`, the keys, then `claude`, then `codex`; see [providers](providers.md#detection)). `--model` sets `CONKY_MODEL`, which an anthropic or openai key honours; a command provider takes its model from `CONKY_COMMAND_<NAME>`. The answer cache is off in a draw, so each draw asks afresh.
 
-`--cap` is the most live model calls in all (default 40). A draw is not started when the calls already made plus the largest draw so far would pass it, and no call passes it.
+Draws run in parallel worker processes, each in its own folder. `--jobs N` sets how many run at once (default the number of draws, at most 8). One line a draw is printed as it finishes; the rows are written in draw order once all are done.
 
-The runner draws no charts. It prints the claim and the forecast before drawing, one line a draw and a last line `passed K of N`, and appends one row a draw to `rows.jsonl`:
+`--cap` is the most live model calls in all (default 40), held in one count that every draw spends from under a lock, so no call passes it. A run is refused before it starts when its draws could pass the cap in the worst case: each live step may be asked twice, because an answer a rule refuses is asked again once, so the draws times twice the live steps must not exceed the cap. The message states the sum. If the count is spent anyway, later calls are refused and the run says so.
+
+The runner draws no charts. It prints the claim and the forecast before drawing, one line a draw and a last line `passed K of N`, and appends one row a draw to `rows.jsonl` and one observation a draw to `observations.jsonl`. The rows:
 
 | Key | Meaning |
 |---|---|
@@ -82,3 +84,15 @@ The runner draws no charts. It prints the claim and the forecast before drawing,
 | `error` | Present when the draw stopped early, with why. |
 
 A draw passes when every `expect` held and it reached its end.
+
+`observations.jsonl` is read from each draw's vault after the run, with no model call and no verdict. It is the raw material for reading a walk. One line a draw, with these keys:
+
+| Key | Meaning |
+|---|---|
+| `draw` | The draw's number. |
+| `new_pages` | The pages that exist at the end and were not the card's starting pages. |
+| `rules` | For each page that carries rules, the rules as written: text, or the mapping with the one key `each`. |
+| `refusals` | Every refusal in the vault's history, oldest first, each with its `page` and `reason`, read from the commit trailers. |
+| `answers` | The first 200 characters of each live answer. |
+
+`python -m bench.cards --read DIR` prints a short summary of a run from the two files: the claim, forecast and par as recorded, `passed K of N`, then one line a draw saying where it put a rule, what was refused and why, each trimmed.
