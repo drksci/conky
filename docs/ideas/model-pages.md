@@ -10,11 +10,9 @@ source: maintainers
 
 ## Idea
 
-Some questions cannot be answered from state. A page can pose such a question to an AI model and write the answer back as an ordinary signed change, so the answer is recorded, attributable and subject to the same rules as any other write.
+A page can pose a question state cannot answer to an AI model and write the answer back as an ordinary signed change, so the answer is recorded, attributable and subject to the same rules as any write. Calls happen only when state cannot answer ([decision 0007](../decisions/0007-inference-for-real-thinking.md)).
 
-A provider is itself a page: it names an endpoint and a model. Secret keys stay outside the vault, like signing keys. Any page that needs a model points at a provider page, so changing provider is editing one page, and different pages can use different providers (a cheap one for housekeeping, a strong one for hard questions).
-
-Calls happen only when state cannot answer ([decision 0007](../decisions/0007-inference-for-real-thinking.md)).
+A provider is itself a page: it names an endpoint and a model, and its secret key stays outside the vault, like signing keys. A page that needs a model points at a provider page, so changing provider is editing one page, and different pages can use different ones (a cheap one for housekeeping, a strong one for hard questions).
 
 ## Composes from
 
@@ -26,7 +24,7 @@ Provider-specific code paths and prompts scattered in code.
 
 ## Falsifying test
 
-The same vault runs unchanged against two different providers by editing one page. Every model answer appears in history with the question that caused it. With the provider unreachable, everything that does not need a model still works.
+The same vault runs unchanged against two providers by editing one page. Every model answer appears in history with the question that caused it. With the provider unreachable, everything that does not need a model still works.
 
 ## What was built
 
@@ -37,7 +35,7 @@ The same vault runs unchanged against two different providers by editing one pag
 - `conky ask` is the one-off form ([command line](../reference/cli.md#ask)).
 - Two wire formats are supported, `openai` and `anthropic`, using the standard library only.
 
-The tests in `tests/test_model.py` run a real HTTP server on the local machine in each wire format. They cover the falsifying test above with stand-in servers in place of real providers: the same watch entry is answered in the other wire format after one provider page is edited. No live provider has been called.
+The tests in `tests/test_model.py` run a real HTTP server on the local machine in each wire format. They cover the falsifying test with stand-in servers in place of real providers: the same watch entry is answered in the other wire format after one provider page is edited. No live provider has been called.
 
 Decision: [0019](../decisions/0019-providers-are-pages.md).
 

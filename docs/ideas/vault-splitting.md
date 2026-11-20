@@ -10,7 +10,7 @@ source: maintainers
 
 ## Idea
 
-When a vault grows too large or too busy, a space becomes its own vault (its own Git repository) that the parent links to, so history and write load are divided along the lines the organisation already has. Rules and reactions across two vaults are not worked out.
+When a vault grows too large or too busy, a space becomes its own vault (its own Git repository) that the parent links to, so history and write load divide along lines the organisation already has. Rules and reactions across two vaults are not worked out.
 
 ## Composes from
 

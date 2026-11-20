@@ -10,9 +10,9 @@ source: maintainers
 
 ## Idea
 
-Every page can carry a measure of how long it has gone untouched, which rises as the [clock](clock.md) moves. Past a threshold the page is noticed: it is summarised, split, handed to its owner to review, or marked archived. An archived page stays readable and linkable but drops out of what others attend to.
+Every page can carry a measure of how long it has gone untouched, rising as the [clock](clock.md) moves. Past a threshold the page is noticed: summarised, split, handed to its owner to review, or archived. An archived page stays readable and linkable but drops out of what others attend to.
 
-This is pressure applied to age instead of size, and relief is the reaction that acts on either. See [pressure, not walls](../essays/pressure-not-walls.md). Nothing of this is built.
+This is pressure applied to age instead of size, and relief is the reaction that acts on either ([pressure, not walls](../essays/pressure-not-walls.md)). Nothing of this is built.
 
 ## Composes from
 
@@ -24,7 +24,7 @@ Stale pages that accumulate unnoticed, and manual clean-up.
 
 ## Falsifying test
 
-In a long run no page stays untouched and unarchived past its limit, and no refusal or model call is needed for the routine cases.
+In a long run no page stays untouched and unarchived past its limit, and the routine cases need no refusal or model call.
 
 ## Open questions
 

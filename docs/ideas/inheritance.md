@@ -10,13 +10,11 @@ source: maintainers
 
 ## Idea
 
-A space hands down its rules today. It should hand down two more things: its context and its reactions. Context is the space's fields, readable by members in rules, reactions and embeds. Reactions are the space's watch entries, which then run for every member.
+A space hands down its rules today. It should also hand down its context and its reactions: the space's fields, readable by members in rules, reactions and embeds, and its watch entries, which then run for every member. Only the rules are built.
 
-A page may join more than one space, so it can sit in a team and also follow a practice. Nothing beyond rules is built.
+A page may join more than one space, so it can sit in a team and also follow a practice. Each consequence below needs no new mechanism.
 
-Consequences, each of which needs no new mechanism:
-
-- A pattern is a space, and applying a pattern is joining it.
+- A pattern is a space, and applying it is joining it.
 - A rule that nothing may go stale is one measure on the top space.
 - A team's way of working is the same thing at a smaller depth.
 - An actor is a space whose notes and helpers live inside it and share its budget.
@@ -32,7 +30,7 @@ A separate pattern mechanism, per-page mandatory settings and repeated context.
 
 ## Falsifying test
 
-A staleness measure written once on the top space applies to every page with no page edited. A page that joins a second space gains that space's rules and reactions, and loses them on leaving.
+A staleness measure written once on the top space applies to every page with no page edited. A page that joins a second space gains its rules and reactions, and loses them on leaving.
 
 ## Open questions
 

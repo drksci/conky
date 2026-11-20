@@ -10,9 +10,7 @@ source: maintainers
 
 ## Idea
 
-Every change is already a signed entry that names its cause, so the history is a complete trace by default. What is missing is reading it comfortably: summaries per page and per period, and links from any fact to the change that set it.
-
-Those are derived data and can be regenerated ([decision 0017](../decisions/0017-derived-data.md)). The summaries are not built. Two additions to the record are, and are described below.
+Every change is already a signed entry that names its cause, so the history is a complete trace by default. What is missing is reading it comfortably: summaries per page and per period, and links from any fact to the change that set it. Those are derived data and can be regenerated ([decision 0017](../decisions/0017-derived-data.md)). They are not built. Two additions to the record are.
 
 ## What was built
 
@@ -37,4 +35,4 @@ A separate audit log or tracing system.
 
 ## Falsifying test
 
-For any field of any page, the change that set it and the chain of causes behind it can be shown without special tooling beyond the vault.
+For any field of any page, the change that set it and the chain of causes behind it can be shown with nothing beyond the vault.

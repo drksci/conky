@@ -10,7 +10,7 @@ source: maintainers
 
 ## Idea
 
-Double-entry conservation for money, stock and inference cost: every movement debits one place and credits another, so the total is conserved.
+Every movement of money, stock or inference cost debits one place and credits another, so the total is conserved.
 
 ## Composes from
 
@@ -26,7 +26,4 @@ A sequence of recorded writes in which the total changes without a recorded sour
 
 ## Standing
 
-The ledger stays a pattern and is never a runtime feature; cost recorded for model calls would be one use of it.
-
-
-A built-in ledger was judged a bad idea. Accounting should be a pattern, not a runtime feature; see [patterns](patterns.md). The conservation need survives as the grouped write described there.
+A built-in ledger was judged a bad idea. The ledger stays a pattern, never a runtime feature, and the cost of model calls would be one use of it. See [patterns](patterns.md), where the conservation need survives as the grouped write.

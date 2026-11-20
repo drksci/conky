@@ -10,7 +10,7 @@ source: maintainers
 
 ## Idea
 
-Renaming or moving a page is one change that also rewrites every link and embed that points to it, so nothing breaks and nobody has to tidy up. Old names live only in history. Nothing of this is built.
+Renaming or moving a page is one change that also rewrites every link and embed pointing to it, so nothing breaks and nobody tidies up. Old names live only in history. Nothing of this is built.
 
 ## Composes from
 

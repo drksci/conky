@@ -10,13 +10,13 @@ source: maintainers
 
 ## Idea
 
-Every identifiable thing (an actor, a tool, a space, any page that wants one) carries a `seed`: a short, memorable, slightly absurd phrase, generated when the page is created. An example is "reluctant sheriff of small numbers". The seed never changes. The name can.
+Every identifiable thing (an actor, a tool, a space, any page that wants one) carries a `seed`: a short, memorable, slightly absurd phrase generated when the page is created, such as "reluctant sheriff of small numbers". The seed never changes. The name can.
 
-From the seed alone come two things. One is a stable identifier, so a rename breaks nothing and the same thing is recognisable across vaults. The other is a face: a small monochrome dithered portrait drawn by code from the seed, which always works and needs no model.
+Two things come from the seed alone: a stable identifier, so a rename breaks nothing and the same thing is recognisable across vaults, and a face, a small monochrome dithered portrait drawn by code, which always works and needs no model.
 
-A profile is ordinary fields on the page: the seed, the current name, a line in its own words, and optionally a portrait it chose. If a portrait provider is available (a provider page, as for models), an actor may ask for a made portrait in the same monochrome style, or write its own profile through a model page. When none is available, the seed's drawn face is used.
+A profile is ordinary fields on the page: the seed, the current name, a line in its own words, and optionally a portrait it chose. If a portrait provider is available (a provider page, as for models), an actor may ask for a made portrait in the same style, or write its own profile through a model page. Otherwise the drawn face is used.
 
-The seed is public and is never a source of keys. Signing keys stay separate and secret. The flavour of the phrases and the style of the faces come from the vault's taste page; see [house-style](house-style.md). Nothing of this is built.
+The seed is public and never a source of keys, which stay separate and secret. The flavour of the phrases and the style of the faces come from the vault's taste page ([house-style](house-style.md)). Nothing of this is built.
 
 ## Composes from
 
@@ -28,7 +28,7 @@ Identifiers people cannot remember, broken references after renames, and blank a
 
 ## Falsifying test
 
-The same seed gives the same identifier and the same face on any machine. Renaming a page changes neither. With no provider configured every actor still has a face. A write that changes a seed is refused.
+The same seed gives the same identifier and face on any machine. Renaming a page changes neither. With no provider configured every actor still has a face. A write that changes a seed is refused.
 
 ## Open questions
 

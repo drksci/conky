@@ -12,17 +12,17 @@ source: maintainers
 
 A connector brings a space into the vault: the pages it writes are what it perceives, and the pages others write to are what it can do.
 
-That is the whole law. A tool server, a terminal program, a browser, a clock and an inbox have the same shape, and the mechanism is only space, page, write, watch and rule. Calling the written pages a connector's senses and the pages written to its hands is plain description, not a new word.
+That is the whole law. A tool server, a terminal program, a browser, a clock and an inbox share this shape, and the mechanism is only space, page, write, watch and rule. Calling the written pages a connector's senses and the pages written to its hands is plain description, not a new word.
 
 The terminal connector is the first instance and is built. It writes the `screen` page, which is what the program shows, and a character writes the `hands` page, which is what to type ([connectors reference](../reference/connectors.md)). Everything below generalises that pair.
 
 ## Tools
 
-When a connector attaches to a tool server, it asks the server what it offers. For the Model Context Protocol (MCP) that is `tools/list`. The connector writes one page for each tool into a space, with the tool's name, description and input shape as fields. The space is a shelf, like the space of a pattern ([patterns](patterns.md)).
+When a connector attaches to a tool server, it asks what the server offers. For the Model Context Protocol (MCP) that is `tools/list`. The connector writes one page per tool into a space, with the tool's name, description and input shape as fields. The space is a shelf, like the space of a pattern ([patterns](patterns.md)).
 
-Discovery is reading. An agent finds what it can do by reading the shelf, as it reads any page. Nothing is placed in a prompt behind its back. A page that asks a model embeds the shelf, or one tool page, when it wants the tools in view.
+Discovery is reading. An agent finds what it can do by reading the shelf, as it reads any page, and nothing is placed in a prompt behind its back. A page that asks a model embeds the shelf, or one tool page, when it wants the tools in view.
 
-A call is a write. A character writes a request to a tool's page: the arguments as fields and a turn. The connector holds no state. It sees the request in the history, performs the call, and writes the result back onto the same page as a signed write caused by the request. A failed call is a result that says so. A call that a rule refuses is recorded as a refusal, and the server never receives it.
+A call is a write. A character writes a request to a tool's page: the arguments as fields and a turn. The connector holds no state. It sees the request in the history, performs the call, and writes the result onto the same page as a signed write caused by the request. A failed call is a result that says so. A call that a rule refuses is recorded as a refusal, and the server never receives it.
 
 ## Reach, limits and record
 
@@ -32,7 +32,7 @@ The record already says who called what and why: a signed request and a signed r
 
 ## A go-between, so characters never call tools
 
-Writing arguments to a tool page is machine work. A character that has to do it stops being a character and starts filling in forms. So each connector space has a go-between: an ordinary model page, a [background mind](background-minds.md), that stands between the raw pages and everyone else.
+Writing arguments to a tool page is machine work, and a character that does it stops being a character and fills in forms. So each connector space has a go-between: an ordinary model page, a [background mind](background-minds.md), standing between the raw pages and everyone else.
 
 - Inwards, it watches what the connector perceives and writes what a person would take from it: a few plain sentences, or the same composed screen people get ([A2UI](a2ui.md), [the compositor](compositor.md)). Characters watch that page, not the raw one. Only the go-between needs a provider that can read images.
 - Outwards, it reads what a character said in its own words, such as "push on to the fort", and writes the request the tool expects. The request is an ordinary signed write, so the translation is on the record and a rule can refuse it ([thought to change](thought-to-change.md)).
@@ -42,14 +42,14 @@ Nothing new is added. The go-between is a page with watch entries, the order of 
 
 ## Think once, then reflex
 
-A go-between that asked a model about every frame would be slow, costly and no better informed. It works the way the compositor does for a screen: understand the shape once, then keep up with changes cheaply.
+A go-between that asked a model about every frame would be slow, costly and no better informed. It works as the compositor does for a screen: understand the shape once, then keep up with changes cheaply.
 
 - Notice cheaply. The connector writes only when what it perceives has changed, and a budget rule caps how often. A write that changes nothing is already skipped by every watcher.
-- Keep a reading. The first time, a capable model looks hard and writes a reading for that source: how it is laid out, which part carries which fact, what can be ignored. The reading is a page, and a kind of [pattern](patterns.md). From then on, applying it is a reflex: take the status line from here, the choice list from there, compare with last time.
+- Keep a reading. The first time, a capable model looks hard and writes a reading for that source: how it is laid out, which part carries which fact, what can be ignored. The reading is a page, and a kind of [pattern](patterns.md). Applying it is then a reflex: take the status line from here, the choice list from there, compare with last time.
 - Pass on what changed. Characters receive the difference in a sentence and a few fields, not a fresh description of everything.
 - Escalate on surprise. A [measure](measures.md) tracks how much of each change the reading explained. When it drops, pressure rises and the capable model is asked to revise the reading ([learned reactions](learned-reactions.md)). When a provider is missing, the same ladder is walked downwards to the plain-sentence reflex.
 
-The outward direction is the same mechanism. A layout for people and a reading for characters are both written once by thought and applied afterwards by reflex.
+The outward direction works the same way. A layout for people and a reading for characters are both written once by thought and applied afterwards by reflex.
 
 ## Large results
 

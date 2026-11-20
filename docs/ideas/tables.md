@@ -10,7 +10,7 @@ source: maintainers
 
 ## Idea
 
-Tabular data stored as Parquet beside its page, queryable, so the data travels with the vault. The vault is a Git repository, so small tables are committed and travel by clone or bundle. Large or external data is referenced by a pointer with a content hash, using Git LFS where a remote supports it ([decision 0003](../decisions/0003-data-beside-pages.md)). High-frequency data belongs in a table, not in page writes, because each write is a commit.
+Tabular data lives as Parquet beside its page, queryable, so the data travels with the vault. Small tables are committed and travel by clone or bundle. Large or external data is referenced by a pointer with a content hash, using Git LFS where a remote supports it ([decision 0003](../decisions/0003-data-beside-pages.md)). High-frequency data belongs in a table, not in page writes, because each write is a commit.
 
 ## Composes from
 

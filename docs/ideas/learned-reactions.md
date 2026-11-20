@@ -10,7 +10,7 @@ source: maintainers
 
 ## Idea
 
-When a model-backed page keeps answering the same question the same way, the answer is promoted to a deterministic reaction, so the model is no longer asked. Unsupported cases still go to the model. Source: the [research index](../research/dair-2026.md).
+When a model-backed page keeps giving the same answer to the same question, the answer becomes a reaction and the model is no longer asked. Cases it does not cover still go to the model. Source: the [research index](../research/dair-2026.md).
 
 ## Composes from
 

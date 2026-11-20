@@ -10,19 +10,15 @@ source: maintainers
 
 ## Idea
 
-The runtime should not contain domain machinery such as a ledger. Instead there is a pattern maker. It is similar to a skill generator, but it works on professional domains and on the dynamics of businesses, organisations and teams. It takes goldens, which are worked examples of good practice: a structure that already works in a vault, a professional method, or a standard process. It distils them into a simple recipe of patterns, practices, methods and processes that can be applied again.
+The runtime holds no domain machinery such as a ledger. A pattern maker, much like a skill generator but for professional domains and the dynamics of businesses and teams, takes goldens (worked examples of good practice: a structure that already works in a vault, a professional method, a standard process) and distils them into a recipe that can be applied again.
 
-A pattern is a space: a named recipe that says when to use it and how to compose the existing words (pages, spaces, rules, reactions, tables) into a known structure. Applying a pattern is joining its space, and a page may join several ([what a space hands down](inheritance.md)).
+A pattern is a space: a named recipe that says when to use it and how to compose existing words (pages, spaces, rules, reactions, tables) into a known structure. Applying it is joining its space, and a page may join several ([what a space hands down](inheritance.md)). A pattern is itself a page, so actors can read, apply and write new ones, and a structure that works can be promoted into a pattern.
 
-There is no shipped catalogue. Nothing is defined in advance. Profit and loss, double-entry accounts, stock control, approvals, and a clearing house for mutual debts are things the maker could be asked to produce, not things that come built in. Patterns are produced when a need or a good example appears.
-
-Applying a pattern is just a series of ordinary writes. Everything it creates is therefore in the vault's Git history, and it can be changed afterwards like anything else. A pattern is itself a page, the page of its space, so actors can read, apply and write new ones. A structure that works can be promoted into a pattern.
+There is no shipped catalogue. Profit and loss, double-entry accounts, stock control, approvals and a clearing house for mutual debts are things the maker could be asked to produce, and they appear when a need or a good example does. Applying a pattern is a series of ordinary writes, so everything it creates is in the vault's Git history and can be changed like anything else. Nothing of this is built.
 
 ## The maker
 
-The input is one or more goldens plus a statement of the need. The output is a space page that holds the pattern's rules, context and reactions.
-
-Making a pattern is real thinking, so it is one of the places where a model is asked. Applying a pattern afterwards needs no model.
+The input is one or more goldens and a statement of the need. The output is a space page holding the pattern's rules, context and reactions. Making a pattern is real thinking, so it is one of the places a model is asked. Applying one needs no model.
 
 ## Composes from
 
@@ -30,15 +26,15 @@ Page, space, rule, watch, and tables when they exist. Made patterns are pages in
 
 ## Removes
 
-The ledger as a built-in, and any other domain feature that would otherwise be added to the runtime.
+The ledger as a built-in, and any other domain feature that would otherwise enter the runtime.
 
 ## What it exposes
 
-Trying to express double-entry as a pattern shows what the ledger idea was really hiding. There is a general need for one write to change several pages together, all or nothing, with rules able to see the whole group. That makes it possible to check that what leaves one account arrives in another. Changing several pages together is now one commit, because the vault is a Git repository ([decision 0002](../decisions/0002-git-is-the-store.md)). What remains to build is rules that can see the whole group. Accounting is then only a pattern on top of it.
+Expressing double-entry as a pattern shows what the ledger idea was hiding: a general need for one write to change several pages together, all or nothing, with rules able to see the whole group, so that what leaves one account arrives in another. Changing several pages together is now one commit, because the vault is a Git repository ([decision 0002](../decisions/0002-git-is-the-store.md)). What remains to build is rules that can see the whole group. Accounting is then only a pattern on top.
 
 ## Falsifying test
 
-Given a golden of double-entry bookkeeping, the maker produces a pattern that, when applied, sets up accounts with conservation enforced, with no accounting-specific code in the runtime. If it needs a runtime change, that change must be a general primitive usable by unrelated patterns.
+Given a golden of double-entry bookkeeping, the maker produces a pattern that, when applied, sets up accounts with conservation enforced and no accounting-specific code in the runtime. If it needs a runtime change, that change must be a general primitive usable by unrelated patterns.
 
 ## Prior art
 
