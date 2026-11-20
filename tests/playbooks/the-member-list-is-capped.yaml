@@ -1,0 +1,36 @@
+# A list of members shows 20 lines, then counts the rest.
+pages:
+  broken: {api: command, command: no-such-program-here}
+  den: {}
+  n01: {within: den}
+  n02: {within: den}
+  n03: {within: den}
+  n04: {within: den}
+  n05: {within: den}
+  n06: {within: den}
+  n07: {within: den}
+  n08: {within: den}
+  n09: {within: den}
+  n10: {within: den}
+  n11: {within: den}
+  n12: {within: den}
+  n13: {within: den}
+  n14: {within: den}
+  n15: {within: den}
+  n16: {within: den}
+  n17: {within: den}
+  n18: {within: den}
+  n19: {within: den}
+  n20: {within: den}
+  n21: {within: den}
+  n22: {within: den}
+  reader:
+    seen: ""
+    watch:
+      - on: ticket
+        when: "true"
+        ask: {provider: broken, prompt: p, otherwise: "![[den#members]]", into: seen}
+  ticket: {text: one}
+steps:
+  - write: {page: ticket, fields: {text: two}}
+  - expect: {fields: {reader.seen: "n01\nn02\nn03\nn04\nn05\nn06\nn07\nn08\nn09\nn10\nn11\nn12\nn13\nn14\nn15\nn16\nn17\nn18\nn19\nn20\n(2 more not shown)"}}

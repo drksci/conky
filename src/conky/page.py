@@ -159,6 +159,8 @@ def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
             for entry in value:
                 _check_watch(entry)
             watch = value
+        elif key == MEMBERS:
+            raise ShapeError("members is computed from the pages within a space: use another name")
         else:
             fields[key] = value
     result = Page(within, rules, watch, fields, page.body if body is None else body)
@@ -261,14 +263,53 @@ def parse(text: str) -> Page:
     return Page(head.get("within"), head.get("rules") or [], head.get("watch") or [], fields, body)
 
 
-def _embed_text(target: Page | None, field: str | None) -> str | None:
-    """Return the text an embed names on target, or None when there is nothing to embed.
+MEMBERS = "members"
+MEMBERS_CAP = arch.constant(
+    20,
+    "members cap",
+    "conky.page.MEMBERS_CAP",
+    "slot.key",
+    "Most lines an embedded list of members shows before it counts the rest.",
+    doc="vault-format.md#pages",
+)
 
-    With a field it is that field's value. Without one it is the body. A missing page, a
-    missing field and an empty body give None.
+
+def _within(name: str, space: str, lookup: dict[str, Page]) -> bool:
+    """Return whether the page name lies within space, directly or through spaces."""
+    seen: set[str] = set()
+    found = lookup.get(name)
+    while found is not None and found.within and found.within not in seen:
+        if found.within == space:
+            return True
+        seen.add(found.within)
+        found = lookup.get(found.within)
+    return False
+
+
+def _members_text(space: str, lookup: dict[str, Page]) -> str | None:
+    """Return one line per page within space, sorted by name, or None when there is none."""
+    names = sorted(n for n in lookup if _within(n, space, lookup))
+    lines = []
+    for name in names[:MEMBERS_CAP]:
+        first = next((ln.strip() for ln in lookup[name].body.splitlines() if ln.strip()), "")
+        lines.append(f"{name}: {first}" if first else name)
+    if len(names) > MEMBERS_CAP:
+        lines.append(f"({len(names) - MEMBERS_CAP} more not shown)")
+    return "\n".join(lines) or None
+
+
+def _embed_text(name: str, field: str | None, lookup: dict[str, Page]) -> str | None:
+    """Return the text an embed names in lookup, or None when there is nothing to embed.
+
+    With the part `members` it is the list of the pages within a space that exists. With a
+    field it is that field's value. Without one it is the body. A missing page, a missing
+    field, an empty body and a space with no members give None.
     """
+    target = lookup.get(name)
     if target is None:
         return None
+    if field == MEMBERS:
+        return _members_text(name, lookup)
     if field is None:
         return target.body or None
     if field not in target.fields:
@@ -286,7 +327,7 @@ def embedded(text: str, lookup: dict[str, Page]) -> list[str]:
     names: list[str] = []
     for found in EMBED.finditer(text):
         name = found.group(1)
-        if _embed_text(lookup.get(name), found.group(2)) is not None and name not in names:
+        if _embed_text(name, found.group(2), lookup) is not None and name not in names:
             names.append(name)
     return names
 
@@ -294,12 +335,12 @@ def embedded(text: str, lookup: dict[str, Page]) -> list[str]:
 @arch.part(
     "part.embed",
     "layer.history",
-    "`![[page]]` or `![[page#field]]`, resolved on read and in prompts.",
+    "`![[page]]`, `![[page#field]]` or `![[space#members]]`, resolved on read and in prompts.",
     doc="vault-format.md#pages",
 )
 def resolve_text(text: str, lookup: dict[str, Page]) -> str:
     """Return text with each embed replaced by the field or body it names in lookup."""
-    return EMBED.sub(lambda m: _embed_text(lookup.get(m.group(1)), m.group(2)) or "", text)
+    return EMBED.sub(lambda m: _embed_text(m.group(1), m.group(2), lookup) or "", text)
 
 
 @arch.step(

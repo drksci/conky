@@ -1,0 +1,18 @@
+# A space with no pages within it, and one that does not exist, embed nothing.
+pages:
+  broken: {api: command, command: no-such-program-here}
+  den: {}
+  reader:
+    seen: "x"
+    gone: "x"
+    watch:
+      - on: ticket
+        when: "true"
+        ask: {provider: broken, prompt: "p", otherwise: "![[den#members]]", into: seen}
+      - on: ticket
+        when: "true"
+        ask: {provider: broken, prompt: "p", otherwise: "![[nowhere#members]]", into: gone}
+  ticket: {text: one}
+steps:
+  - write: {page: ticket, fields: {text: two}}
+  - expect: {fields: {reader.seen: "", reader.gone: ""}, verify: true}

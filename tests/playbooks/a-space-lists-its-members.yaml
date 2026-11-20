@@ -1,0 +1,24 @@
+# An embed of a space's members shows the pages kept within it, as one line each.
+pages:
+  broken: {api: command, command: no-such-program-here}
+  den: {}
+  scribe:
+    within: den
+    seen: ""
+    watch:
+      - on: ticket
+        when: "true"
+        ask:
+          provider: broken
+          prompt: "Kept so far:\n![[den#members]]"
+          otherwise: "![[den#members]]"
+          into: seen
+  ticket: {text: one}
+steps:
+  - write: {page: note-b, actor: alice, fields: {within: den}, body: "Second\nmore"}
+  - write: {page: note-a, actor: alice, fields: {within: den}, body: "First"}
+  - write: {page: blank, actor: alice, fields: {within: den}}
+  - write: {page: ticket, fields: {text: two}}
+  - expect:
+      fields:
+        scribe.seen: "blank\nnote-a: First\nnote-b: Second\nscribe"

@@ -32,8 +32,9 @@ A body may contain an embed, resolved when the page is read and never when it is
 
 - `![[name#field]]` becomes the value of that field on that page.
 - `![[name]]` becomes the body of that page as stored. An embedded body is not itself resolved.
+- `![[space#members]]` becomes one line for each page within that space, directly or through spaces, sorted by name: `name: first line of its body`, or the name alone when the body is empty. At most 20 lines are shown, then `(N more not shown)` counts the rest. `members` is a part every space has, computed and never stored, so a page may not carry a field of that name and a write that tries is refused as a malformed page.
 
-A string is inserted as it is and a boolean as `true` or `false`. A missing page, a missing field or an empty body gives nothing. Any other value is inserted as compact JSON.
+A string is inserted as it is and a boolean as `true` or `false`. A missing page, a missing field, an empty body or a space with no members gives nothing. Any other value is inserted as compact JSON.
 
 ## Commits
 
@@ -69,7 +70,7 @@ A model answer is a write by the page that asked ([rules and reactions](rules-an
 
 The resolved prompt sits between the subject and the trailers, exactly as sent, so the question is in the history beside its answer. The trailers are always the last paragraph of the message. A refusal of an answer that broke a rule carries the same trailers and note.
 
-`Read` records what the page looked at. A page counts as read when an embed in the prompt named it and the named field exists, or, for an embed with no field, when its body is not empty. `conky log` shows them as `read a, b`.
+`Read` records what the page looked at. A page counts as read when an embed in the prompt named it and the named field exists, or, for an embed with no field, when its body is not empty, or, for `#members`, when the space has members. The space is the page named, so a changed list changes the prompt and the question is asked afresh. `conky log` shows them as `read a, b`.
 
 When an entry may write pages ([an answer that is pages](rules-and-reactions.md#an-answer-that-is-pages)), each page of the answer is a following write, with the trailers of any reaction: it is by the page that asked, and its `Cause` is the commit of the answer. No new trailer is needed, so the history shows what a character did and why.
 

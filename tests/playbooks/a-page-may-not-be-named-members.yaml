@@ -1,0 +1,6 @@
+# members is computed for a space, so a page may not store a field of that name.
+pages:
+  den: {}
+steps:
+  - write: {page: note, fields: {within: den, members: "me"}}
+  - expect: {refused: shape, missing: [note]}
