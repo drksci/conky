@@ -30,13 +30,13 @@ One model, one task set, one prompt wrapper, one setting of every parameter. Onl
 |---|---|
 | a. Raw number | `259200` |
 | b. Raw number with unit | `259200 s` |
-| c. Placed, familiar anchors | `between a night and a week, 9 x a night` |
-| d. Placed, opaque anchors | `between a dosk and a mirl, 9 x a dosk` |
-| e. Placed and raw together | `259200 s (between a night and a week, 9 x a night)` |
+| c. Placed, familiar anchors | `between a night and a week, 0.43 x a week` |
+| d. Placed, opaque anchors | `between a dosk and a mirl, 0.43 x a mirl` |
+| e. Placed and raw together | `259200 s (between a night and a week, 0.43 x a week)` |
 
 A placement is a fixed mapping from a value to an anchor, a pure rule with no model in it. Anchors are listed in a table in the prompt, each with its value in base units, so a placed magnitude can always be checked against numbers. In c, d and e the table comes first. In a and b there is no table.
 
-The rule: with anchors sorted by value, a value between two is shown as `between <lower> and <upper>, <r> x <nearest>`, where the nearest anchor is the one with the smallest `|log(value / anchor)|` and `r` is the value over that anchor to two significant figures. A value below the lowest anchor is shown as `below <lowest>, <r> x <lowest>`, and a value above the highest as `beyond <highest>, <r> x <highest>`. Condition c shows the placement alone, so its precision is two significant figures, and that loss belongs to the condition.
+The rule: with anchors sorted by value, a value between two is shown as `between <lower> and <upper>, <r> x <nearest>`, where the nearest anchor is the one with the smallest `|log(value / anchor)|` and `r` is the value over that anchor to two significant figures. A value below the lowest anchor is shown as `below <lowest>, <r> x <lowest>`, and a value above the highest as `beyond <highest>, <r> x <highest>`. Condition c shows the placement alone, so its precision is two significant figures, and that loss belongs to the condition. The nearest anchor of 259200 is a week, not a night, since the log distance is 0.85 against 2.2. The examples in the table first named a night, which broke the rule; corrected on 2026-11-20 when the generators were built.
 
 Anchors:
 
