@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import textwrap
 from collections.abc import Callable
 from dataclasses import dataclass
 from importlib import resources
@@ -11,9 +10,8 @@ from typing import Any
 
 from conky.errors import BadInput
 from conky.page import check_name, load_value
+from conky.present import Outcome, Plain
 from conky.vault import Vault
-
-WIDTH = 78
 
 
 @dataclass(frozen=True)
@@ -90,43 +88,36 @@ def parse(name: str, data: Any) -> Example:
     return Example(name, data["title"].strip(), data["summary"].strip(), data["look_at"], steps)
 
 
-def listing() -> str:
-    """Return the available examples with their summaries, one per entry."""
-    lines = []
-    for name in available():
-        lines.append(name)
-        lines.append(_wrap(load(name).summary, "  ", "  "))
-    return "\n".join(lines)
+def listing(ui: Plain) -> list[str]:
+    """Return the available examples with their summaries, as lines."""
+    return ui.listing([(name, load(name).summary) for name in available()])
 
 
-def _wrap(text: str, first: str, rest: str) -> str:
-    return textwrap.fill(text, WIDTH, initial_indent=first, subsequent_indent=rest)
-
-
-def _outcome(vault: Vault, step: Step, before: int, clock: Callable[[], str]) -> str:
+def _outcome(vault: Vault, step: Step, before: int, clock: Callable[[], str]) -> Outcome:
     result = vault.write(step.page, step.fields, step.body, actor=step.actor, at=clock())
-    new = vault.log()[before:]
-    if result.ok:
-        text = f"written: {step.page}"
-    else:
-        text = f"refused: {step.page}, because {result.reason}"
-    for line in new[1:]:
+    reactions = []
+    for line in vault.log()[before:][1:]:
         _, _, _, kind, page, *_ = line.split()
-        verb = "changed by itself" if kind == "write" else "refused its own change"
-        text += f". Then {page} {verb}"
-    return text
+        reactions.append(
+            (page, "changed by itself" if kind == "write" else "refused its own change")
+        )
+    return Outcome(result.ok, step.page, result.reason or "", tuple(reactions))
 
 
 def run(
-    example: Example, vault: Vault, clock: Callable[[], str], out: Callable[[str], None]
+    example: Example,
+    vault: Vault,
+    clock: Callable[[], str],
+    ui: Plain,
+    out: Callable[[str], None],
 ) -> None:
-    """Run every step against the vault and report each one through out."""
-    out(example.title)
-    out(_wrap(example.summary, "", ""))
+    """Run every step against the vault and report each one through ui and out."""
+    for line in ui.demo_title(example.title, example.summary):
+        out(line)
     for number, step in enumerate(example.steps, start=1):
-        out("")
-        out(_wrap(step.say, f"{number}. ", "   "))
-        out(_wrap(_outcome(vault, step, len(vault.log()), clock), "     -> ", "        "))
+        outcome = _outcome(vault, step, len(vault.log()), clock)
+        for line in ui.demo_step(number, step.say, outcome):
+            out(line)
 
 
 def build(
@@ -134,6 +125,7 @@ def build(
     into: Path,
     keys: Path | None,
     clock: Callable[[], str],
+    ui: Plain,
     out: Callable[[str], None],
 ) -> None:
     """Create the vault for example name at into, run it and print what to look at next."""
@@ -142,11 +134,6 @@ def build(
         raise BadInput(f"{into} already exists: choose another folder with --into PATH")
     keys_dir = keys if keys is not None else into.resolve().parent / "keys"
     vault = Vault.init(into, keys_dir)
-    run(example, vault, clock, out)
-    shown = into
-    out("")
-    out("What to look at next")
-    out(f"  The vault is in {shown}")
-    out(f"  The history:      git -C {shown} log --oneline")
-    out(f"  A page:           conky --vault {shown} read {example.look_at}")
-    out(f"  The checks:       conky --vault {shown} verify")
+    run(example, vault, clock, ui, out)
+    for line in ui.demo_next(into, example.look_at):
+        out(line)

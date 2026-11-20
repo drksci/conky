@@ -21,3 +21,4 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 - `conky ask`: a one-off question whose answer is written to a page by an actor.
 - Trailers `Model`, `Model-Name`, `Tokens-In` and `Tokens-Out`, and `model <provider>` marks in `conky log`.
 - `conky demo`: builds a small example vault, with `stall` and `team` examples, and tells its story step by step.
+- Styled terminal output in the Charm manner, with rounded boxes and badges, switched by `--color auto|always|never` and `NO_COLOR`; plain output is unchanged.

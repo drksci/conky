@@ -11,7 +11,7 @@ source: maintainers
 `conky` is installed by `pip install -e '.[dev]'`. The walkthrough in [getting started](../guide/getting-started.md) uses every command except `demo`, which has its own first section there, and `ask`, which needs a provider.
 
 ```
-conky [--vault DIR] [--keys DIR] <command> ...
+conky [--vault DIR] [--keys DIR] [--color WHEN] <command> ...
 ```
 
 ## Global options
@@ -20,8 +20,20 @@ conky [--vault DIR] [--keys DIR] <command> ...
 |---|---|
 | `--vault DIR` | The vault directory. Default: the current directory. |
 | `--keys DIR` | The directory that holds private keys. Default: `~/.conky/keys`. |
+| `--color WHEN` | `auto`, `always` or `never`. Default: `auto`. |
 
-Both go before the command. `init` takes the vault path as its own argument and ignores `--vault`.
+All go before the command. `init` takes the vault path as its own argument and ignores `--vault`.
+
+## Colour and styled output
+
+In a terminal, conky styles its output with rounded boxes, small coloured badges and the symbols `✓`, `✗`, `↳`, `●` and `○`. The wording is the same as the plain output, with a badge in place of some labels, so no state is shown by colour alone. Styled output needs a terminal that supports 24-bit colour.
+
+- `--color auto` styles output only when it goes to a terminal and the environment variable `NO_COLOR` is not set. This is the default.
+- `--color always` styles output even when it is piped or redirected, for example to capture it.
+- `--color never` prints plain text.
+- `NO_COLOR` set to any value turns styling off under `auto`. An explicit `--color always` overrides it.
+
+Styled output is for people. Plain output is the stable form for scripts: it is what every other section of this page describes, and it has no escape codes. Anything that reads conky output should run it with output piped or with `--color never`. The styled layout can change between releases. Styled lines wrap to the terminal width, at most 88 columns.
 
 ## Commands
 
@@ -37,7 +49,7 @@ Builds a small example vault and narrates it. The examples are data files shippe
 - `--into PATH` is the folder to create. Default: `./conky-demo-<name>`. It is an error if the path already exists.
 - Private keys go in a `keys` directory beside the vault, unless the global `--keys` is given.
 
-Each step prints its number and narration, then an indented line beginning `->` that says what happened: `written: <page>`, or `refused: <page>, because <reason>`, followed by `Then <page> changed by itself` for each reaction. The output ends with what to look at next: the vault path, the Git history command, and the `read` and `verify` commands. The output is plain text, at most 80 columns apart from paths, with no colour codes. The steps use the real write path, so the vault verifies.
+Each step prints its number and narration, then an indented line beginning `->` that says what happened: `written: <page>`, or `refused: <page>, because <reason>`, followed by `Then <page> changed by itself` for each reaction. The output ends with what to look at next: the vault path, the Git history command, and the `read` and `verify` commands. The plain output is at most 80 columns apart from paths, with no colour codes. In a terminal the same content is styled: a box holds the title and summary, each step number is a small badge, results carry `✓ written` and `✗ refused` badges, and a reaction is a line beginning `↳`. See [colour and styled output](#colour-and-styled-output). The steps use the real write path, so the vault verifies.
 
 Errors, each on one line beginning `error: `:
 

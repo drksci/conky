@@ -20,7 +20,7 @@ uvx --from git+https://github.com/drksci/conky conky demo
 
 It makes seven writes across four pages, narrating each step in plain words: a market space with a rule that stock is never negative, a stall inside it, and a depot that watches the stall. A write that breaks the rule is refused. A write that lowers the stock makes the depot mark a reorder by itself. A journal page then keeps its own measure of its size.
 
-The vault is left in `./conky-demo-stall`, with private keys in `./keys`. The closing lines say what to look at next: `git -C conky-demo-stall log --oneline` for the history, and `conky read depot`, `conky verify` for the pages and the checks, which need conky installed as described below. `conky demo team` runs a second example about tasks and a board, and `conky demo --list` lists the examples. The full output and options are in the [command line reference](../reference/cli.md#demo).
+The vault is left in `./conky-demo-stall`, with private keys in `./keys`. The closing lines say what to look at next: `git -C conky-demo-stall log --oneline` for the history, and `conky read depot`, `conky verify` for the pages and the checks, which need conky installed as described below. `conky demo team` runs a second example about tasks and a board, and `conky demo --list` lists the examples. In a terminal the output is styled with boxes and badges, and piped output stays plain text. The full output and options are in the [command line reference](../reference/cli.md#demo).
 
 The rest of this page does the same things by hand.
 

@@ -9,7 +9,7 @@ from pathlib import Path
 
 import yaml
 
-from conky import demo
+from conky import demo, present
 from conky.errors import BadInput, VerifyFailed
 from conky.page import load_value, serialize
 from conky.vault import Vault
@@ -20,6 +20,12 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--vault", default=".", help="vault directory (default: .)")
     parser.add_argument(
         "--keys", default=None, help="private key directory (default: ~/.conky/keys)"
+    )
+    parser.add_argument(
+        "--color",
+        choices=["auto", "always", "never"],
+        default="auto",
+        help="style output: auto styles a terminal unless NO_COLOR is set (default: auto)",
     )
     sub = parser.add_subparsers(dest="command", required=True)
     init = sub.add_parser("init", help="create an empty vault")
@@ -66,18 +72,18 @@ def _now() -> str:
     return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def _run(args: argparse.Namespace) -> int:
+def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int:
     if args.command == "demo":
         if args.list:
-            print(demo.listing())
+            print("\n".join(demo.listing(ui)))
         else:
             into = Path(args.into if args.into else f"conky-demo-{args.name}")
             keys = Path(args.keys) if args.keys else None
-            demo.build(args.name, into, keys, _now, print)
+            demo.build(args.name, into, keys, _now, ui, print)
         return 0
     if args.command == "init":
         Vault.init(args.path, args.keys)
-        print(f"initialised {args.path}")
+        print(ui.initialised(args.path))
         return 0
     vault = Vault(Path(args.vault), args.keys)
     if args.command in ("write", "ask"):
@@ -95,28 +101,30 @@ def _run(args: argparse.Namespace) -> int:
                 at=_now(),
             )
         if not result.ok:
-            print(f"refused (commit {result.id[:7]}): {result.reason}", file=sys.stderr)
+            print(err.refused(result.id[:7], result.reason or ""), file=sys.stderr)
             return 1
-        print(f"written (commit {result.id[:7]})")
+        print(ui.written(result.id[:7]))
     elif args.command == "read":
-        print(serialize(vault.read(args.page)), end="")
+        print(ui.read(serialize(vault.read(args.page))), end="")
     elif args.command == "log":
-        for line in vault.log():
+        for line in ui.log(vault.log()):
             print(line)
     elif args.command == "verify":
         vault.verify()
-        print(f"ok: {len(vault.log())} commits verified")
+        print(ui.verified(len(vault.log())))
     else:
         vault.rebuild()
-        print("restored the working tree from the committed history")
+        print(ui.restored())
     return 0
 
 
 def main(argv: list[str] | None = None) -> int:
     """Run the command line and return the exit code."""
     args = _parser().parse_args(argv)
+    ui = present.choose(args.color, sys.stdout)
+    err = present.choose(args.color, sys.stderr)
     try:
-        return _run(args)
+        return _run(args, ui, err)
     except (BadInput, VerifyFailed) as exc:
-        print(f"error: {exc}", file=sys.stderr)
+        print(err.error(str(exc)), file=sys.stderr)
         return 1
