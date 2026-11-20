@@ -50,7 +50,7 @@ The same vault, with exactly these additions and nothing else:
   `The screen, turn ![[screen#turn]]:` in place of `The screen:`, because a case on the
   character's own page can key only on the screen page's `turn`, which the screen's text does
   not show.
-- The runtime appends its own fixed instruction for pages to the prompt, as it does for every
+- The runtime places its own fixed instruction for pages ahead of the prompt, as it does for every
   ask with `writes`; the adapter does not write it. It tells the character its name and its
   space, how a page is written (the header and end lines the parser cuts on, the page's `within`),
   that a page can be a note or carry a rule, that the space's members are shown to it each time

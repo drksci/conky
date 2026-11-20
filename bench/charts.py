@@ -32,7 +32,7 @@ YELLOW = "#F4C430"
 INKS = {"light": "#1E1E1E", "dark": "#EDEDED"}
 FONT = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 DASHES = ("", "7 3", "1.5 3", "7 3 1.5 3")
-BUDGET_EXITS = ("budget-exhausted", "wall-clock", "stalled")
+BUDGET_EXITS = ("budget-exhausted", "wall-clock", "stalled", "stopped")
 LAYERS = (
     ("task", "TASK TEXT"),
     ("screen", "SCREEN"),
