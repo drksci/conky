@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -89,14 +90,12 @@ class Vault:
         if not self._has_commits():
             return []
         out = git.run(
-            ["log", "--reverse", "--date=format-local:%Y-%m-%dT%H:%M:%SZ", "main"]
-            + ["--format=%x1e%h%x1f%ad%x1f%an%x1f%B"],
-            self.path,
-            {"TZ": "UTC"},
+            ["log", "--reverse", "--format=%x1e%h%x1f%at%x1f%an%x1f%B", "main"], self.path
         )
         lines = []
         for record in out.split("\x1e")[1:]:
-            short, at, actor, message = record.split("\x1f", 3)
+            short, stamp, actor, message = record.split("\x1f", 3)
+            at = datetime.fromtimestamp(int(stamp), UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
             found = git.trailers(message)
             detail = found.get("Reason") or (
                 f"cause {found['Cause'][:7]}" if "Cause" in found else ""

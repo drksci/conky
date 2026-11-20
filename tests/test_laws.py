@@ -1,5 +1,6 @@
 import json
 import subprocess
+from datetime import datetime
 from pathlib import Path
 
 import pytest
@@ -32,10 +33,9 @@ def test_write_is_a_signed_commit_with_trailers_and_dates(vault: Vault) -> None:
     assert result.ok and result.id == commits(vault)[-1]
     subject, found = message(vault)
     assert subject == "write stall" and found == {"Kind": "write", "Page": "stall"}
-    shown = git(vault.path, "log", "-1", "--format=%an|%ae|%cn|%ce|%aI|%cI")
-    assert shown.strip() == "alice|alice@conky|alice|alice@conky|" + "|".join(
-        ["2026-01-01T00:00:00+00:00"] * 2
-    )
+    shown = git(vault.path, "log", "-1", "--format=%an|%ae|%cn|%ce|%at|%ct")
+    stamp = str(int(datetime.fromisoformat(AT).timestamp()))
+    assert shown.strip() == "alice|alice@conky|alice|alice@conky|" + "|".join([stamp] * 2)
     assert signed_by(vault.path) == "alice@conky"
     assert (vault.pages_dir / "stall.md").read_text() == "---\nstock: 40\n---\nFresh bread.\n"
     assert git(vault.path, "show", "HEAD:pages/stall.md") == "---\nstock: 40\n---\nFresh bread.\n"
