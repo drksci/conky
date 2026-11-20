@@ -142,6 +142,6 @@ An accuracy gain with lower consistency, or with output tokens more than a quart
 
 ## What will not be claimed
 
-- Nothing about Conky as a harness, and nothing about the other parts of the idea page: the shared frame across dimensions, the lens page, or emotion.
+- Nothing about Conky as a harness, and nothing about the other parts of the idea page: the shared frame across dimensions, the codec page, or emotion.
 - Nothing about severity or any dimension not run.
 - No claim that a placed magnitude is how a model feels anything. The result is about decisions on these tasks.

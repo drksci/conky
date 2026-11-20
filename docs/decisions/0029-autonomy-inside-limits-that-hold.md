@@ -64,7 +64,7 @@ Autonomy is the point, and it comes from one capability held inside three laws.
 
 Around them, what was already true: every change is signed and says what caused it, so any improvement can be looked at, undone or branched from; the runtime is not a page, so no character can change it; private keys stay outside the vault; a person can hold a vault and step it.
 
-**What grows instead of being built.** A team is a space a character made. A pattern is a space others chose to join, rising by use ([decision 0023](0023-a-pattern-starts-private-and-rises-by-use.md)). Reflection is a page watching itself and rewriting itself when a measure says so. A lens is a page a character keeps about how to read something ([a lens](../ideas/lens.md)). None of these is a runtime feature. The runtime's whole list is: answers that are pages, spaces that hand down rules, context and reactions, time as a write, spending kept as a field, hold and step, files beside pages, and connectors.
+**What grows instead of being built.** A team is a space a character made. A pattern is a space others chose to join, rising by use ([decision 0023](0023-a-pattern-starts-private-and-rises-by-use.md)). Reflection is a page watching itself and rewriting itself when a measure says so. A codec is a page a character keeps about how to read something ([a codec](../ideas/codec.md)). None of these is a runtime feature. The runtime's whole list is: answers that are pages, spaces that hand down rules, context and reactions, time as a write, spending kept as a field, hold and step, files beside pages, and connectors.
 
 ## Consequences
 
@@ -74,3 +74,5 @@ Around them, what was already true: every change is signed and says what caused 
 - What stays with people: the rules of the outermost space, and approvals where a space asks for them.
 - Built: the capability, the first law and the second law. Unbuilt: the third law, time, hold and step, files beside pages, and spaces handing down context and reactions. Until the third law exists, only the depth of a cascade bounds what a self-organising character spends.
 - Lenses, patterns, go-betweens and background minds stop being runtime work. They are written up as things a character can make, and may be offered on a shelf as writings.
+
+2026-11-20: the lens and the go-between are now one idea, the [codec](../ideas/codec.md). This record keeps its original words.

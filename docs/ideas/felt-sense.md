@@ -6,7 +6,7 @@ date: 2026-11-20
 source: the owner's request for a shared way to feel time, severity and impact, and the digest in research/where-am-i.md
 arch:
   covers:
-  - kind.lens
+  - kind.codec
 ---
 
 # A felt sense of magnitude
@@ -15,7 +15,7 @@ arch:
 
 A magnitude reaches a character placed on something it already understands, not as a bare number. Time passed, how severe, how much is at stake and how far off course are each given as a position among familiar anchors, with the raw value kept in the record beside it. Nothing of this is built.
 
-This is the inward [lens](lens.md) for magnitudes. A [measure](measures.md) produces the number. A lens page holds the map from that number to a place among anchors. A character reads the placed version.
+This is the inward [codec](codec.md) for magnitudes. A [measure](measures.md) produces the number. A codec page holds the map from that number to a place among anchors. A character reads the placed version.
 
 - Time: a moment, a meal, a night, a week, a season.
 - Severity: an inconvenience, an injury, a loss.
@@ -32,18 +32,18 @@ Several dimensions placed on the same anchors can be compared: an hour late agai
 
 ## The source's caution
 
-The source found that a model gives a confident gradient for a nonsense axis as readily as a real one. So the placement is never asked of a model. It is a pure rule over the number, with thresholds written on the lens page.
+The source found that a model gives a confident gradient for a nonsense axis as readily as a real one. So the placement is never asked of a model. It is a pure rule over the number, with thresholds written on the codec page.
 
 ## What stays strict
 
 - Rules and measures compute on the raw value and stay pure. The placed version is for reading.
-- It is derived. Deleting the lens changes no fact and no history.
-- With no lens, a character gets the number and a plain unit ([decision 0026](../decisions/0026-it-always-works.md)).
+- It is derived. Deleting the codec changes no fact and no history.
+- With no codec, a character gets the number and a plain unit ([decision 0026](../decisions/0026-it-always-works.md)).
 - The map is a page: written once by thought, visible, revisable, shareable as a [pattern](patterns.md), and the same for every character in a space that hands it down.
 
 ## Composes from
 
-[Measure](measures.md), the [clock](clock.md), [lens](lens.md), [pattern](patterns.md) and embed (the placed version is embedded where a character reads).
+[Measure](measures.md), the [clock](clock.md), [codec](codec.md), [pattern](patterns.md) and embed (the placed version is embedded where a character reads).
 
 ## Removes
 
@@ -51,13 +51,13 @@ Prompts that hand a model raw timestamps and scores and ask it to care.
 
 ## Depends on
 
-The clock (time is a write) and lenses.
+The clock (time is a write) and codecs.
 
 ## Falsifying test
 
 - Characters given placed magnitudes make the same decisions as characters given raw numbers. Then it adds nothing.
 - The placement misleads at the ends of a scale, such as a value far beyond the last anchor.
-- Two characters with the same lens read the same value differently in ways that matter.
+- Two characters with the same codec read the same value differently in ways that matter.
 - A prompt-class control for the [evaluation plan](../research/evaluation-plan.md): same harness, same model, same budget, raw against placed. The result is a prompt result and is never cited as a claim about Conky. The source's untested control applies as well: familiar anchor names against opaque ones.
 - The protocol for this test, with its conditions, tasks and analysis fixed before any run, is the [felt-sense experiment](../research/felt-sense-experiment.md).
 

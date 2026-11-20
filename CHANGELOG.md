@@ -41,4 +41,5 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ### Changed
 
+- The lens idea page is now the codec page, `docs/ideas/codec.md`: a codec turns one tree into another and comes one per form. `kind.lens` is `kind.codec`, `flow.lens.revise` is `flow.codec.revise`, and `kind.interpreter` is removed, since the go-between is the codec at a connector. Nothing in the code changed.
 - A question is settled only while its answer is still in place: the mark `<into>_asked` now digests the prompt together with the answer, so an answer overwritten by another entry is asked for again.

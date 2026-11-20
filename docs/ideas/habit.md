@@ -44,7 +44,7 @@ A habit is a kept conclusion: a case a page wrote down so that it need not think
 
 ## What it absorbs
 
-A [lens](lens.md) is habits of reading and of laying out. A [learned reaction](learned-reactions.md) is a habit of acting. A [felt sense](felt-sense.md) is a habit of placing a magnitude. A [pattern](patterns.md) is a space of habits others chose to join. A cached answer is the exact case. These pages keep their detail and would point here.
+A [codec](codec.md) is habits of reading and of laying out. A [learned reaction](learned-reactions.md) is a habit of acting. A [felt sense](felt-sense.md) is a habit of placing a magnitude. A [pattern](patterns.md) is a space of habits others chose to join. A cached answer is the exact case. These pages keep their detail and would point here.
 
 ## Composes from
 

@@ -18,12 +18,6 @@ arch:
     layer: layer.space
     text: A space of tool pages or of patterns.
     roadmap: R25
-  - kind: archetype
-    name: kind.interpreter
-    by: a person or a character
-    layer: layer.character
-    text: A model page at a connector that turns raw pages into plain words and back.
-    roadmap: R25
   - kind: stage
     name: stage.act.tool
     phase: act
@@ -97,7 +91,7 @@ Its provider is a list tried in order, from a capable model down to a small one.
 
 ## How it reads and writes
 
-The go-between reads the connector's pages and writes a character's plain words as the request a tool expects, through a [lens](lens.md). The lens is written once by thought and applied by reflex, so the go-between rarely asks a model. The request is an ordinary signed write, so the translation is on the record and a rule can refuse it ([thought to change](thought-to-change.md)).
+The go-between is the [codec](codec.md) at a connector: it reads the connector's pages and writes a character's plain words as the request a tool expects. The codec is written once by thought and applied by reflex, so it rarely asks a model. The request is an ordinary signed write, so the translation is on the record and a rule can refuse it ([thought to change](thought-to-change.md)).
 
 ## Large results
 
@@ -144,7 +138,7 @@ With the connector stopped and its files deleted, the vault verifies, and a new 
 1. Whole-page embeds, so a prompt can hold a page body.
 2. The connector contract restated on the terminal connector.
 3. An MCP connector over stdio.
-4. A go-between page for a connector space, with providers tried in order and a plain-sentence reflex last, reading and writing through a lens ([lens](lens.md)).
+4. A go-between page for a connector space, with providers tried in order and a plain-sentence reflex last, reading and writing through a codec ([codec](codec.md)).
 5. Files beside pages, and an image-reading provider for the go-between.
 6. The browser, through an existing MCP server ([browser drivers compared](../research/browser-drivers.md)).
 7. The gatekeeper.

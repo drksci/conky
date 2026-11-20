@@ -8,7 +8,7 @@ arch:
   items:
   - kind: unplaced
     name: learned reactions
-    text: A repeated model answer becomes a reaction and the model is no longer asked. It is carried by the lens idea.
+    text: A repeated model answer becomes a reaction and the model is no longer asked. It is carried by the codec idea.
 ---
 
 # Learned reactions

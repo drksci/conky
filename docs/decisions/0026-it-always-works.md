@@ -33,3 +33,5 @@ This is a design rule for every part, written into the contributor rules, not a 
 - Rules are the exception and stay strict: a rule that cannot be evaluated refuses the write. Falling back there would turn a rule into a request.
 - Every fallback is recorded, so a lowered result is visible and never mistaken for the real thing.
 - Each part lands with a test of its fallback. An error that remains says what to do next.
+
+2026-11-20: the lens and the go-between are now one idea, the [codec](../ideas/codec.md). This record keeps its original words.

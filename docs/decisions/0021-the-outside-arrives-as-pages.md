@@ -36,3 +36,5 @@ The mechanism is set out in [the outside arrives as pages](../ideas/tools.md), w
 - Reach by membership depends on spaces handing down more than rules, which is roadmap step R22.
 - A party cannot see a canvas game until files beside pages and image-reading providers exist. Until then a figure of that game is a schematic and says so.
 - Removed: a separate tool registry, and tool lists written into prompts.
+
+2026-11-20: the lens and the go-between are now one idea, the [codec](../ideas/codec.md). This record keeps its original words.

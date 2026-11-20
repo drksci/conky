@@ -132,7 +132,6 @@ A kind of page is a way pages are used and never a type the runtime knows. Who m
 | <a id="kind.gatekeeper"></a>`kind.gatekeeper` | a person or a character | A page a space names to answer a request for permission. | [gatekeeper.md](../ideas/gatekeeper.md) | - | R14 | planned |
 | <a id="kind.goal"></a>`kind.goal` | a person | What a page's activity is read against. | [direction-and-drift.md](../ideas/direction-and-drift.md) | - | R18 | planned |
 | <a id="kind.hold"></a>`kind.hold` | a person | A field held on a page named hold. | [stepping.md](../ideas/stepping.md) | - | R28 | planned |
-| <a id="kind.interpreter"></a>`kind.interpreter` | a person or a character | A model page at a connector that turns raw pages into plain words and back. | [tools.md](../ideas/tools.md) | - | R25 | planned |
 | <a id="kind.layout"></a>`kind.layout` | a character | How the screen is composed, asked for once. | [compositor.md](../ideas/compositor.md) | - | R11g | planned |
 | <a id="kind.mind"></a>`kind.mind` | a character | Doubt, curiosity, tidying and orientation, each a budgeted model page. | [background-minds.md](../ideas/background-minds.md) | - | R17 | planned |
 | <a id="kind.pattern"></a>`kind.pattern` | a character, through the pattern maker | A space made on demand from goldens, private at first and rising by use. | [patterns.md](../ideas/patterns.md) | - | R6 | planned |
@@ -141,7 +140,7 @@ A kind of page is a way pages are used and never a type the runtime knows. Who m
 | <a id="kind.taste"></a>`kind.taste` | a person, or inferred by a model page | How a vault looks and sounds, kept at the top space. | [house-style.md](../ideas/house-style.md) | - | R23 | planned |
 | <a id="kind.tool"></a>`kind.tool` | a connector | One page per tool of a tool server. A call is a write to it. | [tools.md](../ideas/tools.md) | - | R25 | planned |
 | <a id="kind.archive"></a>`kind.archive` | a character | An archived page stays readable and drops out of attention. Whether it is a field or a space is open. | [staleness.md](../ideas/staleness.md) | - | R3 | idea |
-| <a id="kind.lens"></a>`kind.lens` | a character | How one shape maps to another, written once by thought and revised on surprise. | [lens.md](../ideas/lens.md) | - | R11g | idea |
+| <a id="kind.codec"></a>`kind.codec` | a character | A page of bindings from one tree to another, written once by thought and applied by reflex. | [codec.md](../ideas/codec.md) | - | R11g | idea |
 
 ## 5. Slots
 
@@ -910,11 +909,11 @@ A tool is a page and a call is a write to it, and a go-between stands at the con
 |---|---|---|---|---|---|
 | <a id="flow.tool.call"></a>`flow.tool.call` | [tools.md](../ideas/tools.md) | - | - | R25 | planned |
 
-<a id="flow.lens.revise#1"></a><a id="flow.lens.revise#2"></a><a id="flow.lens.revise#3"></a><a id="flow.lens.revise#4"></a><a id="flow.lens.revise#5"></a><a id="flow.lens.revise#6"></a><a id="flow.lens.revise#7"></a><a id="flow.lens.revise#8"></a>
+<a id="flow.codec.revise#1"></a><a id="flow.codec.revise#2"></a><a id="flow.codec.revise#3"></a><a id="flow.codec.revise#4"></a><a id="flow.codec.revise#5"></a><a id="flow.codec.revise#6"></a><a id="flow.codec.revise#7"></a><a id="flow.codec.revise#8"></a>
 
 ```mermaid
 ---
-title: A lens written and revised on surprise (idea)
+title: A codec written and revised on surprise (idea)
 ---
 sequenceDiagram
     participant lane.person
@@ -926,20 +925,20 @@ sequenceDiagram
     participant lane.provider
     participant lane.outside
     lane.outside->>lane.connector: a raw surface changes
-    lane.connector->>lane.page: the lens page maps it by reflex, with no model call
+    lane.connector->>lane.page: the codec page maps it by reflex, with no model call
     lane.page->>lane.runtime: a measure of the share explained, written as an event
     lane.runtime->>lane.page: the share falls, so pressure rises
-    lane.runtime->>lane.provider: a capable model is asked to revise the lens page
-    lane.provider->>lane.runtime: a new lens
+    lane.runtime->>lane.provider: a capable model is asked to revise the codec page
+    lane.provider->>lane.runtime: a new codec
     lane.runtime->>lane.history: the revision, an ordinary signed write
     Note over lane.page: steady state makes no model call
 ```
 
-A lens is applied by reflex and rewritten only when a measure says it has stopped explaining what it sees.
+A codec is applied by reflex and rewritten only when a measure says it has stopped explaining what it sees.
 
 | Flow | Doc | Code | Test | Step | State |
 |---|---|---|---|---|---|
-| <a id="flow.lens.revise"></a>`flow.lens.revise` | [lens.md](../ideas/lens.md) | - | - | R11g | idea |
+| <a id="flow.codec.revise"></a>`flow.codec.revise` | [codec.md](../ideas/codec.md) | - | - | R11g | idea |
 
 <a id="flow.pattern.rise#1"></a><a id="flow.pattern.rise#2"></a><a id="flow.pattern.rise#3"></a><a id="flow.pattern.rise#4"></a><a id="flow.pattern.rise#5"></a><a id="flow.pattern.rise#6"></a><a id="flow.pattern.rise#7"></a><a id="flow.pattern.rise#8"></a>
 
@@ -1152,10 +1151,10 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`flow.ask.model`](#flow.ask.model) | built | 9 | - |  |
 | [`flow.ask.pages`](#flow.ask.pages) | built | 5 | check.page.format, check.character.organise |  |
 | [`flow.clock.tick`](#flow.clock.tick) | planned | not built | - | - |
+| [`flow.codec.revise`](#flow.codec.revise) | idea | not built | - | - |
 | [`flow.connect.act`](#flow.connect.act) | built | 4 | - |  |
 | [`flow.connect.sense`](#flow.connect.sense) | built | 5 | - |  |
 | [`flow.engine.query`](#flow.engine.query) | planned | not built | - | - |
-| [`flow.lens.revise`](#flow.lens.revise) | idea | not built | - | - |
 | [`flow.page.read`](#flow.page.read) | built | 3 | - |  |
 | [`flow.pattern.rise`](#flow.pattern.rise) | planned | not built | - | - |
 | [`flow.proposal.approve`](#flow.proposal.approve) | planned | not built | - | - |
@@ -1265,19 +1264,19 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [cascading-context](../ideas/cascading-context.md) | idea | [`part.space.context`](#part.space.context) |
 | [character](../ideas/character.md) | idea | [`part.character.self`](#part.character.self) |
 | [clock](../ideas/clock.md) | idea | [`kind.clock`](#kind.clock), [`stage.stimulus.clock`](#stage.stimulus.clock), [`flow.clock.tick`](#flow.clock.tick) |
+| [codec](../ideas/codec.md) | idea | [`kind.codec`](#kind.codec), [`flow.codec.revise`](#flow.codec.revise) |
 | [compositor](../ideas/compositor.md) | idea | [`kind.layout`](#kind.layout), [`stage.stimulus.prompt`](#stage.stimulus.prompt) |
 | [connectors](../ideas/connectors.md) | idea | [`part.connect.terminal`](#part.connect.terminal), [`place.beside.connector`](#place.beside.connector), [`part.connect.protocol`](#part.connect.protocol) |
 | [direction-and-drift](../ideas/direction-and-drift.md) | idea | [`kind.goal`](#kind.goal), [`stage.attention.drift`](#stage.attention.drift) |
 | [dry-run](../ideas/dry-run.md) | idea | [`flow.write.try`](#flow.write.try) |
 | [energy-unit](../ideas/energy-unit.md) | idea | - |
-| [felt-sense](../ideas/felt-sense.md) | idea | [`kind.lens`](#kind.lens) |
+| [felt-sense](../ideas/felt-sense.md) | idea | [`kind.codec`](#kind.codec) |
 | [gatekeeper](../ideas/gatekeeper.md) | idea | [`kind.gatekeeper`](#kind.gatekeeper) |
 | [habit](../ideas/habit.md) | idea | [`part.answer.cache`](#part.answer.cache), [`part.provider.detect`](#part.provider.detect), [`check.habit.keep`](#check.habit.keep), [`part.character.habit`](#part.character.habit) |
 | [house-style](../ideas/house-style.md) | idea | [`kind.taste`](#kind.taste) |
 | [inheritance](../ideas/inheritance.md) | idea | [`part.space`](#part.space), [`part.space.context`](#part.space.context), [`flow.space.inherit`](#flow.space.inherit) |
 | [learned-reactions](../ideas/learned-reactions.md) | idea | - |
 | [ledger](../ideas/ledger.md) | idea | - |
-| [lens](../ideas/lens.md) | idea | [`kind.lens`](#kind.lens), [`flow.lens.revise`](#flow.lens.revise) |
 | [measures](../ideas/measures.md) | enforced | [`law.pressure.notice`](#law.pressure.notice), [`law.measure.watch`](#law.measure.watch), [`flow.watch.measure`](#flow.watch.measure), [`kind.measure`](#kind.measure), [`stage.attention.measure`](#stage.attention.measure) |
 | [model-pages](../ideas/model-pages.md) | enforced | [`flow.ask.model`](#flow.ask.model), [`kind.provider`](#kind.provider), [`stage.think.ask`](#stage.think.ask), [`stage.think.context`](#stage.think.context) |
 | [obsidian-view](../ideas/obsidian-view.md) | idea | - |
@@ -1288,7 +1287,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [stepping](../ideas/stepping.md) | idea | [`law.vault.hold`](#law.vault.hold), [`kind.hold`](#kind.hold), [`flow.vault.step`](#flow.vault.step) |
 | [tables](../ideas/tables.md) | idea | [`data.file`](#data.file), [`data.table`](#data.table), [`data.engine`](#data.engine), [`data.stream.beside`](#data.stream.beside), [`flow.table.append`](#flow.table.append), [`flow.engine.query`](#flow.engine.query), [`flow.table.watch`](#flow.table.watch) |
 | [thought-to-change](../ideas/thought-to-change.md) | idea | [`flow.ask.pages`](#flow.ask.pages), [`law.answer.pages`](#law.answer.pages) |
-| [tools](../ideas/tools.md) | idea | [`kind.tool`](#kind.tool), [`kind.shelf`](#kind.shelf), [`kind.interpreter`](#kind.interpreter), [`stage.act.tool`](#stage.act.tool), [`flow.tool.call`](#flow.tool.call) |
+| [tools](../ideas/tools.md) | idea | [`kind.tool`](#kind.tool), [`kind.shelf`](#kind.shelf), [`stage.act.tool`](#stage.act.tool), [`flow.tool.call`](#flow.tool.call) |
 | [trace](../ideas/trace.md) | idea | [`stage.attention.strip`](#stage.attention.strip) |
 | [vault-splitting](../ideas/vault-splitting.md) | idea | [`flow.vault.link`](#flow.vault.link) |
 
@@ -1339,7 +1338,7 @@ Found in the documents and fitting no row above.
 | build on bedrock | [0031-build-on-bedrock.md](../decisions/0031-build-on-bedrock.md) | Walk a new layer one step at a time before building on it. A working rule whose check is the benchmark walkthrough. |
 | energy unit | [energy-unit.md](../ideas/energy-unit.md) | A unit of value flow that conserves only if its conversion is recorded. It waits on a grouped write and a measure of spend, and has no step of its own. |
 | key rotation and revocation | [0002-git-is-the-store.md](../decisions/0002-git-is-the-store.md) | How keys are rotated and revoked is an open question with no idea or decision. |
-| learned reactions | [learned-reactions.md](../ideas/learned-reactions.md) | A repeated model answer becomes a reaction and the model is no longer asked. It is carried by the lens idea. |
+| learned reactions | [learned-reactions.md](../ideas/learned-reactions.md) | A repeated model answer becomes a reaction and the model is no longer asked. It is carried by the codec idea. |
 | ledger | [ledger.md](../ideas/ledger.md) | A built-in ledger was judged a bad idea. The need survives as a grouped write, in the patterns idea. |
 | rules outside conky | [0002-git-is-the-store.md](../decisions/0002-git-is-the-store.md) | Rules are not enforced on commits made outside conky, and removing the last commit is not detectable from one copy. Verify does not evaluate rules. |
 | the objective | [0001-objective.md](../decisions/0001-objective.md) | An organisation that runs, delivers and improves without its builders directing each step. It is an aim and prescribes no mechanism. |
