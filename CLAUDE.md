@@ -52,6 +52,7 @@ Much of the runtime is scaffold: guard certification and SMT checks are string m
 ## Vault rules
 
 - Every surface has its `guard-` and `view-` companions, or the triad law is changed first. Do not add surfaces that break it.
+- The vault travels alone: a cold reader given only the directory must be able to rebuild the running system. Bulk data sits in open formats (Parquet) at relative paths named by its surface. (rung: idea)
 - `seal:` commits are runtime output. Do not hand-write them or mix them with source changes.
 - Do not edit a sealed surface by hand to make a test pass.
 
