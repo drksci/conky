@@ -19,13 +19,13 @@ uvx --from git+https://github.com/drksci/conky conky assimilate
 
 <h3 align="center">A folder where everything is somebody.</h3>
 
-<p align="center">An open-source agent harness where the whole AI system is Markdown pages in a Git repository.<br>Every page is a character with its own name and voice. Every change is signed. Every rule holds.<br>The dull parts are reflexes, so the thinking can go into being someone.</p>
-
-<p align="center"><a href="docs/guide/concepts.md">Concepts</a> &nbsp;·&nbsp; <a href="docs/guide/getting-started.md">Getting started</a> &nbsp;·&nbsp; <a href="docs/reference/vault-format.md">Reference</a> &nbsp;·&nbsp; <a href="docs/project/roadmap.md">Roadmap</a></p>
+<p align="center">An open-source agent harness with no harness. The whole system is Markdown pages in a Git repository.<br>Every page is somebody, with a name, a voice and rules it cannot talk its way past.</p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/demo.dark.svg"><img src="docs/assets/figures/demo.light.svg" alt="Left, a terminal playing the demo: Maya sets up a lemonade stand with one house rule, fills the cooler, a cup count below zero is refused, a busy hour empties the cooler and the supplier orders lemons by itself. Right, a wireframe of the same thing as a screen, in the pages' own words: the house rule, the cooler's count, the supplier's order and lines from the daybook, updating in step." width="800"></picture></p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-oregon-trail.dark.svg"><img src="docs/assets/figures/fig-oregon-trail.light.svg" alt="A schematic in three panels. The game: Oregon Trail asks whether to stop at the next fort, hunt or continue. Conky: the screen changed, Ma read a pattern, Jed wants to hunt, a house rule refuses it, Ma says to push on, and the hands type 3. A2UI: the same moment as a screen, with the four travellers, the supplies and a note that Ma read The Art of War." width="800"></picture></p>
+
+<p align="center"><sub>Four strangers, one wagon and a BASIC game from 1978. A schematic: the <a href="docs/guide/playing-a-program.md">connector</a> that plays a program works today, the party is next.</sub></p>
 
 
 <br>
@@ -33,11 +33,11 @@ uvx --from git+https://github.com/drksci/conky conky assimilate
 
 ### tl;dr
 
-Every AI agent project turns into the same thing eventually: a pile of prompts, some glue code and a database nobody wants to touch. Six months in, nobody can tell you why it did what it did, and moving it anywhere is a project of its own.
+Every agent project ends up the same: a pile of prompts, some glue code and a database nobody dares touch. Six months in, nobody can say why it did what it did, and moving it is a project of its own.
 
-Conky does it backwards. The whole system is a folder of Markdown files in Git, and every file is somebody: the owner, the cooler, the supplier, the daybook, each with its own name and voice. The dull parts are reflexes. Changes are signed, rules are checked on every write, and pages notice each other, so nobody has to think about any of that. The thinking is saved for being someone.
+Conky does it backwards. The system is a folder of Markdown files in Git, and every file is somebody: the owner, the cooler, the supplier, the daybook. Signing, checking the rules and noticing each other are reflexes that cost no thought, so the thinking goes into being someone.
 
-That's it. Files and Git. If you ever hate it, clone the folder and leave.
+If you ever hate it, clone the folder and leave.
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-0-folder.dark.svg"><img src="docs/assets/figures/fig-0-folder.light.svg" alt="An early Macintosh folder window titled Lemonade stand, in black and white. Inside are six page icons named stand, cooler, supplier, daybook, maya and sam. Dashed arrows run from stand to cooler to supplier, and the daybook has an arrow looping back to itself. The status line reads: 6 pages, running itself." width="800"></picture></p>
 
@@ -45,9 +45,9 @@ That's it. Files and Git. If you ever hate it, clone the folder and leave.
 
 ### Not another harness
 
-Most agent setups keep what is true in four places: the prompt, the config, the database and the code. When they disagree, somebody has to work out which one wins.
+Most agent setups keep the truth in four places: the prompt, the config, the database and the code. When they disagree, somebody has to work out which one wins. Usually Dave.
 
-Conky keeps one place. Each row shows the usual way on the left and Conky on the right, with the actual parts named. Every name is sourced in the <a href="docs/research/harnesses.md">comparison</a>.
+Conky keeps one. Left is the usual way, right is Conky, and the small print names the actual parts, each sourced in the <a href="docs/research/harnesses.md">comparison</a>.
 
 <p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/row-1-truth.dark.svg"><img src="docs/assets/figures/row-1-truth.light.svg" alt="Usually the truth is spread across code, prompts, a database, and Dave. With Conky the truth is the pages, and there is nowhere else to look." width="800"></picture></a></p>
 <p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/row-2-rules.dark.svg"><img src="docs/assets/figures/row-2-rules.light.svg" alt="Usually rules are a strongly worded prompt, and hope. With Conky rules are checked on every change, and a model cannot talk its way past one." width="800"></picture></a></p>
@@ -67,7 +67,7 @@ Conky keeps one place. Each row shows the usual way on the left and Conky on the
 
 <p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-rule.dark.svg"><img src="docs/assets/figures/ico-rule.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>Rules that hold</b> &nbsp;<sub>●</sub><br>Checked on every change, not politely requested in a prompt. A refused change goes on the record too.</p>
 
-<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-reaction.dark.svg"><img src="docs/assets/figures/ico-reaction.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>Things that just happen</b> &nbsp;<sub>●</sub><br>Pages notice each other and respond. Stock runs low, the depot reorders. Nobody held a meeting.</p>
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-reaction.dark.svg"><img src="docs/assets/figures/ico-reaction.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>Things that just happen</b> &nbsp;<sub>●</sub><br>Pages notice each other and respond. The cooler runs low, the supplier reorders. Nobody held a meeting.</p>
 
 <p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-measure.dark.svg"><img src="docs/assets/figures/ico-measure.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>Pages that feel their weight</b> &nbsp;<sub>● &nbsp;tidying up ○</sub><br>A page can watch itself. Pressure builds as it grows, and things get noticed before they rot.</p>
 
