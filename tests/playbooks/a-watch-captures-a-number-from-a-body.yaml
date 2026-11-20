@@ -1,0 +1,13 @@
+# A watch takes a number off the body of the watched page, as a screen is read.
+pages:
+  screen: {}
+  tally:
+    cups: 0
+    watch:
+      - on: screen
+        when: "other_text.contains('cups=')"
+        set:
+          cups: "int(other_text.captures('cups=(\\d+)')[0])"
+steps:
+  - write: {page: screen, fields: {}, body: "lemonade stand\ncups=17 sold"}
+  - expect: {fields: {tally.cups: 17}, verify: true}

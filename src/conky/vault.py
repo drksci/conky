@@ -578,6 +578,7 @@ class Vault:
             "page": page.fields,
             "space": self._context(name, page.within),
             "size": _size(page),
+            "text": page.body,
         }
         found = self._walk(name, page, name, scope)
         if found or before is None or not before.within or before.within == page.within:
@@ -687,6 +688,13 @@ class Vault:
         "A reaction that leaves the page unchanged is not written.",
         doc="rules-and-reactions.md#reactions",
     )
+    @arch.stage(
+        "notice",
+        "stage.notice.text",
+        "`text` and `other_text` are the bodies of the watching page and of the page just "
+        "written, so a watch can read what a page says.",
+        doc="rules-and-reactions.md#variables-in-scope",
+    )
     @arch.change(
         "place.runtime.react",
         "Running reactions after a write, depth first, bounded at 12.",
@@ -704,6 +712,8 @@ class Vault:
                     "space": self._context(watcher, current.within),
                     "other_size": _size(written),
                     "size": _size(current),
+                    "other_text": written.body,
+                    "text": current.body,
                     "event": commit,
                 }
                 try:

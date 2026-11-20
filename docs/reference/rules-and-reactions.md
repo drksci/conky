@@ -42,9 +42,12 @@ Every function is pure. Text over 65536 characters, a result over 65536 characte
 | Rule | `page` | The fields of the page as it would be after the write. Reserved keys are not fields. |
 | Rule | `space` | The fields handed down by the spaces the page is within, nearest winning (see [Context from spaces](#context-from-spaces)). |
 | Rule | `size` | The byte length of the serialised page as it would be after the write. |
+| Rule | `text` | The body of the page as it would be after the write, empty when the page has none. |
 | Watch | `page` | The fields of the watching page as it is now. |
 | Watch | `space` | The same, for the watching page. |
 | Watch | `size` | The byte length of the watching page as it is now. |
+| Watch | `text` | The body of the watching page as it is now. |
+| Watch | `other_text` | The body of the page that was just written. |
 | Watch | `other` | The fields of the page that was just written. |
 | Watch | `other_size` | The byte length of the page that was just written. |
 | Watch | `event` | The id of the change being reacted to. A case can keep it in a field to mark what it has met, then test `page.met != event`. |

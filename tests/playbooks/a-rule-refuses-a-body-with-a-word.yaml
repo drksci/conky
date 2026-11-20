@@ -1,0 +1,11 @@
+# A rule reads the body of the page being written and refuses a forbidden word.
+pages:
+  camp:
+    rules: ["!text.contains('secret')"]
+  scout:
+    within: camp
+steps:
+  - write: {page: note, actor: scout, fields: {within: camp}, body: "the secret is out"}
+  - expect: {refused: rule, missing: [note]}
+  - write: {page: note, actor: scout, fields: {within: camp}, body: "nothing to hide"}
+  - expect: {exists: [note], verify: true}

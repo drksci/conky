@@ -1,0 +1,13 @@
+# A page with no body reads as empty text, in a watch.
+pages:
+  screen: {}
+  tally:
+    blank: false
+    watch:
+      - on: screen
+        when: "true"
+        set:
+          blank: "other_text == '' && text == ''"
+steps:
+  - write: {page: screen, fields: {}}
+  - expect: {fields: {tally.blank: true}, verify: true}
