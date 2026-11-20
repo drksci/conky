@@ -45,6 +45,7 @@ One record per decision, each with context, decision and consequences.
 - [decisions/0014-benchmark-shape.md](decisions/0014-benchmark-shape.md): Benchmark shape
 - [decisions/0015-ideas-climb-rungs.md](decisions/0015-ideas-climb-rungs.md): Ideas climb rungs
 - [decisions/0016-docs-in-repo.md](decisions/0016-docs-in-repo.md): Docs live in the repository
+- [decisions/0017-derived-data.md](decisions/0017-derived-data.md): Derived data sits on top, never underneath
 
 ### Research
 

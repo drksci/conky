@@ -17,6 +17,10 @@ conky keeps no log, hash chain or key format of its own. Git already provides ta
 
 An event is a commit. A seal is its signature. The vault holds public keys only; private keys live in a separate directory. A reader given only the vault can verify it and read it with nothing but Git.
 
+## Derived data
+
+Anything built to make a vault faster or nicer to use is derived data: indexes, caches, snapshots and generated views. It is optional, lives outside the history in a directory that Git ignores, and can be rebuilt from the vault alone. It can be deleted at any time without losing anything, and nothing reads it as the truth ([decision 0017](decisions/0017-derived-data.md)).
+
 ## The parts
 
 - **Pages and the vault format.** Layout, commit conventions and trailers, signing and identity, and what `verify` checks: [vault format](reference/vault-format.md).

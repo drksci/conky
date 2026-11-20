@@ -30,6 +30,7 @@ Run this before every push. CI runs the same command on every pull request.
 - Whatever follows from state happens as a reaction, with no model call. Ask a model only what state cannot answer. (review)
 - Rules and measures are pure: no clock, randomness or I/O inside them. (review)
 - A vault travels alone: cloned or bundled anywhere, it verifies, and it holds no private key. (check: `tests/test_laws.py`)
+- Anything built to make a vault faster or nicer to use is derived data: optional, outside the history, rebuildable from the vault alone, and safe to delete. Nothing reads it as the truth. (review: none built yet)
 - Data lives in three primitives in open formats: document (Markdown with frontmatter), table (Parquet), stream (append-only log). A change of shape is a forward re-projection. Never write a down-migration or a migration ladder. (review)
 - Anything that runs in the background declares a budget and is metered. (review: not built)
 - Runtime output never enters this repository, except the golden vault fixture under `tests/golden/`. (check: `.gitignore`)
