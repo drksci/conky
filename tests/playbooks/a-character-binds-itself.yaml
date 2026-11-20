@@ -1,0 +1,46 @@
+# A character writes a space with a rule and moves itself in; a later answer that breaks the rule is refused twice.
+pages:
+  helper: {api: command, command: stand}
+  den: {}
+  screen: {}
+  traveller:
+    within: den
+    keys: ""
+    watch:
+      - on: screen
+        when: "true"
+        ask:
+          provider: helper
+          writes: den
+          into: keys
+          otherwise: "3"
+          prompt: "The screen reads: ![[screen]] Answer with 1, 2 or 3."
+steps:
+  - says: |
+      2
+      === page: camp ===
+      ---
+      within: den
+      food: 0
+      rules:
+        - "!has(page.keys) || page.keys != '1' || !has(space.food) || int(space.food) < 50"
+      watch:
+        - on: screen
+          when: "other_text.contains('FOOD ')"
+          set:
+            food: "int(other_text.captures('FOOD (\\d+)')[0])"
+      ---
+      Never answer 1 while food is 50 or more.
+      === page: traveller ===
+      ---
+      within: camp
+      ---
+      === end ===
+  - write: {page: screen, fields: {}, body: "FOOD 10\n1, 2 or 3?"}
+  - expect: {exists: [camp], fields: {traveller.keys: "2"}, verify: true}
+  - says: "1"
+  - write: {page: screen, fields: {}, body: "FOOD 80\n1, 2 or 3?"}
+  - expect: {fields: {camp.food: 80, traveller.keys: "3"}, model_calls: 3, verify: true}
+  - says: "1"
+  - write: {page: screen, fields: {}, body: "FOOD 20\n1, 2 or 3?"}
+  - expect: {fields: {camp.food: 20, traveller.keys: "1"}, verify: true}

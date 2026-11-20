@@ -31,3 +31,5 @@ Not yet worked out.
 ## Falsifying test
 
 The translation changes a page in a way the thinker cannot see or override before it takes effect.
+
+A character binding itself with a rule of its own, then being refused when an answer breaks it, is held by the playbook `tests/playbooks/a-character-binds-itself.yaml`.
