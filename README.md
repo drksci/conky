@@ -51,7 +51,7 @@ Conky uses plain Markdown files in Git, so you can read them in Obsidian, VS Cod
 
 ### Not another harness
 
-Conky is... different, and for many reasons including but not limited to:
+Conky is... different, for many reasons, but here are some:
 
 <p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-contrast.dark.svg"><img src="docs/assets/figures/fig-contrast.light.svg" alt="Five comparisons of the usual way beside Conky. The truth is scattered, or it is on the page. The rules are a polite request, or they hold by themselves. One loop runs everything, or nobody is in charge. Nobody knows why it did that, or every change says why. Too big to move, or pick it up and walk out." width="800"></picture></a></p>
 
