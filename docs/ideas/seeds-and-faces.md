@@ -16,7 +16,7 @@ From the seed alone come two things. One is a stable identifier, so a rename bre
 
 A profile is ordinary fields on the page: the seed, the current name, a line in its own words, and optionally a portrait it chose. If a portrait provider is available (a provider page, as for models), an actor may ask for a made portrait in the same monochrome style, or write its own profile through a model page. When none is available, the seed's drawn face is used.
 
-The seed is public and is never a source of keys. Signing keys stay separate and secret. Nothing of this is built.
+The seed is public and is never a source of keys. Signing keys stay separate and secret. The flavour of the phrases and the style of the faces come from the vault's taste page; see [house-style](house-style.md). Nothing of this is built.
 
 ## Composes from
 

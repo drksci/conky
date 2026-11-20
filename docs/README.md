@@ -87,6 +87,7 @@ Candidates that are not yet requirements. Each states its rung.
 - [ideas/direction-and-drift.md](ideas/direction-and-drift.md): Direction and drift
 - [ideas/dry-run.md](ideas/dry-run.md): Trying a change first
 - [ideas/energy-unit.md](ideas/energy-unit.md): Energy unit
+- [ideas/house-style.md](ideas/house-style.md): Taste is a page
 - [ideas/inheritance.md](ideas/inheritance.md): What a space hands down
 - [ideas/learned-reactions.md](ideas/learned-reactions.md): Learned reactions
 - [ideas/ledger.md](ideas/ledger.md): Ledger
