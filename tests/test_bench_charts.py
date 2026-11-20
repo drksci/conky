@@ -128,7 +128,7 @@ def test_every_chart_renders_light_and_dark(results: Path, tmp_path: Path) -> No
     written = charts.render(charts.load(results), tmp_path / "svg")
     drawn = [p for p in written if p.suffix == ".svg"]
     assert sorted(p.name for p in drawn) == sorted(
-        f"{name}.{look}.svg" for name in charts.CHARTS for look in ("light", "dark")
+        f"{name}.{look}.svg" for name in ("plate", *charts.CHARTS) for look in ("light", "dark")
     )
     assert sorted(p.name for p in written if p not in drawn) == [
         "runs.csv",
@@ -141,7 +141,8 @@ def test_every_chart_renders_light_and_dark(results: Path, tmp_path: Path) -> No
     for path in drawn:
         svg = parsed(path)
         assert "SCRIPTED: NOT A RESULT" in svg
-        assert "trail / model stand-in / seeds 1 / 2026-11-20" in svg
+        if not path.name.startswith("plate"):
+            assert "trail / model stand-in / seeds 1 / 2026-11-20" in svg
         ink = charts.INKS["light" if ".light." in path.name else "dark"]
         assert ink in svg
     assert charts.INKS == {"light": "#1E1E1E", "dark": "#EDEDED"}
@@ -203,7 +204,7 @@ def test_the_command_writes_every_chart_and_refuses_an_empty_directory(
 ) -> None:
     out_dir = tmp_path / "charts"
     assert charts.main([str(results), "--out", str(out_dir)]) == 0
-    assert len(list(out_dir.glob("*.svg"))) == 2 * len(charts.CHARTS)
+    assert len(list(out_dir.glob("*.svg"))) == 2 * (len(charts.CHARTS) + 1)
     empty = tmp_path / "none"
     empty.mkdir()
     assert charts.main([str(empty), "--out", str(out_dir)]) == 1
@@ -223,7 +224,7 @@ def test_publishing_writes_the_page_the_data_and_the_readme_block_and_is_repeata
     first = {p: p.read_bytes() for p in written}
     text = readme.read_text(encoding="utf-8")
     assert text.startswith("before\n") and text.endswith("\nafter\n") and "old" not in text
-    assert "### Benchmark" in text and "docs/results/sample/trail.dark.svg" in text
+    assert "### Benchmark" in text and "docs/results/sample/plate.dark.svg" in text
     assert "scripted stand-in" in text and "none of it counts" in text
     page = (root / "docs" / "research" / "results.md").read_text(encoding="utf-8")
     assert page.startswith("---\nkind: research\n") and "status: draft" in page

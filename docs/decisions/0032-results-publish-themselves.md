@@ -28,7 +28,7 @@ Published results live under `docs/results/<name>/` and are the second exception
 
 Every publication says what kind it is. A `pilot` states that it supports no claim. A `result` comes from the fixed protocol. Runs on a scripted stand-in are labelled as not a result on every chart and in the words.
 
-Charts follow the house figures: one ink at full strength, few words, light and dark. The plate shown on the README is coloured with the maintainers' band colours, one hue for each arm that uses a model and one for a broken rule; the other charts keep one ink and one yellow accent.
+The plate shown on the README is a printout in the house style: one ink, grey for what is secondary, dot textures for tone, filled and hollow squares for marks, and two neon pens only, one for the harness under test and one for a broken rule. It states what was held equal: the model, the seeds, the budget and the commit that was run.
 
 ## Consequences
 

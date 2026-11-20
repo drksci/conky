@@ -25,10 +25,10 @@ ROOT = Path(__file__).resolve().parent.parent
 REPOSITORY = "https://github.com/drksci/conky"
 PAGE = "docs/research/results.md"
 START, END = "<!-- bench:start -->", "<!-- bench:end -->"
-SHOWN = ("trail", "progress", "spend", "rules", "board")
+SHOWN = ("plate", "progress", "spend", "rules", "board")
 ALT = {
-    "trail": "Every run drawn as a journey from {start} to {end}, one band per way of "
-    "playing, with arrivals, model calls, text sent, rules broken and pages kept beside it.",
+    "plate": "Every run drawn as a bar from {start} to {end}, one band per harness, with what "
+    "was held equal above and the text each sent below.",
     "progress": "{unit} left to {end} against turn, one line per arm.",
     "spend": "Model calls and text sent against turn, one line per arm.",
     "rules": "House rules broken in the game, by turn, for each run.",
@@ -187,7 +187,7 @@ def readme_block(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
             "",
             story(kind, f, runs),
             "",
-            f'<p align="center"><a href="{PAGE}">{picture(folder, "trail", f)}</a></p>',
+            f'<p align="center"><a href="{PAGE}">{picture(folder, "plate", f)}</a></p>',
             "",
             f'<p align="center"><a href="{PAGE}">Method and every chart</a>'
             f'&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{folder}/runs.csv">the data</a>'
@@ -263,7 +263,9 @@ def publish(results: Path, name: str, kind: str, root: Path = ROOT) -> list[Path
         print(f"not comparable: {why}", file=sys.stderr)
     out = root / "docs" / "results" / name
     written = [
-        p for p in charts.render(runs, out) if p.suffix != ".svg" or p.name.split(".")[0] in SHOWN
+        p
+        for p in charts.render(runs, out, kind)
+        if p.suffix != ".svg" or p.name.split(".")[0] in SHOWN
     ]
     for stray in out.glob("*.svg"):
         if stray.name.split(".")[0] not in SHOWN:

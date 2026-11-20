@@ -2,10 +2,9 @@
 
     python -m bench.charts RESULTS_DIR --out DIR
 
-Writes `trail`, `progress`, `spend`, `where`, `rules` and `board`, each as `NAME.light.svg` (ink on
-transparent, for light pages) and `NAME.dark.svg`. One ink and one yellow accent, except `trail`,
-the front-page plate, which takes the d/rksci band colours. Arms are told apart by line style
-and direct labels. Every chart carries, bottom
+Writes `plate` (the front-page printout, drawn by `bench/plate.py`) and `progress`, `spend`,
+`where`, `rules` and `board`, each as `NAME.light.svg` (ink on transparent, for light pages) and
+`NAME.dark.svg`. Arms are told apart by line style and direct labels. Every chart carries, bottom
 right, `DATA` or `SCRIPTED: NOT A RESULT` from the runs' backend, and bottom left the scenario,
 model, seeds and date. Beside them it writes `runs.csv` and `runs.json` (the standard record of
 each run, see `bench/record.py`) and `series.json` (its series), so the same data can be drawn
@@ -24,17 +23,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from xml.sax.saxutils import escape
 
-from bench import record
+from bench import plate, record
 
 WIDTH = 880
 YELLOW = "#F4C430"
 INKS = {"light": "#1E1E1E", "dark": "#EDEDED"}
-# The d/rksci bands, used by the front-page plate: one hue an arm that thinks, one for a broken
-# rule, one for the grid. The light look takes deeper shades of the same hues to stay readable.
-BANDS = {
-    "#EDEDED": {"arms": ("#00FFFF", YELLOW), "broken": "#FF00FF", "grid": "#8F5BFF"},
-    "#1E1E1E": {"arms": ("#008C9E", "#C79A00"), "broken": "#D100D1", "grid": "#6400FF"},
-}
 FONT = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 DASHES = ("", "7 3", "1.5 3", "7 3 1.5 3")
 LAYERS = (
@@ -634,136 +627,7 @@ def draw_board(runs: list[Run], ink: str) -> Canvas:
     return c
 
 
-DITHER = (
-    '<defs><pattern id="half" width="4" height="4" patternUnits="userSpaceOnUse">'
-    '<path d="M0 0h2v2h-2zM2 2h2v2h-2z" fill="{ink}" shape-rendering="crispEdges"/>'
-    "</pattern></defs>"
-)
-TRAIL_KEY = (
-    "ONE LINE A RUN | TICK: A TURN | ▲ A HOUSE RULE BROKEN | ENDS: o ARRIVED  x DIED  T CAPPED"
-)
-TRAIL_KEY_2 = "!  THE GAME STOPPED ON AN ANSWER IT COULD NOT READ"
-
-
-def draw_trail(runs: list[Run], ink: str) -> Canvas:
-    """The plate for a front page: every run drawn as a journey, with what it cost beside it.
-
-    Drawn like the house figures (one ink at full strength, a dither where a tone is wanted) and
-    coloured with the d/rksci bands: a hue for each arm that uses a model, one for a broken rule
-    and one for the grid.
-    """
-    arms = by_arm(runs)
-    order = arm_order(arms)
-    goal, unit = runs[0].progress["goal"], runs[0].progress["unit"]
-    named = runs[0].progress["start"], runs[0].progress["end"]
-    most = max(len(rs) for rs in arms.values())
-    bands = BANDS.get(ink, BANDS["#EDEDED"])
-    hues = {a: bands["arms"][n % len(bands["arms"])] for n, a in enumerate(modelled(arms, order))}
-    pitch = 7.0
-    row = max(58.0, most * pitch + 26)
-    top = 104.0
-    height = int(top + row * len(order) + 62)
-    c = Canvas(height, ink)
-    c.add(DITHER.format(ink=ink))
-    c.text(24, 28, f"WHO REACHED {named[1].upper()}", 14, weight="bold")
-    c.text(24, 46, TRAIL_KEY, 8)
-    c.text(24, 59, TRAIL_KEY_2, 8)
-    left, right = stamp(runs)
-    c.line(24, height - 28, WIDTH - 24, height - 28, 0.75)
-    c.text(24, height - 12, left, 8)
-    c.text(WIDTH - 24, height - 12, right, 8, anchor="end", weight="bold")
-    x0, x1 = 190.0, 560.0
-    cols = {"arrived": 578.0, "calls": 662.0, "text": 706.0, "broken": 818.0, "kept": 856.0}
-    heads = (
-        (cols["arrived"], "ARRIVED", "start"),
-        (cols["calls"] + 22, "CALLS", "end"),
-        (cols["text"], "TEXT SENT", "start"),
-        (cols["broken"], "BROKEN", "end"),
-        (cols["kept"], "KEPT", "end"),
-    )
-    for x, head, anchor in heads:
-        c.text(x, top - 14, head, 7.5, anchor=anchor, weight="bold")
-    c.text(x0, top - 14, named[0].upper(), 7.5, weight="bold")
-    c.text(x1, top - 14, named[1].upper(), 7.5, anchor="end", weight="bold")
-    bottom = top + row * len(order)
-
-    def px(at: float) -> float:
-        return x0 + (x1 - x0) * min(max(at, 0.0), goal) / goal
-
-    for at in goal_ticks(goal):
-        c.line(px(at), top - 6, px(at), bottom - 4, 0.75, dash="1 5", color=bands["grid"])
-        c.text(px(at), bottom + 10, f"{at:,.0f}", 7.5, anchor="middle")
-    c.text((x0 + x1) / 2, bottom + 24, unit.upper(), 7.5, anchor="middle", weight="bold")
-    most_text = max((sum(k["chars"] for k in r.calls) for r in runs), default=0) or 1
-    for i, arm in enumerate(order):
-        rs = arms[arm]
-        y = top + i * row
-        accent = hues.get(arm)
-        colour = accent or ink
-        c.line(24, y - 4 + row, WIDTH - 24, y - 4 + row, 0.6, dash="1 5")
-        c.text(24, y + 18, arm.upper(), 10.5, weight="bold", fill=accent)
-        gloss = rs[0].row["gloss"]
-        cut = gloss.rfind(" ", 0, 20) if len(gloss) > 20 else len(gloss)
-        c.text(24, y + 32, gloss[:cut], 8)
-        c.text(24, y + 43, gloss[cut:].strip(), 8)
-        first = y + (row - 4 - (len(rs) - 1) * pitch) / 2
-        for k, r in enumerate(rs):
-            ry = first + k * pitch
-            end = px(r.value)
-            c.line(x0, ry, end, ry, 1.2, color=colour)
-            for turn, left_over in sorted(r.left.items()):
-                tx = px(goal - left_over)
-                if turn > 0 and x0 + 2 < tx < end - 4:
-                    c.line(tx, ry - 2, tx, ry + 2, 0.75, color=colour)
-            for turn, _rule in r.breaks:
-                bx = px(goal - left_at(r, turn))
-                c.add(
-                    f'<path d="M{bx - 3:.1f},{ry - 3:.1f} h6 l-3,-5.5 Z" fill="{bands["broken"]}" '
-                    f'stroke="none"/>'
-                )
-            mark(c, end + (5 if r.ending != "reached" else 0), ry, r.ending)
-        mid = y + row / 2 + 1
-        for k, r in enumerate(rs):
-            fill = colour if r.ending == "reached" else "none"
-            c.add(
-                f'<circle cx="{cols["arrived"] + 4 + k * 11:.1f}" cy="{mid - 3:.1f}" r="3.6" '
-                f'fill="{fill}" stroke="{colour}" stroke-width="1.2"/>'
-            )
-        calls = statistics.median(len(r.calls) for r in rs)
-        sent = statistics.median(sum(k["chars"] for k in r.calls) for r in rs)
-        broken = sum(len(r.breaks) for r in rs)
-        counted = rs[0].kept is not None
-        kept = sum(r.kept or 0 for r in rs)
-        c.text(cols["calls"] + 22, mid, f"{calls:,.0f}", 10.5, anchor="end", weight="bold")
-        width = 62 * sent / most_text
-        if sent:
-            c.rect(cols["text"], mid - 9, width, 9, "url(#half)", stroke=colour, sw=0.75)
-            c.text(cols["text"], mid + 12, f"{sent / 1000:,.0f}K CHARS", 7.5)
-        else:
-            c.text(cols["text"], mid, "NONE", 8)
-        c.text(
-            cols["broken"],
-            mid,
-            f"{broken}",
-            10.5,
-            anchor="end",
-            weight="bold",
-            fill=bands["broken"] if broken else None,
-        )
-        c.text(
-            cols["kept"],
-            mid,
-            f"{kept}" if counted else "-",
-            10.5,
-            anchor="end",
-            weight="bold",
-            fill=accent,
-        )
-    return c
-
-
 CHARTS = {
-    "trail": draw_trail,
     "progress": draw_progress,
     "spend": draw_spend,
     "where": draw_where,
@@ -772,7 +636,6 @@ CHARTS = {
 }
 
 TITLES = {
-    "trail": "Where each run ended on the way to {end}, one row per arm",
     "progress": "{unit} left to {end} against turn, one line per arm",
     "spend": "Cumulative model calls and tokens against turn, one line per arm",
     "where": "Bytes sent per call, split by source, one median run per arm",
@@ -781,9 +644,17 @@ TITLES = {
 }
 
 
-def render(runs: list[Run], out: Path) -> list[Path]:
+def render(runs: list[Run], out: Path, kind: str = "runs") -> list[Path]:
+    """Write every chart and the data behind them. kind names the set: pilot, result or runs."""
     out.mkdir(parents=True, exist_ok=True)
     written = []
+    ordered = sorted(runs, key=lambda r: (r.arm, r.seed))
+    rows = [r.row for r in ordered]
+    series = [{"harness": r.arm, "seed": r.seed, "series": r.series} for r in ordered]
+    for look in INKS:
+        path = out / f"plate.{look}.svg"
+        path.write_text(plate.plate(rows, series, runs[0].progress, kind, look), encoding="utf-8")
+        written.append(path)
     for name, draw in CHARTS.items():
         for look, ink in INKS.items():
             path = out / f"{name}.{look}.svg"

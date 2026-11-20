@@ -42,7 +42,7 @@ Counts are runs. Other columns are the median over seeds.
 | `conky` | one character in a vault | 4 of 5 | 2,040 | 42 | 0 | 298 |
 | `loop` | one model in a plain loop | 4 of 5 | 2,040 | 42 | 0 | 240 |
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/trail.dark.svg"><img src="../results/pilot-2/trail.light.svg" alt="Every run drawn as a journey from Independence to Oregon, one band per way of playing, with arrivals, model calls, text sent, rules broken and pages kept beside it." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/plate.dark.svg"><img src="../results/pilot-2/plate.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, with what was held equal above and the text each sent below." width="800"></picture></p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/progress.dark.svg"><img src="../results/pilot-2/progress.light.svg" alt="miles left to Oregon against turn, one line per arm." width="800"></picture></p>
 
