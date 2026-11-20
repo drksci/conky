@@ -59,6 +59,8 @@ The trial below comes first because it can be run as soon as a model is reachabl
 
 ### Trial: the trail, exploratory
 
+The methods for this trial are fixed in the [benchmark protocol](benchmark-protocol.md).
+
 - Aim: to find out whether a party of Conky characters can play a long text game through the terminal connector, and where it breaks. It runs first because it needs only a model and a game, and it is exploratory, not a benchmark result ([decision 0025](../decisions/0025-the-screen-is-built-in-small-steps.md)).
 - Scenario: harness-neutral documents. The seed prompt is "You just woke up in a parallel universe and you're on the Oregon Trail". The game and its seed are fixed. The observables are miles reached, who survived, turns, model calls, tokens and refusals. A scoring note says how they are read.
 - Run: Conky and one plain single-loop baseline, on the same model and budget, with raw traces kept. A second form stops the party mid-trail and hands the vault to a fresh consumer, as in Step 4.

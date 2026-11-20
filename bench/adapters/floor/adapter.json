@@ -1,0 +1,8 @@
+{
+  "arms": {
+    "floor-continue": ["{python}", "adapter.py", "--policy", "continue"],
+    "floor-random": ["{python}", "adapter.py", "--policy", "random"]
+  },
+  "uses_model": false,
+  "state": []
+}

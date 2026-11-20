@@ -1,0 +1,7 @@
+{
+  "arms": {"loop": ["{python}", "adapter.py"]},
+  "uses_model": true,
+  "state": ["transcript.jsonl"],
+  "verify": ["{python}", "adapter.py", "--verify"],
+  "explain": ["{python}", "adapter.py", "--explain"]
+}

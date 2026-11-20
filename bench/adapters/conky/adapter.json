@@ -1,0 +1,8 @@
+{
+  "arms": {"conky": ["{python}", "adapter.py"]},
+  "uses_model": true,
+  "state": ["vault", "keys"],
+  "verify": ["{python}", "adapter.py", "--verify"],
+  "explain": ["{python}", "adapter.py", "--explain"],
+  "shelf_reads": ["{python}", "adapter.py", "--shelf-reads"]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "trail",
+  "version": 1,
+  "environment": "oregon_trail_1975",
+  "prompts": {
+    "full": {
+      "shelf": true
+    },
+    "minimal": {
+      "shelf": true
+    },
+    "paraphrase": {
+      "shelf": true
+    },
+    "full-noshelf": {
+      "shelf": false
+    }
+  },
+  "paired_seeds": true,
+  "opening": [
+    "YES"
+  ],
+  "opening_note": "The environment answers the instructions question with YES, so every player starts at the first purchase with the game's own instructions on screen."
+}
