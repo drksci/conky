@@ -3,7 +3,7 @@
 <p align="center">
   <img src="docs/assets/conky-hero.jpg" alt="A ventriloquist puppet in a sweater that reads conky, with the caption: You just remember I call the shots here, Bubbles." width="800">
 </p>
-<p align="center"><sub>The name comes from Conky, the puppet in the television series <em>Trailer Park Boys</em>. The still and the quote belong to the show's owners and are not covered by this repository's licence.</sub></p>
+<p align="center"><sub><a href="https://www.youtube.com/watch?v=Z1xFvF7zFBY">Trailer Park Boys: Conky</a></sub></p>
 
 <h3 align="center">Your whole system, in a folder you can read.</h3>
 
