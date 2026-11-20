@@ -16,7 +16,7 @@ The append-only signed event log is the authority. Pages are projections that ca
 
 ## Basis
 
-Architect, drawing on a lesson recorded in the Alphaville agency project.
+Architect, drawing on a lesson recorded in an earlier project of the operator.
 
 ## Consequences
 
