@@ -1,4 +1,4 @@
-<h3 align="center"><img src="docs/assets/conky-mark.png" alt="" width="32" height="32" align="absmiddle">&nbsp;&nbsp;Conky&nbsp;&nbsp;&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/slogan.dark.svg"><img src="docs/assets/figures/slogan.light.svg" alt="The unharnessed harness" height="20" align="absmiddle"></picture></h3>
+<h1><img src="docs/assets/conky-mark.png" alt="" width="40" height="40" align="absmiddle">&nbsp;Conky: the unharnessed harness</h1>
 
 ```bash
 uvx --from git+https://github.com/drksci/conky conky demo         # the lemonade stand: build one, watch it run itself
