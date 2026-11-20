@@ -12,7 +12,7 @@ Any rule can be challenged. Change it here first, with the reason, record it in 
 scripts/check
 ```
 
-Run this before every push. CI runs the same command on every pull request.
+Run this before every push. CI runs the same command on every pull request. While working, `scripts/check quick` runs only the tests that changed code can affect.
 
 ## Truth
 
@@ -34,7 +34,7 @@ Run this before every push. CI runs the same command on every pull request.
 - Anything built to make a vault faster or nicer to use is derived data: optional, outside the history, rebuildable from the vault alone, and safe to delete. Nothing reads it as the truth. (review: none built yet)
 - Data lives in three primitives in open formats: document (Markdown with frontmatter), table (Parquet), stream (append-only log). A change of shape is a forward re-projection. Never write a down-migration or a migration ladder. (review)
 - Anything that runs in the background declares a budget and is metered. (review: not built)
-- Runtime output never enters this repository, except the golden vault fixture under `tests/golden/`. (check: `.gitignore`)
+- Runtime output never enters this repository, except the golden vault fixture under `tests/golden/` and published benchmark results under `docs/results/`. (check: `.gitignore`)
 
 ## Design
 
@@ -62,6 +62,7 @@ Run this before every push. CI runs the same command on every pull request.
 - Every law lands with a test that fails when the law is removed. (review)
 - Every check says whether it is measured or judged. A judged check names its question, its evidence and its scale, and a verdict is recorded with who gave it. (check: `scripts/check_docs.py` via the generated index)
 - Benchmark results come only from unscripted runs, with the run count and raw traces kept. (review)
+- Results publish themselves. `bench/publish.py` writes the charts, the data behind them, the results page and the README block from the run files, and nobody edits its output. A pilot says it supports no claim. (check: `tests/test_bench_charts.py`)
 - A scenario is harness-neutral documents: seed prompt, starting state, observables, scoring. Every harness runs it through an adapter on the same model and budget. (review: not built)
 - The assimilation test is a scenario: hand a fresh consumer only a stopped vault and score whether it resumes correctly. (review: not built)
 

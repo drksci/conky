@@ -230,7 +230,8 @@ class Canvas:
     def svg(self, title: str) -> str:
         head = (
             f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{self.height}" '
-            f'viewBox="0 0 {WIDTH} {self.height}" font-family="{FONT}" role="img" '
+            f'viewBox="0 0 {WIDTH} {self.height}" font-family="{FONT}" '
+            f'stroke-linecap="round" letter-spacing=".06em" role="img" '
             f'aria-label="{escape(title)}">\n<title>{escape(title)}</title>\n'
         )
         return head + "\n".join(self.parts) + "\n</svg>\n"

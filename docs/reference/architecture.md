@@ -1344,6 +1344,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0029-autonomy-inside-limits-that-hold](../decisions/0029-autonomy-inside-limits-that-hold.md) | accepted | [`law.answer.pages`](#law.answer.pages), [`law.reach.down`](#law.reach.down), [`law.rule.tighten`](#law.rule.tighten), [`law.runtime.fixed`](#law.runtime.fixed), [`law.spend.conserve`](#law.spend.conserve), [`flow.spend.conserve`](#flow.spend.conserve) |
 | [0030-pay-once](../decisions/0030-pay-once.md) | accepted | [`part.answer.cache`](#part.answer.cache) |
 | [0031-build-on-bedrock](../decisions/0031-build-on-bedrock.md) | accepted | - |
+| [0032-results-publish-themselves](../decisions/0032-results-publish-themselves.md) | accepted | - |
 
 ### Unplaced
 
@@ -1358,6 +1359,7 @@ Found in the documents and fitting no row above.
 | key rotation and revocation | [0002-git-is-the-store.md](../decisions/0002-git-is-the-store.md) | How keys are rotated and revoked is an open question with no idea or decision. |
 | learned reactions | [learned-reactions.md](../ideas/learned-reactions.md) | A repeated model answer becomes a reaction and the model is no longer asked. It is carried by the codec idea. |
 | ledger | [ledger.md](../ideas/ledger.md) | A built-in ledger was judged a bad idea. The need survives as a grouped write, in the patterns idea. |
+| results publish themselves | [0032-results-publish-themselves.md](../decisions/0032-results-publish-themselves.md) | A benchmark's charts, data, results page and README block are generated from the run files by one command and never edited by hand. |
 | rules outside conky | [0002-git-is-the-store.md](../decisions/0002-git-is-the-store.md) | Rules are not enforced on commits made outside conky, and removing the last commit is not detectable from one copy. Verify does not evaluate rules. |
 | the objective | [0001-objective.md](../decisions/0001-objective.md) | An organisation that runs, delivers and improves without its builders directing each step. It is an aim and prescribes no mechanism. |
 | write throughput | [0002-git-is-the-store.md](../decisions/0002-git-is-the-store.md) | One signed commit per write limits throughput to the order of tens a second. |

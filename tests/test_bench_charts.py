@@ -204,3 +204,28 @@ def test_the_command_writes_every_chart_and_refuses_an_empty_directory(
     empty.mkdir()
     assert charts.main([str(empty), "--out", str(out_dir)]) == 1
     assert "run bench.run first" in capsys.readouterr().err
+
+
+def test_publishing_writes_the_page_the_data_and_the_readme_block_and_is_repeatable(
+    results: Path, tmp_path: Path
+) -> None:
+    from bench import publish
+
+    root = tmp_path / "repo"
+    (root / "docs" / "research").mkdir(parents=True)
+    readme = root / "README.md"
+    readme.write_text(f"before\n{publish.START}\nold\n{publish.END}\nafter\n", encoding="utf-8")
+    written = publish.publish(results, "sample", "pilot", root)
+    first = {p: p.read_bytes() for p in written}
+    text = readme.read_text(encoding="utf-8")
+    assert text.startswith("before\n") and text.endswith("\nafter\n") and "old" not in text
+    assert "### Benchmark" in text and "docs/results/sample/trail.dark.svg" in text
+    assert "scripted stand-in" in text and "not a result" in text
+    page = (root / "docs" / "research" / "results.md").read_text(encoding="utf-8")
+    assert page.startswith("---\nkind: research\n") and "status: draft" in page
+    assert (root / "docs" / "results" / "sample" / "runs.csv").exists()
+    publish.publish(results, "sample", "pilot", root)
+    assert {p: p.read_bytes() for p in written} == first
+    readme.write_text("no markers", encoding="utf-8")
+    with pytest.raises(SystemExit, match="markers"):
+        publish.publish(results, "sample", "pilot", root)

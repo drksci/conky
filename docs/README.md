@@ -67,6 +67,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0029-autonomy-inside-limits-that-hold.md](decisions/0029-autonomy-inside-limits-that-hold.md): Autonomy inside limits that hold
 - [decisions/0030-pay-once.md](decisions/0030-pay-once.md): Pay once
 - [decisions/0031-build-on-bedrock.md](decisions/0031-build-on-bedrock.md): Build on bedrock
+- [decisions/0032-results-publish-themselves.md](decisions/0032-results-publish-themselves.md): Results publish themselves
 
 ### Research
 
