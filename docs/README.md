@@ -23,6 +23,7 @@ Every document starts with frontmatter (`kind`, `title`, `status`, `date`, `sour
 - [reference/rules-and-reactions.md](reference/rules-and-reactions.md): Rules and reactions
 - [reference/providers.md](reference/providers.md): Providers
 - [reference/connectors.md](reference/connectors.md): Connectors
+- [reference/vocabulary.md](reference/vocabulary.md): Vocabulary
 
 ### Design
 
@@ -58,6 +59,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0024-a-model-is-reached-by-a-key-or-a-local-program.md](decisions/0024-a-model-is-reached-by-a-key-or-a-local-program.md): A model is reached by a key or by a program already on the machine
 - [decisions/0025-the-screen-is-built-in-small-steps.md](decisions/0025-the-screen-is-built-in-small-steps.md): The people's screen is built in small steps, and the trail is the first trial
 - [decisions/0026-it-always-works.md](decisions/0026-it-always-works.md): It always works
+- [decisions/0027-the-vocabulary-is-what-exists.md](decisions/0027-the-vocabulary-is-what-exists.md): The vocabulary is what exists
 
 ### Research
 

@@ -6,6 +6,7 @@ import hashlib
 import json
 from dataclasses import dataclass
 from datetime import UTC, datetime
+from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
@@ -25,8 +26,37 @@ from conky.page import (
 from conky.rules import RuleError, evaluate, holds
 
 MAX_DEPTH = 12
-_CYCLE = f"cycle: reactions nested deeper than {MAX_DEPTH}"
 KINDS = ("write", "refused")
+
+
+class Trailer(StrEnum):
+    """The keys of a commit's trailer block."""
+
+    KIND = "Kind"
+    PAGE = "Page"
+    CAUSE = "Cause"
+    REASON = "Reason"
+    ATTEMPT = "Attempt"
+    BODY_BYTES = "Body-Bytes"
+    FROM = "From"
+    MODEL = "Model"
+    MODEL_NAME = "Model-Name"
+    TOKENS_IN = "Tokens-In"
+    TOKENS_OUT = "Tokens-Out"
+    READ = "Read"
+
+
+class Refusal(StrEnum):
+    """The word a refusal's reason starts with, saying which law refused."""
+
+    CYCLE = "cycle"
+    SHAPE = "shape"
+    RULE = "rule"
+    WATCH = "watch"
+    MODEL = "model"
+
+
+_CYCLE = f"{Refusal.CYCLE}: reactions nested deeper than {MAX_DEPTH}"
 
 
 def _size(page: Page) -> int:
@@ -137,16 +167,23 @@ class Vault:
             short, stamp, actor, message = record.split("\x1f", 3)
             at = datetime.fromtimestamp(int(stamp), UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
             found = git.trailers(message)
-            detail = found.get("Reason") or (
-                f"cause {found['Cause'][:7]}" if "Cause" in found else ""
+            detail = found.get(Trailer.REASON) or (
+                f"cause {found[Trailer.CAUSE][:7]}" if Trailer.CAUSE in found else ""
             )
-            if "Model" in found:
-                detail = f"{detail} model {found['Model']}".strip()
-            if "Read" in found:
-                detail = f"{detail} read {found['Read']}".strip()
-            if "From" in found:
-                detail = f"{detail} from {found['From']}".strip()
-            fields = [short, at, actor, found.get("Kind", "-"), found.get("Page", "-"), detail]
+            if Trailer.MODEL in found:
+                detail = f"{detail} model {found[Trailer.MODEL]}".strip()
+            if Trailer.READ in found:
+                detail = f"{detail} read {found[Trailer.READ]}".strip()
+            if Trailer.FROM in found:
+                detail = f"{detail} from {found[Trailer.FROM]}".strip()
+            fields = [
+                short,
+                at,
+                actor,
+                found.get(Trailer.KIND, "-"),
+                found.get(Trailer.PAGE, "-"),
+                detail,
+            ]
             lines.append(" ".join(fields).rstrip())
         return lines
 
@@ -180,7 +217,7 @@ class Vault:
                 f"commit {short} has no good signature from a key in {git.SIGNERS} "
                 f"(status {signature}): restore the vault from another clone"
             )
-        kind = found.get("Kind")
+        kind = found.get(Trailer.KIND)
         if kind not in KINDS:
             raise VerifyFailed(
                 f"commit {short} has no valid Kind trailer: it was not made by conky"
@@ -242,9 +279,9 @@ class Vault:
             self.pages_dir.mkdir(exist_ok=True)
             (self.pages_dir / f"{page}.md").write_bytes(serialize(content).encode("utf-8"))
             paths.append(f"pages/{page}.md")
-        trailers = [("Kind", kind), ("Page", page), *extra]
+        trailers = [(Trailer.KIND, kind), (Trailer.PAGE, page), *extra]
         if cause is not None:
-            trailers.append(("Cause", cause))
+            trailers.append((Trailer.CAUSE, cause))
         return git.commit(
             self.path,
             actor=actor,
@@ -267,9 +304,9 @@ class Vault:
         reason: str,
         asked: tuple[list[tuple[str, str]], str] = ([], ""),
     ) -> Result:
-        extra = [("Reason", " ".join(reason.split())), ("Attempt", _compact(changes))]
+        extra = [(Trailer.REASON, " ".join(reason.split())), (Trailer.ATTEMPT, _compact(changes))]
         if body is not None:
-            extra.append(("Body-Bytes", str(len(body.encode("utf-8")))))
+            extra.append((Trailer.BODY_BYTES, str(len(body.encode("utf-8")))))
         extra += asked[0]
         return Result(
             False, self._record("refused", page, actor, at, cause, extra, None, asked[1]), reason
@@ -294,12 +331,12 @@ class Vault:
         try:
             result = apply(self._load(page) or Page(), changes, body)
         except ShapeError as exc:
-            return refuse(f"shape: {exc}")
+            return refuse(f"{Refusal.SHAPE}: {exc}")
         refused = self._rule_reason(page, result)
         if refused:
             reason, space = refused
             if space != page:
-                asked = ([*asked[0], ("From", space)], asked[1])
+                asked = ([*asked[0], (Trailer.FROM, space)], asked[1])
             return self._refuse(page, changes, body, actor, at, cause, reason, asked)
         commit = self._record("write", page, actor, at, cause, asked[0], result, asked[1])
         self._react(page, result, commit, at, depth)
@@ -315,18 +352,18 @@ class Vault:
                 try:
                     held = holds(rule, scope)
                 except RuleError as exc:
-                    return f"rule: {rule} (from {owner}) failed to evaluate: {exc}", owner
+                    return f"{Refusal.RULE}: {rule} (from {owner}) failed to evaluate: {exc}", owner
                 if not held:
-                    return f"rule: {rule} (from {owner}) is false", owner
+                    return f"{Refusal.RULE}: {rule} (from {owner}) is false", owner
             if not space.within:
                 return None
             owner = space.within
             if owner in seen:
-                return f"rule: within chain loops back to {owner}", name
+                return f"{Refusal.RULE}: within chain loops back to {owner}", name
             seen.add(owner)
             found = self._load(owner)
             if found is None:
-                return f"rule: space {owner} does not exist", name
+                return f"{Refusal.RULE}: space {owner} does not exist", name
             space = found
 
     def _react(self, source: str, written: Page, commit: str, at: str, depth: int) -> None:
@@ -347,7 +384,7 @@ class Vault:
                     changes = {k: evaluate(v, scope) for k, v in entry.get("set", {}).items()}
                     unchanged = serialize(apply(current, changes, None)) == serialize(current)
                 except (RuleError, ShapeError) as exc:
-                    reason = f"watch: {entry['when']} (on {watcher}) failed: {exc}"
+                    reason = f"{Refusal.WATCH}: {entry['when']} (on {watcher}) failed: {exc}"
                     self._refuse(watcher, {}, None, watcher, at, commit, reason)
                     continue
                 if "ask" in entry:
@@ -404,7 +441,7 @@ class Vault:
                     (page, actor, at, cause, depth),
                 )
             except model.ModelError as exc:
-                self._refuse(page, {}, None, actor, at, cause, f"model: {exc}")
+                self._refuse(page, {}, None, actor, at, cause, f"{Refusal.MODEL}: {exc}")
         for choice in model.detect().choices:
             try:
                 answer = model.ask(choice.provider, choice.secret, prompt, self.keys_dir)
@@ -430,12 +467,12 @@ class Vault:
     ) -> Result:
         """Write a model's answer to the asking page, with the trailers that record it."""
         page, actor, at, cause, depth = where
-        trailers = [("Model", found.page), ("Model-Name", found.name)]
+        trailers = [(Trailer.MODEL, found.page), (Trailer.MODEL_NAME, found.name)]
         if answer.tokens_in is not None:
-            trailers.append(("Tokens-In", str(answer.tokens_in)))
+            trailers.append((Trailer.TOKENS_IN, str(answer.tokens_in)))
         if answer.tokens_out is not None:
-            trailers.append(("Tokens-Out", str(answer.tokens_out)))
-        trailers += [("Read", name) for name in embedded(template, pages)]
+            trailers.append((Trailer.TOKENS_OUT, str(answer.tokens_out)))
+        trailers += [(Trailer.READ, name) for name in embedded(template, pages)]
         changes = {into: answer.text, f"{into}_asked": digest}
         return self._write(page, changes, None, actor, at, cause, depth, (trailers, prompt))
 
@@ -461,6 +498,8 @@ class Vault:
             text = resolve_text(otherwise, pages).strip()
         if skip_same and (self._load(page) or Page()).fields.get(into) == text:
             return None
-        trailers = [("Model", "none")] + [("Read", name) for name in embedded(template, pages)]
+        trailers = [(Trailer.MODEL, "none")] + [
+            (Trailer.READ, name) for name in embedded(template, pages)
+        ]
         result = self._write(page, {into: text}, None, actor, at, cause, depth, (trailers, prompt))
         return Result(result.ok, result.id, result.reason, plain=True)

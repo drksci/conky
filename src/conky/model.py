@@ -27,6 +27,11 @@ OPENAI_URL = "https://api.openai.com/v1/chat/completions"
 # No OpenAI model id has been verified, so a detected openai choice needs CONKY_MODEL.
 OPENAI_DEFAULT_MODEL: str | None = None
 BUILTIN_COMMANDS = {"claude": ["claude", "-p"], "codex": ["codex", "exec"]}
+PROVIDER_VARIABLE = "CONKY_PROVIDER"
+MODEL_VARIABLE = "CONKY_MODEL"
+KEY_VARIABLES = {"anthropic": "ANTHROPIC_API_KEY", "openai": "OPENAI_API_KEY"}
+SECRET_PREFIX = "CONKY_SECRET_"
+COMMAND_PREFIX = "CONKY_COMMAND_"
 CHOICES = ("anthropic", "openai", "claude", "codex", "none")
 WAYS = (
     "set ANTHROPIC_API_KEY, set OPENAI_API_KEY with CONKY_MODEL, "
@@ -112,7 +117,7 @@ def _read(path: Path) -> str:
 
 def find_secret(name: str, keys_dir: Path) -> str:
     """Return the secret name, from CONKY_SECRET_<NAME> or else <name>.secret in keys_dir."""
-    variable = f"CONKY_SECRET_{name.upper()}"
+    variable = f"{SECRET_PREFIX}{name.upper()}"
     value = os.environ.get(variable, "").strip()
     if not value:
         value = _read(keys_dir / f"{name}.secret")
@@ -130,7 +135,7 @@ def find_command(name: str, keys_dir: Path) -> list[str]:
     The order is the environment variable CONKY_COMMAND_<NAME>, then <name>.command in keys_dir,
     then the built-in argv when its program is on the PATH.
     """
-    variable = f"CONKY_COMMAND_{name.upper()}"
+    variable = f"{COMMAND_PREFIX}{name.upper()}"
     text = os.environ.get(variable, "").strip()
     if not text:
         text = _read(keys_dir / f"{name}.command")
@@ -218,7 +223,7 @@ def detect() -> Detected:
     with a model, claude on the PATH and codex on the PATH. CONKY_PROVIDER=none lists nothing.
     """
     env = os.environ
-    wanted = env.get("CONKY_PROVIDER", "").strip().lower()
+    wanted = env.get(PROVIDER_VARIABLE, "").strip().lower()
     notes: list[str] = []
     if wanted == "none":
         return Detected([], ["CONKY_PROVIDER is none"])
@@ -227,11 +232,11 @@ def detect() -> Detected:
             f"CONKY_PROVIDER is {wanted!r}, which is ignored: use one of {', '.join(CHOICES)}"
         )
         wanted = ""
-    override = env.get("CONKY_MODEL", "").strip()
+    override = env.get(MODEL_VARIABLE, "").strip()
     found: dict[str, Choice] = {}
     for kind, key_name, url, default in (
-        ("anthropic", "ANTHROPIC_API_KEY", ANTHROPIC_URL, ANTHROPIC_DEFAULT_MODEL),
-        ("openai", "OPENAI_API_KEY", OPENAI_URL, OPENAI_DEFAULT_MODEL),
+        ("anthropic", KEY_VARIABLES["anthropic"], ANTHROPIC_URL, ANTHROPIC_DEFAULT_MODEL),
+        ("openai", KEY_VARIABLES["openai"], OPENAI_URL, OPENAI_DEFAULT_MODEL),
     ):
         key = env.get(key_name, "").strip()
         if not key:

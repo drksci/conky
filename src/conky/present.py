@@ -330,6 +330,9 @@ class Styled(Plain):
         return "".join(out)
 
 
+NO_COLOR = "NO_COLOR"
+
+
 def choose(mode: str, stream: TextIO, environ: Mapping[str, str] | None = None) -> Plain:
     """Return the presenter for stream: styled when asked, or when auto on a terminal.
 
@@ -337,6 +340,6 @@ def choose(mode: str, stream: TextIO, environ: Mapping[str, str] | None = None) 
     `never` never does.
     """
     env = os.environ if environ is None else environ
-    if mode == "always" or (mode == "auto" and "NO_COLOR" not in env and stream.isatty()):
+    if mode == "always" or (mode == "auto" and NO_COLOR not in env and stream.isatty()):
         return Styled(shutil.get_terminal_size((MAX_WIDTH, 24)).columns)
     return Plain()

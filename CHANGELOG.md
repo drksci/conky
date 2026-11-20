@@ -15,7 +15,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 - A command line: `init`, `write`, `read`, `log`, `verify`, `rebuild`.
 - A documentation system with frontmatter, a guide, a reference, decisions, ideas and essays, and checks for it.
 - Continuous integration on GitHub Actions: `scripts/check` runs on every pull request and on pushes to `main`.
-- A check that no internal wording appears in tracked text files.
+- A vocabulary page, `docs/reference/vocabulary.md`, listing the concept words and every name the runtime exposes, and a check that it agrees with the code in both directions. It replaces the lists of retired and internal words, which are removed.
 - Explanatory figures in a pen-plotter style, shown in the README and the concepts guide.
 - Prose linting with Vale: a house style in `.vale/styles/conky/` whose errors fail `scripts/check`, and `vale .` for every level.
 - Pages that ask a model. A provider is a page (`openai` or `anthropic` wire format, secret by name and never in the vault). A watch entry can carry `ask` in place of `set`, and the answer is a signed write that records the prompt, the model and the tokens. Tested against stand-in servers only.

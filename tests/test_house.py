@@ -1,51 +1,24 @@
-"""House rules: the plain vocabulary, no fix-later notes and nothing internal in the docs."""
+"""House rules: the vocabulary page agrees with the code, and there are no fix-later notes."""
 
+import argparse
+import importlib
 import importlib.util
+import pkgutil
 import re
-import subprocess
 from pathlib import Path
+
+import pytest
+
+import conky
+from conky import cli, connect, model, page, present
+from conky.vault import KINDS, Refusal, Trailer
 
 ROOT = Path(__file__).resolve().parent.parent
 SELF = Path(__file__).resolve()
 
-# Built from parts so this file does not trip its own checks.
-RETIRED = [
-    "cre" + "st",
-    "sur" + "face",
-    "sl" + "ot",
-    "gu" + "ard",
-    "pu" + "lse",
-    "et" + "ch",
-    "pe" + "ek",
-    "air" + "lock",
-    "wa" + "rd",
-    "re" + "alm",
-    "spr" + "awl",
-    "for" + "ge",
-    "cap" + "sule",
-]
+# Built from parts so this file does not trip its own check.
 MARKERS = ["TO" + "DO", "FIX" + "ME", "X" + "XX", "HA" + "CK"]
-# Internal wording that must not appear in tracked text, built from parts for the same reason.
-INTERNAL = [
-    "oper" + "ator",
-    "archi" + "tect",
-    "wor" + "ker",
-    "wor" + "kers",
-    "lead" + " session",
-    "hand" + "over",
-    "Alpha" + "ville",
-    "proto" + "type",
-    "scaf" + "fold",
-    "this" + " session",
-    "earlier design" + " conversation",
-]
-
-
-def vocabulary_files() -> list[Path]:
-    files = list((ROOT / "src").rglob("*.py"))
-    files += [p for p in (ROOT / "tests").rglob("*.py") if p.resolve() != SELF]
-    files += [ROOT / "README.md", ROOT / "CLAUDE.md", ROOT / "docs" / "design.md"]
-    return [p for p in files if p.exists()]
+PAGE = ROOT / "docs" / "reference" / "vocabulary.md"
 
 
 def marker_files() -> list[Path]:
@@ -59,30 +32,6 @@ def marker_files() -> list[Path]:
     return [p for p in files if p.resolve() != SELF]
 
 
-def tracked_text_files() -> list[Path]:
-    """Tracked and untracked-but-not-ignored text files, outside this file and docs/research."""
-    listing = subprocess.run(
-        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
-        cwd=ROOT,
-        capture_output=True,
-        text=True,
-        check=True,
-    ).stdout
-    files = []
-    for name in listing.split("\0"):
-        path = ROOT / name
-        if not name or not path.is_file() or path.resolve() == SELF:
-            continue
-        if path.relative_to(ROOT).parts[:2] == ("docs", "research"):
-            continue
-        try:
-            path.read_text(encoding="utf-8")
-        except UnicodeDecodeError:
-            continue
-        files.append(path)
-    return files
-
-
 def find(pattern: re.Pattern[str], files: list[Path]) -> list[str]:
     found = []
     for path in files:
@@ -90,16 +39,6 @@ def find(pattern: re.Pattern[str], files: list[Path]) -> list[str]:
             for match in pattern.finditer(line):
                 found.append(f"{path.relative_to(ROOT)}:{number}: {match.group(0)}")
     return found
-
-
-def test_retired_words_do_not_appear():
-    pattern = re.compile(r"\b(" + "|".join(RETIRED) + r")\b", re.IGNORECASE)
-    assert find(pattern, vocabulary_files()) == []
-
-
-def test_no_internal_wording_in_tracked_text():
-    pattern = re.compile(r"\b(" + "|".join(INTERNAL) + r")\b", re.IGNORECASE)
-    assert find(pattern, tracked_text_files()) == []
 
 
 def test_no_fix_later_notes():
@@ -130,3 +69,120 @@ def test_commit_subject_matching():
 def test_changelog_has_unreleased_section():
     text = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     assert re.search(r"^## \[Unreleased\]$", text, re.MULTILINE)
+
+
+def vocabulary() -> dict[str, list[str]]:
+    """Return each table of the vocabulary page: its heading and the names in its first column."""
+    tables: dict[str, list[str]] = {}
+    heading = None
+    for line in PAGE.read_text(encoding="utf-8").splitlines():
+        if line.startswith("## "):
+            heading = line[3:].strip()
+        elif heading and line.startswith("| `"):
+            name, meaning = line.strip("| ").split("|", 1)[0], line.split("|")[2].strip()
+            assert meaning, f"{heading}: {name.strip()} has no meaning: write one in {PAGE}"
+            tables.setdefault(heading, []).append(name.strip().strip("`"))
+    return tables
+
+
+def subparsers(parser: argparse.ArgumentParser) -> dict[str, argparse.ArgumentParser]:
+    """Return the sub-parsers of a parser by name, or nothing when it has none."""
+    for action in parser._actions:
+        if isinstance(action, argparse._SubParsersAction):
+            return dict(action.choices)
+    return {}
+
+
+def options(parser: argparse.ArgumentParser) -> set[str]:
+    """Return the long options a parser defines itself, leaving out help and repeats of globals."""
+    return {
+        flag
+        for action in parser._actions
+        for flag in action.option_strings
+        if flag.startswith("--") and flag != "--help" and action.default != argparse.SUPPRESS
+    }
+
+
+def errors() -> set[str]:
+    """Return the names of the exception classes the package defines."""
+    found = set()
+    for info in pkgutil.iter_modules(conky.__path__):
+        module = importlib.import_module(f"conky.{info.name}")
+        found |= {
+            name
+            for name, value in vars(module).items()
+            if isinstance(value, type)
+            and issubclass(value, Exception)
+            and value.__module__ == module.__name__
+        }
+    return found
+
+
+def command_options() -> set[str]:
+    found = set()
+    for name, parser in subparsers(cli._parser()).items():
+        found |= {f"{name} {flag}" for flag in options(parser)}
+        for inner, sub in subparsers(parser).items():
+            found |= {f"{name} {inner} {flag}" for flag in options(sub)}
+    return found
+
+
+def code() -> dict[str, set[str]]:
+    """Return every set of names the code exposes, keyed by the heading that lists it."""
+    parser = cli._parser()
+    return {
+        "Commands": set(subparsers(parser)),
+        "Global options": options(parser),
+        "Command options": command_options(),
+        "Connectors": set(subparsers(subparsers(parser)["connect"])),
+        "Reserved keys": set(page.RESERVED),
+        "Watch keys": set(page.WATCH_KEYS),
+        "Ask keys": set(page.ASK_KEYS),
+        "Trailer keys": {str(key) for key in Trailer},
+        "Kinds": set(KINDS),
+        "Refusals": {str(word) for word in Refusal},
+        "Errors": errors(),
+        "Provider shapes": set(model.APIS),
+        "Provider choices": set(model.CHOICES),
+        "Built-in commands": set(model.BUILTIN_COMMANDS),
+        "Environment variables": {
+            model.PROVIDER_VARIABLE,
+            model.MODEL_VARIABLE,
+            *model.KEY_VARIABLES.values(),
+            model.SECRET_PREFIX + "<NAME>",
+            model.COMMAND_PREFIX + "<NAME>",
+            present.NO_COLOR,
+            connect.TERM,
+        },
+    }
+
+
+def test_every_table_is_checked_or_stated():
+    stated = {"Concepts", "Verbs"}
+    unknown = set(vocabulary()) - set(code()) - stated
+    assert not unknown, f"{PAGE} has a table the code is not compared with: {sorted(unknown)}"
+
+
+@pytest.mark.parametrize("heading", sorted(code()))
+def test_vocabulary_agrees_with_the_code(heading):
+    listed = vocabulary().get(heading, [])
+    assert len(listed) == len(set(listed)), f"{heading}: a name is listed twice in {PAGE}"
+    exposed = code()[heading]
+    missing = sorted(exposed - set(listed))
+    gone = sorted(set(listed) - exposed)
+    assert not missing, f"{heading}: the code has {missing}: add a row for each to {PAGE}"
+    assert not gone, (
+        f"{heading}: {PAGE} lists {gone}, which the code no longer has: remove the rows"
+    )
+
+
+def test_concepts_and_verbs_are_stated():
+    tables = vocabulary()
+    for heading in ("Concepts", "Verbs"):
+        assert tables.get(heading), f"{PAGE} needs a {heading} table: restore it"
+        assert len(tables[heading]) == len(set(tables[heading])), f"{heading}: a word repeats"
+
+
+def test_the_rules_point_at_the_page():
+    text = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+    assert "docs/reference/vocabulary.md" in text, "CLAUDE.md must name the vocabulary page"

@@ -12,6 +12,8 @@ import yaml
 from conky.errors import BadInput
 
 RESERVED = ("within", "rules", "watch")
+WATCH_KEYS = ("on", "when", "set", "ask")
+ASK_KEYS = ("prompt", "into", "provider", "otherwise")
 NAME = re.compile(r"^[a-z0-9][a-z0-9_-]{0,63}$")
 EMBED = re.compile(r"!\[\[([^\]#]+)(?:#([^\]]+))?\]\]")
 
@@ -67,7 +69,7 @@ def _check_watch(entry: Any) -> None:
         isinstance(entry, dict)
         and {"on", "when"} <= set(entry)
         and len(set(entry) & {"set", "ask"}) == 1
-        and set(entry) <= {"on", "when", "set", "ask"}
+        and set(entry) <= set(WATCH_KEYS)
         and isinstance(entry["on"], str)
         and NAME.match(entry["on"])
         and isinstance(entry["when"], str)
@@ -90,7 +92,7 @@ def _ask_ok(value: Any) -> bool:
     return (
         isinstance(value, dict)
         and {"prompt", "into"} <= set(value)
-        and set(value) <= {"provider", "prompt", "into", "otherwise"}
+        and set(value) <= set(ASK_KEYS)
         and all(isinstance(v, str) for v in value.values())
         and bool(NAME.match(value.get("provider", "x")))
         and bool(value["into"])

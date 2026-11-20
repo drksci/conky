@@ -21,6 +21,7 @@ from conky import git, present
 from conky.errors import BadInput
 from conky.vault import Vault
 
+TERM = "TERM"
 SETTLE = 0.3
 MAX_STEPS = 200
 LINES = 60
@@ -77,7 +78,7 @@ def _start(program: list[str]) -> tuple[int, subprocess.Popen[bytes]]:
         ) from exc
     master, slave = pty.openpty()
     fcntl.ioctl(slave, termios.TIOCSWINSZ, struct.pack("HHHH", 24, 80, 0, 0))
-    env = {**os.environ, "TERM": os.environ.get("TERM", "xterm")}
+    env = {**os.environ, TERM: os.environ.get(TERM, "xterm")}
     try:
         proc = subprocess.Popen(
             program, stdin=slave, stdout=slave, stderr=slave, env=env, start_new_session=True

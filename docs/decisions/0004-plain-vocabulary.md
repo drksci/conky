@@ -18,6 +18,6 @@ One plain word per concept: vault, page, key, link, embed, rule, event, seal, sp
 
 ## Consequences
 
-- Earlier invented terms were dropped, and `tests/test_house.py` holds the retired words out of the code and the main documents.
+- The words and every other name the runtime exposes are listed in [the vocabulary](../reference/vocabulary.md), which the tests compare with the code ([decision 0027](0027-the-vocabulary-is-what-exists.md)).
 - A rename is atomic everywhere.
 - A new concept gets a plain word or is not added.
