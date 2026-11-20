@@ -1,7 +1,8 @@
 """The plain baseline: one loop around one model, and nothing else.
 
 Each turn it reads the screen, sends the prompt pack, the recent turns and the screen to the
-model, and types back what the model says. A reply that starts with SHELF is answered from the
+model, and types back the first non-empty line of what the model says, and keeps the whole answer in
+its transcript. A reply that starts with SHELF is answered from the
 shelf instead of typed. Its only persisted state is `transcript.jsonl` in the working directory.
 
     adapter.py [contract arguments] -- COMMAND...
@@ -40,6 +41,11 @@ def shelf(meter: str, token: str, path: str) -> str:
     if "items" in data:
         return "The shelf holds: " + ", ".join(i["name"] for i in data["items"])
     return data.get("text") or data.get("error", "(nothing)")
+
+
+def first_line(answer: str) -> str:
+    """The first non-empty line of an answer: the only part that is typed."""
+    return next((line.strip() for line in answer.splitlines() if line.strip()), "")
 
 
 def history(notes: list[dict]) -> str:
@@ -93,10 +99,11 @@ def play(args) -> int:
                 notes.add({"shelf": path, "bytes": len(found)})
                 extra += f"\n\nYou asked: {answer}\nThe shelf answered:\n{found}"
             seq += 1
-            notes.add({"seq": seq, "screen": screen, "typed": answer})
+            line = first_line(answer)
+            notes.add({"seq": seq, "screen": screen, "typed": line, "answer": answer})
             if terminal.ended:
                 return 0
-            terminal.type(answer)
+            terminal.type(line)
     finally:
         terminal.close()
 

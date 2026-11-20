@@ -506,3 +506,30 @@ def test_two_runs_in_record_mode_never_share_an_answer(tmp_path: Path) -> None:
                       cache_mode="record", cache=tmp_path / name)  # fmt: skip
         assert post(meter, ask)[0] == 200
     assert live.calls == 2
+
+
+class ThreeLines:
+    name = "three-lines"
+
+    def complete(self, call):
+        return backends.Completion("\n1\nthen I would rest\nand keep notes", None, None)
+
+
+def test_the_loop_types_only_the_first_line_of_an_answer_and_keeps_the_whole(
+    tmp_path: Path,
+) -> None:
+    from bench.adapters.loop import adapter
+
+    meter = Meter(ThreeLines(), "m", "t", Budget(20, 10**6), tmp_path / "meter.jsonl")
+    url = meter.start()
+    work = tmp_path / "work"
+    argv = ["--prompts", str(PACK), "--workdir", str(work), "--meter", url, "--token", "t",
+            "--model", "m", "--scenario", str(SCENARIO), "--calls", "20", "--tokens", "1000000",
+            "--", sys.executable, str(STAND_IN)]  # fmt: skip
+    try:
+        assert adapter.main(argv) == 0
+    finally:
+        meter.stop()
+    notes = base.Notes(work / "transcript.jsonl").read()
+    assert len(notes) >= 5 and {e["typed"] for e in notes} == {"1"}
+    assert all(e["answer"] == "1\nthen I would rest\nand keep notes" for e in notes)

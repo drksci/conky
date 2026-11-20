@@ -62,6 +62,10 @@ Each binds. Over seeds 1 to 30, a scripted reckless policy broke eat-poorly in 3
 
 Every arm may consult the same five short public-domain excerpts, from Sun Tzu (Giles), Marcus Aurelius (Long), Aesop (Vernon Jones), Franklin's list of virtues and Jerome's chapter on packing, fetched from Standard Ebooks and listed with sources in `bench/scenarios/trail/shelf/SOURCES.md`. None mentions the game. The task text carries one neutral line saying a shelf may be consulted, and a variant without that line separates its effect. The shelf is served by the meter (`GET /shelf`, `GET /shelf/NAME`) and every read is logged; for Conky, whose shelf is pages in the vault, reads are taken from the record's `Read` trailers. Which writings were read, when, and how many bytes, are descriptive measures only; no claim is made that reading helps. A model may already know these texts, which is a threat to the measure's meaning, not to its count.
 
+### The reply contract
+
+Every prompt variant carries the same sentence about replies: the first line of the answer is typed into the game exactly as written, and the rest of the answer, if any, is not typed. The sentence does not tell an agent to organise itself or how. An earlier wording asked for one line and nothing else, which forbade any use of the rest of an answer in every arm. The loop adapter types the first non-empty line and keeps the whole answer in its transcript. With plain answers the Conky adapter does not yet cut an answer to its first line, because the runtime types the whole field it was given.
+
 ## Controlling for architecture
 
 - The start is identical and minimal: one agent, the same task text, the environment already at the first gameplay question. The experimenter builds nothing else for any harness: no party of agents, no rules turned into code, no memory scheme.

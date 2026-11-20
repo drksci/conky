@@ -21,7 +21,7 @@ The runner starts the adapter's command (declared in `adapter.json`) with these 
 | `--seed S` | The run's seed, for arms that draw at random |
 | `--shelf` | Present when the shelf is offered: `GET URL/shelf` lists it, `GET URL/shelf/NAME` reads one writing, with the same token |
 | `--resume` | You are a fresh process: carry on from what is in `--workdir` |
-| `-- COMMAND...` | The environment: a line-based program. Run it in a pseudo-terminal (or with pipes; it behaves the same), read what it prints, type one line per answer |
+| `-- COMMAND...` | The environment: a line-based program. Run it in a pseudo-terminal (or with pipes; it behaves the same), read what it prints, type one line per answer (see the reply contract below) |
 
 The environment variables `HOME` (a run-scoped folder), `NO_PROXY=127.0.0.1,localhost` and
 `PYTHONPATH` (the repository) are set. The adapter must not read or write outside `--workdir`
@@ -31,6 +31,13 @@ The environment shows the game from its first gameplay question. When the game e
 program exits; the adapter then exits too. On a stop condition the program also exits, and the
 runner may kill the adapter at any moment; whatever it needs to carry on must already be in
 `--workdir`.
+
+## The reply contract
+
+The task text says that the first line of an agent's answer is typed into the game exactly as
+written and that the rest of the answer, if any, is not typed. An adapter types only that first
+line and may keep the whole answer for itself. What it does with the rest is its own business and
+is declared in its `scaffold.md`.
 
 ## Marking the shared text
 

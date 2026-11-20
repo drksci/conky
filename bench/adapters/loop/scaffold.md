@@ -10,6 +10,7 @@ calls the meter once and types the reply.
   past screens (marked) with "Typed: ..." after each, then "The screen now:" and the current
   screen (marked).
 - A reply starting with SHELF is answered from the shelf and asked again, at most three times a
-  turn; any other reply is typed as it is, after trimming spaces at its ends.
+  turn; any other reply has only its first non-empty line typed, after trimming spaces at its ends;
+  the rest is not typed and stays in the transcript with the whole answer.
 - On a meter error it stops and exits.
 - Its persisted state is `transcript.jsonl`: every screen and what was typed, every shelf read.
