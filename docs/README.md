@@ -75,6 +75,7 @@ Outside work, compared on a fixed basis, with the depth of reading stated.
 - [research/dair-2026.md](research/dair-2026.md): DAIR.AI papers of the week, 2026: relevance index
 - [research/harnesses.md](research/harnesses.md): Agent harnesses compared
 - [research/findings-rubric.md](research/findings-rubric.md): What the research says a harness must do, and where Conky stands
+- [research/gaps.md](research/gaps.md): What others have that Conky lacks: skip, covered or rethought
 - [research/papers.md](research/papers.md): Paper register
 - [research/protocols.md](research/protocols.md): Protocols for agents, tools and interfaces
 - [research/anxiety-kernels.md](research/anxiety-kernels.md): Anxiety kernels: warnings that reach someone who will act
