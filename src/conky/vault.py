@@ -24,6 +24,11 @@ MAX_DEPTH = 12
 _BASE_KEYS = {"seq", "at", "actor", "page", "kind", "set", "body", "cause", "prev", "seal"}
 
 
+def _size(page: Page) -> int:
+    """Return the byte length of the page as serialised."""
+    return len(serialize(page).encode("utf-8"))
+
+
 @dataclass(frozen=True)
 class Result:
     """The outcome of a write: whether it held, the event's seq, and why not."""
@@ -228,7 +233,7 @@ class Vault:
         return Result(True, seq)
 
     def _rule_reason(self, name: str, page: Page) -> str | None:
-        scope = {"page": page.fields, "size": len(serialize(page).encode("utf-8"))}
+        scope = {"page": page.fields, "size": _size(page)}
         seen = {name}
         space, owner = page, name
         while True:
@@ -256,7 +261,12 @@ class Vault:
                 if entry["on"] != source:
                     continue
                 current = self._load(watcher) or Page()
-                scope = {"other": written.fields, "page": current.fields}
+                scope = {
+                    "other": written.fields,
+                    "page": current.fields,
+                    "other_size": _size(written),
+                    "size": _size(current),
+                }
                 try:
                     if not holds(entry["when"], scope):
                         continue

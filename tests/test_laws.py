@@ -234,3 +234,69 @@ def test_watch_key_on_is_plain_text_in_frontmatter(vault: Vault) -> None:
     watch_pair(vault)
     assert "- on: stall\n" in (vault.pages_dir / "depot.md").read_text()
     assert vault.read("depot").watch[0]["on"] == "stall"
+
+
+MEASURE = [
+    {"on": "ledger", "when": "true", "set": {"pressure": "size / 400"}},
+    {"on": "ledger", "when": "page.pressure >= 2", "set": {"state": "'crowded'"}},
+]
+
+
+def pressure_sequence(vault: Vault):
+    w(vault, "ledger", {"pressure": 0, "state": "calm", "watch": MEASURE})
+    w(
+        vault,
+        "tidy",
+        {"watch": [{"on": "ledger", "when": "other.state == 'crowded'", "set": {"seen": "true"}}]},
+    )
+    return w(vault, "ledger", {}, "x" * 1000)
+
+
+def test_pressure_rises_without_refusing_work(vault: Vault) -> None:
+    w(vault, "ledger", {"pressure": 0, "watch": MEASURE[:1]})
+    result = w(vault, "ledger", {}, "x" * 100_000)
+    assert result.ok
+    assert vault.read("ledger").fields["pressure"] >= 250
+    reaction = next(e for e in events(vault) if e["set"].get("pressure", 0) >= 250)
+    assert reaction["cause"] == result.seq and reaction["actor"] == "ledger"
+    assert not [e for e in events(vault) if e["kind"] == "refused"]
+    vault.verify()
+
+
+def test_threshold_fires_a_reaction_without_a_model(vault: Vault) -> None:
+    pressure_sequence(vault)
+    assert vault.read("ledger").fields["state"] == "crowded"
+    assert vault.read("tidy").fields["seen"] is True
+    assert not [e for e in events(vault) if e["kind"] == "refused"]
+
+
+def test_self_watch_settles(vault: Vault, tmp_path: Path, keys_dir: Path) -> None:
+    pressure_sequence(vault)
+    count = len(events(vault))
+    again = Vault.init(tmp_path / "again", keys_dir)
+    pressure_sequence(again)
+    assert count == len(events(again)) and count < 12
+    vault.verify()
+
+
+def test_replay_needs_no_expressions(vault: Vault, monkeypatch: pytest.MonkeyPatch) -> None:
+    pressure_sequence(vault)
+    before = {p.name: p.read_bytes() for p in vault.pages_dir.glob("*.md")}
+
+    def boom(*args, **kwargs):
+        raise AssertionError("an expression was evaluated during replay")
+
+    monkeypatch.setattr("conky.vault.evaluate", boom)
+    monkeypatch.setattr("conky.vault.holds", boom)
+    monkeypatch.setattr("conky.rules.evaluate", boom)
+    monkeypatch.setattr("conky.rules.holds", boom)
+    shutil.rmtree(vault.pages_dir)
+    vault.rebuild()
+    vault.verify()
+    assert before == {p.name: p.read_bytes() for p in vault.pages_dir.glob("*.md")}
+
+
+def test_other_size_is_visible_to_a_watcher(vault: Vault) -> None:
+    w(vault, "gauge", {"watch": [{"on": "stall", "when": "true", "set": {"seen": "other_size"}}]})
+    w(vault, "stall", {}, "x" * 500)
+    assert vault.read("gauge").fields["seen"] == len((vault.pages_dir / "stall.md").read_bytes())

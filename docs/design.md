@@ -33,6 +33,28 @@ that page's own key, with `cause` set to the triggering event. Reactions
 cascade to depth 12, then are refused as a cycle. A reaction that would
 change nothing is skipped, so stable states end.
 
+## Measures
+
+A measure is a page watching itself: a `watch` entry whose `on` is the
+page's own name, setting a field computed from the page's state. No new
+concept is added. Watch expressions can use `page`, `other`, `size` (the
+byte length of the watching page as serialised) and `other_size` (the byte
+length of the page just written; for a self-watch the two are equal). The
+computed value is written as an ordinary recorded event, so replaying the
+log never evaluates an expression and history stays reproducible even if
+the expression language changes. The skip-when-unchanged rule and the depth
+cap still apply, so a self-watch settles when its fields stop changing.
+
+Pressure is the first use. A page with no size rule can take a large write;
+a self-watch such as `{on: <itself>, when: "true", set: {pressure: "size / 400"}}`
+records a rising number, and a second entry with `when: "page.pressure >= 2"`
+can set a state that other pages watch. Walls stay for what must never
+happen. Nothing yet acts to relieve the pressure. The checks are in
+`tests/test_laws.py`.
+
+Think of a spreadsheet: pages are like cells, a self-watch is like a
+formula, and the log is the signed history of every recalculation.
+
 ## Verify and rebuild
 
 `verify` checks the hash chain, every seal against the public keys in the

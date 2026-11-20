@@ -82,6 +82,25 @@ are the refusal and the reaction. Private keys are kept in `~/.conky/keys`, neve
 - Rules in CEL, inherited through `within` chains, with `page` and `size` in scope.
 - A signed, hash-chained, append-only event log that also records refused writes.
 - Reactions: pages that watch other pages and write themselves, with no model call.
+- Measures: a page that watches itself, with `size` and `other_size` in watch expressions. Pressure is the first use:
+
+  ```console
+  $ conky write ledger pressure=0 'watch=[{on: ledger, when: "true", set: {pressure: "size / 400"}}]' --as alice
+  written (seq 0)
+  $ conky write ledger --body "$(python -c 'print("x" * 1000)')" --as alice
+  written (seq 1)
+  $ conky read ledger | head -7
+  ---
+  watch:
+  - on: ledger
+    when: 'true'
+    set:
+      pressure: size / 400
+  pressure: 2
+  ---
+  ```
+
+  The write was not refused; the page recorded its own pressure as event 2, caused by event 1.
 - `verify` and `rebuild`, and a command line: `init`, `write`, `read`, `log`, `verify`, `rebuild`.
 
 ## Not built yet

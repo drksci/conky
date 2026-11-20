@@ -26,6 +26,8 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 - [decisions/0016-principles-as-rules.md](decisions/0016-principles-as-rules.md): Principles as rules
 - [decisions/0017-no-hosted-ci-yet.md](decisions/0017-no-hosted-ci-yet.md): No hosted CI yet
 - [decisions/0018-patterns-not-features.md](decisions/0018-patterns-not-features.md): Patterns, not features
+- [decisions/0019-measures-are-self-watches.md](decisions/0019-measures-are-self-watches.md): Measures are self-watches
+- [decisions/0020-design-authority.md](decisions/0020-design-authority.md): Design authority
 
 ## Ideas
 
@@ -44,6 +46,7 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 
 ## Essays
 
+- [essays/pressure-not-walls.md](essays/pressure-not-walls.md): Pressure, not walls
 - [essays/rules-not-requests.md](essays/rules-not-requests.md): Rules, not requests
 - [essays/the-log-is-the-truth.md](essays/the-log-is-the-truth.md): The log is the truth
 - [essays/things-that-just-happen.md](essays/things-that-just-happen.md): Things that just happen

@@ -1,7 +1,7 @@
 ---
 kind: idea
 title: Measures
-status: idea
+status: enforced
 date: 2026-11-20
 source: archive turn 36
 ---
@@ -33,3 +33,12 @@ Separate mechanisms for attention, decay and metrics, if one measure can serve e
 ## Falsifying test
 
 A measure that needs a clock, randomness or input outside pages and the log to compute what it was meant to.
+
+## What was built
+
+A measure is a page watching itself: a `watch` entry whose `on` is the page's own name. Watch expressions gained `size` (the byte length of the watching page) and `other_size` (the byte length of the page just written). Pressure is a self-watch such as `size / 400`, with a second entry setting a state when a threshold is passed. Decision: [0019](../decisions/0019-measures-are-self-watches.md). Essay: [pressure-not-walls](../essays/pressure-not-walls.md). Tests in `tests/test_laws.py`: pressure rises without refusing work, a threshold fires a reaction, a self-watch settles, replay needs no expressions, and `other_size` is visible.
+
+## Still open
+
+- Decay over time needs a notion of time passing. It should arrive as an ordinary write to a clock page that others watch, not as a hidden timer.
+- What a crowded page should then do about it (split, summarise) needs either a deterministic tool or a model-backed page. Neither is built.
