@@ -1,156 +1,222 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="226" viewBox="0 0 720 226" role="img" aria-label="The median run of each harness: the run, its steps, each model call.">
-<title>The median run of each harness: the run, its steps, each model call.</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="252" viewBox="0 0 720 252" role="img" aria-label="Flame graphs of the time each harness took: run, turn, model or harness.">
+<title>Flame graphs of the time each harness took: run, turn, model or harness.</title>
 <defs><pattern id="dots" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1z" fill="#EDEDED" shape-rendering="crispEdges"/></pattern><pattern id="dense" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#EDEDED" shape-rendering="crispEdges"/></pattern><pattern id="dense-accent" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#FFE066" shape-rendering="crispEdges"/></pattern></defs>
 <text x="24.0" y="28.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start" fill="#EDEDED">Where the time went</text>
-<text x="696.0" y="28.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" font-weight="normal" text-anchor="end" fill="#9AA0A8" letter-spacing="0.14em">SECONDS · RUN, STEP, MODEL CALL</text>
+<text x="696.0" y="28.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" font-weight="normal" text-anchor="end" fill="#9AA0A8" letter-spacing="0.14em">SECONDS · MEDIAN RUN</text>
 <line x1="24.0" y1="40.0" x2="696.0" y2="40.0" stroke="#EDEDED" stroke-width="0.75" stroke-linecap="round"/>
-<text x="24.0" y="66.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="bold" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">LOOP</text>
-<text x="696.0" y="66.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="end" fill="#EDEDED">239 seconds</text>
-<rect x="24.0" y="74.0" width="540.7" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="29.0" y="86.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">the run · 42 model calls</text>
-<rect x="24.0" y="94.0" width="65.4" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="29.0" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">0</text>
-<rect x="91.0" y="94.0" width="32.0" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="96.0" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">1</text>
-<rect x="124.5" y="94.0" width="40.3" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="129.5" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">2</text>
-<rect x="166.4" y="94.0" width="17.5" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="171.4" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">3</text>
-<rect x="185.4" y="94.0" width="20.2" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="190.4" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">4</text>
-<rect x="207.2" y="94.0" width="20.2" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="212.2" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">5</text>
-<rect x="229.0" y="94.0" width="95.9" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="234.0" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">6</text>
-<rect x="326.5" y="94.0" width="19.6" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="331.5" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">7</text>
-<rect x="347.6" y="94.0" width="35.3" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="352.6" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">8</text>
-<rect x="384.5" y="94.0" width="22.6" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="389.5" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">9</text>
-<rect x="408.7" y="94.0" width="30.6" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="413.7" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">10</text>
-<rect x="440.9" y="94.0" width="22.3" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="445.9" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">11</text>
-<rect x="464.8" y="94.0" width="38.8" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="469.8" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">12</text>
-<rect x="505.2" y="94.0" width="59.6" height="18.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="510.2" y="106.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">13</text>
-<rect x="24.0" y="114.0" width="11.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="36.6" y="114.0" width="12.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="50.9" y="114.0" width="13.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="65.5" y="114.0" width="10.4" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="77.5" y="114.0" width="11.9" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="91.0" y="114.0" width="11.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="103.7" y="114.0" width="7.6" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="112.9" y="114.0" width="10.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="124.5" y="114.0" width="18.3" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="144.5" y="114.0" width="7.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="153.8" y="114.0" width="11.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="166.4" y="114.0" width="8.6" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="176.5" y="114.0" width="7.3" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="185.4" y="114.0" width="11.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="198.2" y="114.0" width="7.5" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="207.2" y="114.0" width="9.5" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="218.3" y="114.0" width="9.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="229.0" y="114.0" width="10.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="241.3" y="114.0" width="16.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="258.9" y="114.0" width="14.8" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="275.2" y="114.0" width="22.4" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="299.2" y="114.0" width="9.9" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="310.7" y="114.0" width="14.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="326.5" y="114.0" width="8.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="336.3" y="114.0" width="9.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="347.6" y="114.0" width="7.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="356.9" y="114.0" width="14.4" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="372.8" y="114.0" width="10.1" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="384.5" y="114.0" width="10.8" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="396.9" y="114.0" width="10.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="408.7" y="114.0" width="18.4" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="428.7" y="114.0" width="10.6" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="440.9" y="114.0" width="12.3" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="454.7" y="114.0" width="8.5" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="464.8" y="114.0" width="14.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="480.6" y="114.0" width="10.6" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="492.8" y="114.0" width="10.8" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="505.2" y="114.0" width="9.2" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="515.9" y="114.0" width="9.7" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="527.2" y="114.0" width="9.9" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="538.8" y="114.0" width="13.0" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<rect x="552.8" y="114.0" width="11.9" height="12.0" fill="url(#dense)" stroke="#EDEDED" stroke-width="0.75"/>
-<text x="24.0" y="152.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="bold" text-anchor="start" fill="#FFE066" letter-spacing="0.14em">CONKY</text>
-<text x="696.0" y="152.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="end" fill="#FFE066">297 seconds</text>
-<rect x="24.0" y="160.0" width="671.0" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="29.0" y="172.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">the run · 43 model calls</text>
-<rect x="24.0" y="180.0" width="84.6" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="29.0" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">0</text>
-<rect x="110.7" y="180.0" width="22.3" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="115.7" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">1</text>
-<rect x="135.0" y="180.0" width="23.6" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="140.0" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">2</text>
-<rect x="160.6" y="180.0" width="73.5" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="165.6" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">3</text>
-<rect x="236.1" y="180.0" width="26.6" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="241.1" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">4</text>
-<rect x="264.7" y="180.0" width="53.3" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="269.7" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">5</text>
-<rect x="320.0" y="180.0" width="38.9" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="325.0" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">6</text>
-<rect x="361.0" y="180.0" width="28.1" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="366.0" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">7</text>
-<rect x="391.4" y="180.0" width="26.2" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="396.4" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">8</text>
-<rect x="419.6" y="180.0" width="26.7" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="424.6" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">9</text>
-<rect x="448.6" y="180.0" width="27.7" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="453.6" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">10</text>
-<rect x="478.4" y="180.0" width="50.1" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="483.4" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">11</text>
-<rect x="530.5" y="180.0" width="114.1" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="535.5" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">12</text>
-<rect x="646.6" y="180.0" width="48.4" height="18.0" fill="none" stroke="#FFE066" stroke-width="1.0"/>
-<text x="651.6" y="192.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="bold" text-anchor="start" fill="#EDEDED">13</text>
-<rect x="24.0" y="200.0" width="17.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="43.8" y="200.0" width="14.2" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="60.1" y="200.0" width="13.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="75.9" y="200.0" width="17.0" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="94.9" y="200.0" width="13.7" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="110.7" y="200.0" width="10.4" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="123.1" y="200.0" width="9.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="135.0" y="200.0" width="9.5" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="146.5" y="200.0" width="12.0" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="160.6" y="200.0" width="16.0" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="178.6" y="200.0" width="11.1" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="191.7" y="200.0" width="8.7" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="202.4" y="200.0" width="18.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="223.3" y="200.0" width="10.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="236.1" y="200.0" width="13.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="251.9" y="200.0" width="10.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="264.7" y="200.0" width="11.7" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="278.4" y="200.0" width="12.0" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="292.4" y="200.0" width="11.4" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="305.9" y="200.0" width="12.2" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="320.0" y="200.0" width="13.7" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="335.7" y="200.0" width="9.4" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="347.1" y="200.0" width="11.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="361.0" y="200.0" width="12.3" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="375.4" y="200.0" width="13.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="391.4" y="200.0" width="12.2" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="405.7" y="200.0" width="11.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="419.6" y="200.0" width="14.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="436.5" y="200.0" width="9.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="448.6" y="200.0" width="15.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="466.5" y="200.0" width="9.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="478.4" y="200.0" width="13.0" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="493.5" y="200.0" width="14.1" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="509.6" y="200.0" width="18.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="530.5" y="200.0" width="12.6" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="545.1" y="200.0" width="18.5" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="565.7" y="200.0" width="17.5" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="585.2" y="200.0" width="17.4" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="604.6" y="200.0" width="22.3" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="628.9" y="200.0" width="15.7" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="646.6" y="200.0" width="13.4" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="662.0" y="200.0" width="12.8" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
-<rect x="676.1" y="200.0" width="18.9" height="12.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="0.75"/>
+<rect x="24.0" y="54.0" width="9" height="9" rx="1.5" fill="#8CBEFF"/>
+<text x="38.0" y="62.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" font-weight="normal" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">IN THE MODEL</text>
+<rect x="135.2" y="54.0" width="9" height="9" rx="1.5" fill="#5B6370"/>
+<text x="149.2" y="62.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" font-weight="normal" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">IN THE HARNESS</text>
+<text x="24.0" y="86.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="bold" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">LOOP</text>
+<text x="696.0" y="86.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="end" fill="#EDEDED">239 seconds</text>
+<rect x="24.00" y="94.0" width="540.69" height="17.5" rx="1.5" fill="#C9CDD6"/>
+<text x="28.0" y="106.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#14161A">the run · 42 model calls</text>
+<rect x="24.00" y="113.0" width="65.37" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<text x="28.0" y="125.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#14161A">turn 0</text>
+<rect x="24.00" y="132.0" width="10.98" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="35.98" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="36.57" y="132.0" width="12.71" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="50.28" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="50.87" y="132.0" width="13.08" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="64.95" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="65.54" y="132.0" width="10.38" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="76.92" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="77.51" y="132.0" width="11.85" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="90.37" y="113.0" width="32.57" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<rect x="90.37" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="90.95" y="132.0" width="11.11" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="103.06" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="103.67" y="132.0" width="7.61" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="112.28" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="112.86" y="132.0" width="10.07" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="123.93" y="113.0" width="40.85" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<rect x="123.93" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="124.53" y="132.0" width="18.34" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="143.87" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="144.45" y="132.0" width="7.72" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="153.17" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="153.76" y="132.0" width="11.02" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="165.78" y="113.0" width="18.07" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<rect x="165.78" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="166.38" y="132.0" width="8.57" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="175.95" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="176.54" y="132.0" width="7.31" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="184.85" y="113.0" width="20.77" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<rect x="184.85" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="185.44" y="132.0" width="11.14" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="197.58" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="198.17" y="132.0" width="7.45" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="206.62" y="113.0" width="20.81" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<rect x="206.62" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="207.22" y="132.0" width="9.49" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="217.71" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="218.30" y="132.0" width="9.14" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="228.44" y="113.0" width="96.46" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<text x="232.4" y="125.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#14161A">turn 6</text>
+<rect x="228.44" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="229.03" y="132.0" width="10.68" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="240.71" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="241.30" y="132.0" width="16.00" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="258.30" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="258.90" y="132.0" width="14.77" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="274.66" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="275.25" y="132.0" width="22.38" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="298.62" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="299.20" y="132.0" width="9.92" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="310.12" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="310.71" y="132.0" width="14.19" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="325.89" y="113.0" width="20.14" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<rect x="325.89" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="326.48" y="132.0" width="8.22" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="335.70" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="336.29" y="132.0" width="9.75" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="347.03" y="113.0" width="35.90" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<rect x="347.03" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="347.62" y="132.0" width="7.65" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="356.28" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="356.87" y="132.0" width="14.37" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="372.24" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="372.83" y="132.0" width="10.11" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="383.93" y="113.0" width="23.14" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<rect x="383.93" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="384.52" y="132.0" width="10.82" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="396.33" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="396.92" y="132.0" width="10.15" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="408.07" y="113.0" width="31.22" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<rect x="408.07" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="408.66" y="132.0" width="18.43" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="428.09" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="428.68" y="132.0" width="10.62" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="440.29" y="113.0" width="22.94" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<rect x="440.29" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="440.89" y="132.0" width="12.27" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="454.16" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="454.75" y="132.0" width="8.48" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="464.23" y="113.0" width="39.34" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<rect x="464.23" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="464.82" y="132.0" width="14.23" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="480.05" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="480.63" y="132.0" width="10.59" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="492.23" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="492.82" y="132.0" width="10.75" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="504.57" y="113.0" width="60.12" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<text x="508.6" y="125.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#14161A">turn 13</text>
+<rect x="504.57" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="505.16" y="132.0" width="9.18" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="515.34" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="515.92" y="132.0" width="9.71" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="526.63" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="527.23" y="132.0" width="9.94" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="538.16" y="132.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="538.75" y="132.0" width="12.99" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="552.74" y="132.0" width="11.95" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<text x="24.0" y="175.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="bold" text-anchor="start" fill="#FFE066" letter-spacing="0.14em">CONKY</text>
+<text x="696.0" y="175.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="end" fill="#FFE066">297 seconds</text>
+<rect x="24.00" y="183.0" width="671.00" height="17.5" rx="1.5" fill="#FFE066"/>
+<text x="28.0" y="195.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#14161A">the run · 43 model calls</text>
+<rect x="24.00" y="202.0" width="84.62" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<text x="28.0" y="214.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#14161A">turn 0</text>
+<rect x="24.00" y="221.0" width="17.78" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="42.78" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="43.82" y="221.0" width="14.22" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="59.04" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="60.05" y="221.0" width="13.85" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="74.90" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="75.89" y="221.0" width="17.05" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="93.93" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="94.92" y="221.0" width="13.70" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="109.62" y="202.0" width="23.37" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<rect x="109.62" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="110.65" y="221.0" width="10.42" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="122.07" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="123.08" y="221.0" width="9.91" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="133.99" y="202.0" width="24.57" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<rect x="133.99" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="135.00" y="221.0" width="9.55" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="145.55" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="146.54" y="221.0" width="12.03" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="159.57" y="202.0" width="74.50" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<text x="163.6" y="214.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#14161A">turn 3</text>
+<rect x="159.57" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="160.58" y="221.0" width="16.03" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="177.61" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="178.59" y="221.0" width="11.11" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="190.70" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="191.70" y="221.0" width="8.68" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="201.38" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="202.37" y="221.0" width="18.90" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="222.26" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="223.26" y="221.0" width="10.82" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="235.07" y="202.0" width="27.58" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<rect x="235.07" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="236.08" y="221.0" width="13.78" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="250.87" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="251.90" y="221.0" width="10.75" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="263.66" y="202.0" width="54.36" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<text x="267.7" y="214.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#14161A">turn 5</text>
+<rect x="263.66" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="264.67" y="221.0" width="11.70" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="277.37" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="278.44" y="221.0" width="11.96" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="291.41" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="292.40" y="221.0" width="11.45" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="304.84" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="305.86" y="221.0" width="12.15" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="319.01" y="202.0" width="39.97" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<rect x="319.01" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="320.04" y="221.0" width="13.69" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="334.74" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="335.71" y="221.0" width="9.35" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="346.06" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="347.08" y="221.0" width="11.91" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="359.99" y="202.0" width="29.19" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<rect x="359.99" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="361.03" y="221.0" width="12.32" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="374.35" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="375.41" y="221.0" width="13.76" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="390.18" y="202.0" width="27.43" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<rect x="390.18" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="391.42" y="221.0" width="12.24" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="404.66" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="405.74" y="221.0" width="11.87" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="418.60" y="202.0" width="27.75" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<rect x="418.60" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="419.61" y="221.0" width="14.90" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="435.52" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="436.51" y="221.0" width="9.84" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="447.36" y="202.0" width="28.95" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<rect x="447.36" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="448.61" y="221.0" width="15.84" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="465.44" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="466.45" y="221.0" width="9.86" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="477.31" y="202.0" width="51.13" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<text x="481.3" y="214.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#14161A">turn 11</text>
+<rect x="477.31" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="478.37" y="221.0" width="13.01" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="492.38" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="493.48" y="221.0" width="14.13" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="508.61" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="509.58" y="221.0" width="18.86" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="529.44" y="202.0" width="115.13" height="17.5" rx="1.5" fill="#B8A6FF"/>
+<text x="533.4" y="214.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#14161A">turn 12</text>
+<rect x="529.44" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="530.48" y="221.0" width="12.58" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="544.05" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="545.10" y="221.0" width="18.51" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="564.61" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="565.67" y="221.0" width="17.54" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="584.21" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="585.20" y="221.0" width="17.38" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="603.58" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="604.59" y="221.0" width="22.28" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="627.88" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="628.87" y="221.0" width="15.70" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="645.57" y="202.0" width="49.43" height="17.5" rx="1.5" fill="#9F8CF5"/>
+<text x="649.6" y="214.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="9.5" fill="#14161A">turn 13</text>
+<rect x="645.57" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="646.59" y="221.0" width="13.39" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="660.99" y="221.0" width="0.40" height="17.5" rx="1.5" fill="#5B6370"/>
+<rect x="661.99" y="221.0" width="12.83" height="17.5" rx="1.5" fill="#8CBEFF"/>
+<rect x="676.12" y="221.0" width="18.88" height="17.5" rx="1.5" fill="#8CBEFF"/>
 </svg>
