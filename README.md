@@ -10,15 +10,15 @@ uvx --from git+https://github.com/drksci/conky conky assimilate   # the thing: h
 </p>
 <p align="center"><sub><a href="https://www.youtube.com/watch?v=vcsm6QO-MWE">Trailer Park Boys: Conky</a></sub></p>
 
-<h3 align="center">A folder that runs itself.</h3>
+<h3 align="center">A folder where everything is somebody.</h3>
 
-<p align="center">An open-source agent harness where the whole AI system is Markdown pages in a Git repository.<br>People, teams, tools and rules, as pages you can read. Every change signed. Every rule enforced.<br>Most of the work done by nobody in particular.</p>
+<p align="center">An open-source agent harness where the whole AI system is Markdown pages in a Git repository.<br>Every page is a character with its own name and voice. Every change is signed. Every rule holds.<br>The dull parts are reflexes, so the thinking can go into being someone.</p>
 
 <p align="center"><a href="docs/guide/concepts.md">Concepts</a> &nbsp;·&nbsp; <a href="docs/guide/getting-started.md">Getting started</a> &nbsp;·&nbsp; <a href="docs/reference/vault-format.md">Reference</a> &nbsp;·&nbsp; <a href="docs/project/roadmap.md">Roadmap</a></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/demo.dark.svg"><img src="docs/assets/figures/demo.light.svg" alt="Left, a terminal playing the demo: a market gets one rule, a stall joins, a change that breaks the rule is refused, stock runs low and the depot reorders by itself. Right, a wireframe of the same thing as a screen: a stock level, a reorder indicator flipping to yes, the rule, a pressure gauge and a history list, updating in step." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/demo.dark.svg"><img src="docs/assets/figures/demo.light.svg" alt="Left, a terminal playing the demo: Maya sets up a lemonade stand with one house rule, fills the cooler, a cup count below zero is refused, a busy hour empties the cooler and the supplier orders lemons by itself. Right, a wireframe of the same thing as a screen, in the pages' own words: the house rule, the cooler's count, the supplier's order and lines from the daybook, updating in step." width="800"></picture></p>
 
-<p align="center"><sub>Both need <a href="https://docs.astral.sh/uv/">uv</a>, Git and ssh-keygen. The first builds a tiny market and leaves it to run itself. The second hands a stopped one to a stranger and watches it carry on.</sub></p>
+<p align="center"><sub>Both need <a href="https://docs.astral.sh/uv/">uv</a>, Git and ssh-keygen. The first builds a tiny lemonade stand and leaves it to run itself. The second hands a stopped one to a stranger and watches it carry on.</sub></p>
 
 <br>
 
@@ -27,9 +27,11 @@ uvx --from git+https://github.com/drksci/conky conky assimilate   # the thing: h
 
 Every AI agent project turns into the same thing eventually: a pile of prompts, some glue code and a database nobody wants to touch. Six months in, nobody can tell you why it did what it did, and moving it anywhere is a project of its own.
 
-Conky does it backwards. The whole system is a folder of Markdown files in Git. Every change is a signed commit. The rules get checked on every write, so they hold whether or not anyone remembers them. Pages react to each other without calling a model, and the model only gets asked when the files cannot answer.
+Conky does it backwards. The whole system is a folder of Markdown files in Git, and every file is somebody: the owner, the cooler, the supplier, the daybook, each with its own name and voice. The dull parts are reflexes. Changes are signed, rules are checked on every write, and pages notice each other, so nobody has to think about any of that. The thinking is saved for being someone.
 
 That's it. Files and Git. If you ever hate it, clone the folder and leave.
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-0-folder.dark.svg"><img src="docs/assets/figures/fig-0-folder.light.svg" alt="An early Macintosh folder window titled Lemonade stand, in black and white. Inside are six page icons named stand, cooler, supplier, daybook, maya and sam. Dashed arrows run from stand to cooler to supplier, and the daybook has an arrow looping back to itself. The status line reads: 6 pages, running itself." width="800"></picture></p>
 
 <br>
 

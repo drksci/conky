@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 150" width="880" height="150" role="img" aria-labelledby="t">
-<title id="t">Usually: One loop runs everything, and calls the model for all of it. Conky: Nothing is in charge. Pages notice each other and respond.</title>
+<title id="t">Ugh: One loop runs everything, and calls the model for all of it. Conky: Nothing is in charge. Pages notice each other and respond.</title>
 <style>
 :root{--ink:#1E1E1E}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
@@ -21,7 +21,7 @@
 .b{font-weight:700}
 .u{fill:var(--ink);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;font-size:15px;font-weight:400}
 </style>
-<text class="t" x="24" y="20" font-size="10.08" fill-opacity="1" text-anchor="start">USUALLY</text>
+<text class="t" x="24" y="20" font-size="10.08" fill-opacity="1" text-anchor="start">UGH</text>
 <text class="t" x="464" y="20" font-size="10.08" fill-opacity="1" text-anchor="start">CONKY</text>
 <g transform="translate(42 32)">
 <circle class="s" cx="82" cy="55" r="17"/>

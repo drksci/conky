@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400" role="img" aria-labelledby="t">
-<title id="t">A terminal running conky demo beside a wireframe of the screen it produces: stock, depot, rules, journal and history</title>
+<title id="t">A terminal running conky demo beside a drawing of the lemonade stand's noticeboard: the stand, the cooler, the supplier and the daybook</title>
 <style>
 :root{--ink:#1E1E1E}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
@@ -19,12 +19,12 @@
 .f50{fill:url(#d50)}
 .t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
-.tx{fill:#e6edf3;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace;font-size:11px}
+.tx{fill:#e6edf3;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace;font-size:10.5px}
 .bd{font-weight:700}
-.m{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace;font-size:10px}
-.big{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace;font-size:46px}
-.b{font-weight:700}
-.mt{fill:#000;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace;letter-spacing:.14em}
+.sn{fill:var(--ink);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif}
+.rv{transform-box:fill-box;transform-origin:0 50%}
+@keyframes rv{0%,49%{transform:scaleX(0);animation-timing-function:steps(24,end)}54%,100%{transform:scaleX(1)}}
+.rv{animation:rv 20s linear infinite}
 .x{opacity:0}
 @keyframes a0{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a0{animation:a0 20s linear infinite}
 @keyframes a1{0%{opacity:0}3%{opacity:0}4.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a1{animation:a1 20s linear infinite}
@@ -42,35 +42,27 @@
 @keyframes a13{0%{opacity:0}61%{opacity:0}62.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a13{animation:a13 20s linear infinite}
 @keyframes a14{0%{opacity:0}68%{opacity:0}69.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a14{animation:a14 20s linear infinite}
 @keyframes a15{0%{opacity:0}74%{opacity:0}75.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a15{animation:a15 20s linear infinite}
-@keyframes a16{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}15%{opacity:1}16.5%{opacity:0}100%{opacity:0}}.a16{animation:a16 20s linear infinite}
-@keyframes a17{0%{opacity:0}15%{opacity:0}16.5%{opacity:1}45%{opacity:1}46.5%{opacity:0}100%{opacity:0}}.a17{animation:a17 20s linear infinite}
-@keyframes a18{0%{opacity:0}45%{opacity:0}46.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a18{animation:a18 20s linear infinite}
-@keyframes a19{0%{opacity:0}15%{opacity:0}16.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a19{animation:a19 20s linear infinite}
-@keyframes a20{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}23%{opacity:1}24.5%{opacity:0}100%{opacity:0}}.a20{animation:a20 20s linear infinite}
-@keyframes a21{0%{opacity:0}23%{opacity:0}24.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a21{animation:a21 20s linear infinite}
-@keyframes a22{0%{opacity:0}23%{opacity:0}24.5%{opacity:1}49%{opacity:1}50.5%{opacity:0}100%{opacity:0}}.a22{animation:a22 20s linear infinite}
-@keyframes a23{0%{opacity:0}49%{opacity:0}50.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a23{animation:a23 20s linear infinite}
-@keyframes a24{0%{opacity:0}49%{opacity:0}50.5%{opacity:1}55.5%{opacity:1}57%{opacity:0}100%{opacity:0}}.a24{animation:a24 20s linear infinite}
-@keyframes a25{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}7%{opacity:1}8.5%{opacity:0}100%{opacity:0}}.a25{animation:a25 20s linear infinite}
-@keyframes a26{0%{opacity:0}7%{opacity:0}8.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a26{animation:a26 20s linear infinite}
-@keyframes a27{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}56%{opacity:1}57.5%{opacity:0}100%{opacity:0}}.a27{animation:a27 20s linear infinite}
-@keyframes r28{0%,74%{transform:rotate(-90deg)}78%,97.5%{transform:rotate(0deg)}100%{transform:rotate(-90deg)}}.r28{animation:r28 20s ease-in-out infinite}
-@keyframes a29{0%{opacity:0}56%{opacity:0}57.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a29{animation:a29 20s linear infinite}
-@keyframes a30{0%{opacity:0}56%{opacity:0}57.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a30{animation:a30 20s linear infinite}
+@keyframes a16{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}7%{opacity:1}8.5%{opacity:0}100%{opacity:0}}.a16{animation:a16 20s linear infinite}
+@keyframes a17{0%{opacity:0}7%{opacity:0}8.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a17{animation:a17 20s linear infinite}
+@keyframes a18{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}15%{opacity:1}16.5%{opacity:0}100%{opacity:0}}.a18{animation:a18 20s linear infinite}
+@keyframes a19{0%{opacity:0}15%{opacity:0}16.5%{opacity:1}45%{opacity:1}46.5%{opacity:0}100%{opacity:0}}.a19{animation:a19 20s linear infinite}
+@keyframes a20{0%{opacity:0}45%{opacity:0}46.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a20{animation:a20 20s linear infinite}
+@keyframes a21{0%{opacity:0}15%{opacity:0}16.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a21{animation:a21 20s linear infinite}
+@keyframes a22{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}23%{opacity:1}24.5%{opacity:0}100%{opacity:0}}.a22{animation:a22 20s linear infinite}
+@keyframes a23{0%{opacity:0}23%{opacity:0}24.5%{opacity:1}49%{opacity:1}50.5%{opacity:0}100%{opacity:0}}.a23{animation:a23 20s linear infinite}
+@keyframes a24{0%{opacity:0}49%{opacity:0}50.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a24{animation:a24 20s linear infinite}
+@keyframes a25{0%{opacity:0}49%{opacity:0}50.5%{opacity:1}55.5%{opacity:1}57%{opacity:0}100%{opacity:0}}.a25{animation:a25 20s linear infinite}
+@keyframes a26{0%{opacity:0}1%{opacity:0}2.5%{opacity:1}56%{opacity:1}57.5%{opacity:0}100%{opacity:0}}.a26{animation:a26 20s linear infinite}
+@keyframes a27{0%{opacity:0;transform:translateY(-5px)}56%{opacity:0;transform:translateY(-5px)}57.5%{opacity:1;transform:translateY(0px)}97.5%{opacity:1;transform:translateY(0px)}100%{opacity:0;transform:translateY(-5px)}}.a27{animation:a27 20s linear infinite}
+@keyframes a28{0%{opacity:0;transform:translateY(-5px)}58%{opacity:0;transform:translateY(-5px)}59.5%{opacity:1;transform:translateY(0px)}97.5%{opacity:1;transform:translateY(0px)}100%{opacity:0;transform:translateY(-5px)}}.a28{animation:a28 20s linear infinite}
+@keyframes a29{0%{opacity:0;transform:translateY(-5px)}68%{opacity:0;transform:translateY(-5px)}69.5%{opacity:1;transform:translateY(0px)}97.5%{opacity:1;transform:translateY(0px)}100%{opacity:0;transform:translateY(-5px)}}.a29{animation:a29 20s linear infinite}
+@keyframes a30{0%{opacity:0;transform:translateY(-5px)}70.5%{opacity:0;transform:translateY(-5px)}72%{opacity:1;transform:translateY(0px)}97.5%{opacity:1;transform:translateY(0px)}100%{opacity:0;transform:translateY(-5px)}}.a30{animation:a30 20s linear infinite}
 @keyframes a31{0%{opacity:0}56%{opacity:0}57.5%{opacity:1}74%{opacity:1}75.5%{opacity:0}100%{opacity:0}}.a31{animation:a31 20s linear infinite}
 @keyframes a32{0%{opacity:0}74%{opacity:0}75.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a32{animation:a32 20s linear infinite}
-@keyframes a33{0%{opacity:0}7%{opacity:0}8.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a33{animation:a33 20s linear infinite}
-@keyframes a34{0%{opacity:0}15%{opacity:0}16.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a34{animation:a34 20s linear infinite}
-@keyframes a35{0%{opacity:0}23%{opacity:0}24.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a35{animation:a35 20s linear infinite}
-@keyframes a36{0%{opacity:0}32%{opacity:0}33.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a36{animation:a36 20s linear infinite}
-@keyframes a37{0%{opacity:0}45%{opacity:0}46.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a37{animation:a37 20s linear infinite}
-@keyframes a38{0%{opacity:0}49%{opacity:0}50.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a38{animation:a38 20s linear infinite}
-@keyframes a39{0%{opacity:0}56%{opacity:0}57.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a39{animation:a39 20s linear infinite}
-@keyframes a40{0%{opacity:0}68%{opacity:0}69.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a40{animation:a40 20s linear infinite}
-@keyframes a41{0%{opacity:0}74%{opacity:0}75.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a41{animation:a41 20s linear infinite}
-@keyframes s42{0%{transform:translateY(-104px)}7%{transform:translateY(-104px)}8.5%{transform:translateY(-104px)}15%{transform:translateY(-104px)}16.5%{transform:translateY(-91px)}23%{transform:translateY(-91px)}24.5%{transform:translateY(-78px)}32%{transform:translateY(-78px)}33.5%{transform:translateY(-65px)}45%{transform:translateY(-65px)}46.5%{transform:translateY(-52px)}49%{transform:translateY(-52px)}50.5%{transform:translateY(-39px)}56%{transform:translateY(-39px)}57.5%{transform:translateY(-26px)}68%{transform:translateY(-26px)}69.5%{transform:translateY(-13px)}74%{transform:translateY(-13px)}75.5%{transform:translateY(0px)}97.5%{transform:translateY(0px)}100%{transform:translateY(-104px)}}.s42{animation:s42 20s linear infinite}
-@keyframes a43{0%{opacity:0;transform:translateY(-14px)}32%{opacity:0;transform:translateY(-14px)}33.5%{opacity:1;transform:translateY(0px)}42%{opacity:1;transform:translateY(0px)}43.5%{opacity:0;transform:translateY(-14px)}100%{opacity:0;transform:translateY(-14px)}}.a43{animation:a43 20s linear infinite}
-@media (prefers-reduced-motion:reduce){.an{animation:none!important}}
+@keyframes a33{0%{opacity:0}56%{opacity:0}57.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a33{animation:a33 20s linear infinite}
+@keyframes a34{0%{opacity:0}32%{opacity:0}33.5%{opacity:1}97.5%{opacity:1}100%{opacity:0}}.a34{animation:a34 20s linear infinite}
+@keyframes a35{0%{opacity:0;transform:translateY(-14px)}32%{opacity:0;transform:translateY(-14px)}33.5%{opacity:1;transform:translateY(0px)}42%{opacity:1;transform:translateY(0px)}43.5%{opacity:0;transform:translateY(-14px)}100%{opacity:0;transform:translateY(-14px)}}.a35{animation:a35 20s linear infinite}
+@media (prefers-reduced-motion:reduce){.an,.rv{animation:none!important}}
 </style>
 <defs><pattern id="d25" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d50" width="4" height="4" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM2 2h2v2h-2z"/></pattern></defs>
 <rect x="4" y="4" width="412" height="392" rx="10" fill="#0d1117" stroke="#30363d"/>
@@ -78,68 +70,69 @@
 <circle cx="38" cy="19" r="4.5" fill="#484f58"/>
 <circle cx="54" cy="19" r="4.5" fill="#484f58"/>
 <text class="tx" x="74" y="22.5" fill="#6C6C6C">$ conky demo</text>
-<g class="a0 an"><rect x="20.5" y="34.5" width="383" height="24" rx="6" fill="none" stroke="#874BFD"/><text class="tx bd" x="31" y="50.5" fill="#FF5FAF">A market stall</text></g>
-<g class="a1 an"><rect x="20" y="68" width="19.86" height="13.4" rx="2" fill="#874BFD"/><text class="tx bd" x="29.93" y="78" fill="#EEEEEE" text-anchor="middle">1</text><text class="tx" x="46.48" y="78">A market is a space. It carries one rule for</text><text class="tx" x="46.48" y="91.4">everything inside it. Stock is never negative.</text></g>
-<g class="a2 an"><rect x="46.48" y="94.8" width="72.82" height="13.4" fill="#04B575"/><text class="tx bd" x="53.1" y="104.8" fill="#000" textLength="59.58" lengthAdjust="spacing">✓ written</text><text class="tx" x="132.54" y="104.8" fill="#EEEEEE">market</text></g>
-<g class="a3 an"><rect x="20" y="113.7" width="19.86" height="13.4" rx="2" fill="#874BFD"/><text class="tx bd" x="29.93" y="123.7" fill="#EEEEEE" text-anchor="middle">2</text><text class="tx" x="46.48" y="123.7">A stall joins the market with 40 loaves in stock. It</text><text class="tx" x="46.48" y="137.1">follows the market's rule from now on.</text></g>
-<g class="a4 an"><rect x="46.48" y="140.5" width="72.82" height="13.4" fill="#04B575"/><text class="tx bd" x="53.1" y="150.5" fill="#000" textLength="59.58" lengthAdjust="spacing">✓ written</text><text class="tx" x="132.54" y="150.5" fill="#EEEEEE">stall</text></g>
-<g class="a5 an"><rect x="20" y="159.4" width="19.86" height="13.4" rx="2" fill="#874BFD"/><text class="tx bd" x="29.93" y="169.4" fill="#EEEEEE" text-anchor="middle">3</text><text class="tx" x="46.48" y="169.4">A depot page is set up to watch the stall. When</text><text class="tx" x="46.48" y="182.8">stock falls below 10 it marks a reorder.</text></g>
-<g class="a6 an"><rect x="46.48" y="186.2" width="72.82" height="13.4" fill="#04B575"/><text class="tx bd" x="53.1" y="196.2" fill="#000" textLength="59.58" lengthAdjust="spacing">✓ written</text><text class="tx" x="132.54" y="196.2" fill="#EEEEEE">depot</text></g>
-<g class="a7 an"><rect x="20" y="205.1" width="19.86" height="13.4" rx="2" fill="#874BFD"/><text class="tx bd" x="29.93" y="215.1" fill="#EEEEEE" text-anchor="middle">4</text><text class="tx" x="46.48" y="215.1">Someone tries to set the stall's stock to minus one.</text><text class="tx" x="46.48" y="228.5">The market's rule forbids it.</text></g>
-<g class="a8 an"><rect x="46.48" y="231.9" width="72.82" height="13.4" fill="#FF5F87"/><text class="tx bd" x="53.1" y="241.9" fill="#000" textLength="59.58" lengthAdjust="spacing">✗ refused</text><text class="tx" x="132.54" y="241.9" fill="#EEEEEE">stall</text></g>
-<g class="a9 an"><text class="tx" x="59.72" y="255.3" fill="#6C6C6C">because rule: !has(page.stock) || page.stock &gt;= 0</text><text class="tx" x="59.72" y="268.7" fill="#6C6C6C">(from market) is false</text></g>
-<g class="a10 an"><rect x="20" y="277.6" width="19.86" height="13.4" rx="2" fill="#874BFD"/><text class="tx bd" x="29.93" y="287.6" fill="#EEEEEE" text-anchor="middle">5</text><text class="tx" x="46.48" y="287.6">The stall sells down to 4 loaves. Nobody tells the</text><text class="tx" x="46.48" y="301">depot, and it reacts on its own.</text></g>
-<g class="a11 an"><rect x="46.48" y="304.4" width="72.82" height="13.4" fill="#04B575"/><text class="tx bd" x="53.1" y="314.4" fill="#000" textLength="59.58" lengthAdjust="spacing">✓ written</text><text class="tx" x="132.54" y="314.4" fill="#EEEEEE">stall</text></g>
-<g class="a12 an"><text class="tx" x="53.1" y="327.8"><tspan fill="#6C6C6C">↳ </tspan><tspan fill="#FFB454">depot</tspan><tspan fill="#6C6C6C"> changed by itself</tspan></text></g>
-<g class="a13 an"><rect x="20" y="336.7" width="19.86" height="13.4" rx="2" fill="#874BFD"/><text class="tx bd" x="29.93" y="346.7" fill="#EEEEEE" text-anchor="middle">7</text><text class="tx" x="46.48" y="346.7">A long entry goes into the journal, and the journal</text><text class="tx" x="46.48" y="360.1">measures itself again.</text></g>
-<g class="a14 an"><rect x="46.48" y="363.5" width="72.82" height="13.4" fill="#04B575"/><text class="tx bd" x="53.1" y="373.5" fill="#000" textLength="59.58" lengthAdjust="spacing">✓ written</text><text class="tx" x="132.54" y="373.5" fill="#EEEEEE">journal</text></g>
-<g class="a15 an"><text class="tx" x="53.1" y="386.9"><tspan fill="#6C6C6C">↳ </tspan><tspan fill="#FFB454">journal</tspan><tspan fill="#6C6C6C"> changed by itself</tspan></text></g>
-<text class="t" x="464" y="22" font-size="10.08" fill-opacity="1" text-anchor="start">THE SAME THING, AS A SCREEN</text>
+<g class="a0 an"><rect x="20.5" y="34.5" width="383" height="24" rx="6" fill="none" stroke="#874BFD"/><text class="tx bd" x="31" y="50.5" fill="#FF5FAF">A lemonade stand</text></g>
+<g class="a1 an"><rect x="20" y="68.4" width="18.9" height="12.6" rx="2" fill="#874BFD"/><text class="tx bd" x="29.45" y="78" fill="#EEEEEE" text-anchor="middle">1</text><text class="tx" x="45.2" y="78">Maya sets up the stand and writes down its one house</text><text class="tx" x="45.2" y="90.6">rule. The cooler never holds less than nothing.</text></g>
+<g class="a2 an"><rect x="45.2" y="93.6" width="69.3" height="12.6" fill="#04B575"/><text class="tx bd" x="51.5" y="103.2" fill="#000" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="103.2" fill="#EEEEEE">stand</text></g>
+<g class="a3 an"><rect x="20" y="111.2" width="18.9" height="12.6" rx="2" fill="#874BFD"/><text class="tx bd" x="29.45" y="120.8" fill="#EEEEEE" text-anchor="middle">2</text><text class="tx" x="45.2" y="120.8">She fills the cooler with 40 cups. From now on it</text><text class="tx" x="45.2" y="133.4">follows the house rule.</text></g>
+<g class="a4 an"><rect x="45.2" y="136.4" width="69.3" height="12.6" fill="#04B575"/><text class="tx bd" x="51.5" y="146" fill="#000" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="146" fill="#EEEEEE">cooler</text></g>
+<g class="a5 an"><rect x="20" y="154" width="18.9" height="12.6" rx="2" fill="#874BFD"/><text class="tx bd" x="29.45" y="163.6" fill="#EEEEEE" text-anchor="middle">3</text><text class="tx" x="45.2" y="163.6">The supplier is asked to keep an eye on the cooler. If</text><text class="tx" x="45.2" y="176.2">it drops below 10 cups, lemons are ordered.</text></g>
+<g class="a6 an"><rect x="45.2" y="179.2" width="69.3" height="12.6" fill="#04B575"/><text class="tx bd" x="51.5" y="188.8" fill="#000" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="188.8" fill="#EEEEEE">supplier</text></g>
+<g class="a7 an"><rect x="20" y="196.8" width="18.9" height="12.6" rx="2" fill="#874BFD"/><text class="tx bd" x="29.45" y="206.4" fill="#EEEEEE" text-anchor="middle">4</text><text class="tx" x="45.2" y="206.4">Sam tries to write down minus one cup. The house rule</text><text class="tx" x="45.2" y="219">turns him away.</text></g>
+<g class="a8 an"><rect x="45.2" y="222" width="69.3" height="12.6" fill="#FF5F87"/><text class="tx bd" x="51.5" y="231.6" fill="#000" textLength="56.7" lengthAdjust="spacing">✗ refused</text><text class="tx" x="127.1" y="231.6" fill="#EEEEEE">cooler</text></g>
+<g class="a9 an"><text class="tx" x="57.8" y="244.2" fill="#6C6C6C">because rule: !has(page.cups) || page.cups &gt;= 0 (from</text><text class="tx" x="57.8" y="256.8" fill="#6C6C6C">stand) is false</text></g>
+<g class="a10 an"><rect x="20" y="264.8" width="18.9" height="12.6" rx="2" fill="#874BFD"/><text class="tx bd" x="29.45" y="274.4" fill="#EEEEEE" text-anchor="middle">5</text><text class="tx" x="45.2" y="274.4">A busy hour takes the cooler down to 4 cups. Nobody</text><text class="tx" x="45.2" y="287">calls the supplier, and the order goes in anyway.</text></g>
+<g class="a11 an"><rect x="45.2" y="290" width="69.3" height="12.6" fill="#04B575"/><text class="tx bd" x="51.5" y="299.6" fill="#000" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="299.6" fill="#EEEEEE">cooler</text></g>
+<g class="a12 an"><text class="tx" x="51.5" y="312.2"><tspan fill="#6C6C6C">↳ </tspan><tspan fill="#FFB454">supplier</tspan><tspan fill="#6C6C6C"> changed by itself</tspan></text></g>
+<g class="a13 an"><rect x="20" y="320.2" width="18.9" height="12.6" rx="2" fill="#874BFD"/><text class="tx bd" x="29.45" y="329.8" fill="#EEEEEE" text-anchor="middle">7</text><text class="tx" x="45.2" y="329.8">A long entry goes into the daybook, and the daybook</text><text class="tx" x="45.2" y="342.4">notices its own weight.</text></g>
+<g class="a14 an"><rect x="45.2" y="345.4" width="69.3" height="12.6" fill="#04B575"/><text class="tx bd" x="51.5" y="355" fill="#000" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="355" fill="#EEEEEE">daybook</text></g>
+<g class="a15 an"><text class="tx" x="51.5" y="367.6"><tspan fill="#6C6C6C">↳ </tspan><tspan fill="#FFB454">daybook</tspan><tspan fill="#6C6C6C"> changed by itself</tspan></text></g>
+<text class="t" x="464" y="22" font-size="10.08" fill-opacity="1" text-anchor="start">A2UI</text>
 <text class="t" x="876" y="22" font-size="8.4" fill-opacity="1" text-anchor="end">WIREFRAME</text>
 <path class="f50" d="M468 378H880V38H876V378Z"/>
 <path class="i" d="M464 34H876V378H464Z"/>
 <path class="i" d="M464 54L876 54"/>
 <path class="k" d="M472 39H482V49H472Z"/>
-<path class="h" d="M488 38.5L617.24 38.5"/>
-<path class="h" d="M722.76 38.5L870 38.5"/>
-<path class="h" d="M488 41.5L617.24 41.5"/>
-<path class="h" d="M722.76 41.5L870 41.5"/>
-<path class="h" d="M488 44.5L617.24 44.5"/>
-<path class="h" d="M722.76 44.5L870 44.5"/>
-<path class="h" d="M488 47.5L617.24 47.5"/>
-<path class="h" d="M722.76 47.5L870 47.5"/>
-<path class="h" d="M488 50.5L617.24 50.5"/>
-<path class="h" d="M722.76 50.5L870 50.5"/>
-<text class="t" x="670" y="48.5" font-size="10.08" fill-opacity="1" text-anchor="middle">MARKET STALL</text>
-<path class="k" d="M476 92H666V204H476Z"/>
-<text class="t" x="486" y="110" font-size="9.24" fill-opacity="1" text-anchor="start">STOCK</text>
-<g class="a16 an x"><path class="k" d="M476 116L666 204"/><path class="k" d="M666 116L476 204"/><path class="k" d="M476 116L666 116"/></g>
-<g class="a17 an x"><text class="big" x="486" y="158">40</text><path class="f25" d="M486 170H622V184H486Z"/>
-<path class="s" d="M486 170H622V184H486Z"/></g>
-<g class="a18 an"><text class="big b" x="486" y="158">4</text><path class="f25" d="M486 170H499.6V184H486Z"/>
-<path class="s" d="M486 170H499.6V184H486Z"/></g>
-<g class="a19 an"><path class="k" d="M486 170H656V184H486Z"/><path class="a" d="M520 164L520 189"/><text class="t" x="520" y="197" font-size="7.56" fill-opacity="1" text-anchor="middle">LOW</text></g>
-<path class="k" d="M674 92H864V146H674Z"/>
-<text class="t" x="684" y="110" font-size="9.24" fill-opacity="1" text-anchor="start">DEPOT</text>
-<g class="a20 an x"><path class="k" d="M674 116L864 146"/><path class="k" d="M864 116L674 146"/><path class="k" d="M674 116L864 116"/></g>
-<g class="a21 an"><text class="t" x="684" y="134" font-size="10.08" fill-opacity="1" text-anchor="start">REORDER</text></g>
-<g class="a22 an x"><path class="i" d="M796 119H840Q850 119 850 129V129Q850 139 840 139H796Q786 139 786 129V129Q786 119 796 119Z"/><text class="t" x="818" y="133" font-size="10.08" fill-opacity="1" text-anchor="middle">NO</text></g>
-<mask id="yes" maskUnits="userSpaceOnUse" x="784" y="117" width="68" height="24"><rect x="784" y="117" width="68" height="24" fill="#fff"/><text class="mt" x="818" y="133" font-size="10.08" fill-opacity="1" text-anchor="middle">YES</text></mask>
-<g class="a23 an"><path class="d" mask="url(#yes)" d="M796 119H840Q850 119 850 129V129Q850 139 840 139H796Q786 139 786 129V129Q786 119 796 119Z"/></g>
-<g class="a24 an x"><path class="a" d="M671 89H867V149H671Z"/></g>
-<path class="k" d="M674 152H864V204H674Z"/>
-<text class="t" x="684" y="170" font-size="9.24" fill-opacity="1" text-anchor="start">RULES</text>
-<g class="a25 an x"><path class="k" d="M674 176L864 204"/><path class="k" d="M864 176L674 204"/><path class="k" d="M674 176L864 176"/></g>
-<g class="a26 an"><path class="k" d="M684 180H694V190H684Z"/><path class="i" d="M686 185L689 188L694 178"/><text class="m" x="702" y="189">stock is never negative</text></g>
-<path class="k" d="M476 212H666V370H476Z"/>
-<text class="t" x="486" y="230" font-size="9.24" fill-opacity="1" text-anchor="start">JOURNAL</text>
-<g class="a27 an x"><path class="k" d="M476 236L666 370"/><path class="k" d="M666 236L476 370"/><path class="k" d="M476 236L666 236"/></g>
-<g class="a29 an"><path class="k" d="M519 304A52 52 0 0 1 623 304Z"/><path class="k" d="M527 304L519 304"/><path class="k" d="M539.89 272.89L534.23 267.23"/><path class="k" d="M571 260L571 252"/><path class="k" d="M602.11 272.89L607.77 267.23"/><path class="k" d="M615 304L623 304"/><circle class="d" cx="571" cy="304" r="3.5"/><text class="t" x="571" y="363" font-size="9.24" fill-opacity="1" text-anchor="middle">PRESSURE</text></g>
-<g class="a30 an"><g class="r28 an" style="transform-origin:571px 304px"><path class="a" d="M571 304L571 262"/></g></g>
-<g class="a31 an x"><text class="big" x="571" y="346" text-anchor="middle" font-size="26">0</text></g>
-<g class="a32 an"><text class="big b" x="571" y="346" text-anchor="middle" font-size="26">2</text></g>
-<path class="k" d="M674 212H864V370H674Z"/>
-<text class="t" x="684" y="230" font-size="9.24" fill-opacity="1" text-anchor="start">HISTORY</text>
-<g class="s42 an"><g class="a33 an"><circle class="d" cx="688" cy="354.6" r="2.4"/><text class="m" x="698" y="358">wrote market</text></g><g class="a34 an"><circle class="d" cx="688" cy="341.6" r="2.4"/><text class="m" x="698" y="345">wrote stall</text></g><g class="a35 an"><circle class="d" cx="688" cy="328.6" r="2.4"/><text class="m" x="698" y="332">wrote depot</text></g><g class="a36 an"><circle class="k" cx="688" cy="315.6" r="2.6"/><text class="m" x="698" y="319">refused: stall</text></g><g class="a37 an"><circle class="d" cx="688" cy="302.6" r="2.4"/><text class="m" x="698" y="306">wrote stall</text></g><g class="a38 an"><circle class="d" cx="688" cy="289.6" r="2.4"/><text class="m" x="698" y="293">depot reacted</text></g><g class="a39 an"><circle class="d" cx="688" cy="276.6" r="2.4"/><text class="m" x="698" y="280">wrote journal</text></g><g class="a40 an"><circle class="d" cx="688" cy="263.6" r="2.4"/><text class="m" x="698" y="267">wrote journal: long entry</text></g><g class="a41 an"><circle class="d" cx="688" cy="250.6" r="2.4"/><text class="m" x="698" y="254">journal reacted</text></g></g>
-<g class="a43 an x"><path class="a" d="M476 60H864V84H476Z"/><text class="t" x="670" y="76" font-size="10.08" fill-opacity="1" text-anchor="middle">REFUSED: STOCK -1</text></g>
+<path class="h" d="M488 38.5L609.79 38.5"/>
+<path class="h" d="M730.21 38.5L870 38.5"/>
+<path class="h" d="M488 41.5L609.79 41.5"/>
+<path class="h" d="M730.21 41.5L870 41.5"/>
+<path class="h" d="M488 44.5L609.79 44.5"/>
+<path class="h" d="M730.21 44.5L870 44.5"/>
+<path class="h" d="M488 47.5L609.79 47.5"/>
+<path class="h" d="M730.21 47.5L870 47.5"/>
+<path class="h" d="M488 50.5L609.79 50.5"/>
+<path class="h" d="M730.21 50.5L870 50.5"/>
+<text class="t" x="670" y="48.5" font-size="10.08" fill-opacity="1" text-anchor="middle">LEMONADE STAND</text>
+<path class="k" d="M476 78H666V178H476Z"/>
+<text class="t" x="486" y="95" font-size="9.24" fill-opacity="1" text-anchor="start">STAND</text>
+<g class="a16 an x"><path class="k" d="M476 101L666 178"/><path class="k" d="M666 101L476 178"/><path class="k" d="M476 101L666 101"/></g>
+<g class="a17 an"><text class="sn" font-size="13.5" font-weight="600" aria-label="We never sell what we have not made."><tspan x="486" y="120">We never sell what</tspan><tspan x="486" y="136">we have not made.</tspan></text><text class="sn sm" x="486" y="157" font-size="10.5">I am Maya, and Sam helps me</text><text class="sn sm" x="486" y="169" font-size="10.5">on busy days.</text></g>
+<path class="k" d="M674 78H864V178H674Z"/>
+<text class="t" x="684" y="95" font-size="9.24" fill-opacity="1" text-anchor="start">COOLER</text>
+<g class="a18 an x"><path class="k" d="M674 101L864 178"/><path class="k" d="M864 101L674 178"/><path class="k" d="M674 101L864 101"/></g>
+<g class="a19 an x"><text class="sn" x="684" y="132" font-size="34" font-weight="400">40</text><text class="sn" x="728" y="132" font-size="13">cups</text><path class="f25" d="M684 144H820V154H684Z"/>
+<path class="s" d="M684 144H820V154H684Z"/></g>
+<g class="a20 an"><text class="sn" x="684" y="132" font-size="34" font-weight="800">4</text><text class="sn" x="709" y="132" font-size="13">cups</text><path class="f25" d="M684 144H697.6V154H684Z"/>
+<path class="s" d="M684 144H697.6V154H684Z"/></g>
+<g class="a21 an"><path class="k" d="M684 144H854V154H684Z"/><text class="sn sm" x="684" y="169" font-size="10.5">Maya made 40 cups this morning.</text></g>
+<path class="k" d="M476 184H864V236H476Z"/>
+<text class="t" x="486" y="201" font-size="9.24" fill-opacity="1" text-anchor="start">SUPPLIER</text>
+<g class="a22 an x"><path class="k" d="M476 207L864 236"/><path class="k" d="M864 207L476 236"/><path class="k" d="M476 207L864 207"/></g>
+<g class="a23 an x"><path class="k" d="M486 222L726 222"/></g>
+<mask id="wr" maskUnits="userSpaceOnUse" x="476" y="206" width="388" height="24"><rect class="rv" x="476" y="206" width="388" height="24" fill="#fff"/></mask>
+<g class="a24 an"><g mask="url(#wr)"><text class="sn" x="486" y="222" font-size="13.5">Two bags of lemons, please. We are nearly out.</text></g></g>
+<g class="a25 an x"><path class="a" d="M473 181H867V239H473Z"/></g>
+<path class="k" d="M476 242H864V352H476Z"/>
+<text class="t" x="486" y="259" font-size="9.24" fill-opacity="1" text-anchor="start">DAYBOOK</text>
+<g class="a26 an x"><path class="k" d="M476 265L864 352"/><path class="k" d="M864 265L476 352"/><path class="k" d="M476 265L864 265"/></g>
+<g class="a27 an"><text class="sn" font-size="10.5"><tspan x="486" y="278">9:00. Opened up. Sunny, with a small breeze.</tspan></text></g>
+<g class="a28 an"><text class="sn" font-size="10.5"><tspan x="486" y="290.4">9:05. Forty cups in the cooler.</tspan></text></g>
+<g class="a29 an"><text class="sn" font-size="10.5"><tspan x="486" y="302.8">11:15. The cooler is down to four cups. ... The supplier ordered</tspan><tspan x="486" y="315.2">lemons by itself, which still makes me smile.</tspan></text></g>
+<g class="a30 an"><text class="sn" font-size="10.5"><tspan x="486" y="327.6">15:00. Wrote this entry. The day was longer than I expected, and I</tspan><tspan x="486" y="340">am happy with it.</tspan></text></g>
+<g class="a31 an x"><circle class="k" cx="848" cy="255" r="3"/></g>
+<g class="a32 an"><path class="f25" d="M841 255a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z"/>
+<path class="s" d="M841 255a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z"/></g>
+<g class="a33 an"><text class="t" x="836" y="258" font-size="7.14" fill-opacity="1" text-anchor="end">PRESSURE</text></g>
+<g class="a34 an"><text class="sn sm" x="476" y="369" font-size="10.5">Sam tried to write down minus one cup. The house rule said no.</text></g>
+<g class="a35 an x"><path class="a" d="M476 56H864V74H476Z"/><text class="sn" x="670" y="69" font-size="11.5" text-anchor="middle">Not allowed: we never sell what we have not made.</text></g>
 </svg>
