@@ -10,7 +10,7 @@ source: maintainers
 
 ## Idea
 
-Cheap [model pages](model-pages.md) with a declared budget that do the quiet work:
+Cheap [model pages](model-pages.md) with a declared budget. They are parts of a character's inner life, not housekeeping services: the doubting, curiosity, tidying and orientation that a page does when nobody is asking it for anything. See [a page with a self](character.md). The four minds are:
 
 - Doubt: review what was done.
 - Curiosity: notice something nearby worth a look.

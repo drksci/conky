@@ -36,7 +36,7 @@ One record per decision, each with context, decision and consequences.
 - [decisions/0004-plain-vocabulary.md](decisions/0004-plain-vocabulary.md): Plain vocabulary
 - [decisions/0005-rules-in-cel.md](decisions/0005-rules-in-cel.md): Rules in CEL
 - [decisions/0006-size-is-a-rule.md](decisions/0006-size-is-a-rule.md): Size is a rule
-- [decisions/0007-inference-for-real-thinking.md](decisions/0007-inference-for-real-thinking.md): Inference is for real thinking
+- [decisions/0007-inference-for-real-thinking.md](decisions/0007-inference-for-real-thinking.md): Reflexes are free, so thought goes into character
 - [decisions/0008-measures-are-self-watches.md](decisions/0008-measures-are-self-watches.md): Measures are self-watches
 - [decisions/0009-patterns-not-features.md](decisions/0009-patterns-not-features.md): Patterns, not features
 - [decisions/0010-no-debt-no-down-migrations.md](decisions/0010-no-debt-no-down-migrations.md): No debt, no down-migrations
@@ -49,6 +49,7 @@ One record per decision, each with context, decision and consequences.
 - [decisions/0017-derived-data.md](decisions/0017-derived-data.md): Derived data sits on top, never underneath
 - [decisions/0018-not-doing.md](decisions/0018-not-doing.md): What conky will not do
 - [decisions/0019-providers-are-pages.md](decisions/0019-providers-are-pages.md): Providers are pages
+- [decisions/0020-everything-is-somebody.md](decisions/0020-everything-is-somebody.md): Everything is somebody
 
 ### Research
 
@@ -82,6 +83,7 @@ Candidates that are not yet requirements. Each states its rung.
 - [ideas/assimilation-test.md](ideas/assimilation-test.md): Assimilation test
 - [ideas/auto-linking.md](ideas/auto-linking.md): Auto-linking
 - [ideas/background-minds.md](ideas/background-minds.md): Background minds
+- [ideas/character.md](ideas/character.md): A page with a self
 - [ideas/cascading-context.md](ideas/cascading-context.md): Context that flows down
 - [ideas/clock.md](ideas/clock.md): Time as an ordinary change
 - [ideas/compositor.md](ideas/compositor.md): The compositor: a screen that is asked for once

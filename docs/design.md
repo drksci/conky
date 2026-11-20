@@ -11,6 +11,8 @@ A short technical overview. The detail is in three reference pages and in the de
 
 ## The model
 
+Everything in a vault is somebody: a page is a character with an identity, a temperament and a voice, not a record with fields. Signed history, rules and reactions are the body, the reflexes and physics a creature never thinks about, so that characters can be lively without being dangerous. Reflexes are free, so thought goes into character ([decision 0020](decisions/0020-everything-is-somebody.md), [a page with a self](ideas/character.md)). Today a page can ask a model, and nothing yet gives a page a generated temperament or voice.
+
 A vault is a plain Git repository. Its pages are Markdown files under `pages/`, and its history is the authority: every change to a page is one signed commit, and a write that is refused is recorded as an empty signed commit. What is not in the history did not happen.
 
 conky keeps no log, hash chain or key format of its own. Git already provides tamper-evident history, signed commits, exact restore, transport by clone, push or bundle, and atomic multi-file changes, with tools that exist almost everywhere. conky is what sits on top: rules, reactions, measures and a few conventions ([decision 0002](decisions/0002-git-is-the-store.md)).
@@ -47,7 +49,7 @@ Outside the eight is how two vaults relate, which is an open question.
 3. **Groups.** Several pages changed together are already one commit. What is not built is a rule that evaluates the whole group, which a ledger-like pattern needs. See [patterns](ideas/patterns.md).
 4. **Who signed.** A rule should be able to see who signed a change and what caused it, so approvals and permission need no new mechanism. See [approvals](ideas/approvals.md).
 5. **Trying first.** A change is applied on a throwaway branch, the consequences are reported and the branch is discarded. See [dry run](ideas/dry-run.md).
-6. **Asking a model.** A page can ask a model and write the answer as an ordinary signed change. Asking is built and tested against stand-in servers. A declared budget that stops spending is not built. See [pages that ask a model](ideas/model-pages.md) and [background minds](ideas/background-minds.md).
+6. **Asking a model.** A page can ask a model and write the answer as an ordinary signed change. Asking is built and tested against stand-in servers. A declared budget that stops spending is not built. Asking is how a page thinks, and cost is bounded by budgets, not by avoiding the model: reflexes are free, so thought goes into character ([decision 0020](decisions/0020-everything-is-somebody.md), [a page with a self](ideas/character.md)). See [pages that ask a model](ideas/model-pages.md) and [background minds](ideas/background-minds.md).
 7. **Tables.** Tabular data sits as Parquet beside its page, so it travels with the vault. See [tables](ideas/tables.md).
 8. **Derived data.** Indexes, summaries and views are optional, live outside the history and can be deleted. The rule is recorded in [decision 0017](decisions/0017-derived-data.md). Nothing is built. See [the history is the trace](ideas/trace.md), [the people's view](ideas/obsidian-view.md) and [a screen from the pages](ideas/a2ui.md). Connectors for outside protocols and the composed screen belong here too: see [connectors](ideas/connectors.md) and [the compositor](ideas/compositor.md).
 
@@ -64,7 +66,8 @@ Each choice has a record in [decisions](decisions/). Those that shape the whole 
 
 - [Git is the store](decisions/0002-git-is-the-store.md)
 - [Rules in CEL](decisions/0005-rules-in-cel.md)
-- [Inference is for real thinking](decisions/0007-inference-for-real-thinking.md)
+- [Reflexes are free, so thought goes into character](decisions/0007-inference-for-real-thinking.md)
+- [Everything is somebody](decisions/0020-everything-is-somebody.md)
 - [Providers are pages](decisions/0019-providers-are-pages.md)
 - [Measures are self-watches](decisions/0008-measures-are-self-watches.md)
 - [Patterns, not features](decisions/0009-patterns-not-features.md)
@@ -78,11 +81,11 @@ Two design questions are open and recorded in [open questions](project/open-ques
 In roadmap order:
 
 1. Spaces that hand down context and reactions, and pages that join several spaces.
-2. The clock, then staleness and relief.
-3. Several pages in one commit, with rules that see the group.
-4. Rules that see who signed, with approvals and the gatekeeper.
-5. Dry run, then seeds, identifiers and drawn faces.
-6. Budgets for model pages and the first background mind.
+2. Seeds, faces and a self for every page.
+3. The clock, then budgets for model pages and the first background mind, then staleness and relief.
+4. Several pages in one commit, with rules that see the group.
+5. Rules that see who signed, with approvals and the gatekeeper.
+6. Dry run.
 7. Rename with link repair, then tables stored as Parquet beside their page ([decision 0003](decisions/0003-data-beside-pages.md)).
 8. Derived data: trace summaries, the people's view and the A2UI screen.
 9. The pattern maker, then direction and drift.

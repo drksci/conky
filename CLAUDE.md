@@ -27,7 +27,7 @@ Run this before every push. CI runs the same command on every pull request.
 - Anything that must never happen is a rule the runtime evaluates. Never ask a model to obey a constraint. (check: `tests/test_laws.py`)
 - Anything that should be noticed rather than forbidden is a pressure that triggers a reaction, not a wall that stops work. (check: `tests/test_laws.py`)
 - A measure is a page watching itself. Its value is written as a recorded event, so reading history never evaluates an expression. (check: `tests/test_laws.py`)
-- Whatever follows from state happens as a reaction, with no model call. Ask a model only what state cannot answer. (check: `tests/test_model.py` for the mechanism; review for when to use it)
+- Whatever follows from state happens as a reflex, with no model call, so that thought can go into character, judgement and conversation. Avoiding the model is never the aim. (check: `tests/test_model.py` for the mechanism; review for the balance)
 - A provider is a page; a secret is never written to a vault. (check: `tests/test_model.py`)
 - Rules and measures are pure: no clock, randomness or I/O inside them. (review)
 - A vault travels alone: cloned or bundled anywhere, it verifies, and it holds no private key. (check: `tests/test_laws.py`)
@@ -38,6 +38,7 @@ Run this before every push. CI runs the same command on every pull request.
 
 ## Design
 
+- Everything is somebody. A page is a character with an identity, a temperament and a voice, and the rules exist so it can be lively without being dangerous. (review: temperament and voice are not built)
 - Build a new concept from existing words or remove one. If it does neither, it does not land. (review)
 - Domain structures (accounting, stock, approvals) are patterns made on demand from goldens and composed from existing words, never runtime features or a shipped catalogue. The runtime gains only general primitives. (review)
 - Outside protocols are reached through connectors beside the vault, never built into the core. A connector holds no state and writes through the same rules as anyone. (review: none built)

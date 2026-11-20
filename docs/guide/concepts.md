@@ -10,6 +10,12 @@ source: maintainers
 
 The ideas behind conky in plain language. Each section ends with a link to the technical page for that idea. For a hands-on version, see [getting started](getting-started.md).
 
+## Everything is somebody
+
+Every page in a vault is a character, not a record. It has an identity, a temperament and a voice of its own, and it notices things, takes an interest and writes in its own words. That liveliness is what the AI is for. The fixed parts (signed history, rules and reactions) are the body: reflexes and physics that a living creature never has to think about, so that a character can be odd without breaking a house rule. Today the example vaults hold human-written content, a page can ask a model, and no page yet has a generated temperament or voice.
+
+In detail: [everything is somebody](../decisions/0020-everything-is-somebody.md) and [a page with a self](../ideas/character.md).
+
 ## Pages
 
 A page is a short document with a few labelled facts at the top and ordinary text underneath. Think of an index card: a title, some fields filled in, and a note. A page can stand for anything the system contains: a person, a team, a tool, a process, a store of data, a set of rules.
@@ -40,7 +46,7 @@ In detail: [rules and refusals](../reference/rules-and-reactions.md#refusals).
 
 A page can be set to watch another page. When the watched page changes and a stated condition is true, the watching page updates itself. The cups in a cooler fall below a threshold, and the supplier's page writes an order, with nobody deciding to. This works like a spreadsheet, where changing one cell updates the cells that depend on it.
 
-Reactions need no thinking, by a person or by an AI model. Thinking is for the questions that state cannot answer, and a page can ask a model for those (see [Asking a model](#asking-a-model)).
+A reaction is a reflex: it needs no thinking, by a person or by an AI model, so no thought is spent on it. The thought goes into what a reflex cannot do, such as judgement, curiosity and a page's own manner, and a page can ask a model for those (see [Asking a model](#asking-a-model)).
 
 Reactions can set off further reactions. A limit stops this from running forever, and a reaction that would change nothing is skipped.
 
@@ -48,7 +54,7 @@ In detail: [reactions](../reference/rules-and-reactions.md#reactions).
 
 ## Asking a model
 
-Some questions cannot be answered from the facts in the pages, such as a one-sentence summary of a request. A page can ask an AI model such a question and keep the answer in one of its own fields. The question is written in a watch entry or given with `conky ask`.
+Some questions cannot be answered from the facts in the pages, such as a one-sentence summary of a request, or how a tired supplier would word an order. Asking a model is how a page thinks, and it is not a last resort. A page can ask an AI model such a question and keep the answer in one of its own fields. The question is written in a watch entry or given with `conky ask`.
 
 The answer is recorded and checked like any other change. It is signed by the page that asked and is subject to that page's rules. The history keeps the question beside it, with the name of the model and the number of tokens used when the provider reports them. A refused answer is recorded with its reason. Reading the history never calls a model.
 
