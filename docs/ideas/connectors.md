@@ -23,7 +23,13 @@ The protocols fall into four families. The examples below were read in [protocol
 - **Interfaces.** A2UI describes a screen as data a renderer draws, and AG-UI streams events between an agent backend and an application. See [a screen from the pages](a2ui.md) and [the compositor](compositor.md).
 - **Clients.** The Agent Client Protocol connects a code editor to a coding agent.
 
-Nothing is built. The mappings in the research page are proposals.
+Apart from the terminal connector described below, nothing is built. The mappings in the research page are proposals.
+
+## What was built
+
+One connector exists: `conky connect terminal`, which gives a vault eyes and hands on a terminal program. It writes what the program shows to a screen page and types what a hands page says, both as ordinary signed writes by the connector's own actor. It holds no state, and the vault verifies with it stopped. Any page can play the program, by reaction or by asking a model. The pages, fields and limits are in the [connectors reference](../reference/connectors.md), and a run is shown in [playing a program](../guide/playing-a-program.md). It is tested in `tests/test_connect.py` against a small game.
+
+This covers the first part of the falsifying test: a change made through the connector appears as a signed commit by the connector's key, and a rule can refuse it. Everything else on this page is not built: no protocol from the families above, no streaming of fast-changing data, and no way yet to grant and limit a connector's key.
 
 ## Composes from
 

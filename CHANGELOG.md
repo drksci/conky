@@ -22,4 +22,6 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 - Trailers `Model`, `Model-Name`, `Tokens-In` and `Tokens-Out`, and `model <provider>` marks in `conky log`.
 - `conky demo`: builds a small example vault, with `lemonade` and `team` examples, written as notes people leave for each other, and tells its story step by step.
 - Styled terminal output in the Charm manner, with rounded boxes and badges, switched by `--color auto|always|never` and `NO_COLOR`; plain output is unchanged.
+- `conky connect terminal`: a connector that gives a vault eyes and hands on a terminal program. It writes the program's screen to a page and types what a hands page says, as ordinary signed writes by its own actor. POSIX only. Tested against a small game in `tests/games/trail.py`.
+- Trailers `Read` on a model answer, naming the pages embedded in the prompt, and `From` on a refusal by a rule that came from a space, with `read` and `from` marks in `conky log`.
 - `conky assimilate`: takes over a stopped vault from its folder alone, checks it, reads it and carries on as a new actor with a new key. With no source it uses a small stopped vault that ships in the package, built by `scripts/build_stopped_vault.py`. It is the mechanical form of the assimilation test and involves no model.

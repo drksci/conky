@@ -141,6 +141,18 @@ class Plain:
         """Return an error line."""
         return f"error: {message}"
 
+    def screen(self, turn: int, commit: str) -> str:
+        """Return the line for a screen written to the vault."""
+        return f"screen {turn} written (commit {commit})"
+
+    def keys(self, turn: int, text: str) -> str:
+        """Return the line for keys sent to the program."""
+        return f"keys sent for screen {turn}: {text}"
+
+    def ended(self, reason: str) -> str:
+        """Return the line for the end of a run."""
+        return f"ended: {reason}"
+
     def log(self, lines: list[str]) -> list[str]:
         """Return the history lines."""
         return lines
@@ -151,7 +163,8 @@ class Plain:
 
 
 _FIELD = re.compile(r"^(\s*(?:- )*)([^\s:#-][^:]*:)(\s.*|)$")
-_MODEL_TAIL = re.compile(r"^(.*?)(?:^| )model (\S+)$")
+_MODEL_TAIL = re.compile(r"^(.*?)(?:^| )model (\S+)(?: read (.+))?$")
+_FROM_TAIL = re.compile(r"^(.*?)(?:^| )from (\S+)$")
 
 
 class Styled(Plain):
@@ -251,6 +264,17 @@ class Styled(Plain):
             return f"{badge} {style.colour(message, style.RED)}"
         return f"{badge} {style.colour(head + sep, style.RED)}{style.bright(todo)}"
 
+    def screen(self, turn: int, commit: str) -> str:
+        badge = style.badge(f"screen {turn}", style.MINT)
+        return f"{badge} {style.dim(f'(commit {commit})')}"
+
+    def keys(self, turn: int, text: str) -> str:
+        badge = style.badge(f"keys for {turn}", style.PURPLE, style.BRIGHT)
+        return f"{badge} {style.bright(text)}"
+
+    def ended(self, reason: str) -> str:
+        return f"{style.badge('ended', style.AMBER)} {style.bright(reason)}"
+
     def log(self, lines: list[str]) -> list[str]:
         rows = [line.split(None, 5) for line in lines]
         rows = [[*row, ""] if len(row) == 5 else row for row in rows]
@@ -269,11 +293,18 @@ class Styled(Plain):
                 f"{mark} {style.bright(page.ljust(page_width))}"
             )
             found = _MODEL_TAIL.match(detail)
+            space = _FROM_TAIL.match(detail)
             if found:
-                text, provider = found.groups()
+                text, provider, read = found.groups()
                 tail = f"{style.dim(text)} " if text else ""
                 pill = style.badge("model", style.PURPLE, style.BRIGHT)
                 line += f" {tail}{pill} {style.bright(provider)}"
+                if read:
+                    line += f" {style.dim('read')} {style.bright(read)}"
+            elif space:
+                text, name = space.groups()
+                tail = f"{style.dim(text)} " if text else ""
+                line += f" {tail}{style.dim('from')} {style.bright(name)}"
             elif detail:
                 line += f" {style.dim(detail)}"
             out.append(line)

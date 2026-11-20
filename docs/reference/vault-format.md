@@ -59,8 +59,11 @@ An answer from a model is a write ([rules and reactions](rules-and-reactions.md#
 | `Model-Name` | the `model` field of that page, as sent |
 | `Tokens-In` | prompt tokens, only when the provider reported them |
 | `Tokens-Out` | completion tokens, only when the provider reported them |
+| `Read` | a page whose fields were embedded in the prompt, one trailer for each distinct page in order of first use, and none when no page was embedded |
 
 Between the subject and the trailers sits the resolved prompt, exactly as it was sent, so the question is in the history beside its answer. The trailers are always the last paragraph of the message. A refusal of an answer that broke a rule carries the same trailers and note.
+
+`Read` records what the page looked at to ask its question. A page counts as read when an embed in the prompt named it and the named field exists. `conky log` shows the pages as `read a, b`.
 
 The answer is a field of the page like any other. The secret used to reach the provider is never written to the vault, in a page, a trailer or a message. See [providers](providers.md#secrets).
 
@@ -75,9 +78,10 @@ A refused write is an empty commit, signed the same way. It changes no page. It 
 | `Reason` | one line saying why the write was refused |
 | `Attempt` | compact JSON of the attempted field changes |
 | `Body-Bytes` | the length of the supplied body in bytes, only when a body was supplied |
+| `From` | the space whose rule refused the write, only when the rule came from a space above the page and not from the page itself |
 | `Cause` | the triggering commit, only when the refused write was a reaction |
 
-The reasons begin with `shape`, `rule`, `cycle`, `watch` or `model`; see [rules and reactions](rules-and-reactions.md#refusals).
+The reasons begin with `shape`, `rule`, `cycle`, `watch` or `model`; see [rules and reactions](rules-and-reactions.md#refusals). The reason text names the space too, as in `(from stand)`. `From` repeats it as a trailer so that a reader of the history can find refusals by space without parsing the reason. `conky log` shows it as `from <space>`.
 
 ## Identity and signing
 
@@ -104,7 +108,7 @@ The private key of each actor is an OpenSSH ed25519 key file named after the act
 1. The working tree is clean. A change made outside conky is a failure.
 2. `git fsck --strict` passes.
 3. Every commit on `main` has a good signature from a key in `keys/allowed_signers`.
-4. Every commit has a `Kind` trailer of `write` or `refused`. Other trailers, such as those of a model answer, are not checked.
+4. Every commit has a `Kind` trailer of `write` or `refused`. Other trailers, such as `Read` and `From` and those of a model answer, are accepted and not checked.
 5. A write changes only files under `pages/` and `keys/allowed_signers`.
 6. A refusal changes nothing except `keys/allowed_signers`, which it changes only in an actor's first commit.
 

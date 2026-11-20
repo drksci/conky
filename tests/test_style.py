@@ -134,3 +134,15 @@ def test_styled_log_aligns_columns_and_marks_model_answers() -> None:
     assert "cause a1b2c3d" in plain[1]
     assert " ".join(plain[2].split()).endswith("model helper") and "refused" in plain[2]
     assert "48;2;135;75;253" in out[2]
+
+
+def test_styled_log_shows_what_was_read_and_which_space_refused() -> None:
+    from conky.present import Styled
+
+    lines = [
+        "a1b2c3d 2026-11-20T10:00:00Z desk write desk cause 1234567 model helper read a, b",
+        "b2c3d4e 2026-11-20T10:00:01Z sam refused cooler rule: x (from stand) is false from stand",
+    ]
+    plain = [" ".join(ESCAPE.sub("", x).split()) for x in Styled(88).log(lines)]
+    assert plain[0].endswith("model helper read a, b")
+    assert plain[1].endswith("is false from stand")

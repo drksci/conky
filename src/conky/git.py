@@ -124,11 +124,14 @@ def commit(
 
 
 def trailers(message: str) -> dict[str, str]:
-    """Return the trailer block at the end of a commit message as a mapping."""
+    """Return the trailer block at the end of a commit message as a mapping.
+
+    A key that appears on several lines, such as `Read`, holds its values joined by `, `.
+    """
     paragraphs = message.strip().split("\n\n")
     found: dict[str, str] = {}
     for line in paragraphs[-1].splitlines() if len(paragraphs) > 1 else []:
         key, sep, value = line.partition(": ")
         if sep:
-            found[key] = value
+            found[key] = f"{found[key]}, {value}" if key in found else value
     return found

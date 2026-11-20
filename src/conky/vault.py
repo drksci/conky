@@ -16,6 +16,7 @@ from conky.page import (
     ShapeError,
     apply,
     check_name,
+    embedded,
     parse,
     resolve,
     resolve_text,
@@ -134,6 +135,10 @@ class Vault:
             )
             if "Model" in found:
                 detail = f"{detail} model {found['Model']}".strip()
+            if "Read" in found:
+                detail = f"{detail} read {found['Read']}".strip()
+            if "From" in found:
+                detail = f"{detail} from {found['From']}".strip()
             fields = [short, at, actor, found.get("Kind", "-"), found.get("Page", "-"), detail]
             lines.append(" ".join(fields).rstrip())
         return lines
@@ -283,14 +288,18 @@ class Vault:
             result = apply(self._load(page) or Page(), changes, body)
         except ShapeError as exc:
             return refuse(f"shape: {exc}")
-        reason = self._rule_reason(page, result)
-        if reason:
-            return refuse(reason)
+        refused = self._rule_reason(page, result)
+        if refused:
+            reason, space = refused
+            if space != page:
+                asked = ([*asked[0], ("From", space)], asked[1])
+            return self._refuse(page, changes, body, actor, at, cause, reason, asked)
         commit = self._record("write", page, actor, at, cause, asked[0], result, asked[1])
         self._react(page, result, commit, at, depth)
         return Result(True, commit)
 
-    def _rule_reason(self, name: str, page: Page) -> str | None:
+    def _rule_reason(self, name: str, page: Page) -> tuple[str, str] | None:
+        """Return the reason a rule refuses the page and the page the rule came from."""
         scope = {"page": page.fields, "size": _size(page)}
         seen = {name}
         space, owner = page, name
@@ -299,18 +308,18 @@ class Vault:
                 try:
                     held = holds(rule, scope)
                 except RuleError as exc:
-                    return f"rule: {rule} (from {owner}) failed to evaluate: {exc}"
+                    return f"rule: {rule} (from {owner}) failed to evaluate: {exc}", owner
                 if not held:
-                    return f"rule: {rule} (from {owner}) is false"
+                    return f"rule: {rule} (from {owner}) is false", owner
             if not space.within:
                 return None
             owner = space.within
             if owner in seen:
-                return f"rule: within chain loops back to {owner}"
+                return f"rule: within chain loops back to {owner}", name
             seen.add(owner)
             found = self._load(owner)
             if found is None:
-                return f"rule: space {owner} does not exist"
+                return f"rule: space {owner} does not exist", name
             space = found
 
     def _react(self, source: str, written: Page, commit: str, at: str, depth: int) -> None:
@@ -361,7 +370,8 @@ class Vault:
         """
         if depth > MAX_DEPTH:
             return self._refuse(page, {}, None, actor, at, cause, _CYCLE)
-        prompt = resolve_text(template, self._all())
+        pages = self._all()
+        prompt = resolve_text(template, pages)
         digest = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
         marker = f"{into}_asked"
         current = (self._load(page) or Page()).fields
@@ -379,5 +389,6 @@ class Vault:
             trailers.append(("Tokens-In", str(answer.tokens_in)))
         if answer.tokens_out is not None:
             trailers.append(("Tokens-Out", str(answer.tokens_out)))
+        trailers += [("Read", name) for name in embedded(template, pages)]
         changes = {into: answer.text, marker: digest}
         return self._write(page, changes, None, actor, at, cause, depth, (trailers, prompt))

@@ -99,6 +99,21 @@ def test_rule_inherited_through_two_level_chain(vault: Vault) -> None:
     assert vault.read("cooler").fields["price"] == 3
 
 
+def test_a_refusal_by_a_rule_from_a_space_names_that_space(vault: Vault) -> None:
+    w(vault, "stand", {"rules": ["!has(page.price) || page.price >= 0"]})
+    w(vault, "bazaar", {"within": "stand"})
+    assert w(vault, "cooler", {"within": "bazaar", "rules": ["page.price < 100"], "price": 3}).ok
+    assert not w(vault, "cooler", {"price": -3}).ok
+    _, found = message(vault)
+    assert found["From"] == "stand" and "(from stand)" in found["Reason"]
+    assert vault.log()[-1].endswith(" from stand")
+    assert not w(vault, "cooler", {"price": 300}).ok
+    _, found = message(vault)
+    assert "From" not in found and "(from cooler)" in found["Reason"]
+    assert not vault.log()[-1].endswith(" from cooler")
+    vault.verify()
+
+
 def test_size_rule_in_a_space_refuses_an_oversized_member(vault: Vault) -> None:
     w(vault, "tight", {"rules": ["size <= 300"]})
     assert w(vault, "note", {"within": "tight"}, "short").ok

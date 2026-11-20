@@ -9,7 +9,7 @@ from pathlib import Path
 
 import yaml
 
-from conky import assimilate, demo, present
+from conky import assimilate, connect, demo, present
 from conky.assimilate import INTO
 from conky.errors import BadInput, VerifyFailed
 from conky.page import load_value, serialize
@@ -47,6 +47,23 @@ def _parser() -> argparse.ArgumentParser:
     sub.add_parser("log", help="print the history, oldest first")
     sub.add_parser("verify", help="check the tree, the objects, the seals and the history")
     sub.add_parser("rebuild", help="restore the working tree to the committed state")
+    link = sub.add_parser("connect", help="run a connector beside the vault")
+    kinds = link.add_subparsers(dest="connector", required=True)
+    term = kinds.add_parser("terminal", help="give a vault eyes and hands on a terminal program")
+    term.add_argument("--vault", default=argparse.SUPPRESS, help="vault directory (default: .)")
+    term.add_argument(
+        "--keys", default=argparse.SUPPRESS, help="private key directory (default: ~/.conky/keys)"
+    )
+    term.add_argument("--as", dest="actor", default="terminal", help="the connector's actor name")
+    term.add_argument("--screen", default="screen", help="page that receives the screen")
+    term.add_argument("--hands", default="hands", help="page that says what to type")
+    term.add_argument(
+        "--settle", type=float, default=connect.SETTLE, help="seconds of quiet that end a screen"
+    )
+    term.add_argument(
+        "--max-steps", type=int, default=connect.MAX_STEPS, help="most screens to write"
+    )
+    term.add_argument("program", nargs="+", metavar="COMMAND", help="after --, the program to run")
     demo_cmd = sub.add_parser("demo", help="build a small example vault and show it working")
     demo_cmd.add_argument(
         "name", nargs="?", default="lemonade", help="the example (default: lemonade)"
@@ -121,6 +138,11 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
         print(ui.initialised(args.path))
         return 0
     vault = Vault(Path(args.vault), args.keys)
+    if args.command == "connect":
+        settings = connect.Settings(
+            args.actor, args.screen, args.hands, args.settle, args.max_steps
+        )
+        return connect.terminal(vault, args.program, settings, _now, ui, print)
     if args.command in ("write", "ask"):
         if args.command == "write":
             result = vault.write(

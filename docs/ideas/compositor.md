@@ -20,6 +20,8 @@ A person can change the screen by asking. Each window and each element carries a
 
 The words shown on the screen are the pages' own words. With no model available the screen falls back to a plain default layout that always works.
 
+A strip of plain-language notices of what the pages did, derived from the history, could sit beside the layout: see [an activity strip](trace.md#an-activity-strip).
+
 Nothing is built.
 
 ## Composes from

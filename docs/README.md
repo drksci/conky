@@ -12,6 +12,7 @@ Each document below starts with frontmatter (`kind`, `title`, `status`, `date`, 
 
 - [guide/concepts.md](guide/concepts.md): Concepts
 - [guide/getting-started.md](guide/getting-started.md): Getting started
+- [guide/playing-a-program.md](guide/playing-a-program.md): Playing a program
 
 ## Layer 3: technical detail
 
@@ -21,6 +22,7 @@ Each document below starts with frontmatter (`kind`, `title`, `status`, `date`, 
 - [reference/cli.md](reference/cli.md): Command line
 - [reference/rules-and-reactions.md](reference/rules-and-reactions.md): Rules and reactions
 - [reference/providers.md](reference/providers.md): Providers
+- [reference/connectors.md](reference/connectors.md): Connectors
 
 ### Design
 

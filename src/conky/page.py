@@ -179,6 +179,16 @@ def parse(text: str) -> Page:
     return Page(head.get("within"), head.get("rules") or [], head.get("watch") or [], fields, body)
 
 
+def embedded(text: str, lookup: dict[str, Page]) -> list[str]:
+    """Return the pages whose fields text embeds, each once, in order of first use."""
+    names: list[str] = []
+    for found in EMBED.finditer(text):
+        target = lookup.get(found.group(1))
+        if target is not None and found.group(2) in target.fields and found.group(1) not in names:
+            names.append(found.group(1))
+    return names
+
+
 def resolve_text(text: str, lookup: dict[str, Page]) -> str:
     """Return text with each embed replaced by the field value it names in lookup."""
 

@@ -163,6 +163,7 @@ def test_an_ask_entry_answers_as_a_signed_write_by_the_asking_page(
         "Model-Name": "test-model",
         "Tokens-In": "11",
         "Tokens-Out": "7",
+        "Read": "ticket",
         "Cause": commits(vault)[-2],
     }
     assert text.splitlines()[0] == "write desk"
@@ -204,6 +205,42 @@ def test_each_wire_format_sends_the_right_request_and_reads_the_answer(
         assert "authorization" not in sent["headers"]
     assert vault.read("desk").fields["summary"] == "The printer keeps jamming."
     assert message(vault)[1]["Tokens-In"] == "11" and message(vault)[1]["Tokens-Out"] == "7"
+
+
+def test_the_answer_names_each_page_that_was_embedded_once_in_order(
+    vault: Vault, stand: Stand
+) -> None:
+    provider(vault, stand)
+    assert w(vault, "other", {"x": 1}).ok
+    assert w(vault, "ticket", {"status": "old", "text": "printer jams"}).ok
+    prompt = (
+        "![[other#x]] ![[ticket#text]] ![[other#x]] ![[ticket#status]] ![[ghost#y]] ![[ticket#no]]"
+    )
+    assert w(vault, "desk", {"summary": "", "watch": watch(prompt=prompt)}).ok
+    new_ticket(vault)
+    text, tags = message(vault)
+    assert tags["Read"] == "other, ticket"
+    assert text.count("\nRead: ") == 2
+    assert vault.log()[-1].endswith("model helper read other, ticket")
+    vault.verify()
+
+
+def test_an_answer_to_a_prompt_with_no_embeds_has_no_read_trailer(
+    vault: Vault, stand: Stand
+) -> None:
+    provider(vault, stand)
+    assert w(vault, "ticket", {"status": "old"}).ok
+    assert w(vault, "desk", {"summary": "", "watch": watch(prompt="Say hello.")}).ok
+    new_ticket(vault)
+    assert "Read" not in message(vault)[1]
+    assert vault.log()[-1].endswith("model helper")
+
+
+def test_an_answer_refused_by_a_rule_still_says_what_was_read(vault: Vault, stand: Stand) -> None:
+    provider(vault, stand)
+    desk(vault, rules=["page.summary.size() <= 5"])
+    new_ticket(vault)
+    assert last_refusal(vault)["Read"] == "ticket"
 
 
 def test_changing_provider_is_editing_one_page(vault: Vault, stand: Stand) -> None:
@@ -414,7 +451,7 @@ def test_history_verifies_and_reads_with_no_network_and_no_secrets(
     copy.verify()
     assert copy.read("desk").fields["summary"] == "The printer keeps jamming."
     assert copy.log() == vault.log()
-    assert vault.log()[-1].endswith("model helper")
+    assert vault.log()[-1].endswith("model helper read ticket")
     assert " cause " in vault.log()[-1]
     assert len(stand.requests) == asked
     assert not (tmp_path / "no-such-keys").exists()

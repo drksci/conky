@@ -8,7 +8,7 @@ source: maintainers
 
 # Command line
 
-`conky` is installed by `pip install -e '.[dev]'`. The walkthrough in [getting started](../guide/getting-started.md) uses every command except `demo` and `assimilate`, which have their own sections there, and `ask`, which needs a provider.
+`conky` is installed by `pip install -e '.[dev]'`. The walkthrough in [getting started](../guide/getting-started.md) uses every command except `demo` and `assimilate`, which have their own sections there, `ask`, which needs a provider, and `connect`, which is shown in [playing a program](../guide/playing-a-program.md).
 
 ```
 conky [--vault DIR] [--keys DIR] [--color WHEN] <command> ...
@@ -140,7 +140,7 @@ Prints the page as stored, with embeds resolved. It is an error if the page does
 conky log
 ```
 
-Prints the history, oldest first, one line per commit: short id, instant in UTC, actor, kind, page, then the reason for a refusal or `cause <id>` for a reaction. A line for a model answer ends with `model <provider page>`. An empty vault prints nothing.
+Prints the history, oldest first, one line per commit: short id, instant in UTC, actor, kind, page, then the reason for a refusal or `cause <id>` for a reaction. A line for a model answer ends with `model <provider page>`, then `read <pages>` when the prompt embedded pages. A line for a refusal by a rule that came from a space ends with `from <space>`. An empty vault prints nothing.
 
 ### verify
 
@@ -149,6 +149,32 @@ conky verify
 ```
 
 Checks the vault as described in [vault format](../reference/vault-format.md#what-verify-checks). It prints `ok: <n> commits verified` on success. On failure it prints `error: <first problem>` and exits 1.
+
+### connect terminal
+
+```
+conky connect terminal [--vault V] [--keys K] [--as NAME] [--screen PAGE] [--hands PAGE]
+                       [--settle SECONDS] [--max-steps N] -- COMMAND [ARGS...]
+```
+
+Runs a [connector](connectors.md) beside the vault that gives it eyes and hands on a terminal program. It starts `COMMAND` in a pseudo-terminal, writes what the program shows to the screen page, and types what the hands page says. POSIX only.
+
+- `COMMAND [ARGS...]` is the program. Put it after `--`, so that its own options are not read as conky's.
+- `--vault V` and `--keys K` are the global options of the same names. They work before or after `connect terminal`.
+- `--as NAME` is the connector's actor, which signs every write. Default: `terminal`. Its key is made on first use, like any actor's.
+- `--screen PAGE` is the page that receives the screen. Default: `screen`.
+- `--hands PAGE` is the page that says what to type. Default: `hands`.
+- `--settle SECONDS` is how long the output must stay quiet before it is written as a screen. Default: 0.3.
+- `--max-steps N` is the most screens to write. Default: 200.
+
+It prints one line for each screen written and each set of keys sent, then a line for the end of the run. The run ends when the program exits, at `--max-steps` screens or on interrupt, and the reason is written to the field `ended` of the screen page. The exit code is 0 for each of these. The pages, fields and limits are in [connectors](connectors.md).
+
+Errors, each on one line beginning `error: `, include:
+
+- `error: cannot start '<program>': <reason>: check the command and that it is on PATH`
+- `error: conky connect terminal needs a POSIX system: run it on Linux or macOS`
+- `error: --screen and --hands name the same page: give each its own page`
+- `error: cannot create the page '<page>': <reason>: create it first, or change the rule`
 
 ### rebuild
 
