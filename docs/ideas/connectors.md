@@ -23,7 +23,7 @@ The protocols fall into four families. The examples below were read in [protocol
 - **Interfaces.** A2UI describes a screen as data a renderer draws, and AG-UI streams events between an agent backend and an application. See [a screen from the pages](a2ui.md) and [the compositor](compositor.md).
 - **Clients.** The Agent Client Protocol connects a code editor to a coding agent.
 
-Apart from the terminal connector described below, nothing is built. The mappings in the research page are proposals.
+Apart from the terminal connector described below, nothing is built. The mappings in the research page are proposals. How a connector to a tool server would make its tools discoverable and callable as pages is in [tools](tools.md), and the drivers a first browser shelf could use are compared in [browser drivers compared](../research/browser-drivers.md).
 
 ## What was built
 

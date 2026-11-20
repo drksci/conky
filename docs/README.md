@@ -52,11 +52,13 @@ One record per decision, each with context, decision and consequences.
 - [decisions/0018-not-doing.md](decisions/0018-not-doing.md): What conky will not do
 - [decisions/0019-providers-are-pages.md](decisions/0019-providers-are-pages.md): Providers are pages
 - [decisions/0020-everything-is-somebody.md](decisions/0020-everything-is-somebody.md): Everything is somebody
+- [decisions/0021-the-outside-arrives-as-pages.md](decisions/0021-the-outside-arrives-as-pages.md): The outside arrives as pages
 
 ### Research
 
 Outside work, compared on a fixed basis, with the depth of reading stated.
 
+- [research/browser-drivers.md](research/browser-drivers.md): Browser drivers compared, and what they suggest for a web connector
 - [research/dair-2026.md](research/dair-2026.md): DAIR.AI papers of the week, 2026: relevance index
 - [research/harnesses.md](research/harnesses.md): Agent harnesses compared
 - [research/papers.md](research/papers.md): Paper register
@@ -107,6 +109,7 @@ Candidates that are not yet requirements. Each states its rung.
 - [ideas/staleness.md](ideas/staleness.md): Nothing goes stale
 - [ideas/tables.md](ideas/tables.md): Tables
 - [ideas/thought-to-change.md](ideas/thought-to-change.md): Thought to change
+- [ideas/tools.md](ideas/tools.md): The outside arrives as pages
 - [ideas/trace.md](ideas/trace.md): The history is the trace
 - [ideas/vault-splitting.md](ideas/vault-splitting.md): Vault splitting
 
