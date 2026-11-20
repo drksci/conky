@@ -25,5 +25,9 @@
   "label": {
     "floor-continue": "constant",
     "floor-random": "random"
+  },
+  "link": {
+    "floor-continue": "https://github.com/drksci/conky/tree/main/bench/adapters/floor",
+    "floor-random": "https://github.com/drksci/conky/tree/main/bench/adapters/floor"
   }
 }

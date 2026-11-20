@@ -27,5 +27,8 @@
   },
   "label": {
     "loop": "bare"
+  },
+  "link": {
+    "loop": "https://github.com/drksci/conky/tree/main/bench/adapters/loop"
   }
 }

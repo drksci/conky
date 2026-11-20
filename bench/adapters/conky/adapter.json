@@ -46,5 +46,8 @@
   },
   "label": {
     "conky": "conky"
+  },
+  "link": {
+    "conky": "https://github.com/drksci/conky"
   }
 }

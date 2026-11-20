@@ -27,6 +27,13 @@
     "kind": "conversation"
   },
   "label": {
-    "cli": "claude"
-  }
+    "cli": "claude code"
+  },
+  "link": {
+    "cli": "https://claude.com/claude-code"
+  },
+  "version": [
+    "claude",
+    "--version"
+  ]
 }

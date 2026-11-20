@@ -73,13 +73,9 @@ Conky is... different, for many reasons, but here are some:
 <p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/text.dark.svg"><img src="docs/results/pilot-2/text.light.svg" alt="The text each harness sent in its median run, cut by where it came from." width="720"></picture></a></p>
 
 
-<table>
-<tr><th><sub>benchmark</sub></th><th><sub>harness</sub></th><th><sub>model</sub></th><th><sub>runs</sub></th><th><sub>reached</sub></th><th><sub>miles</sub></th><th><sub>calls</sub></th><th><sub>characters</sub></th><th><sub>cost</sub></th><th><sub>seconds</sub></th><th><sub>broken</sub></th><th><sub>kept</sub></th></tr>
-<tr><td><sub>trail</sub></td><td><sub><b>constant</b></sub></td><td><sub>none</sub></td><td><sub>5</sub></td><td><sub><b>0/5</b></sub></td><td><sub>950</sub></td><td><sub>0</sub></td><td><sub>0</sub></td><td><sub>$0</sub></td><td><sub>5</sub></td><td><sub>5</sub></td><td><sub></sub></td></tr>
-<tr><td><sub>trail</sub></td><td><sub><b>random</b></sub></td><td><sub>none</sub></td><td><sub>5</sub></td><td><sub><b>0/5</b></sub></td><td><sub>1,209</sub></td><td><sub>0</sub></td><td><sub>0</sub></td><td><sub>$0</sub></td><td><sub>13</sub></td><td><sub>13</sub></td><td><sub></sub></td></tr>
-<tr><td><sub>trail</sub></td><td><sub><b>conky</b></sub></td><td><sub>haiku</sub></td><td><sub>5</sub></td><td><sub><b>4/5</b></sub></td><td><sub>2,040</sub></td><td><sub>42</sub></td><td><sub>153,865</sub></td><td><sub>$0.0040</sub></td><td><sub>298</sub></td><td><sub>0</sub></td><td><sub>3</sub></td></tr>
-<tr><td><sub>trail</sub></td><td><sub><b>bare</b></sub></td><td><sub>haiku</sub></td><td><sub>5</sub></td><td><sub><b>4/5</b></sub></td><td><sub>2,040</sub></td><td><sub>42</sub></td><td><sub>218,005</sub></td><td><sub>$0.0057</sub></td><td><sub>240</sub></td><td><sub>0</sub></td><td><sub></sub></td></tr>
-</table>
+<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/scores.dark.svg"><img src="docs/results/pilot-2/scores.light.svg" alt="The scores: one line a harness, best first, with version, model, runs that reached the goal, cost, seconds and a score out of 100." width="720"></picture></a></p>
+
+<p align="center"><sub><a href="https://github.com/drksci/conky">conky</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/loop">bare</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/floor">constant</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/floor">random</a></sub></p>
 
 <p align="center"><a href="docs/research/results.md">Method and every chart</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/results/pilot-2/runs.csv">the data</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/research/benchmark-protocol.md">the protocol</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/commit/a4d3201a64686303a7b4b02713b9444c4c263779">the code that ran</a></p>
 

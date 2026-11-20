@@ -102,6 +102,19 @@ def git_commit() -> str:
     return done.stdout.strip() + ("+changes" if dirty.stdout.strip() else "")
 
 
+def harness_version(manifest: dict) -> str | None:
+    """What an outside harness says its version is, when its manifest names the command to ask."""
+    command = manifest.get("version")
+    if not command:
+        return None
+    try:
+        done = subprocess.run(command, capture_output=True, text=True, check=False, timeout=20)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    words = done.stdout.strip().split()
+    return words[0] if words else None
+
+
 def now() -> str:
     return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -357,6 +370,7 @@ class Run:
             "versions": {
                 "python": platform.python_version(),
                 "repository": git_commit(),
+                "harness": harness_version(self.arm["manifest"]),
                 "game": {
                     "repository": fetch.REPOSITORY,
                     "commit": fetch.COMMIT,

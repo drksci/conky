@@ -24,6 +24,7 @@ LOOKS = {
         "accent": "#C99A00",
         "mark": "#0097A7",
         "paper": "#FFFFFF",
+        "warm": "#C6502C",
     },
     "dark": {
         "ink": "#EDEDED",
@@ -31,6 +32,7 @@ LOOKS = {
         "accent": "#FFE066",
         "mark": "#7DF9FF",
         "paper": "#0D1117",
+        "warm": "#FF9E80",
     },
 }
 TITLE = (
@@ -314,6 +316,7 @@ def text(rows: list[dict], calls: list[dict], look: str) -> str:
     s = Sheet(look)
     order, arms, accent, thinking = _setup(rows)
     made = {(e["harness"], e["seed"]): e["calls"] for e in calls}
+    thinking = [h for h in thinking if any(made.get((h, r["seed"])) for r in arms[h])]
     _head(s, "Where the text went", _state(rows, "characters · median run"))
     _key(s, 62, tuple((TINTS[k], word) for k, word in SHARES))
     trees = {}
@@ -347,6 +350,7 @@ def time(rows: list[dict], calls: list[dict], look: str) -> str:
     s = Sheet(look)
     order, arms, accent, thinking = _setup(rows)
     made = {(e["harness"], e["seed"]): e["calls"] for e in calls}
+    thinking = [h for h in thinking if any(made.get((h, r["seed"])) for r in arms[h])]
     _head(s, "Where the time went", _state(rows, "seconds · median run"))
     _key(s, 62, ((TINTS["call"], "in the model"), (TINTS["idle"], "in the harness")))
     trees = {}
@@ -499,6 +503,7 @@ def cost(rows: list[dict], series: list[dict], calls: list[dict], progress: dict
     goal, unit = progress["goal"], progress["unit"]
     steps = {(e["harness"], e["seed"]): e["series"] for e in series}
     made = {(e["harness"], e["seed"]): e["calls"] for e in calls}
+    thinking = [h for h in thinking if any(made.get((h, r["seed"])) for r in arms[h])]
     spent: dict[tuple, float] = {}
     basis = ""
     for h in thinking:
@@ -577,3 +582,32 @@ def _nice(value: float) -> float:
         return 1.0
     scale = 10 ** math.floor(math.log10(value))
     return next(scale * m for m in (1, 2, 5, 10) if scale * m >= value)
+
+
+def scoreboard(lines: list[dict], look: str) -> str:
+    """The scores as a small printed table: one line a harness, best first.
+
+    Each line has `name`, `accent` and `cells`, a list of (text, standing) where standing is
+    `best`, `worst` or nothing. Colour is in the lettering only: the best of a column in the
+    cool pen, the worst in the warm one.
+    """
+    s = Sheet(look)
+    heads = ("harness", "version", "model", "reached", "cost", "seconds", "score")
+    at = (24.0, 170.0, 262.0, 392.0, 490.0, 590.0, WIDTH - 24.0)
+    ends = ("start", "start", "start", "end", "end", "end", "end")
+    for head, x, anchor in zip(heads, at, ends, strict=True):
+        s.caps(x, 22, head, anchor=anchor)
+    s.line(24, 32, WIDTH - 24, 32)
+    y = 54.0
+    for line in lines:
+        s.caps(
+            at[0], y, line["name"], "accent" if line["accent"] else "ink", size=10.5, weight="bold"
+        )
+        for k, (words, standing) in enumerate(line["cells"], start=1):
+            tone = {"best": "mark", "worst": "warm"}.get(standing, "ink")
+            last = k == len(heads) - 1
+            s.text(at[k], y, words, 15 if last else 11.5, tone, SANS if last else MONO,
+                   "bold" if last or standing else "normal", ends[k])  # fmt: skip
+        s.line(24, y + 11, WIDTH - 24, y + 11, 0.75, "grey", "1 4")
+        y += 28
+    return s.svg(y - 8, "The scores: one line a harness, best first.")

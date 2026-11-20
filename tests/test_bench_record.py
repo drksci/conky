@@ -50,6 +50,8 @@ def test_the_row_has_the_standard_keys_and_values(tmp_path: Path) -> None:
         "violations": 1,
         "kept": None,
         "tape": "",
+        "version": "",
+        "cost": None,
     }
     assert re.fullmatch(r"[0-9a-f]{12}", loop["tape"])
     dead = record.row(folder(root, "floor-random"))

@@ -47,6 +47,8 @@ KEYS = (
     "violations",
     "kept",
     "tape",
+    "version",
+    "cost",
 )
 BUDGET_EXITS = ("budget-exhausted", "wall-clock", "stalled", "stopped")
 
@@ -184,6 +186,7 @@ def row(folder: Path) -> dict:
     steps_ = series(folder)
     seg = meta.get("segments", [])
     uses_model = meta.get("uses_model", True)
+    versions = meta.get("versions") or {}
     tape = hashlib.sha256((folder / "transcript.jsonl").read_bytes()).hexdigest()[:12]
     return {
         "scenario": name,
@@ -209,7 +212,26 @@ def row(folder: Path) -> dict:
         "violations": sum(len(s["violations"]) for s in steps_),
         "kept": kept(folder, manifest(harness).get("kept")),
         "tape": tape,
+        "version": versions.get("harness") or versions.get("repository", "")[:7],
+        "cost": _cost(meta, made, uses_model),
     }
+
+
+def _cost(meta: dict, made: list[dict], uses_model: bool) -> float | None:
+    """Dollars for the run: what the harness reported of itself, else list price for its calls,
+    nothing for a harness with no model, and None when neither is known."""
+    if not uses_model:
+        return 0.0
+    told = (meta.get("self_reported") or {}).get("total_cost_usd")
+    if isinstance(told, int | float):
+        return round(float(told), 6)
+    found = dollars(meta.get("model", ""), made)
+    return round(found[0], 6) if found else None
+
+
+def link(harness: str) -> str:
+    """Where a reader can find the harness, from its `adapter.json`, or nothing."""
+    return manifest(harness).get("link", {}).get(harness, "")
 
 
 def _spread(values: set) -> str:

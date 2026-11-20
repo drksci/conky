@@ -52,6 +52,8 @@ Counts are runs. Other columns are the median over seeds.
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/text.dark.svg"><img src="../results/pilot-2/text.light.svg" alt="The text each harness sent in its median run, cut by where it came from." width="720"></picture></p>
 
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/scores.dark.svg"><img src="../results/pilot-2/scores.light.svg" alt="The scores: one line a harness, best first, with version, model, runs that reached the goal, cost, seconds and a score out of 100." width="720"></picture></p>
+
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/progress.dark.svg"><img src="../results/pilot-2/progress.light.svg" alt="miles left to Oregon against turn, one line per arm." width="720"></picture></p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/spend.dark.svg"><img src="../results/pilot-2/spend.light.svg" alt="Model calls and text sent against turn, one line per arm." width="720"></picture></p>

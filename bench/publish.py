@@ -19,17 +19,20 @@ import statistics
 import sys
 from pathlib import Path
 
-from bench import analyse, charts, record
+from bench import analyse, charts, plate, record
 
 ROOT = Path(__file__).resolve().parent.parent
 REPOSITORY = "https://github.com/drksci/conky"
 PAGE = "docs/research/results.md"
 START, END = "<!-- bench:start -->", "<!-- bench:end -->"
 PLATES = ("reached", "became", "cost", "time", "text")
-SHOWN = (*PLATES, "progress", "spend", "rules", "board")
+BOARD = "scores"
+SHOWN = (*PLATES, BOARD, "progress", "spend", "rules", "board")
 ALT = {
     "reached": "Every run drawn as a bar from {start} to {end}, one band per harness, under "
     "the model, seeds, budget and commit that were held equal.",
+    "scores": "The scores: one line a harness, best first, with version, model, runs that "
+    "reached the goal, cost, seconds and a score out of 100.",
     "became": "The parts each harness was made of when its median run stopped.",
     "cost": "Text sent against progress made, one line for every run.",
     "text": "The text each harness sent in its median run, cut by where it came from.",
@@ -115,36 +118,81 @@ def table(f: dict) -> str:
     return head + body
 
 
-def scores(f: dict, runs: list[charts.Run]) -> str:
-    """The scores as one small table for the front page: a row a harness, medians over seeds."""
-    heads = ("benchmark", "harness", "model", "runs", "reached", f["progress"]["unit"], "calls")
-    heads += ("characters", "cost", "seconds", "broken", "kept")
-    out = ["<table>", "<tr>" + "".join(f"<th><sub>{h}</sub></th>" for h in heads) + "</tr>"]
-    for arm in f["order"]:
+WEIGHTS = {"reach": 70, "cost": 15, "time": 15}
+
+
+def totals(runs: list[charts.Run], order: list[str]) -> dict[str, dict]:
+    """A row a harness: the share that reached the goal, the median cost and time of a run, and
+    a score out of 100.
+
+    The score is the share of runs that reached the goal, times the weights: `reach` in full,
+    `cost` and `time` each in proportion to the cheapest and the quickest harness that uses a
+    model. A harness that never reaches the goal scores nothing, however cheap or quick it is.
+    """
+    out = {}
+    for arm in order:
         rs = [r for r in runs if r.arm == arm]
-        p = f["per"][arm]
-        kept = [r.kept for r in rs if r.kept is not None]
-        sent = statistics.median(r.row["chars"] for r in rs)
-        paid = [record.dollars(r.row["model"], r.calls) for r in rs]
-        cost = statistics.median(p[0] for p in paid) if paid and all(paid) else None
-        cells = (
-            f["scenario"],
-            f"<b>{record.label(arm)}</b>",
-            rs[0].row["model"],
-            p["n"],
-            f"<b>{p['arrived']}/{p['n']}</b>",
-            f"{p['value']:,.0f}",
-            f"{p['calls']:,.0f}",
-            f"{sent:,.0f}" if sent else "0",
-            f"${cost:.4f}" if cost is not None else ("$0" if not sent else ""),
-            f"{p['wall']:,.0f}",
-            sum(len(r.breaks) for r in rs),
-            sum(kept) if kept else "",
+        costs = [r.row["cost"] for r in rs]
+        out[arm] = {
+            "reach": sum(r.row["ending"] == "reached" for r in rs) / len(rs),
+            "n": len(rs),
+            "cost": statistics.median(costs) if all(c is not None for c in costs) else None,
+            "time": statistics.median(r.row["wall_s"] for r in rs),
+            "uses": rs[0].row["model"] != "none",
+            "row": rs[0].row,
+        }
+    paid = [t for t in out.values() if t["uses"]]
+    cheapest = min((t["cost"] for t in paid if t["cost"]), default=None)
+    quickest = min((t["time"] for t in paid if t["time"]), default=None)
+    for t in out.values():
+        part = WEIGHTS["reach"]
+        if t["uses"] and t["cost"] and cheapest:
+            part += WEIGHTS["cost"] * cheapest / t["cost"]
+        if t["uses"] and t["time"] and quickest:
+            part += WEIGHTS["time"] * quickest / t["time"]
+        t["score"] = round(t["reach"] * part)
+    return out
+
+
+def standings(found: dict[str, dict]) -> list[dict]:
+    """The scoreboard's lines, best first: each cell with whether it is the best or the worst."""
+
+    def standing(key: str, arm: str, high: bool) -> str:
+        everyone = key in ("reach", "score")
+        pool = [t[key] for t in found.values() if t[key] is not None and (everyone or t["uses"])]
+        value = found[arm][key]
+        if value is None or not (everyone or found[arm]["uses"]) or len(set(pool)) < 2:
+            return ""
+        best, worst = (max(pool), min(pool)) if high else (min(pool), max(pool))
+        return "best" if value == best else "worst" if value == worst else ""
+
+    lines = []
+    for arm in sorted(found, key=lambda arm: -found[arm]["score"]):
+        t = found[arm]
+        lines.append(
+            {
+                "name": record.label(arm),
+                "accent": bool(record.manifest(arm).get("accent")),
+                "cells": [
+                    (t["row"]["version"], ""),
+                    (t["row"]["model"], ""),
+                    (f"{round(t['reach'] * t['n'])}/{t['n']}", standing("reach", arm, True)),
+                    (f"${t['cost']:.4f}" if t["cost"] else "", standing("cost", arm, False)),
+                    (f"{t['time']:,.0f}", standing("time", arm, False)),
+                    (f"{t['score']}", standing("score", arm, True)),
+                ],
+            }
         )
-        row = "".join(f"<td><sub>{str(c).replace(' ', '&nbsp;')}</sub></td>" for c in cells)
-        out.append(f"<tr>{row}</tr>")
-    out.append("</table>")
-    return "\n".join(out)
+    return lines
+
+
+def linked(found: dict[str, dict]) -> str:
+    """The harnesses as one line of links, in the scoreboard's order."""
+    names = []
+    for arm in sorted(found, key=lambda arm: -found[arm]["score"]):
+        where, name = record.link(arm), record.label(arm)
+        names.append(f'<a href="{where}">{name}</a>' if where else name)
+    return '<p align="center"><sub>' + "&nbsp;&nbsp;·&nbsp;&nbsp;".join(names) + "</sub></p>"
 
 
 def setup(f: dict) -> str:
@@ -239,7 +287,9 @@ def readme_block(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
                 )
             ),
             "",
-            scores(f, runs),
+            f'<p align="center"><a href="{PAGE}">{picture(folder, "scores", f)}</a></p>',
+            "",
+            linked(totals(runs, f["order"])),
             "",
             f'<p align="center"><a href="{PAGE}">Method and every chart</a>'
             f'&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{folder}/runs.csv">the data</a>'
@@ -325,6 +375,11 @@ def publish(results: Path, name: str, kind: str, root: Path = ROOT) -> list[Path
     for stray in out.glob("*.svg"):
         if stray.name.split(".")[0] not in SHOWN:
             stray.unlink()
+    lines = standings(totals(runs, f["order"]))
+    for look in plate.LOOKS:
+        board = out / f"scores.{look}.svg"
+        board.write_text(plate.scoreboard(lines, look), encoding="utf-8")
+        written.append(board)
     doc = root / "docs" / "research" / "results.md"
     doc.write_text(page(name, kind, f, runs), encoding="utf-8")
     readme = root / "README.md"

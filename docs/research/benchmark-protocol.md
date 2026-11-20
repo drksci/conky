@@ -216,3 +216,11 @@ Fetched on 2026-11-20:
 - [tau2-bench](https://github.com/sierra-research/tau2-bench) runs a fixed number of trials per task (`--num-trials`), names the user simulator's model in the command, and saves every simulation for later viewing. The runner's fixed seeds, recorded model and kept transcripts follow it. Its README does not mention seeds.
 - [AI Agents That Matter](https://arxiv.org/abs/2407.01502) argues for "jointly optimizing" cost and accuracy and reports "a pervasive lack of reproducibility" from unstandardised evaluation. Cost is reported beside every outcome here, and every number carries the run's full record.
 - The [benchmark survey](benchmarks.md) found no benchmark that holds the model, prompt and budget fixed and varies only the harness; this protocol is built to do that, at small scale.
+
+## The score
+
+The front page gives each harness one score out of 100, so that a reader has a single number to start from. It is the share of runs that reached the goal, times three weights: 70 for reaching it, 15 for cost and 15 for time. Cost and time are each counted in proportion to the cheapest and the quickest harness that uses a model, so the cheapest gets the full 15 and one that costs twice as much gets half. A harness that never reaches the goal scores nothing, however cheap or quick it is.
+
+The weights are a judgement, stated here before the benchmark proper is run, and they are in one place in the code (`WEIGHTS` in `bench/publish.py`). The score orders the table. It replaces none of the measures beside it, and a difference of a few points between two harnesses on five runs means nothing.
+
+Cost is in dollars. A harness that reports its own cost is taken at its word; otherwise the run's tokens are priced from `bench/prices.json`, and where a provider reports no token counts they are estimated from characters. Each harness's version is the one it reports of itself, or the commit of this repository for a harness that lives in it.
