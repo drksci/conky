@@ -2,6 +2,8 @@
 
 <h3 align="center">The Unharnessed Harness</h3>
 
+<br>
+
 <p><img src="docs/assets/conky-hero.jpg" alt="A ventriloquist puppet in a sweater that reads conky, with the caption: You just remember I call the shots here, Bubbles." width="100%"><br><sub><a href="https://www.youtube.com/watch?v=vcsm6QO-MWE">Trailer Park Boys: Conky</a></sub></p>
 
 <h3 align="center">Unharness your agents.</h3>
