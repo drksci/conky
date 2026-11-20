@@ -10,11 +10,12 @@ source: maintainers
 
 ## Context
 
-A vault's Git history is the source of truth, and it is deliberately simple: pages are files, changes are signed commits, state is a view of the history ([0002](0002-git-is-the-store.md)). Some ways of using a vault are slow or awkward against plain files and history: searching, querying across many pages, finding what watches what, showing a view to people, starting up on a long history.
+- A vault's Git history is the source of truth and is deliberately simple: pages are files, changes are signed commits, state is a view of the history ([0002](0002-git-is-the-store.md)).
+- Some uses are slow or awkward against plain files and history: searching, querying across many pages, finding what watches what, showing a view to people, starting up on a long history.
 
 ## Decision
 
-Anything built to make a vault faster or nicer to use is derived data: indexes, caches, snapshots, query stores, generated views. Derived data is optional. It lives outside the vault's history, in a directory named `.conky/` that Git ignores. It can always be rebuilt from the vault alone, and it can be deleted at any time without losing anything. Nothing ever reads derived data as the truth, and no rule or reaction depends on it being present.
+Anything built to make a vault faster or nicer to use is derived data: indexes, caches, snapshots, query stores, generated views. Derived data is optional and lives outside the vault's history, in a directory named `.conky/` that Git ignores. It can always be rebuilt from the vault alone and deleted at any time without losing anything. Nothing reads it as the truth, and no rule or reaction depends on it being present.
 
 ## Consequences
 

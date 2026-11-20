@@ -10,13 +10,13 @@ source: maintainers
 
 ## Context
 
-The terminal connector lets a program's screen become writes to one page and a character's answer become writes to another. The next consumers are a browser and the many tool servers that speak the Model Context Protocol. Building one connector per case would give each its own way to be found, called and limited.
-
-The survey in [browser drivers](../research/browser-drivers.md) found that most leading browser drivers can be reached over that protocol, so a general connector reaches the browser without driver code of its own.
+- The terminal connector turns a program's screen into writes to one page and a character's answer into writes to another.
+- The next consumers are a browser and the many tool servers that speak the Model Context Protocol. One connector per case would give each its own way to be found, called and limited.
+- The survey in [browser drivers](../research/browser-drivers.md) found that most leading browser drivers can be reached over that protocol, so a general connector reaches the browser without driver code of its own.
 
 ## Decision
 
-A connector brings a space into the vault. The pages it writes are what it perceives. The pages others write to are what it can do. Nothing else is added: the parts are space, page, write, watch and rule.
+A connector brings a space into the vault. The pages it writes are what it perceives, and the pages others write to are what it can do. Nothing else is added: the parts are space, page, write, watch and rule.
 
 - A tool is a page. A call is a write to it, and the result is a signed write back, caused by the request.
 - A character finds what it can sense and do by reading the spaces it is within. There is no registry and no tool list placed in a prompt for it.

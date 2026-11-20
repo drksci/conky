@@ -10,11 +10,12 @@ source: maintainers
 
 ## Context
 
-The reference implementation is in Python while the design is still changing ([0011](0011-python-reference-implementation.md)). Python needs an interpreter and, for this design, Git and `ssh-keygen` on the machine. That limits where a vault can be used: not in a browser, and not on a machine without those tools.
+- The reference implementation is Python while the design is still changing ([0011](0011-python-reference-implementation.md)).
+- Python needs an interpreter and, for this design, Git and `ssh-keygen` on the machine. That rules out a browser and any machine without those tools.
 
 ## Decision
 
-Once the vault format is settled, a core in Rust is intended. It would be compiled natively and to WebAssembly, so that it can run without Git or other tools installed and in a browser. This is a plan, not a present capability, and nothing of it is built.
+Once the vault format is settled, a core in Rust is intended, compiled natively and to WebAssembly so that it runs in a browser and without Git or other tools installed. This is a plan, not a present capability, and nothing of it is built.
 
 Any other implementation, including that one, must pass the same conformance suite: the golden vault fixture in `tests/golden/` and the tests in `tests/`. The golden vault is a bundle of a small vault that every implementation must verify and read to identical pages. A change that breaks the fixture is a break in the vault format and needs a decision record first.
 

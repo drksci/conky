@@ -10,7 +10,7 @@ source: maintainers
 
 ## Context
 
-Documentation kept in a wiki drifts from the code and cannot be checked. Documentation kept beside the code is versioned and reviewed with it.
+Documentation kept in a wiki drifts from the code and cannot be checked. Documentation beside the code is versioned and reviewed with it.
 
 ## Decision
 

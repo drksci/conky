@@ -10,11 +10,11 @@ source: maintainers
 
 ## Context
 
-Domain structures such as double-entry accounting are tempting to build into the runtime. A built-in ledger is one domain's structure, and building it in would break the rule that a new concept is composed from existing words or removes one.
+Domain structures such as double-entry accounting are tempting to build into the runtime. A built-in ledger is one domain's structure, and it would break the rule that a new concept is composed from existing words or removes one.
 
 ## Decision
 
-Domain structures are never built into the runtime. They are patterns: recipes that compose the existing words. The runtime only gains general primitives. Patterns are not shipped as a catalogue; they are made on demand from worked examples by a pattern maker. See [patterns](../ideas/patterns.md) and [ledger](../ideas/ledger.md).
+Domain structures are never built into the runtime. They are patterns, recipes that compose the existing words, and the runtime only gains general primitives. Patterns are not shipped as a catalogue: a pattern maker makes them on demand from worked examples. See [patterns](../ideas/patterns.md) and [ledger](../ideas/ledger.md).
 
 ## Consequences
 

@@ -10,7 +10,7 @@ source: maintainers
 
 ## Context
 
-A runtime grows by accepting reasonable requests. Some requests would undo the properties the design depends on: one authority, a vault that travels alone, and a small set of general words.
+A runtime grows by accepting reasonable requests. Some would undo the properties the design depends on: one authority, a vault that travels alone, and a small set of general words.
 
 ## Decision
 

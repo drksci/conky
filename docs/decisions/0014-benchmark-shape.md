@@ -10,11 +10,11 @@ source: maintainers
 
 ## Context
 
-Claims about how conky compares with other agent harnesses need a fair way to be tested. A scenario written for one harness favours it.
+Claims about how conky compares with other agent harnesses need a fair test, and a scenario written for one harness favours it.
 
 ## Decision
 
-A benchmark scenario is a set of harness-neutral documents: seed prompt, starting state, observables and scoring. It runs through an adapter on the same model and budget for every harness. It includes the assimilation test: hand a fresh consumer only a stopped vault and score whether it resumes correctly. Status is open because none of this is built.
+A benchmark scenario is a set of harness-neutral documents: seed prompt, starting state, observables and scoring. It runs through an adapter on the same model and budget for every harness, and includes the assimilation test: hand a fresh consumer only a stopped vault and score whether it resumes correctly. Status is open because none of this is built.
 
 ## Consequences
 

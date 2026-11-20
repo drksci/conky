@@ -10,18 +10,13 @@ source: maintainers
 
 ## Context
 
-[Decision 0007](0007-inference-for-real-thinking.md) says a model is asked only what state cannot answer. It does not say how a page asks. The risks are:
-
-- a new word in the vocabulary;
-- provider-specific code scattered through the runtime;
-- a secret leaking into a history that is meant to be shared;
-- answers that cannot be read later without calling the model again.
-
-Two wire formats cover most services: the chat completions format that most hosted providers and local servers accept, and the Anthropic messages format. Both are a single JSON request and a single JSON reply.
+- [Decision 0007](0007-inference-for-real-thinking.md) says a model is asked only what state cannot answer, but not how a page asks.
+- The risks are a new word in the vocabulary, provider-specific code scattered through the runtime, a secret leaking into a history meant to be shared, and answers that cannot be read later without calling the model again.
+- Two wire formats cover most services: the chat completions format that most hosted providers and local servers accept, and the Anthropic messages format. Both are a single JSON request and a single JSON reply.
 
 ## Decision
 
-Nothing is added to the vocabulary. A model is reached through a provider page, and a question is asked by a watch entry.
+A model is reached through a provider page, and a question is asked by a watch entry. Nothing is added to the vocabulary.
 
 - A provider is an ordinary page with the fields `api` (`openai` or `anthropic`), `url`, `model`, an optional `secret` and an optional `max_tokens`. A rule can constrain provider pages like any page.
 - The `secret` field holds the name of a secret. The value is looked up by name in the environment variable `CONKY_SECRET_<NAME>`, then in the file `<name>.secret` in the key directory. It is never written to the vault.
@@ -32,7 +27,7 @@ Nothing is added to the vocabulary. A model is reached through a provider page, 
 - `conky ask` is a one-off question by an actor, through the same path.
 - The call uses the standard library only, in one small module: one POST per question, with no streaming, no system prompt and no tools.
 
-This builds on the prior art of the two public formats, which providers and local servers already implement, rather than a client library for each.
+This builds on the two public formats, which providers and local servers already implement, rather than a client library for each.
 
 ## Consequences
 
@@ -41,7 +36,7 @@ This builds on the prior art of the two public formats, which providers and loca
 - An answer is a recorded write, so history is read without a model. A model's output counts as a claim made by a page, not as a checked fact: nothing yet marks the difference.
 - Only the two formats are supported. A service with another format needs a new `api` value and a decision.
 - The behaviour has been tested against stand-in servers on the local machine. It has not been run against a live provider.
-- Cost is recorded as token counts when the provider reports them. Nothing limits it. Because the question is skipped only when its resolved prompt is unchanged, a prompt that embeds its own answer is asked repeatedly until the depth limit.
+- Cost is recorded as token counts when the provider reports them. Nothing limits it. Because a question is skipped only when its resolved prompt is unchanged, a prompt that embeds its own answer is asked repeatedly until the depth limit.
 
 ## Open questions
 

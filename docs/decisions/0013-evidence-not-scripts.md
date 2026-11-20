@@ -10,7 +10,7 @@ source: maintainers
 
 ## Context
 
-A scripted demonstration can look exactly like a real measurement, because the script shows only the cases its author chose. A number printed by a script is a hypothesis, not a result.
+A scripted demonstration shows only the cases its author chose, so it can look exactly like a real measurement. A number printed by a script is a hypothesis, not a result.
 
 ## Decision
 

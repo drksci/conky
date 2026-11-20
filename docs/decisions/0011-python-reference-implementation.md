@@ -10,7 +10,10 @@ source: maintainers
 
 ## Context
 
-The design is still changing. The runtime needs a language in which it is quick to change and to test. Parquet and DuckDB tooling is native to Python, the agent harnesses that conky is to be compared with are written in Python, and no part of the runtime yet needs a sandbox for untrusted code.
+- The design is still changing, so the runtime needs a language that is quick to change and to test.
+- Parquet and DuckDB tooling is native to Python.
+- The agent harnesses conky is to be compared with are written in Python.
+- No part of the runtime yet needs a sandbox for untrusted code.
 
 ## Decision
 

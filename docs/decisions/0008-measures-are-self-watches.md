@@ -10,16 +10,19 @@ source: maintainers
 
 ## Context
 
-Some limits are better expressed as a rising signal than as a refusal. That needs a way to compute a number from a page's state and keep it up to date. Adding a new concept for it would break the aim of building from existing words, and a value computed at read time would make history depend on the expression language.
+- Some limits are better expressed as a rising signal than as a refusal, which needs a number computed from a page's state and kept up to date.
+- A new concept for it would break the aim of building from existing words.
+- A value computed at read time would make history depend on the expression language.
 
 ## Decision
 
-No new concept is added for measures or pressure. A measure is a page that watches itself: a `watch` entry whose `on` is the page's own name, which sets a field computed from the page's state. Pressure is a measure. Because the computed value is written as an ordinary recorded event, reading history never evaluates an expression, so history stays reproducible even if the expression language changes.
+A measure is a page that watches itself: a `watch` entry whose `on` is the page's own name, which sets a field computed from the page's state. Pressure is a measure. No new concept is added.
 
 ## Consequences
 
+- The computed value is written as an ordinary recorded event, so reading history never evaluates an expression and history stays reproducible even if the expression language changes.
 - Watch expressions can use `size` and `other_size`, the byte lengths of the watching page and of the page just written.
-- A measure costs one recorded event each time its value changes. That makes measures visible in the log, and it also means a noisy measure makes a noisy log.
+- A measure costs one recorded event each time its value changes, so measures are visible in the log, and a noisy measure makes a noisy log.
 
 ## Open questions
 

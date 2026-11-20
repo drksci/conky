@@ -10,11 +10,11 @@ source: maintainers
 
 ## Context
 
-A system built from documents, rules and reactions can be judged in many ways. Without a stated aim, design choices have nothing to be measured against.
+Without a stated aim, design choices have nothing to be measured against.
 
 ## Decision
 
-The objective is an organisation that can run, deliver and improve without its builders having to direct each step. This is an aim, not a present capability, and it does not prescribe mechanisms.
+The objective is an organisation that can run, deliver and improve without its builders directing each step. It is an aim, not a present capability, and it prescribes no mechanisms.
 
 ## Consequences
 
