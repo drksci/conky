@@ -27,18 +27,17 @@ impl CapsuleHost {
     }
 
     /// Invokes breathe on a guest capsule with bounded context
-    pub fn invoke_breathe(
-        &self,
-        trigger: &str,
-        payload: &str,
-    ) -> Result<String, Fault> {
+    pub fn invoke_breathe(&self, trigger: &str, payload: &str) -> Result<String, Fault> {
         // Enforce input context size limit
         if payload.len() > 4096 {
             return Err(Fault::Sprawl(payload.len() as u32));
         }
 
         // Host returns executed response
-        Ok(format!("breathe: handled trigger '{}' with fuel limit {}", trigger, self.config.max_fuel))
+        Ok(format!(
+            "breathe: handled trigger '{}' with fuel limit {}",
+            trigger, self.config.max_fuel
+        ))
     }
 }
 

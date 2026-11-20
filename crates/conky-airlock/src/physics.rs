@@ -43,12 +43,20 @@ mod tests {
             target: "[[wal]]".into(),
             delta: "".into(),
             parity: vec![
-                Line { vault: "sol".into(), unit: "usd".into(), shift: -5.0 },
-                Line { vault: "lemon_supplier".into(), unit: "usd".into(), shift: 5.0 },
+                Line {
+                    vault: "sol".into(),
+                    unit: "usd".into(),
+                    shift: -5.0,
+                },
+                Line {
+                    vault: "supplier".into(),
+                    unit: "usd".into(),
+                    shift: 5.0,
+                },
             ],
             shadow: false,
             settle: "quiescent".into(),
-            purpose: "[[buy_lemons]]".into(),
+            purpose: "[[buy]]".into(),
             base: "sig:dummy".into(),
         };
         assert!(enforce_parity(&patch).is_ok());
@@ -60,12 +68,20 @@ mod tests {
             target: "[[wal]]".into(),
             delta: "".into(),
             parity: vec![
-                Line { vault: "sol".into(), unit: "usd".into(), shift: -5.0 },
-                Line { vault: "lemon_supplier".into(), unit: "usd".into(), shift: 4.5 },
+                Line {
+                    vault: "sol".into(),
+                    unit: "usd".into(),
+                    shift: -5.0,
+                },
+                Line {
+                    vault: "supplier".into(),
+                    unit: "usd".into(),
+                    shift: 4.5,
+                },
             ],
             shadow: false,
             settle: "quiescent".into(),
-            purpose: "[[buy_lemons]]".into(),
+            purpose: "[[buy]]".into(),
             base: "sig:dummy".into(),
         };
         assert_eq!(enforce_parity(&patch), Err(Fault::Imbalance));

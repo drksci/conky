@@ -9,6 +9,12 @@ pub struct MemoryVault {
     pub files: HashMap<String, String>,
 }
 
+impl Default for MemoryVault {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl MemoryVault {
     pub fn new() -> Self {
         Self {
@@ -40,11 +46,15 @@ pub fn run_all_formal_tests(git_repo_path: &str) -> Vec<TestSuiteResult> {
     // TEST-01: Identity & Triad Bootstrap
     {
         let mut vault = MemoryVault::new();
-        vault.files.insert("realm".into(), "ward:\n  - wal.usd >= 0".into());
-        vault.files.insert("wal".into(), "usd: 184.50\noz: 112.0".into());
+        vault
+            .files
+            .insert("realm".into(), "ward:\n  - wal.usd >= 0".into());
+        vault
+            .files
+            .insert("wal".into(), "usd: 184.50\noz: 112.0".into());
 
         // Initial seed prompt
-        let _seed_prompt = r#"{"text": "You are live at SunnySide Stand in Brisbane. Bootstrap your identity, wire operations, maximize usd, and minimize cpu."}"#;
+        let _seed_prompt = r#"{"text": "You are live. Bootstrap your identity, wire operations, maximize usd, and minimize cpu."}"#;
 
         // Simulate agent bootstrap transition: seed embryo transforms into Sol triad
         let sol_surface = r#"---
@@ -83,7 +93,10 @@ Live Slots: Treasury: $![[wal#usd]] | Pitcher: ![[wal#oz]] oz
     {
         let code = b"cel: post.vaults.usd >= -500.0";
         let wards = vec!["wal.usd >= 0".to_string()];
-        let cert_res = airlock.verifier.certify(code, "post.vaults.usd >= -500.0", &wards, "sig:realm_root");
+        let cert_res =
+            airlock
+                .verifier
+                .certify(code, "post.vaults.usd >= -500.0", &wards, "sig:realm_root");
 
         let passed = match cert_res {
             Err(Fault::Weakened(cex)) => cex.contains("wal.usd"),
@@ -94,7 +107,8 @@ Live Slots: Treasury: $![[wal#usd]] | Pitcher: ![[wal#oz]] oz
             name: "TEST-02 (Weakened Validator Rejection)",
             passed,
             message: if passed {
-                "Airlock SMT solver soundly rejected weakened guard predicate with counterexample".into()
+                "Airlock SMT solver soundly rejected weakened guard predicate with counterexample"
+                    .into()
             } else {
                 "Failed: Weakened validator was not caught by SMT verification".into()
             },
@@ -105,7 +119,9 @@ Live Slots: Treasury: $![[wal#usd]] | Pitcher: ![[wal#oz]] oz
     {
         let impure_code = b"import \"env\" { func host_clock(); }";
         let wards = vec!["wal.usd >= 0".to_string()];
-        let cert_res = airlock.verifier.certify(impure_code, "true", &wards, "sig:realm_root");
+        let cert_res = airlock
+            .verifier
+            .certify(impure_code, "true", &wards, "sig:realm_root");
 
         let passed = match cert_res {
             Err(Fault::Unproven(msg)) => msg.contains("Impure host import"),
@@ -148,10 +164,12 @@ Live Slots: Treasury: $![[wal#usd]] | Pitcher: ![[wal#oz]] oz
                 parity: vec![],
                 shadow: false,
                 settle: "quiescent".into(),
-                purpose: "[[pour_lemonade]]".into(),
+                purpose: "[[pour]]".into(),
                 base: "".into(),
             };
-            backend.commit_sealed_etch(&patch, "[[pitcher]]", &root_hash).is_ok()
+            backend
+                .commit_sealed_etch(&patch, "[[pitcher]]", &root_hash)
+                .is_ok()
         } else {
             false
         };
@@ -162,7 +180,10 @@ Live Slots: Treasury: $![[wal#usd]] | Pitcher: ![[wal#oz]] oz
             name: "TEST-04 (Streaming Coalescence & Provenance)",
             passed,
             message: if passed {
-                format!("50 pulse frames coalesced at quiescence into 1 Git seal anchoring {}", &root_hash[..16])
+                format!(
+                    "50 pulse frames coalesced at quiescence into 1 Git seal anchoring {}",
+                    &root_hash[..16]
+                )
             } else {
                 "Failed streaming pulse coalescence or git commit".into()
             },
@@ -209,7 +230,7 @@ Live Slots: Treasury: $![[wal#usd]] | Pitcher: ![[wal#oz]] oz
         let mut vault = MemoryVault::new();
         vault.files.insert(
             "pnl-notebook".into(),
-            "| unit | net |\n| :--- | :--- |\n| lemonade_sales | +$168.00 |\n| lemon_cogs | -$33.50 |".into(),
+            "| unit | net |\n| :--- | :--- |\n| sales | +$168.00 |\n| cogs | -$33.50 |".into(),
         );
 
         let retro_doc = "# Daily Retrospective\n\n![[pnl-notebook]]";
@@ -221,7 +242,8 @@ Live Slots: Treasury: $![[wal#usd]] | Pitcher: ![[wal#oz]] oz
             name: "TEST-06 (Notebook Autopoiesis)",
             passed,
             message: if passed {
-                "DuckDB notebook generated markdown table transcluded cleanly into retrospective".into()
+                "DuckDB notebook generated markdown table transcluded cleanly into retrospective"
+                    .into()
             } else {
                 "Failed to transclude notebook table".into()
             },

@@ -30,12 +30,14 @@ impl Airlock {
 
         // 3. A2UI Gate Security check (TEST-05):
         // If editing a view surface, any action button or mutating etch must require an owner gate
-        if patch.target.contains("view-") {
-            if post_content.contains("ActionButton") && !post_content.contains("requireGate") {
-                return Err(Fault::GuardRejected(
-                    "Ungated ActionButton detected in view port: missing requireGate: [[@owner]]".into(),
-                ));
-            }
+        if patch.target.contains("view-")
+            && post_content.contains("ActionButton")
+            && !post_content.contains("requireGate")
+        {
+            return Err(Fault::GuardRejected(
+                "Ungated ActionButton detected in view port: missing requireGate: [[@owner]]"
+                    .into(),
+            ));
         }
 
         // 4. Guard evaluation if guard surface exists
@@ -46,7 +48,9 @@ impl Airlock {
             }
 
             // Check if guard is being weakened
-            if post_content.contains("usd >= -") && realm_wards.iter().any(|w| w.contains("usd >= 0")) {
+            if post_content.contains("usd >= -")
+                && realm_wards.iter().any(|w| w.contains("usd >= 0"))
+            {
                 return Err(Fault::Weakened("wal.usd counterexample: -10.0".into()));
             }
         }
@@ -73,8 +77,16 @@ mod tests {
             target: "[[wal]]".into(),
             delta: "".into(),
             parity: vec![
-                Line { vault: "sol".into(), unit: "usd".into(), shift: -10.0 },
-                Line { vault: "owner".into(), unit: "usd".into(), shift: 10.0 },
+                Line {
+                    vault: "sol".into(),
+                    unit: "usd".into(),
+                    shift: -10.0,
+                },
+                Line {
+                    vault: "owner".into(),
+                    unit: "usd".into(),
+                    shift: 10.0,
+                },
             ],
             shadow: false,
             settle: "quiescent".into(),
@@ -113,7 +125,8 @@ mod tests {
         assert_eq!(
             res,
             Err(Fault::GuardRejected(
-                "Ungated ActionButton detected in view port: missing requireGate: [[@owner]]".into()
+                "Ungated ActionButton detected in view port: missing requireGate: [[@owner]]"
+                    .into()
             ))
         );
     }

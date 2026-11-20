@@ -78,7 +78,9 @@ pub fn parse_surface(content: &str) -> Result<ParsedSurface, anyhow::Error> {
         .ok_or_else(|| anyhow::anyhow!("Unterminated frontmatter"))?;
 
     let yaml_str = &after_first[..end_idx];
-    let body = after_first[end_idx + 4..].trim_start_matches('\n').to_string();
+    let body = after_first[end_idx + 4..]
+        .trim_start_matches('\n')
+        .to_string();
 
     let frontmatter: SurfaceFrontmatter = serde_yaml::from_str(yaml_str)?;
     Ok(ParsedSurface { frontmatter, body })
@@ -102,7 +104,7 @@ ward:
   - "wal.usd >= 0"
 seal: "sig:ed25519:10f4"
 ---
-# SunnySide Operational Realm
+# Operational Realm
 Maximize `usd` profit safely.
 "#;
         let parsed = parse_surface(doc).unwrap();

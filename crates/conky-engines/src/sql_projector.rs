@@ -14,9 +14,14 @@ impl SqlProjector {
         if !trimmed.starts_with("SELECT") {
             anyhow::bail!("Only SELECT queries are permitted in surface projectors");
         }
-        for forbidden in &["DROP", "DELETE", "UPDATE", "INSERT", "ALTER", "ATTACH", "DETACH"] {
+        for forbidden in &[
+            "DROP", "DELETE", "UPDATE", "INSERT", "ALTER", "ATTACH", "DETACH",
+        ] {
             if trimmed.contains(forbidden) {
-                anyhow::bail!("Forbidden mutating keyword '{}' in projector SQL", forbidden);
+                anyhow::bail!(
+                    "Forbidden mutating keyword '{}' in projector SQL",
+                    forbidden
+                );
             }
         }
         Ok(())
@@ -29,10 +34,8 @@ impl SqlProjector {
     ) -> Result<String, anyhow::Error> {
         Self::validate_query(sql)?;
 
-        let conn = Connection::open_with_flags(
-            db_path,
-            rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY,
-        )?;
+        let conn =
+            Connection::open_with_flags(db_path, rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY)?;
 
         let mut stmt = conn.prepare(sql)?;
         let column_count = stmt.column_count();
@@ -86,23 +89,31 @@ mod tests {
 
     #[test]
     fn test_sql_projection_to_markdown() {
-        let dir = std::env::temp_dir().join(format!("conky_sql_{}", std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()));
+        let dir = std::env::temp_dir().join(format!(
+            "conky_sql_{}",
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
+        ));
         let _ = std::fs::create_dir_all(&dir);
         let db_path = dir.join("test.db");
         let conn = Connection::open(&db_path).unwrap();
         conn.execute_batch(
             "CREATE TABLE sales (unit TEXT, net REAL);
-             INSERT INTO sales VALUES ('lemonade_sales', 168.0), ('lemon_cogs', -33.5);",
-        ).unwrap();
+             INSERT INTO sales VALUES ('sales', 168.0), ('cogs', -33.5);",
+        )
+        .unwrap();
 
         let md = SqlProjector::project_markdown_table(
             &db_path,
             "SELECT unit, net FROM sales ORDER BY net DESC",
-        ).unwrap();
+        )
+        .unwrap();
 
         assert!(md.contains("| unit | net |"));
-        assert!(md.contains("| lemonade_sales | 168.00 |"));
-        assert!(md.contains("| lemon_cogs | -33.50 |"));
+        assert!(md.contains("| sales | 168.00 |"));
+        assert!(md.contains("| cogs | -33.50 |"));
     }
 
     #[test]

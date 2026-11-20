@@ -28,7 +28,7 @@ impl GitBackend {
         let tree_id = index.write_tree()?;
         let tree = self.repo.find_tree(tree_id)?;
 
-        let sig = Signature::now(author, "conky@sunnyside.internal")?;
+        let sig = Signature::now(author, "conky@localhost")?;
 
         let head = self.repo.head();
         let parents = match head {
@@ -44,14 +44,8 @@ impl GitBackend {
 
         let parent_refs: Vec<&git2::Commit> = parents.iter().collect();
 
-        self.repo.commit(
-            Some("HEAD"),
-            &sig,
-            &sig,
-            message,
-            &tree,
-            &parent_refs,
-        )
+        self.repo
+            .commit(Some("HEAD"), &sig, &sig, message, &tree, &parent_refs)
     }
 
     pub fn commit_etch(&self, patch: &Patch, identity: &Crest) -> Result<Oid, git2::Error> {

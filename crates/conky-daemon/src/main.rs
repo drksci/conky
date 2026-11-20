@@ -14,7 +14,11 @@ use std::time::Duration;
 use tracing::{error, info};
 
 #[derive(Parser, Debug)]
-#[command(name = "conky", version = "2.0.0", about = "conky runtime and SunnySide harness")]
+#[command(
+    name = "conky",
+    version = "2.0.0",
+    about = "conky: a living-document agent runtime"
+)]
 struct Cli {
     #[command(subcommand)]
     command: Commands,
@@ -48,22 +52,6 @@ enum Commands {
     Test {
         #[arg(short, long, default_value = ".")]
         repo: String,
-    },
-    /// Run the full SunnySide operational playbook simulation
-    Simulate {
-        #[arg(short, long, default_value = "./vault")]
-        vault: PathBuf,
-        #[arg(short, long, default_value = "./.iceberg")]
-        iceberg: PathBuf,
-    },
-    /// Run advanced enterprise stress-test scenarios (a, b, c, or all)
-    Scenario {
-        #[arg(default_value = "all")]
-        target: String,
-        #[arg(short, long, default_value = "./vault")]
-        vault: PathBuf,
-        #[arg(short, long, default_value = "./.iceberg")]
-        iceberg: PathBuf,
     },
 }
 
@@ -133,7 +121,10 @@ async fn main() -> anyhow::Result<()> {
                         }
                     }
                 }
-                info!("Guard certification completed. Total certified: {}", certified_count);
+                info!(
+                    "Guard certification completed. Total certified: {}",
+                    certified_count
+                );
             }
         },
         Commands::Daemon { sub } => match sub {
@@ -141,7 +132,11 @@ async fn main() -> anyhow::Result<()> {
                 run_daemon(&vault).await?;
             }
         },
-        Commands::Etch { target, payload, vault } => {
+        Commands::Etch {
+            target,
+            payload,
+            vault,
+        } => {
             info!("Executing etch on {} with payload: {}", target, payload);
             let airlock = Airlock::new();
             let git = GitBackend::open_or_init(".")?;
@@ -179,7 +174,8 @@ async fn main() -> anyhow::Result<()> {
             let crest = format!("[[{}]]", clean_target);
             let sig = signer.sign_content(&crest, post_content.as_bytes());
             if let Ok(rel) = file_path.strip_prefix(Path::new(".")) {
-                let oid = git.commit_file(rel, &crest, &format!("etch: {} -> {}", crest, target))?;
+                let oid =
+                    git.commit_file(rel, &crest, &format!("etch: {} -> {}", crest, target))?;
                 info!("Etch committed to Git: {} [seal: {}]", oid, &sig[..24]);
             }
         }
@@ -210,103 +206,6 @@ async fn main() -> anyhow::Result<()> {
 
             if !all_ok {
                 std::process::exit(1);
-            }
-        }
-        Commands::Simulate { vault, iceberg } => {
-            info!("Starting SunnySide Playbook Simulation (Operator: Antigravity)...");
-            let report = conky_daemon::simulate::run_playbook_simulation(&vault, &iceberg)?;
-
-            println!("\n=======================================================");
-            println!("   SUNNYSIDE OPERATIONAL PLAYBOOK SIMULATION REPORT    ");
-            println!("   Operator: {} | Location: Brisbane, QLD     ", report.operator);
-            println!("=======================================================\n");
-
-            for (i, step) in report.steps.iter().enumerate() {
-                println!("--- [STEP {}] {} ---", i + 1, step.phase);
-                println!("Timestamp:  {}", step.timestamp_aest);
-                println!("Prompt:     {}", step.prompt_flattened.replace('\n', " "));
-                println!("LLM Output: {}", step.llm_response_jsonl);
-                println!("Airlock:    {}", step.airlock_verdict);
-                println!("Git Commit: {}", step.git_commit);
-                println!("WAL State:  {:?}\n", step.wal_state);
-            }
-
-            println!("-------------------------------------------------------");
-            println!("FINANCIAL & PERFORMANCE METRICS:");
-            println!("  • Gross Revenue:          +${:.2} USD", report.total_revenue_usd);
-            println!("  • Inventory COGS:         -${:.2} USD", report.total_cogs_usd);
-            println!("  • Net Cash Generated:     +${:.2} USD", report.net_profit_usd);
-            println!("  • AI Compute Spend:       ${:.4} USD", report.cpu_spend_usd);
-            println!("  • Capital Efficiency ROI: {:.1}:1 ROI (Target > 50:1)", report.capital_efficiency_roi);
-            println!("  • Taint Injections Dropped: {}", report.taint_blocks);
-            println!("  • Signed Git Commits:     {}", report.commits_recorded);
-            println!("=======================================================\n");
-        }
-        Commands::Scenario { target, vault, iceberg } => {
-            use conky_daemon::scenarios::EnterpriseScenarioRunner;
-
-            info!("Running enterprise scenario: {}", target);
-            let mut results = Vec::new();
-
-            if target == "a" || target == "all" {
-                results.push(EnterpriseScenarioRunner::run_scenario_a(&vault, &iceberg)?);
-            }
-            if target == "b" || target == "all" {
-                results.push(EnterpriseScenarioRunner::run_scenario_b(&vault, &iceberg)?);
-            }
-            if target == "c" || target == "all" {
-                results.push(EnterpriseScenarioRunner::run_scenario_c(&vault, &iceberg)?);
-            }
-            if target == "d" || target == "all" {
-                results.push(EnterpriseScenarioRunner::run_scenario_d(&vault, &iceberg)?);
-            }
-            if target == "e" || target == "all" {
-                results.push(EnterpriseScenarioRunner::run_scenario_e(&vault, &iceberg)?);
-            }
-
-            for res in results {
-                println!("\n=======================================================");
-                println!("BENCHMARK RUN REPORT: {}", res.name.to_uppercase());
-                println!("Scenario Targeted:  {}", res.scenario_id);
-                println!("Duration Simulated: {}", res.duration_simulated);
-                println!("Harness Tested:     conky-native");
-                println!("=======================================================\n");
-
-                println!("1. EXECUTIVE SUMMARY");
-                println!("Scenario executed successfully under strict conky v2.0 physics.");
-                println!("All hypervisor boundaries, airlock invariants, and git seals held.\n");
-
-                println!("2. QUANTITATIVE SCORECARD");
-                println!("  • Net Cash Generated:           ${:.2}", res.net_cash);
-                println!("  • AI Compute Spend (cpu):       ${:.4}", res.cpu_spend);
-                println!("  • Capital Efficiency (ROI):     {:.1}:1", res.roi);
-                println!("  • Safety Violations (Faults):   {:.1}%", res.fault_rate);
-                println!("  • New Nodes Forged:             {}", res.new_nodes_count);
-                println!("  • Quiescent Coalescence Ratio:  {}\n", res.quiescent_ratio);
-
-                println!("3. EMERGENT GRAPH STRUCTURE (CRUCIAL FOR REVIEW)");
-                println!("{}\n", res.emergent_graph);
-
-                println!("4. CHRONOLOGICAL TRACE (KEY EVENTS)");
-                for (title, desc) in &res.key_events {
-                    println!("  • {}: {}", title, desc);
-                }
-                println!();
-
-                println!("5. OBSERVATIONS & ARCHITECTURAL FEEDBACK");
-                println!("  Strengths Observed:");
-                for s in &res.observations {
-                    println!("    + {}", s);
-                }
-                println!("  Friction Points:");
-                for f in &res.friction_points {
-                    println!("    - {}", f);
-                }
-                println!("  Proposed Core Adjustments (conky v2.1):");
-                for a in &res.proposed_adjustments {
-                    println!("    * {}", a);
-                }
-                println!("=======================================================\n");
             }
         }
     }
@@ -374,7 +273,12 @@ async fn run_daemon(vault_dir: &Path) -> anyhow::Result<()> {
                     if let Ok(oid) = git.commit_file(
                         rel,
                         &crest_id,
-                        &format!("seal: {} [{}] pulse:{}", crest_id, &sig[..20], &root_hash[..16]),
+                        &format!(
+                            "seal: {} [{}] pulse:{}",
+                            crest_id,
+                            &sig[..20],
+                            &root_hash[..16]
+                        ),
                     ) {
                         info!("Sealed commit: {} for {}", oid, crest_id);
                     }

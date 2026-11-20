@@ -18,7 +18,10 @@ impl ShadowExecution {
             .output();
 
         if let Err(e) = add_status {
-            return Err(Fault::Ward(format!("Failed creating shadow worktree: {}", e)));
+            return Err(Fault::Ward(format!(
+                "Failed creating shadow worktree: {}",
+                e
+            )));
         }
 
         // 2. Execute inner logic inside worktree

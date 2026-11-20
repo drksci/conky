@@ -4,6 +4,8 @@ version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
+repository.workspace = true
+description = "Airlock pipeline for conky: patch validation, taint fence, guard certification stub and parity checks"
 
 [dependencies]
 serde.workspace = true

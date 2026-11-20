@@ -38,7 +38,10 @@ impl StreamMultiplexer {
         frame.rolling_hash = new_hash.clone();
         self.chains.insert(frame.source.clone(), new_hash);
 
-        let frames = self.buffered_frames.entry(frame.source.clone()).or_default();
+        let frames = self
+            .buffered_frames
+            .entry(frame.source.clone())
+            .or_default();
         frames.push(frame);
 
         Ok(frames.len() as u64)
@@ -53,7 +56,11 @@ impl StreamMultiplexer {
 
     pub fn flush_quiescence(&mut self, source: &str) -> (String, usize) {
         let root = self.get_rolling_root(source);
-        let count = self.buffered_frames.remove(source).map(|v| v.len()).unwrap_or(0);
+        let count = self
+            .buffered_frames
+            .remove(source)
+            .map(|v| v.len())
+            .unwrap_or(0);
         (root, count)
     }
 }

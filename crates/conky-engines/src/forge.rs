@@ -34,7 +34,9 @@ impl ForgeEngine {
         let mut hasher = Hasher::new();
         hasher.update(cel_code.as_bytes());
         let code_hash = hasher.finalize().to_hex();
-        let artifact_path = self.iceberg_dir.join(format!("{}_{}.cel", name, &code_hash[..8]));
+        let artifact_path = self
+            .iceberg_dir
+            .join(format!("{}_{}.cel", name, &code_hash[..8]));
         if let Some(parent) = artifact_path.parent() {
             let _ = std::fs::create_dir_all(parent);
         }
@@ -110,16 +112,18 @@ mod tests {
 
     #[test]
     fn test_forge_tool_triad_generation() {
-        let dir = std::env::temp_dir().join(format!("conky_forge_{}", std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()));
+        let dir = std::env::temp_dir().join(format!(
+            "conky_forge_{}",
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
+        ));
         let _ = std::fs::create_dir_all(&dir);
         let forge = ForgeEngine::new(&dir);
 
         let triad = forge
-            .forge_gear_tool(
-                "batch-scaler",
-                "[[sol]]",
-                "160 - 32",
-            )
+            .forge_gear_tool("batch-scaler", "[[sol]]", "160 - 32")
             .unwrap();
 
         assert!(triad.surface_md.contains("crest: \"[[batch-scaler]]\""));

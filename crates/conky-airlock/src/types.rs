@@ -2,8 +2,8 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
 pub type Crest = String; // "[[a19f4c881b]]"
-pub type Link = String;  // "[[wal#usd]]"
-pub type Seal = String;  // "sig:ed25519:..."
+pub type Link = String; // "[[wal#usd]]"
+pub type Seal = String; // "sig:ed25519:..."
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Line {

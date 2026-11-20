@@ -1,5 +1,5 @@
-use conky_airlock::types::{Fault, Line};
 use conky_airlock::enforce_parity;
+use conky_airlock::types::{Fault, Line};
 use rusqlite::{params, Connection};
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
@@ -50,10 +50,11 @@ impl WalEngine {
             base: "".into(),
         })?;
 
-        let mut conn = Connection::open(&self.db_path)
-            .map_err(|e| Fault::Ward(format!("DB error: {}", e)))?;
+        let mut conn =
+            Connection::open(&self.db_path).map_err(|e| Fault::Ward(format!("DB error: {}", e)))?;
 
-        let tx = conn.transaction()
+        let tx = conn
+            .transaction()
             .map_err(|e| Fault::Ward(format!("DB tx error: {}", e)))?;
 
         for line in lines {
@@ -63,7 +64,8 @@ impl WalEngine {
             ).map_err(|e| Fault::Ward(format!("Insert failed: {}", e)))?;
         }
 
-        tx.commit().map_err(|e| Fault::Ward(format!("Commit failed: {}", e)))?;
+        tx.commit()
+            .map_err(|e| Fault::Ward(format!("Commit failed: {}", e)))?;
         Ok(())
     }
 
@@ -78,9 +80,8 @@ impl WalEngine {
 
     pub fn get_vault_balances(&self, vault: &str) -> Result<HashMap<String, f64>, anyhow::Error> {
         let conn = Connection::open(&self.db_path)?;
-        let mut stmt = conn.prepare(
-            "SELECT unit, SUM(shift) FROM ledger WHERE vault = ?1 GROUP BY unit",
-        )?;
+        let mut stmt =
+            conn.prepare("SELECT unit, SUM(shift) FROM ledger WHERE vault = ?1 GROUP BY unit")?;
         let rows = stmt.query_map(params![vault], |row| {
             Ok((row.get::<_, String>(0)?, row.get::<_, f64>(1)?))
         })?;
@@ -100,16 +101,31 @@ mod tests {
 
     #[test]
     fn test_wal_sqlite_double_entry() {
-        let dir = std::env::temp_dir().join(format!("conky_wal_{}", std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()));
+        let dir = std::env::temp_dir().join(format!(
+            "conky_wal_{}",
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
+        ));
         let _ = std::fs::create_dir_all(&dir);
         let wal = WalEngine::open_or_init(&dir).unwrap();
 
         let lines = vec![
-            Line { vault: "sol".into(), unit: "usd".into(), shift: 15.0 },
-            Line { vault: "customer".into(), unit: "usd".into(), shift: -15.0 },
+            Line {
+                vault: "sol".into(),
+                unit: "usd".into(),
+                shift: 15.0,
+            },
+            Line {
+                vault: "customer".into(),
+                unit: "usd".into(),
+                shift: -15.0,
+            },
         ];
 
-        wal.append_transaction(&lines, "[[sale]]", "flux:init").unwrap();
+        wal.append_transaction(&lines, "[[sale]]", "flux:init")
+            .unwrap();
         let sol_usd = wal.get_balance("sol", "usd").unwrap();
         let cust_usd = wal.get_balance("customer", "usd").unwrap();
 
@@ -117,9 +133,11 @@ mod tests {
         assert_eq!(cust_usd, -15.0);
 
         // Imbalance should fail
-        let bad_lines = vec![
-            Line { vault: "sol".into(), unit: "usd".into(), shift: 15.0 },
-        ];
+        let bad_lines = vec![Line {
+            vault: "sol".into(),
+            unit: "usd".into(),
+            shift: 15.0,
+        }];
         assert_eq!(
             wal.append_transaction(&bad_lines, "[[hack]]", "flux:init"),
             Err(Fault::Imbalance)

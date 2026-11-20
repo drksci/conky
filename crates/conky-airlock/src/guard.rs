@@ -35,7 +35,11 @@ impl GuardVerifier {
         Ok(format!("cert:smt:{}", hasher.finalize().to_hex()))
     }
 
-    fn smt_find_counterexample(&self, guard_smt: &str, realm_wards_smt: &[String]) -> Option<String> {
+    fn smt_find_counterexample(
+        &self,
+        guard_smt: &str,
+        realm_wards_smt: &[String],
+    ) -> Option<String> {
         // SMT solver integration:
         // If candidate guard weakens any ward (e.g. allowing negative usd when realm demands usd >= 0)
         for ward in realm_wards_smt {
@@ -62,7 +66,9 @@ mod tests {
         let verifier = GuardVerifier::new();
         let code = b"cel: post.vaults.usd >= 0.0";
         let wards = vec!["wal.usd >= 0".to_string()];
-        let proof = verifier.certify(code, "post.vaults.usd >= 0.0", &wards, "sig:realm_root").unwrap();
+        let proof = verifier
+            .certify(code, "post.vaults.usd >= 0.0", &wards, "sig:realm_root")
+            .unwrap();
         assert!(proof.starts_with("cert:smt:"));
     }
 
@@ -71,7 +77,9 @@ mod tests {
         let verifier = GuardVerifier::new();
         let code = b"cel: post.vaults.usd >= -500.0";
         let wards = vec!["wal.usd >= 0".to_string()];
-        let err = verifier.certify(code, "post.vaults.usd >= -500.0", &wards, "sig:realm_root").unwrap_err();
+        let err = verifier
+            .certify(code, "post.vaults.usd >= -500.0", &wards, "sig:realm_root")
+            .unwrap_err();
         match err {
             Fault::Weakened(cex) => assert!(cex.contains("wal.usd")),
             _ => panic!("Expected Fault::Weakened, got {:?}", err),

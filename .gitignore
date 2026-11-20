@@ -3,3 +3,6 @@
 *.swp
 *.DS_Store
 .iceberg/
+
+# Runtime vaults do not belong in this repository
+/vault/

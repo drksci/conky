@@ -14,9 +14,9 @@ impl CrestSigner {
     }
 
     pub fn get_or_create_key(&mut self, crest: &str) -> &SigningKey {
-        self.keys.entry(crest.to_string()).or_insert_with(|| {
-            SigningKey::generate(&mut OsRng)
-        })
+        self.keys
+            .entry(crest.to_string())
+            .or_insert_with(|| SigningKey::generate(&mut OsRng))
     }
 
     pub fn sign_content(&mut self, crest: &str, content: &[u8]) -> String {

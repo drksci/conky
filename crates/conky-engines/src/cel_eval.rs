@@ -9,10 +9,7 @@ impl CelEvaluator {
     }
 
     /// Evaluates a CEL boolean expression given string/number context variables
-    pub fn eval_bool(
-        expr: &str,
-        vars: &HashMap<String, f64>,
-    ) -> Result<bool, anyhow::Error> {
+    pub fn eval_bool(expr: &str, vars: &HashMap<String, f64>) -> Result<bool, anyhow::Error> {
         let program = Program::compile(expr)
             .map_err(|e| anyhow::anyhow!("Failed to compile CEL expression '{}': {:?}", expr, e))?;
 

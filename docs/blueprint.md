@@ -1,5 +1,7 @@
 # `conky` & SunnySide: The Definitive Implementation Blueprint (v2.0)
 
+> Note: this is the v2.0 specification kept as written. The SunnySide lemonade-stand material in it is historical, and its vault and scripted scenarios have been removed from the repository. See README.md for what is actually implemented.
+
 * **Version:** 2.0.0 (Unified Streaming & Provable Architecture)
 * **Runtime & Harness (`conky`):** Obsidian-Native, Git-Backed, Rust / Astrid OS / Wasmtime Component Model (`WIT`)
 * **Application & Meta-Benchmark (`SunnySide`):** Self-Bootstrapping Autonomous Lemonade Stand (Brisbane, QLD)

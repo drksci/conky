@@ -4,6 +4,8 @@ version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
+repository.workspace = true
+description = "conky engines: CEL evaluation, SQLite double-entry ledger and projections, and gear tool forging"
 
 [dependencies]
 conky-airlock = { path = "../conky-airlock" }

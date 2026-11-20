@@ -4,6 +4,8 @@ version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
+repository.workspace = true
+description = "conky document graph: frontmatter parsing, backlink index and slot transclusion"
 
 [dependencies]
 conky-airlock = { path = "../conky-airlock" }

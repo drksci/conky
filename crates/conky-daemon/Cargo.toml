@@ -4,6 +4,8 @@ version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
+repository.workspace = true
+description = "conky command line and daemon: Git-backed vault, etch commits, signing, pulse streaming and file watching"
 
 [[bin]]
 name = "conky"

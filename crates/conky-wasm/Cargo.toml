@@ -4,6 +4,8 @@ version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
+repository.workspace = true
+description = "conky capsule host: stub for sandboxed Wasmtime execution with fuel limits"
 
 [dependencies]
 conky-airlock = { path = "../conky-airlock" }
