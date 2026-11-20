@@ -5,7 +5,7 @@
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/slogan.dark.svg"><img src="docs/assets/figures/slogan.light.svg" alt="The unharnessed harness" width="640"></picture></p>
 
 <p align="center">
-  <img src="docs/assets/conky-hero.jpg" alt="A ventriloquist puppet in a sweater that reads conky, with the caption: You just remember I call the shots here, Bubbles." width="800">
+  <img src="docs/assets/conky-hero.jpg" alt="A ventriloquist puppet in a sweater that reads conky, with the caption: You just remember I call the shots here, Bubbles." width="640">
 </p>
 <p align="center"><sub><a href="https://www.youtube.com/watch?v=vcsm6QO-MWE">Trailer Park Boys: Conky</a></sub></p>
 
@@ -41,7 +41,23 @@ That's it. Files and Git. If you ever hate it, clone the folder and leave.
 <br>
 
 
-### What a folder can do
+### Why it is not another harness
+
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-reaction.dark.svg"><img src="docs/assets/figures/ico-reaction.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>Nothing is in charge.</b><br>There is no orchestrator and no main loop. Pages notice each other and respond, the way a low stock level leads to a reorder. The system is what the pages do.</p>
+
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-rule.dark.svg"><img src="docs/assets/figures/ico-rule.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>A model cannot talk its way past a rule.</b><br>Rules live in the pages and are checked on every change, by software, not by asking nicely in a prompt. A refusal is recorded like anything else.</p>
+
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-model.dark.svg"><img src="docs/assets/figures/ico-model.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>It mostly does not call the model.</b><br>Whatever follows from the pages just happens. A model gets a question only when the pages run out of answers, and its answer is signed and checked like any other change.</p>
+
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-history.dark.svg"><img src="docs/assets/figures/ico-history.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>You can <code>git blame</code> an agent.</b><br>Every change is a signed commit that names who made it and what caused it. The whole system reads with <code>cat</code>, and undo is a checkout.</p>
+
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-measure.dark.svg"><img src="docs/assets/figures/ico-measure.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>Pages feel pressure, not walls.</b><br>Nothing hits a hard limit and stops. A page that grows too big or goes too quiet builds pressure, and that gets it noticed and tidied.</p>
+
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-leave.dark.svg"><img src="docs/assets/figures/ico-leave.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>Success is being able to leave.</b><br>The test Conky sets itself: stop it, hand a stranger nothing but the folder, and see whether they can carry on. No export, no migration, no lock-in.</p>
+
+<details>
+<summary>The ten parts, with what works today</summary>
+<br>
 
 <sub>● works today &nbsp;&nbsp; ○ on the way</sub>
 
@@ -65,8 +81,9 @@ That's it. Files and Git. If you ever hate it, clone the folder and leave.
 
 <p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-leave.dark.svg"><img src="docs/assets/figures/ico-leave.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>Leave any time</b> &nbsp;<sub>●</sub><br>It is a Git repository. Clone it, bundle it, take it somewhere better. No export wizard.</p>
 
-<br>
+</details>
 
+<br>
 
 ### The whale and the door
 
@@ -76,11 +93,7 @@ Every system ends up as one of these two.
 
 **Where the truth lives.** Usually in code, prompts, a database, and Dave. Here, in pages.
 
-**How rules are kept.** Usually with a strongly worded prompt. Here, checked on every change.
-
 **"Why did it do that."** Usually you grep the logs and pray. Here there is a signed history, with causes.
-
-**When a model gets called.** Usually constantly, for everything. Here, when the pages run out of answers.
 
 **What leaving costs.** Usually a migration project and a quarter. Here, `git clone`.
 
@@ -89,19 +102,13 @@ Every system ends up as one of these two.
 
 ### How far along
 
-**Now.** Pages, spaces, rules, reactions, measures, a signed history, asking a model, and the demo.
-
-**Next.** A sense of time, tidying up what has gone quiet, trying a change before making it, approvals, and renames that fix their own links.
-
-**Later.** Background minds, direction and drift, patterns, tables, a core that runs in a browser, and the assimilation test.
-
-The assimilation test is the one to watch. Stop a running system, hand a stranger nothing but the folder, and see whether it carries on as the original. Unlike in a certain Antarctic film, every copy gets the blood test.
+Early. Working and tested: pages, spaces, rules, reactions, measures, signed history, asking a model, and the demo. Still to come: a sense of time, tidying up, approvals, background minds, patterns, tables, a core that runs in a browser, and the test that matters most. Unlike in a certain Antarctic film, every copy gets the blood test.
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-6-blood-test.dark.svg"><img src="docs/assets/figures/fig-6-blood-test.light.svg" alt="A row of four dishes on a bench, tagged original, copy, copy, copy, with a hot wire reaching towards them and a yellow tick above each copy." width="800"></picture></p>
 
 <p align="center"><sub><i>Every copy gets tested. Every copy has to pass.</i></sub></p>
 
-The parts marked as working are real and tested. The model part has only met stand-in servers so far, not a live provider, and nothing here has been measured against anything else yet. The [roadmap](docs/project/roadmap.md) has the order, and the [evaluation plan](docs/research/evaluation-plan.md) says how the measuring will be done.
+The model part has only met stand-in servers so far, and nothing here has been measured against anything else yet. The [roadmap](docs/project/roadmap.md) has the order, and the [evaluation plan](docs/research/evaluation-plan.md) says how the measuring will be done.
 
 <br>
 
