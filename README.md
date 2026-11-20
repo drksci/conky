@@ -1,6 +1,6 @@
 <h3 align="center"><img src="docs/assets/conky-mark.png" alt="" width="48" height="48" align="absmiddle">&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/name.dark.svg"><img src="docs/assets/figures/name.light.svg" alt="Conky" height="48" align="absmiddle"></picture></h3>
 
-<h3 align="center">The Unharnessed Harness</h3>
+<h3 align="center">The Unharnessed Harness&nbsp;&nbsp;<a href="https://github.com/drksci/conky/actions/workflows/ci.yml"><img src="https://github.com/drksci/conky/actions/workflows/ci.yml/badge.svg" alt="CI" align="absmiddle"></a></h3>
 
 <br>
 
@@ -64,9 +64,6 @@ Five places it parts ways with the usual. The small print names the real parts, 
 
 <p align="center"><a href="docs/guide/concepts.md">Concepts</a> &nbsp;·&nbsp; <a href="docs/guide/getting-started.md">Getting started</a> &nbsp;·&nbsp; <a href="docs/reference/vault-format.md">Reference</a> &nbsp;·&nbsp; <a href="docs/design.md">Design</a> &nbsp;·&nbsp; <a href="docs/decisions/0001-objective.md">Decisions</a> &nbsp;·&nbsp; <a href="docs/research/harnesses.md">Research</a> &nbsp;·&nbsp; <a href="CONTRIBUTING.md">Contributing</a></p>
 
-<p align="center"><sub>Early days. The <a href="docs/project/roadmap.md">roadmap</a> says what works.<br><a href="LICENSE-MIT">MIT</a> or <a href="LICENSE-APACHE">Apache-2.0</a>, your pick. The puppet belongs to other people.</sub></p>
-
-<p align="center"><a href="https://github.com/drksci/conky/actions/workflows/ci.yml"><img src="https://github.com/drksci/conky/actions/workflows/ci.yml/badge.svg" alt="CI"></a></p>
 
 <br>
 
