@@ -28,5 +28,5 @@ A pattern is born inside the actor or space that made it and is visible only the
 - There is no committee and no catalogue.
 - Promotion is one rung at a time, like ideas.
 - Everything is composed from measure, reaction, proposal page, approval and rule.
-- It depends on the clock (R12), signers and approvals (R14), background minds (R17) and the leaving rule of [decision 0022](0022-leaving-a-space-is-a-write-the-space-can-refuse.md) (R22). All of these are unbuilt.
+- It depends on the clock (R12), signers and approvals (R14), background minds (R17) and the several-space part of R22. The leaving rule of [decision 0022](0022-leaving-a-space-is-a-write-the-space-can-refuse.md) is built ([decision 0028](0028-a-character-writes-pages.md)); the rest are unbuilt.
 - Removed: the open question of how a practice is promoted.

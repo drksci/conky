@@ -70,6 +70,8 @@ The resolved prompt sits between the subject and the trailers, exactly as sent, 
 
 `Read` records what the page looked at. A page counts as read when an embed in the prompt named it and the named field exists, or, for an embed with no field, when its body is not empty. `conky log` shows them as `read a, b`.
 
+When an entry may write pages ([an answer that is pages](rules-and-reactions.md#an-answer-that-is-pages)), each page of the answer is a following write, with the trailers of any reaction: it is by the page that asked, and its `Cause` is the commit of the answer. No new trailer is needed, so the history shows what a character did and why.
+
 The answer is a field like any other. The secret used to reach the provider is never written to the vault, in a page, a trailer or a message ([providers](providers.md#secrets)).
 
 ### A refusal
@@ -86,7 +88,7 @@ A refused write is an empty commit, signed the same way. It changes no page. It 
 | `From` | the space whose rule refused the write, only when the rule came from a space above the page and not from the page itself |
 | `Cause` | the triggering commit, only when the refused write was a reaction |
 
-The reasons begin with `shape`, `rule`, `cycle`, `watch` or `model` ([rules and reactions](rules-and-reactions.md#refusals)). The reason names the space, as in `(from stand)`. `From` repeats it as a trailer so that refusals can be found by space without parsing the reason, and `conky log` shows it as `from <space>`.
+The reasons begin with `shape`, `rule`, `cycle`, `watch`, `model` or `limit` ([rules and reactions](rules-and-reactions.md#refusals)). The reason names the space, as in `(from stand)`. `From` repeats it as a trailer so that refusals can be found by space without parsing the reason, and `conky log` shows it as `from <space>`.
 
 ## Identity and signing
 

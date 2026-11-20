@@ -52,7 +52,7 @@ In detail: [reactions](../reference/rules-and-reactions.md#reactions).
 
 ## Asking a model
 
-Asking a model is how a page thinks, for questions the facts cannot answer, such as how a tired supplier would word an order. The question is written in a watch entry or given with `conky ask`, and the answer lands in one of the page's own fields.
+Asking a model is how a page thinks, for questions the facts cannot answer, such as how a tired supplier would word an order. The question is written in a watch entry or given with `conky ask`, and the answer lands in one of the page's own fields. An entry can also let the answer hold pages, written into a space it names, so that a character can make notes, other characters and rules for itself, inside limits the runtime enforces ([an answer that is pages](../reference/rules-and-reactions.md#an-answer-that-is-pages)).
 
 The page that asked signs the answer, and its rules apply. The history keeps the question beside it, with the model's name and the tokens used when the provider reports them. A refused answer is recorded with its reason. Reading the history never calls a model.
 

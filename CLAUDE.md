@@ -39,6 +39,7 @@ Run this before every push. CI runs the same command on every pull request.
 ## Design
 
 - Everything is somebody. A page is a character with an identity, a temperament and a voice, and the rules exist so it can be lively without being dangerous. (review: temperament and voice are not built)
+- Autonomy is the point. Structure is grown by the characters from a small seed, never installed for them: one character and a prompt is a complete starting state. The runtime supplies limits, not plans, and a character improves the system only by writing pages, so every improvement is signed, visible and reversible. (review; check: `bench/` starts every arm from one agent)
 - Build a new concept from existing words or remove one. If it does neither, it does not land. (review)
 - Domain structures (accounting, stock, approvals) are patterns made on demand from goldens and composed from existing words, never runtime features or a shipped catalogue. The runtime gains only general primitives. (review)
 - Outside protocols are reached through connectors beside the vault, never built into the core. A connector holds no state and writes through the same rules as anyone. (check: `tests/test_connect.py` for the terminal connector; review for others)

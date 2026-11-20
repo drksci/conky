@@ -66,6 +66,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `write --body` | The new body of the page. |
 | `write --as` | The actor that makes the write. |
 | `ask --provider` | The page that describes the model. |
+| `ask --writes` | The space the answer may write pages into. |
 | `ask --prompt` | The question, with embeds resolved. |
 | `ask --as` | The actor that makes the write. |
 | `demo --into` | The folder to create. |
@@ -110,6 +111,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `into` | The field that receives the answer. |
 | `provider` | The provider page to try first. |
 | `otherwise` | The text to write when no model answers. |
+| `writes` | The space the answer may write pages into. |
 
 ## Trailer keys
 
@@ -144,6 +146,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `rule` | A rule was false, could not be evaluated or came from a space that is missing or loops. |
 | `watch` | A watch expression failed to evaluate. |
 | `model` | A named provider could not be asked or did not answer. |
+| `limit` | A page written by an answer broke a limit of the space it was given. |
 
 ## Errors
 

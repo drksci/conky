@@ -38,7 +38,19 @@ def _parser() -> argparse.ArgumentParser:
     write.add_argument("--as", dest="actor", required=True)
     ask = sub.add_parser("ask", help="ask a model and write the answer to a field of a page")
     ask.add_argument("page")
-    ask.add_argument("into", metavar="into-field")
+    ask.add_argument(
+        "into",
+        nargs="?",
+        default=None,
+        metavar="into-field",
+        help="the field that receives the answer",
+    )
+    ask.add_argument(
+        "--writes",
+        default=None,
+        metavar="SPACE",
+        help="let the answer hold pages, written as the actor into this space",
+    )
     ask.add_argument(
         "--provider",
         default=None,
@@ -177,6 +189,7 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
             result = vault.ask(
                 args.page,
                 args.into,
+                writes=args.writes,
                 provider=args.provider,
                 prompt=args.prompt,
                 actor=args.actor,
@@ -186,9 +199,16 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
             print(err.refused(result.id[:7], result.reason or ""), file=sys.stderr)
             return 1
         print(ui.written(result.id[:7]))
+        for name, landed in result.pages:
+            if landed.ok:
+                print(f"{name}: {ui.written(landed.id[:7])}")
+            else:
+                print(f"{name}: {err.refused(landed.id[:7], landed.reason or '')}", file=sys.stderr)
         if result.plain:
             print(vault.read(args.page).fields[args.into])
             print(f"No model answered. To give Conky one: {model.WAYS}.", file=sys.stderr)
+        if not all(landed.ok for _, landed in result.pages):
+            return 1
     elif args.command == "read":
         print(ui.read(serialize(vault.read(args.page))), end="")
     elif args.command == "log":

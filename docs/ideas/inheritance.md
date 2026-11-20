@@ -10,7 +10,7 @@ source: maintainers
 
 ## Idea
 
-A space hands down its rules today. It should also hand down its context and its reactions: the space's fields, readable by members in rules, reactions and embeds, and its watch entries, which then run for every member. Only the rules are built.
+A space hands down its rules today, and a write that changes a page's `within` is judged by the rules of the spaces it leaves as well as those it joins ([decision 0022](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md), built with [decision 0028](../decisions/0028-a-character-writes-pages.md)). It should also hand down its context and its reactions: the space's fields, readable by members in rules, reactions and embeds, and its watch entries, which then run for every member. Only the rules, and leaving as a judged write, are built. Rung: idea. The enforced part is the leaving rule, tested in `tests/test_laws.py`; a page is still within one space.
 
 A page may join more than one space, so it can sit in a team and also follow a practice. Each consequence below needs no new mechanism.
 
@@ -35,7 +35,7 @@ A staleness measure written once on the top space applies to every page with no 
 ## Open questions
 
 - The order of evaluation when several spaces apply.
-- Leaving a space is settled in [decision 0022](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md).
+- Leaving a space is settled and built: [decision 0022](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md).
 - Conflicts between two spaces' rules. The stricter rule must win.
 
 Related: [context that flows down](cascading-context.md), [patterns](patterns.md), [staleness](staleness.md).

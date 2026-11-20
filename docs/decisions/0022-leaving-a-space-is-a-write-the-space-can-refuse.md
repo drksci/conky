@@ -26,6 +26,6 @@ Joining and leaving are ordinary writes to `within`. A write that changes `withi
 
 - A house rule binds for as long as the space says so. The default stays the easy one: free to leave.
 - A refusal is recorded like any other and names the space that refused.
-- A rule about who may move a page waits on rules that can see who signed (R14 in the [roadmap](../project/roadmap.md)). The leaving rule itself is built with R22.
-- Unbuilt: the runtime still judges only the spaces after the write.
+- A rule about who may move a page waits on rules that can see who signed (R14 in the [roadmap](../project/roadmap.md)).
+- Built with [decision 0028](0028-a-character-writes-pages.md): a write that changes the `within` of an existing page is judged by the rules of the spaces it was in as well as those it will be in. A page may still be within one space only, so the several-space part of R22 is unbuilt.
 - Removed: the open questions about who may change which space a page belongs to, and whether a page can leave a space by itself.

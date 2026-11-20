@@ -13,7 +13,7 @@ from conky.errors import BadInput
 
 RESERVED = ("within", "rules", "watch")
 WATCH_KEYS = ("on", "when", "set", "ask")
-ASK_KEYS = ("prompt", "into", "provider", "otherwise")
+ASK_KEYS = ("prompt", "into", "provider", "otherwise", "writes")
 NAME = re.compile(r"^[a-z0-9][a-z0-9_-]{0,63}$")
 EMBED = re.compile(r"!\[\[([^\]#]+)(?:#([^\]]+))?\]\]")
 
@@ -78,7 +78,7 @@ def _check_watch(entry: Any) -> None:
     if not ok:
         raise ShapeError(
             "watch entries need on (page name), when (text) and either set (field: text) "
-            "or ask (prompt and into, with optional provider and otherwise)"
+            "or ask (prompt, with into or writes or both, and optional provider and otherwise)"
         )
 
 
@@ -91,11 +91,13 @@ def _set_ok(value: Any) -> bool:
 def _ask_ok(value: Any) -> bool:
     return (
         isinstance(value, dict)
-        and {"prompt", "into"} <= set(value)
+        and "prompt" in value
+        and bool({"into", "writes"} & set(value))
         and set(value) <= set(ASK_KEYS)
         and all(isinstance(v, str) for v in value.values())
         and bool(NAME.match(value.get("provider", "x")))
-        and bool(value["into"])
+        and bool(NAME.match(value.get("writes", "x")))
+        and bool(value.get("into", "x"))
     )
 
 
@@ -165,18 +167,47 @@ def serialize(page: Page) -> str:
     return f"---\n{text}---\n{body}"
 
 
-def parse(text: str) -> Page:
-    """Parse serialised Markdown into a page."""
+def _split(text: str) -> tuple[str, str]:
+    """Return the frontmatter text and the body of serialised Markdown."""
     if not text.startswith("---\n"):
         raise BadInput("page does not start with frontmatter")
     rest = text[4:]
     if rest.startswith("---\n"):
-        raw, body = "", rest[4:]
-    else:
-        end = rest.find("\n---\n")
-        if end < 0:
-            raise BadInput("frontmatter is not closed")
-        raw, body = rest[: end + 1], rest[end + 5 :]
+        return "", rest[4:]
+    end = rest.find("\n---\n")
+    if end < 0:
+        raise BadInput("frontmatter is not closed")
+    return rest[: end + 1], rest[end + 5 :]
+
+
+def given(text: str) -> tuple[dict[str, Any], str | None]:
+    """Read a page that someone gave as text: the keys it names, and its body if it has one.
+
+    The keys are changes to apply, so a key the text leaves out stays as it is. A body is
+    returned only when it holds text. Raises ShapeError saying what is wrong.
+    """
+    try:
+        raw, body = _split(text)
+        head = load_value(raw) or {}
+    except BadInput as exc:
+        raise ShapeError(
+            f"{exc}: start it with a --- line and close the frontmatter with another"
+        ) from exc
+    except yaml.YAMLError as exc:
+        reason = str(exc).splitlines()[0] if str(exc) else "it cannot be read"
+        raise ShapeError(f"the frontmatter is not valid YAML ({reason}): correct it") from exc
+    if not isinstance(head, dict) or not all(isinstance(k, str) for k in head):
+        raise ShapeError("the frontmatter must be keys with values, each key text")
+    try:
+        json.dumps(head)
+    except (TypeError, ValueError) as exc:
+        raise ShapeError(f"values must be plain data: {exc}") from exc
+    return head, (body if body.strip() else None)
+
+
+def parse(text: str) -> Page:
+    """Parse serialised Markdown into a page."""
+    raw, body = _split(text)
     head = load_value(raw) or {}
     fields = {k: v for k, v in head.items() if k not in RESERVED}
     return Page(head.get("within"), head.get("rules") or [], head.get("watch") or [], fields, body)

@@ -10,14 +10,16 @@ from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
-from conky import git, model
+from conky import answer, git, model
 from conky.errors import BadInput, VerifyFailed
 from conky.page import (
+    NAME,
     Page,
     ShapeError,
     apply,
     check_name,
     embedded,
+    given,
     parse,
     resolve,
     resolve_text,
@@ -54,6 +56,7 @@ class Refusal(StrEnum):
     RULE = "rule"
     WATCH = "watch"
     MODEL = "model"
+    LIMIT = "limit"
 
 
 _CYCLE = f"{Refusal.CYCLE}: reactions nested deeper than {MAX_DEPTH}"
@@ -77,6 +80,23 @@ class Result:
     id: str
     reason: str | None = None
     plain: bool = False
+    pages: tuple[tuple[str, Result], ...] = ()
+
+
+@dataclass(frozen=True)
+class Ask:
+    """One question to a model, as a watch entry or the command line puts it."""
+
+    prompt: str
+    into: str | None = None
+    writes: str | None = None
+    provider: str | None = None
+    otherwise: str | None = None
+
+    @property
+    def marker(self) -> str:
+        """The field that records which prompt got an answer."""
+        return f"{self.into or 'writes'}_asked"
 
 
 class Vault:
@@ -131,8 +151,9 @@ class Vault:
     def ask(
         self,
         page: str,
-        into: str,
+        into: str | None = None,
         *,
+        writes: str | None = None,
         provider: str | None = None,
         prompt: str,
         actor: str,
@@ -141,19 +162,24 @@ class Vault:
     ) -> Result:
         """Ask a model once and write the answer to a field of the page, or record why not.
 
-        With no provider page the model is detected from the environment and the PATH.
+        With `writes` the answer may also hold pages, which are written by the actor into that
+        space and listed in the result. With no provider page the model is detected from the
+        environment and the PATH.
         """
         check_name(page)
         check_name(actor)
         if provider is not None:
             check_name(provider)
-        if not into:
-            raise BadInput("the field to write the answer to must be a non-empty name")
+        if writes is not None:
+            check_name(writes)
+        if not into and writes is None:
+            raise BadInput(
+                "give a field to write the answer to, a space to write pages into, or both"
+            )
         if self._dirty():
             raise BadInput(self._dirty_message())
-        return self._ask(
-            page, into, provider, prompt, None, actor, at, cause, 0, skip_settled=False
-        )
+        ask = Ask(prompt, into or None, writes, provider)
+        return self._ask(page, ask, actor, at, cause, 0, skip_settled=False)
 
     def log(self) -> list[str]:
         """Return the history oldest first, one line per commit."""
@@ -322,17 +348,23 @@ class Vault:
         cause: str | None,
         depth: int,
         asked: tuple[list[tuple[str, str]], str] = ([], ""),
+        bound: str | None = None,
     ) -> Result:
         def refuse(reason: str) -> Result:
             return self._refuse(page, changes, body, actor, at, cause, reason, asked)
 
         if depth > MAX_DEPTH:
             return refuse(_CYCLE)
+        before = self._load(page)
         try:
-            result = apply(self._load(page) or Page(), changes, body)
+            result = apply(before or Page(), changes, body)
         except ShapeError as exc:
             return refuse(f"{Refusal.SHAPE}: {exc}")
-        refused = self._rule_reason(page, result)
+        if bound is not None:
+            breach = self._breach(page, before, result, bound)
+            if breach:
+                return refuse(f"{Refusal.LIMIT}: {breach}")
+        refused = self._rule_reason(page, result, before)
         if refused:
             reason, space = refused
             if space != page:
@@ -342,11 +374,62 @@ class Vault:
         self._react(page, result, commit, at, depth)
         return Result(True, commit)
 
-    def _rule_reason(self, name: str, page: Page) -> tuple[str, str] | None:
-        """Return the reason a rule refuses the page and the page the rule came from."""
+    def _inside(self, name: str | None, space: str) -> bool:
+        """Return whether name is space or lies within it, directly or through spaces."""
+        seen: set[str] = set()
+        while name is not None and name not in seen:
+            if name == space:
+                return True
+            seen.add(name)
+            found = self._load(name)
+            name = found.within if found is not None else None
+        return False
+
+    def _breach(self, name: str, before: Page | None, page: Page, space: str) -> str | None:
+        """Return the limit a page written by an answer breaks, if any.
+
+        The page must lie within the space before the write, when it exists, and after it.
+        """
+        if name == space or not self._inside(page.within, space):
+            return f"page {name} is not within space {space}: set within to it or a space inside it"
+        if before is not None and not self._inside(before.within, space):
+            return f"page {name} lies outside space {space}, so an answer cannot change it"
+        if "secret" in page.fields or "command" in page.fields:
+            return (
+                f"page {name} names a secret or a command, which a page written by an answer "
+                "may not: leave that to the person who sets up the provider"
+            )
+        for entry in page.watch:
+            target = entry.get("ask", {}).get("writes")
+            if target is not None and not self._inside(target, space):
+                return (
+                    f"a watch entry of {name} writes into {target}, outside space {space}: "
+                    f"name {space} or a space inside it"
+                )
+        return None
+
+    def _rule_reason(
+        self, name: str, page: Page, before: Page | None = None
+    ) -> tuple[str, str] | None:
+        """Return the reason a rule refuses the page and the page the rule came from.
+
+        The rules of the page and of every space above it are judged. A write that changes
+        `within` is also judged by the rules of the spaces the page was in before it.
+        """
         scope = {"page": page.fields, "size": _size(page)}
+        found = self._walk(name, page, name, scope)
+        if found or before is None or not before.within or before.within == page.within:
+            return found
+        left = self._load(before.within)
+        if left is None:
+            return f"{Refusal.RULE}: space {before.within} does not exist", name
+        return self._walk(name, left, before.within, scope)
+
+    def _walk(
+        self, name: str, space: Page, owner: str, scope: dict[str, Any]
+    ) -> tuple[str, str] | None:
+        """Judge the rules of space and of the spaces above it against scope."""
         seen = {name}
-        space, owner = page, name
         while True:
             for rule in space.rules:
                 try:
@@ -388,19 +471,15 @@ class Vault:
                     self._refuse(watcher, {}, None, watcher, at, commit, reason)
                     continue
                 if "ask" in entry:
-                    ask = entry["ask"]
-                    args = (ask["into"], ask.get("provider"), ask["prompt"], ask.get("otherwise"))
-                    self._ask(watcher, *args, watcher, at, commit, depth + 1, skip_settled=True)
+                    ask = Ask(**entry["ask"])
+                    self._ask(watcher, ask, watcher, at, commit, depth + 1, skip_settled=True)
                 elif not unchanged:
                     self._write(watcher, changes, None, watcher, at, commit, depth + 1)
 
     def _ask(
         self,
         page: str,
-        into: str,
-        provider: str | None,
-        template: str,
-        otherwise: str | None,
+        ask: Ask,
         actor: str,
         at: str,
         cause: str | None,
@@ -418,70 +497,101 @@ class Vault:
         if depth > MAX_DEPTH:
             return self._refuse(page, {}, None, actor, at, cause, _CYCLE)
         pages = self._all()
-        prompt = resolve_text(template, pages)
+        prompt = resolve_text(ask.prompt, pages)
+        if ask.writes is not None:
+            prompt += answer.instruction(ask.writes)
         digest = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
-        marker = f"{into}_asked"
         current = (self._load(page) or Page()).fields
-        if skip_settled and into in current and current.get(marker) == digest:
+        if (
+            skip_settled
+            and (ask.into is None or ask.into in current)
+            and current.get(ask.marker) == digest
+        ):
             return None
-        if provider is not None:
+        where = (page, actor, at, cause, depth)
+        if ask.provider is not None:
             try:
-                loaded = self._load(provider)
-                found = model.provider(provider, None if loaded is None else loaded.fields)
+                loaded = self._load(ask.provider)
+                found = model.provider(ask.provider, None if loaded is None else loaded.fields)
                 secret = model.find_secret(found.secret, self.keys_dir) if found.secret else None
-                answer = model.ask(found, secret, prompt, self.keys_dir)
-                return self._answered(
-                    found,
-                    answer,
-                    into,
-                    digest,
-                    template,
-                    pages,
-                    prompt,
-                    (page, actor, at, cause, depth),
-                )
+                reply = model.ask(found, secret, prompt, self.keys_dir)
+                return self._answered(found, reply, ask, digest, pages, prompt, where)
             except model.ModelError as exc:
                 self._refuse(page, {}, None, actor, at, cause, f"{Refusal.MODEL}: {exc}")
         for choice in model.detect().choices:
             try:
-                answer = model.ask(choice.provider, choice.secret, prompt, self.keys_dir)
+                reply = model.ask(choice.provider, choice.secret, prompt, self.keys_dir)
             except model.ModelError:
                 continue
-            where = (page, actor, at, cause, depth)
-            return self._answered(
-                choice.provider, answer, into, digest, template, pages, prompt, where
-            )
-        where = (page, actor, at, cause, depth)
-        return self._plain(where, into, otherwise, template, pages, prompt, skip_settled)
+            return self._answered(choice.provider, reply, ask, digest, pages, prompt, where)
+        return self._plain(where, ask, pages, prompt, skip_settled)
 
     def _answered(
         self,
         found: model.Provider,
-        answer: model.Answer,
-        into: str,
+        reply: model.Answer,
+        ask: Ask,
         digest: str,
-        template: str,
         pages: dict[str, Page],
         prompt: str,
         where: tuple[str, str, str, str | None, int],
     ) -> Result:
-        """Write a model's answer to the asking page, with the trailers that record it."""
+        """Write a model's answer to the asking page, with the trailers that record it.
+
+        When the entry may write pages, the answer is cut into plain text and page blocks. The
+        text goes to `into`, and once that write has held each block is written in order as the
+        actor, caused by the answer, one level deeper.
+        """
         page, actor, at, cause, depth = where
         trailers = [(Trailer.MODEL, found.page), (Trailer.MODEL_NAME, found.name)]
-        if answer.tokens_in is not None:
-            trailers.append((Trailer.TOKENS_IN, str(answer.tokens_in)))
-        if answer.tokens_out is not None:
-            trailers.append((Trailer.TOKENS_OUT, str(answer.tokens_out)))
-        trailers += [(Trailer.READ, name) for name in embedded(template, pages)]
-        changes = {into: answer.text, f"{into}_asked": digest}
-        return self._write(page, changes, None, actor, at, cause, depth, (trailers, prompt))
+        if reply.tokens_in is not None:
+            trailers.append((Trailer.TOKENS_IN, str(reply.tokens_in)))
+        if reply.tokens_out is not None:
+            trailers.append((Trailer.TOKENS_OUT, str(reply.tokens_out)))
+        trailers += [(Trailer.READ, name) for name in embedded(ask.prompt, pages)]
+        text, blocks = reply.text, []
+        if ask.writes is not None:
+            text, blocks = answer.split(reply.text)
+        changes = {ask.marker: digest}
+        if ask.into is not None:
+            changes[ask.into] = text
+        result = self._write(page, changes, None, actor, at, cause, depth, (trailers, prompt))
+        if not (result.ok and blocks and ask.writes is not None):
+            return result
+        landed = self._land(blocks, ask.writes, page, actor, at, result.id, depth + 1)
+        return Result(True, result.id, pages=landed)
+
+    def _land(
+        self,
+        blocks: list[answer.Block],
+        space: str,
+        asker: str,
+        actor: str,
+        at: str,
+        cause: str,
+        depth: int,
+    ) -> tuple[tuple[str, Result], ...]:
+        """Write each page block into space, in order. A bad block is one recorded refusal."""
+        landed = []
+        for block in blocks:
+            name = block.name if NAME.match(block.name) else asker
+            try:
+                if block.problem is not None:
+                    raise ShapeError(block.problem)
+                changes, body = given(block.text)
+            except ShapeError as exc:
+                reason = f"{Refusal.SHAPE}: page block {block.name or '(no name)'}: {exc}"
+                landed.append((name, self._refuse(name, {}, None, actor, at, cause, reason)))
+                continue
+            landed.append(
+                (name, self._write(name, changes, body, actor, at, cause, depth, bound=space))
+            )
+        return tuple(landed)
 
     def _plain(
         self,
         where: tuple[str, str, str, str | None, int],
-        into: str,
-        otherwise: str | None,
-        template: str,
+        ask: Ask,
         pages: dict[str, Page],
         prompt: str,
         skip_same: bool,
@@ -489,17 +599,26 @@ class Vault:
         """Write a plain sentence because no model answered, and leave the question unsettled.
 
         The field `<into>_asked` is not written, so the next ask with a model asks for real.
-        Returns None when a reaction would write the sentence the page already holds.
+        Returns None when a reaction would write the sentence the page already holds. An ask
+        with no `into` has nowhere to put a sentence, so the failure is recorded as a refusal
+        and no page is written.
         """
         page, actor, at, cause, depth = where
-        if otherwise is None:
-            text = model.plain_sentence(page, into, prompt)
+        if ask.into is None:
+            reason = (
+                f"{Refusal.MODEL}: no model answered, so no pages were written: "
+                f"to give Conky one, {model.WAYS}"
+            )
+            return self._refuse(page, {}, None, actor, at, cause, reason)
+        if ask.otherwise is None:
+            text = model.plain_sentence(page, ask.into, prompt)
         else:
-            text = resolve_text(otherwise, pages).strip()
-        if skip_same and (self._load(page) or Page()).fields.get(into) == text:
+            text = resolve_text(ask.otherwise, pages).strip()
+        if skip_same and (self._load(page) or Page()).fields.get(ask.into) == text:
             return None
         trailers = [(Trailer.MODEL, "none")] + [
-            (Trailer.READ, name) for name in embedded(template, pages)
+            (Trailer.READ, name) for name in embedded(ask.prompt, pages)
         ]
-        result = self._write(page, {into: text}, None, actor, at, cause, depth, (trailers, prompt))
+        changes = {ask.into: text}
+        result = self._write(page, changes, None, actor, at, cause, depth, (trailers, prompt))
         return Result(result.ok, result.id, result.reason, plain=True)

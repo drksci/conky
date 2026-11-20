@@ -60,6 +60,8 @@ One record per decision: context, decision, consequences.
 - [decisions/0025-the-screen-is-built-in-small-steps.md](decisions/0025-the-screen-is-built-in-small-steps.md): The people's screen is built in small steps, and the trail is the first trial
 - [decisions/0026-it-always-works.md](decisions/0026-it-always-works.md): It always works
 - [decisions/0027-the-vocabulary-is-what-exists.md](decisions/0027-the-vocabulary-is-what-exists.md): The vocabulary is what exists
+- [decisions/0028-a-character-writes-pages.md](decisions/0028-a-character-writes-pages.md): A character writes pages
+- [decisions/0029-autonomy-inside-limits-that-hold.md](decisions/0029-autonomy-inside-limits-that-hold.md): Autonomy inside limits that hold
 
 ### Research
 

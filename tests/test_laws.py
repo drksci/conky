@@ -114,6 +114,20 @@ def test_a_refusal_by_a_rule_from_a_space_names_that_space(vault: Vault) -> None
     vault.verify()
 
 
+def test_leaving_a_space_is_judged_by_the_rules_of_the_space_it_leaves(vault: Vault) -> None:
+    w(vault, "club", {"rules": ["size <= 200"]})
+    w(vault, "street", {})
+    assert w(vault, "member", {"within": "club"}, "short").ok
+    result = w(vault, "member", {"within": "street"}, "x" * 400)
+    assert not result.ok and result.reason.startswith("rule: size <= 200 (from club)")
+    _, found = message(vault)
+    assert found["Kind"] == "refused" and found["From"] == "club"
+    assert vault.read("member").within == "club"
+    assert w(vault, "member", {"within": "street"}, "short").ok
+    assert w(vault, "member", {}, "x" * 400).ok
+    vault.verify()
+
+
 def test_size_rule_in_a_space_refuses_an_oversized_member(vault: Vault) -> None:
     w(vault, "tight", {"rules": ["size <= 300"]})
     assert w(vault, "note", {"within": "tight"}, "short").ok

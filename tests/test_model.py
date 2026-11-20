@@ -584,6 +584,8 @@ def test_ask_that_breaks_a_rule_exits_non_zero_and_leaves_the_page(
             "ask": {"provider": "Bad Name", "prompt": "q", "into": "a"},
         },
         {"on": "ticket", "when": "true", "ask": {"provider": "helper", "prompt": "q", "into": ""}},
+        {"on": "ticket", "when": "true", "ask": {"prompt": "q", "writes": "Bad Name"}},
+        {"on": "ticket", "when": "true", "ask": {"prompt": "q", "writes": 3}},
         {"on": "ticket", "when": "true", "ask": "q"},
         {"on": "ticket", "when": "true"},
     ],
@@ -591,7 +593,9 @@ def test_ask_that_breaks_a_rule_exits_non_zero_and_leaves_the_page(
 def test_a_malformed_ask_entry_is_a_shape_refusal(vault: Vault, entry: dict) -> None:
     result = w(vault, "desk", {"watch": [entry]})
     assert not result.ok and result.reason is not None
-    assert result.reason.startswith("shape: ") and "ask (prompt and into" in result.reason
+    assert (
+        result.reason.startswith("shape: ") and "ask (prompt, with into or writes" in result.reason
+    )
     assert not (vault.pages_dir / "desk.md").exists()
 
 

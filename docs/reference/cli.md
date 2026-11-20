@@ -118,12 +118,14 @@ On success it prints `written (commit <id>)`, with the short commit id. If a rul
 ### ask
 
 ```
-conky ask <page> <into-field> [--provider <provider page>] --prompt TEXT --as <actor>
+conky ask <page> [<into-field>] [--writes <space>] [--provider <provider page>] --prompt TEXT --as <actor>
 ```
 
 Asks a model one question and writes the answer to the field `into-field` of `page`, as a signed commit by `actor`. It takes the same path as a watch entry with `ask` ([rules and reactions](rules-and-reactions.md#asking-a-model)): embeds in the prompt are resolved, the provider page named by `--provider` says how to reach the model ([providers](providers.md)), and the commit records the question and the model ([vault format](vault-format.md#a-model-answer)). `--prompt` and `--as` are required. Without `--provider` a model is detected from the environment and the PATH, see [`conky model`](#model).
 
 The skip rule does not apply: the question is asked every time. The answer is written together with the field `<into-field>_asked`, which later watch entries use to skip a question they would repeat.
+
+With `--writes <space>` the answer may also hold pages, which `actor` writes into that space, one signed commit each, caused by the answer ([an answer that is pages](rules-and-reactions.md#an-answer-that-is-pages)). `<into-field>` may then be left out, and the plain text of the answer is dropped. After the line for the answer, the command prints one line for each page, `<page>: written (commit <id>)` on standard output or `<page>: refused (commit <id>): <reason>` on standard error, and exits 1 if any page was refused. The pages that were not refused are kept.
 
 On success it prints `written (commit <id>)`. If the answer breaks a rule it prints `refused (commit <id>): <reason>` on standard error and exits 1, and the refusal is committed. A model that cannot be asked does not fail the command: a named provider that fails is recorded as a refusal whose reason starts with `model:`, then the detected models are tried, and when none answers a plain sentence is written. In that case the command prints the sentence on standard output, a one-line hint on standard error that lists the ways to give Conky a model, and exits 0 ([when no model answers](providers.md#when-no-model-answers)). The actor needs its key, as for `write`.
 
