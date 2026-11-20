@@ -75,6 +75,7 @@ Outside work, compared on a fixed basis, with the depth of reading stated.
 - [research/harnesses.md](research/harnesses.md): Agent harnesses compared
 - [research/papers.md](research/papers.md): Paper register
 - [research/protocols.md](research/protocols.md): Protocols for agents, tools and interfaces
+- [research/where-am-i.md](research/where-am-i.md): MARCO: a shared word for where an agent is
 - [research/benchmarks.md](research/benchmarks.md): Benchmarks and evaluations for agent harnesses
 - [research/evaluation-plan.md](research/evaluation-plan.md): Evaluation plan (draft): three kinds of result kept apart, and steps from cheapest first
 
@@ -108,6 +109,7 @@ Candidates, not requirements. Each states its rung.
 - [ideas/direction-and-drift.md](ideas/direction-and-drift.md): Direction and drift
 - [ideas/dry-run.md](ideas/dry-run.md): Trying a change first
 - [ideas/energy-unit.md](ideas/energy-unit.md): Energy unit
+- [ideas/felt-sense.md](ideas/felt-sense.md): A felt sense of magnitude
 - [ideas/house-style.md](ideas/house-style.md): Taste is a page
 - [ideas/inheritance.md](ideas/inheritance.md): What a space hands down
 - [ideas/learned-reactions.md](ideas/learned-reactions.md): Learned reactions
