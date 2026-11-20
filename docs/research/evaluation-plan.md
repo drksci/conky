@@ -68,6 +68,7 @@ Prompts live in one versioned prompt set shared by all harnesses. Any prompt tex
 - Aim: to find out whether a stopped vault carries its whole state.
 - Run: stop a running system, copy the vault by clone or bundle to another location, run `verify` and `rebuild`, continue with further writes, and compare state. Equality is defined before the run as identical pages and identical log head after the same sequence of writes.
 - Cost class: none.
+- Status: the clone, check and carry-on part now exists as the command `conky assimilate` ([reference](../reference/cli.md#assimilate)). It is a mechanism result. The comparison of identical pages and log heads after the same sequence of writes is not part of the command.
 - Informative result: equality holds, or the first difference is located.
 - Cannot show: that anything other than conky's own commands can resume. This is the mechanical half of the [assimilation test](../ideas/assimilation-test.md).
 

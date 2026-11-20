@@ -9,7 +9,8 @@ from pathlib import Path
 
 import yaml
 
-from conky import demo, present
+from conky import assimilate, demo, present
+from conky.assimilate import INTO
 from conky.errors import BadInput, VerifyFailed
 from conky.page import load_value, serialize
 from conky.vault import Vault
@@ -52,6 +53,26 @@ def _parser() -> argparse.ArgumentParser:
         "--into", default=None, help="folder to create (default: ./conky-demo-NAME)"
     )
     demo_cmd.add_argument("--list", action="store_true", help="list the examples")
+    assim = sub.add_parser("assimilate", help="take over a stopped vault from its folder alone")
+    assim.add_argument(
+        "source",
+        nargs="?",
+        default=None,
+        help="a vault directory, a Git bundle or a URL (default: a stopped vault in the package)",
+    )
+    assim.add_argument("--into", default=INTO, help=f"folder to create (default: ./{INTO})")
+    assim.add_argument("--as", dest="actor", default="newcomer", help="the new actor's name")
+    assim.add_argument(
+        "--keys", default=argparse.SUPPRESS, help="where the new key goes (default: ./keys)"
+    )
+    assim.add_argument(
+        "--then",
+        nargs="+",
+        action="append",
+        default=[],
+        metavar=("PAGE", "FIELD=VALUE"),
+        help="a write to make as the newcomer; repeat to make several",
+    )
     return parser
 
 
@@ -81,6 +102,18 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
             keys = Path(args.keys) if args.keys else None
             demo.build(args.name, into, keys, _now, ui, print)
         return 0
+    if args.command == "assimilate":
+        extra = []
+        for page, *pairs in args.then:
+            if not pairs:
+                raise BadInput(f"--then {page} has no field=value: give at least one")
+            say = f"Write {' '.join(pairs)} to {page}."
+            step = demo.Step(say, page, args.actor, _fields(pairs), None)
+            extra.append(assimilate.Carry(step))
+        keys = Path(args.keys) if args.keys else None
+        return assimilate.run(
+            args.source, Path(args.into), args.actor, keys, extra, _now, ui, print
+        )
     if args.command == "init":
         Vault.init(args.path, args.keys)
         print(ui.initialised(args.path))

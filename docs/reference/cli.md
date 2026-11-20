@@ -8,7 +8,7 @@ source: maintainers
 
 # Command line
 
-`conky` is installed by `pip install -e '.[dev]'`. The walkthrough in [getting started](../guide/getting-started.md) uses every command except `demo`, which has its own first section there, and `ask`, which needs a provider.
+`conky` is installed by `pip install -e '.[dev]'`. The walkthrough in [getting started](../guide/getting-started.md) uses every command except `demo` and `assimilate`, which have their own sections there, and `ask`, which needs a provider.
 
 ```
 conky [--vault DIR] [--keys DIR] [--color WHEN] <command> ...
@@ -55,6 +55,41 @@ Errors, each on one line beginning `error: `:
 
 - `error: <path> already exists: choose another folder with --into PATH`
 - `error: no example named '<name>': run conky demo --list to see the examples`
+
+### assimilate
+
+```
+conky assimilate [source] [--into PATH] [--as ACTOR] [--keys DIR] [--then PAGE FIELD=VALUE ...]
+```
+
+Takes over a stopped vault from its folder alone, checks it and carries on from where it stopped. It is the mechanical form of the [assimilation test](../ideas/assimilation-test.md): no model is involved, so it shows that the state travels and resumes, and it says nothing about how an agent behaves. In the [evaluation plan](../research/evaluation-plan.md) it is a mechanism result.
+
+- `source` is the vault to take over: a path to a vault directory, a path to a Git bundle, or a URL that `git clone` accepts. Without it, a small stopped vault that ships in the package is used, so the bare command works anywhere. That vault is the `stall` example stopped before the stall sells down: the market, the stall and the depot exist, and one write has been refused.
+- `--into PATH` is the folder to create. Default: `./conky-assimilated`. It is an error if the path already exists.
+- `--as ACTOR` names the newcomer. Default: `newcomer`.
+- `--keys DIR` is where the newcomer's new key goes. Default: a `keys` directory beside the new vault. The option also works before the command, like the global `--keys`.
+- `--then PAGE FIELD=VALUE ...` is a write to make as the newcomer, with the same field syntax as [write](#write). Repeat it to make several writes, which run in order. Put `source` before the first `--then`.
+
+It reports five numbered steps as they happen.
+
+1. Take the folder. `git clone` copies the source into the new folder. Nothing else is copied: no keys and no settings.
+2. Check it. This is [verify](#verify): every commit is signed by a key the vault lists, the trailers are valid and the tree is clean. The step reports the number of commits, pages and spaces, and the last change. A space is a page that other pages lie within.
+3. Read the room. Each page is listed with its space, the number of rules that apply to it (its own plus those inherited through its space) and the pages it watches. This reads the files only.
+4. Carry on. The newcomer is a new actor with a new key made in the key directory, so the original author's key is never needed. Its public key is added to `keys/allowed_signers` in the same commit as its first write. For the packaged vault the writes come from a data file beside it: the stall sells down to 4 loaves, and the depot must react by itself. For any other source the writes are the `--then` options. With none, the command stops after step 3 and prints the `conky write` command to continue with.
+5. Check again. The vault is verified once more, and the commits added by the carry-on are listed, with each reaction and its cause and each refusal and its reason.
+
+A reaction is signed by the page that reacts, as for any write, so it needs that page's key. When the source lists a reacting page whose key stayed with the original author, the write fails with `no private key for '<page>'`, and the fix is to give that key with `--keys`.
+
+The output ends with a short statement of what was shown and what was not. In a terminal it is styled like the demo: a box for the title and the closing, numbered step badges, `✓` and `✗` badges, and `↳` for each reaction. Plain output has no escape codes.
+
+The exit code is 1 if verification fails at step 2 or step 5, or if a write that the packaged vault expects to be kept is refused or draws no reaction. A refused `--then` write is reported with its reason and does not change the exit code. Errors, each on one line beginning `error: `, include:
+
+- `error: <path> already exists: choose another folder with --into PATH`
+- `error: cannot take <source>: ...: give a vault directory, a bundle file or a URL that git clone accepts`
+- `error: a key named '<actor>' already exists in <dir>: choose another name with --as ACTOR or another folder with --keys DIR`
+- `error: '<actor>' is already listed in the vault's keys/allowed_signers: choose a new name with --as ACTOR`
+
+A vault that fails step 2 is reported in the output of the step, with the first problem verify found, and nothing is written to it.
 
 ### init
 

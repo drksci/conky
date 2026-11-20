@@ -93,7 +93,8 @@ def listing(ui: Plain) -> list[str]:
     return ui.listing([(name, load(name).summary) for name in available()])
 
 
-def _outcome(vault: Vault, step: Step, before: int, clock: Callable[[], str]) -> Outcome:
+def play(vault: Vault, step: Step, before: int, clock: Callable[[], str]) -> Outcome:
+    """Make the step's write and return what it did, with each reaction that followed."""
     result = vault.write(step.page, step.fields, step.body, actor=step.actor, at=clock())
     reactions = []
     for line in vault.log()[before:][1:]:
@@ -115,7 +116,7 @@ def run(
     for line in ui.demo_title(example.title, example.summary):
         out(line)
     for number, step in enumerate(example.steps, start=1):
-        outcome = _outcome(vault, step, len(vault.log()), clock)
+        outcome = play(vault, step, len(vault.log()), clock)
         for line in ui.demo_step(number, step.say, outcome):
             out(line)
 

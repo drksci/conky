@@ -22,6 +22,18 @@ It makes seven writes across four pages, narrating each step in plain words: a m
 
 The vault is left in `./conky-demo-stall`, with private keys in `./keys`. The closing lines say what to look at next: `git -C conky-demo-stall log --oneline` for the history, and `conky read depot`, `conky verify` for the pages and the checks, which need conky installed as described below. `conky demo team` runs a second example about tasks and a board, and `conky demo --list` lists the examples. In a terminal the output is styled with boxes and badges, and piped output stays plain text. The full output and options are in the [command line reference](../reference/cli.md#demo).
 
+## Taking over a stopped vault
+
+One command takes over a vault that has stopped, using nothing but its folder.
+
+```bash
+uvx --from git+https://github.com/drksci/conky conky assimilate
+```
+
+With no argument it uses a small stopped market stall that ships in the package. The command clones the folder into `./conky-assimilated`, checks every signature, lists each page with its rules and watches, and then carries on as a new actor called `newcomer`, with a key made for the occasion in `./keys`. The stall sells down to 4 loaves, the depot reacts by itself, and the vault is checked again. To take over a vault of your own, give its directory, a Git bundle or a URL as the first argument, and add `--then PAGE FIELD=VALUE` for each write to make. The options are in the [command line reference](../reference/cli.md#assimilate).
+
+This shows that the folder alone is enough to check a vault's history and to continue it, with no key from the original author. It shows nothing about behaviour, because no model is involved: it is the mechanical half of the [assimilation test](../ideas/assimilation-test.md).
+
 The rest of this page does the same things by hand.
 
 ## Before starting

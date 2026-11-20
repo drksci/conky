@@ -1,0 +1,7 @@
+steps:
+  - say: The stall sells down to 4 loaves. Nobody tells the depot, and it is expected to react on its own.
+    write:
+      page: stall
+      fields:
+        stock: 4
+    reacts: [depot]

@@ -1,0 +1,14 @@
+stall.bundle is the vault that `conky assimilate` takes over when it is given no source. It is a
+Git bundle of the first four steps of the `stall` example: the market, the stall and the depot
+exist and one write has been refused, but the stall has not sold down. stall.yaml says how to
+carry on.
+
+It is made at fixed instants, one minute apart from 2026-01-01T09:00:00Z, by a key derived from a
+fixed seed, so rebuilding it gives the same commit ids:
+
+    python scripts/build_stopped_vault.py src/conky/stopped/stall.bundle
+
+The bundle holds only the public half of that key, in keys/allowed_signers. The private half is
+never written anywhere the command can reach. tests/test_assimilate.py rebuilds the bundle and
+compares commit ids with this one. Rebuild it only when the vault format changes, and say so in
+the changelog.

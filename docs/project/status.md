@@ -20,8 +20,9 @@ From [design](../design.md) and the [reference](../reference/vault-format.md):
 - Reactions: pages that watch other pages and write themselves, with no model call.
 - Model pages: a provider is a page (`openai` or `anthropic` wire format, secret by name, never in the vault), and a watch entry with `ask`, or `conky ask`, asks it one question. The answer is a signed write by the asking page, and the commit records the prompt, the model and the tokens. A failure is a refusal that starts `model:`. Tested only against stand-in servers on the local machine.
 - Measures: a page can watch itself, with `size` and `other_size` in watch expressions. Pressure is the first use. Nothing yet acts on pressure to relieve it.
-- `verify` (clean tree, `git fsck`, signatures from `keys/allowed_signers`, trailers, files changed), `rebuild` (restore the committed state), and a command line: `init`, `write`, `ask`, `read`, `log`, `verify`, `rebuild`, `demo`.
+- `verify` (clean tree, `git fsck`, signatures from `keys/allowed_signers`, trailers, files changed), `rebuild` (restore the committed state), and a command line: `init`, `write`, `ask`, `read`, `log`, `verify`, `rebuild`, `demo`, `assimilate`.
 - `conky demo`: builds a small example vault (`stall` or `team`, shipped as data in the package) with the real write path and narrates each step, including a refused write and a reaction.
+- `conky assimilate`: takes over a stopped vault from its folder alone (a directory, a bundle or a URL, or a small one that ships in the package), checks it, reads its pages, carries on as a new actor with a new key, and checks again. It is the mechanical form of the [assimilation test](../ideas/assimilation-test.md): a mechanism result with no model, so it shows that state travels and resumes and nothing about behaviour. The packaged vault is built reproducibly by `scripts/build_stopped_vault.py`.
 - A golden vault under `tests/golden/` that every version must keep verifying and reading.
 - CI that runs `scripts/check` on every pull request and on pushes to `main`.
 
@@ -37,4 +38,5 @@ From [design](../design.md) and the [reference](../reference/vault-format.md):
 - Two open design questions, recorded without answers in [open questions](open-questions.md): rules on a space also apply to the space page itself, and removing the last commit is not detectable from one copy alone.
 - Rules are not enforced on commits made outside conky or pushed from elsewhere; `verify` catches unsigned or unlisted-key commits, not rule violations ([decision 0002](../decisions/0002-git-is-the-store.md)).
 - Write throughput is limited by one signed commit per write, in the order of tens per second.
-- Everything on the [roadmap](roadmap.md) is unbuilt except the first slice of measures, the demo and model pages.
+- Everything on the [roadmap](roadmap.md) is unbuilt except the first slice of measures, the demo, model pages and the mechanical form of the resume test.
+- The resume test with a model is not built, so nothing yet shows that a consumer other than conky's own commands can resume from a stopped vault.

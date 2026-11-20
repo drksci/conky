@@ -32,6 +32,18 @@ class Outcome:
     reactions: tuple[tuple[str, str], ...]
 
 
+def _fill(text: str, width: int, *, initial_indent: str, subsequent_indent: str) -> str:
+    """Wrap text on spaces only, so a path or a hyphenated name is never split."""
+    return textwrap.fill(
+        text,
+        width,
+        initial_indent=initial_indent,
+        subsequent_indent=subsequent_indent,
+        break_long_words=False,
+        break_on_hyphens=False,
+    )
+
+
 def _next_commands(shown: object, look_at: str) -> list[tuple[str, str]]:
     return [
         ("The history:", f"git -C {shown} log --oneline"),
@@ -57,21 +69,46 @@ class Plain:
         """Return the opening of a demo."""
         return [title, textwrap.fill(summary, PLAIN_WIDTH)]
 
-    def demo_step(self, number: int, say: str, outcome: Outcome) -> list[str]:
-        """Return one step: a blank line, the narration and what happened."""
+    def step(self, number: int, say: str) -> list[str]:
+        """Return the head of a step: a blank line and the numbered narration."""
+        initial = f"{number}. "
+        fill = _fill(say, PLAIN_WIDTH, initial_indent=initial, subsequent_indent="   ")
+        return ["", fill]
+
+    def result(self, number: int, outcome: Outcome) -> list[str]:
+        """Return what a write did, and the reactions that followed it."""
         if outcome.ok:
             text = f"written: {outcome.page}"
         else:
             text = f"refused: {outcome.page}, because {outcome.reason}"
         for page, verb in outcome.reactions:
             text += f". Then {page} {verb}"
+        return [_fill(text, PLAIN_WIDTH, initial_indent="     -> ", subsequent_indent="        ")]
+
+    def note(self, number: int, state: str, label: str, text: str) -> list[str]:
+        """Return one finding under a step: ok or fail with a label, or info with none."""
+        deeper = " " * 8
+        if state == "info":
+            return [_fill(text, PLAIN_WIDTH, initial_indent=deeper, subsequent_indent=deeper)]
         return [
-            "",
-            textwrap.fill(say, PLAIN_WIDTH, initial_indent=f"{number}. ", subsequent_indent="   "),
-            textwrap.fill(
-                text, PLAIN_WIDTH, initial_indent="     -> ", subsequent_indent="        "
-            ),
+            _fill(
+                f"{label}: {text}",
+                PLAIN_WIDTH,
+                initial_indent="     -> ",
+                subsequent_indent=deeper,
+            )
         ]
+
+    def closing(self, title: str, paragraphs: list[str]) -> list[str]:
+        """Return a closing block: a title and short paragraphs."""
+        fill = [
+            _fill(p, PLAIN_WIDTH, initial_indent="  ", subsequent_indent="  ") for p in paragraphs
+        ]
+        return ["", title, *fill]
+
+    def demo_step(self, number: int, say: str, outcome: Outcome) -> list[str]:
+        """Return one step: a blank line, the narration and what happened."""
+        return [*self.step(number, say), *self.result(number, outcome)]
 
     def demo_next(self, shown: object, look_at: str) -> list[str]:
         """Return the closing block that says what to look at next."""
@@ -135,11 +172,17 @@ class Styled(Plain):
         inner += [style.dim(x) for x in style.wrap(summary, self.width - 4)]
         return style.box(inner)
 
-    def demo_step(self, number: int, say: str, outcome: Outcome) -> list[str]:
+    def _indent(self, number: int) -> str:
+        return " " * (style.visible_len(style.badge(str(number), style.PURPLE)) + 1)
+
+    def step(self, number: int, say: str) -> list[str]:
         pill = style.badge(str(number), style.PURPLE, style.BRIGHT)
-        indent = " " * (style.visible_len(pill) + 1)
-        lines = ["", *style.wrap(say, self.width, pill + " ", indent)]
+        return ["", *style.wrap(say, self.width, pill + " ", self._indent(number))]
+
+    def result(self, number: int, outcome: Outcome) -> list[str]:
+        indent = self._indent(number)
         page = style.bright(outcome.page)
+        lines = []
         if outcome.ok:
             lines.append(f"{indent}{style.badge('✓ written', style.MINT)}  {page}")
         else:
@@ -151,6 +194,31 @@ class Styled(Plain):
             name = style.colour(other, style.AMBER)
             lines.append(f"{indent} {style.dim('↳')} {name} {style.dim(verb)}")
         return lines
+
+    def note(self, number: int, state: str, label: str, text: str) -> list[str]:
+        indent = self._indent(number)
+        if state == "info":
+            deeper = indent + "    "
+            return [style.bright(x) for x in style.wrap(text, self.width, deeper, deeper)]
+        if state == "ok":
+            mark = style.badge(f"✓ {label}", style.MINT)
+        else:
+            mark = style.badge(f"✗ {label}", style.RED)
+        room = max(self.width - style.visible_len(indent + mark) - 2, MIN_WIDTH // 2)
+        lines = style.wrap(text, room)
+        hang = " " * (style.visible_len(indent + mark) + 2)
+        return [f"{indent}{mark}  {style.bright(lines[0])}"] + [
+            hang + style.bright(x) for x in lines[1:]
+        ]
+
+    def closing(self, title: str, paragraphs: list[str]) -> list[str]:
+        inner = [style.title(title)]
+        for paragraph in paragraphs:
+            inner += [style.dim(x) for x in style.wrap(paragraph, self.width - 4)]
+        return ["", *style.box(inner)]
+
+    def demo_step(self, number: int, say: str, outcome: Outcome) -> list[str]:
+        return [*self.step(number, say), *self.result(number, outcome)]
 
     def demo_next(self, shown: object, look_at: str) -> list[str]:
         inner = [style.title("What to look at next")]
