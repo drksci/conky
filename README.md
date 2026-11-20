@@ -37,6 +37,10 @@ Pages are grouped into spaces, and a page follows the rules of the space it belo
 
 Take a market stall that is running low on stock. Its page records the new level, a page for the depot is watching it, and the depot's page marks a reorder, with nobody deciding to. If someone tried to set the stock below zero, the market's rule would refuse the change, and the refusal would be kept in the history.
 
+<p align="center"><img src="docs/assets/figures/fig-5-too-big-to-move.svg" alt="Pen-plotter plate of a whale skeleton lying settled on the ground, drawn in side view with a long skull and jaws, a sagging spine, splayed ribs, a flipper and small pelvic bones. Thin leader lines name the places state gets stuck: settings, a hidden database, glue code, old versions and private formats. A caption says it grew until it could not be moved. Beside it, much smaller, a single folder of papers with a short history tape and a carry handle has a dashed yellow path leading off the frame: a folder and its history, pick it up and go." width="800"></p>
+
+*Fig. 5. A system that keeps its state scattered in many private places grows until it settles under its own weight, while a folder of documents with its history can be picked up and carried. Illustration, not data.*
+
 ## Where it stands
 
 Working and tested today:
