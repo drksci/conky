@@ -1,8 +1,6 @@
-<p align="center"><img src="docs/assets/conky-mark.png" alt="" width="72" height="72"></p>
+<h3 align="center"><img src="docs/assets/conky-mark.png" alt="" width="36" height="36" align="absmiddle">&nbsp;&nbsp;Conky</h3>
 
-<h3 align="center">Conky</h3>
-
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/slogan.dark.svg"><img src="docs/assets/figures/slogan.light.svg" alt="The unharnessed harness" width="640"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/slogan.dark.svg"><img src="docs/assets/figures/slogan.light.svg" alt="The unharnessed harness" width="520"></picture></p>
 
 <p align="center"><img src="docs/assets/figures/chip-stall.svg" alt="Market stall demo" height="24" align="absmiddle">&nbsp;&nbsp;<code>uvx --from git+https://github.com/drksci/conky conky demo</code></p>
 
