@@ -7,13 +7,13 @@
 
 *Pre-alpha · built and tested: log, rules, reactions, measures · not built: tables, model-backed pages, benchmark*
 
-**An organisation as a folder of Markdown pages, where every change is a signed line in a log and most of what happens needs no model at all.**
+**A folder of Markdown pages that behaves like a living system: every change is signed into its history, and most of what happens needs no model at all.**
 
-Most agent systems keep their truth in several places at once: prompts, tool schemas, a database, an orchestration script. conky keeps it in one. A vault is a directory of pages. Each page is a Markdown document with a few fields at the top, and it can stand for a person, a tool, a store of data or a rule. Nothing changes a page except a write, and every write is appended to a log and signed by whoever made it. Delete the pages and they can be rebuilt from the log, byte for byte.
+Most agent systems keep their truth in several places at once: prompts, tool schemas, a database, an orchestration script. conky keeps it in one. A vault is a directory of pages. Each page is a Markdown document with a few fields at the top, and it can stand for anything the system contains: a person, an agent, a team, a tool, a process, a store of data, a rule. Nothing changes a page except a write, and every write is appended to a log and signed by whoever made it. Delete the pages and they can be rebuilt from the log, byte for byte.
 
 Rules are checked by the runtime, not requested in a prompt. A write that breaks one is refused, and the refusal is recorded too. Pages watch each other and react, so a stock level falling below ten raises a reorder flag without anyone, human or model, deciding to. Inference is kept for the questions that state cannot answer.
 
-The name comes from a puppet who reminds his operator who calls the shots. The aim is in the same spirit: an organisation that runs, delivers and improves without its builders. That is not built. What exists is the core, in 722 lines of Python with 31 tests, and no model attached yet.
+The name comes from a puppet who reminds his operator who calls the shots. Anything that can be written down as pages can live here, from one agent's memory to a whole business. The first aim is in the puppet's spirit: an organisation that runs, delivers and improves without its builders. That is not built. What exists is the core, in 722 lines of Python with 31 tests, and no model attached yet.
 
 ## Sixty seconds
 
