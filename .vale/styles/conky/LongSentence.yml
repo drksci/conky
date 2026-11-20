@@ -1,0 +1,7 @@
+# Sentences longer than 35 words.
+extends: occurrence
+message: "Sentence is longer than 35 words. Split it."
+level: warning
+scope: sentence
+max: 35
+token: '\b(\w[\w''-]*)\b'

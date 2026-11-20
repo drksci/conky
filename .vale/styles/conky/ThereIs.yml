@@ -1,0 +1,9 @@
+# "There is" and "There are" as a sentence opener.
+extends: existence
+message: "Rewrite so the subject opens the sentence instead of '%s'."
+level: warning
+ignorecase: false
+nonword: true
+scope: sentence
+tokens:
+  - '^There (?:is|are|was|were)\b'

@@ -1,0 +1,11 @@
+# First person plural in headings, except the fixed essay heading "How we would know we are wrong".
+extends: existence
+message: "Avoid first person plural in headings ('%s')."
+level: error
+ignorecase: true
+nonword: true
+scope: heading
+tokens:
+  - '^(?:[^H]|H[^o]|Ho[^w]|How[^ ]).*\b(?:we|our|ours|us|ourselves)\b'
+  - '^(?:we|our|ours|us|ourselves)\b'
+  - '\b(?:our|ours|us|ourselves)\b'

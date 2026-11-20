@@ -10,7 +10,7 @@ source: maintainers
 
 ## What prompted it
 
-Open a shared folder that a team has used for a year and ask a simple question: how did this page come to say what it says? Usually nobody can tell you. The page is there, and the history, if there is any, is a side effect of whatever tool saved it. A system has to choose what counts as the truth: the documents, or the record of what happened to them. conky takes the record. The record is the history of a Git repository ([decision 0002](../decisions/0002-git-is-the-store.md)), and this essay describes it.
+Open a shared folder that a team has used for a year and ask a simple question about how this page came to say what it says. Usually nobody can tell you. The page is there, and the history, if there is any, is a side effect of whatever tool saved it. A system has to choose what counts as the truth: the documents, or the record of what happened to them. conky takes the record. The record is the history of a Git repository ([decision 0002](../decisions/0002-git-is-the-store.md)), and this essay describes it.
 
 ## The problem
 
@@ -30,7 +30,7 @@ This is built. `verify` checks that the working tree is clean, that `git fsck` p
 
 ## What it solves
 
-- There is no migration and no private format. A new shape is a new reading of the same history, in a format everyone can already read.
+- Nothing needs migrating and no format is private. A new shape is a new reading of the same history, in a format everyone can already read.
 - A vault can be copied to another machine and still verify, because it carries its own history and public keys.
 - Who did what, and what was refused, is answerable from the record.
 - Corruption is detectable: a page that differs from the committed state is a failed check, not a mystery.
@@ -41,7 +41,7 @@ A system that treats the signed Git history as the only authority, and restores 
 
 ## How we would know we are wrong
 
-- `verify` passes on a vault whose pages cannot actually be trusted, or fails on a healthy vault, in a real run rather than a constructed one.
+- `verify` passes on a vault whose pages cannot be trusted, or fails on a healthy vault, in a real run rather than a constructed one.
 - Writes are so slow, at one signed commit each, that real workloads cannot live in pages. Tens of writes per second is the expectation; a workload that needs more belongs in data files.
 - A fresh consumer handed a stopped vault cannot resume correctly. This is the [assimilation test](../ideas/assimilation-test.md), and it is not built yet.
 - A failure appears that the history cannot show. Two are known: history can be rewritten locally and is detectable only against another copy, and rules are not enforced on commits made outside conky (see [open questions](../project/open-questions.md) and [decision 0002](../decisions/0002-git-is-the-store.md)).

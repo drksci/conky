@@ -29,7 +29,7 @@ These come from general experience, not from any study.
 
 A measure is a page watching itself. A `watch` entry whose `on` is the page's own name sets a field computed from the page's state, using `size`, the byte length of the page. Pressure is such a measure: a number that rises as the page grows. Thresholds are further entries that fire when the number passes a value, setting a state that other pages can watch and react to. Walls remain for what must never happen, such as a negative balance. See [decision 0008](../decisions/0008-measures-are-self-watches.md).
 
-What is built is the measure and the threshold reaction. A page with no size rule accepts a large write, its pressure field rises as a recorded event, a threshold sets a state, and a watching page reacts, with no model call and no refusal. What is not built is anything that actually relieves the pressure, such as splitting or summarising a page. Today pressure is noticed and nothing yet acts on it.
+What is built is the measure and the threshold reaction. A page with no size rule accepts a large write, its pressure field rises as a recorded event, a threshold sets a state, and a watching page reacts, with no model call and no refusal. What is not built is anything that relieves the pressure, such as splitting or summarising a page. Today pressure is noticed and nothing yet acts on it.
 
 ## What it solves
 

@@ -31,7 +31,7 @@ This is built and shown in the [getting started](../guide/getting-started.md) wa
 - Cost: routine consequences carry no inference bill.
 - Determinism: the same state gives the same result, so behaviour can be replayed and checked.
 - Auditability: each reaction is an event in the history with its cause named.
-- Focus: model capacity is spent where it is actually needed.
+- Focus: model capacity is spent where it is needed.
 
 ## Hypothesis
 

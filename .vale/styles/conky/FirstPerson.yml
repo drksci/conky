@@ -1,0 +1,12 @@
+# First person plural in public prose. The fixed essay heading "How we would know we are wrong" is exempt.
+extends: existence
+message: "Avoid first person plural ('%s'). Name the project, the reader or the maintainers."
+level: error
+ignorecase: true
+scope: ~heading
+tokens:
+  - we
+  - our
+  - ours
+  - us
+  - ourselves

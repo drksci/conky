@@ -14,7 +14,7 @@ The ideas behind conky in plain language. Each section ends with a link to the t
 
 A page is a short document with a few labelled facts at the top and ordinary text underneath. Think of an index card: a title, some fields filled in, and a note. A page can stand for anything the system contains: a person, a team, a tool, a process, a store of data, a set of rules.
 
-Everything is a page, so everything can be opened and read in the same way. There is no hidden database and no part of the system that only a program can see.
+Everything is a page, so everything can be opened and read in the same way. No database is hidden, and no part of the system can be seen only by a program.
 
 In detail: [vault format](../reference/vault-format.md#pages).
 

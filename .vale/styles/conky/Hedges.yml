@@ -1,0 +1,22 @@
+# Hedging and weak qualifiers. Reported only; read them and judge.
+# 'rather than' is a real contrast, so only the hedging uses of 'rather' are matched.
+extends: existence
+nonword: true
+message: "'%s' is a hedge or weak qualifier. Cut it or be specific."
+level: warning
+ignorecase: true
+tokens:
+  - '\bvery\b'
+  - '\breally\b'
+  - '\bquite\b'
+  - '\brather(?: [^t]| t[^h]|[,.])'
+  - '\bsomewhat\b'
+  - '\bfairly\b'
+  - '\bbasically\b'
+  - '\bactually\b'
+  - '\bessentially\b'
+  - '\barguably\b'
+  - '\bperhaps\b'
+  - '\bin order to\b'
+  - '\bdue to the fact that\b'
+  - '\bit should be noted that\b'

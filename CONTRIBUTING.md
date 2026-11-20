@@ -18,7 +18,14 @@ scripts/check
 
 The pre-push hook runs the same command and blocks the push if it fails. CI runs the same command on every pull request and on pushes to `main`.
 
-`scripts/check` runs five things: `ruff check`, `ruff format --check`, the tests, `scripts/check_docs.py` and `scripts/check_commits.py`. Ruff selects the rule sets E, F, I, B, UP and SIM with a line length of 100. The pre-push hook is local configuration and is not cloned with the repository, so each clone enables it once with the command above.
+`scripts/check` runs six things: `ruff check`, `ruff format --check`, the tests, `scripts/check_docs.py`, the prose check described below and `scripts/check_commits.py`. Ruff selects the rule sets E, F, I, B, UP and SIM with a line length of 100. The pre-push hook is local configuration and is not cloned with the repository, so each clone enables it once with the command above.
+
+## Prose
+
+Published Markdown is linted with [Vale](https://vale.sh), which `pip install -e '.[dev]'` installs. The house style is in `.vale/styles/conky/`. Errors fail `scripts/check`: stock phrases and hype words, first person plural, em and en dashes, exclamation marks and rhetorical questions. Warnings and suggestions cover hedges, "there is" openers, "not only ... but" constructions and sentences over 35 words. They are reported, and you read them and decide.
+
+- `scripts/check` runs `vale --minAlertLevel=error` on the README, CONTRIBUTING, CHANGELOG, SECURITY, CLAUDE.md and `docs/`.
+- `vale .` reports every level.
 
 ## Commits
 

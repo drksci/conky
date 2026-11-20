@@ -1,0 +1,9 @@
+# Em dashes and en dashes used as punctuation. Use a comma, colon, full stop or brackets.
+# Written with code points so this file stays free of the characters it bans.
+extends: existence
+message: "Replace the dash with a comma, colon, full stop or brackets."
+level: error
+nonword: true
+tokens:
+  - '\x{2014}'
+  - '\x{2013}'

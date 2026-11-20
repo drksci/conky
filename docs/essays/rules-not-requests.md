@@ -26,7 +26,7 @@ In conky a rule is a pure boolean expression, written in CEL, attached to a page
 
 This is built. A space might say `page.stock >= 0` and `size <= 2000`; a member write that breaks either is refused with the reason. What is not built is any model-backed actor to test this against; today the actors are people and scripts using the command line.
 
-The same thinking applies to claims about the system. A rule is real only if a test fails when the rule is removed, and a benchmark number is real only if it came from an unscripted run with the run count and traces kept ([decision 0013](../decisions/0013-evidence-not-scripts.md)).
+The same thinking applies to claims about the system. A rule is real only if a test fails when the rule is removed. A benchmark number is real only if it came from an unscripted run with the run count and traces kept ([decision 0013](../decisions/0013-evidence-not-scripts.md)).
 
 ## What it solves
 
@@ -44,5 +44,5 @@ Moving invariants out of prompts and into runtime rules makes a population of ac
 - Rules prove too blunt: actors spend most of their effort being refused, or work around rules in ways the rules cannot see.
 - Real invariants turn out not to be expressible as pure boolean expressions over a page and its size. Rules see only the resulting page and its size, so anything that needs more is out of reach for now.
 - Rule evaluation becomes the bottleneck or the main source of defects.
-- There is already one known oddity: rules on a space also apply to the space page itself ([open questions](../project/open-questions.md)). If such cases multiply, the primitive is wrong.
+- One oddity is already known: rules on a space also apply to the space page itself ([open questions](../project/open-questions.md)). If such cases multiply, the primitive is wrong.
 - A hard refusal may be the wrong shape for some limits at all; see the pressure idea in [measures](../ideas/measures.md).

@@ -6,4 +6,6 @@ ruff check .
 ruff format --check .
 pytest -q
 python scripts/check_docs.py
+vale --minAlertLevel=error README.md CONTRIBUTING.md CHANGELOG.md SECURITY.md CLAUDE.md docs
+echo "prose: no house-style errors (vale, errors only)"
 python scripts/check_commits.py

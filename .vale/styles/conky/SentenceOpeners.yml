@@ -1,0 +1,7 @@
+# "Additionally" at the start of a sentence. Case-sensitive on purpose: only the capitalised form opens a sentence.
+extends: existence
+message: "Drop the sentence opener '%s'. Join the idea to the last one or state it directly."
+level: error
+ignorecase: false
+tokens:
+  - Additionally

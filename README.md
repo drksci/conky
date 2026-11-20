@@ -5,77 +5,71 @@
 </p>
 <p align="center"><sub>The name comes from Conky, the puppet in the television series <em>Trailer Park Boys</em>. The still and the quote belong to the show's owners and are not covered by this repository's licence.</sub></p>
 
-Try it. One command, nothing to set up beyond uv and Git:
+<h3 align="center">Your whole system, in a folder you can read.</h3>
+
+Every person, team, tool and rule is a page. Every change is signed and kept. The rules enforce themselves. Most things happen by themselves, and nobody has to think about them.
 
 ```bash
 uvx --from git+https://github.com/drksci/conky conky demo
 ```
 
-It builds a small market in a folder and shows it running itself. It needs uv, Git 2.34 or newer and ssh-keygen.
+That builds a small market in a folder and lets it run itself. It needs [uv](https://docs.astral.sh/uv/), Git and ssh-keygen.
 
-*Early days: the core works and is tested; much is still to be built.*
+[![CI](https://github.com/drksci/conky/actions/workflows/ci.yml/badge.svg)](https://github.com/drksci/conky/actions/workflows/ci.yml) *Early days. The core works and is tested. Most of the plan is still ahead.*
 
-[![CI](https://github.com/drksci/conky/actions/workflows/ci.yml/badge.svg)](https://github.com/drksci/conky/actions/workflows/ci.yml)
+## Five ideas
 
-**A folder of plain documents that behaves like a living system: every change is recorded and signed, the rules are enforced for you, and most things simply happen without anyone having to think about them.**
+- **Everything is a page.** If it exists, you can open it and read it.
+- **History is the truth.** Nothing changes without a signed entry, so anything can be traced and anything can be put back.
+- **Rules hold by themselves.** They are checked on every change. A change that breaks one is refused, and the refusal is kept too.
+- **Most things just happen.** Pages notice each other and respond. Thinking is saved for what needs it.
+- **You can always leave.** It is ordinary files in ordinary version control. Copy the folder and go.
 
-## The idea in five lines
+<p align="center"><img src="docs/assets/figures/fig-1-one-change.svg" alt="A pen-plotter drawing, left to right. A person changes the stall's page. The change is stamped and added to a history tape. It passes a gate that checks the rules. A dashed yellow line leads to the depot's page, which marks a reorder by itself." width="800"></p>
 
-- **Everything is a page.** If it exists, it can be opened and read: a person, a team, a tool, a process, a rule.
-- **History is the truth.** Nothing changes without a signed entry saying who changed what, so anything can be traced and put back.
-- **Rules hold by themselves.** They are checked on every change, not left to good behaviour, and a refused change is recorded too.
-- **Most things just happen.** Pages notice each other and respond; thinking, by a person or an AI model, is kept for what truly needs it.
-- **It goes anywhere.** The whole thing is ordinary files in ordinary version control, with nothing to migrate and nothing to be locked into.
+<p align="center"><em>Stock runs low. The change is signed, checked, and the depot reorders. Nobody decided to.</em></p>
 
-<p align="center"><img src="docs/assets/figures/fig-1-one-change.svg" alt="A pen-plotter drawing in five steps, left to right. A person changes the stall's page. The change is stamped and added to the history tape. It passes a gate that checks the rules. A dashed yellow line then leads to the depot's page, which marks a reorder by itself. Notes read: signed and recorded, checked every time, nobody had to decide." width="800"></p>
+## Why
 
-<p align="center"><em>Fig. 1. One change: signed and recorded, checked against the rules, and answered by another page with nobody deciding. Schematic, not data.</em></p>
+Most systems built around AI keep their truth in a dozen places at once: prompts, settings, a database, glue code, old versions of all four. They work, and they grow, and one day nobody can move them.
 
-## What it is
+<p align="center"><img src="docs/assets/figures/fig-5-too-big-to-move.svg" alt="A pen-plotter plate of a whale skeleton settled on the ground. Leader lines name the places state gets stuck: settings, a hidden database, glue code, old versions and private formats. Beside it, much smaller, a folder of papers with a carry handle and a dashed yellow path leading off the frame." width="800"></p>
 
-Pages are grouped into spaces, and a page follows the rules of the space it belongs to. Nothing is hidden in a program or a database.
+<p align="center"><em>It grew until it could not be moved.</em></p>
 
-Take a market stall that is running low on stock. Its page records the new level, a page for the depot is watching it, and the depot's page marks a reorder, with nobody deciding to. If someone tried to set the stock below zero, the market's rule would refuse the change, and the refusal would be kept in the history.
-
-<p align="center"><img src="docs/assets/figures/fig-5-too-big-to-move.svg" alt="Pen-plotter plate of a whale skeleton lying settled on the ground, drawn in side view with a long skull and jaws, a sagging spine, splayed ribs, a flipper and small pelvic bones. Thin leader lines name the places state gets stuck: settings, a hidden database, glue code, old versions and private formats. A caption says it grew until it could not be moved. Beside it, much smaller, a single folder of papers with a short history tape and a carry handle has a dashed yellow path leading off the frame: a folder and its history, pick it up and go." width="800"></p>
-
-*Fig. 5. A system that keeps its state scattered in many private places grows until it settles under its own weight, while a folder of documents with its history can be picked up and carried. Illustration, not data.*
+conky keeps one thing: a folder of pages and the history of how they came to say what they say. Any tool that reads files can read it. Any place that holds a folder can hold it.
 
 ## Where it stands
 
-Working and tested today:
+Working today, with tests:
 
-- Pages, grouped into spaces that pass their rules down.
-- Rules that are checked on every change, with refusals recorded.
-- A signed history of every change, which can be checked and used to restore the pages.
-- Pages that respond to each other without anyone being asked.
-- Pages that keep track of their own size and growth.
-- A command line to try all of this, and a demo that builds a small market and tells its story step by step.
+- Pages, grouped into spaces that hand their rules down.
+- Rules checked on every change, with refusals kept.
+- A signed history that can be verified and used to restore everything.
+- Pages that respond to each other, and pages that watch themselves.
+- A command line, and the demo above.
 
 Not built yet:
 
 - Pages that put a question to an AI model, with a choice of provider.
-- Time as a change that pages can react to.
-- Anything that acts when a page becomes crowded or goes untouched.
-- Tables of data kept beside the pages.
-- Rules that look at several pages changed together.
-- Measured comparisons with other systems. No measurements have been made.
+- Time, as something pages can respond to.
+- Tidying up what has grown crowded or gone quiet.
+- Tables of data beside the pages.
+- Any measured comparison with other systems.
 
-The order of the remaining work is in the [roadmap](docs/project/roadmap.md).
+The order of work is in the [roadmap](docs/project/roadmap.md).
 
 ## Go deeper
 
-- [Concepts](docs/guide/concepts.md): the ideas in plain language.
-- [Getting started](docs/guide/getting-started.md): a hands-on walkthrough.
-- [Reference](docs/reference/vault-format.md): the technical detail, with the [command line](docs/reference/cli.md) and [rules and reactions](docs/reference/rules-and-reactions.md).
-- [Design and decisions](docs/design.md): the overview and the [decision records](docs/decisions/0001-objective.md).
-- [Research and comparisons](docs/research/harnesses.md): how conky relates to other systems and to published work.
-- [Contributing](CONTRIBUTING.md): how to take part.
-
-## The name
-
-The name comes from a puppet who reminds the man holding him who calls the shots.
+| If you want | Read |
+|---|---|
+| The ideas, in plain language | [Concepts](docs/guide/concepts.md) |
+| To try it by hand | [Getting started](docs/guide/getting-started.md) |
+| The technical detail | [Reference](docs/reference/vault-format.md), [command line](docs/reference/cli.md), [rules and reactions](docs/reference/rules-and-reactions.md) |
+| Why it is built this way | [Design](docs/design.md) and the [decision records](docs/decisions/0001-objective.md) |
+| How it compares | [Research and comparisons](docs/research/harnesses.md) |
+| To take part | [Contributing](CONTRIBUTING.md) |
 
 ## Licence
 
-Dual licensed under [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option. The hero still and its quote are not covered by either.
+[MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), whichever you prefer. The pictures of the puppet are not covered by either.

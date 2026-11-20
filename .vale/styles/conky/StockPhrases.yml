@@ -1,0 +1,71 @@
+# Stock phrases and filler typical of generated or padded prose.
+extends: existence
+message: "'%s' is a stock phrase. Say the plain thing instead."
+level: error
+ignorecase: true
+tokens:
+  - delve
+  - delves
+  - delving
+  - leverage
+  - leverages
+  - leveraged
+  - leveraging
+  - seamless
+  - seamlessly
+  - robust
+  - cutting-edge
+  - state-of-the-art
+  - game-changer
+  - game-changing
+  - revolutionary
+  - revolutionize
+  - revolutionise
+  - unlock
+  - unlocks
+  - unleash
+  - empower
+  - empowers
+  - elevate
+  - supercharge
+  - harness the power
+  - at its core
+  - in today's world
+  - in the realm of
+  - a testament to
+  - it's worth noting
+  - it is worth noting
+  - it's important to note
+  - it is important to note
+  - needless to say
+  - rest assured
+  - look no further
+  - dive into
+  - deep dive
+  - navigate the landscape
+  - landscape of
+  - tapestry
+  - ever-evolving
+  - fast-paced
+  - holistic
+  - synergy
+  - paradigm shift
+  - best-in-class
+  - world-class
+  - next-generation
+  - effortless
+  - effortlessly
+  - simply put
+  - in essence
+  - in conclusion
+  - to sum up
+  - overall
+  - moreover
+  - furthermore
+  - that being said
+  - having said that
+  - plays a crucial role
+  - plays a vital role
+  - a wide range of
+  - a plethora of
+  - myriad

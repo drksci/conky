@@ -1,0 +1,8 @@
+# Three hype adjectives in a row used for emphasis, such as "fast, simple and powerful".
+extends: existence
+message: "'%s' stacks adjectives for emphasis. Pick the one that is true and show it."
+level: warning
+ignorecase: true
+nonword: true
+tokens:
+  - '\b(?:fast|quick|simple|easy|powerful|flexible|scalable|reliable|secure|lightweight|intuitive|elegant|modern|clean|smart|efficient|safe)(?:, (?:fast|quick|simple|easy|powerful|flexible|scalable|reliable|secure|lightweight|intuitive|elegant|modern|clean|smart|efficient|safe))+,? (?:and|or) (?:fast|quick|simple|easy|powerful|flexible|scalable|reliable|secure|lightweight|intuitive|elegant|modern|clean|smart|efficient|safe)\b'

@@ -1,0 +1,10 @@
+# "Not only X but also Y" and "not just X, but Y".
+extends: existence
+message: "'%s' is a stock contrast. State both facts plainly."
+level: warning
+ignorecase: true
+nonword: true
+scope: sentence
+tokens:
+  - '\bnot only\b[^.;]*\bbut\b'
+  - '\bnot just\b[^.;]*\bbut\b'

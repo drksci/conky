@@ -1,0 +1,8 @@
+# Rhetorical questions: headings and sentences that end in a question mark.
+# docs/project/open-questions.md is exempt in .vale.ini.
+extends: existence
+message: "State the point instead of asking a question."
+level: error
+nonword: true
+tokens:
+  - '\?'

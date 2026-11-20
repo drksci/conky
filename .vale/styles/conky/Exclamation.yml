@@ -1,0 +1,7 @@
+# Exclamation marks in prose.
+extends: existence
+message: "No exclamation marks in prose."
+level: error
+nonword: true
+tokens:
+  - '!'

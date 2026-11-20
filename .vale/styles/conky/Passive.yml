@@ -1,0 +1,10 @@
+# Passive openers that hide who should act.
+extends: existence
+message: "'%s' hides who acts. Say who should do it."
+level: suggestion
+ignorecase: true
+nonword: true
+scope: sentence
+tokens:
+  - '^It is (?:recommended|suggested|advised|expected) that\b'
+  - '^It (?:can|should|must) be (?:noted|said|argued) that\b'
