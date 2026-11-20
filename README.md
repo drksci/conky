@@ -6,7 +6,7 @@
 
 <h3 align="center">Delete the harness. Keep the agents.</h3>
 
-<p align="center">Agents, rules and data are all pages in one Git folder.<br>The pages notice each other and act. There is nothing else.</p>
+<p align="center">Agents, rules and data are all pages in one Git folder.<br>Everything is a living page. It notices, therefore it is.</p>
 
 ### Copy pasta
 
