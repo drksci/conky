@@ -4,6 +4,16 @@ title: "A habit: what recurs is thought about once"
 status: idea
 date: 2026-11-20
 source: "maintainers; the owner's pages on Telos, anxiety kernels and MARCO, digested under research/"
+arch:
+  covers:
+  - part:answer-cache
+  - part:detection
+  items:
+  - kind: part
+    name: habit
+    layer: characters
+    text: 'A kept conclusion on a page: when a guard holds, then a response, because of a source, expecting what should follow.'
+    state: idea
 ---
 
 # A habit: what recurs is thought about once
@@ -41,9 +51,9 @@ Five separate mechanisms for one move. Prompts that re-describe a whole screen e
 
 A page reading its own recent history, so reflection has something to reflect on. The clock, for horizons. Rules that can see where a write came from: without that, a case learned from untrusted text is indistinguishable from one learned by thought.
 
-## The risk, stated
+## The bet, stated
 
-The research the project has read cuts against self-written reflexes: agents that improve themselves copy planted instructions into what they write, and planted text in memory attacks later sessions ([findings rubric](../research/findings-rubric.md)). A habit is exactly that kind of thing. This idea does not go further up the rungs until a case carries its source and a rule can refuse one learned from an untrusted page.
+Some of the research the project has read points the other way: agents that improve themselves have been seen copying planted instructions into what they write, and planted text in memory has been used against later sessions ([findings rubric](../research/findings-rubric.md)). Research informs this design and does not rule it. The bet here is that a self-written reflex is safe when it is a visible page with a source, bound by the rules of its space, checked against what happens, and removable. The tests below are what would show the bet lost.
 
 ## Falsifying test
 
