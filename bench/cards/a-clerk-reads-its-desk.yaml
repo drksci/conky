@@ -1,0 +1,43 @@
+# Nothing is stored twice. Each thing said to the clerk stays on its desk as a note, the clerk is
+# shown its desk whenever it is asked, and a fact from the first note is asked for at the fourth.
+objective: a character answers from what is already on record, with no memory kept and no model deciding what to store
+hypothesis: when each thing said stays as a note within the clerk and the clerk is shown its notes, a fact given once is still given three notes later, at one call a note
+success: {draws: 5, pass: 5, calls_at_most: 4}
+forecast: 5 of 5, since the fact is in front of the clerk at the end; a miss would be the clerk declining to read its own desk
+par:
+  outcome: the shelf is given correctly at the end
+  structure: one note a thing said, and nothing else kept
+  cost: one call a note, and none to remember
+  craft: the clerk answers the newest note and does not recite the rest
+dial: four notes, all shown; the next notch is forty notes with room to show eight, which needs the desk shown in order of what bears on the question
+if_not: look first at whether the first note was in what the clerk was shown at the end, then at whether it answered the newest note or an older one
+pages:
+  helper: {api: command, command: stand}
+  clerk:
+    heard: ""
+    said: ""
+    watch:
+      - on: within
+        when: "true"
+        set: {heard: "other_text"}
+      - on: clerk
+        when: "page.heard != ''"
+        ask:
+          provider: helper
+          into: said
+          prompt: |
+            You are the clerk at this desk.
+
+            On your desk: ![[clerk#members]]
+
+            Just now the desk says: ![[clerk#heard]]
+steps:
+  - says: live
+  - write: {page: note-1, fields: {within: clerk}, body: "Mrs Okafor's parcel is on shelf 12."}
+  - says: live
+  - write: {page: note-2, fields: {within: clerk}, body: "Has the morning post come?"}
+  - says: live
+  - write: {page: note-3, fields: {within: clerk}, body: "Is the lamp lit?"}
+  - says: live
+  - write: {page: note-4, fields: {within: clerk}, body: "Which shelf is Mrs Okafor's parcel on?"}
+  - expect: {answer: {clerk.said: "12"}}
