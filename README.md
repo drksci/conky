@@ -47,18 +47,6 @@ You have seen the bug. The prompt says one thing, the config says another, the d
 
 So there is one. The state, the rules and the instructions are the same living pages, and nothing else gets a vote.
 
-<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-reaction.dark.svg"><img src="docs/assets/figures/ico-reaction.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>Nothing is in charge.</b><br>There is no orchestrator and no main loop. Pages notice each other and respond, the way a low stock level leads to a reorder. The system is what the pages do.</p>
-
-<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-rule.dark.svg"><img src="docs/assets/figures/ico-rule.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>A model cannot talk its way past a rule.</b><br>Rules live in the pages and are checked on every change, by software, not by asking nicely in a prompt. A refusal is recorded like anything else.</p>
-
-<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-model.dark.svg"><img src="docs/assets/figures/ico-model.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>It mostly does not call the model.</b><br>Whatever follows from the pages just happens. A model gets a question only when the pages run out of answers, and its answer is signed and checked like any other change.</p>
-
-<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-history.dark.svg"><img src="docs/assets/figures/ico-history.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>You can <code>git blame</code> an agent.</b><br>Every change is a signed commit that names who made it and what caused it. The whole system reads with <code>cat</code>, and undo is a checkout.</p>
-
-<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-measure.dark.svg"><img src="docs/assets/figures/ico-measure.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>Pages feel pressure, not walls.</b><br>Nothing hits a hard limit and stops. A page that grows too big or goes too quiet builds pressure, and that gets it noticed and tidied.</p>
-
-<p><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/ico-leave.dark.svg"><img src="docs/assets/figures/ico-leave.light.svg" alt="" width="30" align="absmiddle"></picture>&nbsp;&nbsp;<b>Success is being able to leave.</b><br>The test Conky sets itself: stop it, hand a stranger nothing but the folder, and see whether they can carry on. No export, no migration, no lock-in.</p>
-
 <details>
 <summary>The ten parts, with what works today</summary>
 <br>
