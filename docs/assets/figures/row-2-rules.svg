@@ -23,11 +23,11 @@
 .pt{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:9px;opacity:.6;text-decoration:underline;text-decoration-thickness:.75px;text-underline-offset:2px}
 </style>
 <text class="t" x="240" y="11" font-size="9.24" fill-opacity="1" text-anchor="start">USUALLY</text>
-<text class="pt" x="24" y="154">CrewAI task guardrails</text>
-<text class="pt" x="24" y="165">OpenAI Agents guardrails</text>
-<text class="pt" x="24" y="176">Claude Agent SDK hooks</text>
-<text class="t" x="680" y="11" font-size="9.24" fill-opacity="1" text-anchor="start">CONKY</text>
-<text class="pt" x="464" y="154">rule</text>
+<text class="pt" x="24" y="154" text-anchor="start">CrewAI task guardrails</text>
+<text class="pt" x="24" y="165" text-anchor="start">OpenAI Agents guardrails</text>
+<text class="pt" x="24" y="176" text-anchor="start">Claude Agent SDK hooks</text>
+<text class="t" x="468" y="11" font-size="9.24" fill-opacity="1" text-anchor="start">CONKY</text>
+<text class="pt" x="856" y="154" text-anchor="end">rule</text>
 <g transform="translate(42 26)">
 <path class="s" d="M7 6H61Q68 6 68 13V45Q68 52 61 52H25L16 62L18 52H7Q0 52 0 45V13Q0 6 7 6Z"/>
 <path class="k" d="M11 20L56 20"/>
@@ -41,7 +41,7 @@
 <path class="i" d="M72 28C94 28 100 48 102 68C104 90 116 98 134 98H150"/>
 <path class="i" d="M153.71 94.93L160 98L153.71 101.07"/>
 </g>
-<g transform="translate(482 26)">
+<g transform="translate(674 26)">
 <path class="s" d="M0 16H32L44 28V80H0Z"/>
 <path class="k" d="M32 16V28H44"/>
 <path class="k" d="M14 38L30 38"/>
@@ -55,6 +55,7 @@
 <path class="a" d="M132 54L141 65L160 38"/>
 </g>
 <text class="u"><tspan x="240" y="76">Rules are a strongly</tspan><tspan x="240" y="96">worded prompt, and hope.</tspan></text>
-<text class="u"><tspan x="680" y="56">Rules are checked on</tspan><tspan x="680" y="76">every change. A model</tspan><tspan x="680" y="96">cannot talk its way past</tspan><tspan x="680" y="116">one.</tspan></text>
+<text class="u"><tspan x="468" y="56">Rules are checked on</tspan><tspan x="468" y="76">every change. A model</tspan><tspan x="468" y="96">cannot talk its way past</tspan><tspan x="468" y="116">one.</tspan></text>
+<path d="M440 6 Q443.2 17 439.2 28 Q437.4 39 440.8 50 Q442.2 61 439.2 72 Q436.6 83 440.8 94 Q443.2 105 439.2 116 Q437.4 127 440.8 138 Q442.2 149 439.2 160 Q436.6 169 440.8 178" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-dasharray="1 6" stroke-linecap="round" opacity=".7"/>
 <svg x="23" y="9" width="30" height="30" viewBox="0 0 128 128"><path d="M64 12.81C1.88 12.81.41 82.46.41 96.25c0 13.77 28.47 24.94 63.59 24.94 35.12 0 63.59-11.17 63.59-24.94 0-13.79-1.46-83.44-63.59-83.44z" fill="#fcc21b"/><ellipse cx="43.95" cy="56.46" rx="7.92" ry="9.63" fill="#2f2f2f"/><ellipse cx="84.03" cy="56.46" rx="7.92" ry="9.63" fill="#2f2f2f"/><path d="M95 101.6H33c-7.7 0-14-6.3-14-14s6.3-14 14-14h62c7.7 0 14 6.3 14 14s-6.3 14-14 14z" fill="#fff"/><g fill="#838383"><path d="M47.44 75.17h3.12v25h-3.12zM32.44 75.17h3.12v25h-3.12zM92.45 75.17h3.12v25h-3.12zM77.44 75.17h3.12v25h-3.12zM62.44 75.17h3.12v25h-3.12z"/><path d="M20.49 86.04h87.01v3.12H20.49z"/></g><path d="M95 77.6c5.51 0 10 4.49 10 10s-4.49 10-10 10H33c-5.51 0-10-4.49-10-10s4.49-10 10-10h62m0-4H33c-7.7 0-14 6.3-14 14s6.3 14 14 14h62c7.7 0 14-6.3 14-14s-6.3-14-14-14z" fill="#2f2f2f"/></svg>
 </svg>

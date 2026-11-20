@@ -44,12 +44,12 @@
 </style>
 <defs><pattern id="d12" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d12-w" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(1.80000)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d12-p" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(3.87837)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d25" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d25-w" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(1.80000)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d25-p" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse" patternTransform="scale(3.87837)"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><clipPath id="c"><rect x="24" y="20" width="200" height="114"/></clipPath></defs>
 <text class="t" x="240" y="11" font-size="9.24" fill-opacity="1" text-anchor="start">USUALLY</text>
-<text class="pt" x="24" y="154">LangGraph Postgres or SQLite saver</text>
-<text class="pt" x="24" y="165">Microsoft Agent Framework checkpoints</text>
-<text class="pt" x="24" y="176">Claude Agent SDK session store</text>
-<text class="t" x="680" y="11" font-size="9.24" fill-opacity="1" text-anchor="start">CONKY</text>
-<text class="pt" x="464" y="154">conky verify</text>
-<text class="pt" x="464" y="165">vault</text>
+<text class="pt" x="24" y="154" text-anchor="start">LangGraph Postgres or SQLite saver</text>
+<text class="pt" x="24" y="165" text-anchor="start">Microsoft Agent Framework checkpoints</text>
+<text class="pt" x="24" y="176" text-anchor="start">Claude Agent SDK session store</text>
+<text class="t" x="468" y="11" font-size="9.24" fill-opacity="1" text-anchor="start">CONKY</text>
+<text class="pt" x="856" y="154" text-anchor="end">conky verify</text>
+<text class="pt" x="856" y="165" text-anchor="end">vault</text>
 <g clip-path="url(#c)">
 <g class="w" transform="translate(7.33 -21.11) scale(0.56)">
 <path class="i" d="M285.64 169.48L295.84 163.33L288.1 150.49L277.9 156.64Z"/>
@@ -101,7 +101,7 @@
 <path class="i" d="M34 272L846 272"/>
 </g>
 </g>
-<g class="p" transform="translate(419.36 -9.23) scale(0.26)">
+<g class="p" transform="translate(611.36 -9.23) scale(0.26)">
 <path class="k" d="M416.82 341.64Q429.99 393.48 469 430.07Q455.83 378.23 416.82 341.64Z"/>
 <path class="k" d="M469 430.07Q475.72 481.05 504.84 523.43Q498.12 472.45 469 430.07Z"/>
 <circle class="k" cx="469" cy="430.07" r="4.4"/>
@@ -155,9 +155,10 @@
 <path class="s" d="M788 190L828 182L828 548L788 540Z"/>
 <path class="y" d="M612 532C658 532 708 500 736 280"/>
 </g>
-<path class="i" d="M464 130L497.72 130"/>
-<path class="i" d="M634.95 130L664 130"/>
+<path class="i" d="M656 130L689.72 130"/>
+<path class="i" d="M826.95 130L856 130"/>
 <text class="u"><tspan x="240" y="76">It grew until it could</tspan><tspan x="240" y="96">not be moved.</tspan></text>
-<text class="u"><tspan x="680" y="76">A folder and its history.</tspan><tspan x="680" y="96">Pick it up and go.</tspan></text>
+<text class="u"><tspan x="468" y="76">A folder and its history.</tspan><tspan x="468" y="96">Pick it up and go.</tspan></text>
+<path d="M440 6 Q443.2 17 439.2 28 Q437.4 39 440.8 50 Q442.2 61 439.2 72 Q436.6 83 440.8 94 Q443.2 105 439.2 116 Q437.4 127 440.8 138 Q442.2 149 439.2 160 Q436.6 169 440.8 178" fill="none" stroke="var(--ink)" stroke-width="1.1" stroke-dasharray="1 6" stroke-linecap="round" opacity=".7"/>
 <svg x="23" y="9" width="30" height="30" viewBox="0 0 128 128"><defs><linearGradient id="a" gradientUnits="userSpaceOnUse" x1="64" x2="64" y1="99.553" y2="4.276"><stop offset="0" stop-color="#fcc21b"/><stop offset=".151" stop-color="#e5bf34"/><stop offset=".473" stop-color="#abb973"/><stop offset=".935" stop-color="#4fafd8"/><stop offset="1" stop-color="#42ade7"/></linearGradient></defs><path d="M64 9.64C1.69 9.64.21 79.5.21 93.33c0 13.83 28.56 25.03 63.79 25.03 35.24 0 63.79-11.21 63.79-25.03 0-13.83-1.47-83.69-63.79-83.69z" fill="url(#a)"/><path d="M80.46 90.47c0 14.09-7.37 20.03-16.46 20.03s-16.46-5.94-16.46-20.03 7.37-31 16.46-31 16.46 16.91 16.46 31z" fill="#ed6c30"/><ellipse transform="rotate(-83.65)" ry="18.09" rx="19.385" cy="90.427" cx="-35.503" fill="#fff"/><path d="M90.507 45.134c-.15 2.148-2.044 3.788-4.224 3.658-2.187-.124-3.84-1.979-3.69-4.126.143-2.155 2.03-3.788 4.217-3.658 2.187.124 3.847 1.972 3.697 4.126" fill="#2f2f2f"/><ellipse transform="rotate(-4.313)" ry="19.569" rx="18.261" cy="48.365" cx="38.936" fill="#fff"/><path d="M46.908 44.298c.247 2.14-1.307 4.098-3.473 4.37-2.173.28-4.137-1.235-4.385-3.369-.26-2.14 1.295-4.097 3.467-4.377 2.167-.273 4.137 1.236 4.391 3.376" fill="#2f2f2f"/><path d="M64 9.64C1.69 9.64.21 79.5.21 93.33c0 13.83 28.56 25.03 63.79 25.03 35.24 0 63.79-11.21 63.79-25.03 0-13.83-1.47-83.69-63.79-83.69z" fill="none"/><defs><path d="M64 9.64C1.69 9.64.21 79.5.21 93.33c0 13.83 28.56 25.03 63.79 25.03 35.24 0 63.79-11.21 63.79-25.03 0-13.83-1.47-83.69-63.79-83.69z" id="b"/></defs><g fill="#e48c15"><path d="M29.08 121.23c4.69 1.33 10.12-.73 10.24-5.2l.66-14.77c.02-.24 1.08-16.03-7.09-24.46l-.12-.13c-5.75-6.76-8.27-11.55-10.85-19.98-.86-2.79-2.89-5.41-6.38-4.99-2.47.3-4.85 1.35-4.69 9.23.19 9.18 2.02 18.32 5.7 24.72 5.14 8.95 3.8 19.17 4.36 25.72.34 4.11 3.23 8.63 8.17 9.86zM98.92 121.23c-4.69 1.33-10.12-.73-10.24-5.2l-.66-14.77c-.02-.24-1.08-16.03 7.09-24.46l.12-.13c5.75-6.76 8.27-11.55 10.85-19.98.86-2.79 2.89-5.41 6.38-4.99 2.47.3 4.85 1.35 4.69 9.23-.19 9.18-2.02 18.32-5.7 24.72-5.14 8.95-3.8 19.17-4.36 25.72-.34 4.11-3.23 8.63-8.17 9.86z"/></g></svg>
 </svg>
