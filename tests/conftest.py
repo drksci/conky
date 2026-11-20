@@ -56,3 +56,9 @@ def keys_dir(tmp_path: Path) -> Path:
 @pytest.fixture
 def vault(tmp_path: Path, keys_dir: Path) -> Vault:
     return Vault.init(tmp_path / "vault", keys_dir)
+
+
+@pytest.fixture(autouse=True)
+def no_detected_model(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Keep every test from reaching a model that happens to be set up on this machine."""
+    monkeypatch.setenv("CONKY_PROVIDER", "none")

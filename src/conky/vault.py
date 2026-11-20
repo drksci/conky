@@ -46,6 +46,7 @@ class Result:
     ok: bool
     id: str
     reason: str | None = None
+    plain: bool = False
 
 
 class Vault:
@@ -102,21 +103,27 @@ class Vault:
         page: str,
         into: str,
         *,
-        provider: str,
+        provider: str | None = None,
         prompt: str,
         actor: str,
         at: str,
         cause: str | None = None,
     ) -> Result:
-        """Ask a model once and write the answer to a field of the page, or record why not."""
+        """Ask a model once and write the answer to a field of the page, or record why not.
+
+        With no provider page the model is detected from the environment and the PATH.
+        """
         check_name(page)
         check_name(actor)
-        check_name(provider)
+        if provider is not None:
+            check_name(provider)
         if not into:
             raise BadInput("the field to write the answer to must be a non-empty name")
         if self._dirty():
             raise BadInput(self._dirty_message())
-        return self._ask(page, into, provider, prompt, actor, at, cause, 0, skip_settled=False)
+        return self._ask(
+            page, into, provider, prompt, None, actor, at, cause, 0, skip_settled=False
+        )
 
     def log(self) -> list[str]:
         """Return the history oldest first, one line per commit."""
@@ -345,8 +352,8 @@ class Vault:
                     continue
                 if "ask" in entry:
                     ask = entry["ask"]
-                    args = (ask["into"], ask["provider"], ask["prompt"], watcher, at, commit)
-                    self._ask(watcher, *args, depth + 1, skip_settled=True)
+                    args = (ask["into"], ask.get("provider"), ask["prompt"], ask.get("otherwise"))
+                    self._ask(watcher, *args, watcher, at, commit, depth + 1, skip_settled=True)
                 elif not unchanged:
                     self._write(watcher, changes, None, watcher, at, commit, depth + 1)
 
@@ -354,8 +361,9 @@ class Vault:
         self,
         page: str,
         into: str,
-        provider: str,
+        provider: str | None,
         template: str,
+        otherwise: str | None,
         actor: str,
         at: str,
         cause: str | None,
@@ -363,10 +371,12 @@ class Vault:
         *,
         skip_settled: bool,
     ) -> Result | None:
-        """Ask the provider page's model and write the answer to a field of page.
+        """Ask a model and write the answer to a field of page, always leaving a sentence there.
 
-        Returns None when the question is skipped because its answer is already recorded.
-        A failure to ask is recorded as a refusal whose reason starts with `model:`.
+        The provider page, when one is named, is tried first and its failure is recorded as a
+        refusal whose reason starts with `model:`. Then each detected model is tried in order,
+        and when none answers a plain sentence is written. Returns None when the question is
+        skipped because its answer is already recorded.
         """
         if depth > MAX_DEPTH:
             return self._refuse(page, {}, None, actor, at, cause, _CYCLE)
@@ -377,18 +387,80 @@ class Vault:
         current = (self._load(page) or Page()).fields
         if skip_settled and into in current and current.get(marker) == digest:
             return None
-        try:
-            loaded = self._load(provider)
-            found = model.provider(provider, None if loaded is None else loaded.fields)
-            secret = model.find_secret(found.secret, self.keys_dir) if found.secret else None
-            answer = model.ask(found, secret, prompt)
-        except model.ModelError as exc:
-            return self._refuse(page, {}, None, actor, at, cause, f"model: {exc}")
-        trailers = [("Model", provider), ("Model-Name", found.model)]
+        if provider is not None:
+            try:
+                loaded = self._load(provider)
+                found = model.provider(provider, None if loaded is None else loaded.fields)
+                secret = model.find_secret(found.secret, self.keys_dir) if found.secret else None
+                answer = model.ask(found, secret, prompt, self.keys_dir)
+                return self._answered(
+                    found,
+                    answer,
+                    into,
+                    digest,
+                    template,
+                    pages,
+                    prompt,
+                    (page, actor, at, cause, depth),
+                )
+            except model.ModelError as exc:
+                self._refuse(page, {}, None, actor, at, cause, f"model: {exc}")
+        for choice in model.detect().choices:
+            try:
+                answer = model.ask(choice.provider, choice.secret, prompt, self.keys_dir)
+            except model.ModelError:
+                continue
+            where = (page, actor, at, cause, depth)
+            return self._answered(
+                choice.provider, answer, into, digest, template, pages, prompt, where
+            )
+        where = (page, actor, at, cause, depth)
+        return self._plain(where, into, otherwise, template, pages, prompt, skip_settled)
+
+    def _answered(
+        self,
+        found: model.Provider,
+        answer: model.Answer,
+        into: str,
+        digest: str,
+        template: str,
+        pages: dict[str, Page],
+        prompt: str,
+        where: tuple[str, str, str, str | None, int],
+    ) -> Result:
+        """Write a model's answer to the asking page, with the trailers that record it."""
+        page, actor, at, cause, depth = where
+        trailers = [("Model", found.page), ("Model-Name", found.name)]
         if answer.tokens_in is not None:
             trailers.append(("Tokens-In", str(answer.tokens_in)))
         if answer.tokens_out is not None:
             trailers.append(("Tokens-Out", str(answer.tokens_out)))
         trailers += [("Read", name) for name in embedded(template, pages)]
-        changes = {into: answer.text, marker: digest}
+        changes = {into: answer.text, f"{into}_asked": digest}
         return self._write(page, changes, None, actor, at, cause, depth, (trailers, prompt))
+
+    def _plain(
+        self,
+        where: tuple[str, str, str, str | None, int],
+        into: str,
+        otherwise: str | None,
+        template: str,
+        pages: dict[str, Page],
+        prompt: str,
+        skip_same: bool,
+    ) -> Result | None:
+        """Write a plain sentence because no model answered, and leave the question unsettled.
+
+        The field `<into>_asked` is not written, so the next ask with a model asks for real.
+        Returns None when a reaction would write the sentence the page already holds.
+        """
+        page, actor, at, cause, depth = where
+        if otherwise is None:
+            text = model.plain_sentence(page, into, prompt)
+        else:
+            text = resolve_text(otherwise, pages).strip()
+        if skip_same and (self._load(page) or Page()).fields.get(into) == text:
+            return None
+        trailers = [("Model", "none")] + [("Read", name) for name in embedded(template, pages)]
+        result = self._write(page, {into: text}, None, actor, at, cause, depth, (trailers, prompt))
+        return Result(result.ok, result.id, result.reason, plain=True)

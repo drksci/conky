@@ -60,8 +60,8 @@ A model answer is a write by the page that asked ([rules and reactions](rules-an
 
 | Trailer | Value |
 |---|---|
-| `Model` | the name of the provider page |
-| `Model-Name` | the `model` field of that page, as sent |
+| `Model` | the name of the provider page, `detected:<kind>` for a model found from the environment, or `none` when no model answered and a plain sentence was written |
+| `Model-Name` | the `model` field of that page, as sent, or the command's name; left out for `none` |
 | `Tokens-In` | prompt tokens, only when the provider reported them |
 | `Tokens-Out` | completion tokens, only when the provider reported them |
 | `Read` | a page whose fields or body were embedded in the prompt, one trailer for each distinct page in order of first use, and none when no page was embedded |

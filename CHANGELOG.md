@@ -19,6 +19,8 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 - Explanatory figures in a pen-plotter style, shown in the README and the concepts guide.
 - Prose linting with Vale: a house style in `.vale/styles/conky/` whose errors fail `scripts/check`, and `vale .` for every level.
 - Pages that ask a model. A provider is a page (`openai` or `anthropic` wire format, secret by name and never in the vault). A watch entry can carry `ask` in place of `set`, and the answer is a signed write that records the prompt, the model and the tokens. Tested against stand-in servers only.
+- A third provider shape, `api: command`: the prompt goes to a named program's standard input and the answer is its standard output. The program comes from outside the vault (`CONKY_COMMAND_<NAME>`, `<name>.command` in the key directory, or the built-in `claude` and `codex`), never from a page.
+- A model with no provider page: when an ask names none, Conky detects one from `CONKY_PROVIDER`, `ANTHROPIC_API_KEY`, `OPENAI_API_KEY` with `CONKY_MODEL`, then `claude` and `codex` on the PATH. A failing model falls to the next, and with none a plain sentence is written, or the watch entry's `otherwise`, and the question stays unsettled so a later ask with a model replaces it. `conky model` shows the order.
 - `conky ask`: a one-off question whose answer is written to a page by an actor.
 - Trailers `Model`, `Model-Name`, `Tokens-In` and `Tokens-Out`, and `model <provider>` marks in `conky log`.
 - `conky demo`: builds a small example vault, with `lemonade` and `team` examples, written as notes people leave for each other, and tells its story step by step.

@@ -9,7 +9,7 @@ from pathlib import Path
 
 import yaml
 
-from conky import assimilate, connect, demo, present
+from conky import assimilate, connect, demo, model, present
 from conky.assimilate import INTO
 from conky.errors import BadInput, VerifyFailed
 from conky.page import load_value, serialize
@@ -39,9 +39,14 @@ def _parser() -> argparse.ArgumentParser:
     ask = sub.add_parser("ask", help="ask a model and write the answer to a field of a page")
     ask.add_argument("page")
     ask.add_argument("into", metavar="into-field")
-    ask.add_argument("--provider", required=True, help="the page that describes the model")
+    ask.add_argument(
+        "--provider",
+        default=None,
+        help="the page that describes the model (default: detect one, see `conky model`)",
+    )
     ask.add_argument("--prompt", required=True)
     ask.add_argument("--as", dest="actor", required=True)
+    sub.add_parser("model", help="print which model an ask without a provider would use")
     read = sub.add_parser("read", help="print a page with embeds resolved")
     read.add_argument("page")
     sub.add_parser("log", help="print the history, oldest first")
@@ -108,6 +113,22 @@ def _fields(pairs: list[str]) -> dict[str, object]:
     return changes
 
 
+def _model_lines() -> list[str]:
+    found = model.detect()
+    if not found.choices:
+        lines = ["no model is available, so an ask writes a plain sentence"]
+    else:
+        first, *rest = found.choices
+        lines = [f"{first.provider.page}: {first.why}, so asks run it first"]
+        lines += [f"then {c.provider.page}: {c.why}" for c in rest]
+        lines.append("if all of these fail, an ask writes a plain sentence")
+    lines += [f"note: {note}" for note in found.notes]
+    if not found.choices:
+        lines.append(f"to give Conky a model: {model.WAYS}")
+    lines.append("a provider page named by an ask is tried before all of these")
+    return lines
+
+
 def _now() -> str:
     return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -133,6 +154,10 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
         return assimilate.run(
             args.source, Path(args.into), args.actor, keys, extra, _now, ui, print
         )
+    if args.command == "model":
+        for line in _model_lines():
+            print(line)
+        return 0
     if args.command == "init":
         Vault.init(args.path, args.keys)
         print(ui.initialised(args.path))
@@ -161,6 +186,9 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
             print(err.refused(result.id[:7], result.reason or ""), file=sys.stderr)
             return 1
         print(ui.written(result.id[:7]))
+        if result.plain:
+            print(vault.read(args.page).fields[args.into])
+            print(f"No model answered. To give Conky one: {model.WAYS}.", file=sys.stderr)
     elif args.command == "read":
         print(ui.read(serialize(vault.read(args.page))), end="")
     elif args.command == "log":
@@ -182,6 +210,6 @@ def main(argv: list[str] | None = None) -> int:
     err = present.choose(args.color, sys.stderr)
     try:
         return _run(args, ui, err)
-    except (BadInput, VerifyFailed) as exc:
+    except (BadInput, VerifyFailed, model.ModelError) as exc:
         print(err.error(str(exc)), file=sys.stderr)
         return 1

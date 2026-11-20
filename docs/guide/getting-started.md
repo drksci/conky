@@ -123,7 +123,9 @@ $ export CONKY_SECRET_EXAMPLE=the-secret-from-the-provider
 $ conky ask cooler note --provider helper --prompt 'Describe this cooler in one sentence: ![[cooler#cups]] cups left.' --as maya
 ```
 
-`ask` resolves the embed, sends the prompt to the provider once and writes the answer to the `note` field of `cooler` in a commit signed by `maya`. The commit holds the resolved prompt, the provider page and model names, and the token counts when the provider reports them. If the secret is missing or the provider cannot be reached, nothing is written to `note` and a refusal is recorded with a reason that starts `model:` and says what to do next. A watch entry with `ask` does the same when a page changes; see [asking a model](../reference/rules-and-reactions.md#asking-a-model).
+`ask` resolves the embed, sends the prompt to the provider once and writes the answer to the `note` field of `cooler` in a commit signed by `maya`. The commit holds the resolved prompt, the provider page and model names, and the token counts when the provider reports them. If the secret is missing or the provider cannot be reached, a refusal is recorded with a reason that starts `model:` and says what to do next, and the other models Conky can find are tried. With none, a plain sentence is written to `note` and is replaced the next time a model is available.
+
+The provider page is optional. Leave out `--provider` and Conky uses `ANTHROPIC_API_KEY`, or `claude` or `codex` when they are on the PATH, and `conky model` says which. See [detection](../reference/providers.md#detection). A watch entry with `ask` does the same when a page changes; see [asking a model](../reference/rules-and-reactions.md#asking-a-model).
 
 ## The history
 

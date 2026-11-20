@@ -478,7 +478,7 @@ def test_every_failure_is_a_model_refusal_and_nothing_else_is_affected(
     assert vault.read("ticket").fields["status"] == "new"
     assert vault.read("aaa").fields == {"seen": "new"}
     assert vault.read("zzz").fields == {"seen": "new"}
-    assert vault.read("desk").fields == {"summary": ""}
+    assert vault.read("desk").fields["summary"].startswith("No model was around")
     assert refusal["Page"] == "desk"
     vault.verify()
 
@@ -528,9 +528,11 @@ def test_conky_ask_writes_the_answer_as_the_actor(
     assert run(tmp_path, "verify") == 0
     stand.stop()
     capsys.readouterr()
-    assert run(tmp_path, *ask, "--prompt", "again") == 1
-    err = capsys.readouterr().err
-    assert err.startswith("refused (commit ") and "model: cannot reach" in err
+    assert run(tmp_path, *ask, "--prompt", "again") == 0
+    seen = capsys.readouterr()
+    assert "No model answered. To give Conky one" in seen.err
+    assert "No model was around to answer" in seen.out
+    assert "model: cannot reach" in message(vault, "HEAD~1")[1]["Reason"]
     with pytest.raises(SystemExit) as stopped:
         run(tmp_path, "ask", "desk", "summary", "--provider", "ghost", "--as", "bob")
     assert stopped.value.code == 2
@@ -570,7 +572,7 @@ def test_ask_that_breaks_a_rule_exits_non_zero_and_leaves_the_page(
         },
         {"on": "ticket", "when": "true", "ask": {"provider": "helper", "prompt": "q"}},
         {"on": "ticket", "when": "true", "ask": {"provider": "helper", "into": "a"}},
-        {"on": "ticket", "when": "true", "ask": {"prompt": "q", "into": "a"}},
+        {"on": "ticket", "when": "true", "ask": {"prompt": "q", "into": "a", "otherwise": 3}},
         {
             "on": "ticket",
             "when": "true",
@@ -589,7 +591,7 @@ def test_ask_that_breaks_a_rule_exits_non_zero_and_leaves_the_page(
 def test_a_malformed_ask_entry_is_a_shape_refusal(vault: Vault, entry: dict) -> None:
     result = w(vault, "desk", {"watch": [entry]})
     assert not result.ok and result.reason is not None
-    assert result.reason.startswith("shape: ") and "ask (provider, prompt, into)" in result.reason
+    assert result.reason.startswith("shape: ") and "ask (prompt and into" in result.reason
     assert not (vault.pages_dir / "desk.md").exists()
 
 

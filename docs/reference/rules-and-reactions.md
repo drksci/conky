@@ -79,25 +79,27 @@ watch:
 - on: ticket
   when: "other.status == 'new'"
   ask:
-    provider: helper        # the name of a provider page
+    provider: helper        # optional: the name of a provider page
+    otherwise: "Nobody has looked at this yet."   # optional: the sentence to write with no model
     prompt: "Summarise this request in one sentence: ![[ticket#text]]"
     into: summary           # the field on this page that receives the answer
 ```
 
-An entry has `set` or `ask`, never both. An `ask` has exactly `provider`, `prompt` and `into`, all text, and `provider` is a page name. Anything else is refused with reason `shape`.
+An entry has `set` or `ask`, never both. An `ask` has `prompt` and `into`, and may have `provider` and `otherwise`, all text, and `provider` is a page name. Anything else is refused with reason `shape`. Without `provider` a model is detected from the environment ([detection](providers.md#detection)).
 
 When the entry fires, in order:
 
 1. Embeds in `prompt` are resolved as when a page is read ([vault format](vault-format.md#pages)): `![[page#field]]` reads one field and `![[page]]` reads a whole body. A change to either changes the resolved prompt, so the skip rule asks again.
 2. The skip rule applies. The watching page keeps a field `<into>_asked` holding the SHA-256 hex digest of the resolved prompt it last got an answer for. If `into` is present and `<into>_asked` matches the resolved prompt, nothing is asked and nothing is written. A settled question is never asked twice, so a loop settles. The depth limit of 12 still applies, checked before the model is called.
-3. The provider page is read ([providers](providers.md)) and the model is called once.
-4. The trimmed answer is written to `into`, together with `<into>_asked`, in one write by the watching page. It carries `Cause` like any reaction and is checked against the page's rules and its spaces' rules. A refused answer is recorded as a refusal and the field keeps its value.
+3. The provider page, if one is named, is read ([providers](providers.md)) and the model is called once. Without one, or when it fails, detected models are tried in order.
+4. If no model answered, the `otherwise` text or a built-in sentence is written to `into` and `<into>_asked` is left out, so a later ask with a model replaces it ([when no model answers](providers.md#when-no-model-answers)).
+5. The trimmed answer is written to `into`, together with `<into>_asked`, in one write by the watching page. It carries `Cause` like any reaction and is checked against the page's rules and its spaces' rules. A refused answer is recorded as a refusal and the field keeps its value.
 
 The commit records the question and the model ([vault format](vault-format.md#a-model-answer)). Reading the history needs no model call.
 
 ### When asking fails
 
-Each of these is recorded as a refusal on the asking page: a missing or malformed provider page, a secret that cannot be found, a failed connection, an HTTP error, a reply with no answer text, and no reply within 60 seconds. The reason starts with `model:` and says what to do next, for example `model: secret 'openrouter' not found: set CONKY_SECRET_OPENROUTER or put it in openrouter.secret in the key directory`. There are no retries. The write that triggered the entry stands and every other reaction runs, so everything that needs no model works with no network.
+Each of these, for a named provider page, is recorded as a refusal on the asking page, and the question then falls through to detection and the plain sentence: a missing or malformed provider page, a secret that cannot be found, a failed connection, an HTTP error, a reply with no answer text, and no reply within 60 seconds. The reason starts with `model:` and says what to do next, for example `model: secret 'openrouter' not found: set CONKY_SECRET_OPENROUTER or put it in openrouter.secret in the key directory`. There are no retries. The write that triggered the entry stands and every other reaction runs, so everything that needs no model works with no network.
 
 ## Measures
 

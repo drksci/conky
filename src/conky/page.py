@@ -76,7 +76,7 @@ def _check_watch(entry: Any) -> None:
     if not ok:
         raise ShapeError(
             "watch entries need on (page name), when (text) and either set (field: text) "
-            "or ask (provider, prompt, into)"
+            "or ask (prompt and into, with optional provider and otherwise)"
         )
 
 
@@ -89,9 +89,10 @@ def _set_ok(value: Any) -> bool:
 def _ask_ok(value: Any) -> bool:
     return (
         isinstance(value, dict)
-        and set(value) == {"provider", "prompt", "into"}
+        and {"prompt", "into"} <= set(value)
+        and set(value) <= {"provider", "prompt", "into", "otherwise"}
         and all(isinstance(v, str) for v in value.values())
-        and bool(NAME.match(value["provider"]))
+        and bool(NAME.match(value.get("provider", "x")))
         and bool(value["into"])
     )
 

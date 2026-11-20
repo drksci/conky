@@ -118,14 +118,22 @@ On success it prints `written (commit <id>)`, with the short commit id. If a rul
 ### ask
 
 ```
-conky ask <page> <into-field> --provider <provider page> --prompt TEXT --as <actor>
+conky ask <page> <into-field> [--provider <provider page>] --prompt TEXT --as <actor>
 ```
 
-Asks a model one question and writes the answer to the field `into-field` of `page`, as a signed commit by `actor`. It takes the same path as a watch entry with `ask` ([rules and reactions](rules-and-reactions.md#asking-a-model)): embeds in the prompt are resolved, the provider page named by `--provider` says how to reach the model ([providers](providers.md)), and the commit records the question and the model ([vault format](vault-format.md#a-model-answer)). `--provider`, `--prompt` and `--as` are required.
+Asks a model one question and writes the answer to the field `into-field` of `page`, as a signed commit by `actor`. It takes the same path as a watch entry with `ask` ([rules and reactions](rules-and-reactions.md#asking-a-model)): embeds in the prompt are resolved, the provider page named by `--provider` says how to reach the model ([providers](providers.md)), and the commit records the question and the model ([vault format](vault-format.md#a-model-answer)). `--prompt` and `--as` are required. Without `--provider` a model is detected from the environment and the PATH, see [`conky model`](#model).
 
 The skip rule does not apply: the question is asked every time. The answer is written together with the field `<into-field>_asked`, which later watch entries use to skip a question they would repeat.
 
-On success it prints `written (commit <id>)`. If the answer breaks a rule, or the model cannot be asked, it prints `refused (commit <id>): <reason>` on standard error and exits 1. The refusal is committed, and its reason starts with `model:` when the cause is the provider, the secret or the network. The actor needs its key, as for `write`.
+On success it prints `written (commit <id>)`. If the answer breaks a rule it prints `refused (commit <id>): <reason>` on standard error and exits 1, and the refusal is committed. A model that cannot be asked does not fail the command: a named provider that fails is recorded as a refusal whose reason starts with `model:`, then the detected models are tried, and when none answers a plain sentence is written. In that case the command prints the sentence on standard output, a one-line hint on standard error that lists the ways to give Conky a model, and exits 0 ([when no model answers](providers.md#when-no-model-answers)). The actor needs its key, as for `write`.
+
+### model
+
+```
+conky model
+```
+
+Prints which model an ask with no provider would use, and why, then the models behind it that are tried if it fails, and what happens if all of them fail. It reads only the environment and the PATH, calls nothing, needs no vault and always exits 0. See [detection](providers.md#detection).
 
 ### read
 

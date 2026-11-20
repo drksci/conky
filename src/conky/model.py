@@ -5,6 +5,9 @@ from __future__ import annotations
 import http.client
 import json
 import os
+import shlex
+import shutil
+import subprocess
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -14,9 +17,21 @@ from typing import Any
 from conky.page import NAME
 
 TIMEOUT = 60
-APIS = ("openai", "anthropic")
+COMMAND_TIMEOUT = 120
+APIS = ("openai", "anthropic", "command")
 ANTHROPIC_VERSION = "2023-06-01"
 ANTHROPIC_MAX_TOKENS = 1024
+ANTHROPIC_URL = "https://api.anthropic.com/v1/messages"
+ANTHROPIC_DEFAULT_MODEL = "claude-sonnet-5-5"
+OPENAI_URL = "https://api.openai.com/v1/chat/completions"
+# No OpenAI model id has been verified, so a detected openai choice needs CONKY_MODEL.
+OPENAI_DEFAULT_MODEL: str | None = None
+BUILTIN_COMMANDS = {"claude": ["claude", "-p"], "codex": ["codex", "exec"]}
+CHOICES = ("anthropic", "openai", "claude", "codex", "none")
+WAYS = (
+    "set ANTHROPIC_API_KEY, set OPENAI_API_KEY with CONKY_MODEL, "
+    "put claude or codex on the PATH, or write a provider page and name it"
+)
 
 
 class ModelError(Exception):
@@ -29,10 +44,16 @@ class Provider:
 
     page: str
     api: str
-    url: str
-    model: str
+    url: str | None
+    model: str | None
     secret: str | None
     max_tokens: int | None
+    command: str | None = None
+
+    @property
+    def name(self) -> str:
+        """The model's name for the commit: the page's model, else the command's name."""
+        return self.model or self.command or ""
 
 
 @dataclass(frozen=True)
@@ -58,6 +79,13 @@ def provider(page: str, fields: dict[str, Any] | None) -> Provider:
     secret, limit = fields.get("secret"), fields.get("max_tokens")
     if api not in APIS:
         raise bad(f"api must be one of {', '.join(APIS)}")
+    if api == "command":
+        name = fields.get("command")
+        if not (isinstance(name, str) and NAME.match(name)):
+            raise bad("command must be the name of a program, never a command line")
+        if model is not None and not (isinstance(model, str) and model):
+            raise bad("model must be the model's name")
+        return Provider(page, api, None, model, None, None, name)
     if not (isinstance(url, str) and url.startswith(("http://", "https://"))):
         raise bad("url must be an http or https address")
     if not (isinstance(model, str) and model):
@@ -71,19 +99,180 @@ def provider(page: str, fields: dict[str, Any] | None) -> Provider:
     return Provider(page, api, url, model, secret, limit)
 
 
+def _read(path: Path) -> str:
+    """Return the trimmed text of a file beside the keys, or nothing when it is absent."""
+    try:
+        return path.read_text(encoding="utf-8").strip() if path.is_file() else ""
+    except (OSError, UnicodeDecodeError) as exc:
+        raise ModelError(
+            f"cannot read {path.name} in the key directory ({type(exc).__name__}): "
+            "make it a readable text file or delete it"
+        ) from exc
+
+
 def find_secret(name: str, keys_dir: Path) -> str:
     """Return the secret name, from CONKY_SECRET_<NAME> or else <name>.secret in keys_dir."""
     variable = f"CONKY_SECRET_{name.upper()}"
     value = os.environ.get(variable, "").strip()
     if not value:
-        path = keys_dir / f"{name}.secret"
-        value = path.read_text(encoding="utf-8").strip() if path.is_file() else ""
+        value = _read(keys_dir / f"{name}.secret")
     if not value:
         raise ModelError(
             f"secret {name!r} not found: set {variable} or put it in {name}.secret "
             "in the key directory"
         )
     return value
+
+
+def find_command(name: str, keys_dir: Path) -> list[str]:
+    """Return the argv for a command name, from outside the vault and never through a shell.
+
+    The order is the environment variable CONKY_COMMAND_<NAME>, then <name>.command in keys_dir,
+    then the built-in argv when its program is on the PATH.
+    """
+    variable = f"CONKY_COMMAND_{name.upper()}"
+    text = os.environ.get(variable, "").strip()
+    if not text:
+        text = _read(keys_dir / f"{name}.command")
+    try:
+        argv = shlex.split(text)
+    except ValueError as exc:
+        raise ModelError(
+            f"command {name!r} in {variable} or {name}.command cannot be split into words: "
+            "correct its quoting"
+        ) from exc
+    if not argv and name in BUILTIN_COMMANDS and shutil.which(BUILTIN_COMMANDS[name][0]):
+        argv = list(BUILTIN_COMMANDS[name])
+    if not argv:
+        raise ModelError(
+            f"command {name!r} is not set up: set {variable} to the program and its options, "
+            f"or put them in {name}.command in the key directory"
+        )
+    return argv
+
+
+def _run(found: Provider, argv: list[str], prompt: str) -> Answer:
+    where = f"provider {found.page!r}"
+    try:
+        done = subprocess.run(
+            argv,
+            input=prompt,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            timeout=COMMAND_TIMEOUT,
+            check=False,
+        )
+    except FileNotFoundError as exc:
+        raise ModelError(
+            f"{where} cannot start {argv[0]!r}: install it or correct CONKY_COMMAND_"
+            f"{(found.command or '').upper()}, then ask again"
+        ) from exc
+    except subprocess.TimeoutExpired as exc:
+        raise ModelError(
+            f"{where} gave no answer in {COMMAND_TIMEOUT} seconds: check that {argv[0]!r} "
+            "runs without asking for input, then ask again"
+        ) from exc
+    except OSError as exc:
+        raise ModelError(
+            f"{where} cannot run {argv[0]!r} ({type(exc).__name__}): check the program "
+            "and its permissions, then ask again"
+        ) from exc
+    if done.returncode != 0:
+        detail = " ".join(done.stderr.split())[:200]
+        raise ModelError(
+            f"{where} exited with status {done.returncode}"
+            f"{': ' + detail if detail else ''}: run {argv[0]!r} by hand to see why, "
+            "then ask again"
+        )
+    text = done.stdout.rstrip()
+    if not text.strip():
+        raise ModelError(
+            f"{where} printed no answer: check that {argv[0]!r} writes its answer to "
+            "standard output"
+        )
+    return Answer(text, None, None)
+
+
+@dataclass(frozen=True)
+class Choice:
+    """One model that detection found, with the secret it needs and why it was found."""
+
+    provider: Provider
+    secret: str | None
+    why: str
+
+
+@dataclass(frozen=True)
+class Detected:
+    """Every model the environment offers, in the order to try them, and what was skipped."""
+
+    choices: list[Choice]
+    notes: list[str]
+
+
+def detect() -> Detected:
+    """List the models to try, from the environment and the PATH alone, never from a vault.
+
+    CONKY_PROVIDER, when it names one, goes first. Then come ANTHROPIC_API_KEY, OPENAI_API_KEY
+    with a model, claude on the PATH and codex on the PATH. CONKY_PROVIDER=none lists nothing.
+    """
+    env = os.environ
+    wanted = env.get("CONKY_PROVIDER", "").strip().lower()
+    notes: list[str] = []
+    if wanted == "none":
+        return Detected([], ["CONKY_PROVIDER is none"])
+    if wanted and wanted not in CHOICES:
+        notes.append(
+            f"CONKY_PROVIDER is {wanted!r}, which is ignored: use one of {', '.join(CHOICES)}"
+        )
+        wanted = ""
+    override = env.get("CONKY_MODEL", "").strip()
+    found: dict[str, Choice] = {}
+    for kind, key_name, url, default in (
+        ("anthropic", "ANTHROPIC_API_KEY", ANTHROPIC_URL, ANTHROPIC_DEFAULT_MODEL),
+        ("openai", "OPENAI_API_KEY", OPENAI_URL, OPENAI_DEFAULT_MODEL),
+    ):
+        key = env.get(key_name, "").strip()
+        if not key:
+            continue
+        name = override or default
+        if not name:
+            notes.append(f"{key_name} is set but no default model is known: set CONKY_MODEL")
+            continue
+        page = f"detected:{kind}"
+        found[kind] = Choice(Provider(page, kind, url, name, None, None), key, f"{key_name} is set")
+    for program in BUILTIN_COMMANDS:
+        if shutil.which(program):
+            page = f"detected:{program}"
+            provider_ = Provider(page, "command", None, None, None, None, program)
+            found[program] = Choice(provider_, None, f"{program} is on the PATH")
+    if wanted and wanted not in found:
+        notes.append(f"CONKY_PROVIDER is {wanted} but it is not available: {_MISSING[wanted]}")
+    order = ([wanted] if wanted in found else []) + [k for k in found if k != wanted]
+    return Detected([found[k] for k in order], notes)
+
+
+_MISSING = {
+    "anthropic": "set ANTHROPIC_API_KEY",
+    "openai": "set OPENAI_API_KEY and CONKY_MODEL",
+    "claude": "put claude on the PATH",
+    "codex": "put codex on the PATH",
+}
+
+PLAIN_LIMIT = 60
+
+
+def plain_sentence(page: str, into: str, prompt: str) -> str:
+    """Return the built-in sentence written when no model could answer the prompt."""
+    words = prompt.split()
+    asked = " ".join(words)
+    if len(asked) > PLAIN_LIMIT:
+        asked = asked[:PLAIN_LIMIT].rsplit(" ", 1)[0] + "..."
+    return (
+        f'No model was around to answer "{asked}", so {page} keeps this line in {into} '
+        "until one is."
+    )
 
 
 def _request(found: Provider, secret: str | None, prompt: str) -> urllib.request.Request:
@@ -127,9 +316,11 @@ def _parse(found: Provider, data: Any) -> Answer:
     return Answer(text.strip(), _count(usage, names[0]), _count(usage, names[1]))
 
 
-def ask(found: Provider, secret: str | None, prompt: str) -> Answer:
+def ask(found: Provider, secret: str | None, prompt: str, keys_dir: Path) -> Answer:
     """Send prompt to the provider once, with no retry, and return its answer."""
     where = f"provider {found.page!r}"
+    if found.command is not None:
+        return _run(found, find_command(found.command, keys_dir), prompt)
     try:
         with urllib.request.urlopen(_request(found, secret, prompt), timeout=TIMEOUT) as reply:
             data = json.loads(reply.read())
