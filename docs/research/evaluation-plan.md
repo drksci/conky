@@ -55,6 +55,17 @@ Prompts live in one versioned prompt set shared by all harnesses. Any prompt tex
 
 ## Steps, cheapest first
 
+The trial below comes first because it can be run as soon as a model is reachable. Steps 0 to 5 are decided in writing before each is run.
+
+### Trial: the trail, exploratory
+
+- Aim: to find out whether a party of Conky characters can play a long text game through the terminal connector, and where it breaks. It runs first because it needs only a model and a game, and it is exploratory, not a benchmark result ([decision 0025](../decisions/0025-the-screen-is-built-in-small-steps.md)).
+- Scenario: harness-neutral documents. The seed prompt is "You just woke up in a parallel universe and you're on the Oregon Trail". The game and its seed are fixed. The observables are miles reached, who survived, turns, model calls, tokens and refusals. A scoring note says how they are read.
+- Run: Conky and one plain single-loop baseline, on the same model and budget, with raw traces kept. A second form stops the party mid-trail and hands the vault to a fresh consumer, as in Step 4.
+- Cost class: cents to dollars. It needs a model reached with nothing configured ([decision 0024](../decisions/0024-a-model-is-reached-by-a-key-or-a-local-program.md)).
+- Result classes: refusals and the reflex count are mechanism results, the comparison with the baseline is a harness result, and anything about wording is a prompt result. They are kept apart as above.
+- Cannot show: that Conky is better than anything. Nothing is claimed until runs are unscripted and repeated, and one game with one baseline cannot carry a claim about harnesses.
+
 ### Step 0: mechanism checks, no model
 
 - Aim: to find out whether the documented properties of conky hold.

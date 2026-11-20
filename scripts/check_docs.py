@@ -31,7 +31,7 @@ STATUSES = {
     "reference": {"current", "draft"},
 }
 LINK = re.compile(r"(?<!!)\[[^\]]*\]\(([^)\s]+)\)")
-STEP = re.compile(r"^- (R\d+) \((done|next|later)\): ", re.MULTILINE)
+STEP = re.compile(r"^- (R\d+[a-z]?) \((done|next|later)\): ", re.MULTILINE)
 DECISION_NAME = re.compile(r"^(\d{4})-[a-z0-9]+(-[a-z0-9]+)*\.md$")
 
 

@@ -35,7 +35,7 @@ A staleness measure written once on the top space applies to every page with no 
 ## Open questions
 
 - The order of evaluation when several spaces apply.
-- Whether a page can leave a space by itself.
+- Leaving a space is settled in [decision 0022](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md).
 - Conflicts between two spaces' rules. The stricter rule must win.
 
 Related: [context that flows down](cascading-context.md), [patterns](patterns.md), [staleness](staleness.md).

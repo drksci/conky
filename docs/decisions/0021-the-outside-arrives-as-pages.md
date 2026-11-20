@@ -30,6 +30,6 @@ The mechanism is set out in [the outside arrives as pages](../ideas/tools.md), w
 
 - The terminal connector is the first instance of this shape and is restated to it, not replaced.
 - A general connector for the Model Context Protocol is built before any connector for a single product.
-- Reach by membership depends on spaces handing down more than rules, which is the roadmap step marked next.
+- Reach by membership depends on spaces handing down more than rules, which is roadmap step R22.
 - A party cannot see a canvas game until files beside pages and image-reading providers exist. Until then a figure of that game is a schematic and says so.
 - Removed: a separate tool registry, and tool lists written into prompts.
