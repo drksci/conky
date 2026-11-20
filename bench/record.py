@@ -239,7 +239,11 @@ def _spread(values: set) -> str:
 
 
 def comparable(rows: list[dict]) -> list[str]:
-    """The reasons the arms of a set of rows are not comparable; empty when they are."""
+    """The reasons the arms of a set of rows are not comparable; empty when they are.
+
+    A control arm reaches its model outside the meter by design, so its backend is not held
+    against the set; everything else is held equal for it as for any arm.
+    """
     reasons = []
     models = {r["model"] for r in rows if r["model"] != "none"}
     if len(models) > 1:
@@ -255,7 +259,8 @@ def comparable(rows: list[dict]) -> list[str]:
         ("scenario_version", "scenario versions"),
         ("backend", "backends"),
     ):
-        values = {r[key] for r in rows}
+        metered = [r for r in rows if key != "backend" or not manifest(r["harness"]).get("control")]
+        values = {r[key] for r in metered}
         if len(values) > 1:
             reasons.append(f"the runs have different {what} ({_spread(values)})")
     commits = {r["commit"] for r in rows}

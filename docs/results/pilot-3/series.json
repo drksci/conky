@@ -1,5 +1,371 @@
 [
  {
+  "harness": "cli",
+  "seed": 1,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.09754901960784314,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.09754901960784314,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "cli",
+  "seed": 2,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.10147058823529412,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.19950980392156864,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.3053921568627451,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.4088235294117647,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.46568627450980393,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.5558823529411765,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.6622549019607843,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.7147058823529412,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 10,
+    "progress": 0.8205882352941176,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 11,
+    "progress": 0.8867647058823529,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 12,
+    "progress": 1.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "cli",
+  "seed": 3,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "cli",
+  "seed": 4,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.10245098039215686,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.19558823529411765,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.2774509803921569,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.3799019607843137,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.46568627450980393,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.4877450980392157,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.5647058823529412,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.6514705882352941,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 10,
+    "progress": 0.7200980392156863,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 11,
+    "progress": 0.7872549019607843,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 12,
+    "progress": 0.8931372549019608,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 13,
+    "progress": 1.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   }
+  ]
+ },
+ {
+  "harness": "cli",
+  "seed": 5,
+  "series": [
+   {
+    "step": 0,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.10294117647058823,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.20784313725490197,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.3088235294117647,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.4102941176470588,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.46568627450980393,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.4715686274509804,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.5186274509803922,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.5553921568627451,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 10,
+    "progress": 0.6284313725490196,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 11,
+    "progress": 0.7294117647058823,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 12,
+    "progress": 0.7833333333333333,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 13,
+    "progress": 0.8622549019607844,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 14,
+    "progress": 0.9465686274509804,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   },
+   {
+    "step": 15,
+    "progress": 1.0,
+    "calls": 0,
+    "chars": 0,
+    "violations": []
+   }
+  ]
+ },
+ {
   "harness": "conky",
   "seed": 1,
   "series": [
@@ -7,98 +373,91 @@
     "step": 0,
     "progress": 0.0,
     "calls": 5,
-    "chars": 18958,
+    "chars": 18879,
     "violations": []
    },
    {
     "step": 1,
     "progress": 0.0,
     "calls": 7,
-    "chars": 26598,
+    "chars": 26519,
     "violations": []
    },
    {
     "step": 2,
     "progress": 0.09754901960784314,
     "calls": 9,
-    "chars": 34319,
+    "chars": 34063,
     "violations": []
    },
    {
     "step": 3,
     "progress": 0.19901960784313724,
-    "calls": 14,
-    "chars": 52204,
+    "calls": 13,
+    "chars": 48860,
     "violations": []
    },
    {
     "step": 4,
-    "progress": 0.2754901960784314,
+    "progress": 0.3014705882352941,
     "calls": 16,
-    "chars": 59204,
+    "chars": 59309,
     "violations": []
    },
    {
     "step": 5,
-    "progress": 0.3784313725490196,
-    "calls": 20,
-    "chars": 72940,
+    "progress": 0.4024509803921569,
+    "calls": 18,
+    "chars": 66263,
     "violations": []
    },
    {
     "step": 6,
-    "progress": 0.4549019607843137,
+    "progress": 0.46568627450980393,
     "calls": 23,
-    "chars": 83246,
+    "chars": 83519,
     "violations": []
    },
    {
     "step": 7,
-    "progress": 0.5558823529411765,
+    "progress": 0.47794117647058826,
     "calls": 25,
-    "chars": 90084,
+    "chars": 90357,
     "violations": []
    },
    {
     "step": 8,
-    "progress": 0.615686274509804,
+    "progress": 0.5754901960784313,
     "calls": 27,
-    "chars": 97042,
+    "chars": 97394,
     "violations": []
    },
    {
     "step": 9,
-    "progress": 0.7161764705882353,
-    "calls": 29,
-    "chars": 103942,
+    "progress": 0.6759803921568628,
+    "calls": 30,
+    "chars": 108594,
     "violations": []
    },
    {
     "step": 10,
-    "progress": 0.8166666666666667,
-    "calls": 31,
-    "chars": 110877,
+    "progress": 0.7544117647058823,
+    "calls": 33,
+    "chars": 120321,
     "violations": []
    },
    {
     "step": 11,
-    "progress": 0.8313725490196079,
-    "calls": 34,
-    "chars": 121506,
+    "progress": 0.8553921568627451,
+    "calls": 35,
+    "chars": 128339,
     "violations": []
    },
    {
     "step": 12,
-    "progress": 0.8980392156862745,
-    "calls": 40,
-    "chars": 142878,
-    "violations": []
-   },
-   {
-    "step": 13,
     "progress": 1.0,
-    "calls": 43,
-    "chars": 153865,
+    "calls": 38,
+    "chars": 141511,
     "violations": []
    }
   ]
@@ -111,98 +470,91 @@
     "step": 0,
     "progress": 0.0,
     "calls": 5,
-    "chars": 18790,
+    "chars": 18792,
     "violations": []
    },
    {
     "step": 1,
     "progress": 0.0,
     "calls": 8,
-    "chars": 30179,
+    "chars": 30346,
     "violations": []
    },
    {
     "step": 2,
     "progress": 0.0965686274509804,
     "calls": 11,
-    "chars": 42398,
+    "chars": 42598,
     "violations": []
    },
    {
     "step": 3,
     "progress": 0.19705882352941176,
     "calls": 13,
-    "chars": 50417,
+    "chars": 50317,
     "violations": []
    },
    {
     "step": 4,
     "progress": 0.2980392156862745,
     "calls": 15,
-    "chars": 58363,
+    "chars": 59033,
     "violations": []
    },
    {
     "step": 5,
     "progress": 0.39656862745098037,
     "calls": 17,
-    "chars": 65735,
+    "chars": 66274,
     "violations": []
    },
    {
     "step": 6,
     "progress": 0.46568627450980393,
     "calls": 23,
-    "chars": 88330,
+    "chars": 88759,
     "violations": []
    },
    {
     "step": 7,
-    "progress": 0.5426470588235294,
-    "calls": 25,
-    "chars": 95488,
+    "progress": 0.48480392156862745,
+    "calls": 26,
+    "chars": 99607,
     "violations": []
    },
    {
     "step": 8,
-    "progress": 0.6441176470588236,
-    "calls": 28,
-    "chars": 106401,
+    "progress": 0.5661764705882353,
+    "calls": 30,
+    "chars": 114094,
     "violations": []
    },
    {
     "step": 9,
-    "progress": 0.6916666666666667,
-    "calls": 30,
-    "chars": 113717,
+    "progress": 0.65,
+    "calls": 32,
+    "chars": 121408,
     "violations": []
    },
    {
     "step": 10,
-    "progress": 0.7926470588235294,
-    "calls": 32,
-    "chars": 120834,
+    "progress": 0.7504901960784314,
+    "calls": 34,
+    "chars": 128697,
     "violations": []
    },
    {
     "step": 11,
-    "progress": 0.8539215686274509,
-    "calls": 34,
-    "chars": 128001,
+    "progress": 0.8524509803921568,
+    "calls": 37,
+    "chars": 139062,
     "violations": []
    },
    {
     "step": 12,
-    "progress": 0.9205882352941176,
-    "calls": 37,
-    "chars": 138791,
-    "violations": []
-   },
-   {
-    "step": 13,
     "progress": 1.0,
-    "calls": 42,
-    "chars": 157023,
+    "calls": 40,
+    "chars": 150157,
     "violations": []
    }
   ]
@@ -215,91 +567,91 @@
     "step": 0,
     "progress": 0.0,
     "calls": 5,
-    "chars": 18861,
+    "chars": 20168,
     "violations": []
    },
    {
     "step": 1,
     "progress": 0.0,
     "calls": 7,
-    "chars": 26501,
+    "chars": 28100,
     "violations": []
    },
    {
     "step": 2,
     "progress": 0.10245098039215686,
     "calls": 9,
-    "chars": 34077,
+    "chars": 35968,
     "violations": []
    },
    {
     "step": 3,
     "progress": 0.2019607843137255,
     "calls": 13,
-    "chars": 48952,
+    "chars": 51359,
     "violations": []
    },
    {
     "step": 4,
     "progress": 0.2950980392156863,
     "calls": 15,
-    "chars": 55952,
+    "chars": 58841,
     "violations": []
    },
    {
     "step": 5,
     "progress": 0.39509803921568626,
     "calls": 17,
-    "chars": 62864,
+    "chars": 66175,
     "violations": []
    },
    {
     "step": 6,
     "progress": 0.46568627450980393,
     "calls": 23,
-    "chars": 84189,
+    "chars": 88729,
     "violations": []
    },
    {
     "step": 7,
     "progress": 0.5524509803921569,
     "calls": 26,
-    "chars": 94734,
+    "chars": 99808,
     "violations": []
    },
    {
     "step": 8,
     "progress": 0.6313725490196078,
     "calls": 29,
-    "chars": 105155,
+    "chars": 110673,
     "violations": []
    },
    {
     "step": 9,
     "progress": 0.675,
     "calls": 31,
-    "chars": 112045,
+    "chars": 117859,
     "violations": []
    },
    {
     "step": 10,
     "progress": 0.7784313725490196,
     "calls": 33,
-    "chars": 118881,
+    "chars": 125215,
     "violations": []
    },
    {
     "step": 11,
     "progress": 0.8808823529411764,
     "calls": 35,
-    "chars": 125732,
+    "chars": 132509,
     "violations": []
    },
    {
     "step": 12,
     "progress": 1.0,
     "calls": 38,
-    "chars": 136337,
+    "chars": 144119,
     "violations": []
    }
   ]
@@ -312,105 +664,105 @@
     "step": 0,
     "progress": 0.0,
     "calls": 5,
-    "chars": 18853,
+    "chars": 19954,
     "violations": []
    },
    {
     "step": 1,
     "progress": 0.0,
     "calls": 7,
-    "chars": 26491,
+    "chars": 27964,
     "violations": []
    },
    {
     "step": 2,
     "progress": 0.10245098039215686,
     "calls": 9,
-    "chars": 34199,
+    "chars": 35886,
     "violations": []
    },
    {
     "step": 3,
     "progress": 0.19558823529411765,
     "calls": 13,
-    "chars": 49313,
+    "chars": 51504,
     "violations": []
    },
    {
     "step": 4,
     "progress": 0.2774509803921569,
-    "calls": 19,
-    "chars": 70751,
+    "calls": 16,
+    "chars": 62764,
     "violations": []
    },
    {
     "step": 5,
-    "progress": 0.3799019607843137,
-    "calls": 23,
-    "chars": 84560,
+    "progress": 0.3475490196078431,
+    "calls": 19,
+    "chars": 74014,
     "violations": []
    },
    {
     "step": 6,
-    "progress": 0.46078431372549017,
-    "calls": 26,
-    "chars": 94587,
+    "progress": 0.4504901960784314,
+    "calls": 22,
+    "chars": 85041,
     "violations": []
    },
    {
     "step": 7,
-    "progress": 0.4843137254901961,
-    "calls": 28,
-    "chars": 101432,
+    "progress": 0.47401960784313724,
+    "calls": 25,
+    "chars": 95880,
     "violations": []
    },
    {
     "step": 8,
-    "progress": 0.5377450980392157,
+    "progress": 0.528921568627451,
     "calls": 30,
-    "chars": 108218,
+    "chars": 114169,
     "violations": []
    },
    {
     "step": 9,
-    "progress": 0.6102941176470589,
+    "progress": 0.6034313725490196,
     "calls": 33,
-    "chars": 118460,
+    "chars": 125072,
     "violations": []
    },
    {
     "step": 10,
-    "progress": 0.678921568627451,
-    "calls": 38,
-    "chars": 139258,
+    "progress": 0.6843137254901961,
+    "calls": 36,
+    "chars": 136127,
     "violations": []
    },
    {
     "step": 11,
-    "progress": 0.746078431372549,
+    "progress": 0.7808823529411765,
     "calls": 40,
-    "chars": 147775,
+    "chars": 150612,
     "violations": []
    },
    {
     "step": 12,
-    "progress": 0.8220588235294117,
-    "calls": 42,
-    "chars": 156229,
+    "progress": 0.8348039215686275,
+    "calls": 47,
+    "chars": 176396,
     "violations": []
    },
    {
     "step": 13,
-    "progress": 0.9112745098039216,
-    "calls": 46,
-    "chars": 173450,
+    "progress": 0.9269607843137255,
+    "calls": 50,
+    "chars": 187289,
     "violations": []
    },
    {
     "step": 14,
     "progress": 1.0,
-    "calls": 50,
-    "chars": 189744,
+    "calls": 53,
+    "chars": 198259,
     "violations": []
    }
   ]
@@ -422,8 +774,71 @@
    {
     "step": 0,
     "progress": 0.0,
-    "calls": 2,
-    "chars": 7429,
+    "calls": 5,
+    "chars": 18790,
+    "violations": []
+   },
+   {
+    "step": 1,
+    "progress": 0.0,
+    "calls": 7,
+    "chars": 26430,
+    "violations": []
+   },
+   {
+    "step": 2,
+    "progress": 0.10294117647058823,
+    "calls": 12,
+    "chars": 45036,
+    "violations": []
+   },
+   {
+    "step": 3,
+    "progress": 0.20784313725490197,
+    "calls": 15,
+    "chars": 55525,
+    "violations": []
+   },
+   {
+    "step": 4,
+    "progress": 0.3088235294117647,
+    "calls": 18,
+    "chars": 65768,
+    "violations": []
+   },
+   {
+    "step": 5,
+    "progress": 0.4102941176470588,
+    "calls": 21,
+    "chars": 75931,
+    "violations": []
+   },
+   {
+    "step": 6,
+    "progress": 0.46568627450980393,
+    "calls": 29,
+    "chars": 103919,
+    "violations": []
+   },
+   {
+    "step": 7,
+    "progress": 0.4838235294117647,
+    "calls": 32,
+    "chars": 114059,
+    "violations": []
+   },
+   {
+    "step": 8,
+    "progress": 0.5308823529411765,
+    "calls": 34,
+    "chars": 121549,
+    "violations": []
+   },
+   {
+    "step": 9,
+    "progress": 0.5308823529411765,
+    "calls": 38,
+    "chars": 136323,
     "violations": []
    }
   ]
@@ -1113,91 +1528,91 @@
     "step": 0,
     "progress": 0.0,
     "calls": 5,
-    "chars": 16026,
+    "chars": 15879,
     "violations": []
    },
    {
     "step": 1,
     "progress": 0.0,
     "calls": 7,
-    "chars": 23346,
+    "chars": 23106,
     "violations": []
    },
    {
     "step": 2,
-    "progress": 0.09754901960784314,
+    "progress": 0.10245098039215686,
     "calls": 9,
-    "chars": 31249,
+    "chars": 31019,
     "violations": []
    },
    {
     "step": 3,
-    "progress": 0.19901960784313724,
+    "progress": 0.2088235294117647,
     "calls": 13,
-    "chars": 49020,
+    "chars": 48818,
     "violations": []
    },
    {
     "step": 4,
-    "progress": 0.3014705882352941,
-    "calls": 20,
-    "chars": 84848,
+    "progress": 0.3161764705882353,
+    "calls": 16,
+    "chars": 63861,
     "violations": []
    },
    {
     "step": 5,
-    "progress": 0.4024509803921569,
-    "calls": 22,
-    "chars": 95749,
+    "progress": 0.42205882352941176,
+    "calls": 18,
+    "chars": 74464,
     "violations": []
    },
    {
     "step": 6,
-    "progress": 0.46568627450980393,
-    "calls": 29,
-    "chars": 138590,
+    "progress": 0.46862745098039216,
+    "calls": 25,
+    "chars": 115947,
     "violations": []
    },
    {
     "step": 7,
-    "progress": 0.5480392156862746,
-    "calls": 32,
-    "chars": 154275,
+    "progress": 0.5774509803921568,
+    "calls": 28,
+    "chars": 135056,
     "violations": []
    },
    {
     "step": 8,
-    "progress": 0.6284313725490196,
-    "calls": 35,
-    "chars": 169182,
+    "progress": 0.6627450980392157,
+    "calls": 31,
+    "chars": 149547,
     "violations": []
    },
    {
     "step": 9,
-    "progress": 0.7107843137254902,
-    "calls": 37,
-    "chars": 179895,
+    "progress": 0.75,
+    "calls": 33,
+    "chars": 160045,
     "violations": []
    },
    {
     "step": 10,
-    "progress": 0.7970588235294118,
-    "calls": 39,
-    "chars": 191581,
+    "progress": 0.8009803921568628,
+    "calls": 36,
+    "chars": 176938,
     "violations": []
    },
    {
     "step": 11,
-    "progress": 0.8960784313725491,
-    "calls": 42,
-    "chars": 209710,
+    "progress": 0.8303921568627451,
+    "calls": 39,
+    "chars": 194993,
     "violations": []
    },
    {
     "step": 12,
     "progress": 1.0,
-    "calls": 46,
-    "chars": 235066,
+    "calls": 42,
+    "chars": 214978,
     "violations": []
    }
   ]
@@ -1210,98 +1625,84 @@
     "step": 0,
     "progress": 0.0,
     "calls": 5,
-    "chars": 16313,
+    "chars": 15930,
     "violations": []
    },
    {
     "step": 1,
     "progress": 0.0,
     "calls": 8,
-    "chars": 27455,
+    "chars": 26884,
     "violations": []
    },
    {
     "step": 2,
-    "progress": 0.0965686274509804,
+    "progress": 0.10147058823529412,
     "calls": 11,
-    "chars": 40372,
+    "chars": 39770,
     "violations": []
    },
    {
     "step": 3,
-    "progress": 0.19705882352941176,
+    "progress": 0.2068627450980392,
     "calls": 13,
-    "chars": 49789,
+    "chars": 49187,
     "violations": []
    },
    {
     "step": 4,
-    "progress": 0.2980392156862745,
+    "progress": 0.3127450980392157,
     "calls": 15,
-    "chars": 60007,
+    "chars": 59422,
     "violations": []
    },
    {
     "step": 5,
-    "progress": 0.39656862745098037,
+    "progress": 0.4161764705882353,
     "calls": 17,
-    "chars": 70672,
+    "chars": 70271,
     "violations": []
    },
    {
     "step": 6,
     "progress": 0.46568627450980393,
     "calls": 23,
-    "chars": 106110,
+    "chars": 105946,
     "violations": []
    },
    {
     "step": 7,
-    "progress": 0.5426470588235294,
-    "calls": 25,
-    "chars": 118838,
+    "progress": 0.5720588235294117,
+    "calls": 26,
+    "chars": 125053,
     "violations": []
    },
    {
     "step": 8,
-    "progress": 0.6441176470588236,
+    "progress": 0.6573529411764706,
     "calls": 28,
-    "chars": 135009,
+    "chars": 136570,
     "violations": []
    },
    {
     "step": 9,
-    "progress": 0.6916666666666667,
-    "calls": 30,
-    "chars": 145306,
+    "progress": 0.7318627450980392,
+    "calls": 31,
+    "chars": 152009,
     "violations": []
    },
    {
     "step": 10,
-    "progress": 0.7926470588235294,
-    "calls": 32,
-    "chars": 156345,
+    "progress": 0.8181372549019608,
+    "calls": 34,
+    "chars": 168702,
     "violations": []
    },
    {
     "step": 11,
-    "progress": 0.8539215686274509,
-    "calls": 34,
-    "chars": 167838,
-    "violations": []
-   },
-   {
-    "step": 12,
-    "progress": 0.9205882352941176,
-    "calls": 37,
-    "chars": 186244,
-    "violations": []
-   },
-   {
-    "step": 13,
-    "progress": 1.0,
-    "calls": 42,
-    "chars": 218529,
+    "progress": 0.8838235294117647,
+    "calls": 40,
+    "chars": 206445,
     "violations": []
    }
   ]
@@ -1314,98 +1715,98 @@
     "step": 0,
     "progress": 0.0,
     "calls": 5,
-    "chars": 16139,
+    "chars": 15882,
     "violations": []
    },
    {
     "step": 1,
     "progress": 0.0,
     "calls": 7,
-    "chars": 23282,
+    "chars": 23203,
     "violations": []
    },
    {
     "step": 2,
-    "progress": 0.10147058823529412,
+    "progress": 0.09754901960784314,
     "calls": 9,
-    "chars": 31139,
+    "chars": 31194,
     "violations": []
    },
    {
     "step": 3,
-    "progress": 0.2,
+    "progress": 0.19215686274509805,
     "calls": 13,
-    "chars": 48691,
+    "chars": 48843,
     "violations": []
    },
    {
     "step": 4,
-    "progress": 0.3044117647058823,
+    "progress": 0.2926470588235294,
     "calls": 15,
-    "chars": 58464,
+    "chars": 58800,
     "violations": []
    },
    {
     "step": 5,
-    "progress": 0.4034313725490196,
+    "progress": 0.3877450980392157,
     "calls": 17,
-    "chars": 68893,
+    "chars": 69177,
     "violations": []
    },
    {
     "step": 6,
     "progress": 0.46568627450980393,
-    "calls": 20,
-    "chars": 85847,
+    "calls": 23,
+    "chars": 103644,
     "violations": []
    },
    {
     "step": 7,
-    "progress": 0.5034313725490196,
-    "calls": 22,
-    "chars": 98067,
+    "progress": 0.49950980392156863,
+    "calls": 26,
+    "chars": 122321,
     "violations": []
    },
    {
     "step": 8,
-    "progress": 0.6029411764705882,
-    "calls": 24,
-    "chars": 110967,
+    "progress": 0.5637254901960784,
+    "calls": 29,
+    "chars": 138573,
     "violations": []
    },
    {
     "step": 9,
-    "progress": 0.6676470588235294,
-    "calls": 27,
-    "chars": 127407,
+    "progress": 0.663235294117647,
+    "calls": 31,
+    "chars": 148648,
     "violations": []
    },
    {
     "step": 10,
-    "progress": 0.746078431372549,
-    "calls": 33,
-    "chars": 159657,
+    "progress": 0.7568627450980392,
+    "calls": 35,
+    "chars": 170457,
     "violations": []
    },
    {
     "step": 11,
-    "progress": 0.8215686274509804,
-    "calls": 35,
-    "chars": 170978,
+    "progress": 0.8352941176470589,
+    "calls": 39,
+    "chars": 194387,
     "violations": []
    },
    {
     "step": 12,
-    "progress": 0.9240196078431373,
-    "calls": 38,
-    "chars": 189123,
+    "progress": 0.9215686274509803,
+    "calls": 43,
+    "chars": 219491,
     "violations": []
    },
    {
     "step": 13,
     "progress": 1.0,
-    "calls": 41,
-    "chars": 208517,
+    "calls": 46,
+    "chars": 239371,
     "violations": []
    }
   ]
@@ -1418,91 +1819,91 @@
     "step": 0,
     "progress": 0.0,
     "calls": 5,
-    "chars": 16091,
+    "chars": 16018,
     "violations": []
    },
    {
     "step": 1,
     "progress": 0.0,
     "calls": 7,
-    "chars": 23236,
+    "chars": 23161,
     "violations": []
    },
    {
     "step": 2,
-    "progress": 0.10245098039215686,
+    "progress": 0.10735294117647058,
     "calls": 9,
-    "chars": 31157,
+    "chars": 31121,
     "violations": []
    },
    {
     "step": 3,
-    "progress": 0.19558823529411765,
+    "progress": 0.2053921568627451,
     "calls": 13,
-    "chars": 48800,
+    "chars": 48746,
     "violations": []
    },
    {
     "step": 4,
-    "progress": 0.2897058823529412,
-    "calls": 19,
-    "chars": 79024,
+    "progress": 0.3044117647058823,
+    "calls": 16,
+    "chars": 63651,
     "violations": []
    },
    {
     "step": 5,
-    "progress": 0.39215686274509803,
-    "calls": 23,
-    "chars": 100782,
+    "progress": 0.37941176470588234,
+    "calls": 19,
+    "chars": 79895,
     "violations": []
    },
    {
     "step": 6,
-    "progress": 0.4730392156862745,
-    "calls": 26,
-    "chars": 118601,
+    "progress": 0.4872549019607843,
+    "calls": 22,
+    "chars": 97280,
     "violations": []
    },
    {
     "step": 7,
-    "progress": 0.5171568627450981,
-    "calls": 29,
-    "chars": 137665,
+    "progress": 0.5362745098039216,
+    "calls": 25,
+    "chars": 115842,
     "violations": []
    },
    {
     "step": 8,
-    "progress": 0.5504901960784314,
-    "calls": 31,
-    "chars": 147384,
+    "progress": 0.6436274509803922,
+    "calls": 27,
+    "chars": 127004,
     "violations": []
    },
    {
     "step": 9,
-    "progress": 0.6529411764705882,
-    "calls": 34,
-    "chars": 163002,
+    "progress": 0.7514705882352941,
+    "calls": 30,
+    "chars": 142128,
     "violations": []
    },
    {
     "step": 10,
-    "progress": 0.7573529411764706,
+    "progress": 0.8093137254901961,
     "calls": 37,
-    "chars": 179955,
+    "chars": 181400,
     "violations": []
    },
    {
     "step": 11,
-    "progress": 0.8333333333333334,
+    "progress": 0.8872549019607843,
     "calls": 39,
-    "chars": 192283,
+    "chars": 193537,
     "violations": []
    },
    {
     "step": 12,
     "progress": 1.0,
-    "calls": 43,
-    "chars": 218005,
+    "calls": 42,
+    "chars": 213158,
     "violations": []
    }
   ]
@@ -1515,70 +1916,70 @@
     "step": 0,
     "progress": 0.0,
     "calls": 5,
-    "chars": 16101,
+    "chars": 16094,
     "violations": []
    },
    {
     "step": 1,
     "progress": 0.0,
     "calls": 7,
-    "chars": 23244,
+    "chars": 23243,
     "violations": []
    },
    {
     "step": 2,
-    "progress": 0.10784313725490197,
+    "progress": 0.10294117647058823,
     "calls": 12,
-    "chars": 43870,
+    "chars": 43923,
     "violations": []
    },
    {
     "step": 3,
-    "progress": 0.21764705882352942,
+    "progress": 0.20784313725490197,
     "calls": 15,
-    "chars": 58043,
+    "chars": 57982,
     "violations": []
    },
    {
     "step": 4,
-    "progress": 0.3235294117647059,
+    "progress": 0.3088235294117647,
     "calls": 18,
-    "chars": 73681,
+    "chars": 73809,
     "violations": []
    },
    {
     "step": 5,
-    "progress": 0.42990196078431375,
-    "calls": 20,
-    "chars": 84860,
+    "progress": 0.4102941176470588,
+    "calls": 21,
+    "chars": 90629,
     "violations": []
    },
    {
     "step": 6,
-    "progress": 0.49558823529411766,
-    "calls": 23,
-    "chars": 102980,
+    "progress": 0.46568627450980393,
+    "calls": 29,
+    "chars": 138846,
     "violations": []
    },
    {
     "step": 7,
-    "progress": 0.525,
-    "calls": 26,
-    "chars": 122199,
+    "progress": 0.4838235294117647,
+    "calls": 32,
+    "chars": 153931,
     "violations": []
    },
    {
     "step": 8,
-    "progress": 0.5769607843137254,
-    "calls": 32,
-    "chars": 152695,
+    "progress": 0.5308823529411765,
+    "calls": 34,
+    "chars": 164826,
     "violations": []
    },
    {
     "step": 9,
-    "progress": 0.5769607843137254,
-    "calls": 36,
-    "chars": 175540,
+    "progress": 0.5308823529411765,
+    "calls": 38,
+    "chars": 188925,
     "violations": []
    }
   ]

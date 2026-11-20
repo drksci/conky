@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="610" viewBox="0 0 880 610" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" stroke-linecap="round" letter-spacing=".1em" role="img" aria-label="House rules broken in the game, by turn, per run">
+<title>House rules broken in the game, by turn, per run</title>
+<text x="24.0" y="26.0" font-size="13" text-anchor="start" opacity="1.0" font-weight="bold" fill="#EDEDED">RULES BROKEN</text>
+<text x="24.0" y="43.0" font-size="10" text-anchor="start" opacity="0.65" font-weight="normal" fill="#EDEDED">FILLED: HOUSE RULE BROKEN IN THE GAME  |  HOLLOW: BREAKING INPUT PROPOSED, NOT TYPED</text>
+<line x1="24.0" y1="582.0" x2="856.0" y2="582.0" stroke="#EDEDED" stroke-width="0.6" opacity="0.35"/>
+<text x="24.0" y="598.0" font-size="9" text-anchor="start" opacity="0.65" font-weight="normal" fill="#EDEDED">trail / model haiku / seeds 1-5 / 2026-11-20</text>
+<text x="856.0" y="598.0" font-size="9" text-anchor="end" opacity="1.0" font-weight="bold" fill="#EDEDED">DATA</text>
+<text x="24.0" y="81.0" font-size="10" text-anchor="start" opacity="1.0" font-weight="bold" fill="#EDEDED">CLI</text>
+<text x="856.0" y="81.0" font-size="10" text-anchor="end" opacity="1.0" font-weight="bold" fill="#EDEDED">0 broken</text>
+<text x="190.0" y="82.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 1</text>
+<line x1="200.0" y1="78.0" x2="312.0" y2="78.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="98.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 2</text>
+<line x1="200.0" y1="94.0" x2="648.0" y2="94.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="114.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 3</text>
+<line x1="200.0" y1="110.0" x2="200.0" y2="110.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="130.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 4</text>
+<line x1="200.0" y1="126.0" x2="685.3" y2="126.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="146.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 5</text>
+<line x1="200.0" y1="142.0" x2="760.0" y2="142.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="24.0" y="175.0" font-size="10" text-anchor="start" opacity="1.0" font-weight="bold" fill="#EDEDED">CONKY</text>
+<text x="856.0" y="175.0" font-size="10" text-anchor="end" opacity="1.0" font-weight="bold" fill="#EDEDED">0 broken</text>
+<text x="190.0" y="176.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 1</text>
+<line x1="200.0" y1="172.0" x2="648.0" y2="172.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="192.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 2</text>
+<line x1="200.0" y1="188.0" x2="648.0" y2="188.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="208.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 3</text>
+<line x1="200.0" y1="204.0" x2="648.0" y2="204.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="224.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 4</text>
+<line x1="200.0" y1="220.0" x2="722.7" y2="220.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="240.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 5</text>
+<line x1="200.0" y1="236.0" x2="536.0" y2="236.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="24.0" y="269.0" font-size="10" text-anchor="start" opacity="1.0" font-weight="bold" fill="#EDEDED">FLOOR-CONTINUE</text>
+<text x="856.0" y="269.0" font-size="10" text-anchor="end" opacity="1.0" font-weight="bold" fill="#EDEDED">5 broken</text>
+<text x="190.0" y="270.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 1</text>
+<line x1="200.0" y1="266.0" x2="461.3" y2="266.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="286.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 2</text>
+<line x1="200.0" y1="282.0" x2="424.0" y2="282.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<rect x="422.5" y="274.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<text x="190.0" y="302.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 3</text>
+<line x1="200.0" y1="298.0" x2="424.0" y2="298.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<rect x="422.5" y="290.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<text x="190.0" y="318.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 4</text>
+<line x1="200.0" y1="314.0" x2="386.7" y2="314.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<rect x="347.8" y="306.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<text x="190.0" y="334.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 5</text>
+<line x1="200.0" y1="330.0" x2="424.0" y2="330.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<rect x="347.8" y="322.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<rect x="422.5" y="322.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<text x="24.0" y="363.0" font-size="10" text-anchor="start" opacity="1.0" font-weight="bold" fill="#EDEDED">FLOOR-RANDOM</text>
+<text x="856.0" y="363.0" font-size="10" text-anchor="end" opacity="1.0" font-weight="bold" fill="#EDEDED">13 broken</text>
+<text x="190.0" y="364.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 1</text>
+<line x1="200.0" y1="360.0" x2="760.0" y2="360.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<rect x="235.8" y="352.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<rect x="385.2" y="352.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<rect x="422.5" y="352.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<rect x="497.2" y="352.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<rect x="646.5" y="352.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<rect x="721.2" y="352.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<text x="190.0" y="380.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 2</text>
+<line x1="200.0" y1="376.0" x2="573.3" y2="376.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="396.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 3</text>
+<line x1="200.0" y1="392.0" x2="498.7" y2="392.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<rect x="235.8" y="384.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<rect x="273.2" y="384.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<rect x="310.5" y="384.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<rect x="347.8" y="384.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<text x="190.0" y="412.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 4</text>
+<line x1="200.0" y1="408.0" x2="498.7" y2="408.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<rect x="273.2" y="400.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<rect x="310.5" y="400.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<rect x="422.5" y="400.0" width="3.0" height="16.0" fill="#F4C430" opacity="1.0" stroke="#EDEDED" stroke-width="0.5"/>
+<text x="190.0" y="428.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 5</text>
+<line x1="200.0" y1="424.0" x2="274.7" y2="424.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="24.0" y="457.0" font-size="10" text-anchor="start" opacity="1.0" font-weight="bold" fill="#EDEDED">LOOP</text>
+<text x="856.0" y="457.0" font-size="10" text-anchor="end" opacity="1.0" font-weight="bold" fill="#EDEDED">0 broken</text>
+<text x="190.0" y="458.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 1</text>
+<line x1="200.0" y1="454.0" x2="648.0" y2="454.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="474.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 2</text>
+<line x1="200.0" y1="470.0" x2="610.7" y2="470.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="490.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 3</text>
+<line x1="200.0" y1="486.0" x2="685.3" y2="486.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="506.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 4</text>
+<line x1="200.0" y1="502.0" x2="648.0" y2="502.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<text x="190.0" y="522.0" font-size="9" text-anchor="end" opacity="0.65" font-weight="normal" fill="#EDEDED">seed 5</text>
+<line x1="200.0" y1="518.0" x2="536.0" y2="518.0" stroke="#EDEDED" stroke-width="0.8" opacity="0.5"/>
+<line x1="200.0" y1="534.0" x2="760.0" y2="534.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<line x1="200.0" y1="534.0" x2="200.0" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="200.0" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">0</text>
+<line x1="237.3" y1="534.0" x2="237.3" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="237.3" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">1</text>
+<line x1="274.7" y1="534.0" x2="274.7" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="274.7" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">2</text>
+<line x1="312.0" y1="534.0" x2="312.0" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="312.0" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">3</text>
+<line x1="349.3" y1="534.0" x2="349.3" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="349.3" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">4</text>
+<line x1="386.7" y1="534.0" x2="386.7" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="386.7" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">5</text>
+<line x1="424.0" y1="534.0" x2="424.0" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="424.0" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">6</text>
+<line x1="461.3" y1="534.0" x2="461.3" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="461.3" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">7</text>
+<line x1="498.7" y1="534.0" x2="498.7" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="498.7" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">8</text>
+<line x1="536.0" y1="534.0" x2="536.0" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="536.0" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">9</text>
+<line x1="573.3" y1="534.0" x2="573.3" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="573.3" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">10</text>
+<line x1="610.7" y1="534.0" x2="610.7" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="610.7" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">11</text>
+<line x1="648.0" y1="534.0" x2="648.0" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="648.0" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">12</text>
+<line x1="685.3" y1="534.0" x2="685.3" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="685.3" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">13</text>
+<line x1="722.7" y1="534.0" x2="722.7" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="722.7" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">14</text>
+<line x1="760.0" y1="534.0" x2="760.0" y2="537.0" stroke="#EDEDED" stroke-width="0.8" opacity="1.0"/>
+<text x="760.0" y="546.0" font-size="9" text-anchor="middle" opacity="0.7" font-weight="normal" fill="#EDEDED">15</text>
+<text x="760.0" y="558.0" font-size="9" text-anchor="end" opacity="0.8" font-weight="normal" fill="#EDEDED">TURN</text>
+</svg>

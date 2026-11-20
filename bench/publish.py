@@ -137,7 +137,9 @@ def totals(runs: list[charts.Run], order: list[str]) -> dict[str, dict]:
         out[arm] = {
             "reach": sum(r.row["ending"] == "reached" for r in rs) / len(rs),
             "n": len(rs),
-            "cost": statistics.median(costs) if all(c is not None for c in costs) else None,
+            "cost": statistics.median(known)
+            if (known := [c for c in costs if c is not None])
+            else None,
             "time": statistics.median(r.row["wall_s"] for r in rs),
             "uses": rs[0].row["model"] != "none",
             "row": rs[0].row,
@@ -257,6 +259,9 @@ def story(kind: str, f: dict, runs: list[charts.Run]) -> str:
         if kept:
             told += f" and kept {kept} pages of its own notes"
         lines.append(told + ".")
+    for arm in f["order"]:
+        if record.manifest(arm).get("control"):
+            lines.append(f"Stock {record.label(arm).title()} arrived {per[arm]['arrived']} times.")
     if f["scripted"]:
         lines.append("These runs used a scripted stand-in for the model, so none of it counts.")
     elif kind == "pilot":
