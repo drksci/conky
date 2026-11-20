@@ -53,7 +53,7 @@ Conky uses plain Markdown files in Git, so you can read them in Obsidian, VS Cod
 
 Conky is... different, and for many reasons including but not limited to:
 
-<p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-contrast.dark.svg"><img src="docs/assets/figures/fig-contrast.light.svg" alt="Five comparisons of the usual way beside Conky. The truth is scattered across code, prompts and a database, or it is on the pages with nowhere else to look. The rules are a prompt and a private prayer, or they hold on their own. One big loop runs the whole show, or nobody is in charge and it all gets done anyway. Why it did that is between the agent and the logs, or every change is signed and says why. It was crushed under the weight of itself, or it is only a folder to pick up and walk out with." width="800"></picture></a></p>
+<p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-contrast.dark.svg"><img src="docs/assets/figures/fig-contrast.light.svg" alt="Five comparisons of the usual way beside Conky. The truth is scattered, or it is on the page. The rules are a polite request, or they hold by themselves. One loop runs everything, or nobody is in charge. Nobody knows why it did that, or every change says why. Too big to move, or pick it up and walk out." width="800"></picture></a></p>
 
 
 <br>
