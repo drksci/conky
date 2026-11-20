@@ -1,0 +1,1 @@
+success met: passed 4 of 5 (bar: at least 3 of 5); median calls a draw 1 (bar: at most 2)

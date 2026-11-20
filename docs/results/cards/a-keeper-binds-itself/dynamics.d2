@@ -1,0 +1,109 @@
+vars: {
+  d2-config: {
+    layout-engine: elk
+    pad: 24
+    theme-id: 301
+    dark-theme-id: 301
+    theme-overrides: {
+      N1: "#141413"
+      N2: "#141413"
+      N3: "#595854"
+      N4: "#c9c8c3"
+      N5: "#c9c8c3"
+      N6: "#f1f0ec"
+      N7: "#fbfaf7"
+      B1: "#141413"
+      B2: "#141413"
+      B3: "#c9c8c3"
+      B4: "#ffffff"
+      B5: "#ffffff"
+      B6: "#ffffff"
+      AA2: "#141413"
+      AA4: "#fbfaf7"
+      AA5: "#fbfaf7"
+      AB4: "#fbfaf7"
+      AB5: "#fbfaf7"
+    }
+    dark-theme-overrides: {
+      N1: "#dcefd3"
+      N2: "#dcefd3"
+      N3: "#93aa9f"
+      N4: "#2c3568"
+      N5: "#2c3568"
+      N6: "#0b1038"
+      N7: "#030620"
+      B1: "#dcefd3"
+      B2: "#dcefd3"
+      B3: "#2c3568"
+      B4: "#070b2c"
+      B5: "#070b2c"
+      B6: "#070b2c"
+      AA2: "#dcefd3"
+      AA4: "#030620"
+      AA5: "#030620"
+      AB4: "#030620"
+      AB5: "#030620"
+    }
+  }
+}
+direction: right
+classes: {
+  character: {shape: person; style: {stroke-width: 1; font-size: 12; fill: transparent; text-transform: none}}
+  provider: {shape: hexagon; style: {stroke-width: 1; font-size: 12; text-transform: none}}
+  measure: {shape: circle; style: {stroke-width: 1; font-size: 12; text-transform: none}}
+  reflex: {shape: oval; style: {stroke-width: 1; font-size: 12; text-transform: none}}
+  screen: {shape: rectangle; style: {stroke-width: 1; font-size: 12; text-transform: none}}
+  hands: {shape: rectangle; style: {stroke-width: 1; font-size: 12; text-transform: none}}
+  page: {shape: page; style: {stroke-width: 1; font-size: 12; text-transform: none}}
+  note: {shape: square; style: {stroke-width: 1; font-size: 8; text-transform: none}}
+  room: {style: {stroke-width: 2; border-radius: 0; font-size: 12; bold: false; text-transform: none}}
+  added: {shape: text; style: {font-color: "#a2600c"; font-size: 12; text-transform: none}}
+  given: {shape: text; style: {font-size: 12; text-transform: none}}
+  bell: {shape: oval; style: {stroke-width: 1; font-size: 10; stroke: "#a2600c"; text-transform: none}}
+  bellq: {shape: oval; style: {stroke-width: 1; font-size: 10; text-transform: none}}
+  refusal: {style: {stroke: "#cc2a68"; font-color: "#cc2a68"; stroke-width: 2; font-size: 10; text-transform: none}}
+  edge: {style: {stroke-width: 1; font-size: 10; text-transform: none}}
+  title: {shape: text; style: {font-size: 22; text-transform: none}}
+  caption: {shape: text; style: {font-size: 12; text-transform: none}}
+  panel: {shape: sql_table; style: {stroke-width: 1; font-size: 10; text-transform: none}}
+}
+title: "a keeper binds itself" {class: title; near: top-center}
+den: "den" {
+  class: room
+  style.opacity: 1
+  keeper: "keeper" {class: character; style.opacity: 1}
+  payment-baker: "payment-baker" {class: page; style.opacity: 0}
+  rule0: "space.cash - page.amount >= 20" {class: added; style.opacity: 0}
+}
+order: "order" {class: page; style.opacity: 1}
+landlord-payment: "landlord-payment" {class: page; style.stroke: "#cc2a68"; style.opacity: 0}
+order -> den.keeper: "heard" {class: edge; style.stroke: "#2c4fd0"; style.stroke-dash: 3; style.opacity: 1}
+den.keeper -> den.payment-baker: "wrote" {class: edge; style.stroke: "#007c84"; style.opacity: 0}
+landlord-payment -> den: "turned away" {class: refusal; style.opacity: 0}
+caption: "the room as given" {class: caption; near: bottom-center}
+steps: {
+  s1: {
+    caption: "2/6   alice writes order"
+  }
+  s2: {
+    caption: "3/6   keeper answers order"
+    den.keeper.style.stroke-width: 3
+    den.keeper.style.stroke: "#6c46d6"
+  }
+  s3: {
+    caption: "4/6   keeper adds a rule to den"
+    den.rule0.style.opacity: 1
+    den.keeper.style.stroke-width: 1
+    den.keeper.style.stroke: B1
+  }
+  s4: {
+    caption: "5/6   keeper keeps payment-baker in den"
+    den.payment-baker.style.opacity: 1
+    (den.keeper -> den.payment-baker)[0].style.opacity: 1
+  }
+  s5: {
+    caption: "6/6   landlord-payment is turned away"
+    landlord-payment.style.opacity: 1
+    (landlord-payment -> den)[0].style.opacity: 1
+  }
+}

@@ -71,6 +71,8 @@ A card is a playbook with `says: live` steps, which a real model answers, drawn 
 | `dial` | The notch this card sets and what the next notch would be. |
 | `if_not` | What a miss would point at: the lower layer to look at first. |
 
+A drawn card is published with `python -m bench.dynamics RUN_DIR` ([decision 0043](../decisions/0043-a-trial-is-drawn-as-it-happened.md)). It writes `docs/results/cards/<card>/`: the rows (without the vault paths), the observations, the verdict, `timeline.json` (each draw's vault history as plain events, read by `bench/timeline.py`), `run.json`, and two pictures as D2 text, `dynamics.d2` (the steps of the lowest-numbered draw that passed) and `topology.d2` (its final state). D2 draws them as `dynamics.svg` and `topology.svg` when its program is found: download a release from https://d2lang.com and put `d2` on the PATH, or name it in `CONKY_D2`. Without it the text is written, existing SVGs are left alone and the command says so. The command then rewrites the board `docs/research/trials.md` and the Dynamics block of the README from what is published.
+
 A worked example, the top of `bench/cards/a-clerk-remembers.yaml`:
 
 ```yaml

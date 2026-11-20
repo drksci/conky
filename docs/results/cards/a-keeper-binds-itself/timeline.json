@@ -1,0 +1,1282 @@
+{
+ "1": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "cash": [
+     null,
+     80
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": "den"
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "order",
+     "hears": "order",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": "den"
+    }
+   ],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 5,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": "den"
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     null,
+     "eb23b4fc627854ac6896fa7629b0f1e6fe1869662eaaedf84b418a47bf1f"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "den",
+   "by": "keeper",
+   "cause": 6,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [
+     {
+      "each": true,
+      "text": "space.cash - page.amount >= 20"
+     }
+    ],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [
+    {
+     "each": true,
+     "text": "space.cash - page.amount >= 20"
+    }
+   ],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "payment-baker",
+   "by": "keeper",
+   "cause": 6,
+   "within": "den",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "amount": 30
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "amount": [
+     null,
+     30
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "refused",
+   "page": "landlord-payment",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "rule: space.cash - page.amount >= 20 (from den) is false",
+   "from": "den"
+  }
+ ],
+ "2": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "cash": [
+     null,
+     80
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": "den"
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "order",
+     "hears": "order",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": "den"
+    }
+   ],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 5,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": "den"
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     null,
+     "eb23b4fc627854ac6896fa7629b0f1e6fe1869662eaaedf84b418a47bf1f"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "den",
+   "by": "keeper",
+   "cause": 6,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [
+     {
+      "each": true,
+      "text": "space.cash - page.amount >= 20"
+     }
+    ],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [
+    {
+     "each": true,
+     "text": "space.cash - page.amount >= 20"
+    }
+   ],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "payment-baker",
+   "by": "keeper",
+   "cause": 6,
+   "within": "den",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "amount": 30
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "amount": [
+     null,
+     30
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "refused",
+   "page": "landlord-payment",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "rule: space.cash - page.amount >= 20 (from den) is false",
+   "from": "den"
+  }
+ ],
+ "3": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "cash": [
+     null,
+     80
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": "den"
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "order",
+     "hears": "order",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": "den"
+    }
+   ],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 5,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": "den"
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     null,
+     "eb23b4fc627854ac6896fa7629b0f1e6fe1869662eaaedf84b418a47bf1f"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "den",
+   "by": "keeper",
+   "cause": 6,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [
+     {
+      "each": true,
+      "text": "space.cash - page.amount >= 20"
+     }
+    ],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [
+    {
+     "each": true,
+     "text": "space.cash - page.amount >= 20"
+    }
+   ],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "baker-payment",
+   "by": "keeper",
+   "cause": 6,
+   "within": "den",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "amount": 30
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "amount": [
+     null,
+     30
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "refused",
+   "page": "landlord-payment",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "rule: space.cash - page.amount >= 20 (from den) is false",
+   "from": "den"
+  }
+ ],
+ "4": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "cash": [
+     null,
+     80
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": "den"
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "order",
+     "hears": "order",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": "den"
+    }
+   ],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 5,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": "den"
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     null,
+     "eb23b4fc627854ac6896fa7629b0f1e6fe1869662eaaedf84b418a47bf1f"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "den",
+   "by": "keeper",
+   "cause": 6,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [
+     {
+      "each": true,
+      "text": "space.cash - page.amount >= 20"
+     }
+    ],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [
+    {
+     "each": true,
+     "text": "space.cash - page.amount >= 20"
+    }
+   ],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "refused",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 6,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "shape: page block baker payment: The header 'baker payment' does not name a page. A header reads `=== page: <name> ===`, with a name of lowercase letters, digits, dashes and underscores.",
+   "from": null
+  },
+  {
+   "n": 9,
+   "kind": "refused",
+   "page": "landlord-payment",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "rule: space.cash - page.amount >= 20 (from den) is false",
+   "from": "den"
+  }
+ ],
+ "5": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "cash": [
+     null,
+     80
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": "den"
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "order",
+     "hears": "order",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": "den"
+    }
+   ],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 5,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": "den"
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     null,
+     "eb23b4fc627854ac6896fa7629b0f1e6fe1869662eaaedf84b418a47bf1f"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "den",
+   "by": "keeper",
+   "cause": 6,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [
+     {
+      "each": true,
+      "text": "space.cash - page.amount >= 20"
+     }
+    ],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [
+    {
+     "each": true,
+     "text": "space.cash - page.amount >= 20"
+    }
+   ],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "payment-baker",
+   "by": "keeper",
+   "cause": 6,
+   "within": "den",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "amount": 30
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "amount": [
+     null,
+     30
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "refused",
+   "page": "landlord-payment",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "rule: space.cash - page.amount >= 20 (from den) is false",
+   "from": "den"
+  }
+ ]
+}

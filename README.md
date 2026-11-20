@@ -82,6 +82,25 @@ Conky is... different, for many reasons, but here are some:
 <br>
 <!-- bench:end -->
 
+<!-- dynamics:start -->
+### Dynamics
+
+Each trial is drawn from the history of one of its draws, step by step: a frame for a space, a person for a character, amber for a rule or watch a character added, and pink for a write turned away.
+
+<p align="center"><img src="docs/results/cards/a-keeper-binds-itself/dynamics.svg" alt="a keeper binds itself, drawn as it happened in draw 1, the first that passed" width="720"></p>
+<p align="center"><sub>A character states a standing limit on the space it works in, and that limit refuses a payment that breaks it. Draw 1 of 5, the first that passed.</sub></p>
+
+<p align="center"><img src="docs/results/cards/a-keeper-hears-the-no/dynamics.svg" alt="a keeper hears the no, drawn as it happened in draw 1, the first that passed" width="720"></p>
+<p align="center"><sub>A character makes its own space listen for refusals, so that what is turned away is counted with no further thought. Draw 1 of 5, the first that passed.</sub></p>
+
+<p align="center"><img src="docs/results/cards/a-clerk-reads-a-crowded-desk/dynamics.svg" alt="a clerk reads a crowded desk, drawn as it happened in draw 1, the first that passed" width="720"></p>
+<p align="center"><sub>A character with more on record than it can be shown still answers from the record, because its space shows what bears on the matter first. Draw 1 of 5, the first that passed.</sub></p>
+
+<p align="center"><a href="docs/research/trials.md">Every trial, red ones included</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/results/cards">the data</a></p>
+
+<br>
+<!-- dynamics:end -->
+
 ### Topology
 
 A few parts, wrapped in layers, with the world plugging in at the edge. Solid is built, dotted is planned. The complete inventory, with a swimlane for every flow, is the <a href="docs/reference/architecture.md">architecture index</a>.

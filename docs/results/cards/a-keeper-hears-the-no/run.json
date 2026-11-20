@@ -1,0 +1,9 @@
+{
+ "card": "a-keeper-hears-the-no",
+ "model": "claude",
+ "date": "2026-11-20",
+ "draws": 5,
+ "passed": 4,
+ "shown": 1,
+ "commit": "1fee3c31d9577cab1dc8856e7384222abb4b43d5"
+}

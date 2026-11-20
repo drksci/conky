@@ -1395,6 +1395,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0040-the-runtime-narrates-and-pages-speak](../decisions/0040-the-runtime-narrates-and-pages-speak.md) | accepted | [`law.embed.anonymous`](#law.embed.anonymous) |
 | [0041-a-character-gives-its-space-reflexes](../decisions/0041-a-character-gives-its-space-reflexes.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`law.event.notice`](#law.event.notice) |
 | [0042-a-space-shows-what-bears-first](../decisions/0042-a-space-shows-what-bears-first.md) | accepted | [`law.embed.shows`](#law.embed.shows) |
+| [0043-a-trial-is-drawn-as-it-happened](../decisions/0043-a-trial-is-drawn-as-it-happened.md) | accepted | - |
 
 ### Unplaced
 
@@ -1403,6 +1404,7 @@ Found in the documents and fitting no row above.
 | Item | Where | Note |
 |---|---|---|
 | a generated index for a notes application | [obsidian-view.md](../ideas/obsidian-view.md) | Derived data under R11. Nothing is designed beyond the idea. |
+| a trial is drawn as it happened | [0043-a-trial-is-drawn-as-it-happened.md](../decisions/0043-a-trial-is-drawn-as-it-happened.md) | A card's recorded draw is published with a picture drawn from the vault's own history, by components that follow the page archetypes and a layout that places them. |
 | ahead or different with each step | [0033-ahead-or-different-with-each-step.md](../decisions/0033-ahead-or-different-with-each-step.md) | Every step states the difference it makes against other harnesses and how that is shown; parity work waits until a difference depends on it. |
 | arcs | [arcs.md](../ideas/arcs.md) | A primary purpose with branches, each scored by its distance from it. Not yet worked out, and read as direction and drift. |
 | attention | [attention.md](../ideas/attention.md) | Every page hears what it chose to hear, at the cheapest layer that can deal with it, and a thinking page is shown only what its own household passed up. It needs an event a watch can read and an ordered, budgeted list of members. |

@@ -1,0 +1,3022 @@
+{
+ "1": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "clerk",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "",
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "within",
+     "hears": null,
+     "sets": [
+      "heard"
+     ],
+     "asks": false,
+     "provider": null,
+     "writes": null
+    },
+    {
+     "on": "clerk",
+     "hears": "clerk",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "heard": [
+     null,
+     ""
+    ],
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "note-1",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 3,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Mrs Okafor's parcel is on shelf 12.\n",
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "",
+     "Mrs Okafor's parcel is on shelf 12.\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 4,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Mrs Okafor's parcel is on shelf 12.\n",
+     "said": "Noted: Mrs Okafor's parcel is on shelf 12, as the desk note "
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "Noted: Mrs Okafor's parcel is on shelf 12, as the desk note "
+    ],
+    "said_asked": [
+     null,
+     "0df9bdf0c3f3ec19aee5cc002156e3fa1213eff0a83ff98a156efac488f0"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1"
+   ]
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "note-2",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 6,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Has the morning post come?\n",
+     "said": "Noted: Mrs Okafor's parcel is on shelf 12, as the desk note "
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Mrs Okafor's parcel is on shelf 12.\n",
+     "Has the morning post come?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 7,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Has the morning post come?\n",
+     "said": "I can't tell from the desk. Nothing here records the morning"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "Noted: Mrs Okafor's parcel is on shelf 12, as the desk note ",
+     "I can't tell from the desk. Nothing here records the morning"
+    ],
+    "said_asked": [
+     "0df9bdf0c3f3ec19aee5cc002156e3fa1213eff0a83ff98a156efac488f0",
+     "9f869b03292045922594d72f306913548e300e07393542ea7211f65a558d"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2"
+   ]
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "note-3",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 9,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Is the lamp lit?\n",
+     "said": "I can't tell from the desk. Nothing here records the morning"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Has the morning post come?\n",
+     "Is the lamp lit?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 10,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Is the lamp lit?\n",
+     "said": "I can't tell from the desk. My notes cover Mrs Okafor's parc"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "I can't tell from the desk. Nothing here records the morning",
+     "I can't tell from the desk. My notes cover Mrs Okafor's parc"
+    ],
+    "said_asked": [
+     "9f869b03292045922594d72f306913548e300e07393542ea7211f65a558d",
+     "dbe0f77053419117a14fb513570a25c048ecd01eee5335390ceb1c41285f"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2",
+    "note-3"
+   ]
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "note-4",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 13,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 12,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Which shelf is Mrs Okafor's parcel on?\n",
+     "said": "I can't tell from the desk. My notes cover Mrs Okafor's parc"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Is the lamp lit?\n",
+     "Which shelf is Mrs Okafor's parcel on?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 14,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 13,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Which shelf is Mrs Okafor's parcel on?\n",
+     "said": "Mrs Okafor's parcel is on **shelf 12**, according to note-1."
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "I can't tell from the desk. My notes cover Mrs Okafor's parc",
+     "Mrs Okafor's parcel is on **shelf 12**, according to note-1."
+    ],
+    "said_asked": [
+     "dbe0f77053419117a14fb513570a25c048ecd01eee5335390ceb1c41285f",
+     "6eb0c558662ad882d39ef9df850a27c38f55f54d3341e5cd68b730e63ee3"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2",
+    "note-3",
+    "note-4"
+   ]
+  }
+ ],
+ "2": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "clerk",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "",
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "within",
+     "hears": null,
+     "sets": [
+      "heard"
+     ],
+     "asks": false,
+     "provider": null,
+     "writes": null
+    },
+    {
+     "on": "clerk",
+     "hears": "clerk",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "heard": [
+     null,
+     ""
+    ],
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "note-1",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 3,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Mrs Okafor's parcel is on shelf 12.\n",
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "",
+     "Mrs Okafor's parcel is on shelf 12.\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 4,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Mrs Okafor's parcel is on shelf 12.\n",
+     "said": "Noted: Mrs Okafor's parcel is on shelf 12."
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "Noted: Mrs Okafor's parcel is on shelf 12."
+    ],
+    "said_asked": [
+     null,
+     "951f462cedd4dbee2f354dd97efa8f6b6f22d4beeff368c2adbb885c4cfc"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1"
+   ]
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "note-2",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 6,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Has the morning post come?\n",
+     "said": "Noted: Mrs Okafor's parcel is on shelf 12."
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Mrs Okafor's parcel is on shelf 12.\n",
+     "Has the morning post come?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 7,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Has the morning post come?\n",
+     "said": "I don't have any record of the morning post arriving. The de"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "Noted: Mrs Okafor's parcel is on shelf 12.",
+     "I don't have any record of the morning post arriving. The de"
+    ],
+    "said_asked": [
+     "951f462cedd4dbee2f354dd97efa8f6b6f22d4beeff368c2adbb885c4cfc",
+     "b05b038f4bb35b16b7cb63e58e11c03a95511f35229e288f3005ce59c7fd"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2"
+   ]
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "note-3",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 9,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Is the lamp lit?\n",
+     "said": "I don't have any record of the morning post arriving. The de"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Has the morning post come?\n",
+     "Is the lamp lit?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 10,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Is the lamp lit?\n",
+     "said": "I can't see the lamp from the desk, so I don't know whether "
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "I don't have any record of the morning post arriving. The de",
+     "I can't see the lamp from the desk, so I don't know whether "
+    ],
+    "said_asked": [
+     "b05b038f4bb35b16b7cb63e58e11c03a95511f35229e288f3005ce59c7fd",
+     "3409f48150bbaffd56c5ba254174c3fb1c7e2f0a1012b25125f1a7984c9b"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2",
+    "note-3"
+   ]
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "note-4",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 13,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 12,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Which shelf is Mrs Okafor's parcel on?\n",
+     "said": "I can't see the lamp from the desk, so I don't know whether "
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Is the lamp lit?\n",
+     "Which shelf is Mrs Okafor's parcel on?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 14,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 13,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Which shelf is Mrs Okafor's parcel on?\n",
+     "said": "Mrs Okafor's parcel is on **shelf 12**, according to note-1."
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "I can't see the lamp from the desk, so I don't know whether ",
+     "Mrs Okafor's parcel is on **shelf 12**, according to note-1."
+    ],
+    "said_asked": [
+     "3409f48150bbaffd56c5ba254174c3fb1c7e2f0a1012b25125f1a7984c9b",
+     "6eb0c558662ad882d39ef9df850a27c38f55f54d3341e5cd68b730e63ee3"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2",
+    "note-3",
+    "note-4"
+   ]
+  }
+ ],
+ "3": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "clerk",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "",
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "within",
+     "hears": null,
+     "sets": [
+      "heard"
+     ],
+     "asks": false,
+     "provider": null,
+     "writes": null
+    },
+    {
+     "on": "clerk",
+     "hears": "clerk",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "heard": [
+     null,
+     ""
+    ],
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "note-1",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 3,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Mrs Okafor's parcel is on shelf 12.\n",
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "",
+     "Mrs Okafor's parcel is on shelf 12.\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 4,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Mrs Okafor's parcel is on shelf 12.\n",
+     "said": "Noted: Mrs Okafor's parcel is on shelf 12."
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "Noted: Mrs Okafor's parcel is on shelf 12."
+    ],
+    "said_asked": [
+     null,
+     "951f462cedd4dbee2f354dd97efa8f6b6f22d4beeff368c2adbb885c4cfc"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1"
+   ]
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "note-2",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 6,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Has the morning post come?\n",
+     "said": "Noted: Mrs Okafor's parcel is on shelf 12."
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Mrs Okafor's parcel is on shelf 12.\n",
+     "Has the morning post come?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 7,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Has the morning post come?\n",
+     "said": "I don't have any record of the morning post arriving. My des"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "Noted: Mrs Okafor's parcel is on shelf 12.",
+     "I don't have any record of the morning post arriving. My des"
+    ],
+    "said_asked": [
+     "951f462cedd4dbee2f354dd97efa8f6b6f22d4beeff368c2adbb885c4cfc",
+     "ef28110c82d53af45a9634911e9a9f95686db619d24ac1966963ad649bf5"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2"
+   ]
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "note-3",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 9,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Is the lamp lit?\n",
+     "said": "I don't have any record of the morning post arriving. My des"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Has the morning post come?\n",
+     "Is the lamp lit?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 10,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Is the lamp lit?\n",
+     "said": "I can't tell from here. Nothing on the desk says whether the"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "I don't have any record of the morning post arriving. My des",
+     "I can't tell from here. Nothing on the desk says whether the"
+    ],
+    "said_asked": [
+     "ef28110c82d53af45a9634911e9a9f95686db619d24ac1966963ad649bf5",
+     "fd7f4b92b71cc0ded11d2ccb7ea886d405f38c8bde5b4c2c75c690beb18c"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2",
+    "note-3"
+   ]
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "note-4",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 13,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 12,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Which shelf is Mrs Okafor's parcel on?\n",
+     "said": "I can't tell from here. Nothing on the desk says whether the"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Is the lamp lit?\n",
+     "Which shelf is Mrs Okafor's parcel on?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 14,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 13,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Which shelf is Mrs Okafor's parcel on?\n",
+     "said": "Shelf 12. Mrs Okafor's parcel is there, according to note-1."
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "I can't tell from here. Nothing on the desk says whether the",
+     "Shelf 12. Mrs Okafor's parcel is there, according to note-1."
+    ],
+    "said_asked": [
+     "fd7f4b92b71cc0ded11d2ccb7ea886d405f38c8bde5b4c2c75c690beb18c",
+     "354892a5b53e3c847c11148f1a31213ebe00d8c4b234b117cb50738acd87"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2",
+    "note-3",
+    "note-4"
+   ]
+  }
+ ],
+ "4": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "clerk",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "",
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "within",
+     "hears": null,
+     "sets": [
+      "heard"
+     ],
+     "asks": false,
+     "provider": null,
+     "writes": null
+    },
+    {
+     "on": "clerk",
+     "hears": "clerk",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "heard": [
+     null,
+     ""
+    ],
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "note-1",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 3,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Mrs Okafor's parcel is on shelf 12.\n",
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "",
+     "Mrs Okafor's parcel is on shelf 12.\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 4,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Mrs Okafor's parcel is on shelf 12.\n",
+     "said": "Mrs Okafor's parcel is on shelf 12."
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "Mrs Okafor's parcel is on shelf 12."
+    ],
+    "said_asked": [
+     null,
+     "c1d8cf3c5866cb4e0bd8d2ca15e96f13413d58d8b0c50813d699a823dfd8"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1"
+   ]
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "note-2",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 6,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Has the morning post come?\n",
+     "said": "Mrs Okafor's parcel is on shelf 12."
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Mrs Okafor's parcel is on shelf 12.\n",
+     "Has the morning post come?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 7,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Has the morning post come?\n",
+     "said": "I don't know. My notes only mention Mrs Okafor's parcel on s"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "Mrs Okafor's parcel is on shelf 12.",
+     "I don't know. My notes only mention Mrs Okafor's parcel on s"
+    ],
+    "said_asked": [
+     "c1d8cf3c5866cb4e0bd8d2ca15e96f13413d58d8b0c50813d699a823dfd8",
+     "10c855a87866f944408c2338caa969ad8c15a78bf995deb10ab1d8c1dca6"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2"
+   ]
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "note-3",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 9,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Is the lamp lit?\n",
+     "said": "I don't know. My notes only mention Mrs Okafor's parcel on s"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Has the morning post come?\n",
+     "Is the lamp lit?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 10,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Is the lamp lit?\n",
+     "said": "I can't see the lamp from here, so I can't say whether it's "
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "I don't know. My notes only mention Mrs Okafor's parcel on s",
+     "I can't see the lamp from here, so I can't say whether it's "
+    ],
+    "said_asked": [
+     "10c855a87866f944408c2338caa969ad8c15a78bf995deb10ab1d8c1dca6",
+     "4d6ae3f501afb5bcad959eabe972e60ac2b9e89e83bc6476370b6571b913"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2",
+    "note-3"
+   ]
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "note-4",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 13,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 12,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Which shelf is Mrs Okafor's parcel on?\n",
+     "said": "I can't see the lamp from here, so I can't say whether it's "
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Is the lamp lit?\n",
+     "Which shelf is Mrs Okafor's parcel on?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 14,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 13,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Which shelf is Mrs Okafor's parcel on?\n",
+     "said": "Mrs Okafor's parcel is on **shelf 12**."
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "I can't see the lamp from here, so I can't say whether it's ",
+     "Mrs Okafor's parcel is on **shelf 12**."
+    ],
+    "said_asked": [
+     "4d6ae3f501afb5bcad959eabe972e60ac2b9e89e83bc6476370b6571b913",
+     "e5e13bb520dbba1d42360b369d1c9894df603be42825b0aa28540b008f58"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2",
+    "note-3",
+    "note-4"
+   ]
+  }
+ ],
+ "5": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "clerk",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "",
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "within",
+     "hears": null,
+     "sets": [
+      "heard"
+     ],
+     "asks": false,
+     "provider": null,
+     "writes": null
+    },
+    {
+     "on": "clerk",
+     "hears": "clerk",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "heard": [
+     null,
+     ""
+    ],
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "note-1",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 3,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Mrs Okafor's parcel is on shelf 12.\n",
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "",
+     "Mrs Okafor's parcel is on shelf 12.\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 4,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Mrs Okafor's parcel is on shelf 12.\n",
+     "said": "Mrs Okafor's parcel is on shelf 12."
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "Mrs Okafor's parcel is on shelf 12."
+    ],
+    "said_asked": [
+     null,
+     "c1d8cf3c5866cb4e0bd8d2ca15e96f13413d58d8b0c50813d699a823dfd8"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1"
+   ]
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "note-2",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 6,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Has the morning post come?\n",
+     "said": "Mrs Okafor's parcel is on shelf 12."
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Mrs Okafor's parcel is on shelf 12.\n",
+     "Has the morning post come?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 7,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Has the morning post come?\n",
+     "said": "I don't have any record that the morning post has arrived. M"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "Mrs Okafor's parcel is on shelf 12.",
+     "I don't have any record that the morning post has arrived. M"
+    ],
+    "said_asked": [
+     "c1d8cf3c5866cb4e0bd8d2ca15e96f13413d58d8b0c50813d699a823dfd8",
+     "fb0ccbec84cdf1c909c3b65db06236efef29c923dd80905c2cb043f83320"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2"
+   ]
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "note-3",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 9,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Is the lamp lit?\n",
+     "said": "I don't have any record that the morning post has arrived. M"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Has the morning post come?\n",
+     "Is the lamp lit?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 10,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Is the lamp lit?\n",
+     "said": "I can't see the lamp, so I don't know whether it's lit. Noth"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "I don't have any record that the morning post has arrived. M",
+     "I can't see the lamp, so I don't know whether it's lit. Noth"
+    ],
+    "said_asked": [
+     "fb0ccbec84cdf1c909c3b65db06236efef29c923dd80905c2cb043f83320",
+     "5cbdf8808e6f166b46096fd10ac92ff55eefe6e15a27c0181c755252185c"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2",
+    "note-3"
+   ]
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "note-4",
+   "by": "alice",
+   "cause": null,
+   "within": "clerk",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 13,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 12,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Which shelf is Mrs Okafor's parcel on?\n",
+     "said": "I can't see the lamp, so I don't know whether it's lit. Noth"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "heard": [
+     "Is the lamp lit?\n",
+     "Which shelf is Mrs Okafor's parcel on?\n"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 14,
+   "kind": "write",
+   "page": "clerk",
+   "by": "clerk",
+   "cause": 13,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "heard": "Which shelf is Mrs Okafor's parcel on?\n",
+     "said": "Mrs Okafor's parcel is on **shelf 12**, according to note-1."
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "within",
+      "hears": null,
+      "sets": [
+       "heard"
+      ],
+      "asks": false,
+      "provider": null,
+      "writes": null
+     },
+     {
+      "on": "clerk",
+      "hears": "clerk",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "I can't see the lamp, so I don't know whether it's lit. Noth",
+     "Mrs Okafor's parcel is on **shelf 12**, according to note-1."
+    ],
+    "said_asked": [
+     "5cbdf8808e6f166b46096fd10ac92ff55eefe6e15a27c0181c755252185c",
+     "6eb0c558662ad882d39ef9df850a27c38f55f54d3341e5cd68b730e63ee3"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "note-1",
+    "note-2",
+    "note-3",
+    "note-4"
+   ]
+  }
+ ]
+}

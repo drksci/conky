@@ -78,6 +78,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0040-the-runtime-narrates-and-pages-speak.md](decisions/0040-the-runtime-narrates-and-pages-speak.md): The runtime narrates and pages speak
 - [decisions/0041-a-character-gives-its-space-reflexes.md](decisions/0041-a-character-gives-its-space-reflexes.md): A character gives its space reflexes
 - [decisions/0042-a-space-shows-what-bears-first.md](decisions/0042-a-space-shows-what-bears-first.md): A space shows what bears first
+- [decisions/0043-a-trial-is-drawn-as-it-happened.md](decisions/0043-a-trial-is-drawn-as-it-happened.md): A trial is drawn as it happened
 
 ### Research
 
@@ -98,6 +99,7 @@ Outside work, compared on a fixed basis, with the depth of reading stated.
 - [research/benchmarks.md](research/benchmarks.md): Benchmarks and evaluations for agent harnesses
 - [research/evaluation-plan.md](research/evaluation-plan.md): Evaluation plan (draft): three kinds of result kept apart, and steps from cheapest first
 - [research/results.md](research/results.md): Benchmark results, generated from the run files
+- [research/trials.md](research/trials.md): Every trial card with its latest verdict and its drawn history, generated
 - [research/benchmark-protocol.md](research/benchmark-protocol.md): Benchmark protocol (draft): the trail, fixed before any live run
 
 ## Beyond the layers

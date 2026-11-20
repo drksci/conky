@@ -35,6 +35,7 @@ From [design](../design.md) and the [reference](../reference/vault-format.md):
 - A golden vault under `tests/golden/` that every version must keep verifying and reading.
 - An architecture index generated from the code and the documents ([architecture index](../reference/architecture.md)): the built half from markers in `src/conky/` (`conky.arch`), the planned half from the `arch` frontmatter of ideas and decisions, and a Checks table that says for each law, flow and part whether a measured test, a judged check or nothing holds it. Judged checks are declared and their evidence bundle is written by `conky.arch.bundle`; no verdict has been recorded for any.
 - CI that runs `scripts/check` on every pull request and on pushes to `main`.
+- Trial pictures: `python -m bench.dynamics RUN_DIR` publishes a drawn card as D2 text and, with D2 installed, as an animated SVG and a topology of one draw, and writes the board `docs/research/trials.md`. Verified by tests on a tiny vault and on the published cards, and by eye in Chromium. D2 cannot set a pen per look, so the pens are the same in light and dark.
 
 ## Unverified
 

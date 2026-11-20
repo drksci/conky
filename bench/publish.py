@@ -19,7 +19,7 @@ import statistics
 import sys
 from pathlib import Path
 
-from bench import analyse, charts, plate, record
+from bench import analyse, charts, dynamics, plate, record
 
 ROOT = Path(__file__).resolve().parent.parent
 REPOSITORY = "https://github.com/drksci/conky"
@@ -415,6 +415,8 @@ def publish(results: Path, name: str, kind: str, root: Path = ROOT) -> list[Path
     readme.write_text(
         head + readme_block(name, kind, f, runs) + rest.split(END, 1)[1], encoding="utf-8"
     )
+    if dynamics.START in readme.read_text(encoding="utf-8"):
+        written += dynamics.refresh(root)
     return [*written, doc, readme]
 
 
