@@ -10,6 +10,7 @@ from __future__ import annotations
 import io
 import json
 import random
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -647,3 +648,113 @@ def test_an_unmetered_arm_has_no_probe_no_resume_and_others_take_no_agent(
 
 def test_the_control_walk_holds_on_the_stand_in(tmp_path: Path) -> None:
     assert walk.main(["--arm", "cli", "--out", str(tmp_path / "walk")]) == 0
+
+
+# Branching a run: answers from an earlier run's record while requests match, live after.
+
+
+def trace_of_file(path: Path) -> list[dict]:
+    return [json.loads(x) for x in path.read_text().splitlines()]
+
+
+def trace_of(folder: Path) -> list[dict]:
+    return trace_of_file(folder / "meter.jsonl")
+
+
+def play(out: Path, *extra: str) -> Path:
+    argv = ["--arms", "loop", "--game", str(STAND_IN), "--stall", "15", "--wall", "60"]
+    assert run.main([*argv, *extra, "--out", str(out)]) == 0
+    return out / "trail" / "loop" / "full" / "seed-1"
+
+
+@pytest.fixture(scope="module")
+def tape(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    out = tmp_path_factory.mktemp("tape")
+    play(out, "--cache-mode", "record")
+    return out
+
+
+def test_an_unchanged_branch_replays_every_call_and_ends_the_same(
+    tape: Path, tmp_path: Path
+) -> None:
+    source = tape / "trail" / "loop" / "full" / "seed-1"
+    folder = play(tmp_path, "--cache-mode", "branch", "--replay-from", str(tape))
+    calls = trace_of(folder)
+    assert len(calls) >= 5 and {c["cache"] for c in calls} == {"replayed"}
+    record = json.loads((folder / "run.json").read_text())
+    assert record["branched_from"] == str(source) and record["live_from"] is None
+    assert record["replayed_calls"] == len(calls) and record["live_calls"] == 0
+    one, two = (textenv.text(textenv.read(p / "transcript.jsonl")) for p in (source, folder))
+    assert one == two
+
+
+def test_live_from_a_call_replays_the_calls_before_it_and_goes_live_after(
+    tape: Path, tmp_path: Path
+) -> None:
+    folder = play(
+        tmp_path, "--cache-mode", "branch", "--replay-from", str(tape), "--live-from", "3"
+    )
+    calls = trace_of(folder)
+    assert [c["cache"] for c in calls[:2]] == ["replayed", "replayed"]
+    assert {c["cache"] for c in calls[2:]} == {"recorded"}
+    record = json.loads((folder / "run.json").read_text())
+    assert record["live_from"] == 3
+    assert (record["replayed_calls"], record["live_calls"]) == (2, len(calls) - 2)
+
+
+def test_a_changed_prompt_goes_live_at_the_first_request_that_differs(
+    tape: Path, tmp_path: Path
+) -> None:
+    source = tmp_path / "source"
+    shutil.copytree(tape / "trail" / "loop" / "full", source / "trail" / "loop" / "minimal")
+    argv = ["--arms", "loop", "--prompts", "minimal", "--game", str(STAND_IN), "--stall", "15",
+            "--wall", "60", "--cache-mode", "branch", "--replay-from", str(source),
+            "--out", str(tmp_path / "b")]  # fmt: skip
+    assert run.main(argv) == 0
+    calls = trace_of(tmp_path / "b" / "trail" / "loop" / "minimal" / "seed-1")
+    assert calls[0]["cache"] == "recorded"
+
+
+def test_a_meter_branch_replays_until_a_request_differs(tmp_path: Path) -> None:
+    def ask(text: str) -> dict:
+        return {"model": "m", "messages": [{"role": "user", "content": text}]}
+
+    live = Counting()
+    first = Meter(live, "m", "t", Budget(9, 99), tmp_path / "a.jsonl", cache_mode="record",
+                  cache=tmp_path / "one")  # fmt: skip
+    for text in ("a", "b", "c"):
+        post(first, ask(text))
+    branch = Counting()
+    again = Meter(branch, "m", "t", Budget(9, 99), tmp_path / "b.jsonl", cache_mode="branch",
+                  cache=tmp_path / "two", replay_from=tmp_path / "one")  # fmt: skip
+    for text in ("a", "B", "c"):
+        assert post(again, ask(text))[0] == 200
+    assert [x["cache"] for x in trace_of_file(tmp_path / "b.jsonl")] == [
+        "replayed",
+        "recorded",
+        "replayed",
+    ]
+    assert branch.calls == 1 and again.branched == {"replayed": 2, "live": 1}
+
+
+def test_branching_needs_the_run_to_branch_from(tmp_path: Path) -> None:
+    with pytest.raises(SystemExit, match="2"):
+        run.main(["--cache-mode", "branch", "--out", str(tmp_path)])
+    with pytest.raises(ValueError, match="replay_from"):
+        Meter(Counting(), "m", "t", Budget(1, 1), tmp_path / "x.jsonl", cache_mode="branch")
+
+
+def test_a_branched_run_is_left_out_of_the_analysis_and_the_publisher(
+    tape: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    from bench import publish
+
+    folder = play(tmp_path / "b", "--cache-mode", "branch", "--replay-from", str(tape))
+    assert analyse.partition(tmp_path / "b") == ([], [folder])
+    assert analyse.load(tmp_path / "b") == []
+    assert len(analyse.load(tape)) == 1
+    analyse.main([str(tmp_path / "b")])
+    assert "left out 1 branched runs" in capsys.readouterr().err
+    with pytest.raises(SystemExit, match="no runs"):
+        publish.publish(tmp_path / "b", "x", "probe", tmp_path / "root")
+    assert "left out 1 branched runs" in capsys.readouterr().err

@@ -64,9 +64,11 @@ Conky is... different, for many reasons, but here are some:
 
 <p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/reached.dark.svg"><img src="docs/results/pilot-2/reached.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, under the model, seeds, budget and commit that were held equal." width="720"></picture></a></p>
 
-<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/text.dark.svg"><img src="docs/results/pilot-2/text.light.svg" alt="The text each harness sent in its median run, cut by where it came from." width="720"></picture></a></p>
+<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/became.dark.svg"><img src="docs/results/pilot-2/became.light.svg" alt="The parts each harness was made of when its median run stopped." width="720"></picture></a></p>
 
 <p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/time.dark.svg"><img src="docs/results/pilot-2/time.light.svg" alt="The median run of each harness along a time axis: steps above, model calls below." width="720"></picture></a></p>
+
+<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/text.dark.svg"><img src="docs/results/pilot-2/text.light.svg" alt="The text each harness sent in its median run, cut by where it came from." width="720"></picture></a></p>
 
 
 <p align="center"><a href="docs/research/results.md">Method and every chart</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/results/pilot-2/runs.csv">the data</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/research/benchmark-protocol.md">the protocol</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/commit/a4d3201a64686303a7b4b02713b9444c4c263779">the code that ran</a></p>

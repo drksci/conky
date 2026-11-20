@@ -35,7 +35,7 @@ SCREEN = ("<<<screen>>>", "<<</screen>>>")
 SPAN = re.compile(r"<<<(pack|screen)>>>(.*?)<<</\1>>>", re.DOTALL)
 
 
-CACHE_MODES = ("record", "replay", "off")
+CACHE_MODES = ("record", "replay", "branch", "off")
 
 
 @dataclass
@@ -196,9 +196,14 @@ class Meter:
         cache_mode: str = "off",
         cache: Path | None = None,
         replay_from: Path | None = None,
+        live_from: int | None = None,
     ) -> None:
         if cache_mode not in CACHE_MODES:
             raise ValueError(f"cache mode must be one of {', '.join(CACHE_MODES)}")
+        if cache_mode == "branch" and replay_from is None:
+            raise ValueError("cache mode branch needs replay_from: the record to branch from")
+        self.live_from = live_from
+        self.branched = {"replayed": 0, "live": 0}
         self.cache_mode, self.cache, self.replay_from = cache_mode, cache, replay_from
         self.seen: dict[str, int] = {}
         self.backend, self.model, self.token, self.budget = backend, model, token, budget
@@ -238,27 +243,34 @@ class Meter:
         """Answer from the backend, recording it, or from this run's record, by cache mode.
 
         The record belongs to one run: a key counts repeats within the run, and nothing is
-        shared between runs, so independent runs stay independent.
+        shared between runs, so independent runs stay independent. Mode `branch` reads another
+        run's record while a request matches it and goes live, recording, from the first that
+        does not, or from call number `live_from` whatever matches.
         """
         if self.cache_mode == "off" or self.cache is None:
             return self.backend.complete(call)
         key = self._key(data)
         entry["cache_key"] = key
-        if self.cache_mode == "replay":
+        if self.cache_mode in ("replay", "branch"):
             source = (self.replay_from or self.cache) / f"{key}.json"
-            if not source.exists():
+            forced = self.live_from is not None and self.calls >= self.live_from
+            if self.cache_mode == "branch" and (forced or not source.exists()):
+                self.branched["live"] += 1
+            elif not source.exists():
                 entry["cache"] = "miss"
                 raise BackendError(
                     f"no recorded answer for this request ({key}) in {source.parent}"
                 )
-            stored = json.loads(source.read_text(encoding="utf-8"))
-            entry["cache"] = "replayed"
-            return Completion(
-                stored["text"],
-                stored["tokens_in"],
-                stored["tokens_out"],
-                {**stored.get("note", {}), "replayed": True},
-            )
+            else:
+                stored = json.loads(source.read_text(encoding="utf-8"))
+                entry["cache"] = "replayed"
+                self.branched["replayed"] += 1
+                return Completion(
+                    stored["text"],
+                    stored["tokens_in"],
+                    stored["tokens_out"],
+                    {**stored.get("note", {}), "replayed": True},
+                )
         done = self.backend.complete(call)
         self.cache.mkdir(parents=True, exist_ok=True)
         stored = {

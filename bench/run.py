@@ -24,8 +24,13 @@ Options for experiments and debugging:
   run recorded, with no command line at all. It has no probes and no resume, and its results are
   never pooled with metered arms (see `bench/adapters/cli/README.md`).
 
-A stepped run, a run resumed by hand and a run on the `scripted` backend are marked in
-`run.json` and are never reported as results.
+- `--cache-mode branch --replay-from RESULTS_DIR [--live-from CALL]`: answer from an earlier
+  run's record while a request matches it, and go live from the first that does not, or from
+  call number CALL. `run.json` gets `branched_from`, `live_from`, `replayed_calls` and
+  `live_calls`.
+
+A stepped run, a run resumed by hand, a branched run and a run on the `scripted` backend are
+marked in `run.json` and are never reported as results.
 """
 
 from __future__ import annotations
@@ -122,6 +127,7 @@ class Plan:
     game: Path | None = None
     cache_mode: str = ""
     replay_from: Path | None = None
+    live_from: int | None = None
     answers: str = "keys"
     agent: str = ""
     replay: Path | None = None
@@ -310,6 +316,7 @@ class Run:
             mode,
             self.dir / "cache",
             plan.replay_from,
+            plan.live_from,
         )
         url = meter.start()
         workdir, home = self.dir / "workdir", self.dir / "home"
@@ -344,6 +351,8 @@ class Run:
             "replay_session": str(plan.replay) if plan.replay else None,
             "cache_mode": mode,
             "replay_from": str(plan.replay_from) if plan.replay_from else None,
+            "branched_from": str(plan.replay_from.parent) if mode == "branch" else None,
+            "live_from": plan.live_from if mode == "branch" else None,
             "versions": {
                 "python": platform.python_version(),
                 "repository": git_commit(),
@@ -389,6 +398,9 @@ class Run:
         self.record["segments"] = segments
         self.record["exit"] = segments[-1]["exit"]
         self.record["end"] = now()
+        if mode == "branch":
+            self.record["replayed_calls"] = meter.branched["replayed"]
+            self.record["live_calls"] = meter.branched["live"]
         self.record["accountability"] = self.accountability(workdir)
         self.record["self_reported"] = self.self_reported(workdir) if control else None
         self.record["shelf_reads_recorded"] = self.shelf_reads(workdir)
@@ -604,12 +616,24 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--cache-mode",
-        choices=("record", "replay", "off"),
+        choices=("record", "replay", "branch", "off"),
         default="",
-        help="model calls: record (default with a model), replay (stored answers only), off",
+        help="model calls: record (default with a model), replay (stored answers only), "
+        "branch (stored answers while the request matches, live from the first that does not), off",
     )
     parser.add_argument(
-        "--replay-from", type=Path, default=None, help="with --cache-mode replay: a results dir"
+        "--replay-from",
+        type=Path,
+        default=None,
+        help="with --cache-mode replay or branch: the results dir of the run to read answers from",
+    )
+    parser.add_argument(
+        "--live-from",
+        type=int,
+        default=None,
+        metavar="CALL",
+        help="with --cache-mode branch: go live from this call number (the meter's own count of "
+        "calls in the run, from 1) even where the request matches a stored answer",
     )
     parser.add_argument(
         "--answers",
@@ -660,6 +684,10 @@ def main(argv: list[str] | None = None) -> int:
             parser.error(f"arm {name!r} takes no --agent or --replay")
         if args.probe and manifest.get("metered", True) is False:
             parser.error(f"arm {name!r} is unmetered: it has no --probe, see its README")
+    if args.cache_mode == "branch" and not args.replay_from:
+        parser.error("--cache-mode branch needs --replay-from RESULTS_DIR, the run to branch from")
+    if args.live_from is not None and args.cache_mode != "branch":
+        parser.error("--live-from only applies with --cache-mode branch")
     cells = matrix(args.scenario, chosen, args.prompts.split(","), seeds(args.seeds))
     if args.step and len(cells) != 1:
         parser.error("--step runs exactly one run: give one arm, one prompt and one seed")
@@ -683,6 +711,7 @@ def main(argv: list[str] | None = None) -> int:
             args.cache,
             args.game.resolve() if args.game else None,
             args.cache_mode,
+            live_from=args.live_from,
             answers=args.answers,
             agent=args.agent,
             replay=args.replay.resolve() if args.replay else None,

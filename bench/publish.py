@@ -19,17 +19,18 @@ import statistics
 import sys
 from pathlib import Path
 
-from bench import charts, record
+from bench import analyse, charts, record
 
 ROOT = Path(__file__).resolve().parent.parent
 REPOSITORY = "https://github.com/drksci/conky"
 PAGE = "docs/research/results.md"
 START, END = "<!-- bench:start -->", "<!-- bench:end -->"
-PLATES = ("reached", "text", "time")
+PLATES = ("reached", "became", "time", "text")
 SHOWN = (*PLATES, "progress", "spend", "rules", "board")
 ALT = {
     "reached": "Every run drawn as a bar from {start} to {end}, one band per harness, under "
     "the model, seeds, budget and commit that were held equal.",
+    "became": "The parts each harness was made of when its median run stopped.",
     "text": "The text each harness sent in its median run, cut by where it came from.",
     "time": "The median run of each harness along a time axis: steps above, model calls below.",
     "progress": "{unit} left to {end} against turn, one line per arm.",
@@ -268,7 +269,10 @@ def page(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
 
 
 def publish(results: Path, name: str, kind: str, root: Path = ROOT) -> list[Path]:
-    runs = charts.load(results)
+    kept, branched = analyse.partition(results)
+    if branched:
+        print(analyse.skipped_note(branched), file=sys.stderr)
+    runs = [charts.load_run(folder) for folder in kept]
     if not runs:
         raise SystemExit(f"no runs under {results}: run bench.run first, or point at its --out")
     f = facts(runs)

@@ -172,9 +172,16 @@ Decided before any run, applied by the analysis, which refuses to make a table f
 - runs on a stand-in game instead of the scenario's;
 - stepped runs (`--step`), runs resumed by hand (`--resume`) and any run a person assisted;
 - runs whose answers were replayed from a record;
+- branched runs (see [Branching a run](#branching-a-run)), which the analysis and the publisher leave out and count;
 - `fixed`-answer runs whose recording came from a stand-in.
 
 No other run is dropped. A run that ends on the budget, the wall clock or a stall is kept and scored as it stands, with its exit reason.
+
+## Branching a run
+
+A run keeps a record of every answer, keyed by the whole request. `--cache-mode branch --replay-from RESULTS_DIR` starts a new run from that record: each model call is answered from the record while its request matches a recorded one, and goes to the backend, recording the new answer, from the first request that does not. Changing a rule or the scaffold therefore pays only for the calls it affects. `--live-from CALL` goes live from call number CALL, the meter's own count of calls in the run starting at 1, even where requests match, to sample another continuation from the same point.
+
+A branched run is not an independent sample. Its `run.json` names `branched_from`, `live_from`, `replayed_calls` and `live_calls`, and `bench.analyse` and `bench.publish` leave it out and say how many they left out. A branched run is never reported as a result; it serves development, probes and paired what-if comparisons.
 
 ## What is kept and where
 

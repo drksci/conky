@@ -117,8 +117,24 @@ def resume_metrics(events: list[dict]) -> dict:
     }
 
 
+def partition(results: Path) -> tuple[list[Path], list[Path]]:
+    """The run folders under `results`, split into those that count and the branched ones.
+
+    A branched run reuses another run's answers, so it is not an independent sample.
+    """
+    kept, branched = [], []
+    for path in sorted(results.rglob("run.json")):
+        record = json.loads(path.read_text())
+        (branched if record.get("branched_from") else kept).append(path.parent)
+    return kept, branched
+
+
+def skipped_note(branched: list[Path]) -> str:
+    return f"left out {len(branched)} branched runs: they are never reported as results"
+
+
 def load(results: Path) -> list[dict]:
-    return [run_metrics(p.parent) for p in sorted(results.rglob("run.json"))]
+    return [run_metrics(folder) for folder in partition(results)[0]]
 
 
 def check(runs: list[dict]) -> None:
@@ -382,6 +398,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--json", type=Path, default=None)
     parser.add_argument("--markdown", type=Path, default=None)
     args = parser.parse_args(argv)
+    branched = partition(args.results)[1]
+    if branched:
+        print(skipped_note(branched), file=sys.stderr)
     try:
         result = analyse(load(args.results))
     except Refused as exc:
