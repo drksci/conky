@@ -52,12 +52,12 @@ Watch entries tried in order with each guard evaluated at that moment, measures,
 
 **Built by hand, and it works.** The playbooks under `tests/playbooks/` make a habit from those parts with no change to the runtime: a character keeps its cases as watch entries on its own page, asks a model only when no case fits, and the answer adds the case. A situation met twice is thought about once, a new situation still goes to thought, and removing the cases changes only the cost. The model is a stand-in.
 
-**What building it found.** Two things that a slot for cases on an ask would remove, and that composition has to work around:
+**What building it found, now fixed.** Two things composition had to work around, both general and both since changed in the runtime:
 
-- A case has to mark which change it handled, so the fallback knows not to ask. Marking by content goes stale. It works when the page being watched carries a turn, as a connector's screen page does. The smallest general change is to put the id of the change being reacted to in scope.
-- A question counts as settled when its prompt has not changed, even if another entry has since overwritten the answer. A case and the fallback write the same field, so a stale answer can be left in place. The smallest general change is to treat a question as settled only while its answer is still there.
+- A case has to mark which change it handled, so the fallback knows not to ask. The id of the change being reacted to is now in scope as `event`.
+- A question used to count as settled when its prompt had not changed, even if another entry had overwritten the answer. It is now settled only while its answer still stands.
 
-So the choice between ordered watch entries and a slot is now a real one, with evidence on each side. It is not yet made ([decision 0031](../decisions/0031-build-on-bedrock.md)).
+With those in, a habit composes cleanly from ordered watch entries. Whether a slot for cases on an ask is still worth adding is decided by writing one habit each way and comparing ([decision 0031](../decisions/0031-build-on-bedrock.md)).
 
 ## Removes
 

@@ -134,6 +134,18 @@ def test_a_reacting_page_plays_the_game_to_its_end(vault: Vault) -> None:
 
 
 @arch.holds("flow.connect.act")
+def test_first_line_types_only_the_first_line_and_the_page_keeps_all_three(vault: Vault) -> None:
+    running = Running(vault, "--max-steps", "2", "--first-line")
+    wait_for(vault, 1)
+    keys = "\n2\nthen I would hunt\nand keep notes"
+    assert w(vault, "hands", {"keys": keys, "turn": 1}).ok
+    assert running.finish() == 0
+    body = committed(vault, "screen").body
+    assert "Rest a day." in body and "Hunt. Two rabbits" not in body
+    assert committed(vault, "hands").fields["keys"] == keys
+
+
+@arch.holds("flow.connect.act")
 def test_a_hands_write_for_an_old_turn_is_ignored(vault: Vault) -> None:
     running = Running(vault, "--max-steps", "2")
     wait_for(vault, 1)

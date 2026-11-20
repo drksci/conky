@@ -159,6 +159,7 @@ def play(args) -> int:
         sys.executable, "-c", CLI,
         "--vault", str(args.workdir / "vault"), "--keys", str(args.workdir / "keys"),
         "connect", "terminal", "--hands", CHARACTER, "--settle", "0.3", "--max-steps", "2000",
+        "--first-line",
         "--", *args.command,
     ]  # fmt: skip
     done = subprocess.run(command, env=environment(args.token), check=False)

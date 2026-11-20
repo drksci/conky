@@ -26,6 +26,7 @@ A rule or a `when` condition holds only if it evaluates to the boolean `true`. A
 | Watch | `size` | The byte length of the watching page as it is now. |
 | Watch | `other` | The fields of the page that was just written. |
 | Watch | `other_size` | The byte length of the page that was just written. |
+| Watch | `event` | The id of the change being reacted to. A case can keep it in a field to mark what it has met, then test `page.met != event`. |
 
 A field is read as `page.cups`. The runtime has no size limit of its own: `size <= 2000` is an ordinary rule ([decision 0006](../decisions/0006-size-is-a-rule.md)).
 
@@ -94,7 +95,7 @@ An entry has `set` or `ask`, never both. An `ask` has `prompt`, and `into` or `w
 When the entry fires, in order:
 
 1. Embeds in `prompt` are resolved as when a page is read ([vault format](vault-format.md#pages)): `![[page#field]]` reads one field and `![[page]]` reads a whole body. A change to either changes the resolved prompt, so the skip rule asks again.
-2. With `writes`, the fixed instruction for pages ([An answer that is pages](#an-answer-that-is-pages)) is appended to the resolved prompt. The skip rule applies. The watching page keeps a field `<into>_asked` holding the SHA-256 hex digest of the resolved prompt it last got an answer for, or `writes_asked` when the entry has no `into`. If `into` is present (or the entry has none) and the field matches the resolved prompt, nothing is asked and nothing is written. A settled question is never asked twice, so a loop settles. The depth limit of 12 still applies, checked before the model is called.
+2. With `writes`, the fixed instruction for pages ([An answer that is pages](#an-answer-that-is-pages)) is appended to the resolved prompt. The skip rule applies. The watching page keeps a field `<into>_asked` holding the SHA-256 hex digest of the resolved prompt together with the answer it got, or `writes_asked` when the entry has no `into` (the digest then covers the prompt alone). If `into` is present (or the entry has none) and the field matches the resolved prompt and the answer now in `into`, nothing is asked and nothing is written. A question is settled only while its answer is still in place: when another entry or a write has changed `into`, the same prompt is asked again. Otherwise a settled question is never asked twice, so a loop settles. The depth limit of 12 still applies, checked before the model is called.
 3. The provider page, if one is named, is read ([providers](providers.md)) and the model is called once. Without one, or when it fails, detected models are tried in order.
 4. If no model answered, the `otherwise` text or a built-in sentence is written to `into` and `<into>_asked` is left out, so a later ask with a model replaces it ([when no model answers](providers.md#when-no-model-answers)).
 5. The trimmed answer is written to `into`, together with `<into>_asked`, in one write by the watching page. It carries `Cause` like any reaction and is checked against the page's rules and its spaces' rules. A refused answer is recorded as a refusal and the field keeps its value.

@@ -2,14 +2,14 @@
 pages:
   helper: {api: command, command: stand}
   camp: {}
-  gate: {asks: "", turn: 0}
+  gate: {asks: ""}
   guide:
     within: camp
-    handled: -1
+    met: ""
     said: ""
     watch:
       - on: gate
-        when: page.handled != other.turn
+        when: page.met != event
         ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, writes: camp}
 steps:
   - says: |-
@@ -19,12 +19,12 @@ steps:
       watch:
         - on: gate
           when: "other.asks == 'ford'"
-          set: {said: "'no'", handled: other.turn}
+          set: {said: "'no'", met: event}
         - on: gate
-          when: page.handled != other.turn
+          when: page.met != event
           ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, writes: camp}
       ---
-  - write: {page: gate, fields: {asks: ford, turn: 1}}
+  - write: {page: gate, fields: {asks: ford}}
   - says: |-
       rest
       === page: guide ===
@@ -32,13 +32,13 @@ steps:
       watch:
         - on: gate
           when: "other.asks == 'ford'"
-          set: {said: "'no'", handled: other.turn}
+          set: {said: "'no'", met: event}
         - on: gate
           when: "other.asks == 'storm'"
-          set: {said: "'rest'", handled: other.turn}
+          set: {said: "'rest'", met: event}
         - on: gate
-          when: page.handled != other.turn
+          when: page.met != event
           ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said, writes: camp}
       ---
-  - write: {page: gate, fields: {asks: storm, turn: 2}}
+  - write: {page: gate, fields: {asks: storm}}
   - expect: {fields: {guide.said: rest}, model_calls: 2, verify: true}

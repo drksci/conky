@@ -1,0 +1,22 @@
+# A question is settled only while its answer is in place: a case overwrites the answer, and the same prompt comes again.
+pages:
+  helper: {api: command, command: stand}
+  gate: {asks: ""}
+  guide:
+    said: ""
+    watch:
+      - on: gate
+        when: "other.asks == 'ford'"
+        set: {said: "'no'"}
+      - on: gate
+        when: "other.asks != 'ford'"
+        ask: {provider: helper, prompt: "The gate asks: ![[gate#asks]]", into: said}
+steps:
+  - says: "yes"
+  - write: {page: gate, fields: {asks: hunt}}
+  - expect: {fields: {guide.said: "yes"}, model_calls: 1}
+  - write: {page: gate, fields: {asks: ford}}
+  - expect: {fields: {guide.said: "no"}, model_calls: 1}
+  - says: "yes again"
+  - write: {page: gate, fields: {asks: hunt}}
+  - expect: {fields: {guide.said: "yes again"}, model_calls: 2, verify: true}

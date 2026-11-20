@@ -46,6 +46,7 @@ class Settings:
     hands: str
     settle: float
     max_steps: int
+    first_line: bool = False
 
 
 @arch.step(
@@ -155,7 +156,9 @@ def _last(vault: Vault, page: str) -> str:
     None,
     "keys must be text, the turn must equal the screen and not be answered",
 )
-def _typed(vault: Vault, hands: str, turn: int, answered: int) -> str | None:
+def _typed(
+    vault: Vault, hands: str, turn: int, answered: int, first_line: bool = False
+) -> str | None:
     """Return what the hands page asks to type for the current screen, if it asks."""
     try:
         fields = vault.read(hands).fields
@@ -164,6 +167,10 @@ def _typed(vault: Vault, hands: str, turn: int, answered: int) -> str | None:
     keys = fields.get("keys")
     if not isinstance(keys, str) or not keys or fields.get("turn") != turn or turn == answered:
         return None
+    if first_line:
+        keys = next((line.rstrip() for line in keys.splitlines() if line.strip()), "")
+        if not keys:
+            return None
     return keys if fields.get("enter") is False else keys + "\n"
 
 
@@ -326,7 +333,7 @@ def terminal(
                 reason = f"stopped after {turn} screens"
             elif (latest := _last(vault, settings.hands)) != seen:
                 seen = latest
-                keys = _typed(vault, settings.hands, turn, answered)
+                keys = _typed(vault, settings.hands, turn, answered, settings.first_line)
                 if keys is not None:
                     os.write(master, keys.encode())
                     answered, quiet = turn, time.monotonic()

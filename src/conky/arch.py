@@ -525,7 +525,7 @@ VAULT_STEPS: tuple[tuple[Any, ...], ...] = (
         4,
         "lane.runtime",
         None,
-        "skip when into_asked already holds this prompt's digest",
+        "skip when into_asked marks this prompt and the answer still in place",
         "conky.vault.Vault._ask",
     ),
     (
@@ -727,7 +727,7 @@ VAULT_STEPS: tuple[tuple[Any, ...], ...] = (
         2,
         "lane.runtime",
         "lane.page",
-        "evaluate when, with page, other, size and other_size",
+        "evaluate when, with page, other, size, other_size and event",
         "conky.vault.Vault._react",
     ),
     (

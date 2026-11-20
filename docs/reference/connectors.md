@@ -14,7 +14,7 @@ This page specifies the terminal connector, the only connector built. A connecto
 
 ```
 conky connect terminal [--vault V] [--keys K] [--as NAME] [--screen PAGE] [--hands PAGE]
-                       [--settle SECONDS] [--max-steps N] -- COMMAND [ARGS...]
+                       [--settle SECONDS] [--max-steps N] [--first-line] -- COMMAND [ARGS...]
 ```
 
 The options are in the [command line reference](cli.md#connect-terminal). The connector starts the command in a pseudo-terminal. It gives the vault eyes by writing what the program shows to the screen page, and hands by typing what the hands page says. Any page can then play the program: a reflex, a person writing by hand, or a page that [asks a model](rules-and-reactions.md#asking-a-model). [Playing a program](../guide/playing-a-program.md) runs one for real.
@@ -43,7 +43,7 @@ Default name `hands`. The connector creates it if it does not exist. It reads th
 | `turn` | The number of the screen the keys answer. |
 | `enter` | When `false`, no newline follows the keys. Any other value, or no field, sends one. |
 
-The connector sends the keys when the hands page changes, `keys` holds text, and `turn` equals the number of the current screen. A hands write for an old turn is ignored, and so is a second write for a turn already answered. After sending, the connector waits for the next screen.
+The connector sends the keys when the hands page changes, `keys` holds text, and `turn` equals the number of the current screen. A hands write for an old turn is ignored, and so is a second write for a turn already answered. With `--first-line` the connector types only the first non-empty line of `keys`, so a page may write its reasoning after its reply and the program still reads one line. The whole text stays in the page; keys with no non-empty line are not sent. After sending, the connector waits for the next screen.
 
 A page plays the program by reading `screen` and writing `hands` with the turn it is answering. A reaction on the hands page that watches `screen` does this with `turn: other.turn`. A rule refuses a hands write like any other and the refusal is recorded, so the program never receives refused keys: a rule on the hands page, or on its space, limits what can be typed.
 

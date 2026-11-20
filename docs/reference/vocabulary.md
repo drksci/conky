@@ -82,6 +82,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `connect terminal --hands` | The page that says what to type. |
 | `connect terminal --settle` | Seconds of quiet that end a screen. |
 | `connect terminal --max-steps` | The most screens to write. |
+| `connect terminal --first-line` | Type only the first non-empty line of the keys. |
 
 ## Connectors
 

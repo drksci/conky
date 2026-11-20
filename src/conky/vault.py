@@ -81,6 +81,11 @@ class Refusal(StrEnum):
 _CYCLE = f"{Refusal.CYCLE}: reactions nested deeper than {MAX_DEPTH}"
 
 
+def _mark(prompt: str, answer: str | None) -> str:
+    """Return the digest that settles a question: its resolved prompt and the answer it got."""
+    return hashlib.sha256(f"{prompt}\0{answer or ''}".encode()).hexdigest()
+
+
 def _size(page: Page) -> int:
     """Return the byte length of the page as serialised."""
     return len(serialize(page).encode("utf-8"))
@@ -667,6 +672,7 @@ class Vault:
                     "page": current.fields,
                     "other_size": _size(written),
                     "size": _size(current),
+                    "event": commit,
                 }
                 try:
                     if not holds(entry["when"], scope):
@@ -685,8 +691,16 @@ class Vault:
 
     @arch.stage(
         "notice",
+        "stage.notice.event",
+        "A watch entry reads `event`, the id of the change it is reacting to, so a case "
+        "can mark what it met.",
+        doc="rules-and-reactions.md#variables-in-scope",
+    )
+    @arch.stage(
+        "notice",
         "stage.notice.settled",
-        "A recorded answer for the same resolved prompt is never asked twice.",
+        "A question is settled only while its recorded answer is still in place; "
+        "an overwritten answer is asked again.",
         doc="rules-and-reactions.md#asking-a-model",
     )
     @arch.stage(
@@ -727,12 +741,11 @@ class Vault:
         prompt = resolve_text(ask.prompt, pages)
         if ask.writes is not None:
             prompt += answer.instruction(ask.writes)
-        digest = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
         current = (self._load(page) or Page()).fields
         if (
             skip_settled
             and (ask.into is None or ask.into in current)
-            and current.get(ask.marker) == digest
+            and current.get(ask.marker) == _mark(prompt, current.get(ask.into or ""))
         ):
             return None
         where = (page, actor, at, cause, depth)
@@ -747,7 +760,7 @@ class Vault:
 
                 reply = model.ask_once(self.cache, found, secret, prompt, self.keys_dir, moment)
                 if reply is not None:
-                    return self._answered(found, reply, ask, digest, pages, prompt, where)
+                    return self._answered(found, reply, ask, pages, prompt, where)
             except model.ModelError as exc:
                 self._refuse(page, {}, None, actor, at, cause, f"{Refusal.MODEL}: {exc}")
         for choice in model.detect().choices:
@@ -763,7 +776,7 @@ class Vault:
             except model.ModelError:
                 continue
             if reply is not None:
-                return self._answered(choice.provider, reply, ask, digest, pages, prompt, where)
+                return self._answered(choice.provider, reply, ask, pages, prompt, where)
         return self._plain(where, ask, pages, prompt, skip_settled)
 
     @arch.stage(
@@ -778,7 +791,6 @@ class Vault:
         found: model.Provider,
         reply: model.Answer,
         ask: Ask,
-        digest: str,
         pages: dict[str, Page],
         prompt: str,
         where: tuple[str, str, str, str | None, int],
@@ -801,7 +813,7 @@ class Vault:
         text, blocks = reply.text, []
         if ask.writes is not None:
             text, blocks = answer.split(reply.text)
-        changes = {ask.marker: digest}
+        changes = {ask.marker: _mark(prompt, text if ask.into is not None else None)}
         if ask.into is not None:
             changes[ask.into] = text
         result = self._write(page, changes, None, actor, at, cause, depth, (trailers, prompt))

@@ -91,6 +91,11 @@ def _parser() -> argparse.ArgumentParser:
     term.add_argument(
         "--max-steps", type=int, default=connect.MAX_STEPS, help="most screens to write"
     )
+    term.add_argument(
+        "--first-line",
+        action="store_true",
+        help="type only the first non-empty line of the keys; the page keeps the rest",
+    )
     term.add_argument("program", nargs="+", metavar="COMMAND", help="after --, the program to run")
     demo_cmd = sub.add_parser("demo", help="build a small example vault and show it working")
     demo_cmd.add_argument(
@@ -209,7 +214,7 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
     vault = Vault(Path(args.vault), args.keys, store)
     if args.command == "connect":
         settings = connect.Settings(
-            args.actor, args.screen, args.hands, args.settle, args.max_steps
+            args.actor, args.screen, args.hands, args.settle, args.max_steps, args.first_line
         )
         return connect.terminal(vault, args.program, settings, _now, ui, print)
     if args.command in ("write", "ask"):

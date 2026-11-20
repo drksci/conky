@@ -207,8 +207,9 @@ One chain: a stimulus arrives, it is noticed, thought happens when state cannot 
 | Stimulus | <a id="stage.stimulus.person"></a>`stage.stimulus.person` | `conky write` and `conky ask`. | [cli.md#write](cli.md#write) | `conky.cli.main` | - | - | built |
 | Stimulus | <a id="stage.stimulus.clock"></a>`stage.stimulus.clock` | A write to a clock page. Nothing writes one yet. | [clock.md](../ideas/clock.md) | - | idea | R12 | planned |
 | Stimulus | <a id="stage.stimulus.prompt"></a>`stage.stimulus.prompt` | A request typed at the screen becomes an ordinary write. | [compositor.md](../ideas/compositor.md) | - | idea | R11f | planned |
+| Notice | <a id="stage.notice.event"></a>`stage.notice.event` | A watch entry reads `event`, the id of the change it is reacting to, so a case can mark what it met. | [rules-and-reactions.md#variables-in-scope](rules-and-reactions.md#variables-in-scope) | `conky.vault.Vault._ask` | - | - | built |
 | Notice | <a id="stage.notice.pressure"></a>`stage.notice.pressure` | A second self-watch entry whose `when` reads the number crossing a threshold. | [rules-and-reactions.md#measures](rules-and-reactions.md#measures) | `conky.vault.Vault._react` | - | R2 | built |
-| Notice | <a id="stage.notice.settled"></a>`stage.notice.settled` | A recorded answer for the same resolved prompt is never asked twice. | [rules-and-reactions.md#asking-a-model](rules-and-reactions.md#asking-a-model) | `conky.vault.Vault._ask` | - | - | built |
+| Notice | <a id="stage.notice.settled"></a>`stage.notice.settled` | A question is settled only while its recorded answer is still in place; an overwritten answer is asked again. | [rules-and-reactions.md#asking-a-model](rules-and-reactions.md#asking-a-model) | `conky.vault.Vault._ask` | - | - | built |
 | Notice | <a id="stage.notice.unchanged"></a>`stage.notice.unchanged` | A reaction that leaves the page unchanged is not written. | [rules-and-reactions.md#reactions](rules-and-reactions.md#reactions) | `conky.vault.Vault._react` | - | - | built |
 | Notice | <a id="stage.notice.watch"></a>`stage.notice.watch` | `on` names the page and `when` must be the boolean true. | [rules-and-reactions.md#reactions](rules-and-reactions.md#reactions) | `conky.vault.Vault._react` | - | - | built |
 | Attention beyond notice | <a id="stage.attention.drift"></a>`stage.attention.drift` | Activity is read against a goal page as in phase, drifting or out of phase. The formula is not chosen. | [direction-and-drift.md](../ideas/direction-and-drift.md) | - | idea | R18 | idea |
@@ -352,7 +353,7 @@ sequenceDiagram
     participant lane.provider
     participant lane.outside
     lane.runtime->>lane.page: visit every page in order of name for watch entries on the page just written
-    lane.runtime->>lane.page: evaluate when, with page, other, size and other_size
+    lane.runtime->>lane.page: evaluate when, with page, other, size, other_size and event
     alt refusal
         lane.runtime-->>lane.history: when or a set expression fails: a watch refusal on the watching page
     end
@@ -420,7 +421,7 @@ sequenceDiagram
     lane.page->>lane.runtime: an ask entry fires
     lane.person->>lane.runtime: or a person runs conky ask
     lane.runtime->>lane.page: resolve embeds in the prompt, and add the page instruction when writes is set
-    Note over lane.runtime: skip when into_asked already holds this prompt's digest
+    Note over lane.runtime: skip when into_asked marks this prompt and the answer still in place
     lane.runtime->>lane.page: a provider page is named: read it
     alt refusal
         lane.runtime-->>lane.history: a missing or malformed provider page is a model refusal
@@ -540,7 +541,7 @@ A write to the hands page is typed into the program only when its turn matches t
 
 | Flow | Doc | Code | Test | Step | State |
 |---|---|---|---|---|---|
-| <a id="flow.connect.act"></a>`flow.connect.act` | [connectors.md#the-hands-page](connectors.md#the-hands-page) | `conky.connect._typed`<br>`conky.connect._last`<br>`conky.connect.terminal` | `tests/test_connect.py::test_a_reacting_page_plays_the_game_to_its_end`<br>`tests/test_connect.py::test_a_hands_write_for_an_old_turn_is_ignored`<br>`tests/test_connect.py::test_a_rule_can_keep_a_key_from_the_program` | - | built |
+| <a id="flow.connect.act"></a>`flow.connect.act` | [connectors.md#the-hands-page](connectors.md#the-hands-page) | `conky.connect._typed`<br>`conky.connect._last`<br>`conky.connect.terminal` | `tests/test_connect.py::test_a_reacting_page_plays_the_game_to_its_end`<br>`tests/test_connect.py::test_first_line_types_only_the_first_line_and_the_page_keeps_all_three`<br>`tests/test_connect.py::test_a_hands_write_for_an_old_turn_is_ignored`<br>`tests/test_connect.py::test_a_rule_can_keep_a_key_from_the_program` | - | built |
 
 <a id="flow.space.move#1"></a><a id="flow.space.move#2"></a><a id="flow.space.move#3"></a><a id="flow.space.move#4"></a><a id="flow.space.move#5"></a><a id="flow.space.move#6"></a><a id="flow.space.move#7"></a>
 
@@ -1151,7 +1152,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`flow.ask.model`](#flow.ask.model) | built | 9 | - |  |
 | [`flow.ask.pages`](#flow.ask.pages) | built | 5 | check.page.format, check.character.organise |  |
 | [`flow.clock.tick`](#flow.clock.tick) | planned | not built | - | - |
-| [`flow.connect.act`](#flow.connect.act) | built | 3 | - |  |
+| [`flow.connect.act`](#flow.connect.act) | built | 4 | - |  |
 | [`flow.connect.sense`](#flow.connect.sense) | built | 5 | - |  |
 | [`flow.engine.query`](#flow.engine.query) | planned | not built | - | - |
 | [`flow.lens.revise`](#flow.lens.revise) | idea | not built | - | - |

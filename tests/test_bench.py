@@ -535,6 +535,29 @@ def test_the_loop_types_only_the_first_line_of_an_answer_and_keeps_the_whole(
     assert all(e["answer"] == "1\nthen I would rest\nand keep notes" for e in notes)
 
 
+def test_the_conky_arm_types_only_the_first_line_of_an_answer_and_the_page_keeps_the_whole(
+    tmp_path: Path,
+) -> None:
+    from bench.adapters.conky import adapter
+
+    from conky import Vault
+
+    meter = Meter(ThreeLines(), "m", "t", Budget(20, 10**6), tmp_path / "meter.jsonl")
+    url = meter.start()
+    work = tmp_path / "work"
+    argv = ["--prompts", str(PACK), "--workdir", str(work), "--meter", url, "--token", "t",
+            "--model", "m", "--scenario", str(SCENARIO), "--calls", "20", "--tokens", "1000000",
+            "--", sys.executable, str(STAND_IN)]  # fmt: skip
+    try:
+        assert adapter.main(argv) == 0
+    finally:
+        meter.stop()
+    page = Vault(work / "vault", work / "keys").read(adapter.CHARACTER)
+    assert page.fields["keys"] == "1\nthen I would rest\nand keep notes"
+    kept = [line for line in adapter.explain(work) if line["keys"] == page.fields["keys"]]
+    assert len(kept) >= 5
+
+
 # The stock agent control arm: a fake command line, the helper, record and replay.
 
 FAKE = ROOT / "bench" / "adapters" / "cli" / "fake.py"

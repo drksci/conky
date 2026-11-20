@@ -175,7 +175,7 @@ Checks the vault as described in [vault format](vault-format.md#what-verify-chec
 
 ```
 conky connect terminal [--vault V] [--keys K] [--as NAME] [--screen PAGE] [--hands PAGE]
-                       [--settle SECONDS] [--max-steps N] -- COMMAND [ARGS...]
+                       [--settle SECONDS] [--max-steps N] [--first-line] -- COMMAND [ARGS...]
 ```
 
 Runs a [connector](connectors.md) that gives the vault eyes and hands on a terminal program: it starts `COMMAND` in a pseudo-terminal, writes what the program shows to the screen page and types what the hands page says. POSIX only.
@@ -187,6 +187,7 @@ Runs a [connector](connectors.md) that gives the vault eyes and hands on a termi
 - `--hands PAGE` is the page that says what to type. Default: `hands`.
 - `--settle SECONDS` is how long the output must stay quiet before it is written as a screen. Default: 0.3.
 - `--max-steps N` is the most screens to write. Default: 200.
+- `--first-line` types only the first non-empty line of the hands page's `keys`, with its newline, and leaves the rest in the page. Default: off, so all the keys are typed.
 
 It prints one line for each screen written and each set of keys sent, then a line for the end of the run. The run ends when the program exits, at `--max-steps` screens or on interrupt, and the reason is written to the field `ended` of the screen page. The exit code is 0 for each. The pages, fields and limits are in [connectors](connectors.md).
 
