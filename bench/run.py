@@ -59,6 +59,7 @@ from bench.meter import Budget, Meter
 ROOT = Path(__file__).resolve().parent.parent
 BENCH = ROOT / "bench"
 LAUNCH = BENCH / "envs" / "oregon_trail_1975" / "launch.py"
+ENDING_GRACE = 90  # seconds an adapter gets to finish and report once the game is over
 PROBES = ("resume", "portability", "constraint", "overhead")
 SAMPLE = 5
 
@@ -234,7 +235,7 @@ class Run:
             reason = None
             if finished is None and self.ending():
                 finished = time.time()
-            if finished is not None and time.time() - finished > 20:
+            if finished is not None and time.time() - finished > ENDING_GRACE:
                 reason = self.ending()
             elif meter.exhausted:
                 reason = "budget-exhausted"

@@ -21,12 +21,12 @@
     "--explain"
   ],
   "gloss": {
-    "cli": "the stock agent, left to it"
+    "cli": "stock Claude Code, left to it"
   },
   "shape": {
     "kind": "conversation"
   },
   "label": {
-    "cli": "claude code"
+    "cli": "claude"
   }
 }

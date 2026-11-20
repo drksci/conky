@@ -37,10 +37,10 @@ Counts are runs. Other columns are the median over seeds.
 
 | Arm | What it is | Arrived | Miles | Model calls | Rules broken | Seconds |
 |---|---|---|---|---|---|---|
-| `floor-continue` | always presses continue | 0 of 5 | 950 | 0 | 1 | 5 |
-| `floor-random` | presses keys at random | 0 of 5 | 1,209 | 0 | 3 | 13 |
+| `floor-continue` | no model, always the same key | 0 of 5 | 950 | 0 | 1 | 5 |
+| `floor-random` | no model, keys at random | 0 of 5 | 1,209 | 0 | 3 | 13 |
 | `conky` | one character in a vault | 4 of 5 | 2,040 | 42 | 0 | 298 |
-| `loop` | the model alone, asked each turn | 4 of 5 | 2,040 | 42 | 0 | 240 |
+| `loop` | the bare model, asked each turn | 4 of 5 | 2,040 | 42 | 0 | 240 |
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/reached.dark.svg"><img src="../results/pilot-2/reached.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, under the model, seeds, budget and commit that were held equal." width="720"></picture></p>
 

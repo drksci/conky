@@ -118,7 +118,7 @@ def table(f: dict) -> str:
 def scores(f: dict, runs: list[charts.Run]) -> str:
     """The scores as one small table for the front page: a row a harness, medians over seeds."""
     heads = ("benchmark", "harness", "model", "runs", "reached", f["progress"]["unit"], "calls")
-    heads += ("text sent", "cost a run", "seconds", "rules broken", "pages kept")
+    heads += ("characters", "cost", "seconds", "broken", "kept")
     out = ["<table>", "<tr>" + "".join(f"<th><sub>{h}</sub></th>" for h in heads) + "</tr>"]
     for arm in f["order"]:
         rs = [r for r in runs if r.arm == arm]
@@ -132,7 +132,7 @@ def scores(f: dict, runs: list[charts.Run]) -> str:
             f"<b>{record.label(arm)}</b>",
             rs[0].row["model"],
             p["n"],
-            f"<b>{p['arrived']} of {p['n']}</b>",
+            f"<b>{p['arrived']}/{p['n']}</b>",
             f"{p['value']:,.0f}",
             f"{p['calls']:,.0f}",
             f"{sent:,.0f}" if sent else "0",
@@ -141,7 +141,8 @@ def scores(f: dict, runs: list[charts.Run]) -> str:
             sum(len(r.breaks) for r in rs),
             sum(kept) if kept else "",
         )
-        out.append("<tr>" + "".join(f"<td><sub>{c}</sub></td>" for c in cells) + "</tr>")
+        row = "".join(f"<td><sub>{str(c).replace(' ', '&nbsp;')}</sub></td>" for c in cells)
+        out.append(f"<tr>{row}</tr>")
     out.append("</table>")
     return "\n".join(out)
 
@@ -229,8 +230,6 @@ def readme_block(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
             "",
             story(kind, f, runs),
             "",
-            scores(f, runs),
-            "",
             *(
                 line
                 for name in PLATES
@@ -239,6 +238,8 @@ def readme_block(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
                     "",
                 )
             ),
+            "",
+            scores(f, runs),
             "",
             f'<p align="center"><a href="{PAGE}">Method and every chart</a>'
             f'&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{folder}/runs.csv">the data</a>'

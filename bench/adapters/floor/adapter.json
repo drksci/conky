@@ -16,14 +16,14 @@
   "uses_model": false,
   "state": [],
   "gloss": {
-    "floor-continue": "always presses continue",
-    "floor-random": "presses keys at random"
+    "floor-continue": "no model, always the same key",
+    "floor-random": "no model, keys at random"
   },
   "shape": {
     "kind": "policy"
   },
   "label": {
-    "floor-continue": "no model, one key",
-    "floor-random": "no model, random keys"
+    "floor-continue": "constant",
+    "floor-random": "random"
   }
 }

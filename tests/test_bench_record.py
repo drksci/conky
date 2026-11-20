@@ -30,7 +30,7 @@ def test_the_row_has_the_standard_keys_and_values(tmp_path: Path) -> None:
         "scenario": "trail",
         "scenario_version": None,
         "harness": "loop",
-        "gloss": "the model alone, asked each turn",
+        "gloss": "the bare model, asked each turn",
         "model": "stand-in",
         "seed": 1,
         "commit": "",
@@ -54,7 +54,7 @@ def test_the_row_has_the_standard_keys_and_values(tmp_path: Path) -> None:
     assert re.fullmatch(r"[0-9a-f]{12}", loop["tape"])
     dead = record.row(folder(root, "floor-random"))
     assert (dead["ending"], dead["calls"], dead["violations"]) == ("lost", 0, 1)
-    assert dead["gloss"] == "presses keys at random"
+    assert dead["gloss"] == "no model, keys at random"
 
 
 def test_a_harness_that_uses_no_model_has_the_model_none(tmp_path: Path) -> None:

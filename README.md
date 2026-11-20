@@ -62,14 +62,6 @@ Conky is... different, for many reasons, but here are some:
 
 5 trips each to Oregon: same game, same small model, same luck, same prompt. Pressing keys gets nobody there. The bare model, asked each turn, arrived 4 times. A Conky character arrived 4 times, sent 29% less text, took 24% longer and kept 3 pages of its own notes. It is a pilot: too few trips to call a winner, so none is called.
 
-<table>
-<tr><th><sub>benchmark</sub></th><th><sub>harness</sub></th><th><sub>model</sub></th><th><sub>runs</sub></th><th><sub>reached</sub></th><th><sub>miles</sub></th><th><sub>calls</sub></th><th><sub>text sent</sub></th><th><sub>cost a run</sub></th><th><sub>seconds</sub></th><th><sub>rules broken</sub></th><th><sub>pages kept</sub></th></tr>
-<tr><td><sub>trail</sub></td><td><sub><b>no model, one key</b></sub></td><td><sub>none</sub></td><td><sub>5</sub></td><td><sub><b>0 of 5</b></sub></td><td><sub>950</sub></td><td><sub>0</sub></td><td><sub>0</sub></td><td><sub>$0</sub></td><td><sub>5</sub></td><td><sub>5</sub></td><td><sub></sub></td></tr>
-<tr><td><sub>trail</sub></td><td><sub><b>no model, random keys</b></sub></td><td><sub>none</sub></td><td><sub>5</sub></td><td><sub><b>0 of 5</b></sub></td><td><sub>1,209</sub></td><td><sub>0</sub></td><td><sub>0</sub></td><td><sub>$0</sub></td><td><sub>13</sub></td><td><sub>13</sub></td><td><sub></sub></td></tr>
-<tr><td><sub>trail</sub></td><td><sub><b>conky</b></sub></td><td><sub>haiku</sub></td><td><sub>5</sub></td><td><sub><b>4 of 5</b></sub></td><td><sub>2,040</sub></td><td><sub>42</sub></td><td><sub>153,865</sub></td><td><sub>$0.0040</sub></td><td><sub>298</sub></td><td><sub>0</sub></td><td><sub>3</sub></td></tr>
-<tr><td><sub>trail</sub></td><td><sub><b>bare model</b></sub></td><td><sub>haiku</sub></td><td><sub>5</sub></td><td><sub><b>4 of 5</b></sub></td><td><sub>2,040</sub></td><td><sub>42</sub></td><td><sub>218,005</sub></td><td><sub>$0.0057</sub></td><td><sub>240</sub></td><td><sub>0</sub></td><td><sub></sub></td></tr>
-</table>
-
 <p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/reached.dark.svg"><img src="docs/results/pilot-2/reached.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, under the model, seeds, budget and commit that were held equal." width="720"></picture></a></p>
 
 <p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/became.dark.svg"><img src="docs/results/pilot-2/became.light.svg" alt="The parts each harness was made of when its median run stopped." width="720"></picture></a></p>
@@ -80,6 +72,14 @@ Conky is... different, for many reasons, but here are some:
 
 <p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/text.dark.svg"><img src="docs/results/pilot-2/text.light.svg" alt="The text each harness sent in its median run, cut by where it came from." width="720"></picture></a></p>
 
+
+<table>
+<tr><th><sub>benchmark</sub></th><th><sub>harness</sub></th><th><sub>model</sub></th><th><sub>runs</sub></th><th><sub>reached</sub></th><th><sub>miles</sub></th><th><sub>calls</sub></th><th><sub>characters</sub></th><th><sub>cost</sub></th><th><sub>seconds</sub></th><th><sub>broken</sub></th><th><sub>kept</sub></th></tr>
+<tr><td><sub>trail</sub></td><td><sub><b>constant</b></sub></td><td><sub>none</sub></td><td><sub>5</sub></td><td><sub><b>0/5</b></sub></td><td><sub>950</sub></td><td><sub>0</sub></td><td><sub>0</sub></td><td><sub>$0</sub></td><td><sub>5</sub></td><td><sub>5</sub></td><td><sub></sub></td></tr>
+<tr><td><sub>trail</sub></td><td><sub><b>random</b></sub></td><td><sub>none</sub></td><td><sub>5</sub></td><td><sub><b>0/5</b></sub></td><td><sub>1,209</sub></td><td><sub>0</sub></td><td><sub>0</sub></td><td><sub>$0</sub></td><td><sub>13</sub></td><td><sub>13</sub></td><td><sub></sub></td></tr>
+<tr><td><sub>trail</sub></td><td><sub><b>conky</b></sub></td><td><sub>haiku</sub></td><td><sub>5</sub></td><td><sub><b>4/5</b></sub></td><td><sub>2,040</sub></td><td><sub>42</sub></td><td><sub>153,865</sub></td><td><sub>$0.0040</sub></td><td><sub>298</sub></td><td><sub>0</sub></td><td><sub>3</sub></td></tr>
+<tr><td><sub>trail</sub></td><td><sub><b>bare</b></sub></td><td><sub>haiku</sub></td><td><sub>5</sub></td><td><sub><b>4/5</b></sub></td><td><sub>2,040</sub></td><td><sub>42</sub></td><td><sub>218,005</sub></td><td><sub>$0.0057</sub></td><td><sub>240</sub></td><td><sub>0</sub></td><td><sub></sub></td></tr>
+</table>
 
 <p align="center"><a href="docs/research/results.md">Method and every chart</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/results/pilot-2/runs.csv">the data</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/research/benchmark-protocol.md">the protocol</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/commit/a4d3201a64686303a7b4b02713b9444c4c263779">the code that ran</a></p>
 
