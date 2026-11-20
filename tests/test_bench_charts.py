@@ -220,7 +220,7 @@ def test_publishing_writes_the_page_the_data_and_the_readme_block_and_is_repeata
     text = readme.read_text(encoding="utf-8")
     assert text.startswith("before\n") and text.endswith("\nafter\n") and "old" not in text
     assert "### Benchmark" in text and "docs/results/sample/trail.dark.svg" in text
-    assert "scripted stand-in" in text and "not a result" in text
+    assert "scripted stand-in" in text and "none of it counts" in text
     page = (root / "docs" / "research" / "results.md").read_text(encoding="utf-8")
     assert page.startswith("---\nkind: research\n") and "status: draft" in page
     assert (root / "docs" / "results" / "sample" / "runs.csv").exists()

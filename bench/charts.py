@@ -3,8 +3,9 @@
     python -m bench.charts RESULTS_DIR --out DIR
 
 Writes `trail`, `progress`, `spend`, `where`, `rules` and `board`, each as `NAME.light.svg` (ink on
-transparent, for light pages) and `NAME.dark.svg`. One ink, one yellow accent (the Conky row of
-`trail`, and `rules`), arms told apart by line style and direct labels. Every chart carries, bottom
+transparent, for light pages) and `NAME.dark.svg`. One ink and one yellow accent, except `trail`,
+the front-page plate, which takes the d/rksci band colours. Arms are told apart by line style
+and direct labels. Every chart carries, bottom
 right, `DATA` or `SCRIPTED: NOT A RESULT` from the runs' backend, and bottom left the scenario,
 model, seeds and date. Beside them it writes `runs.csv` and `runs.json`, one row per run, so the
 same data can be drawn another way. It reads the run files (run.json, meter.jsonl,
@@ -30,6 +31,12 @@ WIDTH = 880
 GOAL = score.GOAL_MILES
 YELLOW = "#F4C430"
 INKS = {"light": "#1E1E1E", "dark": "#EDEDED"}
+# The d/rksci bands, used by the front-page plate: one hue an arm that thinks, one for a broken
+# rule, one for the grid. The light look takes deeper shades of the same hues to stay readable.
+BANDS = {
+    "#EDEDED": {"loop": "#00FFFF", "conky": YELLOW, "broken": "#FF00FF", "grid": "#8F5BFF"},
+    "#1E1E1E": {"loop": "#008C9E", "conky": "#C79A00", "broken": "#D100D1", "grid": "#6400FF"},
+}
 FONT = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 DASHES = ("", "7 3", "1.5 3", "7 3 1.5 3")
 BUDGET_EXITS = ("budget-exhausted", "wall-clock", "stalled", "stopped")
@@ -61,6 +68,7 @@ class Run:
     proposed: list[tuple[int, str]] = field(default_factory=list)
     wall: float = 0.0
     tokens_known: bool = True
+    kept: int = 0  # pages a character wrote for itself
 
 
 def _jsonl(path: Path) -> list[dict]:
@@ -136,6 +144,7 @@ def load_run(folder: Path) -> Run:
         proposed=proposed,
         wall=sum(s["end"] - s["start"] for s in record.get("segments", []) if "end" in s),
         tokens_known=all(c["tokens_known"] for c in calls),
+        kept=kept_pages(folder),
     )
 
 
@@ -231,7 +240,7 @@ class Canvas:
         head = (
             f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{self.height}" '
             f'viewBox="0 0 {WIDTH} {self.height}" font-family="{FONT}" '
-            f'stroke-linecap="round" letter-spacing=".06em" role="img" '
+            f'stroke-linecap="round" letter-spacing=".1em" role="img" '
             f'aria-label="{escape(title)}">\n<title>{escape(title)}</title>\n'
         )
         return head + "\n".join(self.parts) + "\n</svg>\n"
@@ -662,52 +671,139 @@ GLOSS = {
 }
 
 
+def kept_pages(folder: Path) -> int:
+    """Pages a Conky character wrote into its own space, counted from the vault it left behind."""
+    pages = folder / "workdir" / "vault" / "pages"
+    if not pages.is_dir():
+        return 0
+    return sum(
+        1
+        for page in pages.glob("*.md")
+        if page.stem != "traveller" and "\nwithin: den\n" in page.read_text(encoding="utf-8")
+    )
+
+
+DITHER = (
+    '<defs><pattern id="half" width="4" height="4" patternUnits="userSpaceOnUse">'
+    '<path d="M0 0h2v2h-2zM2 2h2v2h-2z" fill="{ink}" shape-rendering="crispEdges"/>'
+    "</pattern></defs>"
+)
+TRAIL_KEY = (
+    "ONE LINE A RUN | TICK: A TURN | ▲ A HOUSE RULE BROKEN | ENDS: o ARRIVED  x DIED  T CAPPED"
+)
+TRAIL_KEY_2 = "!  THE GAME STOPPED ON AN ANSWER IT COULD NOT READ"
+
+
 def draw_trail(runs: list[Run], ink: str) -> Canvas:
-    """The one-glance chart: each run is a mark on the road, placed where it ended."""
+    """The plate for a front page: every run drawn as a journey, with what it cost beside it.
+
+    Drawn like the house figures (one ink at full strength, a dither where a tone is wanted) and
+    coloured with the d/rksci bands: a hue for each arm that uses a model, one for a broken rule
+    and one for the grid.
+    """
     arms = by_arm(runs)
     order = [a for a in GLOSS if a in arms] + [a for a in arms if a not in GLOSS]
-    row = 52
-    height = 96 + row * len(order) + 40
-    c = frame(
-        height,
-        ink,
-        "Who reached Oregon",
-        "ONE MARK PER RUN, PLACED WHERE IT ENDED | LINE: MEDIAN | " + MARK_KEY,
-        runs,
+    most = max(len(rs) for rs in arms.values())
+    bands = BANDS.get(ink, BANDS["#EDEDED"])
+    pitch = 7.0
+    row = max(58.0, most * pitch + 26)
+    top = 104.0
+    height = int(top + row * len(order) + 62)
+    c = Canvas(height, ink)
+    c.add(DITHER.format(ink=ink))
+    c.text(24, 28, "WHO REACHED OREGON", 14, weight="bold")
+    c.text(24, 46, TRAIL_KEY, 8)
+    c.text(24, 59, TRAIL_KEY_2, 8)
+    left, right = stamp(runs)
+    c.line(24, height - 28, WIDTH - 24, height - 28, 0.75)
+    c.text(24, height - 12, left, 8)
+    c.text(WIDTH - 24, height - 12, right, 8, anchor="end", weight="bold")
+    x0, x1 = 190.0, 560.0
+    cols = {"arrived": 578.0, "calls": 662.0, "text": 706.0, "broken": 818.0, "kept": 856.0}
+    heads = (
+        (cols["arrived"], "ARRIVED", "start"),
+        (cols["calls"] + 22, "CALLS", "end"),
+        (cols["text"], "TEXT SENT", "start"),
+        (cols["broken"], "BROKEN", "end"),
+        (cols["kept"], "KEPT", "end"),
     )
-    x0, x1, top = 232, WIDTH - 280, 84
-    cols = ((WIDTH - 196, "ARRIVED"), (WIDTH - 110, "MODEL CALLS"), (WIDTH - 24, "RULES BROKEN"))
+    for x, head, anchor in heads:
+        c.text(x, top - 14, head, 7.5, anchor=anchor, weight="bold")
+    c.text(x0, top - 14, "INDEPENDENCE", 7.5, weight="bold")
+    c.text(x1, top - 14, "OREGON", 7.5, anchor="end", weight="bold")
+    bottom = top + row * len(order)
 
     def px(miles: float) -> float:
         return x0 + (x1 - x0) * min(max(miles, 0.0), GOAL) / GOAL
 
-    for x, head in cols:
-        c.text(x, top - 14, head, 8, anchor="end", opacity=0.65)
-    c.text(x0, top - 14, "INDEPENDENCE", 8, opacity=0.65)
-    c.text(x1, top - 14, "OREGON", 8, anchor="end", opacity=0.65)
-    bottom = top + row * len(order)
     for miles in (0, 500, 1000, 1500, GOAL):
-        c.line(px(miles), top - 6, px(miles), bottom - 8, 0.5, dash="1 4", opacity=0.35)
-        c.text(px(miles), bottom + 6, f"{miles:,}", 8, anchor="middle", opacity=0.65)
-    c.text((x0 + x1) / 2, bottom + 20, "MILES", 8, anchor="middle", opacity=0.5)
+        c.line(px(miles), top - 6, px(miles), bottom - 4, 0.75, dash="1 5", color=bands["grid"])
+        c.text(px(miles), bottom + 10, f"{miles:,}", 7.5, anchor="middle")
+    c.text((x0 + x1) / 2, bottom + 24, "MILES", 7.5, anchor="middle", weight="bold")
+    most_text = max((sum(k["chars"] for k in r.calls) for r in runs), default=0) or 1
     for i, arm in enumerate(order):
         rs = arms[arm]
-        y = top + 18 + i * row
-        accent = YELLOW if arm == "conky" else None
-        c.text(24, y - 1, arm.upper(), 11, weight="bold", fill=accent)
-        c.text(24, y + 13, GLOSS.get(arm, ""), 9, opacity=0.65)
-        c.line(x0, y, x1, y, 0.6, opacity=0.25)
-        c.line(x0, y, px(statistics.median(r.miles for r in rs)), y, 2.2, color=accent)
-        spread = 9.0 if len(rs) > 1 else 0.0
+        y = top + i * row
+        accent = bands.get(arm)
+        colour = accent or ink
+        c.line(24, y - 4 + row, WIDTH - 24, y - 4 + row, 0.6, dash="1 5")
+        c.text(24, y + 18, arm.upper(), 10.5, weight="bold", fill=accent)
+        gloss = GLOSS.get(arm, "")
+        cut = gloss.rfind(" ", 0, 20) if len(gloss) > 20 else len(gloss)
+        c.text(24, y + 32, gloss[:cut], 8)
+        c.text(24, y + 43, gloss[cut:].strip(), 8)
+        first = y + (row - 4 - (len(rs) - 1) * pitch) / 2
         for k, r in enumerate(rs):
-            dy = (k - (len(rs) - 1) / 2) * spread / max(len(rs) - 1, 1) * 2
-            mark(c, px(r.miles), y + dy, r.ending)
-        arrived = sum(r.ending == "arrived" for r in rs)
+            ry = first + k * pitch
+            end = px(r.miles)
+            c.line(x0, ry, end, ry, 1.2, color=colour)
+            for turn, left_miles in sorted(r.left.items()):
+                tx = px(GOAL - left_miles)
+                if turn > 0 and x0 + 2 < tx < end - 4:
+                    c.line(tx, ry - 2, tx, ry + 2, 0.75, color=colour)
+            for turn, _rule in r.breaks:
+                bx = px(GOAL - left_at(r, turn))
+                c.add(
+                    f'<path d="M{bx - 3:.1f},{ry - 3:.1f} h6 l-3,-5.5 Z" fill="{bands["broken"]}" '
+                    f'stroke="none"/>'
+                )
+            mark(c, end + (5 if r.ending != "arrived" else 0), ry, r.ending)
+        mid = y + row / 2 + 1
+        for k, r in enumerate(rs):
+            fill = colour if r.ending == "arrived" else "none"
+            c.add(
+                f'<circle cx="{cols["arrived"] + 4 + k * 11:.1f}" cy="{mid - 3:.1f}" r="3.6" '
+                f'fill="{fill}" stroke="{colour}" stroke-width="1.2"/>'
+            )
         calls = statistics.median(len(r.calls) for r in rs)
-        broken = statistics.median(len(r.breaks) for r in rs)
-        values = (f"{arrived} of {len(rs)}", f"{calls:,.0f}", f"{broken:,.0f}")
-        for (x, _), value in zip(cols, values, strict=True):
-            c.text(x, y + 4, value, 11, anchor="end", weight="bold", fill=accent)
+        sent = statistics.median(sum(k["chars"] for k in r.calls) for r in rs)
+        broken = sum(len(r.breaks) for r in rs)
+        kept = sum(r.kept for r in rs)
+        c.text(cols["calls"] + 22, mid, f"{calls:,.0f}", 10.5, anchor="end", weight="bold")
+        width = 62 * sent / most_text
+        if sent:
+            c.rect(cols["text"], mid - 9, width, 9, "url(#half)", stroke=colour, sw=0.75)
+            c.text(cols["text"], mid + 12, f"{sent / 1000:,.0f}K CHARS", 7.5)
+        else:
+            c.text(cols["text"], mid, "NONE", 8)
+        c.text(
+            cols["broken"],
+            mid,
+            f"{broken}",
+            10.5,
+            anchor="end",
+            weight="bold",
+            fill=bands["broken"] if broken else None,
+        )
+        c.text(
+            cols["kept"],
+            mid,
+            f"{kept}" if kept or arm == "conky" else "-",
+            10.5,
+            anchor="end",
+            weight="bold",
+            fill=accent,
+        )
     return c
 
 
@@ -757,6 +853,7 @@ FIELDS = (
     "chars",
     "wall_s",
     "rules_broken",
+    "pages_kept",
 )
 
 
@@ -778,6 +875,7 @@ def rows(runs: list[Run]) -> list[dict]:
             "chars": sum(c["chars"] for c in r.calls),
             "wall_s": round(r.wall, 1),
             "rules_broken": len(r.breaks),
+            "pages_kept": r.kept,
         }
         for r in sorted(runs, key=lambda r: (r.arm, r.seed))
     ]

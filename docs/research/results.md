@@ -12,6 +12,8 @@ This page is generated from the run files by `bench/publish.py`. Nobody edits it
 
 ## Summary
 
+5 trips each to Oregon: same game, same small model, same luck, same prompt. Pressing keys gets nobody there. A plain loop around the model arrived 4 times. A Conky character arrived 4 times, sending 29% less text and keeping 3 pages of its own notes. It is a pilot: too few trips to call a winner, so none is called.
+
 This is a pilot: 5 seeds, one scenario and one model. It shows that the apparatus runs end to end and what a result will look like. It supports no claim that one arm is better than another.
 
 ## Method
@@ -29,7 +31,7 @@ Counts are runs. Other columns are the median over seeds.
 | `loop` | one model in a plain loop | 4 of 5 | 2,040 | 42 | 0 | 239 |
 | `conky` | one character in a vault | 4 of 5 | 2,040 | 42 | 0 | 298 |
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/trail.dark.svg"><img src="../results/pilot-2/trail.light.svg" alt="Where each run ended on the road to Oregon, one row per way of playing." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/trail.dark.svg"><img src="../results/pilot-2/trail.light.svg" alt="Every run drawn as a journey from Independence to Oregon, one band per way of playing, with arrivals, model calls, text sent, rules broken and pages kept beside it." width="800"></picture></p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-2/progress.dark.svg"><img src="../results/pilot-2/progress.light.svg" alt="Miles left to Oregon against turn, one line per arm." width="800"></picture></p>
 

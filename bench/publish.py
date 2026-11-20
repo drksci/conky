@@ -26,7 +26,8 @@ PAGE = "docs/research/results.md"
 START, END = "<!-- bench:start -->", "<!-- bench:end -->"
 SHOWN = ("trail", "progress", "spend", "rules", "board")
 ALT = {
-    "trail": "Where each run ended on the road to Oregon, one row per way of playing.",
+    "trail": "Every run drawn as a journey from Independence to Oregon, one band per way of "
+    "playing, with arrivals, model calls, text sent, rules broken and pages kept beside it.",
     "progress": "Miles left to Oregon against turn, one line per arm.",
     "spend": "Model calls and text sent against turn, one line per arm.",
     "rules": "House rules broken in the game, by turn, for each run.",
@@ -69,14 +70,6 @@ def facts(runs: list[charts.Run]) -> dict:
     }
 
 
-def sentence(arm: str, f: dict) -> str:
-    cost = f"{f['calls']:,.0f} model calls" if f["calls"] else "no model"
-    return (
-        f"`{arm}` ({charts.GLOSS.get(arm, 'an arm')}) arrived in {f['arrived']} of {f['n']} runs "
-        f"with {cost} and {f['broken']:,.0f} rules broken at the median"
-    )
-
-
 def limits(kind: str, f: dict) -> str:
     if f["scripted"]:
         return "These runs used a scripted stand-in for the model. They are not a result."
@@ -114,23 +107,48 @@ def setup(f: dict) -> str:
     )
 
 
-def readme_block(name: str, kind: str, f: dict) -> str:
+def story(kind: str, f: dict, runs: list[charts.Run]) -> str:
+    """Two or three plain sentences for the front page, every number taken from the runs."""
+    n = len(f["seeds"])
+    per = f["per"]
+    lines = [f"{n} trips each to Oregon: same game, same small model, same luck, same prompt."]
+    floors = [a for a in f["order"] if not per[a]["calls"]]
+    if floors and not any(per[a]["arrived"] for a in floors):
+        lines.append("Pressing keys gets nobody there.")
+    if "loop" in per:
+        lines.append(f"A plain loop around the model arrived {per['loop']['arrived']} times.")
+    if "conky" in per:
+        told = f"A Conky character arrived {per['conky']['arrived']} times"
+        sent = {
+            arm: statistics.median(sum(c["chars"] for c in r.calls) for r in runs if r.arm == arm)
+            for arm in ("loop", "conky")
+            if arm in per
+        }
+        if sent.get("loop") and sent.get("conky"):
+            change = round(100 * (sent["conky"] / sent["loop"] - 1))
+            if change:
+                told += f", sending {abs(change)}% {'less' if change < 0 else 'more'} text"
+        kept = sum(r.kept for r in runs if r.arm == "conky")
+        if kept:
+            told += f" and keeping {kept} pages of its own notes"
+        lines.append(told + ".")
+    if f["scripted"]:
+        lines.append("These runs used a scripted stand-in for the model, so none of it counts.")
+    elif kind == "pilot":
+        lines.append("It is a pilot: too few trips to call a winner, so none is called.")
+    return " ".join(lines)
+
+
+def readme_block(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
     folder = f"docs/results/{name}"
-    word = "Pilot" if kind == "pilot" else "Result"
-    arms = "; ".join(sentence(a, f["per"][a]) for a in f["order"] if f["per"][a]["calls"])
     return "\n".join(
         [
             START,
             "### Benchmark",
             "",
-            "Same game, same model, same luck, same opening prompt. Each row is a way of playing.",
+            story(kind, f, runs),
             "",
             f'<p align="center"><a href="{PAGE}">{picture(folder, "trail")}</a></p>',
-            "",
-            f"**{word}, {f['date']}.** {setup(f)}",
-            "",
-            f"{arms[0].upper() + arms[1:]}. The two floors use no model and never arrive, so the "
-            f"game is not won by pressing keys. {limits(kind, f)}",
             "",
             f'<p align="center"><a href="{PAGE}">Method and every chart</a>'
             f'&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{folder}/runs.csv">the data</a>'
@@ -143,7 +161,7 @@ def readme_block(name: str, kind: str, f: dict) -> str:
     )
 
 
-def page(name: str, kind: str, f: dict) -> str:
+def page(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
     folder = f"../results/{name}"
     status = "draft" if kind == "pilot" or f["scripted"] else "current"
     parts = [
@@ -160,6 +178,8 @@ def page(name: str, kind: str, f: dict) -> str:
         "This page is generated from the run files by `bench/publish.py`. Nobody edits it by hand.",
         "",
         "## Summary",
+        "",
+        story(kind, f, runs),
         "",
         limits(kind, f),
         "",
@@ -201,13 +221,15 @@ def publish(results: Path, name: str, kind: str, root: Path = ROOT) -> list[Path
         if stray.name.split(".")[0] not in SHOWN:
             stray.unlink()
     doc = root / "docs" / "research" / "results.md"
-    doc.write_text(page(name, kind, f), encoding="utf-8")
+    doc.write_text(page(name, kind, f, runs), encoding="utf-8")
     readme = root / "README.md"
     text = readme.read_text(encoding="utf-8")
     if START not in text or END not in text:
         raise SystemExit(f"README.md has no {START} and {END} markers: add them where it goes")
     head, rest = text.split(START, 1)
-    readme.write_text(head + readme_block(name, kind, f) + rest.split(END, 1)[1], encoding="utf-8")
+    readme.write_text(
+        head + readme_block(name, kind, f, runs) + rest.split(END, 1)[1], encoding="utf-8"
+    )
     return [*written, doc, readme]
 
 

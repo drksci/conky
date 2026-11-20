@@ -60,13 +60,9 @@ Conky is... different, for many reasons, but here are some:
 <!-- bench:start -->
 ### Benchmark
 
-Same game, same model, same luck, same opening prompt. Each row is a way of playing.
+5 trips each to Oregon: same game, same small model, same luck, same prompt. Pressing keys gets nobody there. A plain loop around the model arrived 4 times. A Conky character arrived 4 times, sending 29% less text and keeping 3 pages of its own notes. It is a pilot: too few trips to call a winner, so none is called.
 
-<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/trail.dark.svg"><img src="docs/results/pilot-2/trail.light.svg" alt="Where each run ended on the road to Oregon, one row per way of playing." width="800"></picture></a></p>
-
-**Pilot, 2026-11-20.** Scenario `trail`, the 1975 text Oregon Trail, fetched at run time. Seeds 1 to 5, the same for every arm, so runs are paired. Model `haiku` for every arm that uses one, at most 70 model calls a run. Every arm starts from one agent and the same opening prompt.
-
-`loop` (one model in a plain loop) arrived in 4 of 5 runs with 42 model calls and 0 rules broken at the median; `conky` (one character in a vault) arrived in 4 of 5 runs with 42 model calls and 0 rules broken at the median. The two floors use no model and never arrive, so the game is not won by pressing keys. This is a pilot: 5 seeds, one scenario and one model. It shows that the apparatus runs end to end and what a result will look like. It supports no claim that one arm is better than another.
+<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-2/trail.dark.svg"><img src="docs/results/pilot-2/trail.light.svg" alt="Every run drawn as a journey from Independence to Oregon, one band per way of playing, with arrivals, model calls, text sent, rules broken and pages kept beside it." width="800"></picture></a></p>
 
 <p align="center"><a href="docs/research/results.md">Method and every chart</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/results/pilot-2/runs.csv">the data</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/research/benchmark-protocol.md">the protocol</a></p>
 
