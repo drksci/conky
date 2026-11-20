@@ -20,9 +20,11 @@
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/demo.dark.svg"><img src="docs/assets/figures/demo.light.svg" alt="Left, a terminal playing the demo: Maya sets up a lemonade stand with one house rule, fills the cooler, a cup count below zero is refused, a busy hour empties the cooler and the supplier orders lemons by itself. Right, a wireframe of the same thing as a screen, in the pages' own words: the house rule, the cooler's count, the supplier's order and lines from the daybook, updating in step." width="800"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-oregon-trail.dark.svg"><img src="docs/assets/figures/fig-oregon-trail.light.svg" alt="A schematic in three panels. The game: Oregon Trail asks whether to stop at the next fort, hunt or continue. Conky: the screen changed, Ma read a pattern, Jed wants to hunt, a house rule refuses it, Ma says to push on, and the hands type 3. A2UI: the same moment as a screen, with the four travellers, the supplies and a note that Ma read The Art of War." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-oregon-trail.dark.svg"><img src="docs/assets/figures/fig-oregon-trail.light.svg" alt="Left, real screens from the 1978 Oregon Trail game: buying supplies, riders ahead, a hunt, and running out of bullets. Right, a schematic of Conky beside it: a console where the party notices each screen, a house rule refuses a hunt and Ma says to push on, and below it the same moment composed as a screen with the four travellers and their supplies." width="800"></picture></p>
 
-<p align="center"><sub>Four strangers, one wagon and a BASIC game from 1978. A schematic: the <a href="docs/guide/playing-a-program.md">connector</a> that plays a program works today, the party is next.</sub></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-composition.dark.svg"><img src="docs/assets/figures/fig-composition.light.svg" alt="An animated schematic graph of who noticed what: the screen reaches Ma and Jed, Ma reads The Art of War from the patterns shelf, Jed is stopped by the house rules, Ma speaks at the campfire, the hands type back to the game, and the diary gains a line." width="800"></picture></p>
+
+<p align="center"><sub>Four strangers, one wagon and a BASIC game from 1978. The game screens are real output. The party is a schematic: the <a href="docs/guide/playing-a-program.md">connector</a> that plays a program works today, the characters are next.</sub></p>
 
 
 <br>

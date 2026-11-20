@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 252" width="800" height="252" role="img" aria-labelledby="t">
-<title id="t">A wagon party playing Oregon Trail: the game asks stop, hunt or continue; Conky records Jed wanting to hunt, refuses on the house rule and shows Ma saying we push on; the screen shows the same state</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 336" width="800" height="336" role="img" aria-labelledby="t">
+<title id="t">A wagon party playing Oregon Trail, in four beats: the game screen on the left asks, the Conky console records what the party did, including Jed wanting to hunt and the house rule refusing, and the A2UI screen shows the same numbers; the game screens are real output, the rest is schematic</title>
 <style>
-:root{--ink:#1E1E1E;--paper:#FFFFFF}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED;--paper:#0D1117}}
-:root[data-theme="dark"]{--ink:#EDEDED;--paper:#0D1117}
+:root{--ink:#1E1E1E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
+:root[data-theme="dark"]{--ink:#EDEDED}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
 .k{stroke:var(--ink);stroke-width:0.75}
@@ -20,150 +20,207 @@
 .t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
 .b{font-weight:700}
 .m{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em}
-.p{fill:var(--ink);stroke:none}
-.p2{fill:var(--paper);letter-spacing:.02em}
-.q{fill:none;stroke:var(--paper);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.g{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace}
+.sn{fill:var(--ink);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif}
+.x{opacity:0}
+.rv{transform-box:fill-box;transform-origin:50% 0}
+@keyframes r0{0%,0.521%{transform:scaleY(0);animation-timing-function:steps(21,end)}6.771%,100%{transform:scaleY(1)}}.r0{animation:r0 19.2s linear infinite}
+@keyframes a1{0%{opacity:0}0%{opacity:0}1.562%{opacity:1}19.271%{opacity:1}20.833%{opacity:0}100%{opacity:0}}.a1{animation:a1 19.2s linear infinite}
+@keyframes a2{0%{opacity:0}19.271%{opacity:0}20.833%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a2{animation:a2 19.2s linear infinite}
+@keyframes a3{0%{opacity:0}0%{opacity:0}1.562%{opacity:1}23.438%{opacity:1}25%{opacity:0}100%{opacity:0}}.a3{animation:a3 19.2s linear infinite}
+@keyframes r4{0%,25.521%{transform:scaleY(0);animation-timing-function:steps(17,end)}31.771%,100%{transform:scaleY(1)}}.r4{animation:r4 19.2s linear infinite}
+@keyframes a5{0%{opacity:0}25%{opacity:0}26.562%{opacity:1}44.271%{opacity:1}45.833%{opacity:0}100%{opacity:0}}.a5{animation:a5 19.2s linear infinite}
+@keyframes a6{0%{opacity:0}44.271%{opacity:0}45.833%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a6{animation:a6 19.2s linear infinite}
+@keyframes a7{0%{opacity:0}25%{opacity:0}26.562%{opacity:1}48.438%{opacity:1}50%{opacity:0}100%{opacity:0}}.a7{animation:a7 19.2s linear infinite}
+@keyframes r8{0%,50.521%{transform:scaleY(0);animation-timing-function:steps(18,end)}56.771%,100%{transform:scaleY(1)}}.r8{animation:r8 19.2s linear infinite}
+@keyframes a9{0%{opacity:0}50%{opacity:0}51.562%{opacity:1}69.271%{opacity:1}70.833%{opacity:0}100%{opacity:0}}.a9{animation:a9 19.2s linear infinite}
+@keyframes a10{0%{opacity:0}69.271%{opacity:0}70.833%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a10{animation:a10 19.2s linear infinite}
+@keyframes a11{0%{opacity:0}50%{opacity:0}51.562%{opacity:1}73.438%{opacity:1}75%{opacity:0}100%{opacity:0}}.a11{animation:a11 19.2s linear infinite}
+@keyframes r12{0%,75.521%{transform:scaleY(0);animation-timing-function:steps(19,end)}81.771%,100%{transform:scaleY(1)}}.r12{animation:r12 19.2s linear infinite}
+@keyframes a13{0%{opacity:0}75%{opacity:0}76.562%{opacity:1}94.271%{opacity:1}95.833%{opacity:0}100%{opacity:0}}.a13{animation:a13 19.2s linear infinite}
+@keyframes a14{0%{opacity:0}94.271%{opacity:0}95.833%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a14{animation:a14 19.2s linear infinite}
+@keyframes a15{0%{opacity:0}75%{opacity:0}76.562%{opacity:1}98.438%{opacity:1}100%{opacity:0}100%{opacity:0}}.a15{animation:a15 19.2s linear infinite}
+@keyframes a16{0%{opacity:0}7.292%{opacity:0}8.854%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a16{animation:a16 19.2s linear infinite}
+@keyframes a17{0%{opacity:0}9.479%{opacity:0}11.042%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a17{animation:a17 19.2s linear infinite}
+@keyframes a18{0%{opacity:0}11.667%{opacity:0}13.229%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a18{animation:a18 19.2s linear infinite}
+@keyframes a19{0%{opacity:0}13.854%{opacity:0}15.417%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a19{animation:a19 19.2s linear infinite}
+@keyframes a20{0%{opacity:0}16.042%{opacity:0}17.604%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a20{animation:a20 19.2s linear infinite}
+@keyframes a21{0%{opacity:0}18.229%{opacity:0}19.792%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a21{animation:a21 19.2s linear infinite}
+@keyframes a22{0%{opacity:0}0%{opacity:0}1.562%{opacity:1}23.438%{opacity:1}25%{opacity:0}100%{opacity:0}}.a22{animation:a22 19.2s linear infinite}
+@keyframes a23{0%{opacity:0}32.292%{opacity:0}33.854%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a23{animation:a23 19.2s linear infinite}
+@keyframes a24{0%{opacity:0}34.479%{opacity:0}36.042%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a24{animation:a24 19.2s linear infinite}
+@keyframes a25{0%{opacity:0}36.667%{opacity:0}38.229%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a25{animation:a25 19.2s linear infinite}
+@keyframes a26{0%{opacity:0}38.854%{opacity:0}40.417%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a26{animation:a26 19.2s linear infinite}
+@keyframes a27{0%{opacity:0}41.042%{opacity:0}42.604%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a27{animation:a27 19.2s linear infinite}
+@keyframes a28{0%{opacity:0}25%{opacity:0}26.562%{opacity:1}48.438%{opacity:1}50%{opacity:0}100%{opacity:0}}.a28{animation:a28 19.2s linear infinite}
+@keyframes a29{0%{opacity:0}57.292%{opacity:0}58.854%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a29{animation:a29 19.2s linear infinite}
+@keyframes a30{0%{opacity:0}59.479%{opacity:0}61.042%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a30{animation:a30 19.2s linear infinite}
+@keyframes a31{0%{opacity:0}61.667%{opacity:0}63.229%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a31{animation:a31 19.2s linear infinite}
+@keyframes a32{0%{opacity:0}63.854%{opacity:0}65.417%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a32{animation:a32 19.2s linear infinite}
+@keyframes a33{0%{opacity:0}66.042%{opacity:0}67.604%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a33{animation:a33 19.2s linear infinite}
+@keyframes a34{0%{opacity:0}50%{opacity:0}51.562%{opacity:1}73.438%{opacity:1}75%{opacity:0}100%{opacity:0}}.a34{animation:a34 19.2s linear infinite}
+@keyframes a35{0%{opacity:0}82.292%{opacity:0}83.854%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a35{animation:a35 19.2s linear infinite}
+@keyframes a36{0%{opacity:0}84.479%{opacity:0}86.042%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a36{animation:a36 19.2s linear infinite}
+@keyframes a37{0%{opacity:0}86.667%{opacity:0}88.229%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a37{animation:a37 19.2s linear infinite}
+@keyframes a38{0%{opacity:0}88.854%{opacity:0}90.417%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a38{animation:a38 19.2s linear infinite}
+@keyframes a39{0%{opacity:0}91.042%{opacity:0}92.604%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a39{animation:a39 19.2s linear infinite}
+@keyframes a40{0%{opacity:0}75%{opacity:0}76.562%{opacity:1}98.438%{opacity:1}100%{opacity:0}100%{opacity:0}}.a40{animation:a40 19.2s linear infinite}
+@keyframes a41{0%{opacity:0}9.896%{opacity:0}11.458%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a41{animation:a41 19.2s linear infinite}
+@keyframes a42{0%{opacity:0}13.542%{opacity:0}15.104%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a42{animation:a42 19.2s linear infinite}
+@keyframes a43{0%{opacity:0}16.667%{opacity:0}18.229%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a43{animation:a43 19.2s linear infinite}
+@keyframes a44{0%{opacity:0}0%{opacity:0}1.562%{opacity:1}23.438%{opacity:1}25%{opacity:0}100%{opacity:0}}.a44{animation:a44 19.2s linear infinite}
+@keyframes a45{0%{opacity:0}34.896%{opacity:0}36.458%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a45{animation:a45 19.2s linear infinite}
+@keyframes a46{0%{opacity:0}38.542%{opacity:0}40.104%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a46{animation:a46 19.2s linear infinite}
+@keyframes a47{0%{opacity:0}41.667%{opacity:0}43.229%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a47{animation:a47 19.2s linear infinite}
+@keyframes a48{0%{opacity:0}25%{opacity:0}26.562%{opacity:1}48.438%{opacity:1}50%{opacity:0}100%{opacity:0}}.a48{animation:a48 19.2s linear infinite}
+@keyframes a49{0%{opacity:0}59.896%{opacity:0}61.458%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a49{animation:a49 19.2s linear infinite}
+@keyframes a50{0%{opacity:0}63.542%{opacity:0}65.104%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a50{animation:a50 19.2s linear infinite}
+@keyframes a51{0%{opacity:0}66.667%{opacity:0}68.229%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a51{animation:a51 19.2s linear infinite}
+@keyframes a52{0%{opacity:0}50%{opacity:0}51.562%{opacity:1}73.438%{opacity:1}75%{opacity:0}100%{opacity:0}}.a52{animation:a52 19.2s linear infinite}
+@keyframes a53{0%{opacity:0}84.896%{opacity:0}86.458%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a53{animation:a53 19.2s linear infinite}
+@keyframes a54{0%{opacity:0}88.542%{opacity:0}90.104%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a54{animation:a54 19.2s linear infinite}
+@keyframes a55{0%{opacity:0}91.667%{opacity:0}93.229%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a55{animation:a55 19.2s linear infinite}
+@keyframes a56{0%{opacity:0}75%{opacity:0}76.562%{opacity:1}98.438%{opacity:1}100%{opacity:0}100%{opacity:0}}.a56{animation:a56 19.2s linear infinite}
+@media (prefers-reduced-motion:reduce){.an{animation:none!important}}
 </style>
 <defs><pattern id="d12" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d25" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d50" width="4" height="4" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM2 2h2v2h-2z"/></pattern></defs>
-<path class="i" d="M7 12H229V234H7Z"/>
-<path class="i" d="M7 28L229 28"/>
-<path class="k" d="M14 16H22V24H14Z"/>
-<path class="h" d="M31 16.5L88.62 16.5"/>
-<path class="h" d="M147.38 16.5L222 16.5"/>
-<path class="h" d="M31 19.5L88.62 19.5"/>
-<path class="h" d="M147.38 19.5L222 19.5"/>
-<path class="h" d="M31 22.5L88.62 22.5"/>
-<path class="h" d="M147.38 22.5L222 22.5"/>
-<text class="t" x="118" y="23.4" font-size="7.56" fill-opacity="1" text-anchor="middle">THE GAME</text>
-<path class="k" d="M14 35H222V227H14Z"/>
-<text class="m" x="22" y="54" font-size="8.1" text-anchor="start" xml:space="preserve">DOCTOR'S BILL IS $20</text>
-<text class="m" x="22" y="71" font-size="8.1" text-anchor="start" xml:space="preserve">TOTAL MILEAGE IS 640</text>
-<text class="m" x="22" y="88" font-size="8.1" text-anchor="start" xml:space="preserve">FOOD BULLETS CLOTHING MISC. SUPP. CASH</text>
-<text class="m" x="22" y="105" font-size="8.1" text-anchor="start" xml:space="preserve">140  12      70       35          160</text>
-<text class="m" x="22" y="139" font-size="8.1" text-anchor="start" xml:space="preserve">DO YOU WANT TO (1) STOP AT THE NEXT</text>
-<text class="m" x="22" y="156" font-size="8.1" text-anchor="start" xml:space="preserve">FORT, (2) HUNT, OR (3) CONTINUE</text>
-<text class="m" x="22" y="190" font-size="8.1" text-anchor="start" xml:space="preserve">?</text>
-<rect class="d" x="34" y="182" width="5.2" height="9.6"/>
-<path class="i" d="M289 12H511V234H289Z"/>
-<path class="i" d="M289 28L511 28"/>
-<path class="k" d="M296 16H304V24H296Z"/>
-<path class="h" d="M313 16.5L379.01 16.5"/>
-<path class="h" d="M420.99 16.5L504 16.5"/>
-<path class="h" d="M313 19.5L379.01 19.5"/>
-<path class="h" d="M420.99 19.5L504 19.5"/>
-<path class="h" d="M313 22.5L379.01 22.5"/>
-<path class="h" d="M420.99 22.5L504 22.5"/>
-<text class="t" x="400" y="23.4" font-size="7.56" fill-opacity="1" text-anchor="middle">CONKY</text>
-<circle class="s" cx="309" cy="57.5" r="4.6"/>
-<path class="i" d="M307 57.7L308.4 59.2L311.2 55.9"/>
-<text class="m" x="322" y="60" font-size="9" text-anchor="start" xml:space="preserve">screen changed</text>
-<circle class="s" cx="309" cy="86.5" r="4.6"/>
-<path class="i" d="M307 86.7L308.4 88.2L311.2 84.9"/>
-<text class="m" x="322" y="89" font-size="9" text-anchor="start" xml:space="preserve">Ma read pattern "The Art of War"</text>
-<circle class="s" cx="309" cy="115.5" r="4.6"/>
-<path class="i" d="M307 115.7L308.4 117.2L311.2 113.9"/>
-<text class="m" x="322" y="118" font-size="9" text-anchor="start" xml:space="preserve">Jed wants to hunt</text>
-<rect x="317" y="137.5" width="153" height="27" fill="#F4C430"/>
-<path class="s" d="M304.4 140.4H313.6V149.6H304.4Z"/>
-<path class="i" d="M306.8 142.8L311.2 147.2"/>
-<path class="i" d="M306.8 147.2L311.2 142.8"/>
-<text class="m" x="322" y="147" font-size="9" text-anchor="start" xml:space="preserve" style="fill:#1E1E1E">refused: house rule,</text>
-<text class="m" x="322" y="159" font-size="9" text-anchor="start" xml:space="preserve" style="fill:#1E1E1E">nobody hunts on 12 bullets</text>
-<circle class="s" cx="309" cy="185.5" r="4.6"/>
-<path class="i" d="M307 185.7L308.4 187.2L311.2 183.9"/>
-<text class="m" x="322" y="188" font-size="9" text-anchor="start" xml:space="preserve">Ma: we push on. Sorry, Jed.</text>
-<circle class="s" cx="309" cy="214.5" r="4.6"/>
-<path class="i" d="M307 214.7L308.4 216.2L311.2 212.9"/>
-<text class="m" x="322" y="217" font-size="9" text-anchor="start" xml:space="preserve">hands typed 3</text>
-<path class="k" d="M309 62.6L309 81.8"/>
-<path class="k" d="M309 91.6L309 110.8"/>
-<path class="k" d="M309 120.6L309 139.8"/>
-<path class="k" d="M309 149.6L309 180.8"/>
-<path class="k" d="M309 190.6L309 209.8"/>
-<path class="i" d="M571 12H793V234H571Z"/>
-<path class="i" d="M571 28L793 28"/>
-<path class="k" d="M578 16H586V24H578Z"/>
-<path class="h" d="M595 16.5L663.81 16.5"/>
-<path class="h" d="M700.19 16.5L786 16.5"/>
-<path class="h" d="M595 19.5L663.81 19.5"/>
-<path class="h" d="M700.19 19.5L786 19.5"/>
-<path class="h" d="M595 22.5L663.81 22.5"/>
-<path class="h" d="M700.19 22.5L786 22.5"/>
-<text class="t" x="682" y="23.4" font-size="7.56" fill-opacity="1" text-anchor="middle">A2UI</text>
-<path class="a" d="M586.5 37H624.5Q628.5 37 628.5 41V87Q628.5 91 624.5 91H586.5Q582.5 91 582.5 87V41Q582.5 37 586.5 37Z"/>
-<path class="f25" d="M594.5 61a11 11 0 1 0 22 0a11 11 0 1 0 -22 0ZM599.1 60a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0ZM607.1 60a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0Z"/>
-<path class="s" d="M594.5 61a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/>
-<circle class="d" cx="601.5" cy="60" r="1.1"/>
-<circle class="d" cx="609.5" cy="60" r="1.1"/>
-<path class="k" d="M602.5 66Q605.5 68 608.5 66"/>
-<path class="f50" d="M601.3 47a4.2 4.2 0 1 0 8.4 0a4.2 4.2 0 1 0 -8.4 0Z"/>
-<path class="s" d="M601.3 47a4.2 4.2 0 1 0 8.4 0a4.2 4.2 0 1 0 -8.4 0Z"/>
-<text class="t" x="605.5" y="85" font-size="7.98" fill-opacity="1" text-anchor="middle">MA</text>
-<path class="s" d="M637.5 37H675.5Q679.5 37 679.5 41V87Q679.5 91 675.5 91H637.5Q633.5 91 633.5 87V41Q633.5 37 637.5 37Z"/>
-<path class="f25" d="M645.5 61a11 11 0 1 0 22 0a11 11 0 1 0 -22 0ZM650.1 60a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0ZM658.1 60a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0Z"/>
-<path class="s" d="M645.5 61a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/>
-<circle class="d" cx="652.5" cy="60" r="1.1"/>
-<circle class="d" cx="660.5" cy="60" r="1.1"/>
-<path class="k" d="M653.5 66Q656.5 68 659.5 66"/>
-<path class="d" d="M645.5 58A11 11 0 0 1 667.5 58Z"/>
-<path class="i" d="M654.5 58L672.5 58"/>
-<text class="t" x="656.5" y="85" font-size="7.98" fill-opacity="1" text-anchor="middle">JED</text>
-<path class="s" d="M688.5 37H726.5Q730.5 37 730.5 41V87Q730.5 91 726.5 91H688.5Q684.5 91 684.5 87V41Q684.5 37 688.5 37Z"/>
-<path class="f12" d="M696.5 61a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/>
-<path class="s" d="M696.5 61a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/>
-<circle class="k" cx="703.5" cy="60" r="3.2"/>
-<circle class="k" cx="711.5" cy="60" r="3.2"/>
-<path class="k" d="M706.7 60L708.3 60"/>
-<circle class="d" cx="703.5" cy="60" r="1"/>
-<circle class="d" cx="711.5" cy="60" r="1"/>
-<path class="k" d="M704.5 66Q707.5 68 710.5 66"/>
-<path class="k" d="M698.5 54Q707.5 44 716.5 54"/>
-<text class="t" x="707.5" y="85" font-size="7.98" fill-opacity="1" text-anchor="middle">DOC</text>
-<path class="s" d="M739.5 37H777.5Q781.5 37 781.5 41V87Q781.5 91 777.5 91H739.5Q735.5 91 735.5 87V41Q735.5 37 739.5 37Z"/>
-<path class="f50" d="M747.5 61a11 11 0 1 0 22 0a11 11 0 1 0 -22 0ZM752.1 60a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0ZM760.1 60a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0Z"/>
-<path class="s" d="M747.5 61a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/>
-<circle class="d" cx="754.5" cy="60" r="1.1"/>
-<circle class="d" cx="762.5" cy="60" r="1.1"/>
-<path class="k" d="M755.5 66Q758.5 68 761.5 66"/>
-<circle class="d" cx="750.5" cy="50" r="2.6"/>
-<circle class="d" cx="766.5" cy="50" r="2.6"/>
-<text class="t" x="758.5" y="85" font-size="7.98" fill-opacity="1" text-anchor="middle">TULLY</text>
-<path class="s" d="M589 105H600.5L605.5 98L610.5 105H669Q675 105 675 111V125Q675 131 669 131H589Q583 131 583 125V111Q583 105 589 105Z"/>
-<text class="m" x="629" y="121.5" font-size="9" text-anchor="middle" xml:space="preserve">we push on</text>
-<path class="f25" d="M739 108C742 115 748 119 747 126C746 131 742 133 739 133C736 133 732 131 731 126C730 120 736 117 739 108Z"/>
-<path class="s" d="M739 108C742 115 748 119 747 126C746 131 742 133 739 133C736 133 732 131 731 126C730 120 736 117 739 108Z"/>
-<path class="d" d="M739 121C741 125 743 127 742 130Q739 133 736 130C735 127 738 125 739 121Z"/>
-<path class="i" d="M726 135L752 139"/>
-<path class="i" d="M726 139L752 135"/>
-<path class="s" d="M587 143H777Q781 143 781 147V193Q781 197 777 197H587Q583 197 583 193V147Q583 143 587 143Z"/>
-<text class="t" x="591" y="157.5" font-size="6.72" fill-opacity="1" text-anchor="start">FOOD</text>
-<path class="k" d="M631 151H703V160H631Z"/>
-<path class="f50" d="M631 151H656.2V160H631Z"/>
-<path class="s" d="M631 151H656.2V160H631Z"/>
-<text class="m" x="709" y="158.6" font-size="8.6" text-anchor="start" xml:space="preserve">140</text>
-<text class="t" x="591" y="172.5" font-size="6.72" fill-opacity="1" text-anchor="start">BULLETS</text>
-<path class="k" d="M631 166H703V175H631Z"/>
-<path class="f50" d="M631 166H639.64V175H631Z"/>
-<path class="s" d="M631 166H639.64V175H631Z"/>
-<text class="m" x="709" y="173.6" font-size="8.6" text-anchor="start" xml:space="preserve">12</text>
-<text class="t" x="591" y="187.5" font-size="6.72" fill-opacity="1" text-anchor="start">MILES</text>
-<path class="k" d="M631 181H703V190H631Z"/>
-<path class="f50" d="M631 181H653.59V190H631Z"/>
-<path class="s" d="M631 181H653.59V190H631Z"/>
-<text class="m" x="709" y="188.6" font-size="8.6" text-anchor="start" xml:space="preserve">640</text>
-<circle cx="768" cy="157" r="8" fill="#F4C430"/>
-<circle class="s" cx="768" cy="157" r="8"/>
-<text class="m" x="768" y="160.4" font-size="10" text-anchor="middle" xml:space="preserve" style="fill:#1E1E1E" font-weight="700">?</text>
-<path class="p" d="M627 209H781Q785 209 785 213V227Q785 231 781 231H627Q623 231 623 227V213Q623 209 627 209Z"/>
-<circle class="q" cx="634" cy="220" r="4.2"/>
-<path class="q" d="M632 220.2L633.4 221.6L636.2 218.4"/>
-<text class="m p2" x="643" y="223.2" font-size="8.6">Ma read "The Art of War"</text>
-<path class="z" d="M236 90L280 90"/>
-<path class="i" d="M274.81 86.49L282 90L274.81 93.51"/>
-<path class="z" d="M518 90L562 90"/>
-<path class="i" d="M556.81 86.49L564 90L556.81 93.51"/>
-<path class="z" d="M282 124L238 124"/>
-<path class="i" d="M243.19 127.51L236 124L243.19 120.49"/>
-<text class="t" x="259" y="138" font-size="6.72" fill-opacity="1" text-anchor="middle">KEYS</text>
-<text class="t" x="793" y="247" font-size="6.72" fill-opacity="1" text-anchor="end">SCHEMATIC</text>
+<defs><mask id="gm0" maskUnits="userSpaceOnUse" x="14" y="31" width="358" height="284"><rect class="r0 rv an" x="14" y="31" width="358" height="284" fill="#fff"/></mask><mask id="gm1" maskUnits="userSpaceOnUse" x="14" y="31" width="358" height="284"><rect class="r4 rv an" x="14" y="31" width="358" height="284" fill="#fff"/></mask><mask id="gm2" maskUnits="userSpaceOnUse" x="14" y="31" width="358" height="284"><rect class="r8 rv an" x="14" y="31" width="358" height="284" fill="#fff"/></mask><mask id="gm3" maskUnits="userSpaceOnUse" x="14" y="31" width="358" height="284"><rect class="r12 rv an" x="14" y="31" width="358" height="284" fill="#fff"/></mask></defs>
+<path class="f50" d="M11 322H383V12H379V322Z"/>
+<path class="i" d="M7 8H379V322H7Z"/>
+<path class="i" d="M7 24L379 24"/>
+<path class="k" d="M14 12H22V20H14Z"/>
+<path class="h" d="M31 12.5L158.65 12.5"/>
+<path class="h" d="M227.35 12.5L372 12.5"/>
+<path class="h" d="M31 15.5L158.65 15.5"/>
+<path class="h" d="M227.35 15.5L372 15.5"/>
+<path class="h" d="M31 18.5L158.65 18.5"/>
+<path class="h" d="M227.35 18.5L372 18.5"/>
+<text class="t" x="193" y="19.8" font-size="9.24" fill-opacity="1" text-anchor="middle">THE GAME</text>
+<path class="k" d="M14 31H372V315H14Z"/>
+<g class="a3 an"><g mask="url(#gm0)"><text class="g" x="23" y="46" font-size="8.1" textLength="277.02" lengthAdjust="spacingAndGlyphs" xml:space="preserve">  (1) ACE MARKSMAN,  (2) GOOD SHOT,  (3) FAIR TO MIDDLIN'</text><text class="g" x="23" y="58.9" font-size="8.1" textLength="238.14" lengthAdjust="spacingAndGlyphs" xml:space="preserve">         (4) NEED MORE PRACTICE,  (5) SHAKY KNEES</text><text class="g" x="23" y="71.8" font-size="8.1" textLength="286.74" lengthAdjust="spacingAndGlyphs" xml:space="preserve">ENTER ONE OF THE ABOVE -- THE BETTER YOU CLAIM YOU ARE, THE</text><text class="g" x="23" y="84.7" font-size="8.1" textLength="272.16" lengthAdjust="spacingAndGlyphs" xml:space="preserve">FASTER YOU'LL HAVE TO BE WITH YOUR GUN TO BE SUCCESSFUL.</text><text class="g" x="23" y="97.6" font-size="8.1" textLength="14.58" lengthAdjust="spacingAndGlyphs" xml:space="preserve">? 1</text><text class="g" x="23" y="136.3" font-size="8.1" textLength="252.72" lengthAdjust="spacingAndGlyphs" xml:space="preserve">HOW MUCH DO YOU WANT TO SPEND ON YOUR OXEN TEAM? 250</text><text class="g" x="23" y="149.2" font-size="8.1" textLength="204.12" lengthAdjust="spacingAndGlyphs" xml:space="preserve">HOW MUCH DO YOU WANT TO SPEND ON FOOD? 130</text><text class="g" x="23" y="162.1" font-size="8.1" textLength="228.42" lengthAdjust="spacingAndGlyphs" xml:space="preserve">HOW MUCH DO YOU WANT TO SPEND ON AMMUNITION? 10</text><text class="g" x="23" y="175" font-size="8.1" textLength="218.7" lengthAdjust="spacingAndGlyphs" xml:space="preserve">HOW MUCH DO YOU WANT TO SPEND ON CLOTHING? 70</text><text class="g" x="23" y="187.9" font-size="8.1" textLength="286.74" lengthAdjust="spacingAndGlyphs" xml:space="preserve">HOW MUCH DO YOU WANT TO SPEND ON MISCELLANEOUS SUPPLIES? 40</text><text class="g" x="23" y="200.8" font-size="8.1" textLength="277.02" lengthAdjust="spacingAndGlyphs" xml:space="preserve">AFTER ALL YOUR PURCHASES, YOU NOW HAVE  200  DOLLARS LEFT</text><text class="g" x="23" y="226.6" font-size="8.1" textLength="97.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">MONDAY MARCH 29 1847</text><text class="g" x="23" y="252.4" font-size="8.1" textLength="87.48" lengthAdjust="spacingAndGlyphs" xml:space="preserve">TOTAL MILEAGE IS 0</text><text class="g" x="23" y="265.3" font-size="8.1" textLength="291.6" lengthAdjust="spacingAndGlyphs" xml:space="preserve">FOOD          BULLETS       CLOTHING      MISC. SUPP.   CASH</text><text class="g" x="23" y="278.2" font-size="8.1" textLength="291.6" lengthAdjust="spacingAndGlyphs" xml:space="preserve"> 130           500           70            40            200</text><text class="g" x="23" y="291.1" font-size="8.1" textLength="194.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve">DO YOU WANT TO (1) HUNT, OR (2) CONTINUE</text><text class="g" x="23" y="304" font-size="8.1" textLength="4.86" lengthAdjust="spacingAndGlyphs" xml:space="preserve">?</text><g class="a1 an x"><rect class="d" x="32.72" y="295.6" width="4.86" height="9.6"/></g></g><g class="a2 an"><text class="g" x="32.72" y="304" font-size="8.1" textLength="4.86" lengthAdjust="spacingAndGlyphs" xml:space="preserve">2</text><rect class="d" x="37.58" y="295.6" width="4.86" height="9.6"/></g></g>
+<g class="a7 an x"><g mask="url(#gm1)"><text class="g" x="23" y="46" font-size="8.1" textLength="29.16" lengthAdjust="spacingAndGlyphs" xml:space="preserve">? BANG</text><text class="g" x="23" y="71.8" font-size="8.1" textLength="213.84" lengthAdjust="spacingAndGlyphs" xml:space="preserve">NICE SHOOTIN' PARDNER---THEY DIDN'T GET MUCH</text><text class="g" x="23" y="97.6" font-size="8.1" textLength="97.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">MONDAY APRIL 12 1847</text><text class="g" x="23" y="123.4" font-size="8.1" textLength="97.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">TOTAL MILEAGE IS 190</text><text class="g" x="23" y="136.3" font-size="8.1" textLength="291.6" lengthAdjust="spacingAndGlyphs" xml:space="preserve">FOOD          BULLETS       CLOTHING      MISC. SUPP.   CASH</text><text class="g" x="23" y="149.2" font-size="8.1" textLength="291.6" lengthAdjust="spacingAndGlyphs" xml:space="preserve"> 112           500           70            40            200</text><text class="g" x="23" y="162.1" font-size="8.1" textLength="325.62" lengthAdjust="spacingAndGlyphs" xml:space="preserve">DO YOU WANT TO (1) STOP AT THE NEXT FORT, (2) HUNT, OR (3) CONTINUE</text><text class="g" x="23" y="175" font-size="8.1" textLength="14.58" lengthAdjust="spacingAndGlyphs" xml:space="preserve">? 3</text><text class="g" x="23" y="187.9" font-size="8.1" textLength="218.7" lengthAdjust="spacingAndGlyphs" xml:space="preserve">DO YOU WANT TO EAT (1) POORLY  (2) MODERATELY</text><text class="g" x="23" y="200.8" font-size="8.1" textLength="68.04" lengthAdjust="spacingAndGlyphs" xml:space="preserve">OR (3) WELL? 2</text><text class="g" x="23" y="213.7" font-size="8.1" textLength="155.52" lengthAdjust="spacingAndGlyphs" xml:space="preserve">RIDERS AHEAD.  THEY LOOK HOSTILE</text><text class="g" x="23" y="226.6" font-size="8.1" textLength="34.02" lengthAdjust="spacingAndGlyphs" xml:space="preserve">TACTICS</text><text class="g" x="23" y="239.5" font-size="8.1" textLength="252.72" lengthAdjust="spacingAndGlyphs" xml:space="preserve">(1) RUN  (2) ATTACK  (3) CONTINUE  (4) CIRCLE WAGONS</text><text class="g" x="23" y="252.4" font-size="8.1" textLength="4.86" lengthAdjust="spacingAndGlyphs" xml:space="preserve">?</text><g class="a5 an x"><rect class="d" x="32.72" y="244" width="4.86" height="9.6"/></g></g><g class="a6 an"><text class="g" x="32.72" y="252.4" font-size="8.1" textLength="4.86" lengthAdjust="spacingAndGlyphs" xml:space="preserve">4</text><text class="g" x="23" y="265.3" font-size="8.1" textLength="43.74" lengthAdjust="spacingAndGlyphs" xml:space="preserve">TYPE WHAM</text><text class="g" x="23" y="278.2" font-size="8.1" textLength="29.16" lengthAdjust="spacingAndGlyphs" xml:space="preserve">? WHAM</text><text class="g" x="23" y="304" font-size="8.1" textLength="165.24" lengthAdjust="spacingAndGlyphs" xml:space="preserve">NICE SHOOTING---YOU DROVE THEM OFF</text><rect class="d" x="23" y="308.5" width="4.86" height="9.6"/></g></g>
+<g class="a11 an x"><g mask="url(#gm2)"><text class="g" x="23" y="46" font-size="8.1" textLength="252.72" lengthAdjust="spacingAndGlyphs" xml:space="preserve">(1) RUN  (2) ATTACK  (3) CONTINUE  (4) CIRCLE WAGONS</text><text class="g" x="23" y="58.9" font-size="8.1" textLength="14.58" lengthAdjust="spacingAndGlyphs" xml:space="preserve">? 4</text><text class="g" x="23" y="71.8" font-size="8.1" textLength="43.74" lengthAdjust="spacingAndGlyphs" xml:space="preserve">TYPE WHAM</text><text class="g" x="23" y="84.7" font-size="8.1" textLength="29.16" lengthAdjust="spacingAndGlyphs" xml:space="preserve">? WHAM</text><text class="g" x="23" y="110.5" font-size="8.1" textLength="165.24" lengthAdjust="spacingAndGlyphs" xml:space="preserve">NICE SHOOTING---YOU DROVE THEM OFF</text><text class="g" x="23" y="123.4" font-size="8.1" textLength="179.82" lengthAdjust="spacingAndGlyphs" xml:space="preserve">RIDERS WERE HOSTILE--CHECK FOR LOSSES</text><text class="g" x="23" y="136.3" font-size="8.1" textLength="131.22" lengthAdjust="spacingAndGlyphs" xml:space="preserve">BAD ILLNESS---MEDICINE USED</text><text class="g" x="23" y="162.1" font-size="8.1" textLength="97.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">MONDAY APRIL 26 1847</text><text class="g" x="23" y="187.9" font-size="8.1" textLength="97.2" lengthAdjust="spacingAndGlyphs" xml:space="preserve">TOTAL MILEAGE IS 367</text><text class="g" x="23" y="200.8" font-size="8.1" textLength="291.6" lengthAdjust="spacingAndGlyphs" xml:space="preserve">FOOD          BULLETS       CLOTHING      MISC. SUPP.   CASH</text><text class="g" x="23" y="213.7" font-size="8.1" textLength="291.6" lengthAdjust="spacingAndGlyphs" xml:space="preserve"> 94            420           70            35            200</text><text class="g" x="23" y="226.6" font-size="8.1" textLength="194.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve">DO YOU WANT TO (1) HUNT, OR (2) CONTINUE</text><text class="g" x="23" y="239.5" font-size="8.1" textLength="14.58" lengthAdjust="spacingAndGlyphs" xml:space="preserve">? 1</text><text class="g" x="23" y="252.4" font-size="8.1" textLength="43.74" lengthAdjust="spacingAndGlyphs" xml:space="preserve">TYPE BANG</text><text class="g" x="23" y="265.3" font-size="8.1" textLength="4.86" lengthAdjust="spacingAndGlyphs" xml:space="preserve">?</text><g class="a9 an x"><rect class="d" x="32.72" y="256.9" width="4.86" height="9.6"/></g></g><g class="a10 an"><text class="g" x="32.72" y="265.3" font-size="8.1" textLength="19.44" lengthAdjust="spacingAndGlyphs" xml:space="preserve">BANG</text><text class="g" x="23" y="291.1" font-size="8.1" textLength="223.56" lengthAdjust="spacingAndGlyphs" xml:space="preserve">RIGHT BETWEEN THE EYES---YOU GOT A BIG ONE!!!!</text><text class="g" x="23" y="304" font-size="8.1" textLength="102.06" lengthAdjust="spacingAndGlyphs" xml:space="preserve">FULL BELLIES TONIGHT!</text><rect class="d" x="23" y="308.5" width="4.86" height="9.6"/></g></g>
+<g class="a15 an x"><g mask="url(#gm3)"><text class="g" x="23" y="46" font-size="8.1" textLength="325.62" lengthAdjust="spacingAndGlyphs" xml:space="preserve">DO YOU WANT TO (1) STOP AT THE NEXT FORT, (2) HUNT, OR (3) CONTINUE</text><text class="g" x="23" y="58.9" font-size="8.1" textLength="14.58" lengthAdjust="spacingAndGlyphs" xml:space="preserve">? 2</text><text class="g" x="23" y="71.8" font-size="8.1" textLength="208.98" lengthAdjust="spacingAndGlyphs" xml:space="preserve">TOUGH---YOU NEED MORE BULLETS TO GO HUNTING</text><text class="g" x="23" y="84.7" font-size="8.1" textLength="325.62" lengthAdjust="spacingAndGlyphs" xml:space="preserve">DO YOU WANT TO (1) STOP AT THE NEXT FORT, (2) HUNT, OR (3) CONTINUE</text><text class="g" x="23" y="97.6" font-size="8.1" textLength="14.58" lengthAdjust="spacingAndGlyphs" xml:space="preserve">? 3</text><text class="g" x="23" y="110.5" font-size="8.1" textLength="218.7" lengthAdjust="spacingAndGlyphs" xml:space="preserve">DO YOU WANT TO EAT (1) POORLY  (2) MODERATELY</text><text class="g" x="23" y="123.4" font-size="8.1" textLength="68.04" lengthAdjust="spacingAndGlyphs" xml:space="preserve">OR (3) WELL? 2</text><text class="g" x="23" y="136.3" font-size="8.1" textLength="330.48" lengthAdjust="spacingAndGlyphs" xml:space="preserve">COLD WEATHER---BRRRRRRR!---YOU HAVE ENOUGH CLOTHING TO KEEP YOU WARM</text><text class="g" x="23" y="149.2" font-size="8.1" textLength="77.76" lengthAdjust="spacingAndGlyphs" xml:space="preserve">RUGGED MOUNTAINS</text><text class="g" x="23" y="162.1" font-size="8.1" textLength="92.34" lengthAdjust="spacingAndGlyphs" xml:space="preserve">THE GOING GETS SLOW</text><text class="g" x="23" y="175" font-size="8.1" textLength="238.14" lengthAdjust="spacingAndGlyphs" xml:space="preserve">BLIZZARD IN MOUNTAIN PASS--TIME AND SUPPLIES LOST</text><text class="g" x="23" y="200.8" font-size="8.1" textLength="92.34" lengthAdjust="spacingAndGlyphs" xml:space="preserve">MONDAY JUNE 21 1847</text><text class="g" x="23" y="226.6" font-size="8.1" textLength="102.06" lengthAdjust="spacingAndGlyphs" xml:space="preserve">TOTAL MILEAGE IS 1007</text><text class="g" x="23" y="239.5" font-size="8.1" textLength="291.6" lengthAdjust="spacingAndGlyphs" xml:space="preserve">FOOD          BULLETS       CLOTHING      MISC. SUPP.   CASH</text><text class="g" x="23" y="252.4" font-size="8.1" textLength="291.6" lengthAdjust="spacingAndGlyphs" xml:space="preserve"> 43            0             70            8             200</text><text class="g" x="23" y="265.3" font-size="8.1" textLength="194.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve">DO YOU WANT TO (1) HUNT, OR (2) CONTINUE</text><text class="g" x="23" y="278.2" font-size="8.1" textLength="4.86" lengthAdjust="spacingAndGlyphs" xml:space="preserve">?</text><g class="a13 an x"><rect class="d" x="32.72" y="269.8" width="4.86" height="9.6"/></g></g><g class="a14 an"><text class="g" x="32.72" y="278.2" font-size="8.1" textLength="4.86" lengthAdjust="spacingAndGlyphs" xml:space="preserve">1</text><text class="g" x="23" y="291.1" font-size="8.1" textLength="208.98" lengthAdjust="spacingAndGlyphs" xml:space="preserve">TOUGH---YOU NEED MORE BULLETS TO GO HUNTING</text><text class="g" x="23" y="304" font-size="8.1" textLength="194.4" lengthAdjust="spacingAndGlyphs" xml:space="preserve">DO YOU WANT TO (1) HUNT, OR (2) CONTINUE</text><rect class="d" x="23" y="308.5" width="4.86" height="9.6"/></g></g>
+<path class="f50" d="M426 128H798V12H794V128Z"/>
+<path class="i" d="M422 8H794V128H422Z"/>
+<path class="i" d="M422 24L794 24"/>
+<path class="k" d="M429 12H437V20H429Z"/>
+<path class="h" d="M446 12.5L583.91 12.5"/>
+<path class="h" d="M632.09 12.5L787 12.5"/>
+<path class="h" d="M446 15.5L583.91 15.5"/>
+<path class="h" d="M632.09 15.5L787 15.5"/>
+<path class="h" d="M446 18.5L583.91 18.5"/>
+<path class="h" d="M632.09 18.5L787 18.5"/>
+<text class="t" x="608" y="19.8" font-size="9.24" fill-opacity="1" text-anchor="middle">CONKY</text>
+<g class="a22 an"><g class="a16 an"><circle class="s" cx="442" cy="38.5" r="4.6"/>
+<path class="i" d="M440 38.7L441.4 40.2L444.2 36.9"/><text class="m" x="455" y="41" font-size="9" text-anchor="start" xml:space="preserve">screen changed</text></g><g class="a17 an"><path class="k" d="M442 43.6L442 49.3"/><circle class="s" cx="442" cy="54" r="4.6"/>
+<path class="i" d="M440 54.2L441.4 55.7L444.2 52.4"/><text class="m" x="455" y="56.5" font-size="9" text-anchor="start" xml:space="preserve">Ma read pattern "The Art of War"</text></g><g class="a18 an"><path class="k" d="M442 59.1L442 64.8"/><circle class="s" cx="442" cy="69.5" r="4.6"/>
+<path class="i" d="M440 69.7L441.4 71.2L444.2 67.9"/><text class="m" x="455" y="72" font-size="9" text-anchor="start" xml:space="preserve">Jed wants to hunt</text></g><g class="a19 an"><path class="k" d="M442 74.6L442 80.3"/><rect x="450" y="78" width="263" height="13" fill="#F4C430"/><path class="s" d="M437.4 80.9H446.6V90.1H437.4Z"/>
+<path class="i" d="M439.8 83.3L444.2 87.7"/>
+<path class="i" d="M439.8 87.7L444.2 83.3"/><text class="m" x="455" y="87.5" font-size="9" text-anchor="start" xml:space="preserve" style="fill:#1E1E1E">refused: house rule, no hunting above 100 food</text></g><g class="a20 an"><path class="k" d="M442 90.1L442 95.8"/><circle class="s" cx="442" cy="100.5" r="4.6"/>
+<path class="i" d="M440 100.7L441.4 102.2L444.2 98.9"/><text class="m" x="455" y="103" font-size="9" text-anchor="start" xml:space="preserve">Ma: we push on. Sorry, Jed.</text></g><g class="a21 an"><path class="k" d="M442 105.6L442 111.3"/><circle class="s" cx="442" cy="116" r="4.6"/>
+<path class="i" d="M440 116.2L441.4 117.7L444.2 114.4"/><text class="m" x="455" y="118.5" font-size="9" text-anchor="start" xml:space="preserve">hands typed 2</text></g></g>
+<g class="a28 an x"><g class="a23 an"><circle class="s" cx="442" cy="38.5" r="4.6"/>
+<path class="i" d="M440 38.7L441.4 40.2L444.2 36.9"/><text class="m" x="455" y="41" font-size="9" text-anchor="start" xml:space="preserve">screen changed</text></g><g class="a24 an"><path class="k" d="M442 43.6L442 49.3"/><circle class="s" cx="442" cy="54" r="4.6"/>
+<path class="i" d="M440 54.2L441.4 55.7L444.2 52.4"/><text class="m" x="455" y="56.5" font-size="9" text-anchor="start" xml:space="preserve">Ma read pattern "The Art of War"</text></g><g class="a25 an"><path class="k" d="M442 59.1L442 64.8"/><circle class="s" cx="442" cy="69.5" r="4.6"/>
+<path class="i" d="M440 69.7L441.4 71.2L444.2 67.9"/><text class="m" x="455" y="72" font-size="9" text-anchor="start" xml:space="preserve">Ma: circle the wagons</text></g><g class="a26 an"><path class="k" d="M442 74.6L442 80.3"/><circle class="s" cx="442" cy="85" r="4.6"/>
+<path class="i" d="M440 85.2L441.4 86.7L444.2 83.4"/><text class="m" x="455" y="87.5" font-size="9" text-anchor="start" xml:space="preserve">hands typed 4</text></g><g class="a27 an"><path class="k" d="M442 90.1L442 95.8"/><circle class="s" cx="442" cy="100.5" r="4.6"/>
+<path class="i" d="M440 100.7L441.4 102.2L444.2 98.9"/><text class="m" x="455" y="103" font-size="9" text-anchor="start" xml:space="preserve">hands typed WHAM</text></g></g>
+<g class="a34 an x"><g class="a29 an"><circle class="s" cx="442" cy="38.5" r="4.6"/>
+<path class="i" d="M440 38.7L441.4 40.2L444.2 36.9"/><text class="m" x="455" y="41" font-size="9" text-anchor="start" xml:space="preserve">screen changed</text></g><g class="a30 an"><path class="k" d="M442 43.6L442 49.3"/><circle class="s" cx="442" cy="54" r="4.6"/>
+<path class="i" d="M440 54.2L441.4 55.7L444.2 52.4"/><text class="m" x="455" y="56.5" font-size="9" text-anchor="start" xml:space="preserve">Jed wants to hunt</text></g><g class="a31 an"><path class="k" d="M442 59.1L442 64.8"/><circle class="s" cx="442" cy="69.5" r="4.6"/>
+<path class="i" d="M440 69.7L441.4 71.2L444.2 67.9"/><text class="m" x="455" y="72" font-size="9" text-anchor="start" xml:space="preserve">allowed: house rule, food is 94</text></g><g class="a32 an"><path class="k" d="M442 74.6L442 80.3"/><circle class="s" cx="442" cy="85" r="4.6"/>
+<path class="i" d="M440 85.2L441.4 86.7L444.2 83.4"/><text class="m" x="455" y="87.5" font-size="9" text-anchor="start" xml:space="preserve">hands typed 1</text></g><g class="a33 an"><path class="k" d="M442 90.1L442 95.8"/><circle class="s" cx="442" cy="100.5" r="4.6"/>
+<path class="i" d="M440 100.7L441.4 102.2L444.2 98.9"/><text class="m" x="455" y="103" font-size="9" text-anchor="start" xml:space="preserve">hands typed BANG</text></g></g>
+<g class="a40 an x"><g class="a35 an"><circle class="s" cx="442" cy="38.5" r="4.6"/>
+<path class="i" d="M440 38.7L441.4 40.2L444.2 36.9"/><text class="m" x="455" y="41" font-size="9" text-anchor="start" xml:space="preserve">screen changed</text></g><g class="a36 an"><path class="k" d="M442 43.6L442 49.3"/><circle class="s" cx="442" cy="54" r="4.6"/>
+<path class="i" d="M440 54.2L441.4 55.7L444.2 52.4"/><text class="m" x="455" y="56.5" font-size="9" text-anchor="start" xml:space="preserve">Doc counted the bullets</text></g><g class="a37 an"><path class="k" d="M442 59.1L442 64.8"/><circle class="s" cx="442" cy="69.5" r="4.6"/>
+<path class="i" d="M440 69.7L441.4 71.2L444.2 67.9"/><text class="m" x="455" y="72" font-size="9" text-anchor="start" xml:space="preserve">Jed wants to hunt</text></g><g class="a38 an"><path class="k" d="M442 74.6L442 80.3"/><circle class="s" cx="442" cy="85" r="4.6"/>
+<path class="i" d="M440 85.2L441.4 86.7L444.2 83.4"/><text class="m" x="455" y="87.5" font-size="9" text-anchor="start" xml:space="preserve">hands typed 1</text></g><g class="a39 an"><path class="k" d="M442 90.1L442 95.8"/><circle class="s" cx="442" cy="100.5" r="4.6"/>
+<path class="i" d="M440 100.7L441.4 102.2L444.2 98.9"/><text class="m" x="455" y="103" font-size="9" text-anchor="start" xml:space="preserve">Ma: we push on</text></g></g>
+<path class="f50" d="M426 322H798V148H794V322Z"/>
+<path class="i" d="M422 144H794V322H422Z"/>
+<path class="i" d="M422 160L794 160"/>
+<path class="k" d="M429 148H437V156H429Z"/>
+<path class="h" d="M446 148.5L587.32 148.5"/>
+<path class="h" d="M628.68 148.5L787 148.5"/>
+<path class="h" d="M446 151.5L587.32 151.5"/>
+<path class="h" d="M628.68 151.5L787 151.5"/>
+<path class="h" d="M446 154.5L587.32 154.5"/>
+<path class="h" d="M628.68 154.5L787 154.5"/>
+<text class="t" x="608" y="155.8" font-size="9.24" fill-opacity="1" text-anchor="middle">A2UI</text>
+<path class="k" d="M432 167H514V215H432Z"/>
+<text class="t" x="439" y="180" font-size="8.4" fill-opacity="1" text-anchor="start">MA</text>
+<path class="f25" d="M474 196a11 11 0 1 0 22 0a11 11 0 1 0 -22 0ZM478.6 195a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0ZM486.6 195a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0Z"/>
+<path class="s" d="M474 196a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/>
+<circle class="d" cx="481" cy="195" r="1.1"/>
+<circle class="d" cx="489" cy="195" r="1.1"/>
+<path class="k" d="M482 201Q485 203 488 201"/>
+<path class="f50" d="M480.8 182a4.2 4.2 0 1 0 8.4 0a4.2 4.2 0 1 0 -8.4 0Z"/>
+<path class="s" d="M480.8 182a4.2 4.2 0 1 0 8.4 0a4.2 4.2 0 1 0 -8.4 0Z"/>
+<path class="k" d="M522 167H604V215H522Z"/>
+<text class="t" x="529" y="180" font-size="8.4" fill-opacity="1" text-anchor="start">JED</text>
+<path class="f25" d="M564 196a11 11 0 1 0 22 0a11 11 0 1 0 -22 0ZM568.6 195a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0ZM576.6 195a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0Z"/>
+<path class="s" d="M564 196a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/>
+<circle class="d" cx="571" cy="195" r="1.1"/>
+<circle class="d" cx="579" cy="195" r="1.1"/>
+<path class="k" d="M572 201Q575 203 578 201"/>
+<path class="d" d="M564 193A11 11 0 0 1 586 193Z"/>
+<path class="i" d="M573 193L591 193"/>
+<path class="k" d="M612 167H694V215H612Z"/>
+<text class="t" x="619" y="180" font-size="8.4" fill-opacity="1" text-anchor="start">DOC</text>
+<path class="f12" d="M654 196a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/>
+<path class="s" d="M654 196a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/>
+<circle class="k" cx="661" cy="195" r="3.2"/>
+<circle class="k" cx="669" cy="195" r="3.2"/>
+<path class="k" d="M664.2 195L665.8 195"/>
+<circle class="d" cx="661" cy="195" r="1"/>
+<circle class="d" cx="669" cy="195" r="1"/>
+<path class="k" d="M662 201Q665 203 668 201"/>
+<path class="k" d="M656 189Q665 179 674 189"/>
+<path class="k" d="M702 167H784V215H702Z"/>
+<text class="t" x="709" y="180" font-size="8.4" fill-opacity="1" text-anchor="start">TULLY</text>
+<path class="f50" d="M744 196a11 11 0 1 0 22 0a11 11 0 1 0 -22 0ZM748.6 195a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0ZM756.6 195a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0Z"/>
+<path class="s" d="M744 196a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/>
+<circle class="d" cx="751" cy="195" r="1.1"/>
+<circle class="d" cx="759" cy="195" r="1.1"/>
+<path class="k" d="M752 201Q755 203 758 201"/>
+<circle class="d" cx="747" cy="185" r="2.6"/>
+<circle class="d" cx="763" cy="185" r="2.6"/>
+<path class="f25" d="M758 224C761 231 767 235 766 242C765 247 761 249 758 249C755 249 751 247 750 242C749 236 755 233 758 224Z"/>
+<path class="s" d="M758 224C761 231 767 235 766 242C765 247 761 249 758 249C755 249 751 247 750 242C749 236 755 233 758 224Z"/>
+<path class="d" d="M758 237C760 241 762 243 761 246Q758 249 755 246C754 243 757 241 758 237Z"/>
+<path class="i" d="M745 251L771 255"/>
+<path class="i" d="M745 255L771 251"/>
+<path class="k" d="M432 258H784V294H432Z"/>
+<text class="t" x="440" y="271" font-size="7.14" fill-opacity="1" text-anchor="start">FOOD</text>
+<path class="k" d="M440 277H502V286H440Z"/>
+<text class="t" x="557.33" y="271" font-size="7.14" fill-opacity="1" text-anchor="start">BULLETS</text>
+<path class="k" d="M557.33 277H619.33V286H557.33Z"/>
+<text class="t" x="674.67" y="271" font-size="7.14" fill-opacity="1" text-anchor="start">MILES</text>
+<path class="k" d="M674.67 277H736.67V286H674.67Z"/>
+<circle class="i" cx="771" cy="270" r="7"/>
+<text class="sn" x="771" y="273.4" font-size="10" text-anchor="middle" font-weight="700">?</text>
+<g class="a44 an"><g class="a41 an"><path class="a" d="M432 167H514V215H432Z"/><path class="f25" d="M440 277H460.15V286H440Z"/>
+<path class="s" d="M440 277H460.15V286H440Z"/><text class="sn" x="509" y="285.4" font-size="9.5" text-anchor="start">130</text><path class="f25" d="M557.33 277H609V286H557.33Z"/>
+<path class="s" d="M557.33 277H609V286H557.33Z"/><text class="sn" x="626.33" y="285.4" font-size="9.5" text-anchor="start">500</text><text class="sn" x="743.67" y="285.4" font-size="9.5" text-anchor="start">0</text></g><g class="a42 an"><path class="k" d="M449 226H468L473 219L478 226H522V248H449Z"/><text class="sn" x="485.5" y="240.6" font-size="9.5" text-anchor="middle">we push on</text></g><g class="a43 an"><path class="a" d="M432 300H784V318H432Z"/><text class="sn" x="608" y="312.4" font-size="9.5" text-anchor="middle">Ma read "The Art of War"</text></g></g>
+<g class="a48 an x"><g class="a45 an"><path class="a" d="M432 167H514V215H432Z"/><path class="f25" d="M440 277H457.36V286H440Z"/>
+<path class="s" d="M440 277H457.36V286H440Z"/><text class="sn" x="509" y="285.4" font-size="9.5" text-anchor="start">112</text><path class="f25" d="M557.33 277H609V286H557.33Z"/>
+<path class="s" d="M557.33 277H609V286H557.33Z"/><text class="sn" x="626.33" y="285.4" font-size="9.5" text-anchor="start">500</text><path class="f25" d="M674.67 277H680.44V286H674.67Z"/>
+<path class="s" d="M674.67 277H680.44V286H674.67Z"/><text class="sn" x="743.67" y="285.4" font-size="9.5" text-anchor="start">190</text></g><g class="a46 an"><path class="k" d="M449 226H468L473 219L478 226H559.1V248H449Z"/><text class="sn" x="504.05" y="240.6" font-size="9.5" text-anchor="middle">circle the wagons</text></g><g class="a47 an"><path class="a" d="M432 300H784V318H432Z"/><text class="sn" x="608" y="312.4" font-size="9.5" text-anchor="middle">Ma read "The Art of War"</text></g></g>
+<g class="a52 an x"><g class="a49 an"><path class="a" d="M522 167H604V215H522Z"/><path class="f25" d="M440 277H454.57V286H440Z"/>
+<path class="s" d="M440 277H454.57V286H440Z"/><text class="sn" x="509" y="285.4" font-size="9.5" text-anchor="start">94</text><path class="f25" d="M557.33 277H600.73V286H557.33Z"/>
+<path class="s" d="M557.33 277H600.73V286H557.33Z"/><text class="sn" x="626.33" y="285.4" font-size="9.5" text-anchor="start">420</text><path class="f25" d="M674.67 277H685.82V286H674.67Z"/>
+<path class="s" d="M674.67 277H685.82V286H674.67Z"/><text class="sn" x="743.67" y="285.4" font-size="9.5" text-anchor="start">367</text></g><g class="a50 an"><path class="k" d="M539 226H558L563 219L568 226H606.7V248H539Z"/><text class="sn" x="572.85" y="240.6" font-size="9.5" text-anchor="middle">here goes</text></g><g class="a51 an"><path class="a" d="M432 300H784V318H432Z"/><text class="sn" x="608" y="312.4" font-size="9.5" text-anchor="middle">Jed got a big one</text></g></g>
+<g class="a56 an x"><g class="a53 an"><path class="a" d="M522 167H604V215H522Z"/><path class="f25" d="M440 277H446.67V286H440Z"/>
+<path class="s" d="M440 277H446.67V286H440Z"/><text class="sn" x="509" y="285.4" font-size="9.5" text-anchor="start">43</text><text class="sn" x="626.33" y="285.4" font-size="9.5" text-anchor="start">0</text><path class="f25" d="M674.67 277H705.27V286H674.67Z"/>
+<path class="s" d="M674.67 277H705.27V286H674.67Z"/><text class="sn" x="743.67" y="285.4" font-size="9.5" text-anchor="start">1007</text></g><g class="a54 an"><path class="k" d="M539 226H558L563 219L568 226H638.5V248H539Z"/><text class="sn" x="588.75" y="240.6" font-size="9.5" text-anchor="middle">no bullets left</text></g><g class="a55 an"><path class="a" d="M432 300H784V318H432Z"/><text class="sn" x="608" y="312.4" font-size="9.5" text-anchor="middle">Doc counted the bullets</text></g></g>
+<path class="z" d="M386 48L413 48"/>
+<path class="i" d="M407.81 44.49L415 48L407.81 51.51"/>
+<path class="z" d="M415 82L388 82"/>
+<path class="i" d="M393.19 85.51L386 82L393.19 78.49"/>
+<text class="t" x="400.5" y="96" font-size="6.72" fill-opacity="1" text-anchor="middle">KEYS</text>
+<path class="z" d="M608 131L608 139"/>
+<path class="i" d="M611.51 133.81L608 141L604.49 133.81"/>
+<text class="t" x="794" y="330" font-size="6.72" fill-opacity="1" text-anchor="end">GAME SCREENS REAL · REST SCHEMATIC</text>
 </svg>
