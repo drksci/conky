@@ -20,7 +20,7 @@ From the [README](../../README.md) and [design](../design.md):
 
 ## Unverified
 
-- CI has not yet run successfully on GitHub, because hosted runners were not being allocated to the repository. The checks pass locally.
+- There is no hosted CI; checks are run locally before each push. See [decision 0017](../decisions/0017-no-hosted-ci-yet.md).
 - No claim here comes from an unscripted benchmark run; none has been made.
 
 ## Known gaps

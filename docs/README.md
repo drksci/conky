@@ -24,6 +24,7 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 - [decisions/0014-lead-and-workers.md](decisions/0014-lead-and-workers.md): Lead and workers
 - [decisions/0015-open-questions.md](decisions/0015-open-questions.md): Open design questions
 - [decisions/0016-principles-as-rules.md](decisions/0016-principles-as-rules.md): Principles as rules
+- [decisions/0017-no-hosted-ci-yet.md](decisions/0017-no-hosted-ci-yet.md): No hosted CI yet
 
 ## Ideas
 

@@ -2,8 +2,6 @@
 
 A small Python runtime in which every actor, tool, data store and rule is a living Markdown page.
 
-[![CI](https://github.com/drksci/conky/actions/workflows/ci.yml/badge.svg)](https://github.com/drksci/conky/actions/workflows/ci.yml)
-
 > [!WARNING]
 > Pre-alpha. This builds the first thin path only. Interfaces and file formats will change.
 

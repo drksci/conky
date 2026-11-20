@@ -12,6 +12,8 @@ Any rule can be challenged. Change it here first, with the reason, record it in 
 ruff check . && ruff format --check . && pytest && python scripts/check_docs.py
 ```
 
+Run this before every push. There is no hosted CI yet; see `docs/decisions/0017-no-hosted-ci-yet.md`.
+
 ## Truth
 
 - What is enforced is the code and its passing tests. `docs/design.md` describes the model. `docs/gemini-osi-stack/` is source material: never edit it, never treat it as a requirement. (review)
@@ -73,4 +75,4 @@ An idea states its rung wherever it is mentioned, and climbs one rung at a time.
 ## Working here
 
 - The lead thinks, decides and reviews. Edits go to economical workers with a precise brief. (review)
-- Small changes, each leaving the checks green. (check: CI)
+- Small changes, each leaving the checks green. (check: the command above, run before every push)

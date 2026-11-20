@@ -10,7 +10,7 @@ source: operator
 
 ## Decision
 
-Project documentation lives in the repository under `docs/`, structured and checked in CI, not in a wiki.
+Project documentation lives in the repository under `docs/`, structured and checked locally before every push, not in a wiki.
 
 ## Basis
 
@@ -18,5 +18,5 @@ Operator asked for maintained formal docs wherever is easiest. Architect chose t
 
 ## Consequences
 
-- `scripts/check_docs.py` checks frontmatter and links in CI.
+- `scripts/check_docs.py` checks frontmatter and links locally before every push.
 - Docs change in the same change as the code they describe.
