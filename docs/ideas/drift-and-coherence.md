@@ -3,7 +3,7 @@ kind: idea
 title: Drift and coherence
 status: idea
 date: 2026-11-20
-source: archive turn 57
+source: earlier design conversation, turn 57 (not in this repository)
 ---
 
 # Drift and coherence

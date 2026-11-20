@@ -171,7 +171,7 @@ There is no hosted CI. The checks are run locally before each push ([decision 00
 
 ```bash
 pip install -e '.[dev]'
-ruff check . && ruff format --check . && pytest && python scripts/check_docs.py
+scripts/check
 ```
 
 ## Licence

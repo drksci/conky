@@ -19,7 +19,7 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 - [decisions/0009-no-debt-no-down-migrations.md](decisions/0009-no-debt-no-down-migrations.md): No debt, no down-migrations
 - [decisions/0010-evidence-not-scripts.md](decisions/0010-evidence-not-scripts.md): Evidence, not scripts
 - [decisions/0011-benchmark-shape.md](decisions/0011-benchmark-shape.md): Benchmark shape
-- [decisions/0012-archive-and-rungs.md](decisions/0012-archive-and-rungs.md): Archive and rungs
+- [decisions/0012-archive-and-rungs.md](decisions/0012-archive-and-rungs.md): Ideas climb rungs
 - [decisions/0013-docs-in-repo.md](decisions/0013-docs-in-repo.md): Docs live in the repository
 - [decisions/0014-lead-and-workers.md](decisions/0014-lead-and-workers.md): Lead and workers
 - [decisions/0015-open-questions.md](decisions/0015-open-questions.md): Open design questions
@@ -30,6 +30,8 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 - [decisions/0020-design-authority.md](decisions/0020-design-authority.md): Design authority
 - [decisions/0021-git-is-the-store.md](decisions/0021-git-is-the-store.md): Git is the store
 - [decisions/0022-data-beside-pages.md](decisions/0022-data-beside-pages.md): Data beside pages
+- [decisions/0023-fresh-cut.md](decisions/0023-fresh-cut.md): Fresh cut
+- [decisions/0024-working-practices.md](decisions/0024-working-practices.md): Working practices
 
 ## Ideas
 
@@ -42,9 +44,11 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 - [ideas/learned-reactions.md](ideas/learned-reactions.md): Learned reactions
 - [ideas/ledger.md](ideas/ledger.md): Ledger
 - [ideas/measures.md](ideas/measures.md): Measures
+- [ideas/obsidian-view.md](ideas/obsidian-view.md): Obsidian view
 - [ideas/patterns.md](ideas/patterns.md): Patterns
 - [ideas/tables.md](ideas/tables.md): Tables
 - [ideas/thought-to-change.md](ideas/thought-to-change.md): Thought to change
+- [ideas/vault-splitting.md](ideas/vault-splitting.md): Vault splitting
 
 ## Essays
 
@@ -63,7 +67,3 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 
 - [project/roadmap.md](project/roadmap.md): Roadmap
 - [project/status.md](project/status.md): Status
-
-## Archive
-
-- [gemini-osi-stack/README.md](gemini-osi-stack/README.md): immutable archive of a design conversation. Source material only.

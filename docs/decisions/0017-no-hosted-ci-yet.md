@@ -10,10 +10,10 @@ source: operator
 
 ## Decision
 
-There is no hosted CI for now. The checks (`ruff check`, `ruff format --check`, `pytest` and `scripts/check_docs.py`) are run locally with one command before every push:
+There is no hosted CI for now. The checks are run locally with one command before every push:
 
 ```bash
-ruff check . && ruff format --check . && pytest && python scripts/check_docs.py
+scripts/check
 ```
 
 The GitHub Actions workflow is removed.

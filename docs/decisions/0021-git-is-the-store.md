@@ -31,6 +31,9 @@ What Git replaces:
 ## Consequences
 
 - Lower write throughput, in the order of tens of writes per second. High-frequency data belongs in data files ([decision 0022](0022-data-beside-pages.md)).
+- A Git host is a backup and a way to share, not a live database. A vault commits locally and pushes in batches.
+- Data that changes at high frequency goes in data files beside the page, and only meaningful changes are committed.
+- A vault that grows too large is split; see [vault-splitting](../ideas/vault-splitting.md).
 - Git and `ssh-keygen` are required, and conky checks for them when a vault is opened.
 - The `cryptography` dependency is gone.
 - Rewriting history is possible locally. It is detectable only against another copy, such as a remote or a clone.

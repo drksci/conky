@@ -3,7 +3,7 @@ kind: idea
 title: Thought to change
 status: idea
 date: 2026-11-20
-source: archive turn 44, criticised in turn 51
+source: earlier design conversation, turn 44, criticised in turn 51 (not in this repository)
 ---
 
 # Thought to change

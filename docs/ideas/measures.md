@@ -3,7 +3,7 @@ kind: idea
 title: Measures
 status: enforced
 date: 2026-11-20
-source: archive turn 36
+source: earlier design conversation, turn 36 (not in this repository)
 ---
 
 # Measures

@@ -3,7 +3,7 @@ kind: idea
 title: Background minds
 status: idea
 date: 2026-11-20
-source: archive turn 35
+source: earlier design conversation, turn 35 (not in this repository)
 ---
 
 # Background minds

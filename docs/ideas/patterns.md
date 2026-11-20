@@ -44,4 +44,4 @@ Given a golden of double-entry bookkeeping, the maker produces a pattern that, w
 
 - Agent skills: named, lazily loaded recipes that an agent reads when it needs them.
 - Skill generators: tools that turn examples and intent into a reusable skill.
-- The earlier archive idea of patterns promoted by agreement (archive turn 42).
+- The earlier idea of patterns promoted by agreement (earlier design conversation, turn 42, not in this repository).

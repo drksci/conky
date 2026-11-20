@@ -9,14 +9,14 @@ Each rule ends with how it is held. **check** names what fails when the rule is 
 Any rule can be challenged. Change it here first, with the reason, record it in `docs/decisions/`, then change the code.
 
 ```bash
-ruff check . && ruff format --check . && pytest && python scripts/check_docs.py
+scripts/check
 ```
 
 Run this before every push. There is no hosted CI yet; see `docs/decisions/0017-no-hosted-ci-yet.md`.
 
 ## Truth
 
-- What is enforced is the code and its passing tests. `docs/design.md` describes the model. `docs/gemini-osi-stack/` is source material: never edit it, never treat it as a requirement. (review)
+- What is enforced is the code and its passing tests. `docs/design.md` describes the model. Nothing else is a requirement. (review)
 - Say plainly what is unbuilt or unverified, in the change and in `docs/project/status.md`. (review)
 
 ## The model
@@ -79,4 +79,8 @@ An idea states its rung wherever it is mentioned, and climbs one rung at a time.
 ## Working here
 
 - The lead thinks, decides and reviews. Edits go to economical workers with a precise brief. (review)
-- Small changes, each leaving the checks green. (check: the command above, run before every push)
+- Work is taken from the step marked `next` in `docs/project/roadmap.md`; there is exactly one. (check: `scripts/check_docs.py`)
+- Run `scripts/check` before every push; the pre-push hook does it for you once enabled. (check: `scripts/hooks/pre-push`)
+- Commit subjects are `<type>: <summary>` with type feat, fix, docs, test, refactor or chore. (check: `scripts/check_commits.py`)
+- A change is done when the checks pass, the docs and status match the code, a decision is recorded if the design moved, and the changelog has its line. (review)
+- Small changes, each leaving the checks green. (check: `scripts/check`)

@@ -14,7 +14,7 @@ Nothing already built has to stay. Existing work is reference, not an obligation
 
 ## Basis
 
-Operator. The earlier Rust code was stand-in scaffolding: guard checks were string matches, nothing ran in a sandbox, and keys were ephemeral. It was deleted and remains in Git history.
+Operator. The earlier Rust code was stand-in scaffolding: guard checks were string matches, nothing ran in a sandbox, and keys were ephemeral. It was deleted and is not carried into the repository's current history ([decision 0023](0023-fresh-cut.md)).
 
 ## Consequences
 

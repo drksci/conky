@@ -3,7 +3,7 @@ kind: idea
 title: Arcs
 status: idea
 date: 2026-11-20
-source: archive turn 34
+source: earlier design conversation, turn 34 (not in this repository)
 ---
 
 # Arcs

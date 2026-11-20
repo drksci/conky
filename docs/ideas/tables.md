@@ -3,7 +3,7 @@ kind: idea
 title: Tables
 status: idea
 date: 2026-11-20
-source: archive turn 24
+source: earlier design conversation, turn 24 (not in this repository)
 ---
 
 # Tables

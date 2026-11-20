@@ -3,7 +3,7 @@ kind: idea
 title: Auto-linking
 status: idea
 date: 2026-11-20
-source: archive turn 56
+source: earlier design conversation, turn 56 (not in this repository)
 ---
 
 # Auto-linking

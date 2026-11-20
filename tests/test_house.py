@@ -1,5 +1,6 @@
 """House rules: the plain vocabulary and no fix-later notes."""
 
+import importlib.util
 import re
 from pathlib import Path
 
@@ -60,3 +61,28 @@ def test_retired_words_do_not_appear():
 def test_no_fix_later_notes():
     pattern = re.compile(r"\b(" + "|".join(MARKERS) + r")\b")
     assert find(pattern, marker_files()) == []
+
+
+def load_check_commits():
+    path = ROOT / "scripts" / "check_commits.py"
+    spec = importlib.util.spec_from_file_location("check_commits", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_commit_subject_matching():
+    ok = load_check_commits().subject_ok
+    assert ok("feat: add a thing")
+    assert ok("chore: x" + "y" * 60)
+    assert not ok("Add a thing")
+    assert not ok("feature: add a thing")
+    assert not ok("fix: Capital start")
+    assert not ok("fix: trailing full stop.")
+    assert not ok("fix:no space")
+    assert not ok("docs: " + "y" * 67)
+
+
+def test_changelog_has_unreleased_section():
+    text = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    assert re.search(r"^## \[Unreleased\]$", text, re.MULTILINE)

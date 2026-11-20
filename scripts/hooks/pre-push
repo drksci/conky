@@ -1,0 +1,4 @@
+#!/bin/sh
+# Block the push if any check fails. Enable with: git config core.hooksPath scripts/hooks
+set -e
+exec "$(git rev-parse --show-toplevel)/scripts/check"

@@ -3,7 +3,7 @@ kind: idea
 title: Ledger
 status: idea
 date: 2026-11-20
-source: archive turn 11
+source: earlier design conversation, turn 11 (not in this repository)
 ---
 
 # Ledger

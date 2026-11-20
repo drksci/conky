@@ -14,7 +14,7 @@ Benchmark results come only from unscripted runs, with the run count and raw tra
 
 ## Basis
 
-Architect finding: the earlier lemonade-stand demo printed hard-coded numbers. It was removed.
+Architect finding: the earlier scripted demo printed hard-coded numbers. It was removed.
 
 ## Consequences
 

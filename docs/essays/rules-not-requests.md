@@ -10,7 +10,7 @@ source: architect
 
 ## What prompted it
 
-The earlier scaffold of this project, written in Rust, passed its own tests and reported benchmark numbers. When we looked closely, neither meant what it appeared to mean. The guard checks it called proofs were string matches. A lemonade-stand demo printed hard-coded numbers instead of measuring a run. Nothing ran in a sandbox, and the keys were ephemeral. The code was deleted ([decision 0001](../decisions/0001-clean-slate.md)) and the episode became a rule about honesty ([decision 0010](../decisions/0010-evidence-not-scripts.md)). This essay is about the larger lesson: where a constraint lives decides whether it holds.
+The earlier prototype of this project passed its own tests and reported benchmark numbers. When we looked closely, neither meant what it appeared to mean. The guard checks it called proofs were string matches. A scripted demo printed hard-coded numbers instead of measuring a run. Nothing ran in a sandbox, and the keys were ephemeral. The code was deleted ([decision 0001](../decisions/0001-clean-slate.md)) and the episode became a rule about honesty ([decision 0010](../decisions/0010-evidence-not-scripts.md)). This essay is about the larger lesson: where a constraint lives decides whether it holds.
 
 ## The problem
 

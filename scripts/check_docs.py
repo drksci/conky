@@ -10,7 +10,6 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
-ARCHIVE = DOCS / "gemini-osi-stack"
 KEYS = ("kind", "title", "status", "date", "source")
 FOLDER_KIND = {
     "decisions": "decision",
@@ -28,14 +27,15 @@ STATUSES = {
     "research": {"current", "draft"},
 }
 LINK = re.compile(r"(?<!!)\[[^\]]*\]\(([^)\s]+)\)")
+STEP = re.compile(r"^- (R\d+) \((done|next|later)\): ", re.MULTILINE)
 DECISION_NAME = re.compile(r"^(\d{4})-[a-z0-9]+(-[a-z0-9]+)*\.md$")
 
 
 def checked_documents() -> list[Path]:
-    """Every Markdown file under docs/ except the archive and the index."""
+    """Every Markdown file under docs/ except the index."""
     found = []
     for path in sorted(DOCS.rglob("*.md")):
-        if ARCHIVE in path.parents or path == DOCS / "README.md":
+        if path == DOCS / "README.md":
             continue
         found.append(path)
     return found
@@ -68,6 +68,23 @@ def check_links(path: Path, text: str) -> list[str]:
         file_part = target.split("#", 1)[0]
         if file_part and not (path.parent / file_part).resolve().exists():
             problems.append(f"{path.relative_to(ROOT)}: broken link {target}")
+    return problems
+
+
+def check_roadmap(text: str) -> list[str]:
+    """The roadmap has steps with unique ids and exactly one step marked next."""
+    steps = STEP.findall(text)
+    problems = []
+    if not steps:
+        problems.append("docs/project/roadmap.md: no steps found")
+    ids = [step_id for step_id, _ in steps]
+    for step_id in sorted({i for i in ids if ids.count(i) > 1}):
+        problems.append(f"docs/project/roadmap.md: duplicate id {step_id}")
+    marked = [step_id for step_id, state in steps if state == "next"]
+    if steps and len(marked) != 1:
+        problems.append(
+            f"docs/project/roadmap.md: exactly one step must be next, found {len(marked)}"
+        )
     return problems
 
 
@@ -119,6 +136,12 @@ def check() -> list[str]:
     for path in documents:
         if path.resolve() not in linked:
             problems.append(f"docs/README.md: does not link {path.relative_to(ROOT)}")
+
+    roadmap = DOCS / "project" / "roadmap.md"
+    if roadmap.exists():
+        problems += check_roadmap(roadmap.read_text(encoding="utf-8"))
+    else:
+        problems.append("docs/project/roadmap.md: missing")
 
     for extra in (index, ROOT / "README.md", ROOT / "CLAUDE.md"):
         if extra.exists():
