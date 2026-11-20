@@ -24,11 +24,13 @@ uvx --from git+https://github.com/drksci/conky conky demo
 <br>
 
 
-### A model in a trench coat
+### tl;dr
 
-That is most AI systems. The coat is prompts, glue code and a database nobody dares open. They demo beautifully. Then they grow, and one day nobody can say why the thing did what it did, or move it anywhere else.
+Every AI agent project turns into the same thing eventually: a pile of prompts, some glue code and a database nobody wants to touch. Six months in, nobody can tell you why it did what it did, and moving it anywhere is a project of its own.
 
-Conky starts from the other end. The system is a folder of pages, and the folder is the whole truth. The software has two jobs: enforce the rules and keep the history. A model is a guest who gets asked a question when the pages cannot answer it.
+Conky does it backwards. The whole system is a folder of Markdown files in Git. Every change is a signed commit. The rules get checked on every write, so they hold whether or not anyone remembers them. Pages react to each other without calling a model, and the model only gets asked when the files cannot answer.
+
+That's it. Files and Git. If you ever hate it, clone the folder and leave.
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-1-one-change.dark.svg"><img src="docs/assets/figures/fig-1-one-change.light.svg" alt="A flat line drawing, left to right: the stall's page, a stamp, a strip of history, a gate marked rules, then a dashed yellow arrow to the depot's page, which has marked a reorder." width="800"></picture></p>
 
