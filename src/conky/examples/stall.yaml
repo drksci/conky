@@ -1,0 +1,57 @@
+title: A market stall
+summary: A stall, a depot that reorders by itself, a rule that is enforced, and a page that measures itself.
+look_at: depot
+steps:
+  - say: A market is a space. It carries one rule for everything inside it. Stock is never negative.
+    write:
+      page: market
+      actor: alice
+      fields:
+        rules: ["!has(page.stock) || page.stock >= 0"]
+  - say: A stall joins the market with 40 loaves in stock. It follows the market's rule from now on.
+    write:
+      page: stall
+      actor: alice
+      fields:
+        within: market
+        stock: 40
+      body: Fresh bread.
+  - say: A depot page is set up to watch the stall. When stock falls below 10 it marks a reorder.
+    write:
+      page: depot
+      actor: alice
+      fields:
+        reorder: false
+        watch:
+          - on: stall
+            when: other.stock < 10
+            set:
+              reorder: "true"
+  - say: Someone tries to set the stall's stock to minus one. The market's rule forbids it.
+    write:
+      page: stall
+      actor: alice
+      fields:
+        stock: -1
+  - say: The stall sells down to 4 loaves. Nobody tells the depot, and it reacts on its own.
+    write:
+      page: stall
+      actor: alice
+      fields:
+        stock: 4
+  - say: A journal page keeps a measure of its own size. A large entry is not refused, and the page records its own pressure.
+    write:
+      page: journal
+      actor: alice
+      fields:
+        pressure: 0
+        watch:
+          - on: journal
+            when: "true"
+            set:
+              pressure: size / 400
+  - say: A long entry goes into the journal, and the journal measures itself again.
+    write:
+      page: journal
+      actor: alice
+      body: "Entry one. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market. This line stands in for a long day at the market."

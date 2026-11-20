@@ -46,6 +46,7 @@ Run this before every push. CI runs the same command on every pull request.
 - Look for prior art and standards before inventing, and cite what you found in the decision. (review)
 - A page reads as if a person wrote it. (review)
 - Keep people, developers and agents on the easy path: one command to start, nothing to configure before the first write, and every error says what to do next. (review)
+- The first thing a newcomer sees is one command that works. The README opens with it, then the five principles. (review)
 
 ## Evidence
 

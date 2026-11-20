@@ -9,6 +9,7 @@ from pathlib import Path
 
 import yaml
 
+from conky import demo
 from conky.errors import BadInput, VerifyFailed
 from conky.page import load_value, serialize
 from conky.vault import Vault
@@ -33,6 +34,12 @@ def _parser() -> argparse.ArgumentParser:
     sub.add_parser("log", help="print the history, oldest first")
     sub.add_parser("verify", help="check the tree, the objects, the seals and the history")
     sub.add_parser("rebuild", help="restore the working tree to the committed state")
+    demo_cmd = sub.add_parser("demo", help="build a small example vault and show it working")
+    demo_cmd.add_argument("name", nargs="?", default="stall", help="the example (default: stall)")
+    demo_cmd.add_argument(
+        "--into", default=None, help="folder to create (default: ./conky-demo-NAME)"
+    )
+    demo_cmd.add_argument("--list", action="store_true", help="list the examples")
     return parser
 
 
@@ -49,15 +56,28 @@ def _fields(pairs: list[str]) -> dict[str, object]:
     return changes
 
 
+def _now() -> str:
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def _run(args: argparse.Namespace) -> int:
+    if args.command == "demo":
+        if args.list:
+            print(demo.listing())
+        else:
+            into = Path(args.into if args.into else f"conky-demo-{args.name}")
+            keys = Path(args.keys) if args.keys else None
+            demo.build(args.name, into, keys, _now, print)
+        return 0
     if args.command == "init":
         Vault.init(args.path, args.keys)
         print(f"initialised {args.path}")
         return 0
     vault = Vault(Path(args.vault), args.keys)
     if args.command == "write":
-        at = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
-        result = vault.write(args.page, _fields(args.fields), args.body, actor=args.actor, at=at)
+        result = vault.write(
+            args.page, _fields(args.fields), args.body, actor=args.actor, at=_now()
+        )
         if not result.ok:
             print(f"refused (commit {result.id[:7]}): {result.reason}", file=sys.stderr)
             return 1

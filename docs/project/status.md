@@ -19,7 +19,8 @@ From [design](../design.md) and the [reference](../reference/vault-format.md):
 - A vault that is a Git repository: every write is a signed commit with trailers, and a refused write is an empty signed commit. Git and `ssh-keygen` are required.
 - Reactions: pages that watch other pages and write themselves, with no model call.
 - Measures: a page can watch itself, with `size` and `other_size` in watch expressions. Pressure is the first use. Nothing yet acts on pressure to relieve it.
-- `verify` (clean tree, `git fsck`, signatures from `keys/allowed_signers`, trailers, files changed), `rebuild` (restore the committed state), and a command line: `init`, `write`, `read`, `log`, `verify`, `rebuild`.
+- `verify` (clean tree, `git fsck`, signatures from `keys/allowed_signers`, trailers, files changed), `rebuild` (restore the committed state), and a command line: `init`, `write`, `read`, `log`, `verify`, `rebuild`, `demo`.
+- `conky demo`: builds a small example vault (`stall` or `team`, shipped as data in the package) with the real write path and narrates each step, including a refused write and a reaction.
 - A golden vault under `tests/golden/` that every version must keep verifying and reading.
 - CI that runs `scripts/check` on every pull request and on pushes to `main`.
 

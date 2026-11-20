@@ -8,7 +8,7 @@ source: maintainers
 
 # Command line
 
-`conky` is installed by `pip install -e '.[dev]'`. The walkthrough in [getting started](../guide/getting-started.md) uses every command.
+`conky` is installed by `pip install -e '.[dev]'`. The walkthrough in [getting started](../guide/getting-started.md) uses every command except `demo`, which has its own first section there.
 
 ```
 conky [--vault DIR] [--keys DIR] <command> ...
@@ -24,6 +24,25 @@ conky [--vault DIR] [--keys DIR] <command> ...
 Both go before the command. `init` takes the vault path as its own argument and ignores `--vault`.
 
 ## Commands
+
+### demo
+
+```
+conky demo [name] [--into PATH] [--list]
+```
+
+Builds a small example vault and narrates it. The examples are data files shipped in the package (`stall` is the default; `team` is the other). Each is a title, a one-line summary and ordered steps, and each step has a plain narration line and one write.
+
+- `name` is the example to run. `--list` prints the examples with their summaries and does nothing else.
+- `--into PATH` is the folder to create. Default: `./conky-demo-<name>`. It is an error if the path already exists.
+- Private keys go in a `keys` directory beside the vault, unless the global `--keys` is given.
+
+Each step prints its number and narration, then an indented line beginning `->` that says what happened: `written: <page>`, or `refused: <page>, because <reason>`, followed by `Then <page> changed by itself` for each reaction. The output ends with what to look at next: the vault path, the Git history command, and the `read` and `verify` commands. The output is plain text, at most 80 columns apart from paths, with no colour codes. The steps use the real write path, so the vault verifies.
+
+Errors, each on one line beginning `error: `:
+
+- `error: <path> already exists: choose another folder with --into PATH`
+- `error: no example named '<name>': run conky demo --list to see the examples`
 
 ### init
 

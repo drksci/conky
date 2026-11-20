@@ -1,0 +1,42 @@
+title: A small team
+summary: A team space where every task needs an owner, and a board that reacts when a task is done.
+look_at: board
+steps:
+  - say: A team is a space. It carries one rule for everything inside it. Every task has an owner.
+    write:
+      page: team
+      actor: alice
+      fields:
+        rules: ["!has(page.status) || page.owner != ''"]
+  - say: A board page is set up to watch the first task. When the task is done, the board counts it.
+    write:
+      page: board
+      actor: alice
+      fields:
+        done: 0
+        watch:
+          - on: task-1
+            when: other.status == 'done'
+            set:
+              done: page.done + 1
+  - say: A task is added with an owner and starts out open.
+    write:
+      page: task-1
+      actor: alice
+      fields:
+        within: team
+        status: open
+        owner: bob
+      body: Write the first draft.
+  - say: Someone tries to hand the task to nobody. The team's rule forbids it.
+    write:
+      page: task-1
+      actor: alice
+      fields:
+        owner: ""
+  - say: Bob finishes the task. Nobody updates the board, and it reacts on its own.
+    write:
+      page: task-1
+      actor: bob
+      fields:
+        status: done
