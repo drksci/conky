@@ -1,6 +1,8 @@
 <p align="center"><img src="docs/assets/conky-mark.png" alt="" width="72" height="72"></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/masthead.dark.svg"><img src="docs/assets/figures/masthead.light.svg" alt="Conky, the unharnessed harness" width="560"></picture></p>
+<h1 align="center">Conky</h1>
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/slogan.dark.svg"><img src="docs/assets/figures/slogan.light.svg" alt="The unharnessed harness" width="640"></picture></p>
 
 <p align="center">
   <img src="docs/assets/conky-hero.jpg" alt="A ventriloquist puppet in a sweater that reads conky, with the caption: You just remember I call the shots here, Bubbles." width="800">
@@ -9,7 +11,7 @@
 
 <h3 align="center">A folder that runs itself.</h3>
 
-<p align="center">People, teams, tools and rules, as pages you can read.<br>Every change signed. Every rule enforced. Most of the work done by nobody in particular.</p>
+<p align="center">An open-source agent harness where the whole AI system is Markdown pages in a Git repository.<br>People, teams, tools and rules, as pages you can read. Every change signed. Every rule enforced.<br>Most of the work done by nobody in particular.</p>
 
 <p align="center"><a href="docs/guide/concepts.md">Concepts</a> &nbsp;·&nbsp; <a href="docs/guide/getting-started.md">Getting started</a> &nbsp;·&nbsp; <a href="docs/reference/vault-format.md">Reference</a> &nbsp;·&nbsp; <a href="docs/project/roadmap.md">Roadmap</a></p>
 
