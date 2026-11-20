@@ -59,16 +59,19 @@ Conky is... different, for many reasons, but here are some:
 
 ### Topology
 
-A few parts, wrapped in layers, with the world plugging in at the edge.
+A few parts, wrapped in layers, with the world plugging in at the edge. Solid is built, dotted is planned.
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-topology.dark.svg"><img src="docs/assets/figures/fig-topology.light.svg" alt="A parts alphabet beside a cross-section of Conky: git at the centre, then pages, reflexes, spaces, characters and an outer edge where connectors, models and people plug in." width="800"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-flows.dark.svg"><img src="docs/assets/figures/fig-flows.light.svg" alt="A seven-lane swimlane of one change: a stimulus is perceived, a page is written, the rules are checked, the change is signed and appended, watchers notice, a prompt goes to a provider and the answer comes back as a write, with a refusal branch and planned steps dotted." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-archetypes.dark.svg"><img src="docs/assets/figures/fig-archetypes.light.svg" alt="One page shape wearing twelve hats: character, space, provider, screen, hands and daybook are built; tool and clock are planned; team, pattern, lens and go-between are made by a character." width="800"></picture></p>
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-who-changes.dark.svg"><img src="docs/assets/figures/fig-who-changes.light.svg" alt="Three bands: what is changed by writing a page, the small fixed runtime with its write loop, and what sits beside the vault; below them, three laws drawn on nested membranes." width="800"></picture></p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-functions.dark.svg"><img src="docs/assets/figures/fig-functions.light.svg" alt="Six definitions with small diagrams: pages are rebuilt from history, a rule is a pure test, a measure is recorded as a write, a watch turns a change into a write, a model answers a prompt built from embeds, and a lens maps both ways; then one change drawn as write, rule, seal, watch, write." width="800"></picture></p>
 
-<p align="center"><a href="docs/guide/topology.md">All six plates</a>, with archetypes, who changes what, and how the parts compose.</p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-compositions.dark.svg"><img src="docs/assets/figures/fig-compositions.light.svg" alt="Six recipes written as sums of parts: pattern, approval, budget, go-between, character and breakpoint." width="800"></picture></p>
 
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-flows.dark.svg"><img src="docs/assets/figures/fig-flows.light.svg" alt="A seven-lane swimlane of one change: a stimulus is perceived, a page is written, the rules are checked, the change is signed and appended, watchers notice, a prompt goes to a provider and the answer comes back as a write, with a refusal branch and planned steps dotted." width="800"></picture></p>
 
 <br>
 

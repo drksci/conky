@@ -41,7 +41,16 @@ A [lens](lens.md) is habits of reading and of laying out. A [learned reaction](l
 
 ## Composes from
 
-Watch entries tried in order with each guard evaluated at that moment, measures, and an answer that is pages. A slot for cases on an ask, with the rung that answered recorded on the commit, would make the ladder uniform. Whether that slot is needed or ordered watch entries are enough is to be found by building one habit by hand first ([decision 0031](../decisions/0031-build-on-bedrock.md)).
+Watch entries tried in order with each guard evaluated at that moment, measures, and an answer that is pages.
+
+**Built by hand, and it works.** `tests/test_habit.py` makes a habit from those parts with no change to the runtime: a character keeps its cases as watch entries on its own page, asks a model only when no case fits, and the answer adds the case. A situation met twice is thought about once, a new situation still goes to thought, and removing the cases changes only the cost. The model is a stand-in.
+
+**What building it found.** Two things that a slot for cases on an ask would remove, and that composition has to work around:
+
+- A case has to mark which change it handled, so the fallback knows not to ask. Marking by content goes stale. It works when the page being watched carries a turn, as a connector's screen page does. The smallest general change is to put the id of the change being reacted to in scope.
+- A question counts as settled when its prompt has not changed, even if another entry has since overwritten the answer. A case and the fallback write the same field, so a stale answer can be left in place. The smallest general change is to treat a question as settled only while its answer is still there.
+
+So the choice between ordered watch entries and a slot is now a real one, with evidence on each side. It is not yet made ([decision 0031](../decisions/0031-build-on-bedrock.md)).
 
 ## Removes
 
@@ -69,4 +78,4 @@ Some of the research the project has read points the other way: agents that impr
 - How a price is put on a warning in a unit the vault shares, and whether that unit is the same as spending.
 - What should never become a habit. A habit makes behaviour repeat, and a character is meant to differ from day to day ([decision 0020](../decisions/0020-everything-is-somebody.md)).
 
-Nothing of this is built.
+A habit has been made by hand in a test. Forecasts, the slow loop, sources on cases and warnings are not built.
