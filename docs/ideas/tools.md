@@ -30,6 +30,16 @@ Which shelves a page can see and call follows from the spaces it is within, so a
 
 The record already says who called what and why: a signed request and a signed result with the request as its cause. The activity strip in [the history is the trace](trace.md) can show "Ma used browser.screenshot" with nothing added.
 
+## A go-between, so characters never call tools
+
+Writing arguments to a tool page is machine work. A character that has to do it stops being a character and starts filling in forms. So each connector space has a go-between: an ordinary model page, a [background mind](background-minds.md), that stands between the raw pages and everyone else.
+
+- Inwards, it watches what the connector perceives and writes what a person would take from it: a few plain sentences, or the same composed screen people get ([A2UI](a2ui.md), [the compositor](compositor.md)). Characters watch that page, not the raw one. Only the go-between needs a provider that can read images.
+- Outwards, it reads what a character said in its own words, such as "we push on", and writes the request the tool expects. The request is an ordinary signed write, so the translation is on the record and a rule can refuse it ([thought to change](thought-to-change.md)).
+- Its provider is a list tried in order, from a capable model down to a small one. The last entry is no model at all: a reflex that writes a plain sentence such as "the screen changed", so the party is never blind and nothing stalls when a provider is down.
+
+Nothing new is added. The go-between is a page with watch entries, the order of providers is a field on it, and the raw pages stay readable for anyone who wants them.
+
 ## Large results
 
 A screenshot is a file kept beside the page and linked from it. A model page that embeds such a link passes the file to a provider that can read images. None of this is built. The alternatives are bytes in the history, which grows the vault with every frame, and bytes outside it with a content hash in the page, as [data beside pages](../decisions/0003-data-beside-pages.md) proposes, which keeps the vault small but leaves a replay without the pictures.
@@ -75,6 +85,7 @@ With the connector stopped and its files deleted, the vault verifies, and a new 
 1. Whole-page embeds, so a prompt can hold a page body.
 2. The connector contract restated on the terminal connector.
 3. An MCP connector over stdio.
-4. Files beside pages, and providers that read images.
-5. The browser, through an existing MCP server ([browser drivers compared](../research/browser-drivers.md)).
-6. The gatekeeper.
+4. A go-between page for a connector space, with providers tried in order and a plain-sentence reflex last.
+5. Files beside pages, and an image-reading provider for the go-between.
+6. The browser, through an existing MCP server ([browser drivers compared](../research/browser-drivers.md)).
+7. The gatekeeper.

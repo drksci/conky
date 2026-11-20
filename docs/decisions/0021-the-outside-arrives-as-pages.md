@@ -22,6 +22,7 @@ A connector brings a space into the vault. The pages it writes are what it perce
 - A character finds what it can sense and do by reading the spaces it is within. There is no registry and no tool list placed in a prompt for it.
 - What must never be called is a rule on the page or its space, evaluated by the runtime.
 - A large or binary result is a file kept beside the page and linked from it.
+- Characters do not call tools. A go-between page turns what a connector perceives into what a person would take from it, and turns a character's plain words into the request a tool expects. Its providers are tried in order and end in a reflex that needs no model.
 
 The mechanism is set out in [the outside arrives as pages](../ideas/tools.md), which stays at the rung idea until it is built.
 
