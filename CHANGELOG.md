@@ -6,6 +6,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ### Added
 
+- Cards: a playbook whose `says: live` steps a real model answers, drawn N times with `python -m bench.cards`, one row a draw kept in `rows.jsonl`. Playbooks gain the checks `rules` and `answer`, and `says: live` is an error in an ordinary playbook test. The first card is `a-keeper-binds-itself` ([cards](docs/reference/playbooks.md#cards)).
 - The order of reactions is stated: watchers of a written page are visited in order of name, each one's own reactions finishing before the next watcher, and a playbook holds it ([reactions](docs/reference/rules-and-reactions.md#reactions)).
 - An answer that a rule refuses is asked again once, with one fixed sentence naming the reason after the prompt. The second ask is caused by the refusal. When it is refused by a rule too, the entry's `otherwise` text is written, and without one the asking stops. A refusal for shape, limit or cycle is not retried ([asking a model](docs/reference/rules-and-reactions.md#when-an-answer-is-refused)).
 - `docs/project/seams.md`: every capability worth pre-empting, the place it will land, what holds that place, and what in today's code it would strain, with seven new idea pages and their roadmap steps.

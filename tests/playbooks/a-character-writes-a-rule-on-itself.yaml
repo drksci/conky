@@ -1,0 +1,30 @@
+# A character answers with a rule on its own page, and the rule then refuses an answer that breaks it.
+pages:
+  helper: {api: command, command: stand}
+  den: {cash: 80}
+  order: {}
+  keeper:
+    within: den
+    pay: 0
+    watch:
+      - on: order
+        when: "true"
+        ask:
+          provider: helper
+          writes: den
+          into: pay
+          otherwise: "0"
+          prompt: "The order reads: ![[order]] Keep 20 in cash. Answer with the amount to pay."
+steps:
+  - says: |
+      30
+      === page: keeper ===
+      ---
+      rules:
+        - "!has(page.pay) || int(page.pay) <= int(space.cash) - 20"
+      ---
+  - write: {page: order, fields: {}, body: "Pay the baker 30."}
+  - expect: {fields: {keeper.pay: "30"}, verify: true}
+  - says: "70"
+  - write: {page: order, fields: {}, body: "Pay the landlord 70."}
+  - expect: {fields: {keeper.pay: "0"}, model_calls: 3, verify: true}

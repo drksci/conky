@@ -1,7 +1,11 @@
 """Run a playbook, a short scenario in YAML. The format is in docs/reference/playbooks.md."""
 
+import re
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
+
+import celpy
 
 from conky import Vault
 from conky.git import trailers
@@ -11,14 +15,25 @@ from .conftest import AT, git
 from .test_pages import Stand
 
 SETS = ("write", "says", "expect")
+LIVE = "live"
 
 
 class Failed(AssertionError):
     """An expectation did not hold: names the playbook, the step, what was expected and found."""
 
 
-def run(path: Path, vault: Vault, stand: Stand) -> None:
-    """Build the starting pages, then play each step in order."""
+def run(
+    path: Path,
+    vault: Vault,
+    stand: Stand,
+    found: Callable[[int, list[str]], None] | None = None,
+) -> None:
+    """Build the starting pages, then play each step in order.
+
+    A step `says: live` asks a real model, so it is an error here unless found is given, which
+    is how a card runs a playbook. With found, a failed expect step is reported to it as its
+    number and the lines that failed, passing steps as no lines, and the run goes on.
+    """
     plan = load_value(path.read_text(encoding="utf-8"))
     last = None
     for page, fields in plan.get("pages", {}).items():
@@ -27,6 +42,12 @@ def run(path: Path, vault: Vault, stand: Stand) -> None:
     for number, step in enumerate(plan["steps"], start=1):
         (kind,) = step
         if kind == "says":
+            if step["says"] == LIVE and found is None:
+                raise Failed(
+                    f"{path.stem}, step {number}: says: live asks a real model, "
+                    f"which a playbook test never does: run this file as a card, "
+                    f"python -m bench.cards {path} --draws 1"
+                )
             stand.says(step["says"])
         elif kind == "write":
             put = step["write"]
@@ -38,8 +59,11 @@ def run(path: Path, vault: Vault, stand: Stand) -> None:
                 at=AT,
             )
         elif kind == "expect":
-            for found in expectations(step["expect"], vault, stand, last):
-                raise Failed(f"{path.stem}, step {number}: {found}")
+            lines = expectations(step["expect"], vault, stand, last)
+            if found is not None:
+                found(number, lines)
+            elif lines:
+                raise Failed(f"{path.stem}, step {number}: {lines[0]}")
         else:
             raise Failed(f"{path.stem}, step {number}: unknown step {kind!r}, use one of {SETS}")
 
@@ -63,6 +87,16 @@ def expectations(expect: dict[str, Any], vault: Vault, stand: Stand, last: Any) 
         elif key == "missing":
             for page in wanted:
                 check(f"{page} exists", False, (vault.pages_dir / f"{page}.md").exists())
+        elif key == "rules":
+            for page, least in wanted.items():
+                held = vault.read(page).rules if (vault.pages_dir / f"{page}.md").exists() else []
+                check(f"{page} has at least {least} rules that parse", True, parsed(held) >= least)
+        elif key == "answer":
+            for where, pattern in wanted.items():
+                page, field = where.split(".", 1)
+                got = vault.read(page).fields.get(field)
+                if not re.search(str(pattern), "" if got is None else str(got)):
+                    out.append(f"{where}: expected a match for {pattern!r}, found {got!r}")
         elif key == "refused":
             reason = None if last is None or last.ok else last.reason
             check("last write refused with", wanted, reason and reason.split(":")[0])
@@ -81,3 +115,15 @@ def expectations(expect: dict[str, Any], vault: Vault, stand: Stand, last: Any) 
         else:
             out.append(f"unknown expectation {key!r}")
     return out
+
+
+def parsed(rules: list[str]) -> int:
+    """Count the rules that are valid expressions."""
+    count = 0
+    for rule in rules:
+        try:
+            celpy.Environment().compile(rule)
+        except celpy.CELParseError:
+            continue
+        count += 1
+    return count

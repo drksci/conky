@@ -158,6 +158,8 @@ What each contrast licenses: the harness effect at a fixed prompt supports a sta
 
 ## Run counts
 
+A card ([playbooks](../reference/playbooks.md#cards)) is the small form of a run: a playbook whose chosen steps a real model answers, drawn N times with `python -m bench.cards`. Each draw keeps its vault and one row in `rows.jsonl`, and reports are made later from those rows. A claim is written as a card with its forecast before it is drawn, drawn a few times to be walked, and drawn more to be measured.
+
 The pilot is 2 arms with a model (`conky`, `loop`) and 2 floors, prompt `full`, seeds 1 to 5, one run per cell: 10 model-arm runs. The first comparison after the pilot is set in writing from the pilot's variance before it is run, with at least 20 seeds per cell.
 
 ## Probes
