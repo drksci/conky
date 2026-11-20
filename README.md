@@ -3,7 +3,7 @@
 <p align="center">
   <img src="docs/assets/conky-hero.jpg" alt="A ventriloquist puppet in a sweater that reads conky, with the caption: You just remember I call the shots here, Bubbles." width="800">
 </p>
-<p align="center"><sub><a href="https://www.youtube.com/watch?v=6QIVtXwAJTY">Trailer Park Boys: Conky</a></sub></p>
+<p align="center"><sub><a href="https://www.youtube.com/watch?v=vcsm6QO-MWE">Trailer Park Boys: Conky</a></sub></p>
 
 <h3 align="center">A folder that runs itself.</h3>
 
