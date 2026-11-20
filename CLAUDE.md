@@ -87,6 +87,8 @@ An idea states its rung wherever it is mentioned, and climbs one rung at a time.
 
 Every new idea, need or surprise is walked through these steps, in order, before it is planned or specified. The answers are written down, a line each. (review)
 
+The walk widens before it narrows. Steps 1 and 2 expand the scope and are not hurried: the first answer is usually the request restated. Steps 3 to 6 distil it. Steps 7 to 9 make it real. After step 6 the idea is said once more in a single sentence. If that sentence is not shorter and truer than the request was, go round again.
+
 1. **The image.** Say what in the world it is like, and look far from software: a trade, a myth, a household chore, a play. A good image makes the idea obvious and a little funny.
 2. **The general case.** Name what it is an instance of. A request for a mailroom is a case of putting something between two things that already talk.
 3. **Existing words.** Say it with what the vocabulary already has, then count what is left over. One new thing can be right. Two means the general case has not been found yet.
