@@ -67,10 +67,10 @@ One line for each screen written, one for each set of keys sent and one for the 
 
 ```
 conky export obsidian [--out FOLDER]
-conky export affine [--out FOLDER]
+conky export notion [--out FOLDER]
 ```
 
-An export writes the vault's present state as a folder another program can open. It is derived data: it reads only the pages committed at the latest commit, so a stray edit to `pages/` never reaches it, and it writes nothing back. The same vault gives the same bytes. Each run deletes and rewrites its own folder, and refuses a `--out` that is the vault, holds it, or is a folder not made by an earlier export. The default folder is `dist/obsidian/` inside the vault. The command adds `dist/` to the vault's `.git/info/exclude`, not to a tracked file, so the history is untouched and `conky verify` still passes. Delete the folder at any time.
+An export writes the vault's present state as a folder another program can open. It is derived data: the notes come only from the pages committed at the latest commit, so a stray edit to `pages/` never reaches them, and nothing is written back. The same vault gives the same bytes. Each run deletes and rewrites its own folder, and refuses a `--out` that is the vault, holds it, or is a folder not made by an earlier export. The default folder is `dist/<form>/` inside the vault. The command adds `dist/` to the vault's `.git/info/exclude`, not to a tracked file, so the history is untouched and `conky verify` still passes. Delete the folder at any time.
 
 ### Obsidian
 
@@ -78,9 +78,11 @@ An export writes the vault's present state as a folder another program can open.
 |---|---|
 | `NAME.md` | One note a page: the page as committed, so its frontmatter is the note's properties and its `[[links]]` and `![[embeds]]` are Obsidian's own marks. |
 | `SPACE/` | A folder for each space. A page within a space sits in that space's folder, a space within a space in a folder inside it, and the space's own note sits at the top of its folder as `SPACE/SPACE.md`. |
-| `conky.canvas` | One canvas laying out the pages. |
+| `spaces.canvas` | The overview to open first: only the spaces, as groups nested as they are within each other, each labelled with its name and the number of pages in it. |
+| `conky.canvas` | The full canvas laying out every page, with the relations as edges. |
+| `who.md` | Who signed what, generated from the history. |
 
-A note is the page exactly as its author wrote it: nothing is added to its body. What is within a space is shown by its folder and by the canvas.
+A note is the page exactly as its author wrote it: nothing is added to its body or its frontmatter. What is within a space is shown by its folder and by the canvases. A page named `who` would share its note's name with `who.md`, so the export would overwrite it: give such a page another name.
 
 For a vault with `kitchen`, `cellar` within `kitchen`, `wine` within `cellar`, `cook` within `kitchen`, a provider `model` and a loose `note`, the tree is:
 
@@ -92,10 +94,35 @@ kitchen/cook.md
 kitchen/kitchen.md
 model.md
 note.md
+spaces.canvas
+who.md
 ```
 
-The canvas follows the [JSON Canvas specification](https://jsoncanvas.org/spec/1.0/), version 1.0, read on 2026-11-20. It writes the fields that specification lists as required for each node (`id`, `type`, `x`, `y`, `width`, `height`, and `file` for a file node) and for each edge (`id`, `fromNode`, `toNode`), plus the optional `label`. Each page is a file node pointing at its note. Each space is a group node, with its `label` set to the space's name, drawn around the nodes of the pages within it. Each relation is an edge labelled `within`, `watch`, `ask` or `writes`, between pages that exist. No Obsidian application settings are written.
+Both canvases follow the [JSON Canvas specification](https://jsoncanvas.org/spec/1.0/), version 1.0, read on 2026-11-20. They write the fields that specification lists as required for each node (`id`, `type`, `x`, `y`, `width`, `height`, and `file` for a file node) and for each edge (`id`, `fromNode`, `toNode`), plus the optional `label`. In `conky.canvas` each page is a file node pointing at its note, each space is a group node labelled with its name and drawn around the nodes of the pages within it, and each relation is an edge labelled `within`, `watch`, `ask` or `writes`, between pages that exist. In `spaces.canvas` each space is a group labelled `NAME: N pages`, where N counts every page within the space, directly or through an inner space, and not the space's own page; inner spaces are drawn inside it and there are no edges. Pages outside any space are not shown there. No Obsidian application settings are written.
+
+### Who signed what
+
+`who.md` is a plain Markdown table with a comment at the top that says it is generated from the history. It has one row a page, in name order:
+
+| Column | Content |
+|---|---|
+| page | A link to the page, `[[name]]`. |
+| signed by | The actor of the page's last change. |
+| when | The date of that commit as recorded, in UTC. |
+| kind | The `Kind` trailer of that commit. |
+| cause | The first seven characters of its `Cause` trailer, or `-`. |
+| changes | How many commits changed the page. Refusals are not counted. |
+
+It is read from the commits whose `Page` trailer names the page, so the notes carry no attribution of their own. `who.md` is written in both forms.
+
+### Notion
+
+`conky export notion` writes the same tree of notes, without the canvases, to `dist/notion/`, with `who.md` beside them and the whole tree again as `conky.zip`. Each note's frontmatter is moved to a fenced `yaml` block at the top, because Notion's page does not say what it does with frontmatter. Links and embeds stay as written.
+
+Notion's page `https://www.notion.com/help/import-data-into-notion`, read on 2026-11-20, documents importing Markdown files, one at a time or several, and importing a zip of them: "If you want to preserve folder structure, zip a folder and import the ZIP." It warns that anchor links and nonstandard Markdown extensions may not import cleanly, so `[[links]]` and `![[embeds]]` are likely to stay as plain text. It also warns that hidden folders and files can make a zip fail, which is why the zip holds one folder, `conky/`, and nothing hidden. The same page gives size limits and a rate limit for file imports, which are Notion's to change.
+
+To import, open Notion's import dialog, choose Markdown, and select `dist/notion/conky.zip`. For a single note, choose that note's `.md` file instead. The result was not tried in Notion: that the folders become nested pages is Notion's documented behavior for a zipped folder, not something this repository has seen.
 
 ### AFFiNE
 
-Nothing is written. On 2026-11-20 the AFFiNE documentation index (`https://docs.affine.pro/`) and its blog index (`https://affine.pro/blog`) were read. Neither names a Markdown or folder import. The one import page found, `https://affine.pro/blog/import-your-data-from-notion-into-affine`, was seen only as a summary in the blog index: it covers importing a zip of Notion HTML. The import page of the documentation (`https://docs.affine.pro/import`) could not be fetched (the server answered 402), so no claim is made about it. `conky export affine` says this and exits with an error. To get the pages into AFFiNE, run `conky export obsidian` and look in AFFiNE's own import dialog for a Markdown option. Build the AFFiNE export when a documented import that fits is read.
+AFFiNE is not supported because no file import was confirmed: the documentation index `https://docs.affine.pro/` and the repository's docs folder `https://github.com/toeverything/AFFiNE/tree/canary/docs` name none, and `https://docs.affine.pro/import` could not be fetched (the server answered 402), all on 2026-11-20.

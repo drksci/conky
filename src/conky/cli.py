@@ -106,7 +106,7 @@ def _parser() -> argparse.ArgumentParser:
     )
     demo_cmd.add_argument("--list", action="store_true", help="list the examples")
     shown = sub.add_parser("export", help="show the vault as a folder another program can open")
-    shown.add_argument("format", choices=["obsidian", "affine"])
+    shown.add_argument("format", choices=["obsidian", "notion"])
     shown.add_argument("--out", default=None, help="folder to write (default: VAULT/dist/FORMAT)")
     assim = sub.add_parser("assimilate", help="take over a stopped vault from its folder alone")
     assim.add_argument(
@@ -221,9 +221,8 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
         )
         return connect.terminal(vault, args.program, settings, _now, ui, print)
     if args.command == "export":
-        if args.format == "affine":
-            export.affine()
-        folder, count = export.obsidian(vault, Path(args.out) if args.out else None)
+        show = export.obsidian if args.format == "obsidian" else export.notion
+        folder, count = show(vault, Path(args.out) if args.out else None)
         print(f"wrote {_count(count, 'page', 'pages')} to {folder}")
         return 0
     if args.command in ("write", "ask"):

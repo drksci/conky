@@ -203,10 +203,10 @@ Errors, each on one line beginning `error: `, include:
 
 ```
 conky export obsidian [--out FOLDER]
-conky export affine
+conky export notion [--out FOLDER]
 ```
 
-`export obsidian` writes the vault's committed pages as a folder a person can open in Obsidian: one note a page, in folders that follow spaces, and one `conky.canvas` with the pages as nodes and their relations as edges. It writes to `dist/obsidian/` in the vault, or to `--out`. The folder is derived: it is rebuilt from the vault each time, is never committed, and can be deleted. `export affine` writes nothing yet and says why. See [connectors](connectors.md#showing-a-vault-elsewhere).
+`export obsidian` writes the vault's committed pages as a folder a person can open in Obsidian: one note a page, in folders that follow spaces, two canvases (`spaces.canvas`, the overview of nested spaces with page counts, and `conky.canvas`, every page and relation), and `who.md`, a table of who signed each page's last change, generated from the history. It writes to `dist/obsidian/` in the vault, or to `--out`. `export notion` writes the notes as Markdown with their frontmatter fenced, `who.md`, and a `conky.zip` of the same tree, under `dist/notion/`, for Notion's Markdown import. The folder is derived: it is rebuilt from the vault each time, is never committed, and can be deleted. See [connectors](connectors.md#showing-a-vault-elsewhere).
 
 ### rebuild
 
