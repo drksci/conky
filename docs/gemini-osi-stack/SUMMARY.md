@@ -71,4 +71,4 @@ The chat starts with a question: what would an OSI-style stack look like for age
 - The user's last message asked for a synthetic energy unit with waveforms, phase and a Coherence signal. Gemini answered with Erg, Harmonic, Coherence and Drift but the chat ends there; no follow-up on how Erg is computed or conserved in practice.
 - Several earlier "next steps" were never run: cross-harness gauntlet (LangGraph, CrewAI, AutoGen), v2.1 Rust stubs for clone/fold/glob, the CRDT and SMT drill-downs offered in turn 45.
 - The stress test (turn 51) raised that some earlier choices might be wrong (UI projected onto an LLM, compost as a mutator). Later turns keep adding; there is no explicit pivot recorded in the captured text.
-- The long v4.0–v16.0 Canvas specs are not in this capture. To read what each version actually specified in detail, export those canvases.
+- The long v4.0–v17.0 Canvas specs are in [canvases/](canvases/), one final-version export per canvas. Where Gemini reused one canvas across turns, only the last version survived.
