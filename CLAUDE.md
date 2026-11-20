@@ -59,6 +59,13 @@ Each idea states its rung wherever it is mentioned:
 - Results come only from unscripted runs, with the run count and raw traces kept.
 - The assimilation test is a scenario: hand a fresh consumer only a stopped vault and score whether it resumes correctly.
 
+## Docs
+
+- Everything worth knowing lives under `docs/`, in the repository, and is kept current in the same change as the code it describes.
+- `decisions/`: one numbered record per decision, with who decided and why. `ideas/`: one page per candidate, stating its rung. `project/`: roadmap and status.
+- `essays/`: every significant idea gets an editorial piece a newcomer can read: what prompted it, the problem, analogues, the idea, what it solves, the hypothesis, and how we would know we are wrong.
+- Every document has frontmatter (`kind`, `title`, `status`, `date`, `source`) and every link resolves. `scripts/check_docs.py` enforces this in CI.
+
 ## Working here
 
 - The lead thinks, decides and reviews; economical workers edit from a precise brief.

@@ -89,14 +89,14 @@ are the refusal and the reaction. Private keys are kept in `~/.conky/keys`, neve
 4. The assimilation test: hand a fresh consumer only a stopped vault and score whether it resumes correctly.
 5. The harness-neutral benchmark against other agent harnesses.
 
-See [docs/design.md](docs/design.md).
+See [docs/design.md](docs/design.md). The documentation index is [docs/README.md](docs/README.md).
 
 ## Layout
 
 ```
 src/conky/   the runtime: page, log, keys, rules, vault, cli
 tests/       one test per law, each fails if the law is removed
-docs/        design.md
+docs/        design.md, decisions, ideas, essays, project (index: docs/README.md)
 <vault>/     pages/  log/events.jsonl  keys/  (public keys only)
 ```
 

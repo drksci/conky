@@ -1,3 +1,10 @@
+---
+kind: design
+title: Design
+status: current
+date: 2026-11-20
+source: architect
+---
 # Design
 
 ## The model
