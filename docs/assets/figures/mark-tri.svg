@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 3" width="60" height="3" role="img" aria-labelledby="t">
+<title id="t">Section break</title>
+<style>
+:root{--ink:#1E1E1E;--tone:#E6E3DC;--acc:#F4C430}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED;--tone:#2B2F36}}
+:root[data-theme="dark"]{--ink:#EDEDED;--tone:#2B2F36}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+</style>
+<rect x="0" y="0" width="20" height="3" fill="#FF00FF"/><rect x="20" y="0" width="20" height="3" fill="#00FFFF"/><rect x="40" y="0" width="20" height="3" fill="#6400FF"/>
+</svg>
