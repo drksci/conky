@@ -223,4 +223,6 @@ The front page gives each harness one score out of 100, so that a reader has a s
 
 The weights are a judgement, stated here before the benchmark proper is run, and they are in one place in the code (`WEIGHTS` in `bench/publish.py`). The score orders the table. It replaces none of the measures beside it, and a difference of a few points between two harnesses on five runs means nothing.
 
+Time is split in two. The seconds a run spent waiting on the model and the network are set apart, from the harness's own report when it gives one and from the meter's timing of each call otherwise. What is left of the wall clock is the harness's own time, and that is what the score counts, so a harness is not marked down for a slow route to its model. Where a harness records neither, the whole wall clock is used for every harness and the page says so.
+
 Cost is in dollars. A harness that reports its own cost is taken at its word; otherwise the run's tokens are priced from `bench/prices.json`, and where a provider reports no token counts they are estimated from characters. Each harness's version is the one it reports of itself, or the commit of this repository for a harness that lives in it.

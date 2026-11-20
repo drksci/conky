@@ -1,0 +1,17 @@
+# Watchers of one page react in name order, each with its own reactions finished first.
+pages:
+  screen: {}
+  a-first:
+    watch:
+      - {on: screen, when: "true", set: {seen: "'yes'"}}
+  z-last:
+    watch:
+      - {on: screen, when: "true", set: {seen: "'yes'"}}
+  tally:
+    n: 0
+    watch:
+      - {on: a-first, when: "true", set: {n: "page.n * 10 + 1"}}
+      - {on: z-last, when: "true", set: {n: "page.n * 10 + 2"}}
+steps:
+  - write: {page: screen, fields: {}, body: "go"}
+  - expect: {fields: {tally.n: 12}, verify: true}

@@ -122,9 +122,19 @@ def table(f: dict) -> str:
 WEIGHTS = {"reach": 70, "cost": 15, "time": 15}
 
 
+def _own_seconds(rs: list[charts.Run]) -> list[float]:
+    """The harness's own seconds for each run: the wall clock less the time spent in the model."""
+    return [
+        max(r.row["wall_s"] - r.row["model_s"], 0.0)
+        for r in rs
+        if r.row["model_s"] is not None and (r.row["model_s"] or r.row["model"] == "none")
+    ]
+
+
 def totals(runs: list[charts.Run], order: list[str]) -> dict[str, dict]:
     """A row a harness: the share that reached the goal, the median cost and time of a run, and
-    a score out of 100.
+    a score out of 100. Time is the harness's own: the wall clock less what was spent waiting on
+    the model, when every harness that uses a model records that; the whole wall clock otherwise.
 
     The score is the share of runs that reached the goal, times the weights: `reach` in full,
     `cost` and `time` each in proportion to the cheapest and the quickest harness that uses a
@@ -141,18 +151,22 @@ def totals(runs: list[charts.Run], order: list[str]) -> dict[str, dict]:
             if (known := [c for c in costs if c is not None])
             else None,
             "time": statistics.median(r.row["wall_s"] for r in rs),
+            "own": statistics.median(own) if (own := _own_seconds(rs)) else None,
             "uses": rs[0].row["model"] != "none",
             "row": rs[0].row,
         }
     paid = [t for t in out.values() if t["uses"]]
     cheapest = min((t["cost"] for t in paid if t["cost"]), default=None)
-    quickest = min((t["time"] for t in paid if t["time"]), default=None)
+    timed = all(t["own"] is not None for t in paid)
+    for t in out.values():
+        t["pace"] = t["own"] if timed else t["time"]
+    quickest = min((t["pace"] for t in paid if t["pace"]), default=None)
     for t in out.values():
         part = WEIGHTS["reach"]
         if t["uses"] and t["cost"] and cheapest:
             part += WEIGHTS["cost"] * cheapest / t["cost"]
-        if t["uses"] and t["time"] and quickest:
-            part += WEIGHTS["time"] * quickest / t["time"]
+        if t["uses"] and t["pace"] and quickest:
+            part += WEIGHTS["time"] * quickest / t["pace"]
         t["score"] = round(t["reach"] * part)
     return out
 
@@ -181,7 +195,13 @@ def standings(found: dict[str, dict]) -> list[dict]:
                     (t["row"]["model"], ""),
                     (f"{round(t['reach'] * t['n'])}/{t['n']}", standing("reach", arm, True)),
                     (f"${t['cost']:.4f}" if t["cost"] else "", standing("cost", arm, False)),
-                    (f"{t['time']:,.0f}", standing("time", arm, False)),
+                    (
+                        f"{t['time'] - t['own']:,.0f}"
+                        if t["own"] is not None and t["uses"]
+                        else "",
+                        "",
+                    ),
+                    (f"{t['pace']:,.0f}", standing("pace", arm, False)),
                     (f"{t['score']}", standing("score", arm, True)),
                 ],
             }
@@ -243,10 +263,7 @@ def story(kind: str, f: dict, runs: list[charts.Run]) -> str:
     if "conky" in per:
         told = f"A Conky character arrived {per['conky']['arrived']} times"
         if "loop" in per:
-            for key, less, more in (
-                ("chars", "sent {n}% less text", "sent {n}% more text"),
-                ("wall_s", "took {n}% less time", "took {n}% longer"),
-            ):
+            for key, less, more in (("chars", "sent {n}% less text", "sent {n}% more text"),):
                 both = {
                     arm: statistics.median(r.row[key] for r in runs if r.arm == arm)
                     for arm in ("loop", "conky")

@@ -6,6 +6,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ### Added
 
+- The order of reactions is stated: watchers of a written page are visited in order of name, each one's own reactions finishing before the next watcher, and a playbook holds it ([reactions](docs/reference/rules-and-reactions.md#reactions)).
 - An answer that a rule refuses is asked again once, with one fixed sentence naming the reason after the prompt. The second ask is caused by the refusal. When it is refused by a rule too, the entry's `otherwise` text is written, and without one the asking stops. A refusal for shape, limit or cycle is not retried ([asking a model](docs/reference/rules-and-reactions.md#when-an-answer-is-refused)).
 - The scores table on the README is one line a harness, best first: a linked name, the version each harness reports of itself, the model, the share that reached the goal, cost, time and a score out of 100 whose weights are stated in the protocol. Harnesses carry one-word names.
 - The benchmark reports dollars: `bench/prices.json` holds list prices for a million tokens, the cost plate draws what each run cost against progress with the price in its legend, and the scores table gains a cost for a run. Where a provider reports no token counts they are estimated from characters, and the plate says so.

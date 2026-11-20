@@ -592,9 +592,9 @@ def scoreboard(lines: list[dict], look: str) -> str:
     cool pen, the worst in the warm one.
     """
     s = Sheet(look)
-    heads = ("harness", "version", "model", "reached", "cost", "seconds", "score")
-    at = (24.0, 170.0, 262.0, 392.0, 490.0, 590.0, WIDTH - 24.0)
-    ends = ("start", "start", "start", "end", "end", "end", "end")
+    heads = ("harness", "version", "model", "reached", "cost", "model s", "own s", "score")
+    at = (24.0, 164.0, 250.0, 362.0, 452.0, 536.0, 614.0, WIDTH - 24.0)
+    ends = ("start", "start", "start", "end", "end", "end", "end", "end")
     for head, x, anchor in zip(heads, at, ends, strict=True):
         s.caps(x, 22, head, anchor=anchor)
     s.line(24, 32, WIDTH - 24, 32)

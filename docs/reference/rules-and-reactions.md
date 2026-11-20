@@ -104,6 +104,8 @@ After a write is committed, the runtime visits every page in order of name, look
 - is checked against rules like any other write, and can be refused;
 - triggers the pages that watch the watching page in turn.
 
+Watchers are visited in order of name, and the reactions to one reaction finish before the next watcher is visited, so the order of the commits is the same on every run. A page that watches both `a-first` and `z-last`, which both watch one page, always meets `a-first` first.
+
 A reaction that would leave the watching page unchanged is skipped, which is what ends a stable state. Reactions nest to a depth of 12, and a deeper one is refused with reason `cycle`. A refused write triggers no reactions, because nothing changed.
 
 ## Asking a model

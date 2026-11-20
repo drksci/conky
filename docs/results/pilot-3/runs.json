@@ -24,7 +24,8 @@
   "kept": null,
   "tape": "270ec92b2e9c",
   "version": "2.1.329",
-  "cost": 0.006694
+  "cost": 0.006694,
+  "model_s": 28.1
  },
  {
   "scenario": "trail",
@@ -51,7 +52,8 @@
   "kept": null,
   "tape": "398ac2b51242",
   "version": "2.1.329",
-  "cost": 0.013968
+  "cost": 0.013968,
+  "model_s": 46.1
  },
  {
   "scenario": "trail",
@@ -78,7 +80,8 @@
   "kept": null,
   "tape": "c6587ef698ba",
   "version": "2.1.329",
-  "cost": null
+  "cost": null,
+  "model_s": null
  },
  {
   "scenario": "trail",
@@ -105,7 +108,8 @@
   "kept": null,
   "tape": "f58db10f190d",
   "version": "2.1.329",
-  "cost": 0.01972
+  "cost": 0.01972,
+  "model_s": 67.1
  },
  {
   "scenario": "trail",
@@ -132,7 +136,8 @@
   "kept": null,
   "tape": "3c26a6a2a92c",
   "version": "2.1.329",
-  "cost": 0.023232
+  "cost": 0.023232,
+  "model_s": 84.6
  },
  {
   "scenario": "trail",
@@ -159,7 +164,8 @@
   "kept": 1,
   "tape": "fde0452297ab",
   "version": "26cb5e3",
-  "cost": 0.003903
+  "cost": 0.003903,
+  "model_s": 266.0
  },
  {
   "scenario": "trail",
@@ -186,7 +192,8 @@
   "kept": 1,
   "tape": "e3177ce6d193",
   "version": "26cb5e3",
-  "cost": 0.004101
+  "cost": 0.004101,
+  "model_s": 267.0
  },
  {
   "scenario": "trail",
@@ -213,7 +220,8 @@
   "kept": 1,
   "tape": "8ab60db3e990",
   "version": "26cb5e3",
-  "cost": 0.003933
+  "cost": 0.003933,
+  "model_s": 250.3
  },
  {
   "scenario": "trail",
@@ -240,7 +248,8 @@
   "kept": 1,
   "tape": "4b54a53d4cbc",
   "version": "26cb5e3",
-  "cost": 0.005309
+  "cost": 0.005309,
+  "model_s": 368.0
  },
  {
   "scenario": "trail",
@@ -267,7 +276,8 @@
   "kept": 2,
   "tape": "2744ecdb4939",
   "version": "26cb5e3",
-  "cost": 0.00364
+  "cost": 0.00364,
+  "model_s": 265.2
  },
  {
   "scenario": "trail",
@@ -294,7 +304,8 @@
   "kept": null,
   "tape": "dc39740b01c2",
   "version": "26cb5e3",
-  "cost": 0.0
+  "cost": 0.0,
+  "model_s": 0.0
  },
  {
   "scenario": "trail",
@@ -321,7 +332,8 @@
   "kept": null,
   "tape": "6b7929b70623",
   "version": "26cb5e3",
-  "cost": 0.0
+  "cost": 0.0,
+  "model_s": 0.0
  },
  {
   "scenario": "trail",
@@ -348,7 +360,8 @@
   "kept": null,
   "tape": "da5d1a3466df",
   "version": "26cb5e3",
-  "cost": 0.0
+  "cost": 0.0,
+  "model_s": 0.0
  },
  {
   "scenario": "trail",
@@ -375,7 +388,8 @@
   "kept": null,
   "tape": "6eadf3927021",
   "version": "26cb5e3",
-  "cost": 0.0
+  "cost": 0.0,
+  "model_s": 0.0
  },
  {
   "scenario": "trail",
@@ -402,7 +416,8 @@
   "kept": null,
   "tape": "39ff27643684",
   "version": "26cb5e3",
-  "cost": 0.0
+  "cost": 0.0,
+  "model_s": 0.0
  },
  {
   "scenario": "trail",
@@ -429,7 +444,8 @@
   "kept": null,
   "tape": "e61fa49dc0e4",
   "version": "26cb5e3",
-  "cost": 0.0
+  "cost": 0.0,
+  "model_s": 0.0
  },
  {
   "scenario": "trail",
@@ -456,7 +472,8 @@
   "kept": null,
   "tape": "aac34c3369b8",
   "version": "26cb5e3",
-  "cost": 0.0
+  "cost": 0.0,
+  "model_s": 0.0
  },
  {
   "scenario": "trail",
@@ -483,7 +500,8 @@
   "kept": null,
   "tape": "ea4cd5220b4a",
   "version": "26cb5e3",
-  "cost": 0.0
+  "cost": 0.0,
+  "model_s": 0.0
  },
  {
   "scenario": "trail",
@@ -510,7 +528,8 @@
   "kept": null,
   "tape": "7f3489f71e56",
   "version": "26cb5e3",
-  "cost": 0.0
+  "cost": 0.0,
+  "model_s": 0.0
  },
  {
   "scenario": "trail",
@@ -537,7 +556,8 @@
   "kept": null,
   "tape": "a744abb4d965",
   "version": "26cb5e3",
-  "cost": 0.0
+  "cost": 0.0,
+  "model_s": 0.0
  },
  {
   "scenario": "trail",
@@ -564,7 +584,8 @@
   "kept": null,
   "tape": "312f168f49c8",
   "version": "26cb5e3",
-  "cost": 0.00565
+  "cost": 0.00565,
+  "model_s": 249.8
  },
  {
   "scenario": "trail",
@@ -591,7 +612,8 @@
   "kept": null,
   "tape": "04ef98118922",
   "version": "26cb5e3",
-  "cost": 0.005461
+  "cost": 0.005461,
+  "model_s": 230.8
  },
  {
   "scenario": "trail",
@@ -618,7 +640,8 @@
   "kept": null,
   "tape": "9a9d501f74e1",
   "version": "26cb5e3",
-  "cost": 0.006275
+  "cost": 0.006275,
+  "model_s": 282.2
  },
  {
   "scenario": "trail",
@@ -645,7 +668,8 @@
   "kept": null,
   "tape": "f80a3ed692e6",
   "version": "26cb5e3",
-  "cost": 0.005613
+  "cost": 0.005613,
+  "model_s": 256.2
  },
  {
   "scenario": "trail",
@@ -672,6 +696,7 @@
   "kept": null,
   "tape": "947fb0f4ed9d",
   "version": "26cb5e3",
-  "cost": 0.005005
+  "cost": 0.005005,
+  "model_s": 222.7
  }
 ]

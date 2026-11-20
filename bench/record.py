@@ -49,6 +49,7 @@ KEYS = (
     "tape",
     "version",
     "cost",
+    "model_s",
 )
 BUDGET_EXITS = ("budget-exhausted", "wall-clock", "stalled", "stopped")
 
@@ -214,6 +215,7 @@ def row(folder: Path) -> dict:
         "tape": tape,
         "version": versions.get("harness") or versions.get("repository", "")[:7],
         "cost": _cost(meta, made, uses_model),
+        "model_s": _model_seconds(meta, made, uses_model),
     }
 
 
@@ -227,6 +229,18 @@ def _cost(meta: dict, made: list[dict], uses_model: bool) -> float | None:
         return round(float(told), 6)
     found = dollars(meta.get("model", ""), made)
     return round(found[0], 6) if found else None
+
+
+def _model_seconds(meta: dict, made: list[dict], uses_model: bool) -> float | None:
+    """Seconds of the run spent waiting on the model and the network, so that what is left of
+    the wall clock is the harness's own time. From the harness's own report when it gives one,
+    else from the meter's timing of each call; None when neither is known."""
+    if not uses_model:
+        return 0.0
+    told = (meta.get("self_reported") or {}).get("duration_api_ms")
+    if isinstance(told, int | float):
+        return round(told / 1000, 1)
+    return round(sum(c["seconds"] for c in made), 1) if made else None
 
 
 def link(harness: str) -> str:

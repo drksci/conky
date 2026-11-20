@@ -60,7 +60,7 @@ Conky is... different, for many reasons, but here are some:
 <!-- bench:start -->
 ### Benchmark
 
-5 trips each to Oregon: same game, same small model, same luck, same prompt. The bare model, asked each turn, arrived 3 times. A Conky character arrived 4 times, sent 32% less text, took 9% longer and kept 6 pages of its own notes. Stock Claude Code arrived 3 times. It is a pilot: too few trips to call a winner, so none is called. This game is a worked example, kept for fun: it fits in one conversation and has one thing to manage, so it shows the apparatus working and not what a harness is for.
+5 trips each to Oregon: same game, same small model, same luck, same prompt. The bare model, asked each turn, arrived 3 times. A Conky character arrived 4 times, sent 32% less text and kept 6 pages of its own notes. Stock Claude Code arrived 3 times. It is a pilot: too few trips to call a winner, so none is called. This game is a worked example, kept for fun: it fits in one conversation and has one thing to manage, so it shows the apparatus working and not what a harness is for.
 
 <p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/reached.dark.svg"><img src="docs/results/pilot-3/reached.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, under the model, seeds, budget and commit that were held equal." width="720"></picture></a></p>
 
@@ -75,7 +75,7 @@ Conky is... different, for many reasons, but here are some:
 
 <p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/scores.dark.svg"><img src="docs/results/pilot-3/scores.light.svg" alt="The scores: one line a harness, best first, with version, model, runs that reached the goal, cost, seconds and a score out of 100." width="720"></picture></a></p>
 
-<p align="center"><sub><a href="https://github.com/drksci/conky">conky</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://claude.com/claude-code">claude code</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/loop">bare</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/floor">constant</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/floor">random</a></sub></p>
+<p align="center"><sub><a href="https://github.com/drksci/conky">conky</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/loop">bare</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://claude.com/claude-code">claude code</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/floor">constant</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/floor">random</a></sub></p>
 
 <p align="center"><a href="docs/research/results.md">Method and every chart</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/results/pilot-3/runs.csv">the data</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/research/benchmark-protocol.md">the protocol</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/commit/26cb5e37ab69a0876c548510809e9580722e39b5">the code that ran</a></p>
 
