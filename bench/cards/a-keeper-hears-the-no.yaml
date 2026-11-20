@@ -1,0 +1,37 @@
+# A keeper is asked to have the den count what it turns away. The count must then keep itself:
+# two payments are refused afterwards and nobody is asked again.
+objective: a character makes its own space listen for refusals, so that what is turned away is counted with no further thought
+hypothesis: asked once, a character adds a watch on refusals to the space it writes into, and each later refusal there is counted by a reflex with no model call
+success: {draws: 5, pass: 3, calls_at_most: 2}
+forecast: a small model writes an entry that parses in 3 of 5 draws and names `on` refusal in 2 of them; where it misses, it writes a rule or a note in place of a watch
+par:
+  outcome: the count reads 2 after two refused payments
+  structure: one watch entry on the den and nothing else
+  cost: one call to set it up; none for either refusal
+  craft: the entry is one line, reads the count by its real name and counts only what was refused
+dial: the model is told the field to count in and that a watch on refusals exists; the next notch says only that the den should know what it turns away
+if_not: look first at whether the answer wrote a watch at all, then at whether the write to the den was refused and why
+pages:
+  helper: {api: command, command: stand}
+  den:
+    cash: 80
+    turned_away: 0
+    rules: [{each: "page.amount <= space.cash - 20"}]
+  order: {}
+  keeper:
+    within: den
+    watch:
+      - on: order
+        when: "true"
+        ask:
+          provider: helper
+          writes: den
+          prompt: |
+            The order reads: ![[order]]
+steps:
+  - says: live
+  - write: {page: order, fields: {}, body: "The den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from now on and without anyone being asked again. A page listens with a watch entry: on refusal, when true, set a field."}
+  - write: {page: landlord-payment, fields: {within: den, amount: 70}}
+  - expect: {refused: rule, fields: {den.turned_away: 1}}
+  - write: {page: tailor-payment, fields: {within: den, amount: 65}}
+  - expect: {refused: rule, fields: {den.turned_away: 2}}
