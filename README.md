@@ -51,7 +51,7 @@ It is plain files in Git. Read all of it, or take it and leave.
 
 ### Not another harness
 
-Conky is... different.
+Conky is... different, and for many reasons including but not limited to:
 
 <p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-contrast.dark.svg"><img src="docs/assets/figures/fig-contrast.light.svg" alt="Five comparisons of the usual way beside Conky. The truth is scattered across code, prompts and a database, or it is on the pages with nowhere else to look. The rules are a prompt and a private prayer, or they hold on their own. One big loop runs the whole show, or nobody is in charge and it all gets done anyway. Why it did that is between the agent and the logs, or every change is signed and says why. It was crushed under the weight of itself, or it is only a folder to pick up and walk out with." width="800"></picture></a></p>
 
