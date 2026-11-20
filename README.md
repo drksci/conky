@@ -11,6 +11,8 @@
 
 **A folder of plain documents that behaves like a living system: every change is recorded and signed, the rules are enforced for you, and most things simply happen without anyone having to think about them.**
 
+<p align="center"><img src="docs/assets/figures/fig-1-one-change.svg" alt="A pen-plotter drawing in five steps, left to right. A person changes the stall's page. The change is stamped and added to the history tape. It passes a gate that checks the rules. A dashed yellow line then leads to the depot's page, which marks a reorder by itself. Notes read: signed and recorded, checked every time, nobody had to decide." width="800"></p>
+
 ## What it is
 
 Everything in the system is a page that can be opened and read. A page can stand for a person, a team, a tool, a process or a set of rules. Nothing is hidden in a program or a database. Pages are grouped into spaces, and a page follows the rules of the space it belongs to.

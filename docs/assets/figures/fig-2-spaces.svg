@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 490" width="880" height="490" role="img" aria-labelledby="t">
+<title id="t">A rule reaches every page</title>
+<style>
+:root{--ink:#1E1E1E;--acc:#F4C430}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
+:root[data-theme="dark"]{--ink:#EDEDED}
+.i,.k,.a,.h,.z{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.i{stroke:var(--ink);stroke-width:1.8}
+.k{stroke:var(--ink);stroke-width:1.1}
+.a{stroke:var(--acc);stroke-width:4}
+.h{stroke:var(--ink);stroke-width:1}
+.z{stroke:var(--ink);stroke-width:1.8;stroke-dasharray:8 8}
+.y{fill:none;stroke:var(--acc);stroke-width:4;stroke-linecap:round;stroke-dasharray:9 9}
+.d{fill:var(--ink);stroke:none}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.12em}
+.b{font-weight:700}
+</style>
+<path class="k" d="M22 22H858V468H22Z"/>
+<circle class="k" cx="11" cy="11" r="4"/>
+<path class="k" d="M3 11L19 11"/>
+<path class="k" d="M11 3L11 19"/>
+<circle class="k" cx="11" cy="479" r="4"/>
+<path class="k" d="M3 479L19 479"/>
+<path class="k" d="M11 471L11 487"/>
+<circle class="k" cx="869" cy="11" r="4"/>
+<path class="k" d="M861 11L877 11"/>
+<path class="k" d="M869 3L869 19"/>
+<circle class="k" cx="869" cy="479" r="4"/>
+<path class="k" d="M861 479L877 479"/>
+<path class="k" d="M869 471L869 487"/>
+<path class="k" d="M166.96 436H858V468H166.96Z"/>
+<path class="k" d="M638.48 436L638.48 468"/>
+<text class="t" x="180.96" y="457" font-size="14" text-anchor="start">FIG. 2  A RULE ON A SPACE REACHES EVERY PAGE</text>
+<text class="t" x="652.48" y="457" font-size="14" text-anchor="start">SCHEMATIC, NOT DATA</text>
+<path class="i" d="M50 50H802L830 78V400H50Z"/>
+<path class="k" d="M802 50V78H830"/>
+<text class="t b" x="76" y="88" font-size="16" text-anchor="start">SPACE</text>
+<text class="t" x="440" y="80" font-size="15" text-anchor="middle">RULE, WRITTEN ONCE</text>
+<path class="a" d="M350 100L530 100"/>
+<path class="k" d="M350 100L350 114"/>
+<path class="k" d="M370 100L370 108"/>
+<path class="k" d="M390 100L390 108"/>
+<path class="k" d="M410 100L410 108"/>
+<path class="k" d="M430 100L430 108"/>
+<path class="k" d="M450 100L450 114"/>
+<path class="k" d="M470 100L470 108"/>
+<path class="k" d="M490 100L490 108"/>
+<path class="k" d="M510 100L510 108"/>
+<path class="k" d="M530 100L530 108"/>
+<path class="k" d="M530 100L530 114"/>
+<path class="k" d="M440 116L440 150"/>
+<path class="k" d="M150 150L600 150"/>
+<path class="k" d="M150 150L150 196"/>
+<path class="i" d="M154.38 189.01L150 198L145.62 189.01"/>
+<path class="k" d="M300 150L300 196"/>
+<path class="i" d="M304.38 189.01L300 198L295.62 189.01"/>
+<path class="k" d="M600 150L600 186"/>
+<path class="i" d="M604.38 179.01L600 188L595.62 179.01"/>
+<path class="i" d="M90 200H192L210 218V330H90Z"/>
+<path class="k" d="M192 200V218H210"/>
+<path class="k" d="M104 244L196 244"/>
+<path class="k" d="M104 266L196 266"/>
+<path class="k" d="M104 288L196 288"/>
+<path class="k" d="M104 310L154.6 310"/>
+<path class="i" d="M240 200H342L360 218V330H240Z"/>
+<path class="k" d="M342 200V218H360"/>
+<path class="k" d="M254 244L346 244"/>
+<path class="k" d="M254 266L346 266"/>
+<path class="k" d="M254 288L346 288"/>
+<path class="k" d="M254 310L304.6 310"/>
+<text class="t" x="150" y="356" font-size="15" text-anchor="middle">PAGE</text>
+<text class="t" x="300" y="356" font-size="15" text-anchor="middle">PAGE</text>
+<path class="i" d="M400 190H778L800 212V380H400Z"/>
+<path class="k" d="M778 190V212H800"/>
+<text class="t" x="424" y="220" font-size="15" text-anchor="start">SPACE WITHIN</text>
+<path class="k" d="M600 190L600 250"/>
+<path class="k" d="M500 250L700 250"/>
+<path class="k" d="M500 250L500 274"/>
+<path class="i" d="M504.38 267.01L500 276L495.62 267.01"/>
+<path class="k" d="M700 250L700 274"/>
+<path class="i" d="M704.38 267.01L700 276L695.62 267.01"/>
+<path class="i" d="M440 278H544L560 294V368H440Z"/>
+<path class="k" d="M544 278V294H560"/>
+<path class="k" d="M454 316L546 316"/>
+<path class="k" d="M454 336L546 336"/>
+<path class="k" d="M454 356L504.6 356"/>
+<path class="i" d="M640 278H744L760 294V368H640Z"/>
+<path class="k" d="M744 278V294H760"/>
+<path class="k" d="M654 316L746 316"/>
+<path class="k" d="M654 336L746 336"/>
+<path class="k" d="M654 356L704.6 356"/>
+</svg>

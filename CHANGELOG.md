@@ -15,3 +15,4 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 - A documentation system with frontmatter, a guide, a reference, decisions, ideas and essays, and checks for it.
 - Continuous integration on GitHub Actions: `scripts/check` runs on every pull request and on pushes to `main`.
 - A check that no internal wording appears in tracked text files.
+- Explanatory figures in a pen-plotter style and shown in the README and the concepts guide.

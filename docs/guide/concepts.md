@@ -22,6 +22,10 @@ In detail: [vault format](../reference/vault-format.md#pages).
 
 A space is a page that other pages belong to. A page names its space, and the page then follows the space's rules, much as the stalls in a market follow the market's rules. A space can itself belong to a larger space, and a page follows the rules of every space above it.
 
+<p align="center"><img src="../assets/figures/fig-2-spaces.svg" alt="A large sheet labelled space holds two pages and a smaller space, which holds two pages of its own. A rule is written once at the top of the large sheet, and thin lines carry it down to every page, including the pages in the smaller space." width="800"></p>
+
+<p align="center"><em>Fig. 2. A rule written once on a space reaches every page in it, including the pages of a space within it. Schematic, not data.</em></p>
+
 In detail: [rules and spaces](../reference/rules-and-reactions.md#rules-and-spaces).
 
 ## Rules
@@ -47,6 +51,10 @@ In detail: [reactions](../reference/rules-and-reactions.md#reactions).
 A measure is a page that watches itself and keeps a number up to date, such as how large it has grown. It is the same idea as a reaction, applied to the page's own state.
 
 Pressure is a measure of how crowded something is. A hard limit stops work at the worst moment. Pressure only rises, like a clutter that nudges someone to tidy up, and other pages can react when it passes a threshold. Hard rules stay for what must never happen. Nothing yet acts to relieve the pressure; today it is recorded and noticed.
+
+<p align="center"><img src="../assets/figures/fig-3-pressure.svg" alt="Two panels. In the first, a page meets a wall and work stops. In the second, a page has a gauge that rises past a marked level, and a dashed line then sets off a tidy-up while work goes on." width="800"></p>
+
+<p align="center"><em>Fig. 3. A wall stops work; pressure only rises, and past a mark it sets off a tidy-up. Schematic, not data.</em></p>
 
 In detail: [measures](../reference/rules-and-reactions.md#measures).
 
@@ -75,5 +83,9 @@ A vault is an ordinary folder of ordinary files under version control. It can be
 A copy does not carry private keys. To keep writing as the same author in a new place, the author's private key has to be present there too.
 
 One limit applies. Removing the most recent entries from a single copy cannot be detected by that copy alone. It shows up when compared with another copy.
+
+<p align="center"><img src="../assets/figures/fig-4-travels.svg" alt="A vault, a folder of pages with its history tape, is copied whole to another place, where it is identical. A dashed line shows the private keys stopped at a bar: they stay behind." width="800"></p>
+
+<p align="center"><em>Fig. 4. A vault is copied whole, history included; private keys stay where they were. Schematic, not data.</em></p>
 
 In detail: [what verify checks](../reference/vault-format.md#what-verify-checks) and [decision 0002](../decisions/0002-git-is-the-store.md).

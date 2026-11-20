@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 485" width="880" height="485" role="img" aria-labelledby="t">
+<title id="t">A vault travels alone</title>
+<style>
+:root{--ink:#1E1E1E;--acc:#F4C430}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
+:root[data-theme="dark"]{--ink:#EDEDED}
+.i,.k,.a,.h,.z{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.i{stroke:var(--ink);stroke-width:1.8}
+.k{stroke:var(--ink);stroke-width:1.1}
+.a{stroke:var(--acc);stroke-width:4}
+.h{stroke:var(--ink);stroke-width:1}
+.z{stroke:var(--ink);stroke-width:1.8;stroke-dasharray:8 8}
+.y{fill:none;stroke:var(--acc);stroke-width:4;stroke-linecap:round;stroke-dasharray:9 9}
+.d{fill:var(--ink);stroke:none}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.12em}
+.b{font-weight:700}
+</style>
+<path class="k" d="M22 22H858V463H22Z"/>
+<circle class="k" cx="11" cy="11" r="4"/>
+<path class="k" d="M3 11L19 11"/>
+<path class="k" d="M11 3L11 19"/>
+<circle class="k" cx="11" cy="474" r="4"/>
+<path class="k" d="M3 474L19 474"/>
+<path class="k" d="M11 466L11 482"/>
+<circle class="k" cx="869" cy="11" r="4"/>
+<path class="k" d="M861 11L877 11"/>
+<path class="k" d="M869 3L869 19"/>
+<circle class="k" cx="869" cy="474" r="4"/>
+<path class="k" d="M861 474L877 474"/>
+<path class="k" d="M869 466L869 482"/>
+<path class="k" d="M318.16 431H858V463H318.16Z"/>
+<path class="k" d="M638.48 431L638.48 463"/>
+<text class="t" x="332.16" y="452" font-size="14" text-anchor="start">FIG. 4  A VAULT TRAVELS ALONE</text>
+<text class="t" x="652.48" y="452" font-size="14" text-anchor="start">SCHEMATIC, NOT DATA</text>
+<path class="i" d="M60 248V98Q60 92 68 92H140L154 110H330V248Z"/>
+<text class="t" x="100" y="106" font-size="14" text-anchor="middle">VAULT</text>
+<path class="i" d="M80 132H128L140 144V228H80Z"/>
+<path class="k" d="M128 132V144H140"/>
+<path class="k" d="M94 164L126 164"/>
+<path class="k" d="M94 182L126 182"/>
+<path class="k" d="M94 200L126 200"/>
+<path class="i" d="M165 132H213L225 144V228H165Z"/>
+<path class="k" d="M213 132V144H225"/>
+<path class="k" d="M179 164L211 164"/>
+<path class="k" d="M179 182L211 182"/>
+<path class="k" d="M179 200L211 200"/>
+<path class="i" d="M250 132H298L310 144V228H250Z"/>
+<path class="k" d="M298 132V144H310"/>
+<path class="k" d="M264 164L296 164"/>
+<path class="k" d="M264 182L296 182"/>
+<path class="k" d="M264 200L296 200"/>
+<path class="i" d="M60 270H330V300H60Z"/>
+<circle class="k" cx="71" cy="285" r="4"/>
+<path class="k" d="M80 285L97 285"/>
+<path class="k" d="M105 270L105 300"/>
+<circle class="k" cx="116" cy="285" r="4"/>
+<path class="k" d="M125 285L142 285"/>
+<path class="k" d="M150 270L150 300"/>
+<circle class="k" cx="161" cy="285" r="4"/>
+<path class="k" d="M170 285L187 285"/>
+<path class="k" d="M195 270L195 300"/>
+<circle class="k" cx="206" cy="285" r="4"/>
+<path class="k" d="M215 285L232 285"/>
+<path class="k" d="M240 270L240 300"/>
+<circle class="k" cx="251" cy="285" r="4"/>
+<path class="k" d="M260 285L277 285"/>
+<path class="k" d="M285 270L285 300"/>
+<circle class="k" cx="296" cy="285" r="4"/>
+<path class="k" d="M305 285L322 285"/>
+<path class="i" d="M550 248V98Q550 92 558 92H630L644 110H820V248Z"/>
+<text class="t" x="590" y="106" font-size="14" text-anchor="middle">VAULT</text>
+<path class="i" d="M570 132H618L630 144V228H570Z"/>
+<path class="k" d="M618 132V144H630"/>
+<path class="k" d="M584 164L616 164"/>
+<path class="k" d="M584 182L616 182"/>
+<path class="k" d="M584 200L616 200"/>
+<path class="i" d="M655 132H703L715 144V228H655Z"/>
+<path class="k" d="M703 132V144H715"/>
+<path class="k" d="M669 164L701 164"/>
+<path class="k" d="M669 182L701 182"/>
+<path class="k" d="M669 200L701 200"/>
+<path class="i" d="M740 132H788L800 144V228H740Z"/>
+<path class="k" d="M788 132V144H800"/>
+<path class="k" d="M754 164L786 164"/>
+<path class="k" d="M754 182L786 182"/>
+<path class="k" d="M754 200L786 200"/>
+<path class="i" d="M550 270H820V300H550Z"/>
+<circle class="k" cx="561" cy="285" r="4"/>
+<path class="k" d="M570 285L587 285"/>
+<path class="k" d="M595 270L595 300"/>
+<circle class="k" cx="606" cy="285" r="4"/>
+<path class="k" d="M615 285L632 285"/>
+<path class="k" d="M640 270L640 300"/>
+<circle class="k" cx="651" cy="285" r="4"/>
+<path class="k" d="M660 285L677 285"/>
+<path class="k" d="M685 270L685 300"/>
+<circle class="k" cx="696" cy="285" r="4"/>
+<path class="k" d="M705 285L722 285"/>
+<path class="k" d="M730 270L730 300"/>
+<circle class="k" cx="741" cy="285" r="4"/>
+<path class="k" d="M750 285L767 285"/>
+<path class="k" d="M775 270L775 300"/>
+<circle class="k" cx="786" cy="285" r="4"/>
+<path class="k" d="M795 285L812 285"/>
+<text class="t b" x="195" y="330" font-size="18" text-anchor="middle">HERE</text>
+<text class="t b" x="685" y="330" font-size="18" text-anchor="middle">ANOTHER PLACE</text>
+<text class="t" x="440" y="168" font-size="15" text-anchor="middle">COPIED WHOLE</text>
+<path class="a" d="M344 190L530 190"/>
+<path class="i" d="M530 190L536 190"/>
+<path class="i" d="M529.01 185.62L538 190L529.01 194.38"/>
+<text class="t" x="440" y="220" font-size="15" text-anchor="middle">IDENTICAL</text>
+<circle class="i" cx="72" cy="390" r="10"/>
+<path class="i" d="M82 390L124 390"/>
+<path class="i" d="M112 390L112 399"/>
+<path class="i" d="M121 390L121 397"/>
+<path class="z" d="M136 390L386 390"/>
+<path class="i" d="M379.01 385.62L388 390L379.01 394.38"/>
+<path class="a" d="M398 371L398 409"/>
+<text class="t" x="418" y="395" font-size="15" text-anchor="start">PRIVATE KEYS STAY BEHIND</text>
+</svg>
