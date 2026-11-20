@@ -32,24 +32,13 @@ The record already says who called what and why: a signed request and a signed r
 
 ## A go-between, so characters never call tools
 
-Writing arguments to a tool page is machine work, and a character that does it stops being a character and fills in forms. So each connector space has a go-between: an ordinary model page, a [background mind](background-minds.md), standing between the raw pages and everyone else.
+Writing arguments to a tool page is machine work, and a character that does it stops being a character and fills in forms. So each connector space has a go-between: an ordinary model page, a [background mind](background-minds.md), that stands at the connector between the raw pages and everyone else. Characters watch what it writes, and the raw pages stay readable for anyone who wants them.
 
-- Inwards, it watches what the connector perceives and writes what a person would take from it: a few plain sentences, or the same composed screen people get ([A2UI](a2ui.md), [the compositor](compositor.md)). Characters watch that page, not the raw one. Only the go-between needs a provider that can read images.
-- Outwards, it reads what a character said in its own words, such as "push on to the fort", and writes the request the tool expects. The request is an ordinary signed write, so the translation is on the record and a rule can refuse it ([thought to change](thought-to-change.md)).
-- Its provider is a list tried in order, from a capable model down to a small one. The last entry is no model at all: a reflex that writes a plain sentence such as "the screen changed", so the party is never blind and nothing stalls when a provider is down.
+Its provider is a list tried in order, from a capable model down to a small one. The last entry is no model at all, so the party is never blind and nothing stalls when a provider is down.
 
-Nothing new is added. The go-between is a page with watch entries, the order of providers is a field on it, and the raw pages stay readable for anyone who wants them.
+## How it reads and writes
 
-## Think once, then reflex
-
-A go-between that asked a model about every frame would be slow, costly and no better informed. It works as the compositor does for a screen: understand the shape once, then keep up with changes cheaply.
-
-- Notice cheaply. The connector writes only when what it perceives has changed, and a budget rule caps how often. A write that changes nothing is already skipped by every watcher.
-- Keep a reading. The first time, a capable model looks hard and writes a reading for that source: how it is laid out, which part carries which fact, what can be ignored. The reading is a page, and a kind of [pattern](patterns.md). Applying it is then a reflex: take the status line from here, the choice list from there, compare with last time.
-- Pass on what changed. Characters receive the difference in a sentence and a few fields, not a fresh description of everything.
-- Escalate on surprise. A [measure](measures.md) tracks how much of each change the reading explained. When it drops, pressure rises and the capable model is asked to revise the reading ([learned reactions](learned-reactions.md)). When a provider is missing, the same ladder is walked downwards to the plain-sentence reflex.
-
-The outward direction works the same way. A layout for people and a reading for characters are both written once by thought and applied afterwards by reflex.
+The go-between reads the connector's pages and writes a character's plain words as the request a tool expects, through a [lens](lens.md). The lens is written once by thought and applied by reflex, so the go-between rarely asks a model. The request is an ordinary signed write, so the translation is on the record and a rule can refuse it ([thought to change](thought-to-change.md)).
 
 ## Large results
 
@@ -96,7 +85,7 @@ With the connector stopped and its files deleted, the vault verifies, and a new 
 1. Whole-page embeds, so a prompt can hold a page body.
 2. The connector contract restated on the terminal connector.
 3. An MCP connector over stdio.
-4. A go-between page for a connector space, with providers tried in order and a plain-sentence reflex last.
+4. A go-between page for a connector space, with providers tried in order and a plain-sentence reflex last, reading and writing through a lens ([lens](lens.md)).
 5. Files beside pages, and an image-reading provider for the go-between.
 6. The browser, through an existing MCP server ([browser drivers compared](../research/browser-drivers.md)).
 7. The gatekeeper.

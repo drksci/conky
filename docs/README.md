@@ -107,6 +107,7 @@ Candidates, not requirements. Each states its rung.
 - [ideas/inheritance.md](ideas/inheritance.md): What a space hands down
 - [ideas/learned-reactions.md](ideas/learned-reactions.md): Learned reactions
 - [ideas/ledger.md](ideas/ledger.md): Ledger
+- [ideas/lens.md](ideas/lens.md): A lens: think once, then keep up by reflex
 - [ideas/measures.md](ideas/measures.md): Measures
 - [ideas/model-pages.md](ideas/model-pages.md): Pages that ask a model
 - [ideas/obsidian-view.md](ideas/obsidian-view.md): Obsidian view

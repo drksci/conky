@@ -10,9 +10,9 @@ source: maintainers
 
 ## Idea
 
-A compositor is a page that asks a model once how a page should be laid out, records the answer as a layout page, and from then on draws the screen from the layout with no model call. The vault can then be shown as one composed screen through an interface protocol such as A2UI. See [a screen from the pages](a2ui.md) and the [protocol research](../research/protocols.md).
+A compositor is the outward [lens](lens.md) for people: a page that asks a model once how a page should be laid out, records the answer as a layout page, and from then on draws the screen from the layout with no model call. The vault can then be shown as one composed screen through an interface protocol such as A2UI. See [a screen from the pages](a2ui.md) and the [protocol research](../research/protocols.md).
 
-The model is asked again only when the shape of a page changes or a person asks for something different. This is the same move as elsewhere in Conky: think once, record the result, then let it happen. See [learned reactions](learned-reactions.md).
+The model is asked again only when the shape of a page changes or a person asks for something different. How a lens stays cheap and when it is revised is described in [the lens](lens.md).
 
 A person changes the screen by asking. Each window and element has a small prompt control at its corner that opens a box to type into, for example "show the cooler as a big number with a bar". The request goes to the compositor as an ordinary change, under the same rules and the same gatekeeper, and is recorded in the history beside the layout it produced.
 
