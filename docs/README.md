@@ -75,6 +75,7 @@ Longer pieces that make the case for one idea each and stand alone.
 
 Candidates that are not yet requirements. Each states its rung.
 
+- [ideas/a2ui.md](ideas/a2ui.md): A screen from the pages
 - [ideas/approvals.md](ideas/approvals.md): Approvals as a pattern
 - [ideas/arcs.md](ideas/arcs.md): Arcs
 - [ideas/assimilation-test.md](ideas/assimilation-test.md): Assimilation test
@@ -82,9 +83,11 @@ Candidates that are not yet requirements. Each states its rung.
 - [ideas/background-minds.md](ideas/background-minds.md): Background minds
 - [ideas/cascading-context.md](ideas/cascading-context.md): Context that flows down
 - [ideas/clock.md](ideas/clock.md): Time as an ordinary change
+- [ideas/gatekeeper.md](ideas/gatekeeper.md): Permission that stays out of the way
 - [ideas/direction-and-drift.md](ideas/direction-and-drift.md): Direction and drift
 - [ideas/dry-run.md](ideas/dry-run.md): Trying a change first
 - [ideas/energy-unit.md](ideas/energy-unit.md): Energy unit
+- [ideas/inheritance.md](ideas/inheritance.md): What a space hands down
 - [ideas/learned-reactions.md](ideas/learned-reactions.md): Learned reactions
 - [ideas/ledger.md](ideas/ledger.md): Ledger
 - [ideas/measures.md](ideas/measures.md): Measures
@@ -92,6 +95,7 @@ Candidates that are not yet requirements. Each states its rung.
 - [ideas/obsidian-view.md](ideas/obsidian-view.md): Obsidian view
 - [ideas/patterns.md](ideas/patterns.md): Patterns
 - [ideas/rename.md](ideas/rename.md): Renaming without breaking anything
+- [ideas/seeds-and-faces.md](ideas/seeds-and-faces.md): A seed, an identity and a face
 - [ideas/staleness.md](ideas/staleness.md): Nothing goes stale
 - [ideas/tables.md](ideas/tables.md): Tables
 - [ideas/thought-to-change.md](ideas/thought-to-change.md): Thought to change

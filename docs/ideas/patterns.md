@@ -12,15 +12,15 @@ source: maintainers
 
 The runtime should not contain domain machinery such as a ledger. Instead there is a pattern maker. It is similar to a skill generator, but it works on professional domains and on the dynamics of businesses, organisations and teams. It takes goldens, which are worked examples of good practice: a structure that already works in a vault, a professional method, or a standard process. It distils them into a simple recipe of patterns, practices, methods and processes that can be applied again.
 
-A pattern is a named recipe. It says when to use it and how to compose the existing words (pages, spaces, rules, reactions, tables) into a known structure.
+A pattern is a space: a named recipe that says when to use it and how to compose the existing words (pages, spaces, rules, reactions, tables) into a known structure. Applying a pattern is joining its space, and a page may join several ([what a space hands down](inheritance.md)).
 
 There is no shipped catalogue. Nothing is defined in advance. Profit and loss, double-entry accounts, stock control, approvals, and a clearing house for mutual debts are things the maker could be asked to produce, not things that come built in. Patterns are produced when a need or a good example appears.
 
-Applying a pattern is just a series of ordinary writes. Everything it creates is therefore in the vault's Git history, and it can be changed afterwards like anything else. A pattern is itself a page, so actors can read, apply and write new ones. A structure that works can be promoted into a pattern.
+Applying a pattern is just a series of ordinary writes. Everything it creates is therefore in the vault's Git history, and it can be changed afterwards like anything else. A pattern is itself a page, the page of its space, so actors can read, apply and write new ones. A structure that works can be promoted into a pattern.
 
 ## The maker
 
-The input is one or more goldens plus a statement of the need. The output is a pattern page.
+The input is one or more goldens plus a statement of the need. The output is a space page that holds the pattern's rules, context and reactions.
 
 Making a pattern is real thinking, so it is one of the places where a model is asked. Applying a pattern afterwards needs no model.
 
