@@ -4,6 +4,10 @@
 
 <p><img src="docs/assets/conky-hero.jpg" alt="A ventriloquist puppet in a sweater that reads conky, with the caption: You just remember I call the shots here, Bubbles." width="100%"><br><sub><a href="https://www.youtube.com/watch?v=vcsm6QO-MWE">Trailer Park Boys: Conky</a></sub></p>
 
+<h3 align="center">Delete the harness. Keep the agents.</h3>
+
+<p align="center">Agents, rules and data are all pages in one Git folder.<br>The pages notice each other and act. There is nothing else.</p>
+
 ### Copy pasta
 
 ```
@@ -13,10 +17,6 @@
 ```
 🛸 user@thething ❯ uvx --from git+https://github.com/drksci/conky conky assimilate
 ```
-
-<h3 align="center">Delete the harness. Keep the agents.</h3>
-
-<p align="center">Agents, rules and data are all pages in one Git folder.<br>The pages notice each other and act. There is nothing else.</p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/demo.dark.svg"><img src="docs/assets/figures/demo.light.svg" alt="Left, a terminal playing the demo: Maya sets up a lemonade stand with one house rule, fills the cooler, a cup count below zero is refused, a busy hour empties the cooler and the supplier orders lemons by itself. Right, a wireframe of the same thing as a screen, in the pages' own words: the house rule, the cooler's count, the supplier's order and lines from the daybook, updating in step." width="800"></picture></p>
 
