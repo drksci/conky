@@ -37,6 +37,12 @@ ANTHROPIC_DEFAULT_MODEL = "claude-sonnet-5-5"
 OPENAI_URL = "https://api.openai.com/v1/chat/completions"
 # No OpenAI model id has been verified, so a detected openai choice needs CONKY_MODEL.
 OPENAI_DEFAULT_MODEL: str | None = None
+# What an agent program is told so that it answers as a model would: its own instructions
+# are replaced, so the prompt is the only thing it reads.
+PLAIN = (
+    "You are a language model answering one prompt. You have no tools, no files and no memory "
+    "beyond the prompt. Reply with plain text only."
+)
 BUILTIN_COMMANDS = arch.constant(
     {
         "claude": [
@@ -46,6 +52,8 @@ BUILTIN_COMMANDS = arch.constant(
             "",
             "--strict-mcp-config",
             "--disable-slash-commands",
+            "--system-prompt",
+            PLAIN,
         ],
         "codex": ["codex", "exec"],
     },

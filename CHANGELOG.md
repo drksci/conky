@@ -4,7 +4,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ## [Unreleased]
 
-- Fixed: a model reached through a program on the machine could read files. The built-in `claude` command now runs with its tools, tool servers and commands off, and every command provider starts in an empty folder. Live runs made before this, including the three trail pilots and the first walks of the cards, reached their model the old way and are marked as such.
+- Fixed: a model reached through a program on the machine could read files. The built-in `claude` command now runs with its tools, tool servers and commands off and its own instructions replaced by one plain line, and every command provider starts in an empty folder. Live runs made before this, including the three trail pilots and the first walks of the cards, reached their model the old way and are marked as such.
 
 ### Changed
 

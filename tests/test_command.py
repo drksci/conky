@@ -459,3 +459,4 @@ def test_a_command_provider_starts_in_an_empty_folder_and_sees_only_its_prompt(
     assert asked(vault).ok
     assert vault.read("desk").fields["summary"] == "files 0 False"
     assert model.BUILTIN_COMMANDS["claude"][:4] == ["claude", "-p", "--tools", ""]
+    assert model.BUILTIN_COMMANDS["claude"][-2:] == ["--system-prompt", model.PLAIN]
