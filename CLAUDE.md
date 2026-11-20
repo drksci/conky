@@ -29,6 +29,7 @@ Run this before every push. CI runs the same command on every pull request. Whil
 - A measure is a page watching itself. Its value is written as a recorded event, so reading history never evaluates an expression. (check: `tests/test_laws.py`)
 - Whatever follows from state happens as a reflex, with no model call, so that thought can go into character, judgement and conversation. Avoiding the model is never the aim. (check: `tests/test_model.py` for the mechanism; review for the balance)
 - A provider is a page; a secret is never written to a vault. (check: `tests/test_model.py`)
+- A model sees its prompt and nothing else. A program that stands in for a model is started in an empty folder with its tools off. (check: `tests/test_command.py`)
 - Rules and measures are pure: no clock, randomness or I/O inside them. (review)
 - A vault travels alone: cloned or bundled anywhere, it verifies, and it holds no private key. (check: `tests/test_laws.py`)
 - Anything built to make a vault faster or nicer to use is derived data: optional, outside the history, rebuildable from the vault alone, and safe to delete. Nothing reads it as the truth. (review: none built yet)

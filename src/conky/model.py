@@ -8,6 +8,7 @@ import os
 import shlex
 import shutil
 import subprocess
+import tempfile
 import urllib.error
 import urllib.request
 from collections.abc import Callable
@@ -37,7 +38,17 @@ OPENAI_URL = "https://api.openai.com/v1/chat/completions"
 # No OpenAI model id has been verified, so a detected openai choice needs CONKY_MODEL.
 OPENAI_DEFAULT_MODEL: str | None = None
 BUILTIN_COMMANDS = arch.constant(
-    {"claude": ["claude", "-p"], "codex": ["codex", "exec"]},
+    {
+        "claude": [
+            "claude",
+            "-p",
+            "--tools",
+            "",
+            "--strict-mcp-config",
+            "--disable-slash-commands",
+        ],
+        "codex": ["codex", "exec"],
+    },
     "built-in command",
     "conky.model.BUILTIN_COMMANDS",
     "slot.command",
@@ -229,15 +240,19 @@ def find_command(name: str, keys_dir: Path) -> list[str]:
 def _run(found: Provider, argv: list[str], prompt: str) -> Answer:
     where = f"provider {found.page!r}"
     try:
-        done = subprocess.run(
-            argv,
-            input=prompt,
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            timeout=COMMAND_TIMEOUT,
-            check=False,
-        )
+        # A model sees its prompt and nothing else: the program starts in an empty folder, so
+        # it finds no project files or instructions lying about.
+        with tempfile.TemporaryDirectory(prefix="conky-ask-") as room:
+            done = subprocess.run(
+                argv,
+                input=prompt,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                timeout=COMMAND_TIMEOUT,
+                check=False,
+                cwd=room,
+            )
     except FileNotFoundError as exc:
         raise ModelError(
             f"{where} cannot start {argv[0]!r}: install it or correct CONKY_COMMAND_"

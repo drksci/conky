@@ -446,3 +446,16 @@ def test_a_missing_key_directory_or_an_unreadable_file_never_breaks_asking(
     assert asked(vault).plain
     assert "cannot read echo.command" in refusal(vault)
     vault.verify()
+
+
+def test_a_command_provider_starts_in_an_empty_folder_and_sees_only_its_prompt(
+    vault: Vault, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A model sees its prompt and nothing else: no project files lie about where it starts."""
+    body = "import os\nprint('files', len(os.listdir('.')), os.getcwd() == os.environ['STARTED'])\n"
+    program(monkeypatch, "echo", script(tmp_path, "where", body))
+    monkeypatch.setenv("STARTED", str(Path.cwd()))
+    provider(vault)
+    assert asked(vault).ok
+    assert vault.read("desk").fields["summary"] == "files 0 False"
+    assert model.BUILTIN_COMMANDS["claude"][:4] == ["claude", "-p", "--tools", ""]
