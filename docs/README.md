@@ -73,8 +73,11 @@ Outside work, compared on a fixed basis, with the depth of reading stated.
 - [research/browser-drivers.md](research/browser-drivers.md): Browser drivers compared, and what they suggest for a web connector
 - [research/dair-2026.md](research/dair-2026.md): DAIR.AI papers of the week, 2026: relevance index
 - [research/harnesses.md](research/harnesses.md): Agent harnesses compared
+- [research/findings-rubric.md](research/findings-rubric.md): What the research says a harness must do, and where Conky stands
 - [research/papers.md](research/papers.md): Paper register
 - [research/protocols.md](research/protocols.md): Protocols for agents, tools and interfaces
+- [research/anxiety-kernels.md](research/anxiety-kernels.md): Anxiety kernels: warnings that reach someone who will act
+- [research/felt-sense-experiment.md](research/felt-sense-experiment.md): Felt-sense experiment: does placing a magnitude help a model
 - [research/where-am-i.md](research/where-am-i.md): MARCO: a shared word for where an agent is
 - [research/benchmarks.md](research/benchmarks.md): Benchmarks and evaluations for agent harnesses
 - [research/evaluation-plan.md](research/evaluation-plan.md): Evaluation plan (draft): three kinds of result kept apart, and steps from cheapest first
@@ -107,6 +110,7 @@ Candidates, not requirements. Each states its rung.
 - [ideas/compositor.md](ideas/compositor.md): The compositor: a screen that is asked for once
 - [ideas/connectors.md](ideas/connectors.md): Connectors: every protocol is a door, not a room
 - [ideas/gatekeeper.md](ideas/gatekeeper.md): Permission that stays out of the way
+- [ideas/habit.md](ideas/habit.md): A habit: what recurs is thought about once
 - [ideas/direction-and-drift.md](ideas/direction-and-drift.md): Direction and drift
 - [ideas/dry-run.md](ideas/dry-run.md): Trying a change first
 - [ideas/energy-unit.md](ideas/energy-unit.md): Energy unit

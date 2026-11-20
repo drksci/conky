@@ -4,6 +4,9 @@ title: A felt sense of magnitude
 status: idea
 date: 2026-11-20
 source: the owner's request for a shared way to feel time, severity and impact, and the digest in research/where-am-i.md
+arch:
+  covers:
+  - archetype:lens
 ---
 
 # A felt sense of magnitude
@@ -56,6 +59,7 @@ The clock (time is a write) and lenses.
 - The placement misleads at the ends of a scale, such as a value far beyond the last anchor.
 - Two characters with the same lens read the same value differently in ways that matter.
 - A prompt-class control for the [evaluation plan](../research/evaluation-plan.md): same harness, same model, same budget, raw against placed. The result is a prompt result and is never cited as a claim about Conky. The source's untested control applies as well: familiar anchor names against opaque ones.
+- The protocol for this test, with its conditions, tasks and analysis fixed before any run, is the [felt-sense experiment](../research/felt-sense-experiment.md).
 
 ## Open questions
 
