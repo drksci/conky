@@ -17,7 +17,7 @@
 
 <h3 align="center">A folder where everything is somebody.</h3>
 
-<p align="center">An open-source agent harness with no harness. The whole system is Markdown pages in a Git repository.<br>Every page is somebody, with a name, a voice and rules it cannot talk its way past.</p>
+<p align="center">An open-source agent harness with nothing wrapped around the model.<br>The system is a folder of pages. Every person, agent, tool, rule and record is one,<br>and each has a name, a voice and limits it cannot argue with.</p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/demo.dark.svg"><img src="docs/assets/figures/demo.light.svg" alt="Left, a terminal playing the demo: Maya sets up a lemonade stand with one house rule, fills the cooler, a cup count below zero is refused, a busy hour empties the cooler and the supplier orders lemons by itself. Right, a wireframe of the same thing as a screen, in the pages' own words: the house rule, the cooler's count, the supplier's order and lines from the daybook, updating in step." width="800"></picture></p>
 
@@ -31,11 +31,11 @@
 
 ### tl;dr
 
-Every agent project ends up the same: a pile of prompts, some glue code and a database nobody dares touch. Six months in, nobody can say why it did what it did, and moving it is a project of its own.
+Most agent systems are a model with machinery around it: prompts, orchestration code and a database, each holding part of the truth where nobody can read it.
 
-Conky does it backwards. The system is a folder of Markdown files in Git, and every file is somebody: the owner, the cooler, the supplier, the daybook. Signing, checking the rules and noticing each other are reflexes that cost no thought, so the thinking goes into being someone.
+Conky takes the machinery away. The system is its own documents. Pages notice each other and act, rules are enforced on every change, and the history of those changes is the only record. What is left for the model is the part worth having a model for: judgement, character and conversation.
 
-If you ever hate it, clone the folder and leave.
+It is plain files in Git, so you can read all of it, and you can take it and leave.
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-0-folder.dark.svg"><img src="docs/assets/figures/fig-0-folder.light.svg" alt="An early Macintosh folder window titled Lemonade stand, in black and white. Inside are six page icons named stand, cooler, supplier, daybook, maya and sam. Dashed arrows run from stand to cooler to supplier, and the daybook has an arrow looping back to itself. The status line reads: 6 pages, running itself." width="800"></picture></p>
 
@@ -43,9 +43,7 @@ If you ever hate it, clone the folder and leave.
 
 ### Not another harness
 
-Most agent setups keep the truth in four places: the prompt, the config, the database and the code. When they disagree, somebody has to work out which one wins. Usually Dave.
-
-Conky keeps one. Left is the usual way, right is Conky, and the small print names the actual parts, each sourced in the <a href="docs/research/harnesses.md">comparison</a>.
+Five places where the usual approach and Conky part ways. Left is the usual way, right is Conky, and the small print names the real parts, each sourced in the <a href="docs/research/harnesses.md">comparison</a>.
 
 <p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/row-1-truth.dark.svg"><img src="docs/assets/figures/row-1-truth.light.svg" alt="Usually the truth is spread across code, prompts, a database, and Dave. With Conky the truth is the pages, and there is nowhere else to look." width="800"></picture></a></p>
 <p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/row-2-rules.dark.svg"><img src="docs/assets/figures/row-2-rules.light.svg" alt="Usually rules are a strongly worded prompt, and hope. With Conky rules are checked on every change, and a model cannot talk its way past one." width="800"></picture></a></p>
