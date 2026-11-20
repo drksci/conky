@@ -51,7 +51,7 @@ It is plain files in Git. Read all of it, or take it and leave.
 
 ### Not another harness
 
-Five places it parts ways with the usual. The small print names the real parts, and the <a href="docs/research/harnesses.md">comparison</a> has the sources.
+Conky is... different.
 
 <p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/row-1-truth.dark.svg"><img src="docs/assets/figures/row-1-truth.light.svg" alt="Usually the truth lives in the code, the prompts, a database, and Dave. With Conky the truth is the pages, and Dave can go home." width="800"></picture></a></p>
 <p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/row-2-rules.dark.svg"><img src="docs/assets/figures/row-2-rules.light.svg" alt="Usually the rules are a strongly worded prompt and a small prayer. With Conky rules are checked on every change, and charm does not work on them." width="800"></picture></a></p>
