@@ -112,6 +112,7 @@ Candidates, not requirements. Each states its rung.
 - [ideas/rename.md](ideas/rename.md): Renaming without breaking anything
 - [ideas/seeds-and-faces.md](ideas/seeds-and-faces.md): A seed, an identity and a face
 - [ideas/staleness.md](ideas/staleness.md): Nothing goes stale
+- [ideas/stepping.md](ideas/stepping.md): One step at a time
 - [ideas/tables.md](ideas/tables.md): Tables
 - [ideas/thought-to-change.md](ideas/thought-to-change.md): Thought to change
 - [ideas/tools.md](ideas/tools.md): The outside arrives as pages
