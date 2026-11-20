@@ -116,6 +116,7 @@ Candidates, not requirements. Each states its rung.
 - [ideas/arcs.md](ideas/arcs.md): Arcs
 - [ideas/assimilation-test.md](ideas/assimilation-test.md): Assimilation test
 - [ideas/auto-linking.md](ideas/auto-linking.md): Auto-linking
+- [ideas/attention.md](ideas/attention.md): Attention: who hears what, and at which layer
 - [ideas/faculties.md](ideas/faculties.md): Faculties
 - [ideas/standing.md](ideas/standing.md): Standing
 - [ideas/background-minds.md](ideas/background-minds.md): Background minds

@@ -1299,6 +1299,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [approvals](../ideas/approvals.md) | idea | [`part.seal.signer`](#part.seal.signer), [`part.seal.signer`](#part.seal.signer), [`kind.proposal`](#kind.proposal), [`flow.proposal.approve`](#flow.proposal.approve) |
 | [arcs](../ideas/arcs.md) | idea | - |
 | [assimilation-test](../ideas/assimilation-test.md) | idea | [`flow.vault.assimilate`](#flow.vault.assimilate), [`part.vault.assimilate`](#part.vault.assimilate), [`part.test.resume`](#part.test.resume) |
+| [attention](../ideas/attention.md) | idea | - |
 | [auto-linking](../ideas/auto-linking.md) | idea | [`part.link`](#part.link) |
 | [background-minds](../ideas/background-minds.md) | idea | [`law.spend.meter`](#law.spend.meter), [`kind.mind`](#kind.mind), [`stage.attention.mind`](#stage.attention.mind) |
 | [cascading-context](../ideas/cascading-context.md) | idea | [`part.space.context`](#part.space.context) |
@@ -1392,6 +1393,7 @@ Found in the documents and fitting no row above.
 | a generated index for a notes application | [obsidian-view.md](../ideas/obsidian-view.md) | Derived data under R11. Nothing is designed beyond the idea. |
 | ahead or different with each step | [0033-ahead-or-different-with-each-step.md](../decisions/0033-ahead-or-different-with-each-step.md) | Every step states the difference it makes against other harnesses and how that is shown; parity work waits until a difference depends on it. |
 | arcs | [arcs.md](../ideas/arcs.md) | A primary purpose with branches, each scored by its distance from it. Not yet worked out, and read as direction and drift. |
+| attention | [attention.md](../ideas/attention.md) | Every page hears what it chose to hear, at the cheapest layer that can deal with it, and a thinking page is shown only what its own household passed up. It needs an event a watch can read and an ordered, budgeted list of members. |
 | build on bedrock | [0031-build-on-bedrock.md](../decisions/0031-build-on-bedrock.md) | Walk a new layer one step at a time before building on it. A working rule whose check is the benchmark walkthrough. |
 | energy unit | [energy-unit.md](../ideas/energy-unit.md) | A unit of value flow that conserves only if its conversion is recorded. It waits on a grouped write and a measure of spend, and has no step of its own. |
 | faculties | [faculties.md](../ideas/faculties.md) | A page that watches another and writes the rule, entry or link a sentence asks for, tried aside before it binds. A reflex kind costs nothing and a thinking kind costs a small call. |

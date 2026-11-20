@@ -12,6 +12,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ### Added
 
+- One idea placed in the design as an idea, nothing built: attention (every page hears what it chose to hear, at the cheapest layer that can deal with it), with its layers, encapsulation rules, trial ladder and falsifying test.
 - Three ideas placed in the design as ideas, nothing built: standing (what is shown first is decided by a measure), being told (a refusal that a watch can notice) and faculties (a sentence in, the form written by a watching page), with entries 26 to 28 in the seams page and falsifying tests added to the pages they touch.
 
 - The card `a-clerk-remembers` tells the clerk who it is, and its reflex keeps every phrase put in bold and no longer only the last answer's, so a fact need not be put in bold again to survive.
