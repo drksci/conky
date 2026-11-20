@@ -5,10 +5,12 @@ the meter. The wiring is in `scaffold.md`; nothing else is built for the agent.
 
 ## Answer mode
 
-`--answers keys` (the default and, so far, the only mode used in any run): each answer fills
-the field `keys`, which the connector types. Every run records this in its command line.
-`--answers pages` is the switch for answers that are pages (`writes:` on an ask, now in the
-runtime); the adapter refuses it until it is wired and walked.
+`--answers keys` (the default): each answer fills the field `keys`, which the connector types.
+`--answers pages`: the character sits in a space, `den`, and its answer is the line to type plus
+any pages it writes there (`writes:` on the ask). With the scripted stand-in the walkthrough
+(stage 10) shows a note kept, the character's own page rewritten with a case, and that case
+answering a later screen with no model call. No live model has used this mode yet. Every run
+records the mode in `run.json` and, when it is not `keys`, in the adapter's command line.
 
 ## What the arm exercises
 

@@ -118,6 +118,7 @@ class Plan:
     game: Path | None = None
     cache_mode: str = ""
     replay_from: Path | None = None
+    answers: str = "keys"
 
 
 class Run:
@@ -154,6 +155,8 @@ class Run:
         command += ["--model", self.plan.model, "--seed", str(self.plan.seed)]
         command += ["--calls", str(self.plan.budget.calls)]
         command += ["--tokens", str(self.plan.budget.tokens)]
+        if self.plan.answers != "keys":
+            command += ["--answers", self.plan.answers]
         if self.shelf:
             command.append("--shelf")
         if resume:
@@ -318,6 +321,7 @@ class Run:
             "step": plan.step,
             "manual_resume": False,
             "stand_in_game": str(plan.game) if plan.game else None,
+            "answers": plan.answers,
             "cache_mode": mode,
             "replay_from": str(plan.replay_from) if plan.replay_from else None,
             "versions": {
@@ -490,6 +494,7 @@ def resume_by_hand(
         wall,
         stall,
         cache=cache,
+        answers=old.get("answers", "keys"),
     )
     folder = out / f"{source.name}-resumed-{arm}-{secrets.token_hex(3)}"
     run = Run(plan, folder)
@@ -577,6 +582,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--replay-from", type=Path, default=None, help="with --cache-mode replay: a results dir"
     )
+    parser.add_argument(
+        "--answers",
+        choices=("keys", "pages"),
+        default="keys",
+        help="for an arm that declares it: what an answer is, a line to type or a line and pages",
+    )
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
     out = args.out.resolve()
@@ -599,6 +610,10 @@ def main(argv: list[str] | None = None) -> int:
     for name in chosen:
         if name not in known:
             parser.error(f"unknown arm {name!r}: known arms are {', '.join(sorted(known))}")
+    if args.answers != "keys":
+        for name in chosen:
+            if args.answers not in known[name]["manifest"].get("answers", ["keys"]):
+                parser.error(f"arm {name!r} has no --answers {args.answers}")
     cells = matrix(args.scenario, chosen, args.prompts.split(","), seeds(args.seeds))
     if args.step and len(cells) != 1:
         parser.error("--step runs exactly one run: give one arm, one prompt and one seed")
@@ -622,6 +637,7 @@ def main(argv: list[str] | None = None) -> int:
             args.cache,
             args.game.resolve() if args.game else None,
             args.cache_mode,
+            answers=args.answers,
         )
         label = f"{name}/{arm}/{prompt}/seed-{seed}" + (f"-{args.probe}" if args.probe else "")
         if args.replay_from:

@@ -36,6 +36,26 @@ The screen:
 The shelf line is present only when the shelf is offered. The scaffolding is the shelf line and
 "The screen:", with the blank lines between parts: about 160 bytes a call with the shelf.
 
+## With `--answers pages`
+
+The same vault, with exactly these additions and nothing else:
+
+- `den`: a space page, body "Where the traveller may keep what it writes."
+- `traveller` gains the fields `within: den` and `turn: 0` (so it is a page inside the space, and
+  its own `turn` exists before the first screen).
+- The ask gains `writes: den`, and its `when` gains ` && page.turn != other.turn`, so a screen
+  that a case on the page has already answered is not asked about again.
+- The prompt starts with one line, "You are the page `traveller` in the space `den`.", and its
+  last part reads `The screen, turn ![[screen#turn]]:` in place of `The screen:`. The character
+  cannot rewrite its own page without knowing its name, and a case on its own page can key only
+  on the screen page's `turn`, which the screen's text does not show.
+- The runtime appends its own fixed instruction for pages to the prompt, as it does for every
+  ask with `writes`; the adapter does not write it.
+
+A case, when the character makes one, is a watch entry it writes on its own page, in the form
+`on: screen`, `when: other.turn == N && <live>`, `set: {keys: '<line>', turn: other.turn}`. The
+adapter ships none; the scripted stand-in writes one (`bench/backends.py`).
+
 ## The process
 
 The terminal connector (`conky connect terminal --hands traveller`) runs the environment,
@@ -45,7 +65,7 @@ call: the meter keeps the record of calls for every arm alike, and runs stay ind
 
 ## Reading the shelf
 
-With today's runtime the character cannot read a shelf page: its prompt is fixed in its watch
-entry and its answer can only fill `keys`. With answers that are pages, it could rewrite its own
-watch entry to embed `![[shelf-fables]]`, and the read would appear in the record's `Read`
-trailer, from which the runner takes the shelf log.
+With `--answers keys` the character cannot read a shelf page: its prompt is fixed in its watch
+entry and its answer can only fill `keys`. With `--answers pages` it can rewrite its own watch
+entry to embed `![[shelf-fables]]`, and the read appears in the record's `Read` trailer, from
+which the runner takes the shelf log. Whether it does is left to the model.

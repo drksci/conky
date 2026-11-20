@@ -30,16 +30,48 @@ CLI = "import sys; from conky.cli import main; sys.exit(main(sys.argv[1:]))"
 PROVIDER = "meter"
 SECRET = "bench"
 SHELF = "shelf"
-# Today a page that asks a model fills one field, so the answer goes into `keys`. When a
-# character can answer with pages, this one setting changes to "pages".
+# `keys`: the answer fills the one field the connector types. `pages`: the character lives in
+# the space DEN, and its answer is the reply plus pages it may write inside that space.
 ANSWERS = ("keys", "pages")
-WHEN = "other.turn > 0 && (!has(other.ended) || other.ended == '')"
+DEN = "den"
+LIVE = "other.turn > 0 && (!has(other.ended) || other.ended == '')"
 PROMPT = (
     "<<<pack>>>![[traveller#task]]<<</pack>>>\n\n"
     "<<<pack>>>![[traveller#house_rules]]<<</pack>>>\n\n"
     "{shelf}"
     "The screen:\n<<<screen>>>![[screen]]<<</screen>>>"
 )
+# With pages the character is told who it is and which screen it answers, because the screen
+# page's `turn` is the one thing a case on its own page can key on.
+PAGES_PROMPT = (
+    "You are the page `traveller` in the space `den`.\n\n"
+    "<<<pack>>>![[traveller#task]]<<</pack>>>\n\n"
+    "<<<pack>>>![[traveller#house_rules]]<<</pack>>>\n\n"
+    "{shelf}"
+    "The screen, turn ![[screen#turn]]:\n<<<screen>>>![[screen]]<<</screen>>>"
+)
+
+
+def watch_of(answers: str, prompt: str, cases: tuple[tuple[int, str], ...] = ()) -> list[dict]:
+    """The character's watch entries. A case is (screen turn, keys): answer that screen at once."""
+    ask = {"provider": PROVIDER, "otherwise": "", "prompt": prompt, "into": "keys"}
+    when = LIVE
+    if answers == "pages":
+        ask["writes"] = DEN
+        when = f"{LIVE} && page.turn != other.turn"
+    entries = [
+        {
+            "on": "screen",
+            "when": f"other.turn == {turn} && {LIVE}",
+            "set": {"keys": f"'{keys}'", "turn": "other.turn"},
+        }
+        for turn, keys in cases
+    ]
+    return [
+        *entries,
+        {"on": "screen", "when": when, "ask": ask},
+        {"on": "screen", "when": LIVE, "set": {"turn": "other.turn"}},
+    ]
 
 
 def now() -> str:
@@ -81,22 +113,24 @@ def setup(args, shelf_dir: Path) -> None:
             names.append(name)
             text = path.read_text(encoding="utf-8")
             assert vault.write(name, {"within": SHELF}, text, actor="bench", at=now()).ok
-    ask = {
-        "provider": PROVIDER,
-        "otherwise": "",
-        "prompt": PROMPT.format(
-            shelf=f"The shelf is the space `shelf` in this vault, pages: {', '.join(names)}.\n\n"
-            if names
-            else ""
-        ),
-        "into": "keys",
-    }
-    watch = [
-        {"on": "screen", "when": WHEN, "ask": ask},
-        {"on": "screen", "when": WHEN, "set": {"turn": "other.turn"}},
-    ]
+    shelf = (
+        f"The shelf is the space `shelf` in this vault, pages: {', '.join(names)}.\n\n"
+        if names
+        else ""
+    )
+    pages = args.answers == "pages"
+    prompt = (PAGES_PROMPT if pages else PROMPT).format(shelf=shelf)
     body = "A traveller on the trail. It answers each screen with what to type."
-    fields = {"task": pack.task, "house_rules": pack.rules, "watch": watch}
+    fields = {
+        "task": pack.task,
+        "house_rules": pack.rules,
+        "watch": watch_of(args.answers, prompt),
+    }
+    if pages:
+        assert vault.write(
+            DEN, {}, "Where the traveller may keep what it writes.", actor="bench", at=now()
+        ).ok
+        fields |= {"within": DEN, "turn": 0}
     assert vault.write(CHARACTER, fields, body, actor="bench", at=now()).ok
 
 
@@ -111,12 +145,8 @@ def aim(args) -> None:
 
 
 def play(args) -> int:
-    if args.answers != "keys":
-        print(
-            "the pages answer mode needs a runtime where a character can answer with pages; "
-            "this runtime cannot, so use --answers keys",
-            file=sys.stderr,
-        )
+    if args.answers not in ANSWERS:
+        print(f"--answers is one of {', '.join(ANSWERS)}", file=sys.stderr)
         return 2
     if not (args.workdir / "vault").exists():
         if args.resume:
@@ -146,29 +176,42 @@ def _commits(vault_dir: Path) -> list[tuple[str, str, dict]]:
     return found
 
 
-def _fields(vault_dir: Path, commit: str, page: str) -> dict:
+def _page(vault_dir: Path, commit: str, page: str):
+    """The page as the commit holds it: `fields` and body, and `within`, `rules`, `watch`."""
     from conky import git
     from conky.page import parse
 
-    return parse(git.run(["show", f"{commit}:pages/{page}.md"], vault_dir)).fields
+    return parse(git.run(["show", f"{commit}:pages/{page}.md"], vault_dir))
+
+
+def _fields(vault_dir: Path, commit: str, page: str) -> dict:
+    return _page(vault_dir, commit, page).fields
 
 
 def typed(vault_dir: Path) -> list[dict]:
-    """Each answer the character gave to a screen, in order: the inputs it typed."""
-    commits = _commits(vault_dir)
-    answers = []
-    for commit, author, tags in commits:
-        if tags.get("Page") == CHARACTER and tags.get("Kind") == "write" and "Model" in tags:
+    """Each line the character gave to a screen, in order: by a model answer or by one of its cases.
+
+    A line is a commit on the character that carries a model's trailers, or that changes `keys`
+    to something. A case that repeats the line before it cannot be told from the turn being
+    recorded, and is missed.
+    """
+    answers, before = [], None
+    for commit, author, tags in _commits(vault_dir):
+        if tags.get("Page") != CHARACTER or tags.get("Kind") != "write":
+            continue
+        keys = _fields(vault_dir, commit, CHARACTER).get("keys")
+        if "Model" in tags or (keys and keys != before):
             answers.append(
                 {
                     "commit": commit,
                     "actor": author,
-                    "keys": _fields(vault_dir, commit, CHARACTER).get("keys"),
-                    "model": tags.get("Model-Name", tags["Model"]),
+                    "keys": keys,
+                    "model": tags.get("Model-Name", tags["Model"]) if "Model" in tags else "",
                     "read": tags.get("Read", ""),
                     "screen_commit": tags.get("Cause", ""),
                 }
             )
+        before = keys
     return answers
 
 
@@ -176,10 +219,16 @@ def explain(workdir: Path) -> list[dict]:
     """Every input the character gave, in order, with who gave it and what caused it."""
     found = []
     for answer in typed(workdir / "vault"):
-        cause = (
-            f"model answer {answer['commit'][:7]} by {answer['model']}, reading "
-            f"{answer['read']}, caused by screen write {answer['screen_commit'][:7]}"
-        )
+        if answer["model"]:
+            cause = (
+                f"model answer {answer['commit'][:7]} by {answer['model']}, reading "
+                f"{answer['read']}, caused by screen write {answer['screen_commit'][:7]}"
+            )
+        else:
+            cause = (
+                f"case {answer['commit'][:7]} on the character's own page, no model call, "
+                f"caused by screen write {answer['screen_commit'][:7]}"
+            )
         found.append({"keys": answer["keys"], "actor": answer["actor"], "cause": cause})
     return found
 

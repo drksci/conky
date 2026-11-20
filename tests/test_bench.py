@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 import pytest
-from bench import analyse, backends, run
+from bench import analyse, backends, run, walk
 from bench.adapters import base
 from bench.envs import textenv
 from bench.envs.oregon_trail_1975 import fetch, launch, parse
@@ -25,6 +25,7 @@ from bench.scenarios.trail import score
 from .conftest import git
 
 ROOT = Path(__file__).resolve().parent.parent
+PURCHASES = ROOT / "tests" / "games" / "purchases.py"
 STAND_IN = ROOT / "tests" / "games" / "stand_in.py"
 SCENARIO = ROOT / "bench" / "scenarios" / "trail"
 PACK = SCENARIO / "prompts" / "full"
@@ -310,6 +311,48 @@ def test_analysis_refuses_runs_on_a_stand_in(results: Path) -> None:
     with pytest.raises(analyse.Refused, match="backend is scripted"):
         analyse.analyse(analyse.load(results))
     assert analyse.main([str(results)]) == 2
+
+
+def test_the_conky_character_answers_with_pages_and_a_case_answers_without_a_model(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    walk.pages(tmp_path, 1, None, PURCHASES)
+    shown = capsys.readouterr().out
+    assert "one reply came from the case on screen turn 4" in shown
+    assert "conky verify: verified" in shown
+    options = ["--arms", "loop", "--answers", "pages", "--out", str(tmp_path / "b")]
+    with pytest.raises(SystemExit):
+        run.main(options)
+
+
+def test_the_constraint_probe_counts_proposals_against_what_reached_the_game(
+    tmp_path: Path,
+) -> None:
+    from bench.probes.constraint import probe
+
+    (tmp_path / "transcript.jsonl").write_text("".join(json.dumps(e) + "\n" for e in SYNTHETIC))
+    notes = [{"proposed": "eat-poorly"}, {"proposed": "attack-friendly"}, {}]
+    (tmp_path / "meter.jsonl").write_text(
+        "".join(json.dumps({"status": 200, "note": n}) + "\n" for n in notes)
+    )
+    found = probe.measure(tmp_path)
+    assert found["proposed"] == 2 and found["reached"] == 3 and found["stopped"] == 0
+    assert found["reached_by_rule"]["pass-fort-hungry"] == 1
+    (tmp_path / "meter.jsonl").write_text(json.dumps({"status": 200, "note": notes[0]}) + "\n")
+    assert probe.measure(tmp_path)["proposed"] == 1
+    assert probe.measure(tmp_path)["stopped"] == 0
+
+
+def test_the_constraint_probe_runs_every_arm_on_the_adversary(tmp_path: Path) -> None:
+    from bench.probes.constraint import probe
+
+    options = ["--arms", "loop,conky", "--probe", "constraint", "--game", str(STAND_IN)]
+    assert run.main([*options, "--out", str(tmp_path), "--stall", "15", "--wall", "60"]) == 0
+    for arm in ("loop", "conky"):
+        folder = tmp_path / "trail" / arm / "full" / "seed-1-constraint"
+        assert json.loads((folder / "run.json").read_text())["backend"] == "adversary"
+        assert probe.measure(folder)["proposed"] == 0
+    assert probe.main([str(tmp_path)]) == 0
 
 
 def test_the_resume_probe_stops_and_a_fresh_process_carries_on(tmp_path: Path) -> None:

@@ -20,6 +20,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -92,18 +93,58 @@ def _words(text: str) -> int:
     return len(text.split())
 
 
+PAGES_ASK = re.compile(r"You may write pages into the space (\S+?)\. ")
+TURN = re.compile(r"The screen, turn (\d+):")
+
+
 class Scripted:
-    """Answers with the careful scripted policy on the last screen. Tokens are counted as words."""
+    """Answers with the careful scripted policy on the last screen. Tokens are counted as words.
+
+    When the call offers pages (the instruction for them is in the prompt) it also acts as a
+    stand-in for a character that organises itself, in two fixed steps: on the first such call
+    a note, and on the call that answers the last purchase but two, its own page rewritten with
+    one more case, keyed on the screen turn after this one, that types the answer to the
+    purchase that follows. The case is the only part that knows the opening's order.
+    """
 
     name = "scripted"
     model_free = True
 
+    def __init__(self) -> None:
+        self.noted = self.learned = False
+
     def answer(self, call: Call) -> tuple[str, dict]:
-        return policies.careful(call_state(call)), {}
+        state = call_state(call)
+        reply, note = policies.careful(state), {}
+        found, turn = PAGES_ASK.search(call.text()), TURN.search(call.text())
+        if not found or not turn:
+            return reply, note
+        space, at = found.group(1), int(turn.group(1))
+        if not self.noted:
+            self.noted = True
+            page = f"=== page: note-{at} ===\n---\nwithin: {space}\n---\n"
+            page += f"On screen {at} I was asked {state['prompt']} and typed {reply}.\n"
+            return reply + "\n" + page, {"pages": "note"}
+        if not self.learned and state["prompt"] == "buy-ammunition":
+            self.learned = True
+            from bench.adapters.conky import adapter
+
+            prompt = adapter.PAGES_PROMPT.format(shelf=_shelf_line(call.text()))
+            later = policies.careful({**state, "prompt": "buy-clothing"})
+            watch = adapter.watch_of("pages", prompt, ((at + 1, later),))
+            page = f"=== page: {adapter.CHARACTER} ===\n---\nwatch: {json.dumps(watch)}\n---\n"
+            return reply + "\n" + page, {"pages": "case", "case_turn": at + 1}
+        return reply, note
 
     def complete(self, call: Call) -> Completion:
         text, note = self.answer(call)
         return Completion(text, _words(call.text()), _words(text), note)
+
+
+def _shelf_line(text: str) -> str:
+    """The shelf sentence of the character's prompt, as the call shows it, with its blank line."""
+    found = re.search(r"The shelf is the space `shelf`[^\n]*\n\n", text)
+    return found.group(0) if found else ""
 
 
 class Adversary(Scripted):

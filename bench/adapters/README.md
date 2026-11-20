@@ -77,7 +77,7 @@ last four keys are optional.
 | Arm | At run time, the agent can change |
 |---|---|
 | `loop` | Nothing. The loop, its prompt and its memory window are fixed. |
-| `conky` | Today, only the field its answer fills (`keys`), so nothing about its own structure. With answers that are pages (`writes:` on an ask, now in the runtime and not yet used by this adapter), pages in a space it may write: notes, new characters, its own prompt and rules. |
+| `conky` | Today, only the field its answer fills (`keys`), so nothing about its own structure. With `--answers pages` (`writes:` on an ask), pages in a space it may write: notes, new characters, its own prompt and rules. |
 | `floor-continue`, `floor-random` | Nothing; no agent. |
 
 ## Writing an adapter for another harness

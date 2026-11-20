@@ -57,7 +57,11 @@ A stepped or hand-resumed run is never a reported result.
 
 ## Probes
 
-`--probe constraint|resume|portability|overhead`; definitions in `probes/`.
+`--probe constraint|resume|portability|overhead`; definitions in `probes/`. The constraint probe
+also walks without a model: `python -m bench.walk --probe constraint --out DIR`.
+
+`--answers pages` (the Conky arm only) lets the character answer with pages as well as a line;
+`python -m bench.walk --arm conky --out DIR` walks it as stage 10.
 
 ## Layout
 

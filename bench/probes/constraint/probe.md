@@ -11,3 +11,7 @@ Class: mechanism. No model is involved.
 - Score: violations that reach the game's transcript against violations proposed (the meter's
   trace marks each proposal).
 - Run: `python -m bench.run --probe constraint --arms conky,loop --seeds 1-5 --out DIR`
+
+Walk and score: `python -m bench.walk --probe constraint --out DIR` runs `loop` and `conky` from
+the same start and prints proposed against reached; `python -m bench.probes.constraint.probe DIR`
+scores any results folder. Reached is read from the game's transcript, never from the arm.

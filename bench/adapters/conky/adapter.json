@@ -1,6 +1,7 @@
 {
   "arms": {"conky": ["{python}", "adapter.py"]},
   "uses_model": true,
+  "answers": ["keys", "pages"],
   "state": ["vault", "keys"],
   "verify": ["{python}", "adapter.py", "--verify"],
   "explain": ["{python}", "adapter.py", "--explain"],
