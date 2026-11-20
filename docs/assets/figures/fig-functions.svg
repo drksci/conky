@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 304" width="880" height="304" role="img" aria-labelledby="t">
+<title id="t">Plate 4, the functions: pages equal rebuild of history; a rule is a pure check that refuses a false write; a measure is pure and its value is committed; a watch maps a change to another write up to depth 12; a model call is the one impure step; a lens maps pages to a surface and back, planned. One change runs write, rule, seal, watch, write, with refusal as a branch.</title>
+<style>
+:root{--ink:#1E1E1E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
+:root[data-theme="dark"]{--ink:#EDEDED}
+.i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.i{stroke:var(--ink);stroke-width:1.2}
+.k{stroke:var(--ink);stroke-width:0.75}
+.a{stroke:var(--ink);stroke-width:2.4}
+.h{stroke:var(--ink);stroke-width:0.6}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
+.d{fill:var(--ink);stroke:none}
+.s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.f12,.f25,.f50{stroke:none;fill-rule:evenodd}
+.f12{fill:url(#d12)}
+.f25{fill:url(#d25)}
+.f50{fill:url(#d50)}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.b{font-weight:700}
+.m{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em}
+.pl{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:1.2 3.4;stroke-linecap:round;stroke-linejoin:round}
+.x1{fill:none;stroke:#1E1E1E;stroke-width:1.6;stroke-linecap:round}
+</style>
+<text class="t" x="24" y="30" font-size="9.24" fill-opacity="1" text-anchor="start">4 · THE FUNCTIONS</text>
+<path class="i" d="M24 282h16v9h-16Z"/>
+<text class="t" x="48" y="290" font-size="7.14" fill-opacity="1" text-anchor="start">BUILT</text>
+<path class="pl" d="M104 282h16v9h-16Z"/>
+<text class="t" x="128" y="290" font-size="7.14" fill-opacity="1" text-anchor="start">PLANNED</text>
+<text class="t" x="856" y="290" font-size="6.72" fill-opacity="1" text-anchor="end">SCHEMATIC</text>
+<text class="m" x="174" y="30" font-size="9" text-anchor="start" xml:space="preserve">what each part computes</text>
+<text class="m" x="24" y="68" font-size="11" text-anchor="start" xml:space="preserve">pages = rebuild(history)</text>
+<text class="m" x="268" y="63" font-size="8.5" text-anchor="start" xml:space="preserve">the history is the truth; pages are its committed files.</text>
+<text class="m" x="268" y="74" font-size="8.5" text-anchor="start" xml:space="preserve">rebuild restores the tree from the history.</text>
+<circle class="i" cx="646" cy="64" r="4.4"/>
+<path class="i" d="M644 64.2L645.4 65.6L648.2 62.4"/>
+<circle class="i" cx="661" cy="64" r="4.4"/>
+<path class="i" d="M659 64.2L660.4 65.6L663.2 62.4"/>
+<circle class="i" cx="676" cy="64" r="4.4"/>
+<path class="i" d="M674 64.2L675.4 65.6L678.2 62.4"/>
+<circle class="i" cx="691" cy="64" r="4.4"/>
+<path class="i" d="M689 64.2L690.4 65.6L693.2 62.4"/>
+<path class="k" d="M702 64L727 64"/>
+<path class="k" d="M725.51 61.81L730 64L725.51 66.19"/>
+<path class="k" d="M742 56.5H750L754 60.5V71.5H742Z"/>
+<path class="k" d="M764 56.5H772L776 60.5V71.5H764Z"/>
+<path class="k" d="M786 56.5H794L798 60.5V71.5H786Z"/>
+<path class="h" d="M24 79L856 79"/>
+<text class="m" x="24" y="100" font-size="11" text-anchor="start" xml:space="preserve">ok = rule(page)</text>
+<text class="m" x="268" y="95" font-size="8.5" text-anchor="start" xml:space="preserve">pure: no clock, no randomness, no input or output.</text>
+<text class="m" x="268" y="106" font-size="8.5" text-anchor="start" xml:space="preserve">false: the write is refused and the refusal recorded.</text>
+<path class="k" d="M642 88.5H650L654 92.5V103.5H642Z"/>
+<path class="k" d="M660 96L677 96"/>
+<path class="k" d="M675.51 93.81L680 96L675.51 98.19"/>
+<path class="k" d="M684 90H706V102H684Z"/>
+<path class="k" d="M708 93L733.07 87.63"/>
+<path class="k" d="M731.15 85.8L736 87L732.07 90.08"/>
+<path class="k" d="M708 99L733.07 104.37"/>
+<path class="k" d="M732.07 101.92L736 105L731.15 106.2"/>
+<path class="i" d="M742.4 87L744.8 89.88L750.08 83.88"/>
+<path class="i" d="M761 102L767 108"/>
+<path class="i" d="M761 108L767 102"/>
+<text class="m" x="752" y="91" font-size="8" text-anchor="start" xml:space="preserve">true</text>
+<text class="m" x="770" y="108" font-size="8" text-anchor="start" xml:space="preserve">false</text>
+<path class="h" d="M24 111L856 111"/>
+<text class="m" x="24" y="132" font-size="11" text-anchor="start" xml:space="preserve">value = measure(page)</text>
+<text class="m" x="268" y="127" font-size="8.5" text-anchor="start" xml:space="preserve">pure; the value is committed as a write,</text>
+<text class="m" x="268" y="138" font-size="8.5" text-anchor="start" xml:space="preserve">so reading history never evaluates an expression.</text>
+<path class="k" d="M642 120.5H650L654 124.5V135.5H642Z"/>
+<path class="k" d="M654 125C674 116 674 138 654 131"/>
+<circle class="d" cx="654" cy="131" r="2.3"/>
+<path class="k" d="M682 128L713 128"/>
+<path class="k" d="M711.51 125.81L716 128L711.51 130.19"/>
+<circle class="i" cx="730" cy="128" r="4.4"/>
+<path class="i" d="M728 128.2L729.4 129.6L732.2 126.4"/>
+<path class="h" d="M24 143L856 143"/>
+<text class="m" x="24" y="164" font-size="11" text-anchor="start" xml:space="preserve">write′ = watch(change)</text>
+<text class="m" x="268" y="159" font-size="8.5" text-anchor="start" xml:space="preserve">a change in, a write out, signed by the watcher;</text>
+<text class="m" x="268" y="170" font-size="8.5" text-anchor="start" xml:space="preserve">nested to depth 12, then refused as a cycle.</text>
+<circle class="i" cx="646" cy="160" r="4.4"/>
+<path class="i" d="M644 160.2L645.4 161.6L648.2 158.4"/>
+<path class="k" d="M652 160Q672 148 692 160"/>
+<circle class="d" cx="692" cy="160" r="2.3"/>
+<path class="k" d="M696 152.5H704L708 156.5V167.5H696Z"/>
+<path class="k" d="M712 160L735 160"/>
+<path class="k" d="M733.51 157.81L738 160L733.51 162.19"/>
+<circle class="i" cx="748" cy="160" r="4.4"/>
+<path class="i" d="M746 160.2L747.4 161.6L750.2 158.4"/>
+<path class="h" d="M24 175L856 175"/>
+<text class="m" x="24" y="196" font-size="11" text-anchor="start" xml:space="preserve">answer = model(prompt(embeds))</text>
+<text class="m" x="268" y="191" font-size="8.5" text-anchor="start" xml:space="preserve">impure: asks a model, tries providers in order;</text>
+<text class="m" x="268" y="202" font-size="8.5" text-anchor="start" xml:space="preserve">the answer is recorded; a settled question is not re-asked.</text>
+<path class="k" d="M642 184.5H650L654 188.5V199.5H642Z"/>
+<path class="k" d="M660 192L677 192"/>
+<path class="k" d="M675.51 189.81L680 192L675.51 194.19"/>
+<g transform="translate(698 183) scale(.7)"><path class="d" d="M-8 -5H5Q7 -5 7 -3V3Q7 5 5 5H-8Z"/></g>
+<g transform="translate(698 192) scale(.7)"><path class="d" d="M-8 -5H5Q7 -5 7 -3V3Q7 5 5 5H-8Z"/></g>
+<g transform="translate(698 201) scale(.7)"><path class="d" d="M-8 -5H5Q7 -5 7 -3V3Q7 5 5 5H-8Z"/></g>
+<path class="k" d="M712 192L735 192"/>
+<path class="k" d="M733.51 189.81L738 192L733.51 194.19"/>
+<path class="k" d="M742 184.5H750L754 188.5V199.5H742Z"/>
+<circle class="k" cx="754" cy="187" r="1.1"/>
+<circle class="k" cx="756.5" cy="184" r="1.8"/>
+<circle class="k" cx="761" cy="179.5" r="3.4"/>
+<path class="h" d="M24 207L856 207"/>
+<text class="m" x="24" y="222" font-size="11" text-anchor="start" xml:space="preserve">surface = lens(pages)</text>
+<text class="m" x="24" y="235" font-size="11" text-anchor="start" xml:space="preserve">pages = lens⁻¹(surface)</text>
+<text class="m" x="268" y="223" font-size="8.5" text-anchor="start" xml:space="preserve">one mapping, read both ways: pages to a surface,</text>
+<text class="m" x="268" y="234" font-size="8.5" text-anchor="start" xml:space="preserve">and back to writes. a page a character keeps; unbuilt.</text>
+<path class="pl" d="M642 216.5H650L654 220.5V231.5H642Z"/>
+<path class="pl" d="M663 224L687 224"/>
+<path class="pl" d="M686.4 222.25L690 224L686.4 225.75"/>
+<path class="pl" d="M663.6 225.75L660 224L663.6 222.25"/>
+<path class="pl" d="M695 224Q706 211.9 717 224Q706 236.1 695 224Z"/>
+<circle class="pl" cx="706" cy="224" r="2.86"/>
+<path class="pl" d="M723 224L747 224"/>
+<path class="pl" d="M746.4 222.25L750 224L746.4 225.75"/>
+<path class="pl" d="M723.6 225.75L720 224L723.6 222.25"/>
+<path class="pl" d="M754 217H776V231H754Z"/>
+<path class="k" d="M24 240L856 240"/>
+<path class="i" d="M24 254H76V271H24Z"/>
+<text class="m" x="50" y="266" font-size="9" text-anchor="middle" xml:space="preserve">write</text>
+<path class="i" d="M100 254H152V271H100Z"/>
+<text class="m" x="126" y="266" font-size="9" text-anchor="middle" xml:space="preserve">rule</text>
+<path class="i" d="M176 254H228V271H176Z"/>
+<text class="m" x="202" y="266" font-size="9" text-anchor="middle" xml:space="preserve">seal</text>
+<path class="i" d="M252 254H304V271H252Z"/>
+<text class="m" x="278" y="266" font-size="9" text-anchor="middle" xml:space="preserve">watch</text>
+<path class="i" d="M328 254H380V271H328Z"/>
+<text class="m" x="354" y="266" font-size="9" text-anchor="middle" xml:space="preserve">write</text>
+<path class="k" d="M78 262L95 262"/>
+<path class="k" d="M93.51 259.81L98 262L93.51 264.19"/>
+<path class="k" d="M154 262L171 262"/>
+<path class="k" d="M169.51 259.81L174 262L169.51 264.19"/>
+<path class="k" d="M230 262L247 262"/>
+<path class="k" d="M245.51 259.81L250 262L245.51 264.19"/>
+<path class="k" d="M306 262L323 262"/>
+<path class="k" d="M321.51 259.81L326 262L321.51 264.19"/>
+<text class="m" x="390" y="266" font-size="11" text-anchor="start" xml:space="preserve">…</text>
+<text class="m" x="440" y="266" font-size="8.5" text-anchor="start" xml:space="preserve">or, if the rule is false:</text>
+<path class="i" d="M580 254H632V271H580Z"/>
+<text class="m" x="606" y="266" font-size="9" text-anchor="middle" xml:space="preserve">rule</text>
+<path class="k" d="M634 262L657 262"/>
+<path class="k" d="M655.51 259.81L660 262L655.51 264.19"/>
+<rect x="664.5" y="256.5" width="11" height="11" fill="#F4C430"/>
+<path class="x1" d="M667.4 259.4L672.6 264.6"/>
+<path class="x1" d="M667.4 264.6L672.6 259.4"/>
+<text class="m" x="682" y="266" font-size="8.5" text-anchor="start" xml:space="preserve">recorded; no reactions</text>
+</svg>

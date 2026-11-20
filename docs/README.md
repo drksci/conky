@@ -13,6 +13,7 @@ Every document starts with frontmatter (`kind`, `title`, `status`, `date`, `sour
 - [guide/concepts.md](guide/concepts.md): Concepts
 - [guide/getting-started.md](guide/getting-started.md): Getting started
 - [guide/playing-a-program.md](guide/playing-a-program.md): Playing a program
+- [guide/topology.md](guide/topology.md): Topology
 
 ## Layer 3: technical detail
 

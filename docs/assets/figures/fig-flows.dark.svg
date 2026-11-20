@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 258" width="880" height="258" role="img" aria-labelledby="t">
+<title id="t">Plate 6, the flows, as a swimlane: a stimulus reaches a connector, which writes a page; the runtime checks the rules and either records a refusal or signs and appends the change; watching pages react, may ask a provider, and their answers go round the same loop; writes to a connector's page leave as actions; the screen and a returning prompt are planned.</title>
+<style>
+:root{--ink:#EDEDED}
+.i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.i{stroke:var(--ink);stroke-width:1.2}
+.k{stroke:var(--ink);stroke-width:0.75}
+.a{stroke:var(--ink);stroke-width:2.4}
+.h{stroke:var(--ink);stroke-width:0.6}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
+.d{fill:var(--ink);stroke:none}
+.s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.f12,.f25,.f50{stroke:none;fill-rule:evenodd}
+.f12{fill:url(#d12)}
+.f25{fill:url(#d25)}
+.f50{fill:url(#d50)}
+.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.b{font-weight:700}
+.m{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em}
+.pl{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:1.2 3.4;stroke-linecap:round;stroke-linejoin:round}
+.x1{fill:none;stroke:#1E1E1E;stroke-width:1.6;stroke-linecap:round}
+</style>
+<text class="t" x="24" y="30" font-size="9.24" fill-opacity="1" text-anchor="start">6 · THE FLOWS</text>
+<path class="i" d="M24 236h16v9h-16Z"/>
+<text class="t" x="48" y="244" font-size="7.14" fill-opacity="1" text-anchor="start">BUILT</text>
+<path class="pl" d="M104 236h16v9h-16Z"/>
+<text class="t" x="128" y="244" font-size="7.14" fill-opacity="1" text-anchor="start">PLANNED</text>
+<text class="t" x="856" y="244" font-size="6.72" fill-opacity="1" text-anchor="end">SCHEMATIC</text>
+<path class="k" d="M24 44L856 44"/>
+<text class="t" x="60" y="60" font-size="6.72" fill-opacity="1" text-anchor="middle">OUTSIDE</text>
+<path class="k" d="M24 70L856 70"/>
+<text class="t" x="60" y="86" font-size="6.72" fill-opacity="1" text-anchor="middle">CONNECTOR</text>
+<path class="k" d="M24 96L856 96"/>
+<text class="t" x="60" y="112" font-size="6.72" fill-opacity="1" text-anchor="middle">PAGES</text>
+<path class="k" d="M24 122L856 122"/>
+<text class="t" x="60" y="138" font-size="6.72" fill-opacity="1" text-anchor="middle">RUNTIME</text>
+<path class="k" d="M24 148L856 148"/>
+<text class="t" x="60" y="164" font-size="6.72" fill-opacity="1" text-anchor="middle">HISTORY</text>
+<path class="k" d="M24 174L856 174"/>
+<text class="t" x="60" y="190" font-size="6.72" fill-opacity="1" text-anchor="middle">MODEL</text>
+<path class="k" d="M24 200L856 200"/>
+<text class="t" x="60" y="216" font-size="6.72" fill-opacity="1" text-anchor="middle">PEOPLE</text>
+<path class="k" d="M24 226L856 226"/>
+<path class="k" d="M24 44L24 226"/>
+<path class="k" d="M856 44L856 226"/>
+<path class="k" d="M96 44L96 226"/>
+<path class="i" d="M110 49H170V65H110Z"/>
+<text class="m" x="140" y="60" font-size="8" text-anchor="middle" xml:space="preserve">1 stimulus</text>
+<path class="i" d="M178 75H238V91H178Z"/>
+<text class="m" x="208" y="86" font-size="8" text-anchor="middle" xml:space="preserve">2 perceive</text>
+<path class="i" d="M246 101H306V117H246Z"/>
+<text class="m" x="276" y="112" font-size="8" text-anchor="middle" xml:space="preserve">3 write</text>
+<path class="i" d="M314 127H374V143H314Z"/>
+<text class="m" x="344" y="138" font-size="8" text-anchor="middle" xml:space="preserve">4 rules</text>
+<path class="i" d="M382 127H442V143H382Z"/>
+<text class="m" x="412" y="138" font-size="8" text-anchor="middle" xml:space="preserve">5 sign</text>
+<path class="i" d="M450 153H510V169H450Z"/>
+<text class="m" x="480" y="164" font-size="8" text-anchor="middle" xml:space="preserve">6 append</text>
+<path class="i" d="M518 101H578V117H518Z"/>
+<text class="m" x="548" y="112" font-size="8" text-anchor="middle" xml:space="preserve">7 watch</text>
+<path class="i" d="M586 127H646V143H586Z"/>
+<text class="m" x="616" y="138" font-size="8" text-anchor="middle" xml:space="preserve">8 prompt</text>
+<path class="i" d="M654 179H714V195H654Z"/>
+<text class="m" x="684" y="190" font-size="8" text-anchor="middle" xml:space="preserve">9 provider</text>
+<path class="i" d="M722 101H782V117H722Z"/>
+<text class="m" x="752" y="112" font-size="8" text-anchor="middle" xml:space="preserve">10 answer</text>
+<path class="k" d="M170 57L174 57L174 83L176.5 83"/>
+<path class="k" d="M173.96 81.03L178 83L173.96 84.97"/>
+<path class="k" d="M238 83L242 83L242 109L244.5 109"/>
+<path class="k" d="M241.96 107.03L246 109L241.96 110.97"/>
+<path class="k" d="M306 109L310 109L310 135L312.5 135"/>
+<path class="k" d="M309.96 133.03L314 135L309.96 136.97"/>
+<path class="k" d="M374 135L380.5 135"/>
+<path class="k" d="M377.96 133.03L382 135L377.96 136.97"/>
+<path class="k" d="M442 135L446 135L446 161L448.5 161"/>
+<path class="k" d="M445.96 159.03L450 161L445.96 162.97"/>
+<path class="k" d="M510 161L514 161L514 109L516.5 109"/>
+<path class="k" d="M513.96 107.03L518 109L513.96 110.97"/>
+<path class="k" d="M578 109L582 109L582 135L584.5 135"/>
+<path class="k" d="M581.96 133.03L586 135L581.96 136.97"/>
+<path class="k" d="M646 135L650 135L650 187L652.5 187"/>
+<path class="k" d="M649.96 185.03L654 187L649.96 188.97"/>
+<path class="k" d="M714 187L718 187L718 109L720.5 109"/>
+<path class="k" d="M717.96 107.03L722 109L717.96 110.97"/>
+<path class="pl" d="M178 49H238V65H178Z"/>
+<text class="m" x="208" y="60" font-size="8" text-anchor="middle" xml:space="preserve">clock</text>
+<path class="pl" d="M208 65L208 73.5"/>
+<path class="pl" d="M209.97 70.96L208 75L206.03 70.96"/>
+<path class="k" d="M344 143L344 153.5"/>
+<path class="k" d="M345.97 150.96L344 155L342.03 150.96"/>
+<rect x="338.5" y="155.5" width="11" height="11" fill="#F4C430"/>
+<path class="x1" d="M341.4 158.4L346.6 163.6"/>
+<path class="x1" d="M341.4 163.6L346.6 158.4"/>
+<text class="m" x="356" y="164" font-size="8" text-anchor="start" xml:space="preserve">refused</text>
+<path class="k" d="M540 117C540 128 556 128 556 118"/>
+<circle class="d" cx="556" cy="118" r="2.3"/>
+<text class="m" x="548" y="138" font-size="8" text-anchor="middle" xml:space="preserve">measure</text>
+<path class="i" d="M586 75H646V91H586Z"/>
+<text class="m" x="616" y="86" font-size="8" text-anchor="middle" xml:space="preserve">act</text>
+<path class="k" d="M578 109L582 109L582 83L584.5 83"/>
+<path class="k" d="M581.96 81.03L586 83L581.96 84.97"/>
+<path class="i" d="M654 49H714V65H654Z"/>
+<text class="m" x="684" y="60" font-size="8" text-anchor="middle" xml:space="preserve">action</text>
+<path class="k" d="M646 83L650 83L650 57L652.5 57"/>
+<path class="k" d="M649.96 55.03L654 57L649.96 58.97"/>
+<text class="m" x="642" y="190" font-size="8" text-anchor="end" xml:space="preserve">else a sentence</text>
+<path class="k" d="M752 101L752 97.5L276 97.5L276 99.5"/>
+<path class="k" d="M277.97 96.96L276 101L274.03 96.96"/>
+<text class="m" x="382" y="86" font-size="8" text-anchor="middle" xml:space="preserve">each answer is a write: again, 12 deep at most</text>
+<path class="pl" d="M790 205H850V221H790Z"/>
+<text class="m" x="820" y="216" font-size="8" text-anchor="middle" xml:space="preserve">screen</text>
+<path class="pl" d="M782 109L820 109L820 203.5"/>
+<path class="pl" d="M821.97 200.96L820 205L818.03 200.96"/>
+<text class="m" x="815" y="138" font-size="8" text-anchor="end" xml:space="preserve">derived</text>
+<path class="pl" d="M790 210L262 210L262 118.5"/>
+<path class="pl" d="M260.03 121.04L262 117L263.97 121.04"/>
+<text class="m" x="450" y="221" font-size="8" text-anchor="middle" xml:space="preserve">a prompt returns as a write</text>
+</svg>
