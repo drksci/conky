@@ -1,8 +1,15 @@
 <h1><img src="docs/assets/conky-mark.png" alt="" width="40" height="40" align="absmiddle">&nbsp;Conky: the unharnessed harness</h1>
 
+<img src="docs/assets/figures/chip-lemonade.svg" alt="Lemonade stand:" height="26" align="left" vspace="13" hspace="6">
+
 ```bash
-uvx --from git+https://github.com/drksci/conky conky demo         # the lemonade stand: build one, watch it run itself
-uvx --from git+https://github.com/drksci/conky conky assimilate   # the thing: hand a stopped one to a stranger
+uvx --from git+https://github.com/drksci/conky conky demo
+```
+
+<img src="docs/assets/figures/chip-assimilate.svg" alt="The thing:" height="26" align="left" vspace="13" hspace="6">
+
+```bash
+uvx --from git+https://github.com/drksci/conky conky assimilate
 ```
 
 <p align="center">
