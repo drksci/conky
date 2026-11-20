@@ -1,4 +1,4 @@
-# conky
+<h1><img src="docs/assets/conky-mark.png" alt="" width="40" height="40" align="absmiddle">&nbsp;conky · the unharnessed harness</h1>
 
 <p align="center">
   <img src="docs/assets/conky-hero.jpg" alt="A ventriloquist puppet in a sweater that reads conky, with the caption: You just remember I call the shots here, Bubbles." width="800">
