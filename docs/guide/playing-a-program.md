@@ -156,4 +156,4 @@ watch:
 
 The model sees each new screen, and is asked again only when the screen text changed. A test with a stand-in provider checks this. No model was called for this page, and no output of one is shown.
 
-A rule can also limit the hands. A rule on `hands`, or on a space it belongs to, that forbids a particular `keys` value turns that write away. The refusal is recorded and the program never receives the key.
+A rule can also limit the hands. A plain rule on `hands`, or an `each` rule on a space it belongs to, that forbids a particular `keys` value turns that write away. The refusal is recorded and the program never receives the key.

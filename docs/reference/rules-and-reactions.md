@@ -56,23 +56,23 @@ A field is read as `page.cups`. The runtime has no size limit of its own: `size 
 
 ## Rules and spaces
 
-A page may carry a list of rules in `rules`. A space is a page that other pages name in `within`. A write is checked against the page's own rules, then those of the space named by its `within`, then that space's own `within`, and so on up the chain, so a page inherits the rules of every space above it.
+A page may carry a list of rules in `rules`. A space is a page that other pages name in `within`. A write is checked against the page's own plain rules, then the `each` rules of the space named by its `within`, then those of that space's own `within`, and so on up the chain, so a page is bound by the `each` rules of every space above it.
 
-A rule entry is a condition as text, or a mapping with the one key `each` whose value is a condition. A plain condition applies to the page that carries it and to every page within it, as above, so a space whose plain rule mentions a field must carry that field. An `each` condition applies to every page within the space, at any depth, and never to the space itself, so a space can bind a whole kind of act without carrying the field:
+A rule entry is a condition as text, or a mapping with the one key `each` whose value is a condition. A plain condition applies to the page that carries it and to no other, so it states an invariant of that page's own state in one line. An `each` condition applies to every page within the space, at any depth, and never to the space itself, so a space can bind a whole kind of act without carrying the field ([decision 0036](../decisions/0036-a-plain-rule-stays-with-its-page.md)):
 
 ```yaml
 rules:
-  - page.cash >= 0                          # this page, and those within
+  - page.cash >= 0                          # this page only
   - each: page.amount <= space.cash - 20    # every page within this one, not this one
 ```
 
 Every page within the space is judged, including a space page that lies within it, so a page that lacks the field fails the rule as any missing field does. Any other mapping is refused for shape, and the reason says what is allowed. A refusal names the condition and the space it came from, whichever form it had ([decision 0034](../decisions/0034-a-rule-for-the-pages-within.md), the key renamed by [decision 0035](../decisions/0035-a-character-binds-its-own-space.md)).
 
-A write that changes the `within` of a page that already exists is judged twice: by the page's own rules and the spaces it will be in, as above, and by the rules of every space it was in before, evaluated against the page as it would be after the write ([decision 0022](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md)). A space that says nothing about leaving lets its members go. A space that wants to bind states it as a rule. A refusal by a space the page is leaving names that space, as any refusal from a space does.
+A write that changes the `within` of a page that already exists is judged twice: by the page's own rules and the `each` rules of the spaces it will be in, as above, and by the `each` rules of every space it was in before, evaluated against the page as it would be after the write ([decision 0022](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md)). A space that says nothing about leaving lets its members go. A space that wants to bind states it as a rule. A refusal by a space the page is leaving names that space, as any refusal from a space does.
 
 ## Context from spaces
 
-A space hands down its fields as `space`. For a page, the runtime starts from the outermost space it is within and overlays the fields of each inner space in turn, ending with the nearest, so the nearest space wins a field of the same name. Reserved keys are not included, and a page within no space reads an empty map. `space` is available in rules (the page's own and those handed down, so a space's rule can speak about context set further in), in watch `when` conditions and in `set` values, where it is the watcher's.
+A space hands down its fields as `space`. For a page, the runtime starts from the outermost space it is within and overlays the fields of each inner space in turn, ending with the nearest, so the nearest space wins a field of the same name. Reserved keys are not included, and a page within no space reads an empty map. `space` is available in rules (the page's own and the `each` rules of the spaces above, so a space's rule can speak about context set further in), in watch `when` conditions and in `set` values, where it is the watcher's.
 
 Reading a field no space has is an error, as `page` is: the rule is refused as failing to evaluate. A rule that may run where the context is missing guards it, as in `!has(space.limit) || page.cups <= space.limit`.
 
@@ -160,7 +160,7 @@ within: <space>
 what you want to keep
 === end ===
 
-A page can be a note to yourself, or it can carry a rule that must stay true from now on: a line under `rules:`, a CEL condition on `page.FIELD`. To bind every page in <space> but not <space> itself, add `each` rules to <space> and nothing else, like this:
+A page can be a note to yourself, or it can carry a rule that must stay true from now on: a line under `rules:`, a CEL condition on `page.FIELD` or `space.FIELD`. To bind every page in <space> but not <space> itself, add `each` rules to <space> and nothing else, like this:
 
 === page: <space> ===
 ---

@@ -42,10 +42,10 @@ A failed check names the playbook, the step number, what was expected and what w
 ## Example
 
 ```yaml
-# A rule on a space refuses a page one of its characters tries to write.
+# An `each` rule on a space refuses a page one of its characters tries to write.
 pages:
   camp:
-    rules: ["!has(page.cups) || page.cups >= 0"]
+    rules: [{each: "!has(page.cups) || page.cups >= 0"}]
   scout:
     within: camp
 steps:

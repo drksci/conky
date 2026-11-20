@@ -616,8 +616,9 @@ class Vault:
     ) -> tuple[str, str] | None:
         """Return the reason a rule refuses the page and the page the rule came from.
 
-        The rules of the page and of every space above it are judged. A write that changes
-        `within` is also judged by the rules of the spaces the page was in before it.
+        The plain rules of the page and the `each` rules of every space above it are judged. A
+        write that changes `within` is also judged by the `each` rules of the spaces the page
+        was in before it.
         """
         scope = {
             "page": page.fields,
@@ -652,8 +653,8 @@ class Vault:
     ) -> tuple[str, str] | None:
         """Judge the rules of space and of the spaces above it against scope.
 
-        An `each` rule is judged only when it comes from a space above the page, never from
-        the page itself.
+        A plain rule is judged only when it is the page's own, and an `each` rule only when it
+        comes from a space above the page.
         """
         seen = {name}
         while True:
@@ -662,8 +663,10 @@ class Vault:
                     if owner == name:
                         continue
                     rule = entry["each"]
-                else:
+                elif owner == name:
                     rule = entry
+                else:
+                    continue
                 try:
                     held = holds(rule, scope)
                 except RuleError as exc:

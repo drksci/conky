@@ -237,7 +237,7 @@ def test_a_page_inside_a_space_it_created_is_within_the_named_space(
 
 @arch.holds("law.rule.tighten")
 def test_a_rule_of_a_space_refuses_a_page_that_breaks_it(den: Vault, stand: Stand) -> None:
-    assert w(den, "shelf", {"within": "den", "rules": ["size <= 200"]}).ok
+    assert w(den, "shelf", {"within": "den", "rules": [{"each": "size <= 200"}]}).ok
     stand.says(
         "=== page: small ===\n---\nwithin: shelf\n---\nShort.\n"
         f"=== page: large ===\n---\nwithin: shelf\n---\n{'long ' * 80}\n"
@@ -254,9 +254,9 @@ def test_a_rule_of_a_space_refuses_a_page_that_breaks_it(den: Vault, stand: Stan
 def test_a_character_can_add_a_rule_to_a_space_it_made_and_the_rule_binds_a_later_write(
     den: Vault, stand: Stand
 ) -> None:
-    stand.says('=== page: shelf ===\n---\nwithin: den\nrules:\n- "size <= 120"\n---\n')
+    stand.says("=== page: shelf ===\n---\nwithin: den\nrules:\n- each: size <= 120\n---\n")
     trigger(den, "make")
-    assert den.read("shelf").rules == ["size <= 120"]
+    assert den.read("shelf").rules == [{"each": "size <= 120"}]
     stand.says(
         "=== page: small ===\n---\nwithin: shelf\n---\nShort.\n"
         f"=== page: large ===\n---\nwithin: shelf\n---\n{'long ' * 60}\n"

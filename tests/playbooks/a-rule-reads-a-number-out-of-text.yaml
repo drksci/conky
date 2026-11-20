@@ -1,7 +1,7 @@
 # A rule takes a number out of a line of text and refuses a write when it is too large.
 pages:
   pantry:
-    rules: ["!has(page.line) || int(page.line.captures('stock=(\\d+)')[0]) <= 10"]
+    rules: [{each: "!has(page.line) || int(page.line.captures('stock=(\\d+)')[0]) <= 10"}]
   shelf: {within: pantry, line: "stock=4"}
 steps:
   - write: {page: shelf, fields: {within: pantry, line: "stock=40"}}

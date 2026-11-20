@@ -56,7 +56,7 @@ Outside the eight is how two vaults relate, which is an open question.
 ## The parts
 
 - **Pages and the vault format.** Layout, commit conventions and trailers, signing and identity, and what `verify` checks: [vault format](reference/vault-format.md).
-- **Rules, reactions and measures.** The expression language, variables in scope, inheritance through spaces, refusal reasons, the reaction depth limit and measures built from self-watches: [rules and reactions](reference/rules-and-reactions.md).
+- **Rules, reactions and measures.** The expression language, variables in scope, the `each` rules spaces hand down, refusal reasons, the reaction depth limit and measures built from self-watches: [rules and reactions](reference/rules-and-reactions.md).
 - **Providers.** How a page reaches a model, the two wire formats and where secrets live: [providers](reference/providers.md).
 - **The command line.** Each command, its options, exit codes and errors: [command line](reference/cli.md).
 

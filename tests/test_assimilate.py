@@ -106,7 +106,7 @@ def test_without_then_it_stops_after_reading_and_says_how_to_continue(
     into = tmp_path / "taken"
     assert take(tmp_path, str(source), "--into", str(into), "--keys", str(tmp_path / "k")) == 0
     out = capsys.readouterr().out
-    assert "stand: not in a space; 1 rule (1 own, 0 inherited)" in out
+    assert "stand: not in a space; 0 rules (0 own, 0 inherited)" in out
     assert "cooler: in stand; 1 rule (0 own, 1 inherited)" in out
     assert "supplier: not in a space; 0 rules (0 own, 0 inherited); watches cooler" in out
     flat = " ".join(out.split())

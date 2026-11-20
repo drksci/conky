@@ -76,7 +76,7 @@ It reports five numbered steps as they happen.
 
 1. Take the folder. `git clone` copies the source into the new folder. Nothing else is copied: no keys and no settings.
 2. Check it with [verify](#verify): every commit is signed by a key the vault lists, the trailers are valid and the tree is clean. The step reports the number of commits, pages and spaces, and the last change. A space is a page that other pages lie within.
-3. Read the room. Each page is listed with its space, the number of rules that apply to it (its own plus those inherited through its space) and the pages it watches. This reads the files only.
+3. Read the room. Each page is listed with its space, the number of rules that apply to it (its own plain rules plus the `each` rules of the spaces above) and the pages it watches. This reads the files only.
 4. Carry on. The newcomer is a new actor with a new key in the key directory, so the original author's key is never needed. Its public key is added to `keys/allowed_signers` in the same commit as its first write. For the packaged vault the writes come from a data file beside it: a busy hour takes the cooler down to 4 cups, and the supplier must react by itself. For any other source the writes are the `--then` options. With none, the command stops after step 3 and prints the `conky write` command to continue with.
 5. Check again. The vault is verified once more, and the commits added by the carry-on are listed, with each reaction and its cause and each refusal and its reason.
 

@@ -50,19 +50,19 @@ Private keys are created in `~/.conky/keys`, never in the vault. The output belo
 
 ## A vault and a space
 
-`init` makes an empty vault. The first `write` makes a space called `stand`. Its members inherit two rules: a page with `cups` may not hold fewer than zero, and no page may exceed 2000 bytes. `--as maya` says who is writing.
+`init` makes an empty vault. The first `write` makes a space called `stand`. Two `each` rules bind its members: a page with `cups` may not hold fewer than zero, and no page may exceed 2000 bytes. `--as maya` says who is writing.
 
 ```console
 $ conky init demo
 initialised demo
 $ cd demo
-$ conky write stand 'rules=["!has(page.cups) || page.cups >= 0", "size <= 2000"]' --body 'Welcome to the stand.' --as maya
+$ conky write stand 'rules=[{each: "!has(page.cups) || page.cups >= 0"}, {each: "size <= 2000"}]' --body 'Welcome to the stand.' --as maya
 written (commit 6e4e3c5)
 ```
 
 ## A member, and a broken rule
 
-A page joins a space with `within`. The next write breaks the inherited rule. The refusal is a commit of its own, changes nothing, and exits with status 1.
+A page joins a space with `within`. The next write breaks an `each` rule of the space. The refusal is a commit of its own, changes nothing, and exits with status 1.
 
 ```console
 $ conky write cooler within=stand cups=40 --body 'Forty cups this morning.' --as maya

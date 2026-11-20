@@ -631,6 +631,8 @@ def test_a_malformed_provider_page_is_named_and_asks_for_the_field_to_be_correct
 
 
 def test_a_rule_can_constrain_provider_pages(vault: Vault, stand: Stand) -> None:
-    assert w(vault, "providers", {"rules": ["page.model == 'approved'"], "model": "approved"}).ok
+    assert w(
+        vault, "providers", {"rules": [{"each": "page.model == 'approved'"}], "model": "approved"}
+    ).ok
     result = w(vault, "helper", {"within": "providers", "api": "openai", "model": "other"})
     assert not result.ok and result.reason is not None and "page.model" in result.reason

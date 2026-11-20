@@ -104,22 +104,21 @@ def _facts(vault: Vault) -> str:
     "read each page: its space, its rules and what it watches",
 )
 def _room(vault: Vault) -> list[str]:
-    """Describe each page from its file: its space, the rules that apply, and what it watches."""
+    """Describe each page from its file: its space, its rules and what it watches."""
     pages = _pages(vault)
     lines = []
     for name, page in pages.items():
         inherited, seen, space = 0, {name}, page.within
         while space and space in pages and space not in seen:
             seen.add(space)
-            inherited += len(pages[space].rules)
+            inherited += sum(isinstance(entry, dict) for entry in pages[space].rules)
             space = pages[space].within
-        rules = _plural(len(page.rules) + inherited, "rule")
+        own = sum(not isinstance(entry, dict) for entry in page.rules)
+        rules = _plural(own + inherited, "rule")
         watched = sorted({entry["on"] for entry in page.watch})
         where = f"in {page.within}" if page.within else "not in a space"
         watches = f"watches {', '.join(watched)}" if watched else "watches nothing"
-        lines.append(
-            f"{name}: {where}; {rules} ({len(page.rules)} own, {inherited} inherited); {watches}"
-        )
+        lines.append(f"{name}: {where}; {rules} ({own} own, {inherited} inherited); {watches}")
     return lines or ["no pages"]
 
 

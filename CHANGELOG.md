@@ -4,6 +4,10 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ## [Unreleased]
 
+### Changed
+
+- A plain rule applies to the page that carries it and to no other; only an `each` rule applies to the pages within a space. The examples, the stopped vault, the guide and the tests that relied on a plain rule being handed down now use `each`, and the fixed statement says a rule can read `space.FIELD` as well as `page.FIELD` ([decision 0036](docs/decisions/0036-a-plain-rule-stays-with-its-page.md)).
+
 ### Added
 
 - Cards draw in parallel with `--jobs N` under one shared call cap that refuses an impossible run before it starts, write `observations.jsonl` beside `rows.jsonl` (new pages, rules as written, refusals with reasons, the start of each live answer), and `python -m bench.cards --read DIR` summarises a run ([cards](docs/reference/playbooks.md#cards)).

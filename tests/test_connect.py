@@ -162,7 +162,7 @@ def test_a_hands_write_for_an_old_turn_is_ignored(vault: Vault) -> None:
 @pytest.mark.parametrize("house_rule", [True, False])
 def test_a_rule_can_keep_a_key_from_the_program(vault: Vault, house_rule: bool) -> None:
     if house_rule:
-        assert w(vault, "house", {"rules": ["!has(page.keys) || page.keys != '9'"]}).ok
+        assert w(vault, "house", {"rules": [{"each": "!has(page.keys) || page.keys != '9'"}]}).ok
         assert w(vault, "hands", {"within": "house"}).ok
     running = Running(vault, "--max-steps", "2")
     wait_for(vault, 1)

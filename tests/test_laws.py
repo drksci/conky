@@ -97,7 +97,7 @@ def test_rule_error_refuses(vault: Vault) -> None:
 
 @arch.holds("law.rule.never")
 def test_rule_inherited_through_two_level_chain(vault: Vault) -> None:
-    w(vault, "stand", {"rules": ["page.price >= 0"], "price": 0})
+    w(vault, "stand", {"rules": [{"each": "page.price >= 0"}], "price": 0})
     w(vault, "bazaar", {"within": "stand", "price": 0})
     assert w(vault, "cooler", {"within": "bazaar", "price": 3}).ok
     result = w(vault, "cooler", {"price": -3})
@@ -108,7 +108,7 @@ def test_rule_inherited_through_two_level_chain(vault: Vault) -> None:
 
 @arch.holds("flow.write.refuse")
 def test_a_refusal_by_a_rule_from_a_space_names_that_space(vault: Vault) -> None:
-    w(vault, "stand", {"rules": ["!has(page.price) || page.price >= 0"]})
+    w(vault, "stand", {"rules": [{"each": "!has(page.price) || page.price >= 0"}]})
     w(vault, "bazaar", {"within": "stand"})
     assert w(vault, "cooler", {"within": "bazaar", "rules": ["page.price < 100"], "price": 3}).ok
     assert not w(vault, "cooler", {"price": -3}).ok
@@ -124,7 +124,7 @@ def test_a_refusal_by_a_rule_from_a_space_names_that_space(vault: Vault) -> None
 
 @arch.holds("law.rule.tighten", "flow.space.move")
 def test_leaving_a_space_is_judged_by_the_rules_of_the_space_it_leaves(vault: Vault) -> None:
-    w(vault, "club", {"rules": ["size <= 200"]})
+    w(vault, "club", {"rules": [{"each": "size <= 200"}]})
     w(vault, "street", {})
     assert w(vault, "member", {"within": "club"}, "short").ok
     result = w(vault, "member", {"within": "street"}, "x" * 400)
@@ -139,7 +139,7 @@ def test_leaving_a_space_is_judged_by_the_rules_of_the_space_it_leaves(vault: Va
 
 @arch.holds("law.rule.never")
 def test_size_rule_in_a_space_refuses_an_oversized_member(vault: Vault) -> None:
-    w(vault, "tight", {"rules": ["size <= 300"]})
+    w(vault, "tight", {"rules": [{"each": "size <= 300"}]})
     assert w(vault, "note", {"within": "tight"}, "short").ok
     before = pages(vault)
     result = w(vault, "note", {}, "x" * 400)

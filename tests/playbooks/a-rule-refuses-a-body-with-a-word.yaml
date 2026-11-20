@@ -1,7 +1,7 @@
 # A rule reads the body of the page being written and refuses a forbidden word.
 pages:
   camp:
-    rules: ["!text.contains('secret')"]
+    rules: [{each: "!text.contains('secret')"}]
   scout:
     within: camp
 steps:

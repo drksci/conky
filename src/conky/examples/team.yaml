@@ -7,7 +7,7 @@ steps:
       page: team
       actor: alice
       fields:
-        rules: ["!has(page.status) || page.owner != ''"]
+        rules: [{each: "!has(page.status) || page.owner != ''"}]
   - say: The board is set up to watch the first task. When the task is done, it adds one to its count.
     write:
       page: board

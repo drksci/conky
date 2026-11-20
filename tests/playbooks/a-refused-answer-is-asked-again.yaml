@@ -2,7 +2,7 @@
 pages:
   helper: {api: command, command: stand}
   camp:
-    rules: ["!has(page.said) || page.said != 'ask 1'"]
+    rules: [{each: "!has(page.said) || page.said != 'ask 1'"}]
   gate: {asks: ""}
   guide:
     within: camp

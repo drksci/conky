@@ -1372,6 +1372,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0033-ahead-or-different-with-each-step](../decisions/0033-ahead-or-different-with-each-step.md) | accepted | - |
 | [0034-a-rule-for-the-pages-within](../decisions/0034-a-rule-for-the-pages-within.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`part.space`](#part.space) |
 | [0035-a-character-binds-its-own-space](../decisions/0035-a-character-binds-its-own-space.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`law.reach.down`](#law.reach.down), [`part.space`](#part.space) |
+| [0036-a-plain-rule-stays-with-its-page](../decisions/0036-a-plain-rule-stays-with-its-page.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`part.space`](#part.space) |
 
 ### Unplaced
 

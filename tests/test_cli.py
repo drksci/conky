@@ -17,7 +17,15 @@ def test_cli_init_write_refuse_read_log_verify_rebuild(
 ) -> None:
     assert main(["--keys", str(tmp_path / "k"), "init", str(tmp_path / "v")]) == 0
     assert (
-        run(tmp_path, "write", "stand", 'rules=["page.stock >= 0"]', "stock=0", "--as", "alice")
+        run(
+            tmp_path,
+            "write",
+            "stand",
+            'rules=[{"each": "page.stock >= 0"}]',
+            "stock=0",
+            "--as",
+            "alice",
+        )
         == 0
     )
     assert run(tmp_path, "write", "cooler", "within=stand", "stock=40", "--as", "alice") == 0

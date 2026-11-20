@@ -7,7 +7,7 @@ steps:
       page: stand
       actor: maya
       fields:
-        rules: ["!has(page.cups) || page.cups >= 0"]
+        rules: [{each: "!has(page.cups) || page.cups >= 0"}]
       body: |-
         Welcome to the stand. I am Maya, and Sam helps me on busy days.
 

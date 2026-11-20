@@ -19,7 +19,7 @@ def test_a_retried_answer_is_a_refusal_then_a_write_caused_by_it(
     stand = Stand(tmp_path / "stand")
     monkeypatch.setenv("CONKY_COMMAND_STAND", f"{sys.executable} {stand.folder / 'model.py'}")
     assert w(vault, "helper", {"api": "command", "command": "stand"}).ok
-    assert w(vault, "camp", {"rules": ["!has(page.said) || page.said != 'ask 1'"]}).ok
+    assert w(vault, "camp", {"rules": [{"each": "!has(page.said) || page.said != 'ask 1'"}]}).ok
     assert w(vault, "gate", {"asks": ""}).ok
     watch = [
         {
