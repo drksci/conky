@@ -23,3 +23,7 @@ Not yet worked out.
 ## Falsifying test
 
 A fresh consumer given only a stopped vault fails to resume correctly where the vault's own pages should have been enough.
+
+## Prior art
+
+The [research index](../research/dair-2026.md) lists "Runtime-Independent Persistent Agents", described there as a six-step pause, save, validate, attach, load, resume handoff. Its authors note that behavioural continuity is a separate question from state continuity, so the test should score both.

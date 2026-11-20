@@ -12,13 +12,20 @@ ROOT = Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
 ARCHIVE = DOCS / "gemini-osi-stack"
 KEYS = ("kind", "title", "status", "date", "source")
-FOLDER_KIND = {"decisions": "decision", "ideas": "idea", "essays": "essay", "project": "project"}
+FOLDER_KIND = {
+    "decisions": "decision",
+    "ideas": "idea",
+    "essays": "essay",
+    "project": "project",
+    "research": "research",
+}
 STATUSES = {
     "design": {"current", "draft"},
     "decision": {"accepted", "open", "superseded"},
     "idea": {"idea", "folded", "enforced", "proven"},
     "essay": {"current", "draft"},
     "project": {"current", "draft"},
+    "research": {"current", "draft"},
 }
 LINK = re.compile(r"(?<!!)\[[^\]]*\]\(([^)\s]+)\)")
 DECISION_NAME = re.compile(r"^(\d{4})-[a-z0-9]+(-[a-z0-9]+)*\.md$")

@@ -23,6 +23,7 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 - [decisions/0013-docs-in-repo.md](decisions/0013-docs-in-repo.md): Docs live in the repository
 - [decisions/0014-lead-and-workers.md](decisions/0014-lead-and-workers.md): Lead and workers
 - [decisions/0015-open-questions.md](decisions/0015-open-questions.md): Open design questions
+- [decisions/0016-principles-as-rules.md](decisions/0016-principles-as-rules.md): Principles as rules
 
 ## Ideas
 
@@ -32,6 +33,7 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 - [ideas/background-minds.md](ideas/background-minds.md): Background minds
 - [ideas/drift-and-coherence.md](ideas/drift-and-coherence.md): Drift and coherence
 - [ideas/energy-unit.md](ideas/energy-unit.md): Energy unit
+- [ideas/learned-reactions.md](ideas/learned-reactions.md): Learned reactions
 - [ideas/ledger.md](ideas/ledger.md): Ledger
 - [ideas/measures.md](ideas/measures.md): Measures
 - [ideas/tables.md](ideas/tables.md): Tables
@@ -42,6 +44,10 @@ Index of everything under `docs/`. Each document starts with frontmatter (`kind`
 - [essays/rules-not-requests.md](essays/rules-not-requests.md): Rules, not requests
 - [essays/the-log-is-the-truth.md](essays/the-log-is-the-truth.md): The log is the truth
 - [essays/things-that-just-happen.md](essays/things-that-just-happen.md): Things that just happen
+
+## Research
+
+- [research/dair-2026.md](research/dair-2026.md): DAIR.AI papers of the week, 2026: relevance index
 
 ## Project
 

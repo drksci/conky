@@ -22,3 +22,7 @@ Operator. Status is open because none of this is built.
 - Comparisons are like for like on model and budget.
 
 See [assimilation-test](../ideas/assimilation-test.md).
+
+## Open questions
+
+- Whether to adopt an existing long-horizon organisation benchmark listed in the [research index](../research/dair-2026.md) (MerchantBench, 1,000 Synthetic Computers) as the shared scenario rather than invent one, so results compare with published numbers.
