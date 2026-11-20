@@ -37,8 +37,10 @@ def instruction(page: str, space: str, shown: bool) -> str:
         f"and they are kept. Write one like this:\n\n{HEADER} <name> ===\n---\n"
         f"within: {space}\n---\nwhat you want to keep\n{END}\n\n"
         "A page can be a note to yourself, or it can carry a rule that must stay true from now "
-        "on: a line under `rules:`, a CEL condition on `page.FIELD`, or `within: CONDITION` "
-        "to bind every page within that page and not the page itself. "
+        "on: a line under `rules:`, a CEL condition on `page.FIELD`. "
+        f"To bind every page in {space} but not {space} itself, add `each` rules to {space} "
+        f"and nothing else, like this:\n\n{HEADER} {space} ===\n---\n"
+        f"rules:\n  - each: page.FIELD < 50\n---\n{END}\n\n"
         f"{seen}You cannot write anywhere else. Writing nothing more is fine.\n\n"
     )
 

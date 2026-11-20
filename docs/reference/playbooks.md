@@ -30,12 +30,12 @@ The checks in `expect`:
 | `model_calls` | The stand-in model has been asked this many times in all. |
 | `model_commits` | This many commits in the history were answered by a model. |
 | `verify` | `true`: the vault verifies. |
-| `rules` | Each `page: n` holds when the page carries at least `n` rules that parse, plain or `within`. |
-| `within_rules` | Each `space: n` holds when the pages within the space, at any depth, carry at least `n` `within` rules that parse. |
+| `rules` | Each `page: n` holds when the page carries at least `n` rules that parse, plain or `each`. |
+| `each_rules` | Each `space: n` holds when the space, or the pages within it at any depth, carry at least `n` `each` rules that parse. |
 | `within_fields` | Each `space: {field: pattern}` holds when some page within the space has the field matching the regular expression. |
 | `answer` | Each `page.field: pattern` holds when the field matches the regular expression. |
 
-A `write` step may carry `within_ruled: space`. The page is then written once into each page within that space that carries a `within` rule, stopping at the first refusal, so a card can try a page where a model chose to place its rule.
+A `write` step may carry `each_ruled: space`. The page is then written once into each page within that space that carries an `each` rule, stopping at the first refusal, so a card can try a page where a model chose to place its rule.
 
 A failed check names the playbook, the step number, what was expected and what was found.
 
@@ -59,7 +59,7 @@ Playbooks never reach a live model. A step `says: live` is an error when the fil
 
 ## Cards
 
-A card is a playbook with `says: live` steps, which a real model answers, drawn several times. The pages, steps and checks are the same, so one language covers the free test and the paid measurement. A card may carry a `claim:` and a `forecast:` as text at the top. Cards live in `bench/cards/`.
+A card is a playbook with `says: live` steps, which a real model answers, drawn several times. The pages, steps and checks are the same, so one language covers the free test and the paid measurement. A card may carry a `claim:` and a `forecast:` as text at the top, and a `par:` of three lines, `outcome`, `structure` and `cost`, saying what an ideal run looks like. Cards live in `bench/cards/`.
 
 ```bash
 python -m bench.cards bench/cards/a-keeper-binds-itself.yaml --draws 5 --model claude-haiku-5-5
@@ -74,7 +74,7 @@ The runner draws no charts. It prints the claim and the forecast before drawing,
 | Key | Meaning |
 |---|---|
 | `card`, `draw` | The card's name and the draw's number. |
-| `claim`, `forecast` | The card's text, in the first row only. |
+| `claim`, `forecast`, `par` | The card's text, in the first row only. |
 | `model` | The names of the models that answered live steps. |
 | `expects` | One entry a `expect` step: `step` (its number) and `failed` (the lines that did not hold, empty when it held). |
 | `calls`, `sent`, `received`, `seconds` | Live calls, characters sent and received, and the draw's time. |

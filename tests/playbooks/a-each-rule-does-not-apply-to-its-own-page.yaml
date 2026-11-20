@@ -1,9 +1,9 @@
-# A within rule is not judged on the page that carries it, and a plain rule on that page still is.
+# A each rule is not judged on the page that carries it, and a plain rule on that page still is.
 pages:
   den:
     rules:
       - "!has(page.cash) || page.cash >= 0"
-      - within: "page.amount > 0"
+      - each: "page.amount > 0"
 steps:
   - write: {page: den, fields: {cash: 5}}
   - expect: {fields: {den.cash: 5}, verify: true}

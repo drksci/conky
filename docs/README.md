@@ -70,6 +70,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0032-results-publish-themselves.md](decisions/0032-results-publish-themselves.md): Results publish themselves
 - [decisions/0033-ahead-or-different-with-each-step.md](decisions/0033-ahead-or-different-with-each-step.md): Ahead or different with each step
 - [decisions/0034-a-rule-for-the-pages-within.md](decisions/0034-a-rule-for-the-pages-within.md): A rule for the pages within
+- [decisions/0035-a-character-binds-its-own-space.md](decisions/0035-a-character-binds-its-own-space.md): A character binds its own space
 
 ### Research
 

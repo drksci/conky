@@ -13,7 +13,7 @@ from .conftest import AT
 
 ASK = {"prompt": "say hello", "into": "said", "provider": "model"}
 WATCH = [{"on": "kitchen", "when": "true", "ask": ASK}]
-RULE = [{"within": "true"}]
+RULE = [{"each": "true"}]
 
 
 def put(vault: Vault, page: str, changes: dict, body: str | None = None) -> None:

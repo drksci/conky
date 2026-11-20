@@ -97,6 +97,15 @@ def _ruled(result: Result) -> Result | None:
     return None
 
 
+def _joined(kept: list[Any], added: list[Any]) -> list[Any]:
+    """Return the rules kept, then each added entry that is not already among them."""
+    rules = list(kept)
+    for entry in added:
+        if entry not in rules:
+            rules.append(entry)
+    return rules
+
+
 def _size(page: Page) -> int:
     """Return the byte length of the page as serialised."""
     return len(serialize(page).encode("utf-8"))
@@ -475,11 +484,18 @@ class Vault:
         if depth > MAX_DEPTH:
             return refuse(_CYCLE)
         before = self._load(page)
+        applied = changes
+        if bound is not None and page == bound:
+            problem = self._bind(page, before, changes, body)
+            if problem:
+                return refuse(f"{Refusal.LIMIT}: {problem}")
+            assert before is not None
+            applied = {"rules": _joined(before.rules, changes["rules"])}
         try:
-            result = apply(before or Page(), changes, body)
+            result = apply(before or Page(), applied, body)
         except ShapeError as exc:
             return refuse(f"{Refusal.SHAPE}: {exc}")
-        if bound is not None:
+        if bound is not None and page != bound:
             breach = self._breach(page, before, result, bound)
             if breach:
                 return refuse(f"{Refusal.LIMIT}: {breach}")
@@ -525,8 +541,9 @@ class Vault:
         """Return the limit a page written by an answer breaks, if any.
 
         The page must lie within the space before the write, when it exists, and after it.
+        The space page itself is judged by `_bind`.
         """
-        if name == space or not self._inside(page.within, space):
+        if not self._inside(page.within, space):
             return f"page {name} is not within space {space}: set within to it or a space inside it"
         if before is not None and not self._inside(before.within, space):
             return f"page {name} lies outside space {space}, so an answer cannot change it"
@@ -542,6 +559,25 @@ class Vault:
                     f"a watch entry of {name} writes into {target}, outside space {space}: "
                     f"name {space} or a space inside it"
                 )
+        return None
+
+    def _bind(
+        self, name: str, before: Page | None, changes: dict[str, Any], body: str | None
+    ) -> str | None:
+        """Return why an answer may not write the space it writes into, or None when it may.
+
+        The one thing allowed is `rules` and nothing else: the entries are added to the rules
+        the space has, and the write is judged like any other.
+        """
+        if before is None:
+            return f"space {name} does not exist, so an answer cannot make it"
+        if set(changes) != {"rules"} or body is not None:
+            return (
+                f"page {name} is the space this answer writes into: an answer may add rules "
+                "to it and nothing else, so send only a rules list and no body"
+            )
+        if not isinstance(changes["rules"], list):
+            return f"rules for {name} must be a list of conditions to add"
         return None
 
     @arch.law(
@@ -616,7 +652,7 @@ class Vault:
     ) -> tuple[str, str] | None:
         """Judge the rules of space and of the spaces above it against scope.
 
-        A `within` rule is judged only when it comes from a space above the page, never from
+        An `each` rule is judged only when it comes from a space above the page, never from
         the page itself.
         """
         seen = {name}
@@ -625,7 +661,7 @@ class Vault:
                 if isinstance(entry, dict):
                     if owner == name:
                         continue
-                    rule = entry["within"]
+                    rule = entry["each"]
                 else:
                     rule = entry
                 try:

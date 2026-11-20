@@ -29,6 +29,8 @@ A write is judged by the plain rules of the page and of every space above it, an
 
 The fixed statement of an ask that may write pages gains one clause, so a character knows it can write such a rule.
 
+The key `within` was renamed `each` by [decision 0035](0035-a-character-binds-its-own-space.md), because a small model read it as the membership field. The text below keeps its original words.
+
 ## Consequences
 
 - A space can bind a kind of act without carrying the field, and the binding playbook no longer needs guards.

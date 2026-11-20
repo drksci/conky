@@ -1,6 +1,10 @@
-# Told that every payment must leave a floor, a keeper states a rule for the pages within a space, and a later payment that breaks it is refused.
-claim: told that every payment must leave a floor, a character states a rule for the pages within a space and a later payment that breaks it is refused
-forecast: a small model writes a within rule that parses in 3 of 5 draws and it covers the breaking payment in 2 of 5
+# Told that every payment must leave a floor, a keeper states an each rule for the pages within a space, and a later payment that breaks it is refused.
+claim: told that every payment must leave a floor, a character states an each rule for the pages within a space and a later payment that breaks it is refused
+forecast: a small model states an `each` rule that parses in 3 of 5 draws, 2 of them on the den itself; the breaking payment is refused in 3 of 5
+par:
+  outcome: the baker is paid and the landlord's payment is refused, with the refusal on record
+  structure: every payment is a page and one standing rule on the den covers them all
+  cost: one call for the payment; none for the refusal
 pages:
   helper: {api: command, command: stand}
   den: {cash: 80}
@@ -20,6 +24,6 @@ pages:
 steps:
   - says: live
   - write: {page: order, fields: {}, body: "Pay the baker 30."}
-  - expect: {within_rules: {den: 1}, within_fields: {den: {amount: "^30$"}}}
-  - write: {page: landlord-payment, within_ruled: den, fields: {amount: 70}}
+  - expect: {each_rules: {den: 1}, within_fields: {den: {amount: "^30$"}}}
+  - write: {page: landlord-payment, fields: {within: den, amount: 70}}
   - expect: {refused: rule}

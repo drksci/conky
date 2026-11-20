@@ -158,9 +158,13 @@ def main(argv: list[str]) -> int:
     out.mkdir(parents=True, exist_ok=True)
     if args.model:
         os.environ[model.MODEL_VARIABLE] = args.model
-    notes = {key: plan[key] for key in ("claim", "forecast") if key in plan}
+    notes = {key: plan[key] for key in ("claim", "forecast", "par") if key in plan}
     for key, text in notes.items():
-        print(f"{key}: {text}")
+        if isinstance(text, dict):
+            for part, line in text.items():
+                print(f"{key} {part}: {line}")
+        else:
+            print(f"{key}: {text}")
     used, widest, wins, drawn = 0, 0, 0, 0
     for number in range(1, args.draws + 1):
         if used + widest > args.cap:

@@ -47,7 +47,7 @@ The capability and the three laws of [decision 0029](../decisions/0029-autonomy-
 | <a id="law.refusal.record"></a>`law.refusal.record` | A refused write is recorded as an empty commit, never dropped. | [vault-format.md#a-refusal](vault-format.md#a-refusal) | `conky.vault.Vault._refuse` | `tests/test_laws.py::test_refused_write_is_an_empty_signed_commit` | - | built |
 | <a id="law.rule.never"></a>`law.rule.never` | Anything that must never happen is a rule the runtime evaluates. | [rules-and-reactions.md#expressions](rules-and-reactions.md#expressions) | `conky.rules.holds` | `tests/test_laws.py::test_rule_error_refuses`<br>`tests/test_laws.py::test_rule_inherited_through_two_level_chain`<br>`tests/test_laws.py::test_size_rule_in_a_space_refuses_an_oversized_member` | - | built |
 | <a id="law.rule.pure"></a>`law.rule.pure` | Rules and measures are pure: no clock, randomness or input and output. | [rules-and-reactions.md#expressions](rules-and-reactions.md#expressions) | `conky.rules.evaluate` | review | - | built |
-| <a id="law.rule.tighten"></a>`law.rule.tighten` | A member adds a rule and cannot remove one or leave one behind. | [0022-leaving-a-space-is-a-write-the-space-can-refuse.md](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md) | `conky.vault.Vault._rule_reason` | `tests/test_laws.py::test_leaving_a_space_is_judged_by_the_rules_of_the_space_it_leaves`<br>`tests/test_laws.py::test_a_changed_space_field_refuses_the_next_member_write`<br>`tests/test_pages.py::test_a_rule_of_a_space_refuses_a_page_that_breaks_it`<br>`tests/test_pages.py::test_a_character_can_add_a_rule_to_a_space_it_made_and_the_rule_binds_a_later_write` | R29 | built |
+| <a id="law.rule.tighten"></a>`law.rule.tighten` | A member adds a rule and cannot remove one or leave one behind. | [0022-leaving-a-space-is-a-write-the-space-can-refuse.md](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md) | `conky.vault.Vault._rule_reason` | `tests/test_laws.py::test_leaving_a_space_is_judged_by_the_rules_of_the_space_it_leaves`<br>`tests/test_laws.py::test_a_changed_space_field_refuses_the_next_member_write`<br>`tests/test_pages.py::test_a_rule_of_a_space_refuses_a_page_that_breaks_it`<br>`tests/test_pages.py::test_a_character_can_add_a_rule_to_a_space_it_made_and_the_rule_binds_a_later_write`<br>`tests/test_pages.py::test_an_answer_adds_a_rule_to_its_space_signed_by_the_asker` | R29 | built |
 | <a id="law.runtime.fixed"></a>`law.runtime.fixed` | The runtime is not a page, so no character can change it. | [0029-autonomy-inside-limits-that-hold.md](../decisions/0029-autonomy-inside-limits-that-hold.md) | `conky.vault.Vault._breach` | `tests/test_pages.py::test_a_character_cannot_write_a_secret_or_a_command_into_a_page` | - | built |
 | <a id="law.scope.out"></a>`law.scope.out` | No batching to hide, no second authority, no hidden state, no control by instruction. | [0018-not-doing.md](../decisions/0018-not-doing.md) | `docs/decisions/0018-not-doing.md` | review | - | built |
 | <a id="law.vault.golden"></a>`law.vault.golden` | The vault format is held stable by a golden vault that every version reads. | [0012-rust-core-planned.md](../decisions/0012-rust-core-planned.md) | `conky.page.parse` | `tests/test_laws.py::test_golden_vault_still_reads` | - | built |
@@ -498,7 +498,7 @@ The answer is written first, then each page lands as a write by the asker inside
 
 | Flow | Doc | Code | Test | Step | State |
 |---|---|---|---|---|---|
-| <a id="flow.ask.pages"></a>`flow.ask.pages` | [rules-and-reactions.md#an-answer-that-is-pages](rules-and-reactions.md#an-answer-that-is-pages) | `conky.vault.Vault._react`<br>`conky.answer.instruction`<br>`conky.answer.split`<br>`conky.vault.Vault._answered`<br>`conky.vault.Vault._land`<br>`conky.vault.Vault._breach`<br>`conky.vault.Vault._rule_reason`<br>`conky.vault.Vault._write` | `tests/test_pages.py::test_an_answer_with_two_pages_writes_both_as_the_asker_caused_by_the_answer`<br>`tests/test_pages.py::test_a_page_outside_the_space_is_refused_and_recorded_and_the_others_land`<br>`tests/test_pages.py::test_a_character_cannot_write_a_secret_or_a_command_into_a_page`<br>`tests/test_pages.py::test_a_malformed_block_is_one_recorded_refusal_and_the_pages_around_it_still_apply`<br>`tests/test_pages.py::test_a_character_writing_a_page_that_asks_again_stops_at_the_depth_cap` | R29 | built |
+| <a id="flow.ask.pages"></a>`flow.ask.pages` | [rules-and-reactions.md#an-answer-that-is-pages](rules-and-reactions.md#an-answer-that-is-pages) | `conky.vault.Vault._react`<br>`conky.answer.instruction`<br>`conky.answer.split`<br>`conky.vault.Vault._answered`<br>`conky.vault.Vault._land`<br>`conky.vault.Vault._breach`<br>`conky.vault.Vault._rule_reason`<br>`conky.vault.Vault._write` | `tests/test_pages.py::test_an_answer_with_two_pages_writes_both_as_the_asker_caused_by_the_answer`<br>`tests/test_pages.py::test_a_page_outside_the_space_is_refused_and_recorded_and_the_others_land`<br>`tests/test_pages.py::test_a_character_cannot_write_a_secret_or_a_command_into_a_page`<br>`tests/test_pages.py::test_a_malformed_block_is_one_recorded_refusal_and_the_pages_around_it_still_apply`<br>`tests/test_pages.py::test_a_character_writing_a_page_that_asks_again_stops_at_the_depth_cap`<br>`tests/test_pages.py::test_an_answer_adds_a_rule_to_its_space_signed_by_the_asker` | R29 | built |
 
 <a id="flow.connect.sense#1"></a><a id="flow.connect.sense#2"></a><a id="flow.connect.sense#3"></a><a id="flow.connect.sense#4"></a><a id="flow.connect.sense#5"></a><a id="flow.connect.sense#6"></a><a id="flow.connect.sense#7"></a><a id="flow.connect.sense#8"></a>
 
@@ -1169,7 +1169,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | Thing | State | Measured tests | Judged checks | No check |
 |---|---|---|---|---|
 | [`flow.ask.model`](#flow.ask.model) | built | 9 | - |  |
-| [`flow.ask.pages`](#flow.ask.pages) | built | 5 | check.page.format, check.character.organise |  |
+| [`flow.ask.pages`](#flow.ask.pages) | built | 6 | check.page.format, check.character.organise |  |
 | [`flow.clock.tick`](#flow.clock.tick) | planned | not built | - | - |
 | [`flow.codec.revise`](#flow.codec.revise) | idea | not built | - | - |
 | [`flow.connect.act`](#flow.connect.act) | built | 4 | - |  |
@@ -1214,7 +1214,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`law.refusal.record`](#law.refusal.record) | built | 1 | - |  |
 | [`law.rule.never`](#law.rule.never) | built | 3 | - |  |
 | [`law.rule.pure`](#law.rule.pure) | built | - | - | review only |
-| [`law.rule.tighten`](#law.rule.tighten) | built | 4 | - |  |
+| [`law.rule.tighten`](#law.rule.tighten) | built | 5 | - |  |
 | [`law.runtime.fixed`](#law.runtime.fixed) | built | 1 | - |  |
 | [`law.scope.out`](#law.scope.out) | built | - | - | review only |
 | [`law.spend.conserve`](#law.spend.conserve) | planned | not built | - | - |
@@ -1371,6 +1371,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0032-results-publish-themselves](../decisions/0032-results-publish-themselves.md) | accepted | - |
 | [0033-ahead-or-different-with-each-step](../decisions/0033-ahead-or-different-with-each-step.md) | accepted | - |
 | [0034-a-rule-for-the-pages-within](../decisions/0034-a-rule-for-the-pages-within.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`part.space`](#part.space) |
+| [0035-a-character-binds-its-own-space](../decisions/0035-a-character-binds-its-own-space.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`law.reach.down`](#law.reach.down), [`part.space`](#part.space) |
 
 ### Unplaced
 

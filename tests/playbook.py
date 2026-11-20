@@ -52,8 +52,8 @@ def run(
         elif kind == "write":
             put = step["write"]
             places = [None]
-            if "within_ruled" in put:
-                places = ruled(vault, put["within_ruled"])
+            if "each_ruled" in put:
+                places = ruled(vault, put["each_ruled"])
             for place in places:
                 fields = put.get("fields", {})
                 if place is not None:
@@ -95,12 +95,15 @@ def expectations(expect: dict[str, Any], vault: Vault, stand: Stand, last: Any) 
         elif key == "rules":
             for page, least in wanted.items():
                 held = vault.read(page).rules if (vault.pages_dir / f"{page}.md").exists() else []
-                texts = [r if isinstance(r, str) else r["within"] for r in held]
+                texts = [r if isinstance(r, str) else r["each"] for r in held]
                 check(f"{page} has at least {least} rules that parse", True, parsed(texts) >= least)
-        elif key == "within_rules":
+        elif key == "each_rules":
             for space, least in wanted.items():
-                count = sum(parsed(within_rules(vault, page)) for page in inside(vault, space))
-                what = f"pages within {space} carry at least {least} within rules that parse"
+                held = [space, *inside(vault, space)]
+                count = sum(parsed(each_rules(vault, page)) for page in held)
+                what = (
+                    f"{space} and the pages within it carry at least {least} each rules that parse"
+                )
                 check(what, True, count >= least)
         elif key == "within_fields":
             for space, fields in wanted.items():
@@ -147,14 +150,14 @@ def inside(vault: Vault, space: str) -> list[str]:
     return found
 
 
-def within_rules(vault: Vault, page: str) -> list[str]:
-    """Return the conditions of the `within` rules a page carries."""
-    return [r["within"] for r in vault.read(page).rules if isinstance(r, dict)]
+def each_rules(vault: Vault, page: str) -> list[str]:
+    """Return the conditions of the `each` rules a page carries."""
+    return [r["each"] for r in vault.read(page).rules if isinstance(r, dict)]
 
 
 def ruled(vault: Vault, space: str) -> list[str]:
-    """Return the pages within space that carry a `within` rule."""
-    return [page for page in inside(vault, space) if within_rules(vault, page)]
+    """Return the pages within space that carry an `each` rule."""
+    return [page for page in inside(vault, space) if each_rules(vault, page)]
 
 
 def parsed(rules: list[str]) -> int:

@@ -1,4 +1,4 @@
-# A character writes a space that carries a within rule, and a later page within it is bound.
+# A character writes a space that carries a each rule, and a later page within it is bound.
 pages:
   helper: {api: command, command: stand}
   den: {cash: 80}
@@ -18,14 +18,14 @@ steps:
       ---
       within: den
       rules:
-        - within: "page.amount <= space.cash - 20"
+        - each: "page.amount <= space.cash - 20"
       ---
       Every payment leaves 20 in cash.
   - write: {page: order, fields: {}, body: "Pay the baker."}
-  - expect: {within_rules: {den: 1}, rules: {payments: 1}, verify: true}
+  - expect: {each_rules: {den: 1}, rules: {payments: 1}, verify: true}
   - write: {page: payment-a, fields: {within: payments, amount: 30}}
   - expect: {exists: [payment-a], within_fields: {den: {amount: "^30$"}}}
   - write: {page: payment-b, fields: {within: payments, amount: 70}}
   - expect: {refused: rule, missing: [payment-b]}
-  - write: {page: payment-b, within_ruled: den, fields: {amount: 70}}
+  - write: {page: payment-b, each_ruled: den, fields: {amount: 70}}
   - expect: {refused: rule, missing: [payment-b]}

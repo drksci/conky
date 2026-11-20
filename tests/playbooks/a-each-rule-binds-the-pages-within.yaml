@@ -1,9 +1,9 @@
-# A within rule refuses a member and accepts the space that carries it, which lacks the field.
+# A each rule refuses a member and accepts the space that carries it, which lacks the field.
 pages:
   den:
     cash: 80
     rules:
-      - within: "page.amount <= space.cash - 20"
+      - each: "page.amount <= space.cash - 20"
   keeper:
     within: den
     amount: 0

@@ -452,3 +452,58 @@ def test_conky_ask_writes_pages_and_prints_what_landed_and_what_was_refused(
         == 0
     )
     assert exists(den, "note-b")
+
+
+BIND = '=== page: den ===\n---\nrules:\n  - each: "page.amount <= 50"\n---\n'
+
+
+@arch.holds("law.rule.tighten", "flow.ask.pages")
+def test_an_answer_adds_a_rule_to_its_space_signed_by_the_asker(den: Vault, stand: Stand) -> None:
+    stand.says("Bound.\n" + BIND)
+    trigger(den, "bind")
+    assert den.read("den").rules == [{"each": "page.amount <= 50"}]
+    assert not refusals(den)
+    commit = history(den)[-1][0]
+    assert signed_by(den.path, commit) == "scribe@conky"
+    assert w(den, "pay", {"within": "den", "amount": 30}).ok
+    assert not w(den, "pay-more", {"within": "den", "amount": 90}).ok
+    den.verify()
+
+
+def test_an_answer_keeps_the_rules_its_space_has_and_ignores_a_duplicate(
+    den: Vault, stand: Stand
+) -> None:
+    kept = "!has(page.cash) || page.cash >= 0"
+    block = '=== page: den ===\n---\nrules:\n  - each: "!has(page.amount)"\n---\n'
+    assert w(den, "den", {"rules": [kept]}).ok
+    stand.says(block + block)
+    trigger(den, "bind")
+    assert den.read("den").rules == [kept, {"each": "!has(page.amount)"}]
+    stand.says("=== page: den ===\n---\nrules: []\n---\n")
+    trigger(den, "unbind")
+    assert den.read("den").rules == [kept, {"each": "!has(page.amount)"}]
+    assert not refusals(den)
+    den.verify()
+
+
+def test_an_answer_cannot_set_a_field_or_a_body_on_its_space(den: Vault, stand: Stand) -> None:
+    stand.says(
+        "=== page: den ===\n---\nrules:\n  - each: page.amount <= 50\ncash: 5000\n---\n"
+        "=== page: den ===\n---\nrules:\n  - each: page.amount <= 60\n---\nA body.\n"
+        "=== page: den ===\n---\nwithin: scribe\nrules: []\n---\n"
+    )
+    trigger(den, "widen")
+    assert den.read("den").rules == [] and den.read("den").fields == {}
+    assert den.read("den").body == "" and den.read("den").within is None
+    found = refusals(den)
+    assert [r["Page"] for r in found] == ["den", "den", "den"]
+    assert all(r["Reason"].startswith("limit: ") for r in found)
+    assert "add rules to it and nothing else" in found[0]["Reason"]
+    den.verify()
+
+
+def test_an_answer_cannot_bind_a_space_it_was_not_given(den: Vault, stand: Stand) -> None:
+    stand.says("=== page: other ===\n---\nrules:\n  - each: page.amount <= 1\n---\n")
+    trigger(den, "bind")
+    (found,) = refusals(den)
+    assert found["Reason"].startswith("limit: ") and "not within space den" in found["Reason"]

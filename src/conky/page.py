@@ -170,13 +170,13 @@ def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
 
 
 def _check_rule(entry: Any) -> None:
-    """Refuse a rule entry that is neither a condition nor a `within` mapping."""
+    """Refuse a rule entry that is neither a condition nor an `each` mapping."""
     if isinstance(entry, str):
         return
-    if isinstance(entry, dict) and set(entry) == {"within"} and isinstance(entry["within"], str):
+    if isinstance(entry, dict) and set(entry) == {"each"} and isinstance(entry["each"], str):
         return
     raise ShapeError(
-        "a rule is a condition as text, or a mapping with the one key within whose value is a "
+        "a rule is a condition as text, or a mapping with the one key each whose value is a "
         f"condition as text, not {entry!r}"
     )
 

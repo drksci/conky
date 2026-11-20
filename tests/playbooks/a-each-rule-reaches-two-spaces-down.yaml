@@ -1,9 +1,9 @@
-# A within rule binds a page at any depth below the space that carries it.
+# A each rule binds a page at any depth below the space that carries it.
 pages:
   den:
     cash: 80
     rules:
-      - within: "page.amount <= space.cash - 20"
+      - each: "page.amount <= space.cash - 20"
   shelf:
     within: den
     amount: 0
