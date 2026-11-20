@@ -91,6 +91,12 @@ def check_roadmap(text: str) -> list[str]:
         problems.append(
             f"docs/project/roadmap.md: exactly one step must be next, found {len(marked)}"
         )
+    for line in text.splitlines():
+        if STEP.match(line) and "(next)" in line.split(":", 1)[0] and "Difference:" not in line:
+            problems.append(
+                "docs/project/roadmap.md: the step marked next must say what it makes "
+                "different, in a sentence starting 'Difference:' (decision 0033)"
+            )
     return problems
 
 

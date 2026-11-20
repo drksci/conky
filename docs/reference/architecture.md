@@ -1345,6 +1345,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0030-pay-once](../decisions/0030-pay-once.md) | accepted | [`part.answer.cache`](#part.answer.cache) |
 | [0031-build-on-bedrock](../decisions/0031-build-on-bedrock.md) | accepted | - |
 | [0032-results-publish-themselves](../decisions/0032-results-publish-themselves.md) | accepted | - |
+| [0033-ahead-or-different-with-each-step](../decisions/0033-ahead-or-different-with-each-step.md) | accepted | - |
 
 ### Unplaced
 
@@ -1353,6 +1354,7 @@ Found in the documents and fitting no row above.
 | Item | Where | Note |
 |---|---|---|
 | a generated index for a notes application | [obsidian-view.md](../ideas/obsidian-view.md) | Derived data under R11. Nothing is designed beyond the idea. |
+| ahead or different with each step | [0033-ahead-or-different-with-each-step.md](../decisions/0033-ahead-or-different-with-each-step.md) | Every step states the difference it makes against other harnesses and how that is shown; parity work waits until a difference depends on it. |
 | arcs | [arcs.md](../ideas/arcs.md) | A primary purpose with branches, each scored by its distance from it. Not yet worked out, and read as direction and drift. |
 | build on bedrock | [0031-build-on-bedrock.md](../decisions/0031-build-on-bedrock.md) | Walk a new layer one step at a time before building on it. A working rule whose check is the benchmark walkthrough. |
 | energy unit | [energy-unit.md](../ideas/energy-unit.md) | A unit of value flow that conserves only if its conversion is recorded. It waits on a grouped write and a measure of spend, and has no step of its own. |

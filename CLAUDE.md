@@ -50,6 +50,7 @@ Run this before every push. CI runs the same command on every pull request. Whil
 - No stub passes as real. Name it `stub` and say so where it is defined. (review)
 - Pay once. Anything costly (a model call, an outside call, a download, heavy computation) is cached by content as derived data: outside the history, safe to delete, and keyed to the moment so a character still answers afresh after a new event. (check: `tests/test_cache.py`)
 - Build nothing before something consumes it. (review)
+- Ahead or different with each step. Every roadmap step says what it puts conky ahead on, or makes it meaningfully different in, against the harnesses in `docs/research/harnesses.md`, and how that will be shown. Work that only reaches parity is done when a difference depends on it, and not before. Unbuilt work is ordered by the difference it makes. (review; check: `scripts/check_docs.py` for the line on the step marked `next`)
 - Look for prior art and standards before inventing, and cite what you found in the decision. (review)
 - A space hands down rules, context and reactions. Prefer handing something down a space to adding a mechanism. (review: only rules are built)
 - A page reads as if a person wrote it: reactions and model pages write sentences where a person would. (check: `tests/test_demo.py` for the example; review elsewhere)

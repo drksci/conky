@@ -1,6 +1,6 @@
 # Contributing
 
-Small, focused contributions are welcome. Read [CLAUDE.md](CLAUDE.md) first: its rules apply to people and agents alike.
+Small, focused contributions are welcome. Read [CLAUDE.md](../CLAUDE.md) first: its rules apply to people and agents alike.
 
 ## Setup
 
@@ -33,7 +33,7 @@ Subjects are `<type>: <summary>`, with type one of feat, fix, docs, test, refact
 
 ## Picking work
 
-Take the step marked `next` in [docs/project/roadmap.md](docs/project/roadmap.md). Each step has a stable id and a state of `done`, `next` or `later`. Exactly one is `next`, and `scripts/check_docs.py` checks it.
+Take the step marked `next` in [docs/project/roadmap.md](../docs/project/roadmap.md). Each step has a stable id and a state of `done`, `next` or `later`. Exactly one is `next`, and `scripts/check_docs.py` checks it.
 
 ## What a change must include
 

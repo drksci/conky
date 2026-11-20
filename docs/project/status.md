@@ -40,7 +40,7 @@ From [design](../design.md) and the [reference](../reference/vault-format.md):
 - One live model call has been made, outside the test suite: a single ask through the built-in `claude` command provider in a throwaway vault, which returned `hello`, was written and passed `conky verify`. Nothing else was exercised live. The `openai` and `anthropic` HTTP shapes are tested only against stand-in servers that follow them as documented, so a real service may differ in ways the tests cannot show. The default Anthropic model id `claude-sonnet-5-5` was taken from the Claude API documentation and never called. No OpenAI default model id is known, so detection through `OPENAI_API_KEY` needs `CONKY_MODEL`. The `codex exec` form was not run because `codex` is not installed here, and detection by environment key, by `CONKY_PROVIDER` and by `codex` have only been run against fakes.
 - Cost is recorded as token counts when a provider reports them. Nothing bounds it, and a model's answer is stored like any other field, with nothing marking it as unchecked.
 - Nothing has been benchmarked to the standard of a result. Two pilots have run unscripted on one small model ([results](../research/results.md)); they show the apparatus works and support no claim. The first pilot found that a small model answered the wrong question when the page instruction came last, which was fixed. The fetched game stops on one unreadable answer, which ends a run early in either arm. its [protocol](../research/benchmark-protocol.md) is fixed before any live run.
-- Nothing in the project has been audited for security. See [SECURITY.md](../../SECURITY.md).
+- Nothing in the project has been audited for security. See [SECURITY.md](../../.github/SECURITY.md).
 
 ## Known gaps
 
