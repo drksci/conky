@@ -40,6 +40,17 @@ Writing arguments to a tool page is machine work. A character that has to do it 
 
 Nothing new is added. The go-between is a page with watch entries, the order of providers is a field on it, and the raw pages stay readable for anyone who wants them.
 
+## Think once, then reflex
+
+A go-between that asked a model about every frame would be slow, costly and no better informed. It works the way the compositor does for a screen: understand the shape once, then keep up with changes cheaply.
+
+- Notice cheaply. The connector writes only when what it perceives has changed, and a budget rule caps how often. A write that changes nothing is already skipped by every watcher.
+- Keep a reading. The first time, a capable model looks hard and writes a reading for that source: how it is laid out, which part carries which fact, what can be ignored. The reading is a page, and a kind of [pattern](patterns.md). From then on, applying it is a reflex: take the status line from here, the choice list from there, compare with last time.
+- Pass on what changed. Characters receive the difference in a sentence and a few fields, not a fresh description of everything.
+- Escalate on surprise. A [measure](measures.md) tracks how much of each change the reading explained. When it drops, pressure rises and the capable model is asked to revise the reading ([learned reactions](learned-reactions.md)). When a provider is missing, the same ladder is walked downwards to the plain-sentence reflex.
+
+The outward direction is the same mechanism. A layout for people and a reading for characters are both written once by thought and applied afterwards by reflex.
+
 ## Large results
 
 A screenshot is a file kept beside the page and linked from it. A model page that embeds such a link passes the file to a provider that can read images. None of this is built. The alternatives are bytes in the history, which grows the vault with every frame, and bytes outside it with a content hash in the page, as [data beside pages](../decisions/0003-data-beside-pages.md) proposes, which keeps the vault small but leaves a replay without the pictures.
