@@ -1,12 +1,12 @@
 # conky
 
-A Rust runtime (`crates/`, `wit/`) where every actor is a living Markdown document. Pre-alpha. This file obeys the law it states: it stays under 4096 bytes, and CI checks it.
+A Rust runtime (`crates/`, `wit/`) where every actor is a living Markdown document. Pre-alpha. This file stays under 4096 bytes; CI checks it.
 
 ## Truth order
 
 1. Code and passing tests: what is enforced.
 2. `docs/blueprint.md`: the v2.0 specification, partly historical.
-3. `docs/gemini-osi-stack/`: source material only. Read `SUMMARY.md` first. Never edit it, never treat it as a requirement.
+3. `docs/gemini-osi-stack/`: source material. Read `SUMMARY.md` first. Never edit it or treat it as a requirement.
 
 ```bash
 cargo fmt --all -- --check && cargo clippy --workspace --all-targets -- -D warnings && cargo test --workspace
@@ -27,6 +27,8 @@ Every principle here is open to challenge. Change it in this file first, with th
 
 ## Hard rules
 
+- **Nothing already built has to stay.** Existing code is reference, not an obligation.
+
 - **No tech debt.** No compatibility shims, deprecated aliases, dead code or "fix later" notes. Replacing something removes the old thing in the same change.
 - **No down-migrations, no migration ladders.** Data lives in three simple primitives in open formats: document (Markdown + frontmatter), table (Parquet), stream (append-only log). A change of shape is a forward re-projection from those, never an in-place rewrite with a way back.
 - **The vault travels alone.** A cold reader given only the directory can rebuild the running system. Data sits at relative paths named by its surface.
@@ -46,8 +48,8 @@ Each idea states its rung wherever it is mentioned:
 | enforced | Runtime code plus a test that fails when the law is broken. |
 | proven | Measured in a run that was not scripted. |
 
-- Fold mechanisms, not vocabulary. The archive renames the same ideas four times.
-- The lexicon in code is v2.x: `crest surface link slot seal guard view pulse proof settle`, verbs `peek watch etch`, engines `mind gear organ`. A rename is one atomic change everywhere.
+- Fold mechanisms, not vocabulary.
+- The lexicon is under revision: one plain word per concept, renamed atomically everywhere.
 - Contradictions are resolved in writing before folding, not by keeping both.
 
 ## Benchmarking
@@ -59,6 +61,8 @@ Each idea states its rung wherever it is mentioned:
 
 ## Working here
 
-- The lead session thinks, decides and reviews. Edits go to economical workers with a precise brief.
-- Small diffs. Every new law lands with the test that proves it bites.
+- The lead thinks, decides and reviews; economical workers edit from a precise brief.
+- Build the check, not the convention: every law lands with a test that bites.
+- Nothing is built before something consumes it; nothing is referenced that does not resolve.
+- Look for prior art and standards before inventing.
 - Say plainly what is unbuilt or unverified.
