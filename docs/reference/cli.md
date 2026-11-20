@@ -8,7 +8,7 @@ source: maintainers
 
 # Command line
 
-`conky` is installed by `pip install -e '.[dev]'`. The walkthrough in [getting started](../guide/getting-started.md) uses every command except `demo` and `assimilate`, which have their own sections there, `ask`, which needs a provider, and `connect`, which is shown in [playing a program](../guide/playing-a-program.md).
+This page specifies every `conky` command, its options, its output and its exit codes. [Getting started](../guide/getting-started.md) walks through them, except `connect`, which [playing a program](../guide/playing-a-program.md) shows. Install with `pip install -e '.[dev]'`.
 
 ```
 conky [--vault DIR] [--keys DIR] [--color WHEN] <command> ...
@@ -22,18 +22,18 @@ conky [--vault DIR] [--keys DIR] [--color WHEN] <command> ...
 | `--keys DIR` | The directory that holds private keys. Default: `~/.conky/keys`. |
 | `--color WHEN` | `auto`, `always` or `never`. Default: `auto`. |
 
-All go before the command. `init` takes the vault path as its own argument and ignores `--vault`.
+The global options go before the command. `init` takes the vault path as its own argument and ignores `--vault`.
 
 ## Colour and styled output
 
-In a terminal, conky styles its output with rounded boxes, small coloured badges and the symbols `✓`, `✗`, `↳`, `●` and `○`. The wording is the same as the plain output, with a badge in place of some labels, so no state is shown by colour alone. Styled output needs a terminal that supports 24-bit colour.
+In a terminal, output is styled with rounded boxes, small coloured badges and the symbols `✓`, `✗`, `↳`, `●` and `○`. The wording matches the plain output, with a badge in place of some labels, so colour never carries a state alone. Styled output needs a terminal with 24-bit colour.
 
-- `--color auto` styles output only when it goes to a terminal and the environment variable `NO_COLOR` is not set. This is the default.
-- `--color always` styles output even when it is piped or redirected, for example to capture it.
+- `--color auto` styles output only when it goes to a terminal and `NO_COLOR` is not set. This is the default.
+- `--color always` styles output even when piped or redirected.
 - `--color never` prints plain text.
 - `NO_COLOR` set to any value turns styling off under `auto`. An explicit `--color always` overrides it.
 
-Styled output is for people. Plain output is the stable form for scripts: it is what every other section of this page describes, and it has no escape codes. Anything that reads conky output should run it with output piped or with `--color never`. The styled layout can change between releases. Styled lines wrap to the terminal width, at most 88 columns.
+Styled output is for people and its layout can change between releases. Plain output is the stable form for scripts, has no escape codes and is what every other section of this page describes. Scripts should pipe the output or pass `--color never`. Styled lines wrap to the terminal width, at most 88 columns.
 
 ## Commands
 
@@ -43,13 +43,13 @@ Styled output is for people. Plain output is the stable form for scripts: it is 
 conky demo [name] [--into PATH] [--list]
 ```
 
-Builds a small example vault and narrates it. The examples are data files shipped in the package (`lemonade` is the default; `team` is the other). Each is a title, a one-line summary and ordered steps, and each step has a plain narration line and one write.
+Builds a small example vault and narrates it. The examples are data files in the package, `lemonade` (the default) and `team`. Each has a title, a one-line summary and ordered steps, and each step is a narration line and one write made through the real write path, so the vault verifies.
 
 - `name` is the example to run. `--list` prints the examples with their summaries and does nothing else.
-- `--into PATH` is the folder to create. Default: `./conky-demo-<name>`. It is an error if the path already exists.
+- `--into PATH` is the folder to create. Default: `./conky-demo-<name>`. It is an error if the path exists.
 - Private keys go in a `keys` directory beside the vault, unless the global `--keys` is given.
 
-Each step prints its number and narration, then an indented line beginning `->` that says what happened: `written: <page>`, or `refused: <page>, because <reason>`, followed by `Then <page> changed by itself` for each reaction. The output ends with what to look at next: the vault path, the Git history command, and the `read` and `verify` commands. The plain output is at most 80 columns apart from paths, with no colour codes. In a terminal the same content is styled: a box holds the title and summary, each step number is a small badge, results carry `✓ written` and `✗ refused` badges, and a reaction is a line beginning `↳`. See [colour and styled output](#colour-and-styled-output). The steps use the real write path, so the vault verifies.
+Each step prints its number and narration, then an indented line beginning `->`: `written: <page>`, or `refused: <page>, because <reason>`, followed by `Then <page> changed by itself` for each reaction. The output ends with what to look at next: the vault path, the Git history command, and the `read` and `verify` commands. Plain output is at most 80 columns apart from paths. In a terminal a box holds the title and summary, step numbers are badges, results carry `✓ written` and `✗ refused` badges, and a reaction is a line beginning `↳` ([colour and styled output](#colour-and-styled-output)).
 
 Errors, each on one line beginning `error: `:
 
@@ -62,34 +62,35 @@ Errors, each on one line beginning `error: `:
 conky assimilate [source] [--into PATH] [--as ACTOR] [--keys DIR] [--then PAGE FIELD=VALUE ...]
 ```
 
-Takes over a stopped vault from its folder alone, checks it and carries on from where it stopped. It is the mechanical form of the [assimilation test](../ideas/assimilation-test.md): no model is involved, so it shows that the state travels and resumes, and it says nothing about how an agent behaves. In the [evaluation plan](../research/evaluation-plan.md) it is a mechanism result.
+Takes over a stopped vault from its folder alone, checks it and carries on from where it stopped. It is the mechanical form of the [assimilation test](../ideas/assimilation-test.md): no model is involved, so it shows that state travels and resumes and says nothing about how an agent behaves. In the [evaluation plan](../research/evaluation-plan.md) it is a mechanism result.
 
-- `source` is the vault to take over: a path to a vault directory, a path to a Git bundle, or a URL that `git clone` accepts. Without it, a small stopped vault that ships in the package is used, so the bare command works anywhere. That vault is the `lemonade` example stopped before the busy hour: the stand, the cooler and the supplier exist, and one write has been refused.
+- `source` is the vault to take over: a vault directory, a Git bundle or a URL that `git clone` accepts. Without it, a small stopped vault in the package is used, so the bare command works anywhere. That vault is the `lemonade` example stopped before the busy hour: the stand, the cooler and the supplier exist, and one write has been refused.
 - `--into PATH` is the folder to create. Default: `./conky-assimilated`. It is an error if the path already exists.
 - `--as ACTOR` names the newcomer. Default: `newcomer`.
-- `--keys DIR` is where the newcomer's new key goes. Default: a `keys` directory beside the new vault. The option also works before the command, like the global `--keys`.
-- `--then PAGE FIELD=VALUE ...` is a write to make as the newcomer, with the same field syntax as [write](#write). Repeat it to make several writes, which run in order. Put `source` before the first `--then`.
+- `--keys DIR` is where the newcomer's new key goes. Default: a `keys` directory beside the new vault. Like the global `--keys`, it works before the command.
+- `--then PAGE FIELD=VALUE ...` is a write to make as the newcomer, with the same field syntax as [write](#write). Repeat it for several writes, which run in order. Put `source` before the first `--then`.
 
 It reports five numbered steps as they happen.
 
 1. Take the folder. `git clone` copies the source into the new folder. Nothing else is copied: no keys and no settings.
-2. Check it. This is [verify](#verify): every commit is signed by a key the vault lists, the trailers are valid and the tree is clean. The step reports the number of commits, pages and spaces, and the last change. A space is a page that other pages lie within.
+2. Check it with [verify](#verify): every commit is signed by a key the vault lists, the trailers are valid and the tree is clean. The step reports the number of commits, pages and spaces, and the last change. A space is a page that other pages lie within.
 3. Read the room. Each page is listed with its space, the number of rules that apply to it (its own plus those inherited through its space) and the pages it watches. This reads the files only.
-4. Carry on. The newcomer is a new actor with a new key made in the key directory, so the original author's key is never needed. Its public key is added to `keys/allowed_signers` in the same commit as its first write. For the packaged vault the writes come from a data file beside it: a busy hour takes the cooler down to 4 cups, and the supplier must react by itself. For any other source the writes are the `--then` options. With none, the command stops after step 3 and prints the `conky write` command to continue with.
+4. Carry on. The newcomer is a new actor with a new key in the key directory, so the original author's key is never needed. Its public key is added to `keys/allowed_signers` in the same commit as its first write. For the packaged vault the writes come from a data file beside it: a busy hour takes the cooler down to 4 cups, and the supplier must react by itself. For any other source the writes are the `--then` options. With none, the command stops after step 3 and prints the `conky write` command to continue with.
 5. Check again. The vault is verified once more, and the commits added by the carry-on are listed, with each reaction and its cause and each refusal and its reason.
 
-A reaction is signed by the page that reacts, as for any write, so it needs that page's key. When the source lists a reacting page whose key stayed with the original author, the write fails with `no private key for '<page>'`, and the fix is to give that key with `--keys`.
+A reaction is signed by the page that reacts, so it needs that page's key. When the source lists a reacting page whose key stayed with the original author, the write fails with `no private key for '<page>'`, and the fix is to give that key with `--keys`.
 
-The output ends with a short statement of what was shown and what was not. In a terminal it is styled like the demo: a box for the title and the closing, numbered step badges, `✓` and `✗` badges, and `↳` for each reaction. Plain output has no escape codes.
+The output ends with a short statement of what was shown and what was not. In a terminal it is styled like the demo. Plain output has no escape codes.
 
-The exit code is 1 if verification fails at step 2 or step 5, or if a write that the packaged vault expects to be kept is refused or draws no reaction. A refused `--then` write is reported with its reason and does not change the exit code. Errors, each on one line beginning `error: `, include:
+The exit code is 1 if verification fails at step 2 or step 5, or if a write that the packaged vault expects to be kept is refused or does not draw the expected reactions. A refused `--then` write is reported with its reason and does not change the exit code. Errors, each on one line beginning `error: `, include:
 
 - `error: <path> already exists: choose another folder with --into PATH`
 - `error: cannot take <source>: ...: give a vault directory, a bundle file or a URL that git clone accepts`
 - `error: a key named '<actor>' already exists in <dir>: choose another name with --as ACTOR or another folder with --keys DIR`
 - `error: '<actor>' is already listed in the vault's keys/allowed_signers: choose a new name with --as ACTOR`
+- `error: --then <page> has no field=value: give at least one`
 
-A vault that fails step 2 is reported in the output of the step, with the first problem verify found, and nothing is written to it.
+A vault that fails step 2 is reported there with the first problem verify found, and nothing is written to it.
 
 ### init
 
@@ -97,7 +98,7 @@ A vault that fails step 2 is reported in the output of the step, with the first 
 conky init <path>
 ```
 
-Creates an empty vault at `path`, making the directory if needed, with branch `main` and signing configured. It prints `initialised <path>`. It makes no commit and no key. It is an error if `path` is already a vault.
+Creates an empty vault at `path`, making the directory if needed, with branch `main` and signing configured, and prints `initialised <path>`. It makes no commit and no key. It is an error if `path` is already a vault.
 
 ### write
 
@@ -105,14 +106,14 @@ Creates an empty vault at `path`, making the directory if needed, with branch `m
 conky write <page> [field=value ...] [--body TEXT] --as <actor>
 ```
 
-Writes fields and a body to a page and makes one signed commit as `actor`. `--as` is required.
+Writes fields and a body to a page as one signed commit by `actor`. `--as` is required.
 
-- Each `field=value` sets one field. The value is read as YAML, so `stock=40` is a number, `reorder=false` is a boolean, and `'rules=["page.stock >= 0"]'` is a list. Quote values that the shell would change.
+- Each `field=value` sets one field. The value is read as YAML, so `stock=40` is a number, `reorder=false` is a boolean and `'rules=["page.stock >= 0"]'` is a list. Quote values the shell would change.
 - The reserved names `within`, `rules` and `watch` set the page's space, rules and watch entries. Setting one to nothing clears it.
-- `--body` replaces the body. Without it the body is left as it is.
-- Fields not named are left as they are.
+- `--body` replaces the body. Without it the body stays as it is.
+- Fields not named stay as they are.
 
-On success it prints `written (commit <id>)`, where the id is the short commit id. If rules refuse the write it prints `refused (commit <id>): <reason>` on standard error, exits 1, and the refusal is still committed. Reactions that follow a write are committed too and are not printed; see `conky log`.
+On success it prints `written (commit <id>)`, with the short commit id. If a rule refuses the write it prints `refused (commit <id>): <reason>` on standard error and exits 1, and the refusal is still committed. Reactions to a write are committed too and are not printed; see `conky log`.
 
 ### ask
 
@@ -120,11 +121,11 @@ On success it prints `written (commit <id>)`, where the id is the short commit i
 conky ask <page> <into-field> --provider <provider page> --prompt TEXT --as <actor>
 ```
 
-Asks a model one question and writes the answer to the field `into-field` of `page`, as a signed commit by `actor`. It takes the same path as a watch entry with `ask` ([rules and reactions](rules-and-reactions.md#asking-a-model)). Embeds in the prompt are resolved, and the provider page named by `--provider` says how to reach the model ([providers](providers.md)). The commit records the question and the model ([vault format](vault-format.md#a-model-answer)). `--provider`, `--prompt` and `--as` are required.
+Asks a model one question and writes the answer to the field `into-field` of `page`, as a signed commit by `actor`. It takes the same path as a watch entry with `ask` ([rules and reactions](rules-and-reactions.md#asking-a-model)): embeds in the prompt are resolved, the provider page named by `--provider` says how to reach the model ([providers](providers.md)), and the commit records the question and the model ([vault format](vault-format.md#a-model-answer)). `--provider`, `--prompt` and `--as` are required.
 
 The skip rule does not apply: the question is asked every time. The answer is written together with the field `<into-field>_asked`, which later watch entries use to skip a question they would repeat.
 
-On success it prints `written (commit <id>)`. If the answer breaks a rule, or the model cannot be asked, it prints `refused (commit <id>): <reason>` on standard error and exits 1. The refusal is committed, and its reason starts with `model:` when the cause is the provider, the secret or the network. A write by the actor needs the actor's key, as for `write`.
+On success it prints `written (commit <id>)`. If the answer breaks a rule, or the model cannot be asked, it prints `refused (commit <id>): <reason>` on standard error and exits 1. The refusal is committed, and its reason starts with `model:` when the cause is the provider, the secret or the network. The actor needs its key, as for `write`.
 
 ### read
 
@@ -140,7 +141,7 @@ Prints the page as stored, with embeds resolved. It is an error if the page does
 conky log
 ```
 
-Prints the history, oldest first, one line per commit: short id, instant in UTC, actor, kind, page, then the reason for a refusal or `cause <id>` for a reaction. A line for a model answer ends with `model <provider page>`, then `read <pages>` when the prompt embedded pages. A line for a refusal by a rule that came from a space ends with `from <space>`. An empty vault prints nothing.
+Prints the history, oldest first, one line per commit: short id, instant in UTC, actor, kind, page, then the reason for a refusal or `cause <id>` for a reaction. A model answer adds `model <provider page>`, then `read <pages>` when the prompt embedded pages. A refusal by a rule from a space adds `from <space>`. An empty vault prints nothing.
 
 ### verify
 
@@ -148,7 +149,7 @@ Prints the history, oldest first, one line per commit: short id, instant in UTC,
 conky verify
 ```
 
-Checks the vault as described in [vault format](../reference/vault-format.md#what-verify-checks). It prints `ok: <n> commits verified` on success. On failure it prints `error: <first problem>` and exits 1.
+Checks the vault as described in [vault format](vault-format.md#what-verify-checks). It prints `ok: <n> commits verified` on success. On failure it prints `error: <first problem>` and exits 1.
 
 ### connect terminal
 
@@ -157,23 +158,24 @@ conky connect terminal [--vault V] [--keys K] [--as NAME] [--screen PAGE] [--han
                        [--settle SECONDS] [--max-steps N] -- COMMAND [ARGS...]
 ```
 
-Runs a [connector](connectors.md) beside the vault that gives it eyes and hands on a terminal program. It starts `COMMAND` in a pseudo-terminal, writes what the program shows to the screen page, and types what the hands page says. POSIX only.
+Runs a [connector](connectors.md) that gives the vault eyes and hands on a terminal program: it starts `COMMAND` in a pseudo-terminal, writes what the program shows to the screen page and types what the hands page says. POSIX only.
 
-- `COMMAND [ARGS...]` is the program. Put it after `--`, so that its own options are not read as conky's.
-- `--vault V` and `--keys K` are the global options of the same names. They work before or after `connect terminal`.
+- `COMMAND [ARGS...]` is the program. Put it after `--`, so its own options are not read as conky's.
+- `--vault V` and `--keys K` are the global options of the same names, and work before or after `connect terminal`.
 - `--as NAME` is the connector's actor, which signs every write. Default: `terminal`. Its key is made on first use, like any actor's.
 - `--screen PAGE` is the page that receives the screen. Default: `screen`.
 - `--hands PAGE` is the page that says what to type. Default: `hands`.
 - `--settle SECONDS` is how long the output must stay quiet before it is written as a screen. Default: 0.3.
 - `--max-steps N` is the most screens to write. Default: 200.
 
-It prints one line for each screen written and each set of keys sent, then a line for the end of the run. The run ends when the program exits, at `--max-steps` screens or on interrupt, and the reason is written to the field `ended` of the screen page. The exit code is 0 for each of these. The pages, fields and limits are in [connectors](connectors.md).
+It prints one line for each screen written and each set of keys sent, then a line for the end of the run. The run ends when the program exits, at `--max-steps` screens or on interrupt, and the reason is written to the field `ended` of the screen page. The exit code is 0 for each. The pages, fields and limits are in [connectors](connectors.md).
 
 Errors, each on one line beginning `error: `, include:
 
 - `error: cannot start '<program>': <reason>: check the command and that it is on PATH`
 - `error: conky connect terminal needs a POSIX system: run it on Linux or macOS`
 - `error: --screen and --hands name the same page: give each its own page`
+- `error: --settle must be 0 or more seconds and --max-steps at least 1`
 - `error: cannot create the page '<page>': <reason>: create it first, or change the rule`
 
 ### rebuild
@@ -194,7 +196,7 @@ Restores the working tree to the committed state and prints `restored the workin
 
 ## Errors
 
-Every failure of the kinds above prints one line on standard error beginning `error: ` and says what to do next where there is something to do, for example:
+Every failure prints one line on standard error beginning `error: `, and says what to do next where there is something to do. For example:
 
 - `error: <path> is not a vault: create one with conky init <path>`
 - `error: the working tree has changes that were not made through conky: run conky --vault <path> rebuild to discard them`
@@ -206,4 +208,4 @@ A write is not attempted while the working tree has changes made outside conky.
 
 ## Time
 
-The command line is the only place the clock is read. It stamps each write with the current time in UTC, to the second. The library takes the instant from its caller.
+The command line is the only place the clock is read. It stamps each write with the current time in UTC, to the second, and the library takes the instant from its caller.
