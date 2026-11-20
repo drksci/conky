@@ -454,14 +454,14 @@ def test_conky_ask_writes_pages_and_prints_what_landed_and_what_was_refused(
     assert exists(den, "note-b")
 
 
-BIND = '=== page: den ===\n---\nrules:\n  - each: "page.amount <= 50"\n---\n'
+BIND = '=== page: den ===\n---\nrules:\n  - each: "!has(page.amount) || page.amount <= 50"\n---\n'
 
 
 @arch.holds("law.rule.tighten", "flow.ask.pages")
 def test_an_answer_adds_a_rule_to_its_space_signed_by_the_asker(den: Vault, stand: Stand) -> None:
     stand.says("Bound.\n" + BIND)
     trigger(den, "bind")
-    assert den.read("den").rules == [{"each": "page.amount <= 50"}]
+    assert den.read("den").rules == [{"each": "!has(page.amount) || page.amount <= 50"}]
     assert not refusals(den)
     commit = history(den)[-1][0]
     assert signed_by(den.path, commit) == "scribe@conky"

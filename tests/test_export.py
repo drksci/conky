@@ -183,7 +183,7 @@ def test_who_shows_the_cause_and_leaves_notes_alone(small: Vault):
 
 
 def test_who_does_not_count_a_refusal(small: Vault):
-    put(small, "cellar", {"rules": [{"each": "false"}]})
+    put(small, "cellar", {"rules": [{"each": "!has(page.x)"}]})
     refused = small.write("wine", {"x": 1}, None, actor="mallory", at=AT)
     assert not refused.ok
     run(small, "obsidian")

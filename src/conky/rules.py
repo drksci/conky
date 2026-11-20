@@ -160,6 +160,95 @@ def _plain(value: Any) -> Any:
     raise RuleError(f"result of type {type(value).__name__} cannot be stored")
 
 
+RULE_NAMES = ("page", "space", "size", "text")
+WATCH_NAMES = (*RULE_NAMES, "other", "other_text", "other_size", "other_name", "event")
+_BINDING = ("all", "exists", "exists_one", "map", "filter")
+
+
+def _idents(node: Any) -> list[str]:
+    return [str(t) for t in node.scan_values(lambda v: getattr(v, "type", "") == "IDENT")]
+
+
+def _walk(node: Any, bound: frozenset[str], names: set[str], reads: list[tuple[str, str]]) -> None:
+    """Collect the names an expression reads from outside itself, and each `name.field` read."""
+    if not hasattr(node, "data"):
+        return
+    kids = node.children
+    if node.data == "ident":
+        if str(kids[0]) not in bound:
+            names.add(str(kids[0]))
+        return
+    if node.data == "member_dot" and getattr(kids[0], "data", "") == "member":
+        head = kids[0].children[0] if len(kids[0].children) == 1 else None
+        found = head.children[0] if getattr(head, "data", "") == "primary" else None
+        if getattr(found, "data", "") == "ident" and str(found.children[0]) not in bound:
+            reads.append((str(found.children[0]), str(kids[1])))
+    if node.data == "member_dot_arg" and str(kids[1]) in _BINDING and len(kids) == 3:
+        _walk(kids[0], bound, names, reads)
+        args = kids[2].children
+        inner = bound | set(_idents(args[0])) if args else bound
+        for arg in args[1:]:
+            _walk(arg, inner, names, reads)
+        return
+    for kid in kids:
+        _walk(kid, bound, names, reads)
+
+
+def reads(expression: str) -> tuple[set[str], list[tuple[str, str]]]:
+    """Return the names an expression reads and each field read off a name, as (name, field).
+
+    Names come from the structure of the parsed expression, so nothing is evaluated. A variable
+    bound by `all`, `exists`, `map` or `filter` is not a name read from outside. A syntax error
+    raises RuleError.
+    """
+    try:
+        tree = _ENV.compile(expression)
+    except celpy.CELParseError as exc:
+        raise RuleError(f"{expression} is not a valid expression") from exc
+    names: set[str] = set()
+    fields: list[tuple[str, str]] = []
+    _walk(tree, frozenset(), names, fields)
+    return names, fields
+
+
+def check(expression: str, allowed: tuple[str, ...]) -> None:
+    """Raise RuleError unless expression parses and reads only the names allowed."""
+    names, _ = reads(expression)
+    unknown = sorted(names - set(allowed))
+    if unknown:
+        raise RuleError(
+            f"{expression} reads {', '.join(unknown)}, which is not here: "
+            f"the names allowed are {', '.join(allowed)}"
+        )
+
+
+_HERE = {"page": "this page", "space": "the space", "other": "the page just written"}
+
+
+def missing(expressions: list[str], scope: dict[str, Any]) -> str:
+    """Say in plain words which field an expression read that its thing does not have.
+
+    When another thing in scope has a field of that name, the reason names it as the one to read.
+    """
+    for expression in expressions:
+        try:
+            _, fields = reads(expression)
+        except RuleError:
+            continue
+        for root, name in fields:
+            held = scope.get(root)
+            if not isinstance(held, dict) or name in held:
+                continue
+            elsewhere = [r for r in _HERE if r != root and name in (scope.get(r) or {})]
+            if elsewhere:
+                other = elsewhere[0]
+                hint = f"{_HERE[other]} has {name}, read it as {other}.{name}"
+            else:
+                hint = f"test for it first, as has({root}.{name})"
+            return f"{root}.{name} does not exist here: {hint}"
+    return "it could not be worked out for this page"
+
+
 @arch.law(
     "law.rule.pure",
     "Rules and measures are pure: no clock, randomness or input and output.",

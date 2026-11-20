@@ -30,7 +30,7 @@ from conky.page import (
     resolve_text,
     serialize,
 )
-from conky.rules import RuleError, evaluate, holds
+from conky.rules import RuleError, evaluate, holds, missing
 
 MAX_DEPTH = 12
 KINDS = arch.constant(
@@ -503,7 +503,7 @@ class Vault:
             breach = self._breach(page, before, result, bound)
             if breach:
                 return refuse(f"{Refusal.LIMIT}: {breach}")
-        refused = self._rule_reason(page, result, before)
+        refused = self._rule_reason(page, result, before) or self._each_reason(page, result, before)
         if refused:
             reason, space = refused
             if space != page:
@@ -523,6 +523,45 @@ class Vault:
             found = self._load(name)
             name = found.within if found is not None else None
         return False
+
+    def _scope(self, name: str, page: Page) -> dict[str, Any]:
+        """Return what a rule reads for a page: its fields, its space, its size and its text."""
+        return {
+            "page": page.fields,
+            "space": self._context(name, page.within),
+            "size": _size(page),
+            "text": page.body,
+        }
+
+    @arch.law(
+        "law.rule.proven",
+        "An `each` rule is tried on the pages already within when it is written, so it lands only "
+        "if it can be evaluated and holds for them.",
+        doc="rules-and-reactions.md#rules-and-spaces",
+    )
+    def _each_reason(self, name: str, page: Page, before: Page | None) -> tuple[str, str] | None:
+        """Return the reason an `each` rule just added fails for a page already within it."""
+        old = before.rules if before else []
+        rules = [r["each"] for r in page.rules if isinstance(r, dict) and r not in old]
+        if not rules:
+            return None
+        for member in sorted(p.stem for p in self.pages_dir.glob("*.md")):
+            held = self._load(member)
+            if member == name or held is None or not self._inside(held.within, name):
+                continue
+            scope = self._scope(member, held)
+            for rule in rules:
+                try:
+                    ok = holds(rule, scope)
+                    why = "is false"
+                except RuleError:
+                    ok, why = False, f"failed to evaluate: {missing([rule], scope)}"
+                if not ok:
+                    return (
+                        f"{Refusal.RULE}: {rule} (from {name}) {why} for {member}, within it",
+                        name,
+                    )
+        return None
 
     @arch.law(
         "law.reach.down",
@@ -624,12 +663,7 @@ class Vault:
         write that changes `within` is also judged by the `each` rules of the spaces the page
         was in before it.
         """
-        scope = {
-            "page": page.fields,
-            "space": self._context(name, page.within),
-            "size": _size(page),
-            "text": page.body,
-        }
+        scope = self._scope(name, page)
         found = self._walk(name, page, name, scope)
         if found or before is None or not before.within or before.within == page.within:
             return found
@@ -673,8 +707,9 @@ class Vault:
                     continue
                 try:
                     held = holds(rule, scope)
-                except RuleError as exc:
-                    return f"{Refusal.RULE}: {rule} (from {owner}) failed to evaluate: {exc}", owner
+                except RuleError:
+                    why = missing([rule], scope)
+                    return f"{Refusal.RULE}: {rule} (from {owner}) failed to evaluate: {why}", owner
                 if not held:
                     return f"{Refusal.RULE}: {rule} (from {owner}) is false", owner
             if not space.within:
@@ -799,7 +834,12 @@ class Vault:
                     changes = {k: evaluate(v, scope) for k, v in entry.get("set", {}).items()}
                     unchanged = serialize(apply(current, changes, None)) == serialize(current)
                 except (RuleError, ShapeError) as exc:
-                    reason = f"{Refusal.WATCH}: {entry['when']} (on {watcher}) failed: {exc}"
+                    why = (
+                        str(exc)
+                        if isinstance(exc, ShapeError)
+                        else missing([entry["when"], *entry.get("set", {}).values()], scope)
+                    )
+                    reason = f"{Refusal.WATCH}: {entry['when']} (on {watcher}) failed: {why}"
                     self._refuse(watcher, {}, None, watcher, at, commit, reason)
                     continue
                 if "ask" in entry:

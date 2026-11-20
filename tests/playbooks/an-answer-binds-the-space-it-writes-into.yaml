@@ -17,7 +17,7 @@ steps:
       === page: den ===
       ---
       rules:
-        - each: "page.amount <= space.cash - 20"
+        - each: "!has(page.amount) || page.amount <= space.cash - 20"
       ---
   - write: {page: order, fields: {}, body: "Pay the baker."}
   - expect: {rules: {den: 1}, fields: {den.cash: 80}, verify: true}

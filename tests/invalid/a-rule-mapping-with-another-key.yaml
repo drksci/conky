@@ -1,0 +1,8 @@
+pages:
+  den: {cash: 10}
+write:
+  page: den
+  set:
+    rules:
+      - {when: "page.cash > 1"}
+refused: shape

@@ -68,6 +68,8 @@ rules:
   - each: page.amount <= space.cash - 20    # every page within this one, not this one
 ```
 
+A rule is proven when it is written. Every rule and every watch `when` and `set` expression is parsed at the write, and a syntax error is refused for shape. A rule may read only `page`, `space`, `size` and `text`, and a watch entry those and `other`, `other_text`, `other_size`, `other_name` and `event`; any other name is refused for shape, and the reason lists the names allowed there. The names are found from the structure of the parsed expression, so nothing is evaluated, and a variable bound by `all`, `exists`, `exists_one`, `map` or `filter` is not a name read from outside. An `each` rule that is added is also tried against every page already within the space, at any depth, and the write is refused for rule, naming the page, if it is false or cannot be evaluated for one ([decision 0038](../decisions/0038-a-rule-is-proven-when-written.md)). The names are judged by the shape of the expression and the fields by the pages, so a rule that reads a field some page lacks lands when the pages within it already have the field.
+
 Every page within the space is judged, including a space page that lies within it, so a page that lacks the field fails the rule as any missing field does. Any other mapping is refused for shape, and the reason says what is allowed. A refusal names the condition and the space it came from, whichever form it had ([decision 0034](../decisions/0034-a-rule-for-the-pages-within.md), the key renamed by [decision 0035](../decisions/0035-a-character-binds-its-own-space.md)).
 
 A write that changes the `within` of a page that already exists is judged twice: by the page's own rules and the `each` rules of the spaces it will be in, as above, and by the `each` rules of every space it was in before, evaluated against the page as it would be after the write ([decision 0022](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md)). A space that says nothing about leaving lets its members go. A space that wants to bind states it as a rule. A refusal by a space the page is leaving names that space, as any refusal from a space does.
@@ -76,7 +78,7 @@ A write that changes the `within` of a page that already exists is judged twice:
 
 A space hands down its fields as `space`. For a page, the runtime starts from the outermost space it is within and overlays the fields of each inner space in turn, ending with the nearest, so the nearest space wins a field of the same name. Reserved keys are not included, and a page within no space reads an empty map. `space` is available in rules (the page's own and the `each` rules of the spaces above, so a space's rule can speak about context set further in), in watch `when` conditions and in `set` values, where it is the watcher's.
 
-Reading a field no space has is an error, as `page` is: the rule is refused as failing to evaluate. A rule that may run where the context is missing guards it, as in `!has(space.limit) || page.cups <= space.limit`.
+Reading a field no space has is an error, as `page` is: the rule is refused as failing to evaluate, and the reason says which field was read on which thing. When another thing in scope has a field of that name, the reason says to read it there: `space.cash does not exist here: this page has cash, read it as page.cash`. A rule that may run where the context is missing guards it, as in `!has(space.limit) || page.cups <= space.limit`.
 
 A write is judged only when its page is written. Changing a field of a space does not re-judge the pages within it; their next write meets the new value. A missing space or a loop in the chain ends the climb, and the walk of rules refuses it as before. Several spaces for one page, reactions handed down and embeds of context are not built.
 
@@ -86,8 +88,8 @@ A write that cannot hold is refused and recorded as an empty signed commit that 
 
 | Reason | When |
 |---|---|
-| `shape` | A reserved key or field is malformed: `within` is not a page name, `rules` is not a list of conditions and `each` mappings, `watch` is not a list of entries with `on`, `when` and exactly one of `set` or `ask` (an `ask` has a `prompt` and `into`, `writes` or both, and no keys beyond those in [Asking a model](#asking-a-model)), or a field name is not text. |
-| `rule` | A rule is false, fails to evaluate, or cannot be reached: the `within` chain loops back on itself, or names a space that does not exist. The reason names the rule and the space it came from. |
+| `shape` | A reserved key or field is malformed: `within` is not a page name, `rules` is not a list of conditions and `each` mappings, `watch` is not a list of entries with `on`, `when` and exactly one of `set` or `ask` (an `ask` has a `prompt` and `into`, `writes` or both, and no keys beyond those in [Asking a model](#asking-a-model)), or a field name is not text. A rule or a watch expression does not parse or reads a name its place does not have (see [Rules and spaces](#rules-and-spaces)). |
+| `rule` | A rule is false, fails to evaluate, or cannot be reached, or an `each` rule being added breaks a page already within the space: the `within` chain loops back on itself, or names a space that does not exist. The reason names the rule and the space it came from. |
 | `cycle` | Reactions are nested deeper than 12. |
 | `watch` | A watch condition or value failed to evaluate. The refusal is recorded against the watching page. |
 | `model` | A question to a model could not be asked or was not answered. The refusal is recorded against the asking page. See [Asking a model](#asking-a-model). |

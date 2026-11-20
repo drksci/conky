@@ -1,0 +1,9 @@
+pages:
+  den: {cash: 10}
+  kid: {within: den, cash: 5}
+write:
+  page: den
+  set:
+    rules:
+      - each: "page.cash >= 8"
+refused: rule

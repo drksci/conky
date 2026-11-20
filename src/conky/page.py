@@ -11,6 +11,7 @@ import yaml
 
 from conky import arch
 from conky.errors import BadInput
+from conky.rules import RULE_NAMES, WATCH_NAMES, RuleError, check
 
 RESERVED = arch.constant(
     ("within", "rules", "watch"),
@@ -118,6 +119,12 @@ def _check_watch(entry: Any) -> None:
             "set (field: text) or ask (prompt, with into or writes or both, "
             "and optional provider and otherwise)"
         )
+    try:
+        check(entry["when"], WATCH_NAMES)
+        for value in entry.get("set", {}).values():
+            check(value, WATCH_NAMES)
+    except RuleError as exc:
+        raise ShapeError(f"watch on {entry['on']}: {exc}") from exc
 
 
 def links(page: Page) -> set[str]:
@@ -186,15 +193,18 @@ def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
 
 
 def _check_rule(entry: Any) -> None:
-    """Refuse a rule entry that is neither a condition nor an `each` mapping."""
-    if isinstance(entry, str):
-        return
-    if isinstance(entry, dict) and set(entry) == {"each"} and isinstance(entry["each"], str):
-        return
-    raise ShapeError(
-        "a rule is a condition as text, or a mapping with the one key each whose value is a "
-        f"condition as text, not {entry!r}"
-    )
+    """Refuse a rule entry that is not a condition, or reads a name a rule does not have."""
+    if isinstance(entry, dict) and set(entry) == {"each"}:
+        entry = entry["each"]
+    if not isinstance(entry, str):
+        raise ShapeError(
+            "a rule is a condition as text, or a mapping with the one key each whose value is a "
+            f"condition as text, not {entry!r}"
+        )
+    try:
+        check(entry, RULE_NAMES)
+    except RuleError as exc:
+        raise ShapeError(str(exc)) from exc
 
 
 def _watch_head(entry: dict[str, Any]) -> dict[str, Any]:
