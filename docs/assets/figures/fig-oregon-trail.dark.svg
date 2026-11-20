@@ -22,47 +22,47 @@
 .sn{fill:var(--ink);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif}
 .x{opacity:0}
 .px{image-rendering:pixelated;image-rendering:crisp-edges}
-@keyframes a0{0%{opacity:0}0%{opacity:0}1.562%{opacity:1}23.438%{opacity:1}25%{opacity:0}100%{opacity:0}}.a0{animation:a0 19.2s linear infinite}
-@keyframes a1{0%{opacity:0}25%{opacity:0}26.562%{opacity:1}48.438%{opacity:1}50%{opacity:0}100%{opacity:0}}.a1{animation:a1 19.2s linear infinite}
-@keyframes a2{0%{opacity:0}50%{opacity:0}51.562%{opacity:1}73.438%{opacity:1}75%{opacity:0}100%{opacity:0}}.a2{animation:a2 19.2s linear infinite}
-@keyframes a3{0%{opacity:0}75%{opacity:0}76.562%{opacity:1}98.438%{opacity:1}100%{opacity:0}100%{opacity:0}}.a3{animation:a3 19.2s linear infinite}
-@keyframes a4{0%{opacity:0}6.25%{opacity:0}7.812%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a4{animation:a4 19.2s linear infinite}
-@keyframes a5{0%{opacity:0}8.438%{opacity:0}10%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a5{animation:a5 19.2s linear infinite}
-@keyframes a6{0%{opacity:0}10.625%{opacity:0}12.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a6{animation:a6 19.2s linear infinite}
-@keyframes a7{0%{opacity:0}0%{opacity:0}1.562%{opacity:1}23.438%{opacity:1}25%{opacity:0}100%{opacity:0}}.a7{animation:a7 19.2s linear infinite}
-@keyframes a8{0%{opacity:0}31.25%{opacity:0}32.812%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a8{animation:a8 19.2s linear infinite}
-@keyframes a9{0%{opacity:0}33.438%{opacity:0}35%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a9{animation:a9 19.2s linear infinite}
-@keyframes a10{0%{opacity:0}35.625%{opacity:0}37.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a10{animation:a10 19.2s linear infinite}
-@keyframes a11{0%{opacity:0}37.812%{opacity:0}39.375%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a11{animation:a11 19.2s linear infinite}
-@keyframes a12{0%{opacity:0}25%{opacity:0}26.562%{opacity:1}48.438%{opacity:1}50%{opacity:0}100%{opacity:0}}.a12{animation:a12 19.2s linear infinite}
-@keyframes a13{0%{opacity:0}56.25%{opacity:0}57.812%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a13{animation:a13 19.2s linear infinite}
-@keyframes a14{0%{opacity:0}58.438%{opacity:0}60%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a14{animation:a14 19.2s linear infinite}
-@keyframes a15{0%{opacity:0}60.625%{opacity:0}62.187%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a15{animation:a15 19.2s linear infinite}
-@keyframes a16{0%{opacity:0}62.812%{opacity:0}64.375%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a16{animation:a16 19.2s linear infinite}
-@keyframes a17{0%{opacity:0}65%{opacity:0}66.562%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a17{animation:a17 19.2s linear infinite}
-@keyframes a18{0%{opacity:0}67.188%{opacity:0}68.75%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a18{animation:a18 19.2s linear infinite}
-@keyframes a19{0%{opacity:0}50%{opacity:0}51.562%{opacity:1}73.438%{opacity:1}75%{opacity:0}100%{opacity:0}}.a19{animation:a19 19.2s linear infinite}
-@keyframes a20{0%{opacity:0}81.25%{opacity:0}82.812%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a20{animation:a20 19.2s linear infinite}
-@keyframes a21{0%{opacity:0}83.438%{opacity:0}85%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a21{animation:a21 19.2s linear infinite}
-@keyframes a22{0%{opacity:0}85.625%{opacity:0}87.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a22{animation:a22 19.2s linear infinite}
-@keyframes a23{0%{opacity:0}87.812%{opacity:0}89.375%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a23{animation:a23 19.2s linear infinite}
-@keyframes a24{0%{opacity:0}75%{opacity:0}76.562%{opacity:1}98.438%{opacity:1}100%{opacity:0}100%{opacity:0}}.a24{animation:a24 19.2s linear infinite}
-@keyframes a25{0%{opacity:0}8.333%{opacity:0}9.896%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a25{animation:a25 19.2s linear infinite}
-@keyframes a26{0%{opacity:0}12.5%{opacity:0}14.062%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a26{animation:a26 19.2s linear infinite}
-@keyframes a27{0%{opacity:0}15.625%{opacity:0}17.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a27{animation:a27 19.2s linear infinite}
-@keyframes a28{0%{opacity:0}0%{opacity:0}1.562%{opacity:1}23.438%{opacity:1}25%{opacity:0}100%{opacity:0}}.a28{animation:a28 19.2s linear infinite}
-@keyframes a29{0%{opacity:0}33.333%{opacity:0}34.896%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a29{animation:a29 19.2s linear infinite}
-@keyframes a30{0%{opacity:0}37.5%{opacity:0}39.062%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a30{animation:a30 19.2s linear infinite}
-@keyframes a31{0%{opacity:0}40.625%{opacity:0}42.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a31{animation:a31 19.2s linear infinite}
-@keyframes a32{0%{opacity:0}25%{opacity:0}26.562%{opacity:1}48.438%{opacity:1}50%{opacity:0}100%{opacity:0}}.a32{animation:a32 19.2s linear infinite}
-@keyframes a33{0%{opacity:0}58.333%{opacity:0}59.896%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a33{animation:a33 19.2s linear infinite}
-@keyframes a34{0%{opacity:0}62.5%{opacity:0}64.063%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a34{animation:a34 19.2s linear infinite}
-@keyframes a35{0%{opacity:0}65.625%{opacity:0}67.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a35{animation:a35 19.2s linear infinite}
-@keyframes a36{0%{opacity:0}50%{opacity:0}51.562%{opacity:1}73.438%{opacity:1}75%{opacity:0}100%{opacity:0}}.a36{animation:a36 19.2s linear infinite}
-@keyframes a37{0%{opacity:0}83.333%{opacity:0}84.896%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a37{animation:a37 19.2s linear infinite}
-@keyframes a38{0%{opacity:0}87.5%{opacity:0}89.062%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a38{animation:a38 19.2s linear infinite}
-@keyframes a39{0%{opacity:0}90.625%{opacity:0}92.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a39{animation:a39 19.2s linear infinite}
-@keyframes a40{0%{opacity:0}75%{opacity:0}76.562%{opacity:1}98.438%{opacity:1}100%{opacity:0}100%{opacity:0}}.a40{animation:a40 19.2s linear infinite}
+@keyframes a0{0%{opacity:0}0%{opacity:0}1.562%{opacity:1}23.438%{opacity:1}25%{opacity:0}100%{opacity:0}}.a0{animation:a0 19.2s linear -3.4s infinite}
+@keyframes a1{0%{opacity:0}25%{opacity:0}26.562%{opacity:1}48.438%{opacity:1}50%{opacity:0}100%{opacity:0}}.a1{animation:a1 19.2s linear -3.4s infinite}
+@keyframes a2{0%{opacity:0}50%{opacity:0}51.562%{opacity:1}73.438%{opacity:1}75%{opacity:0}100%{opacity:0}}.a2{animation:a2 19.2s linear -3.4s infinite}
+@keyframes a3{0%{opacity:0}75%{opacity:0}76.562%{opacity:1}98.438%{opacity:1}100%{opacity:0}100%{opacity:0}}.a3{animation:a3 19.2s linear -3.4s infinite}
+@keyframes a4{0%{opacity:0}6.25%{opacity:0}7.812%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a4{animation:a4 19.2s linear -3.4s infinite}
+@keyframes a5{0%{opacity:0}8.438%{opacity:0}10%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a5{animation:a5 19.2s linear -3.4s infinite}
+@keyframes a6{0%{opacity:0}10.625%{opacity:0}12.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a6{animation:a6 19.2s linear -3.4s infinite}
+@keyframes a7{0%{opacity:0}0%{opacity:0}1.562%{opacity:1}23.438%{opacity:1}25%{opacity:0}100%{opacity:0}}.a7{animation:a7 19.2s linear -3.4s infinite}
+@keyframes a8{0%{opacity:0}31.25%{opacity:0}32.812%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a8{animation:a8 19.2s linear -3.4s infinite}
+@keyframes a9{0%{opacity:0}33.438%{opacity:0}35%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a9{animation:a9 19.2s linear -3.4s infinite}
+@keyframes a10{0%{opacity:0}35.625%{opacity:0}37.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a10{animation:a10 19.2s linear -3.4s infinite}
+@keyframes a11{0%{opacity:0}37.812%{opacity:0}39.375%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a11{animation:a11 19.2s linear -3.4s infinite}
+@keyframes a12{0%{opacity:0}25%{opacity:0}26.562%{opacity:1}48.438%{opacity:1}50%{opacity:0}100%{opacity:0}}.a12{animation:a12 19.2s linear -3.4s infinite}
+@keyframes a13{0%{opacity:0}56.25%{opacity:0}57.812%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a13{animation:a13 19.2s linear -3.4s infinite}
+@keyframes a14{0%{opacity:0}58.438%{opacity:0}60%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a14{animation:a14 19.2s linear -3.4s infinite}
+@keyframes a15{0%{opacity:0}60.625%{opacity:0}62.187%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a15{animation:a15 19.2s linear -3.4s infinite}
+@keyframes a16{0%{opacity:0}62.812%{opacity:0}64.375%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a16{animation:a16 19.2s linear -3.4s infinite}
+@keyframes a17{0%{opacity:0}65%{opacity:0}66.562%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a17{animation:a17 19.2s linear -3.4s infinite}
+@keyframes a18{0%{opacity:0}67.188%{opacity:0}68.75%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a18{animation:a18 19.2s linear -3.4s infinite}
+@keyframes a19{0%{opacity:0}50%{opacity:0}51.562%{opacity:1}73.438%{opacity:1}75%{opacity:0}100%{opacity:0}}.a19{animation:a19 19.2s linear -3.4s infinite}
+@keyframes a20{0%{opacity:0}81.25%{opacity:0}82.812%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a20{animation:a20 19.2s linear -3.4s infinite}
+@keyframes a21{0%{opacity:0}83.438%{opacity:0}85%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a21{animation:a21 19.2s linear -3.4s infinite}
+@keyframes a22{0%{opacity:0}85.625%{opacity:0}87.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a22{animation:a22 19.2s linear -3.4s infinite}
+@keyframes a23{0%{opacity:0}87.812%{opacity:0}89.375%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a23{animation:a23 19.2s linear -3.4s infinite}
+@keyframes a24{0%{opacity:0}75%{opacity:0}76.562%{opacity:1}98.438%{opacity:1}100%{opacity:0}100%{opacity:0}}.a24{animation:a24 19.2s linear -3.4s infinite}
+@keyframes a25{0%{opacity:0}8.333%{opacity:0}9.896%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a25{animation:a25 19.2s linear -3.4s infinite}
+@keyframes a26{0%{opacity:0}12.5%{opacity:0}14.062%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a26{animation:a26 19.2s linear -3.4s infinite}
+@keyframes a27{0%{opacity:0}15.625%{opacity:0}17.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a27{animation:a27 19.2s linear -3.4s infinite}
+@keyframes a28{0%{opacity:0}0%{opacity:0}1.562%{opacity:1}23.438%{opacity:1}25%{opacity:0}100%{opacity:0}}.a28{animation:a28 19.2s linear -3.4s infinite}
+@keyframes a29{0%{opacity:0}33.333%{opacity:0}34.896%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a29{animation:a29 19.2s linear -3.4s infinite}
+@keyframes a30{0%{opacity:0}37.5%{opacity:0}39.062%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a30{animation:a30 19.2s linear -3.4s infinite}
+@keyframes a31{0%{opacity:0}40.625%{opacity:0}42.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a31{animation:a31 19.2s linear -3.4s infinite}
+@keyframes a32{0%{opacity:0}25%{opacity:0}26.562%{opacity:1}48.438%{opacity:1}50%{opacity:0}100%{opacity:0}}.a32{animation:a32 19.2s linear -3.4s infinite}
+@keyframes a33{0%{opacity:0}58.333%{opacity:0}59.896%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a33{animation:a33 19.2s linear -3.4s infinite}
+@keyframes a34{0%{opacity:0}62.5%{opacity:0}64.063%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a34{animation:a34 19.2s linear -3.4s infinite}
+@keyframes a35{0%{opacity:0}65.625%{opacity:0}67.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a35{animation:a35 19.2s linear -3.4s infinite}
+@keyframes a36{0%{opacity:0}50%{opacity:0}51.562%{opacity:1}73.438%{opacity:1}75%{opacity:0}100%{opacity:0}}.a36{animation:a36 19.2s linear -3.4s infinite}
+@keyframes a37{0%{opacity:0}83.333%{opacity:0}84.896%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a37{animation:a37 19.2s linear -3.4s infinite}
+@keyframes a38{0%{opacity:0}87.5%{opacity:0}89.062%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a38{animation:a38 19.2s linear -3.4s infinite}
+@keyframes a39{0%{opacity:0}90.625%{opacity:0}92.188%{opacity:1}98.438%{opacity:1}100%{opacity:0}}.a39{animation:a39 19.2s linear -3.4s infinite}
+@keyframes a40{0%{opacity:0}75%{opacity:0}76.562%{opacity:1}98.438%{opacity:1}100%{opacity:0}100%{opacity:0}}.a40{animation:a40 19.2s linear -3.4s infinite}
 @media (prefers-reduced-motion:reduce){.an{animation:none!important}}
 </style>
 <defs><pattern id="d12" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d25" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d50" width="4" height="4" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM2 2h2v2h-2z"/></pattern></defs>
