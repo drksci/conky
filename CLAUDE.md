@@ -1,0 +1,87 @@
+# conky
+
+A Python runtime (`src/conky/`) where every actor is a living Markdown page and the vault's Git history is the authority. Pre-alpha.
+
+## How these rules work
+
+Each rule ends with how it is held. **check** names what fails when the rule is broken. **review** means someone has to judge it, and a rule held only by review is a gap to close: build the check, not the convention.
+
+Any rule can be challenged. Change it here first, with the reason, record it in `docs/decisions/`, then change the code.
+
+```bash
+scripts/check
+```
+
+Run this before every push. CI runs the same command on every pull request.
+
+## Truth
+
+- What is enforced is the code and its passing tests. `docs/design.md` describes the model. Nothing else is a requirement. (review)
+- Say plainly what is unbuilt or unverified, in the change and in `docs/project/status.md`. (review)
+
+## The model
+
+- State changes only through a write committed to the vault's Git history. A change that is not in the history did not happen. (check: `tests/test_laws.py`)
+- Pages are the committed files. Never edit `pages/` by hand: a stray edit is refused by the next write or discarded by `conky rebuild`. (check: `conky verify`)
+- A refused write is recorded as an empty commit, never dropped. (check: `tests/test_laws.py`)
+- Anything that must never happen is a rule the runtime evaluates. Never ask a model to obey a constraint. (check: `tests/test_laws.py`)
+- Anything that should be noticed rather than forbidden is a pressure that triggers a reaction, not a wall that stops work. (check: `tests/test_laws.py`)
+- A measure is a page watching itself. Its value is written as a recorded event, so reading history never evaluates an expression. (check: `tests/test_laws.py`)
+- Whatever follows from state happens as a reaction, with no model call. Ask a model only what state cannot answer. (review)
+- Rules and measures are pure: no clock, randomness or I/O inside them. (review)
+- A vault travels alone: cloned or bundled anywhere, it verifies, and it holds no private key. (check: `tests/test_laws.py`)
+- Data lives in three primitives in open formats: document (Markdown with frontmatter), table (Parquet), stream (append-only log). A change of shape is a forward re-projection. Never write a down-migration or a migration ladder. (review)
+- Anything that runs in the background declares a budget and is metered. (review: not built)
+- Runtime output never enters this repository, except the golden vault fixture under `tests/golden/`. (check: `.gitignore`)
+
+## Design
+
+- Build a new concept from existing words or remove one. If it does neither, it does not land. (review)
+- Domain structures (accounting, stock, approvals) are patterns made on demand from goldens and composed from existing words, never runtime features or a shipped catalogue. The runtime gains only general primitives. (review)
+- One plain word per concept: `vault page key link embed rule event seal space error`, verbs `read write watch`. An event is a commit and a seal is its signature. A rename is atomic everywhere. (check: `tests/test_house.py`)
+- Nothing already built has to stay. Existing code is reference, not an obligation. (review)
+- No debt: no shims, deprecated aliases, dead code or fix-later notes. Replacing something removes the old thing in the same change. (check: `tests/test_house.py` for fix-later notes; review for the rest)
+- No stub passes as real. Name it `stub` and say so where it is defined. (review)
+- Build nothing before something consumes it. (review)
+- Look for prior art and standards before inventing, and cite what you found in the decision. (review)
+- A page reads as if a person wrote it. (review)
+- Keep people, developers and agents on the easy path: one command to start, nothing to configure before the first write, and every error says what to do next. (review)
+
+## Evidence
+
+- Every law lands with a test that fails when the law is removed. (review)
+- Benchmark results come only from unscripted runs, with the run count and raw traces kept. (review)
+- A scenario is harness-neutral documents: seed prompt, starting state, observables, scoring. Every harness runs it through an adapter on the same model and budget. (review: not built)
+- The assimilation test is a scenario: hand a fresh consumer only a stopped vault and score whether it resumes correctly. (review: not built)
+
+## Ideas
+
+An idea states its rung wherever it is mentioned, and climbs one rung at a time. (check: `scripts/check_docs.py`)
+
+| Rung | Means |
+|---|---|
+| idea | A page in `docs/ideas/` naming its source. |
+| folded | In `docs/design.md`: the law, what it composes from, what it removes, the test that falsifies it. |
+| enforced | Runtime code plus a test that fails when the law is broken. |
+| proven | Measured in a run that was not scripted. |
+
+- Take the mechanism from a source, not its vocabulary. (review)
+- Resolve contradictions in writing before folding, not by keeping both. (review)
+
+## Docs
+
+- Everything worth knowing lives under `docs/` and is updated in the same change as the code it describes. (review)
+- The README is for anyone and stays free of jargon; `docs/guide/` explains the ideas plainly; the technical detail lives a layer below in `docs/reference/`, `docs/design.md` and `docs/decisions/`. (review)
+- Nothing internal is committed: no working notes, no account of who said what, no names of private projects. (check: `tests/test_house.py`)
+- `decisions/`: one numbered record per decision, with its context, the decision and its consequences. `ideas/`: one page per candidate. `research/`: indexes and digests of outside work. `project/`: roadmap and status. (check: `scripts/check_docs.py`)
+- `research/harnesses.md` compares conky with leading harnesses on a fixed rubric, and `research/papers.md` registers outside papers with how far each was read. Both are updated when the field moves; no claim about another project is made from memory. (review)
+- Every significant idea gets an essay in `essays/` a newcomer can read: what prompted it, the problem, analogues, the idea, what it solves, the hypothesis, and how we would know we are wrong. An essay stands alone: it motivates the idea from the general problem. (review)
+- Every document has frontmatter (`kind`, `title`, `status`, `date`, `source`) and every link resolves. (check: `scripts/check_docs.py`)
+
+## Working here
+
+- Work is taken from the step marked `next` in `docs/project/roadmap.md`; there is exactly one. (check: `scripts/check_docs.py`)
+- Run `scripts/check` before every push; the pre-push hook does it for you once enabled. (check: `scripts/hooks/pre-push`)
+- Commit subjects are `<type>: <summary>` with type feat, fix, docs, test, refactor or chore. (check: `scripts/check_commits.py`)
+- A change is done when the checks pass, the docs and status match the code, a decision is recorded if the design moved, and the changelog has its line. (review)
+- Small changes, each leaving the checks green. (check: `scripts/check`)

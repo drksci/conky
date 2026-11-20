@@ -1,0 +1,9 @@
+#!/bin/sh
+# Run every check. Run before each push; the pre-push hook does it too.
+set -e
+cd "$(dirname "$0")/.."
+ruff check .
+ruff format --check .
+pytest -q
+python scripts/check_docs.py
+python scripts/check_commits.py

@@ -1,0 +1,298 @@
+"""The vault: a Git repository whose commits are the events and whose files are the pages."""
+
+from __future__ import annotations
+
+import json
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+from conky import git
+from conky.errors import BadInput, VerifyFailed
+from conky.page import Page, ShapeError, apply, check_name, parse, resolve, serialize
+from conky.rules import RuleError, evaluate, holds
+
+MAX_DEPTH = 12
+KINDS = ("write", "refused")
+
+
+def _size(page: Page) -> int:
+    """Return the byte length of the page as serialised."""
+    return len(serialize(page).encode("utf-8"))
+
+
+def _compact(value: Any) -> str:
+    """Return value as compact JSON on one line."""
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+
+
+@dataclass(frozen=True)
+class Result:
+    """The outcome of a write: whether it held, the commit id, and why not."""
+
+    ok: bool
+    id: str
+    reason: str | None = None
+
+
+class Vault:
+    """A Git repository of pages, with public keys tracked and private keys kept elsewhere."""
+
+    def __init__(self, path: str | Path, keys_dir: str | Path | None = None) -> None:
+        git.require_tools()
+        self.path = Path(path)
+        if not (self.path / ".git").exists():
+            raise BadInput(f"{self.path} is not a vault: create one with `conky init {self.path}`")
+        self.pages_dir = self.path / "pages"
+        self.signers = self.path / git.SIGNERS
+        self.keys_dir = Path(keys_dir) if keys_dir is not None else Path.home() / ".conky" / "keys"
+
+    @classmethod
+    def init(cls, path: str | Path, keys_dir: str | Path | None = None) -> Vault:
+        """Create an empty vault at path and return it."""
+        git.require_tools()
+        if (Path(path) / ".git").exists():
+            raise BadInput(f"{path} is already a vault")
+        git.init(Path(path))
+        return cls(path, keys_dir)
+
+    def read(self, page: str) -> Page:
+        """Return the page with its embeds resolved."""
+        found = self._load(check_name(page))
+        if found is None:
+            raise BadInput(f"no page named {page!r}")
+        return resolve(found, self._all())
+
+    def write(
+        self,
+        page: str,
+        set: dict[str, Any],
+        body: str | None = None,
+        *,
+        actor: str,
+        at: str,
+        cause: str | None = None,
+    ) -> Result:
+        """Write fields and body to a page, or record why the write was refused."""
+        check_name(page)
+        check_name(actor)
+        try:
+            _compact({"set": set, "body": body})
+        except (TypeError, ValueError) as exc:
+            raise BadInput(f"values must be plain JSON data: {exc}") from exc
+        if self._dirty():
+            raise BadInput(self._dirty_message())
+        return self._write(page, dict(set), body, actor, at, cause, 0)
+
+    def log(self) -> list[str]:
+        """Return the history oldest first, one line per commit."""
+        if not self._has_commits():
+            return []
+        out = git.run(
+            ["log", "--reverse", "--date=format-local:%Y-%m-%dT%H:%M:%SZ", "main"]
+            + ["--format=%x1e%h%x1f%ad%x1f%an%x1f%B"],
+            self.path,
+            {"TZ": "UTC"},
+        )
+        lines = []
+        for record in out.split("\x1e")[1:]:
+            short, at, actor, message = record.split("\x1f", 3)
+            found = git.trailers(message)
+            detail = found.get("Reason") or (
+                f"cause {found['Cause'][:7]}" if "Cause" in found else ""
+            )
+            fields = [short, at, actor, found.get("Kind", "-"), found.get("Page", "-"), detail]
+            lines.append(" ".join(fields).rstrip())
+        return lines
+
+    def verify(self) -> None:
+        """Raise VerifyFailed naming the first problem in the tree, the objects or the history."""
+        if self._dirty():
+            raise VerifyFailed(self._dirty_message())
+        try:
+            git.run(["fsck", "--strict"], self.path)
+        except BadInput as exc:
+            raise VerifyFailed(f"{exc}: restore the vault from another clone") from exc
+        if not self._has_commits():
+            return
+        files = self._changed_files()
+        out = git.run(["log", "--reverse", "--format=%x1e%H%x1f%G?%x1f%B", "main"], self.path)
+        for record in out.split("\x1e")[1:]:
+            commit, signature, message = record.split("\x1f", 2)
+            self._check_commit(commit[:7], signature, git.trailers(message), files[commit])
+
+    def rebuild(self) -> None:
+        """Restore the working tree to the committed state, discarding stray changes."""
+        if self._has_commits():
+            git.run(["reset", "-q", "--hard", "main"], self.path)
+        git.run(["clean", "-fdq", "--", "pages", "keys"], self.path)
+
+    def _check_commit(
+        self, short: str, signature: str, found: dict[str, str], files: list[str]
+    ) -> None:
+        if signature != "G":
+            raise VerifyFailed(
+                f"commit {short} has no good signature from a key in {git.SIGNERS} "
+                f"(status {signature}): restore the vault from another clone"
+            )
+        kind = found.get("Kind")
+        if kind not in KINDS:
+            raise VerifyFailed(
+                f"commit {short} has no valid Kind trailer: it was not made by conky"
+            )
+        allowed = [
+            f for f in files if f == git.SIGNERS or (kind == "write" and f.startswith("pages/"))
+        ]
+        if allowed != files:
+            stray = next(f for f in files if f not in allowed)
+            raise VerifyFailed(f"commit {short} ({kind}) changes {stray}, which a {kind} must not")
+
+    def _changed_files(self) -> dict[str, list[str]]:
+        out = git.run(["log", "--name-only", "--format=%x1e%H", "main"], self.path)
+        changed = {}
+        for record in out.split("\x1e")[1:]:
+            commit, *names = record.split("\n")
+            changed[commit] = [n for n in names if n]
+        return changed
+
+    def _has_commits(self) -> bool:
+        return bool(git.run(["branch", "--list", "main"], self.path).strip())
+
+    def _dirty(self) -> bool:
+        return bool(git.run(["status", "--porcelain"], self.path).strip())
+
+    def _dirty_message(self) -> str:
+        return (
+            "the working tree has changes that were not made through conky: "
+            f"run `conky --vault {self.path} rebuild` to discard them"
+        )
+
+    def _load(self, name: str) -> Page | None:
+        path = self.pages_dir / f"{name}.md"
+        return parse(path.read_text(encoding="utf-8")) if path.exists() else None
+
+    def _all(self) -> dict[str, Page]:
+        return {p.stem: parse(p.read_text(encoding="utf-8")) for p in self.pages_dir.glob("*.md")}
+
+    def _record(
+        self,
+        kind: str,
+        page: str,
+        actor: str,
+        at: str,
+        cause: str | None,
+        extra: list[tuple[str, str]],
+        content: Page | None,
+    ) -> str:
+        """Make one signed commit; store content as the page file when it is given."""
+        key, line = git.register(self.keys_dir, self.signers, actor)
+        paths = []
+        if line is not None:
+            self.signers.parent.mkdir(exist_ok=True)
+            with self.signers.open("a", encoding="utf-8") as handle:
+                handle.write(line)
+            paths.append(git.SIGNERS)
+        if content is not None:
+            self.pages_dir.mkdir(exist_ok=True)
+            (self.pages_dir / f"{page}.md").write_bytes(serialize(content).encode("utf-8"))
+            paths.append(f"pages/{page}.md")
+        trailers = [("Kind", kind), ("Page", page), *extra]
+        if cause is not None:
+            trailers.append(("Cause", cause))
+        return git.commit(
+            self.path,
+            actor=actor,
+            at=at,
+            key=key,
+            subject=f"{kind} {page}",
+            trailers=trailers,
+            paths=paths,
+        )
+
+    def _refuse(
+        self,
+        page: str,
+        changes: dict[str, Any],
+        body: str | None,
+        actor: str,
+        at: str,
+        cause: str | None,
+        reason: str,
+    ) -> Result:
+        extra = [("Reason", " ".join(reason.split())), ("Attempt", _compact(changes))]
+        if body is not None:
+            extra.append(("Body-Bytes", str(len(body.encode("utf-8")))))
+        return Result(False, self._record("refused", page, actor, at, cause, extra, None), reason)
+
+    def _write(
+        self,
+        page: str,
+        changes: dict[str, Any],
+        body: str | None,
+        actor: str,
+        at: str,
+        cause: str | None,
+        depth: int,
+    ) -> Result:
+        def refuse(reason: str) -> Result:
+            return self._refuse(page, changes, body, actor, at, cause, reason)
+
+        if depth > MAX_DEPTH:
+            return refuse(f"cycle: reactions nested deeper than {MAX_DEPTH}")
+        try:
+            result = apply(self._load(page) or Page(), changes, body)
+        except ShapeError as exc:
+            return refuse(f"shape: {exc}")
+        reason = self._rule_reason(page, result)
+        if reason:
+            return refuse(reason)
+        commit = self._record("write", page, actor, at, cause, [], result)
+        self._react(page, result, commit, at, depth)
+        return Result(True, commit)
+
+    def _rule_reason(self, name: str, page: Page) -> str | None:
+        scope = {"page": page.fields, "size": _size(page)}
+        seen = {name}
+        space, owner = page, name
+        while True:
+            for rule in space.rules:
+                try:
+                    held = holds(rule, scope)
+                except RuleError as exc:
+                    return f"rule: {rule} (from {owner}) failed to evaluate: {exc}"
+                if not held:
+                    return f"rule: {rule} (from {owner}) is false"
+            if not space.within:
+                return None
+            owner = space.within
+            if owner in seen:
+                return f"rule: within chain loops back to {owner}"
+            seen.add(owner)
+            found = self._load(owner)
+            if found is None:
+                return f"rule: space {owner} does not exist"
+            space = found
+
+    def _react(self, source: str, written: Page, commit: str, at: str, depth: int) -> None:
+        for watcher in sorted(p.stem for p in self.pages_dir.glob("*.md")):
+            for entry in (self._load(watcher) or Page()).watch:
+                if entry["on"] != source:
+                    continue
+                current = self._load(watcher) or Page()
+                scope = {
+                    "other": written.fields,
+                    "page": current.fields,
+                    "other_size": _size(written),
+                    "size": _size(current),
+                }
+                try:
+                    if not holds(entry["when"], scope):
+                        continue
+                    changes = {k: evaluate(v, scope) for k, v in entry["set"].items()}
+                    unchanged = serialize(apply(current, changes, None)) == serialize(current)
+                except (RuleError, ShapeError) as exc:
+                    reason = f"watch: {entry['when']} (on {watcher}) failed: {exc}"
+                    self._refuse(watcher, {}, None, watcher, at, commit, reason)
+                    continue
+                if not unchanged:
+                    self._write(watcher, changes, None, watcher, at, commit, depth + 1)
