@@ -59,7 +59,7 @@ Conky is... different, for many reasons, but here are some:
 
 ### Topology
 
-A few parts, wrapped in layers, with the world plugging in at the edge. Solid is built, dotted is planned.
+A few parts, wrapped in layers, with the world plugging in at the edge. Solid is built, dotted is planned. The complete inventory, with a swimlane for every flow, is the <a href="docs/reference/architecture.md">architecture index</a>.
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-topology.dark.svg"><img src="docs/assets/figures/fig-topology.light.svg" alt="A parts alphabet beside a cross-section of Conky: git at the centre, then pages, reflexes, spaces, characters and an outer edge where connectors, models and people plug in." width="800"></picture></p>
 

@@ -8,7 +8,7 @@ source: maintainers
 
 # Topology
 
-Six plates of the same system, drawn with the same marks. Solid is built and dotted is planned. Each is a schematic.
+Six plates of the same system, drawn with the same marks. Solid is built and dotted is planned. Each is a schematic, and the complete inventory behind them is the [architecture index](../reference/architecture.md).
 
 ## 1. The whole
 
