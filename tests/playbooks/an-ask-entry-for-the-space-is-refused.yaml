@@ -1,0 +1,28 @@
+# An answer that gives its space an ask is turned away with a limit, and a later refusal in the space asks nobody.
+pages:
+  helper: {api: command, command: stand}
+  den:
+    turned: 0
+    rules: [{each: "!has(page.amount) || page.amount >= 0"}]
+  order: {}
+  keeper:
+    within: den
+    watch:
+      - on: order
+        when: "true"
+        ask:
+          provider: helper
+          writes: den
+          prompt: "The order reads: ![[order]] Have the den ask about what it turns away."
+steps:
+  - says: |
+      === page: den ===
+      ---
+      watch:
+        - on: refusal
+          when: "true"
+          ask: {provider: helper, prompt: "Why?", into: said}
+      ---
+  - write: {page: order, fields: {}, body: "Ask about each refusal."}
+  - write: {page: pay-a, fields: {within: den, amount: -1}}
+  - expect: {refused: rule, model_calls: 1, verify: true}

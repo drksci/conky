@@ -180,12 +180,17 @@ what is worth keeping
 
 *A page can be a note. It can also carry a rule that must stay true from now on. A rule is a line under `rules:` that says when the page is fine. It reads the page as page.FIELD and the space as space.FIELD.*
 
-*To bind every page in <space> but not <space> itself, <space> gets `each` rules and nothing else. It is written like this:*
+*To bind every page in <space> but not <space> itself, or to have <space> count what it turns away, <space> gets `each` rules and `watch` entries and nothing else. A watch entry sets a field when something happens. It is written like this:*
 
 === page: <space> ===
 ---
 rules:
   - each: page.FIELD < 50
+watch:
+  - on: refusal
+    when: "true"
+    set:
+      FIELD: page.FIELD + 1
 ---
 === end ===
 
@@ -198,7 +203,7 @@ rules:
 
 **The limits.** The runtime enforces each, and none depends on the prompt.
 
-1. A page must be within the named space, directly or through spaces inside it, after the write. A page that already exists must be within it before the write too, so an answer cannot take hold of a page outside the space by naming it. The space page itself is outside, with one exception: a block that names it is allowed when it holds `rules` and nothing else, no other field and no body. Its entries are added to the rules the space has, one that is already there is ignored, and nothing the space has is removed or changed ([decision 0035](../decisions/0035-a-character-binds-its-own-space.md)). Any other block that names the space is refused. Otherwise the write is refused with reason `limit`. A character may create spaces inside the named space, and a page written after one may lie within it.
+1. A page must be within the named space, directly or through spaces inside it, after the write. A page that already exists must be within it before the write too, so an answer cannot take hold of a page outside the space by naming it. The space page itself is outside, with one exception: a block that names it is allowed when it holds `rules`, `watch` or both and nothing else, no other field and no body. Its entries are added to what the space has, one that is already there is ignored, and nothing the space has is removed or changed ([decision 0035](../decisions/0035-a-character-binds-its-own-space.md)). An added watch entry must be a reflex, a `set`: one that carries `ask` is refused with reason `limit`, because nothing meters an ask yet ([decision 0041](../decisions/0041-a-character-gives-its-space-reflexes.md)). Any other block that names the space is refused. Otherwise the write is refused with reason `limit`. A character may create spaces inside the named space, and a page written after one may lie within it.
 2. Every write is judged by the rules of every space involved, exactly as any write is, including the spaces a page leaves ([Rules and spaces](#rules-and-spaces)). A rule a character adds to a space it made binds the writes that follow.
 3. A page written by an answer may not carry a field `secret` or `command`, which are the fields a provider page uses to name a secret and a program ([providers](providers.md)). Those stay with the person who sets the provider up, and a provider page that has them cannot be changed by an answer. Page names are checked as any page name is, so a name cannot reach outside the vault.
 4. A watch entry of a page written by an answer may not write into a space outside the named space, so a character cannot widen its own reach, or the reach of what it makes, by rewriting a `writes` value. Such a page is refused with reason `limit`.

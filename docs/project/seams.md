@@ -312,7 +312,7 @@ Core means the design's claims depend on it. Optional means a vault works fully 
 - **Why.** A thinking character should spend its context on what it wants, not on the syntax of rules and entries.
 - **Seam.** Watch, ask, an answer that is pages and the retry on a refused answer. Constrained by [`law.provider.page`](../reference/architecture.md#law.provider.page).
 - **Placeholder.** [Faculties](../ideas/faculties.md), with [auto-linking](../ideas/auto-linking.md) as the reflex case.
-- **Refactor risk.** Little is closed off today. An answer that is pages is written as a block of pages into a space, which may add rules to it, and that is the path a faculty uses. What must stay open is trying a written form aside before it binds, which needs the write path to judge without keeping (the same need as [dry run](../ideas/dry-run.md)), and a field or trailer by which a character is shown in words what a faculty did.
+- **Refactor risk.** Little is closed off today. An answer that is pages is written as a block of pages into a space, which may add rules and reflex watch entries to it, and that is the path a faculty uses. What must stay open is trying a written form aside before it binds, which needs the write path to judge without keeping (the same need as [dry run](../ideas/dry-run.md)), and a field or trailer by which a character is shown in words what a faculty did.
 - **Standing.** Optional.
 
 ## Out of scope

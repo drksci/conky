@@ -1,0 +1,15 @@
+# A block for the space holds rules and watch entries and no other field.
+pages:
+  den: {cash: 10}
+answer: |
+  === page: den ===
+  ---
+  cash: 5000
+  watch:
+    - on: refusal
+      when: "true"
+      set:
+        seen: event.id
+  ---
+  === end ===
+refused: limit

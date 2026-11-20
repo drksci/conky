@@ -584,3 +584,66 @@ def test_nothing_a_model_is_shown_says_whether_a_page_was_written_by_a_person_or
     assert person == model
     for mark in ("Model", "Model-Name", "provider"):
         assert mark not in person
+
+
+def _character_in_a_den(root: Path, monkeypatch: pytest.MonkeyPatch, answer: str) -> Vault:
+    """Return a vault whose scribe, asked by a ticket, is answered by the prepared text."""
+    stand = root / "stand"
+    stand.mkdir(parents=True)
+    program = stand / "model.py"
+    program.write_text(
+        "import pathlib, sys\nsys.stdin.read()\n"
+        "print((pathlib.Path(__file__).parent / 'answer.txt').read_text())\n",
+        encoding="utf-8",
+    )
+    (stand / "answer.txt").write_text(answer, encoding="utf-8")
+    monkeypatch.setenv("CONKY_COMMAND_STAND", f"{sys.executable} {program}")
+    vault = Vault.init(root / "vault", root / "keys")
+    ask = {"provider": "helper", "writes": "den", "prompt": "Listen, ![[ticket#n]]."}
+    assert w(vault, "helper", {"api": "command", "command": "stand"}).ok
+    floor = [{"each": "!has(page.amount) || page.amount >= 0"}]
+    watch = [{"on": "refusal", "when": "false", "set": {"never": "1"}}]
+    assert w(vault, "den", {"turned": 0, "rules": floor, "watch": watch}).ok
+    assert w(vault, "ticket", {"n": 0}).ok
+    watch = [{"on": "ticket", "when": "true", "ask": ask}]
+    assert w(vault, "scribe", {"within": "den", "watch": watch}).ok
+    return vault
+
+
+LISTEN = (
+    '=== page: den ===\n---\nwatch:\n  - on: refusal\n    when: "true"\n'
+    "    set:\n      turned: page.turned + 1\n---\n=== end ===\n"
+)
+
+
+@arch.holds("law.answer.pages", "law.event.notice")
+def test_a_character_gives_its_space_a_reflex_that_counts_later_refusals(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    vault = _character_in_a_den(tmp_path, monkeypatch, LISTEN)
+    assert w(vault, "ticket", {"n": 1}).ok
+    assert len(vault.read("den").watch) == 2
+    for name in ("pay-a", "pay-b"):
+        assert not w(vault, name, {"within": "den", "amount": -1}).ok
+    assert vault.read("den").fields["turned"] == 2
+    vault.verify()
+
+
+@arch.holds("law.answer.pages", "law.rule.tighten")
+def test_an_answer_cannot_remove_or_replace_what_its_space_has(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    clear = "=== page: den ===\n---\nrules: []\nwatch: []\n---\n=== end ===\n"
+    vault = _character_in_a_den(tmp_path, monkeypatch, clear)
+    kept = vault.read("den")
+    assert w(vault, "ticket", {"n": 1}).ok
+    assert vault.read("den").rules == kept.rules and vault.read("den").watch == kept.watch
+    asks = (
+        '=== page: den ===\n---\nwatch:\n  - on: den\n    when: "true"\n'
+        "    ask: {provider: helper, prompt: hi, into: said}\n---\n=== end ===\n"
+    )
+    (tmp_path / "stand" / "answer.txt").write_text(asks, encoding="utf-8")
+    assert w(vault, "ticket", {"n": 2}).ok
+    assert vault.read("den").watch == kept.watch
+    assert "must use set" in git(vault.path, "log", "--format=%B", "-8")
+    vault.verify()

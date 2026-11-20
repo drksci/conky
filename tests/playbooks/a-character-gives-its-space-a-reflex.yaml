@@ -1,0 +1,31 @@
+# A character gives its space a refusal counter, and two later refusals are counted with no model call.
+pages:
+  helper: {api: command, command: stand}
+  den:
+    turned: 0
+    rules: [{each: "!has(page.amount) || page.amount >= 0"}]
+  order: {}
+  keeper:
+    within: den
+    watch:
+      - on: order
+        when: "true"
+        ask:
+          provider: helper
+          writes: den
+          prompt: "The order reads: ![[order]] Count what the den turns away."
+steps:
+  - says: |
+      === page: den ===
+      ---
+      watch:
+        - on: refusal
+          when: "true"
+          set:
+            turned: page.turned + 1
+      ---
+  - write: {page: order, fields: {}, body: "Count each refusal."}
+  - expect: {model_calls: 1, fields: {den.turned: 0}}
+  - write: {page: pay-a, fields: {within: den, amount: -1}}
+  - write: {page: pay-b, fields: {within: den, amount: -2}}
+  - expect: {refused: rule, fields: {den.turned: 2}, model_calls: 1, verify: true}

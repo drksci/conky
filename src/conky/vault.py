@@ -496,7 +496,8 @@ class Vault:
             if problem:
                 return refuse(f"{Refusal.LIMIT}: {problem}")
             assert before is not None
-            applied = {"rules": _joined(before.rules, changes["rules"])}
+            kept = {"rules": before.rules, "watch": before.watch}
+            applied = {key: _joined(kept[key], changes[key]) for key in changes}
         try:
             result = apply(before or Page(), applied, body)
         except ShapeError as exc:
@@ -608,23 +609,38 @@ class Vault:
                 )
         return None
 
+    @arch.change(
+        "place.runtime.bind",
+        "Letting an answer give the space it writes into rules and reflexes, never asks.",
+        doc="rules-and-reactions.md#an-answer-that-is-pages",
+        roadmap="R39",
+    )
     def _bind(
         self, name: str, before: Page | None, changes: dict[str, Any], body: str | None
     ) -> str | None:
         """Return why an answer may not write the space it writes into, or None when it may.
 
-        The one thing allowed is `rules` and nothing else: the entries are added to the rules
-        the space has, and the write is judged like any other.
+        What is allowed is `rules`, `watch` or both and nothing else: the entries are added to
+        what the space has, never replacing it, and the write is judged like any other. An added
+        watch entry is a reflex, a `set`: nothing meters an `ask` yet.
         """
         if before is None:
             return f"space {name} does not exist, so an answer cannot make it"
-        if set(changes) != {"rules"} or body is not None:
+        if not set(changes) or not set(changes) <= {"rules", "watch"} or body is not None:
             return (
                 f"page {name} is the space this answer writes into: an answer may add rules "
-                "to it and nothing else, so send only a rules list and no body"
+                "and watch entries to it and nothing else, so send only rules or watch lists "
+                "and no body"
             )
-        if not isinstance(changes["rules"], list):
-            return f"rules for {name} must be a list of conditions to add"
+        for key, value in changes.items():
+            if not isinstance(value, list):
+                return f"{key} for {name} must be a list of entries to add"
+        for entry in changes.get("watch", []):
+            if isinstance(entry, dict) and "ask" in entry:
+                return (
+                    f"a space can be given reflexes this way, but not asks: a watch entry added "
+                    f"to {name} must use set, because nothing meters an ask yet"
+                )
         return None
 
     @arch.law(

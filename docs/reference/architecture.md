@@ -31,12 +31,12 @@ The capability and the three laws of [decision 0029](../decisions/0029-autonomy-
 
 | Law | Statement | Defined | Code | Test | Step | State |
 |---|---|---|---|---|---|---|
-| <a id="law.answer.pages"></a>`law.answer.pages` | An answer is pages, so a character can make notes, characters, spaces and rules. | [rules-and-reactions.md#an-answer-that-is-pages](rules-and-reactions.md#an-answer-that-is-pages) | `conky.vault.Vault._land` | `tests/test_pages.py::test_an_answer_with_two_pages_writes_both_as_the_asker_caused_by_the_answer` | R29 | built |
+| <a id="law.answer.pages"></a>`law.answer.pages` | An answer is pages, so a character can make notes, characters, spaces and rules. | [rules-and-reactions.md#an-answer-that-is-pages](rules-and-reactions.md#an-answer-that-is-pages) | `conky.vault.Vault._land` | `tests/test_laws.py::test_a_character_gives_its_space_a_reflex_that_counts_later_refusals`<br>`tests/test_laws.py::test_an_answer_cannot_remove_or_replace_what_its_space_has`<br>`tests/test_pages.py::test_an_answer_with_two_pages_writes_both_as_the_asker_caused_by_the_answer` | R29 | built |
 | <a id="law.data.three"></a>`law.data.three` | Data is a document, a table or a stream, and a change of shape is a forward re-projection. | [0010-no-debt-no-down-migrations.md](../decisions/0010-no-debt-no-down-migrations.md) | `conky.page.serialize` | `tests/test_laws.py::test_golden_vault_still_reads` | - | built |
 | <a id="law.debt.none"></a>`law.debt.none` | No fix-later notes, shims or dead code. | [0010-no-debt-no-down-migrations.md](../decisions/0010-no-debt-no-down-migrations.md) | `tests/test_house.py` | `tests/test_house.py::test_no_fix_later_notes` | - | built |
 | <a id="law.docs.check"></a>`law.docs.check` | Ideas climb rungs, and the documents, links and this index are checked. | [0015-ideas-climb-rungs.md](../decisions/0015-ideas-climb-rungs.md) | `scripts/check_docs.py` | `tests/test_docs.py::test_docs_pass_the_check` | - | built |
 | <a id="law.embed.anonymous"></a>`law.embed.anonymous` | An embed shows a page's words and nothing about who wrote them. | [vault-format.md#pages](vault-format.md#pages) | `conky.page.resolve_text` | `tests/test_laws.py::test_nothing_a_model_is_shown_says_whether_a_page_was_written_by_a_person_or_a_model` | - | built |
-| <a id="law.event.notice"></a>`law.event.notice` | Every recorded event can be noticed by the pages in relation to it, and the entry says what picks it up: a reflex, a faculty or the character. | [0039-an-event-can-be-noticed.md](../decisions/0039-an-event-can-be-noticed.md) | `conky.vault.Vault._tell` | `tests/test_laws.py::test_a_refusal_can_be_noticed_and_stays_a_refusal` | R38 | built |
+| <a id="law.event.notice"></a>`law.event.notice` | Every recorded event can be noticed by the pages in relation to it, and the entry says what picks it up: a reflex, a faculty or the character. | [0039-an-event-can-be-noticed.md](../decisions/0039-an-event-can-be-noticed.md) | `conky.vault.Vault._tell` | `tests/test_laws.py::test_a_refusal_can_be_noticed_and_stays_a_refusal`<br>`tests/test_laws.py::test_a_character_gives_its_space_a_reflex_that_counts_later_refusals` | R38 | built |
 | <a id="law.event.seal"></a>`law.event.seal` | Every change is signed and says what caused it. | [vault-format.md#a-write](vault-format.md#a-write) | `conky.vault.Vault._record` | `tests/test_laws.py::test_write_is_a_signed_commit_with_trailers_and_dates`<br>`tests/test_laws.py::test_reaction_is_caused_by_and_signed_by_the_reacting_page` | - | built |
 | <a id="law.fallback.always"></a>`law.fallback.always` | Everything works with nothing configured, and rules stay strict. | [0026-it-always-works.md](../decisions/0026-it-always-works.md) | `conky.model.detect` | `tests/test_command.py::test_detection_lists_anthropic_then_openai_then_claude_then_codex`<br>`tests/test_command.py::test_a_failing_detected_model_falls_to_the_next_and_then_to_a_sentence`<br>`tests/test_command.py::test_with_no_model_an_ask_writes_a_sentence_that_names_the_question` | R26 | built |
 | <a id="law.measure.watch"></a>`law.measure.watch` | A measure is a page watching itself, and its value is a recorded event. | [0008-measures-are-self-watches.md](../decisions/0008-measures-are-self-watches.md) | `conky.vault.Vault._react` | `tests/test_laws.py::test_other_size_is_visible_to_a_watcher`<br>`tests/test_laws.py::test_history_needs_no_expressions` | R2 | built |
@@ -50,7 +50,7 @@ The capability and the three laws of [decision 0029](../decisions/0029-autonomy-
 | <a id="law.rule.never"></a>`law.rule.never` | Anything that must never happen is a rule the runtime evaluates. | [rules-and-reactions.md#expressions](rules-and-reactions.md#expressions) | `conky.rules.holds` | `tests/test_laws.py::test_rule_error_refuses`<br>`tests/test_laws.py::test_rule_inherited_through_two_level_chain`<br>`tests/test_laws.py::test_size_rule_in_a_space_refuses_an_oversized_member` | - | built |
 | <a id="law.rule.proven"></a>`law.rule.proven` | An `each` rule is tried on the pages already within when it is written, so it lands only if it can be evaluated and holds for them. | [rules-and-reactions.md#rules-and-spaces](rules-and-reactions.md#rules-and-spaces) | `conky.vault.Vault._each_reason` | review | - | built |
 | <a id="law.rule.pure"></a>`law.rule.pure` | Rules and measures are pure: no clock, randomness or input and output. | [rules-and-reactions.md#expressions](rules-and-reactions.md#expressions) | `conky.rules.evaluate` | review | - | built |
-| <a id="law.rule.tighten"></a>`law.rule.tighten` | A member adds a rule and cannot remove one or leave one behind. | [0022-leaving-a-space-is-a-write-the-space-can-refuse.md](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md) | `conky.vault.Vault._rule_reason` | `tests/test_laws.py::test_leaving_a_space_is_judged_by_the_rules_of_the_space_it_leaves`<br>`tests/test_laws.py::test_a_changed_space_field_refuses_the_next_member_write`<br>`tests/test_pages.py::test_a_rule_of_a_space_refuses_a_page_that_breaks_it`<br>`tests/test_pages.py::test_a_character_can_add_a_rule_to_a_space_it_made_and_the_rule_binds_a_later_write`<br>`tests/test_pages.py::test_an_answer_adds_a_rule_to_its_space_signed_by_the_asker` | R29 | built |
+| <a id="law.rule.tighten"></a>`law.rule.tighten` | A member adds a rule and cannot remove one or leave one behind. | [0022-leaving-a-space-is-a-write-the-space-can-refuse.md](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md) | `conky.vault.Vault._rule_reason` | `tests/test_laws.py::test_leaving_a_space_is_judged_by_the_rules_of_the_space_it_leaves`<br>`tests/test_laws.py::test_a_changed_space_field_refuses_the_next_member_write`<br>`tests/test_laws.py::test_an_answer_cannot_remove_or_replace_what_its_space_has`<br>`tests/test_pages.py::test_a_rule_of_a_space_refuses_a_page_that_breaks_it`<br>`tests/test_pages.py::test_a_character_can_add_a_rule_to_a_space_it_made_and_the_rule_binds_a_later_write`<br>`tests/test_pages.py::test_an_answer_adds_a_rule_to_its_space_signed_by_the_asker` | R29 | built |
 | <a id="law.runtime.fixed"></a>`law.runtime.fixed` | The runtime is not a page, so no character can change it. | [0029-autonomy-inside-limits-that-hold.md](../decisions/0029-autonomy-inside-limits-that-hold.md) | `conky.vault.Vault._breach` | `tests/test_pages.py::test_a_character_cannot_write_a_secret_or_a_command_into_a_page` | - | built |
 | <a id="law.scope.out"></a>`law.scope.out` | No batching to hide, no second authority, no hidden state, no control by instruction. | [0018-not-doing.md](../decisions/0018-not-doing.md) | `docs/decisions/0018-not-doing.md` | review | - | built |
 | <a id="law.vault.golden"></a>`law.vault.golden` | The vault format is held stable by a golden vault that every version reads. | [0012-rust-core-planned.md](../decisions/0012-rust-core-planned.md) | `conky.page.parse` | `tests/test_laws.py::test_golden_vault_still_reads` | - | built |
@@ -202,7 +202,8 @@ A page holds what a vault knows, the fixed runtime does what follows from it, an
 |---|---|---|---|---|---|---|
 | <a id="place.page"></a>`place.page` | <a id="place.page.field"></a>`place.page.field` | Fields, body, `within`, `rules` and `watch`, only by a write. | [vault-format.md#pages](vault-format.md#pages) | `conky.page.apply` | - | built |
 | `place.page` | <a id="place.page.known"></a>`place.page.known` | Provider fields, a connector's screen and hands, a measure's value. | [providers.md#the-provider-page](providers.md#the-provider-page) | `conky.model.provider` | - | built |
-| <a id="place.runtime"></a>`place.runtime` | <a id="place.runtime.clock"></a>`place.runtime.clock` | Reading the clock, in this one place, to stamp each write. | [cli.md#time](cli.md#time) | `conky.cli.main` | - | built |
+| <a id="place.runtime"></a>`place.runtime` | <a id="place.runtime.bind"></a>`place.runtime.bind` | Letting an answer give the space it writes into rules and reflexes, never asks. | [rules-and-reactions.md#an-answer-that-is-pages](rules-and-reactions.md#an-answer-that-is-pages) | `conky.vault.Vault._bind` | R39 | built |
+| `place.runtime` | <a id="place.runtime.clock"></a>`place.runtime.clock` | Reading the clock, in this one place, to stamp each write. | [cli.md#time](cli.md#time) | `conky.cli.main` | - | built |
 | `place.runtime` | <a id="place.runtime.detect"></a>`place.runtime.detect` | Choosing a model when none is named. | [providers.md#detection](providers.md#detection) | `conky.model.detect` | R26 | built |
 | `place.runtime` | <a id="place.runtime.judge"></a>`place.runtime.judge` | Judging rules, shape and limits before a write is kept. | [rules-and-reactions.md#refusals](rules-and-reactions.md#refusals) | `conky.vault.Vault._write` | - | built |
 | `place.runtime` | <a id="place.runtime.limit"></a>`place.runtime.limit` | Enforcing the limits of an answer that is pages. | [rules-and-reactions.md#an-answer-that-is-pages](rules-and-reactions.md#an-answer-that-is-pages) | `conky.vault.Vault._breach` | R29 | built |
@@ -1202,14 +1203,14 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`flow.write.accept`](#flow.write.accept) | built | 2 | - |  |
 | [`flow.write.refuse`](#flow.write.refuse) | built | 5 | - |  |
 | [`flow.write.try`](#flow.write.try) | planned | not built | - | - |
-| [`law.answer.pages`](#law.answer.pages) | built | 1 | check.character.organise |  |
+| [`law.answer.pages`](#law.answer.pages) | built | 3 | check.character.organise |  |
 | [`law.context.down`](#law.context.down) | building | 1 | - |  |
 | [`law.data.derived`](#law.data.derived) | planned | not built | - | - |
 | [`law.data.three`](#law.data.three) | built | 1 | - |  |
 | [`law.debt.none`](#law.debt.none) | built | 1 | - |  |
 | [`law.docs.check`](#law.docs.check) | built | 1 | - |  |
 | [`law.embed.anonymous`](#law.embed.anonymous) | built | 1 | - |  |
-| [`law.event.notice`](#law.event.notice) | built | 1 | - |  |
+| [`law.event.notice`](#law.event.notice) | built | 2 | - |  |
 | [`law.event.seal`](#law.event.seal) | built | 2 | - |  |
 | [`law.fallback.always`](#law.fallback.always) | built | 3 | - |  |
 | [`law.measure.watch`](#law.measure.watch) | built | 2 | - |  |
@@ -1223,7 +1224,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`law.rule.never`](#law.rule.never) | built | 3 | - |  |
 | [`law.rule.proven`](#law.rule.proven) | built | - | - | review only |
 | [`law.rule.pure`](#law.rule.pure) | built | - | - | review only |
-| [`law.rule.tighten`](#law.rule.tighten) | built | 5 | - |  |
+| [`law.rule.tighten`](#law.rule.tighten) | built | 6 | - |  |
 | [`law.runtime.fixed`](#law.runtime.fixed) | built | 1 | - |  |
 | [`law.scope.out`](#law.scope.out) | built | - | - | review only |
 | [`law.spend.conserve`](#law.spend.conserve) | planned | not built | - | - |
@@ -1390,6 +1391,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0038-a-rule-is-proven-when-written](../decisions/0038-a-rule-is-proven-when-written.md) | accepted | [`law.rule.proven`](#law.rule.proven) |
 | [0039-an-event-can-be-noticed](../decisions/0039-an-event-can-be-noticed.md) | accepted | [`law.event.notice`](#law.event.notice), [`stage.notice.refusal`](#stage.notice.refusal) |
 | [0040-the-runtime-narrates-and-pages-speak](../decisions/0040-the-runtime-narrates-and-pages-speak.md) | accepted | [`law.embed.anonymous`](#law.embed.anonymous) |
+| [0041-a-character-gives-its-space-reflexes](../decisions/0041-a-character-gives-its-space-reflexes.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`law.event.notice`](#law.event.notice) |
 
 ### Unplaced
 

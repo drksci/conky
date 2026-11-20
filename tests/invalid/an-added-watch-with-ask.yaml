@@ -1,0 +1,13 @@
+# An answer may give its space reflexes, not asks: nothing meters an ask yet.
+pages:
+  den: {cash: 10}
+answer: |
+  === page: den ===
+  ---
+  watch:
+    - on: refusal
+      when: "true"
+      ask: {provider: helper, prompt: hi, into: said}
+  ---
+  === end ===
+refused: limit

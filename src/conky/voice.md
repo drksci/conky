@@ -33,7 +33,7 @@ A page can be a note. It can also carry a rule that must stay true from now on. 
 
 ## page-each
 
-To bind every page in {space} but not {space} itself, {space} gets `each` rules and nothing else. It is written like this:
+To bind every page in {space} but not {space} itself, or to have {space} count what it turns away, {space} gets `each` rules and `watch` entries and nothing else. A watch entry sets a field when something happens. It is written like this:
 
 ## page-each-example
 
@@ -42,6 +42,11 @@ To bind every page in {space} but not {space} itself, {space} gets `each` rules 
 ---
 rules:
   - each: page.FIELD < 50
+watch:
+  - on: refusal
+    when: "true"
+    set:
+      FIELD: page.FIELD + 1
 ---
 === end ===
 ```

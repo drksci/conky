@@ -498,7 +498,7 @@ def test_an_answer_cannot_set_a_field_or_a_body_on_its_space(den: Vault, stand: 
     found = refusals(den)
     assert [r["Page"] for r in found] == ["den", "den", "den"]
     assert all(r["Reason"].startswith("limit: ") for r in found)
-    assert "add rules to it and nothing else" in found[0]["Reason"]
+    assert "add rules and watch entries to it and nothing else" in found[0]["Reason"]
     den.verify()
 
 

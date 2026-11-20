@@ -1,0 +1,33 @@
+# An answer that adds the reflex its space already has leaves the space with one, so each refusal counts once.
+pages:
+  helper: {api: command, command: stand}
+  den:
+    turned: 0
+    rules: [{each: "!has(page.amount) || page.amount >= 0"}]
+    watch:
+      - on: refusal
+        when: "true"
+        set: {turned: "page.turned + 1"}
+  order: {}
+  keeper:
+    within: den
+    watch:
+      - on: order
+        when: "true"
+        ask:
+          provider: helper
+          writes: den
+          prompt: "The order reads: ![[order]] Count what the den turns away."
+steps:
+  - says: |
+      === page: den ===
+      ---
+      watch:
+        - on: refusal
+          when: "true"
+          set:
+            turned: page.turned + 1
+      ---
+  - write: {page: order, fields: {}, body: "Count each refusal."}
+  - write: {page: pay-a, fields: {within: den, amount: -1}}
+  - expect: {refused: rule, fields: {den.turned: 1}, verify: true}

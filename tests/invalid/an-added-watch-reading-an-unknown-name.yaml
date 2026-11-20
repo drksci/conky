@@ -1,0 +1,14 @@
+# An added watch entry is proven when written, like any other.
+pages:
+  den: {cash: 10}
+answer: |
+  === page: den ===
+  ---
+  watch:
+    - on: refusal
+      when: "true"
+      set:
+        seen: bogus.x
+  ---
+  === end ===
+refused: shape
