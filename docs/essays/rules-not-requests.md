@@ -39,5 +39,5 @@ Moving invariants out of prompts and into runtime rules makes a population of ac
 - Rules prove too blunt: actors spend most of their effort being refused, or work around rules in ways the rules cannot see.
 - Real invariants turn out not to be expressible as pure boolean expressions over a page and its size. Anything that needs more is out of reach for now.
 - Rule evaluation becomes the bottleneck or the main source of defects.
-- One oddity is already known: rules on a space also apply to the space page itself ([open questions](../project/open-questions.md)). If such cases multiply, the primitive is wrong.
+- One oddity was found and closed: a rule on a space applied to the space page itself, which a `within` rule now avoids ([decision 0034](../decisions/0034-a-rule-for-the-pages-within.md)). If such cases multiply, the primitive is wrong.
 - A hard refusal may be the wrong shape for some limits at all; see the pressure idea in [measures](../ideas/measures.md).

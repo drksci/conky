@@ -15,8 +15,11 @@ from . import playbook
 from .test_pages import Stand
 
 CARD = Path(__file__).parent.parent / "bench" / "cards" / "a-keeper-binds-itself.yaml"
-RULE = "!has(page.pay) || int(page.pay) <= int(space.cash) - 20"
-GOOD = f'30\n=== page: keeper ===\n---\nrules:\n  - "{RULE}"\n---\n'
+RULE = "page.amount <= space.cash - 20"
+GOOD = (
+    f'=== page: payments ===\n---\nwithin: den\nrules:\n  - within: "{RULE}"\n---\n'
+    "=== page: baker ===\n---\nwithin: payments\namount: 30\n---\n"
+)
 
 
 @pytest.fixture
@@ -45,7 +48,7 @@ def test_a_card_whose_live_step_is_answered_passes_and_writes_its_row(
     first, second = rows(out)
     assert first["card"] == "a-keeper-binds-itself" and "claim" in first and "forecast" in first
     assert "claim" not in second
-    assert first["expects"] == [{"step": 3, "failed": []}, {"step": 6, "failed": []}]
+    assert first["expects"] == [{"step": 3, "failed": []}, {"step": 5, "failed": []}]
     assert (first["draw"], first["calls"], first["model"]) == (1, 1, "claude")
     assert first["sent"] > 0 and first["received"] == len(GOOD.rstrip())
     assert Path(first["vault"]).is_dir() and Path(first["vault"]).parent.name == "draw-1"
@@ -55,15 +58,16 @@ def test_a_card_whose_live_step_is_answered_passes_and_writes_its_row(
     assert said.splitlines()[-1] == "passed 2 of 2"
 
 
-def test_a_draw_where_no_rule_is_written_fails_its_expects_and_is_kept(
+def test_a_draw_where_no_within_rule_is_written_fails_its_expects_and_is_kept(
     canned: Path, tmp_path: Path
 ) -> None:
-    canned.write_text("30\n")
+    canned.write_text("Paid 30.\n")
     out = tmp_path / "out"
     cards.main([str(CARD), "--draws", "1", "--out", str(out)])
     (row,) = rows(out)
     assert not cards.passed(row)
-    assert "keeper has at least 1 rules that parse" in row["expects"][0]["failed"][0]
+    failed = row["expects"][0]["failed"][0]
+    assert "pages within den carry at least 1 within rules that parse" in failed
 
 
 def test_says_live_in_an_ordinary_playbook_is_refused_with_what_to_do(

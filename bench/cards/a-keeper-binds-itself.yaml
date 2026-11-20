@@ -1,29 +1,25 @@
-# Told that a limit must hold, a keeper writes a rule on its own page, and the rule then refuses it.
-claim: told that a limit must hold, a character writes a rule on its own page, and the rule then refuses it
-forecast: a small model writes a rule that parses in 3 of 5 draws; where it does, the breaking answer is refused every time
+# Told that every payment must leave a floor, a keeper states a rule for the pages within a space, and a later payment that breaks it is refused.
+claim: told that every payment must leave a floor, a character states a rule for the pages within a space and a later payment that breaks it is refused
+forecast: a small model writes a within rule that parses in 3 of 5 draws and it covers the breaking payment in 2 of 5
 pages:
   helper: {api: command, command: stand}
   den: {cash: 80}
   order: {}
   keeper:
     within: den
-    pay: 0
     watch:
       - on: order
         when: "true"
         ask:
           provider: helper
           writes: den
-          into: pay
-          otherwise: "0"
           prompt: |
             The order reads: ![[order]]
 
-            The den holds cash in its field cash, and a rule reads it as space.cash. The den must always keep at least 20 in cash, so a payment may never be more than the cash less 20. Make that impossible for yourself to break, not merely intended. Then answer with the amount to pay, a number alone on the first line.
+            Every payment the den makes must leave at least 20 in cash. The den holds its cash in the field cash. Make that impossible to break, not merely intended. Then record the payment as a page with an amount.
 steps:
   - says: live
   - write: {page: order, fields: {}, body: "Pay the baker 30."}
-  - expect: {rules: {keeper: 1}, answer: {keeper.pay: "^30$"}}
-  - says: "70"
-  - write: {page: order, fields: {}, body: "Pay the landlord 70."}
-  - expect: {fields: {keeper.pay: "0"}}
+  - expect: {within_rules: {den: 1}, within_fields: {den: {amount: "^30$"}}}
+  - write: {page: landlord-payment, within_ruled: den, fields: {amount: 70}}
+  - expect: {refused: rule}

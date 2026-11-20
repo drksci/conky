@@ -51,6 +51,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `connect` | Run a connector beside the vault. |
 | `demo` | Build a small example vault and show it working. |
 | `assimilate` | Take over a stopped vault from its folder alone. |
+| `export` | Show a vault's committed pages in another form, under `dist/`. |
 
 ## Global options
 
@@ -77,6 +78,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `assimilate --into` | The folder to create. |
 | `assimilate --as` | The name of the new actor. |
 | `assimilate --then` | A write to make as the new actor, repeatable. |
+| `export --out` | The folder to write, in place of `dist/<form>/`. |
 | `connect terminal --as` | The connector's actor name. |
 | `connect terminal --screen` | The page that receives the screen. |
 | `connect terminal --hands` | The page that says what to type. |

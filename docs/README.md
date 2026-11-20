@@ -69,6 +69,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0031-build-on-bedrock.md](decisions/0031-build-on-bedrock.md): Build on bedrock
 - [decisions/0032-results-publish-themselves.md](decisions/0032-results-publish-themselves.md): Results publish themselves
 - [decisions/0033-ahead-or-different-with-each-step.md](decisions/0033-ahead-or-different-with-each-step.md): Ahead or different with each step
+- [decisions/0034-a-rule-for-the-pages-within.md](decisions/0034-a-rule-for-the-pages-within.md): A rule for the pages within
 
 ### Research
 

@@ -1,0 +1,16 @@
+# A within rule refuses a member and accepts the space that carries it, which lacks the field.
+pages:
+  den:
+    cash: 80
+    rules:
+      - within: "page.amount <= space.cash - 20"
+  keeper:
+    within: den
+    amount: 0
+steps:
+  - write: {page: pay-a, fields: {within: den, amount: 70}}
+  - expect: {refused: rule, missing: [pay-a]}
+  - write: {page: pay-b, fields: {within: den, amount: 60}}
+  - expect: {exists: [pay-b], verify: true}
+  - write: {page: den, fields: {cash: 90}}
+  - expect: {fields: {den.cash: 90}, verify: true}

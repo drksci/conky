@@ -58,7 +58,15 @@ A field is read as `page.cups`. The runtime has no size limit of its own: `size 
 
 A page may carry a list of rules in `rules`. A space is a page that other pages name in `within`. A write is checked against the page's own rules, then those of the space named by its `within`, then that space's own `within`, and so on up the chain, so a page inherits the rules of every space above it.
 
-The rules of a space therefore also apply to the space page itself, and a space whose rule mentions a field must carry that field. This is a known gap ([open questions](../project/open-questions.md)).
+A rule entry is a condition as text, or a mapping with the one key `within` whose value is a condition. A plain condition applies to the page that carries it and to every page within it, as above, so a space whose plain rule mentions a field must carry that field. A `within` condition applies to every page within the space, at any depth, and never to the space itself, so a space can bind a whole kind of act without carrying the field:
+
+```yaml
+rules:
+  - page.cash >= 0                          # this page, and those within
+  - within: page.amount <= space.cash - 20  # every page within this one, not this one
+```
+
+Every page within the space is judged, including a space page that lies within it, so a page that lacks the field fails the rule as any missing field does. Any other mapping is refused for shape, and the reason says what is allowed. A refusal names the condition and the space it came from, whichever form it had ([decision 0034](../decisions/0034-a-rule-for-the-pages-within.md)).
 
 A write that changes the `within` of a page that already exists is judged twice: by the page's own rules and the spaces it will be in, as above, and by the rules of every space it was in before, evaluated against the page as it would be after the write ([decision 0022](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md)). A space that says nothing about leaving lets its members go. A space that wants to bind states it as a rule. A refusal by a space the page is leaving names that space, as any refusal from a space does.
 
@@ -76,7 +84,7 @@ A write that cannot hold is refused and recorded as an empty signed commit that 
 
 | Reason | When |
 |---|---|
-| `shape` | A reserved key or field is malformed: `within` is not a page name, `rules` is not a list of text, `watch` is not a list of entries with `on`, `when` and exactly one of `set` or `ask` (an `ask` has a `prompt` and `into`, `writes` or both, and no keys beyond those in [Asking a model](#asking-a-model)), or a field name is not text. |
+| `shape` | A reserved key or field is malformed: `within` is not a page name, `rules` is not a list of conditions and `within` mappings, `watch` is not a list of entries with `on`, `when` and exactly one of `set` or `ask` (an `ask` has a `prompt` and `into`, `writes` or both, and no keys beyond those in [Asking a model](#asking-a-model)), or a field name is not text. |
 | `rule` | A rule is false, fails to evaluate, or cannot be reached: the `within` chain loops back on itself, or names a space that does not exist. The reason names the rule and the space it came from. |
 | `cycle` | Reactions are nested deeper than 12. |
 | `watch` | A watch condition or value failed to evaluate. The refusal is recorded against the watching page. |

@@ -102,10 +102,12 @@ Every concept word and verb of the [vocabulary](vocabulary.md), and each named p
 | <a id="part.character.self"></a>`part.character.self` | [`layer.character`](#layer.character) | A seed, a face, a temperament and a voice for every page. | [character.md](../ideas/character.md) | - | R23 | planned |
 | <a id="part.pattern.make"></a>`part.pattern.make` | [`layer.character`](#layer.character) | Domain structures are never built in. A pattern maker makes them on demand from worked examples. | [0009-patterns-not-features.md](../decisions/0009-patterns-not-features.md) | - | R6 | planned |
 | <a id="part.character.habit"></a>`part.character.habit` | [`layer.character`](#layer.character) | A kept conclusion on a page: when a guard holds, then a response, because of a source, expecting what should follow. | [habit.md](../ideas/habit.md) | - | - | idea |
-| <a id="part.cli.command"></a>`part.cli.command` | [`layer.edge`](#layer.edge) | `init write ask model read log verify rebuild connect demo assimilate cache`. | [cli.md#commands](cli.md#commands) | `conky.cli.main` | - | built |
+| <a id="part.cli.command"></a>`part.cli.command` | [`layer.edge`](#layer.edge) | `init write ask model read log verify rebuild connect demo assimilate cache export`. | [cli.md#commands](cli.md#commands) | `conky.cli.main` | - | built |
 | <a id="part.cli.demo"></a>`part.cli.demo` | [`layer.edge`](#layer.edge) | A narrated example vault built with the real write path. | [cli.md#demo](cli.md#demo) | `conky.demo.build` | R20 | built |
 | <a id="part.cli.present"></a>`part.cli.present` | [`layer.edge`](#layer.edge) | One result, two presenters: plain for scripts, styled for people. | [cli.md#colour-and-styled-output](cli.md#colour-and-styled-output) | `conky.present.choose` | - | built |
 | <a id="part.connect.terminal"></a>`part.connect.terminal` | [`layer.edge`](#layer.edge) | The terminal connector, eyes and hands on a program. | [connectors.md#the-terminal-connector](connectors.md#the-terminal-connector) | `conky.connect.terminal` | - | built |
+| <a id="part.export.affine"></a>`part.export.affine` | [`layer.edge`](#layer.edge) | Says that no AFFiNE file import that fits was found, and writes nothing. | [connectors.md#showing-a-vault-elsewhere](connectors.md#showing-a-vault-elsewhere) | `conky.export.affine` | - | built |
+| <a id="part.export.obsidian"></a>`part.export.obsidian` | [`layer.edge`](#layer.edge) | The committed pages as an Obsidian folder of notes and a JSON Canvas, rebuilt each time. | [connectors.md#showing-a-vault-elsewhere](connectors.md#showing-a-vault-elsewhere) | `conky.export.obsidian` | - | built |
 | <a id="part.vault.assimilate"></a>`part.vault.assimilate` | [`layer.edge`](#layer.edge) | Take over a stopped vault from its folder alone. | [cli.md#assimilate](cli.md#assimilate) | `conky.assimilate.run` | R21 | built |
 | <a id="part.connect.protocol"></a>`part.connect.protocol` | [`layer.edge`](#layer.edge) | Connectors for the protocols people already use, each a door and not a room. | [connectors.md](../ideas/connectors.md) | - | R25 | planned |
 | <a id="part.screen"></a>`part.screen` | [`layer.edge`](#layer.edge) | A screen derived from the pages as A2UI messages, drawn by a renderer. | [a2ui.md](../ideas/a2ui.md) | - | R11b | planned |
@@ -127,7 +129,7 @@ From the store upwards. Each layer sits on the one before.
 | Reflexes (<a id="layer.reflex"></a>`layer.reflex`) | CEL rules, reactions, the depth bound, measures, pressure. | [`part.rule`](#part.rule), [`part.rule.captures`](#part.rule.captures), [`part.rule.indexof`](#part.rule.indexof), [`part.rule.join`](#part.rule.join), [`part.rule.lowerascii`](#part.rule.lowerascii), [`part.rule.replace`](#part.rule.replace), [`part.rule.split`](#part.rule.split), [`part.rule.substring`](#part.rule.substring), [`part.rule.trim`](#part.rule.trim), [`part.watch`](#part.watch) | [`part.seal.signer`](#part.seal.signer), [`part.rule.origin`](#part.rule.origin) |
 | Spaces (<a id="layer.space"></a>`layer.space`) | `within`, rules handed down, leaving judged. | [`part.space`](#part.space), [`part.space.context`](#part.space.context) | - |
 | Characters (<a id="layer.character"></a>`layer.character`) | Pages that ask a model, providers, answers that are pages. | [`part.answer.cache`](#part.answer.cache), [`part.answer.format`](#part.answer.format), [`part.provider.detect`](#part.provider.detect) | [`part.character.face`](#part.character.face), [`part.character.self`](#part.character.self), [`part.pattern.make`](#part.pattern.make), [`part.character.habit`](#part.character.habit) |
-| The edge (<a id="layer.edge"></a>`layer.edge`) | The command line, presenters, connectors, `demo`, `assimilate`. | [`part.cli.command`](#part.cli.command), [`part.cli.demo`](#part.cli.demo), [`part.cli.present`](#part.cli.present), [`part.connect.terminal`](#part.connect.terminal), [`part.vault.assimilate`](#part.vault.assimilate) | [`part.connect.protocol`](#part.connect.protocol), [`part.screen`](#part.screen), [`part.screen.page`](#part.screen.page), [`part.screen.update`](#part.screen.update), [`part.test.bench`](#part.test.bench), [`part.test.resume`](#part.test.resume), [`part.test.trial`](#part.test.trial), [`part.screen.live`](#part.screen.live) |
+| The edge (<a id="layer.edge"></a>`layer.edge`) | The command line, presenters, connectors, `demo`, `assimilate`. | [`part.cli.command`](#part.cli.command), [`part.cli.demo`](#part.cli.demo), [`part.cli.present`](#part.cli.present), [`part.connect.terminal`](#part.connect.terminal), [`part.export.affine`](#part.export.affine), [`part.export.obsidian`](#part.export.obsidian), [`part.vault.assimilate`](#part.vault.assimilate) | [`part.connect.protocol`](#part.connect.protocol), [`part.screen`](#part.screen), [`part.screen.page`](#part.screen.page), [`part.screen.update`](#part.screen.update), [`part.test.bench`](#part.test.bench), [`part.test.resume`](#part.test.resume), [`part.test.trial`](#part.test.trial), [`part.screen.live`](#part.screen.live) |
 
 ## 4. Archetypes
 
@@ -1236,6 +1238,8 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`part.embed`](#part.embed) | built | - | - | none |
 | [`part.error`](#part.error) | built | - | - | none |
 | [`part.event`](#part.event) | built | - | - | none |
+| [`part.export.affine`](#part.export.affine) | built | - | - | none |
+| [`part.export.obsidian`](#part.export.obsidian) | built | - | - | none |
 | [`part.key`](#part.key) | built | - | - | none |
 | [`part.key.rotate`](#part.key.rotate) | idea | not built | - | - |
 | [`part.link`](#part.link) | idea | not built | - | - |
@@ -1366,6 +1370,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0031-build-on-bedrock](../decisions/0031-build-on-bedrock.md) | accepted | - |
 | [0032-results-publish-themselves](../decisions/0032-results-publish-themselves.md) | accepted | - |
 | [0033-ahead-or-different-with-each-step](../decisions/0033-ahead-or-different-with-each-step.md) | accepted | - |
+| [0034-a-rule-for-the-pages-within](../decisions/0034-a-rule-for-the-pages-within.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`part.space`](#part.space) |
 
 ### Unplaced
 

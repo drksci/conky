@@ -30,8 +30,12 @@ The checks in `expect`:
 | `model_calls` | The stand-in model has been asked this many times in all. |
 | `model_commits` | This many commits in the history were answered by a model. |
 | `verify` | `true`: the vault verifies. |
-| `rules` | Each `page: n` holds when the page carries at least `n` rules that parse. |
+| `rules` | Each `page: n` holds when the page carries at least `n` rules that parse, plain or `within`. |
+| `within_rules` | Each `space: n` holds when the pages within the space, at any depth, carry at least `n` `within` rules that parse. |
+| `within_fields` | Each `space: {field: pattern}` holds when some page within the space has the field matching the regular expression. |
 | `answer` | Each `page.field: pattern` holds when the field matches the regular expression. |
+
+A `write` step may carry `within_ruled: space`. The page is then written once into each page within that space that carries a `within` rule, stopping at the first refusal, so a card can try a page where a model chose to place its rule.
 
 A failed check names the playbook, the step number, what was expected and what was found.
 

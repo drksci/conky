@@ -23,7 +23,7 @@ steps:
       within: den
       food: 0
       rules:
-        - "!has(page.keys) || page.keys != '1' || !has(space.food) || int(space.food) < 50"
+        - within: "page.keys != '1' || space.food < 50"
       watch:
         - on: screen
           when: "other_text.contains('FOOD ')"

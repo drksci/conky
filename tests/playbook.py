@@ -51,13 +51,18 @@ def run(
             stand.says(step["says"])
         elif kind == "write":
             put = step["write"]
-            last = vault.write(
-                put["page"],
-                put.get("fields", {}),
-                put.get("body"),
-                actor=put.get("actor", "alice"),
-                at=AT,
-            )
+            places = [None]
+            if "within_ruled" in put:
+                places = ruled(vault, put["within_ruled"])
+            for place in places:
+                fields = put.get("fields", {})
+                if place is not None:
+                    fields = {**fields, "within": place}
+                last = vault.write(
+                    put["page"], fields, put.get("body"), actor=put.get("actor", "alice"), at=AT
+                )
+                if not last.ok:
+                    break
         elif kind == "expect":
             lines = expectations(step["expect"], vault, stand, last)
             if found is not None:
@@ -90,7 +95,19 @@ def expectations(expect: dict[str, Any], vault: Vault, stand: Stand, last: Any) 
         elif key == "rules":
             for page, least in wanted.items():
                 held = vault.read(page).rules if (vault.pages_dir / f"{page}.md").exists() else []
-                check(f"{page} has at least {least} rules that parse", True, parsed(held) >= least)
+                texts = [r if isinstance(r, str) else r["within"] for r in held]
+                check(f"{page} has at least {least} rules that parse", True, parsed(texts) >= least)
+        elif key == "within_rules":
+            for space, least in wanted.items():
+                count = sum(parsed(within_rules(vault, page)) for page in inside(vault, space))
+                what = f"pages within {space} carry at least {least} within rules that parse"
+                check(what, True, count >= least)
+        elif key == "within_fields":
+            for space, fields in wanted.items():
+                for field, pattern in fields.items():
+                    got = [str(vault.read(p).fields.get(field)) for p in inside(vault, space)]
+                    if not any(re.search(str(pattern), g) for g in got):
+                        out.append(f"no page within {space} has {field} matching {pattern!r}")
         elif key == "answer":
             for where, pattern in wanted.items():
                 page, field = where.split(".", 1)
@@ -115,6 +132,29 @@ def expectations(expect: dict[str, Any], vault: Vault, stand: Stand, last: Any) 
         else:
             out.append(f"unknown expectation {key!r}")
     return out
+
+
+def inside(vault: Vault, space: str) -> list[str]:
+    """Return the pages that lie within space, at any depth."""
+    found = []
+    for path in sorted(vault.pages_dir.glob("*.md")):
+        seen, above = {path.stem}, vault.read(path.stem).within
+        while above is not None and above != space and above not in seen:
+            seen.add(above)
+            above = vault.read(above).within
+        if above == space:
+            found.append(path.stem)
+    return found
+
+
+def within_rules(vault: Vault, page: str) -> list[str]:
+    """Return the conditions of the `within` rules a page carries."""
+    return [r["within"] for r in vault.read(page).rules if isinstance(r, dict)]
+
+
+def ruled(vault: Vault, space: str) -> list[str]:
+    """Return the pages within space that carry a `within` rule."""
+    return [page for page in inside(vault, space) if within_rules(vault, page)]
 
 
 def parsed(rules: list[str]) -> int:

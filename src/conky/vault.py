@@ -614,10 +614,20 @@ class Vault:
     def _walk(
         self, name: str, space: Page, owner: str, scope: dict[str, Any]
     ) -> tuple[str, str] | None:
-        """Judge the rules of space and of the spaces above it against scope."""
+        """Judge the rules of space and of the spaces above it against scope.
+
+        A `within` rule is judged only when it comes from a space above the page, never from
+        the page itself.
+        """
         seen = {name}
         while True:
-            for rule in space.rules:
+            for entry in space.rules:
+                if isinstance(entry, dict):
+                    if owner == name:
+                        continue
+                    rule = entry["within"]
+                else:
+                    rule = entry
                 try:
                     held = holds(rule, scope)
                 except RuleError as exc:

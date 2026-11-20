@@ -9,7 +9,7 @@ from pathlib import Path
 
 import yaml
 
-from conky import arch, assimilate, cache, connect, demo, model, present
+from conky import arch, assimilate, cache, connect, demo, export, model, present
 from conky.assimilate import INTO
 from conky.errors import BadInput, VerifyFailed
 from conky.page import load_value, serialize
@@ -105,6 +105,9 @@ def _parser() -> argparse.ArgumentParser:
         "--into", default=None, help="folder to create (default: ./conky-demo-NAME)"
     )
     demo_cmd.add_argument("--list", action="store_true", help="list the examples")
+    shown = sub.add_parser("export", help="show the vault as a folder another program can open")
+    shown.add_argument("format", choices=["obsidian", "affine"])
+    shown.add_argument("--out", default=None, help="folder to write (default: VAULT/dist/FORMAT)")
     assim = sub.add_parser("assimilate", help="take over a stopped vault from its folder alone")
     assim.add_argument(
         "source",
@@ -217,6 +220,12 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
             args.actor, args.screen, args.hands, args.settle, args.max_steps, args.first_line
         )
         return connect.terminal(vault, args.program, settings, _now, ui, print)
+    if args.command == "export":
+        if args.format == "affine":
+            export.affine()
+        folder, count = export.obsidian(vault, Path(args.out) if args.out else None)
+        print(f"wrote {_count(count, 'page', 'pages')} to {folder}")
+        return 0
     if args.command in ("write", "ask"):
         if args.command == "write":
             result = vault.write(
@@ -268,7 +277,7 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
 @arch.part(
     "part.cli.command",
     "layer.edge",
-    "`init write ask model read log verify rebuild connect demo assimilate cache`.",
+    "`init write ask model read log verify rebuild connect demo assimilate cache export`.",
     doc="cli.md#commands",
 )
 @arch.stage(

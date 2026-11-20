@@ -79,7 +79,7 @@ class Page:
     """One page: its space, rules, watches, own fields and body."""
 
     within: str | None = None
-    rules: list[str] = field(default_factory=list)
+    rules: list[str | dict[str, str]] = field(default_factory=list)
     watch: list[dict[str, Any]] = field(default_factory=list)
     fields: dict[str, Any] = field(default_factory=dict)
     body: str = ""
@@ -148,8 +148,10 @@ def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
         elif key == "rules":
             if value is None:
                 value = []
-            if not isinstance(value, list) or not all(isinstance(r, str) for r in value):
-                raise ShapeError("rules must be a list of text")
+            if not isinstance(value, list):
+                raise ShapeError("rules must be a list")
+            for entry in value:
+                _check_rule(entry)
             rules = value
         elif key == "watch":
             if value is None:
@@ -165,6 +167,18 @@ def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
             fields[key] = value
     result = Page(within, rules, watch, fields, page.body if body is None else body)
     return parse(serialize(result))
+
+
+def _check_rule(entry: Any) -> None:
+    """Refuse a rule entry that is neither a condition nor a `within` mapping."""
+    if isinstance(entry, str):
+        return
+    if isinstance(entry, dict) and set(entry) == {"within"} and isinstance(entry["within"], str):
+        return
+    raise ShapeError(
+        "a rule is a condition as text, or a mapping with the one key within whose value is a "
+        f"condition as text, not {entry!r}"
+    )
 
 
 def _watch_head(entry: dict[str, Any]) -> dict[str, Any]:

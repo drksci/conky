@@ -199,6 +199,15 @@ Errors, each on one line beginning `error: `, include:
 - `error: --settle must be 0 or more seconds and --max-steps at least 1`
 - `error: cannot create the page '<page>': <reason>: create it first, or change the rule`
 
+### export
+
+```
+conky export obsidian [--out FOLDER]
+conky export affine
+```
+
+`export obsidian` writes the vault's committed pages as a folder a person can open in Obsidian: one note a page, in folders that follow spaces, and one `conky.canvas` with the pages as nodes and their relations as edges. It writes to `dist/obsidian/` in the vault, or to `--out`. The folder is derived: it is rebuilt from the vault each time, is never committed, and can be deleted. `export affine` writes nothing yet and says why. See [connectors](connectors.md#showing-a-vault-elsewhere).
+
 ### rebuild
 
 ```

@@ -1,0 +1,8 @@
+# A rule is a condition or a mapping with the one key within; any other mapping is refused for shape.
+pages:
+  den: {}
+steps:
+  - write: {page: den, fields: {rules: [{without: "true"}]}}
+  - expect: {refused: shape, fields: {den.rules: null}}
+  - write: {page: den, fields: {rules: [{within: "true", also: "true"}]}}
+  - expect: {refused: shape}
