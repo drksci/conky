@@ -73,6 +73,8 @@ A few parts, wrapped in layers, with the world plugging in at the edge. Solid is
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-flows.dark.svg"><img src="docs/assets/figures/fig-flows.light.svg" alt="A seven-lane swimlane of one change: a stimulus is perceived, a page is written, the rules are checked, the change is signed and appended, watchers notice, a prompt goes to a provider and the answer comes back as a write, with a refusal branch and planned steps dotted." width="800"></picture></p>
 
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-recursion.dark.svg"><img src="docs/assets/figures/fig-recursion.light.svg" alt="One membrane drawn five times, each zooming into a member of the last: a vault, a space, a character, the habit a character keeps, and one case with its when, then, because and expect." width="800"></picture></p>
+
 <br>
 
 <p align="center"><a href="docs/guide/concepts.md">Concepts</a> &nbsp;·&nbsp; <a href="docs/guide/getting-started.md">Getting started</a> &nbsp;·&nbsp; <a href="docs/reference/vault-format.md">Reference</a> &nbsp;·&nbsp; <a href="docs/design.md">Design</a> &nbsp;·&nbsp; <a href="docs/decisions/0001-objective.md">Decisions</a> &nbsp;·&nbsp; <a href="docs/research/harnesses.md">Research</a> &nbsp;·&nbsp; <a href="CONTRIBUTING.md">Contributing</a></p>

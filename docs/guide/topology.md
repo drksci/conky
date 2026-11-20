@@ -8,7 +8,7 @@ source: maintainers
 
 # Topology
 
-Six plates of the same system, drawn with the same marks. Solid is built and dotted is planned. Each is a schematic, and the complete inventory behind them is the [architecture index](../reference/architecture.md).
+Seven plates of the same system, drawn with the same marks. Solid is built and dotted is planned. Each is a schematic, and the complete inventory behind them is the [architecture index](../reference/architecture.md).
 
 ## 1. The whole
 
@@ -46,3 +46,8 @@ Bigger things are sums of the same parts, made by characters. None of these is m
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../../docs/assets/figures/fig-compositions.dark.svg"><img src="../../docs/assets/figures/fig-compositions.light.svg" alt="Six recipes written as sums of parts: pattern, approval, budget, go-between, character and breakpoint." width="800"></picture></p>
 
+## 7. The same shape at every depth
+
+A character is itself a space. What it keeps are pages inside it, and the shape repeats down to a single case.
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../../docs/assets/figures/fig-recursion.dark.svg"><img src="../../docs/assets/figures/fig-recursion.light.svg" alt="One membrane drawn five times, each zooming into a member of the last: a vault, a space, a character, the habit a character keeps, and one case with its when, then, because and expect." width="800"></picture></p>
