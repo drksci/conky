@@ -10,10 +10,12 @@ import shutil
 import subprocess
 import urllib.error
 import urllib.request
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from conky.cache import Cache, Mode, digest
 from conky.page import NAME
 
 TIMEOUT = 60
@@ -68,6 +70,7 @@ class Answer:
     text: str
     tokens_in: int | None
     tokens_out: int | None
+    cached: bool = False
 
 
 def provider(page: str, fields: dict[str, Any] | None) -> Provider:
@@ -350,3 +353,47 @@ def ask(found: Provider, secret: str | None, prompt: str, keys_dir: Path) -> Ans
             f"{where} sent no answer text in the {found.api} format: check that api matches "
             "the service"
         ) from exc
+
+
+def moment_key(found: Provider, prompt: str, cause: str) -> str:
+    """Return the cache key of one question put in one moment.
+
+    It is the hash of the provider's shape, its endpoint or command name, its model, the most
+    tokens it may write, the whole prompt as sent and the event that caused the question. The
+    same words asked after a new event have another key, so a character answers afresh.
+    """
+    limit = found.max_tokens or (ANTHROPIC_MAX_TOKENS if found.api == "anthropic" else None)
+    return digest(
+        "answer",
+        found.api,
+        found.url or "",
+        found.command or "",
+        found.model or "",
+        str(limit or ""),
+        prompt,
+        cause,
+    )
+
+
+def ask_once(
+    cache: Cache,
+    found: Provider,
+    secret: Callable[[], str | None],
+    prompt: str,
+    keys_dir: Path,
+    cause: str,
+) -> Answer | None:
+    """Return the cached answer to this question in this moment, else ask the provider and keep it.
+
+    Returns None when the cache is in mode `only` and holds no answer: no provider is called.
+    The secret is looked up only when the provider is called. A failed call is never kept.
+    """
+    key = moment_key(found, prompt, cause)
+    kept = cache.get(key)
+    if isinstance(kept, dict) and isinstance(kept.get("text"), str) and kept["text"].strip():
+        return Answer(kept["text"], None, None, cached=True)
+    if cache.mode == Mode.ONLY:
+        return None
+    reply = ask(found, secret(), prompt, keys_dir)
+    cache.put(key, {"text": reply.text})
+    return reply

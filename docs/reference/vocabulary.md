@@ -43,6 +43,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `write` | Write fields and a body to a page. |
 | `ask` | Ask a model and write the answer to a field of a page. |
 | `model` | Print which model an ask without a provider would use. |
+| `cache` | Show the cache of costly answers, or clear it. |
 | `read` | Print a page with embeds resolved. |
 | `log` | Print the history, oldest first. |
 | `verify` | Check the tree, the objects, the seals and the history. |
@@ -57,6 +58,8 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 |---|---|
 | `--vault` | The vault directory. |
 | `--keys` | The directory that holds private keys. |
+| `--cache-dir` | The directory that holds the cache. |
+| `--cache-mode` | What the cache may do: `on`, `off`, `refresh` or `only`. |
 | `--color` | Whether output is styled: `auto`, `always` or `never`. |
 
 ## Command options
@@ -129,6 +132,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `Tokens-In` | Tokens in the prompt, when the provider reports them. |
 | `Tokens-Out` | Tokens in the answer, when the provider reports them. |
 | `Read` | A page embedded in the prompt. |
+| `Cache` | `hit` when the answer came from the cache and was not paid for again. |
 
 ## Kinds
 
@@ -157,6 +161,15 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `ModelError` | A model could not be asked or did not answer. |
 | `ShapeError` | A write would give a page a malformed reserved key or field. |
 | `RuleError` | A rule or expression could not be evaluated. |
+
+## Cache modes
+
+| Name | Meaning |
+|---|---|
+| `on` | Read the cache before asking and write what is paid for. |
+| `off` | Neither read nor write the cache. |
+| `refresh` | Ignore existing entries and write new ones. |
+| `only` | Never call a provider: a miss falls to the plain sentence. |
 
 ## Provider shapes
 
@@ -193,5 +206,8 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `OPENAI_API_KEY` | The key for the detected `openai` choice. |
 | `CONKY_SECRET_<NAME>` | The secret called `<name>` that a provider page names. |
 | `CONKY_COMMAND_<NAME>` | The program and options for the command called `<name>`. |
+| `CONKY_CACHE` | The cache mode, the same as `--cache-mode`. |
+| `CONKY_CACHE_DIR` | The cache directory, the same as `--cache-dir`. |
+| `CONKY_CACHE_MAX` | The most megabytes the cache keeps. |
 | `NO_COLOR` | Turns styling off under `--color auto`. |
 | `TERM` | Passed to a program run by `connect terminal`. |

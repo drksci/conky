@@ -9,7 +9,7 @@ from pathlib import Path
 
 import yaml
 
-from conky import assimilate, connect, demo, model, present
+from conky import assimilate, cache, connect, demo, model, present
 from conky.assimilate import INTO
 from conky.errors import BadInput, VerifyFailed
 from conky.page import load_value, serialize
@@ -21,6 +21,15 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--vault", default=".", help="vault directory (default: .)")
     parser.add_argument(
         "--keys", default=None, help="private key directory (default: ~/.conky/keys)"
+    )
+    parser.add_argument(
+        "--cache-dir", default=None, help="cache directory (default: ~/.conky/cache)"
+    )
+    parser.add_argument(
+        "--cache-mode",
+        choices=[str(mode) for mode in cache.Mode],
+        default=None,
+        help="what the cache may do: on, off, refresh or only (default: on)",
     )
     parser.add_argument(
         "--color",
@@ -59,6 +68,8 @@ def _parser() -> argparse.ArgumentParser:
     ask.add_argument("--prompt", required=True)
     ask.add_argument("--as", dest="actor", required=True)
     sub.add_parser("model", help="print which model an ask without a provider would use")
+    store = sub.add_parser("cache", help="show the cache of costly answers, or clear it")
+    store.add_argument("action", nargs="?", choices=["clear"], default=None)
     read = sub.add_parser("read", help="print a page with embeds resolved")
     read.add_argument("page")
     sub.add_parser("log", help="print the history, oldest first")
@@ -141,6 +152,22 @@ def _model_lines() -> list[str]:
     return lines
 
 
+def _cache_lines(store: cache.Cache, *, clear: bool) -> list[str]:
+    if clear:
+        return [f"cleared {_count(store.clear(), 'entry', 'entries')} from {store.directory}"]
+    found = store.stats()
+    return [
+        f"cache: {store.directory}",
+        f"{_count(found.entries, 'entry', 'entries')}, {found.size} bytes, "
+        f"kept up to {store.limit} bytes; mode {store.mode}",
+        "to empty it: conky cache clear",
+    ]
+
+
+def _count(number: int, one: str, many: str) -> str:
+    return f"{number} {one if number == 1 else many}"
+
+
 def _now() -> str:
     return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -170,11 +197,16 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
         for line in _model_lines():
             print(line)
         return 0
+    store = cache.Cache.open(args.cache_dir, args.cache_mode)
+    if args.command == "cache":
+        for line in _cache_lines(store, clear=args.action == "clear"):
+            print(line)
+        return 0
     if args.command == "init":
-        Vault.init(args.path, args.keys)
+        Vault.init(args.path, args.keys, store)
         print(ui.initialised(args.path))
         return 0
-    vault = Vault(Path(args.vault), args.keys)
+    vault = Vault(Path(args.vault), args.keys, store)
     if args.command == "connect":
         settings = connect.Settings(
             args.actor, args.screen, args.hands, args.settle, args.max_steps

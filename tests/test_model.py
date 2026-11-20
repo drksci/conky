@@ -351,7 +351,7 @@ def test_a_secret_appears_nowhere_in_the_vault(
     (keys_dir / "filed.secret").write_text("filed-" + SECRET)
     monkeypatch.setenv("CONKY_SECRET_ENVIRONED", "environ-" + SECRET)
     provider(vault, stand, secret="filed")
-    provider(vault, stand, name="other", secret="environed")
+    provider(vault, stand, name="other", secret="environed", model="other-model")
     desk(vault)
     assert w(vault, "desk", {"watch": watch() + watch("other", into="other")}).ok
     assert new_ticket(vault).ok

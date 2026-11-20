@@ -65,6 +65,7 @@ A model answer is a write by the page that asked ([rules and reactions](rules-an
 | `Tokens-In` | prompt tokens, only when the provider reported them |
 | `Tokens-Out` | completion tokens, only when the provider reported them |
 | `Read` | a page whose fields or body were embedded in the prompt, one trailer for each distinct page in order of first use, and none when no page was embedded |
+| `Cache` | `hit` when the answer came from the cache. No tokens were spent, so `Tokens-In` and `Tokens-Out` are left out ([the cache](providers.md#cache)) |
 
 The resolved prompt sits between the subject and the trailers, exactly as sent, so the question is in the history beside its answer. The trailers are always the last paragraph of the message. A refusal of an answer that broke a rule carries the same trailers and note.
 

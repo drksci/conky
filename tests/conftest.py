@@ -62,3 +62,13 @@ def vault(tmp_path: Path, keys_dir: Path) -> Vault:
 def no_detected_model(monkeypatch: pytest.MonkeyPatch) -> None:
     """Keep every test from reaching a model that happens to be set up on this machine."""
     monkeypatch.setenv("CONKY_PROVIDER", "none")
+
+
+@pytest.fixture(autouse=True)
+def private_cache(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    """Give every test its own empty cache, so none reads or writes a real one."""
+    found = tmp_path / "cache"
+    monkeypatch.setenv("CONKY_CACHE_DIR", str(found))
+    for name in ("CONKY_CACHE", "CONKY_CACHE_MAX"):
+        monkeypatch.delenv(name, raising=False)
+    return found

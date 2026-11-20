@@ -11,7 +11,7 @@ source: maintainers
 This page specifies every `conky` command, its options, its output and its exit codes. [Getting started](../guide/getting-started.md) walks through them, except `connect`, which [playing a program](../guide/playing-a-program.md) shows. Install with `pip install -e '.[dev]'`.
 
 ```
-conky [--vault DIR] [--keys DIR] [--color WHEN] <command> ...
+conky [--vault DIR] [--keys DIR] [--cache-dir DIR] [--cache-mode MODE] [--color WHEN] <command> ...
 ```
 
 ## Global options
@@ -20,6 +20,8 @@ conky [--vault DIR] [--keys DIR] [--color WHEN] <command> ...
 |---|---|
 | `--vault DIR` | The vault directory. Default: the current directory. |
 | `--keys DIR` | The directory that holds private keys. Default: `~/.conky/keys`. |
+| `--cache-dir DIR` | The directory that holds the cache. Default: `~/.conky/cache`, or `CONKY_CACHE_DIR`. |
+| `--cache-mode MODE` | `on`, `off`, `refresh` or `only`. Default: `on`, or `CONKY_CACHE`. See [the cache](providers.md#cache). |
 | `--color WHEN` | `auto`, `always` or `never`. Default: `auto`. |
 
 The global options go before the command. `init` takes the vault path as its own argument and ignores `--vault`.
@@ -136,6 +138,14 @@ conky model
 ```
 
 Prints which model an ask with no provider would use, and why, then the models behind it that are tried if it fails, and what happens if all of them fail. It reads only the environment and the PATH, calls nothing, needs no vault and always exits 0. See [detection](providers.md#detection).
+
+### cache
+
+```
+conky cache [clear]
+```
+
+Prints where the cache of costly answers is, how many entries it holds, how many bytes they take, the size bound and the mode. With `clear` it deletes every entry and prints how many. It needs no vault and always exits 0. A mode that is not one of the four, in `CONKY_CACHE` or `--cache-mode`, is an error that names the four. See [the cache](providers.md#cache).
 
 ### read
 

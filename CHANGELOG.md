@@ -6,6 +6,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ### Added
 
+- Pay once: a cache for model answers, kept in `~/.conky/cache` outside every vault, keyed to the provider, the whole prompt and the event that caused the question. The same question for the same event is never paid for twice, and the same words after a new event are asked afresh. A hit is recorded with the trailer `Cache: hit` and no token counts. `CONKY_CACHE` and `--cache-mode` take `on`, `off`, `refresh` or `only`, `CONKY_CACHE_DIR` and `--cache-dir` move it, `CONKY_CACHE_MAX` bounds it, and `conky cache` shows or clears it ([decision 0030](docs/decisions/0030-pay-once.md)).
 - `![[page]]` with no field embeds the body of a page. A missing page or an empty body embeds nothing, as a missing field does, and a page read this way is listed in the `Read` trailer like one read by field. A page that asks a model can now read a connector's screen text.
 - A vault as a Git repository: every write is a signed commit, and a refused write is an empty signed commit.
 - Rules in CEL, inherited through spaces.

@@ -63,6 +63,8 @@ One record per decision: context, decision, consequences.
 - [decisions/0027-the-vocabulary-is-what-exists.md](decisions/0027-the-vocabulary-is-what-exists.md): The vocabulary is what exists
 - [decisions/0028-a-character-writes-pages.md](decisions/0028-a-character-writes-pages.md): A character writes pages
 - [decisions/0029-autonomy-inside-limits-that-hold.md](decisions/0029-autonomy-inside-limits-that-hold.md): Autonomy inside limits that hold
+- [decisions/0030-pay-once.md](decisions/0030-pay-once.md): Pay once
+- [decisions/0031-build-on-bedrock.md](decisions/0031-build-on-bedrock.md): Build on bedrock
 
 ### Research
 

@@ -48,6 +48,7 @@ Run this before every push. CI runs the same command on every pull request.
 - Nothing already built has to stay. Existing code is reference, not an obligation. (review)
 - No debt: no shims, deprecated aliases, dead code or fix-later notes. Replacing something removes the old thing in the same change. (check: `tests/test_house.py` for fix-later notes; review for the rest)
 - No stub passes as real. Name it `stub` and say so where it is defined. (review)
+- Pay once. Anything costly (a model call, an outside call, a download, heavy computation) is cached by content as derived data: outside the history, safe to delete, and keyed to the moment so a character still answers afresh after a new event. (check: `tests/test_cache.py`)
 - Build nothing before something consumes it. (review)
 - Look for prior art and standards before inventing, and cite what you found in the decision. (review)
 - A space hands down rules, context and reactions. Prefer handing something down a space to adding a mechanism. (review: only rules are built)
@@ -95,4 +96,6 @@ An idea states its rung wherever it is mentioned, and climbs one rung at a time.
 - Run `scripts/check` before every push; the pre-push hook does it for you once enabled. (check: `scripts/hooks/pre-push`)
 - Commit subjects are `<type>: <summary>` with type feat, fix, docs, test, refactor or chore. (check: `scripts/check_commits.py`)
 - A change is done when the checks pass, the docs and status match the code, a decision is recorded if the design moved, and the changelog has its line. (review)
-- Small changes, each leaving the checks green. (check: `scripts/check`)
+- Build on bedrock. A new layer is run one step at a time, by hand or under a stop point, and looked at, before anything is built on it. Nothing runs in bulk, and nothing costly runs at all, until a single step has been walked through and seen to be right. (review; check: `bench/walk.py` for the benchmark)
+- Small changes, each leaving the checks green.
+- Keep the paper index fresh. `docs/research/dair-2026.md` carries the date it was last scanned. An agent starting work here looks at that date first: if it is more than seven days old, rescan the source it names, bring the index and `docs/research/papers.md` up to date, and set the date, before other work. (check: `scripts/check_docs.py` prints a reminder when the date is stale; it does not fail) (check: `scripts/check`)

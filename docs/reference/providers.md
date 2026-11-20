@@ -118,6 +118,30 @@ A plain sentence is written as an ordinary signed write with the trailer `Model:
 
 A key directory that does not exist means no secret and no command file, not an error. A secret or command file that cannot be read as text is a failure with a message that names the file.
 
+## Cache
+
+A question is paid for once. Before any provider is called, Conky looks for the answer in a cache of costly answers ([decision 0030](../decisions/0030-pay-once.md)). The cache is derived data: it lives in `~/.conky/cache` beside the keys, never inside a vault and never in its history, and it can be deleted at any time. A vault verifies and behaves the same without it, and only the cost of asking again changes.
+
+The key of an entry is the hash of:
+
+- the provider's shape, its `url` or `command` name, its `model` and the most tokens it may write (1024 for `anthropic` when the page sets none);
+- the whole prompt as sent, including the instruction added when the entry may write pages;
+- the cause of the question: the commit that made a watch entry react, or for `conky ask` the latest commit of the vault.
+
+The page's name and the secret's name are not in the key. Because the cause is in it, the same words asked after a new event are asked afresh, and a character does not repeat itself. The same question for the same event is not paid for twice, as in a retry after a crash, a replay or a test. The plain sentence and a failed call are never cached.
+
+A commit made from a hit has the usual trailers and one more, `Cache: hit`. It has no `Tokens-In` or `Tokens-Out`, since nothing was spent, so a sum of the token trailers over a history is what was spent.
+
+An entry is a JSON file named by its hash. A write is atomic, and an entry that cannot be read is a miss that the next live call replaces. The cache keeps at most 64 megabytes, or `CONKY_CACHE_MAX` megabytes, and drops the oldest entries first; a hit renews an entry.
+
+| Setting | Meaning |
+|---|---|
+| `CONKY_CACHE_DIR`, `--cache-dir` | Where the cache is. The option wins. |
+| `CONKY_CACHE_MAX` | The most megabytes to keep. |
+| `CONKY_CACHE`, `--cache-mode` | `on` reads and writes (the default). `off` does neither. `refresh` ignores existing entries and writes new ones. `only` never calls a provider, so a miss falls to the plain sentence. |
+
+[`conky cache`](cli.md#cache) shows the cache and `conky cache clear` empties it.
+
 ## Example settings
 
 These map the formats onto common cases. They are examples, not tested integrations: only stand-in servers on the local machine have tested them. Check each value against the service's own documentation.

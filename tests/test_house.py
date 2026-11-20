@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 import conky
-from conky import cli, connect, model, page, present
+from conky import cache, cli, connect, model, page, present
 from conky.vault import KINDS, Refusal, Trailer
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -142,6 +142,7 @@ def code() -> dict[str, set[str]]:
         "Kinds": set(KINDS),
         "Refusals": {str(word) for word in Refusal},
         "Errors": errors(),
+        "Cache modes": {str(mode) for mode in cache.Mode},
         "Provider shapes": set(model.APIS),
         "Provider choices": set(model.CHOICES),
         "Built-in commands": set(model.BUILTIN_COMMANDS),
@@ -151,6 +152,9 @@ def code() -> dict[str, set[str]]:
             *model.KEY_VARIABLES.values(),
             model.SECRET_PREFIX + "<NAME>",
             model.COMMAND_PREFIX + "<NAME>",
+            cache.MODE_VARIABLE,
+            cache.DIR_VARIABLE,
+            cache.MAX_VARIABLE,
             present.NO_COLOR,
             connect.TERM,
         },

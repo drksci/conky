@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 import sys
+from datetime import date
 from pathlib import Path
 
 import yaml
@@ -153,7 +154,37 @@ def check() -> list[str]:
     return problems
 
 
+SCAN_INDEX = DOCS / "research" / "dair-2026.md"
+SCAN_DAYS = 7
+
+
+def scan_reminder(scanned: object, today: date) -> str | None:
+    """Return a reminder when the paper index was last scanned more than seven days before today.
+
+    A reminder is advice, never a failure. This is the one place the check reads a date, and the
+    caller passes today's date in.
+    """
+    if isinstance(scanned, str):
+        try:
+            scanned = date.fromisoformat(scanned)
+        except ValueError:
+            return None
+    if not isinstance(scanned, date):
+        return None
+    days = (today - scanned).days
+    if days <= SCAN_DAYS:
+        return None
+    return (
+        f"reminder: docs/research/dair-2026.md was last scanned on {scanned.isoformat()}, "
+        f"{days} days ago: rescan its source and update the index and docs/research/papers.md"
+    )
+
+
 def main() -> int:
+    meta = frontmatter(SCAN_INDEX.read_text(encoding="utf-8")) if SCAN_INDEX.exists() else None
+    reminder = scan_reminder((meta or {}).get("date"), date.today())
+    if reminder:
+        print(reminder)
     problems = check()
     for problem in problems:
         print(problem)

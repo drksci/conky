@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from conky import answer, git, model
+from conky.cache import Cache
 from conky.errors import BadInput, VerifyFailed
 from conky.page import (
     NAME,
@@ -29,6 +30,7 @@ from conky.rules import RuleError, evaluate, holds
 
 MAX_DEPTH = 12
 KINDS = ("write", "refused")
+CACHE_HIT = "hit"
 
 
 class Trailer(StrEnum):
@@ -46,6 +48,7 @@ class Trailer(StrEnum):
     TOKENS_IN = "Tokens-In"
     TOKENS_OUT = "Tokens-Out"
     READ = "Read"
+    CACHE = "Cache"
 
 
 class Refusal(StrEnum):
@@ -102,7 +105,9 @@ class Ask:
 class Vault:
     """A Git repository of pages, with public keys tracked and private keys kept elsewhere."""
 
-    def __init__(self, path: str | Path, keys_dir: str | Path | None = None) -> None:
+    def __init__(
+        self, path: str | Path, keys_dir: str | Path | None = None, cache: Cache | None = None
+    ) -> None:
         git.require_tools()
         self.path = Path(path)
         if not (self.path / ".git").exists():
@@ -110,15 +115,18 @@ class Vault:
         self.pages_dir = self.path / "pages"
         self.signers = self.path / git.SIGNERS
         self.keys_dir = Path(keys_dir) if keys_dir is not None else Path.home() / ".conky" / "keys"
+        self.cache = cache if cache is not None else Cache.open()
 
     @classmethod
-    def init(cls, path: str | Path, keys_dir: str | Path | None = None) -> Vault:
+    def init(
+        cls, path: str | Path, keys_dir: str | Path | None = None, cache: Cache | None = None
+    ) -> Vault:
         """Create an empty vault at path and return it."""
         git.require_tools()
         if (Path(path) / ".git").exists():
             raise BadInput(f"{path} is already a vault")
         git.init(Path(path))
-        return cls(path, keys_dir)
+        return cls(path, keys_dir, cache)
 
     def read(self, page: str) -> Page:
         """Return the page with its embeds resolved."""
@@ -262,6 +270,10 @@ class Vault:
             commit, *names = record.split("\n")
             changed[commit] = [n for n in names if n]
         return changed
+
+    def _head(self) -> str:
+        """Return the id of the latest event, or nothing in a vault with none."""
+        return git.run(["rev-parse", "HEAD"], self.path).strip() if self._has_commits() else ""
 
     def _has_commits(self) -> bool:
         return bool(git.run(["branch", "--list", "main"], self.path).strip())
@@ -509,21 +521,34 @@ class Vault:
         ):
             return None
         where = (page, actor, at, cause, depth)
+        moment = cause or self._head()
         if ask.provider is not None:
             try:
                 loaded = self._load(ask.provider)
                 found = model.provider(ask.provider, None if loaded is None else loaded.fields)
-                secret = model.find_secret(found.secret, self.keys_dir) if found.secret else None
-                reply = model.ask(found, secret, prompt, self.keys_dir)
-                return self._answered(found, reply, ask, digest, pages, prompt, where)
+
+                def secret(found: model.Provider = found) -> str | None:
+                    return model.find_secret(found.secret, self.keys_dir) if found.secret else None
+
+                reply = model.ask_once(self.cache, found, secret, prompt, self.keys_dir, moment)
+                if reply is not None:
+                    return self._answered(found, reply, ask, digest, pages, prompt, where)
             except model.ModelError as exc:
                 self._refuse(page, {}, None, actor, at, cause, f"{Refusal.MODEL}: {exc}")
         for choice in model.detect().choices:
             try:
-                reply = model.ask(choice.provider, choice.secret, prompt, self.keys_dir)
+                reply = model.ask_once(
+                    self.cache,
+                    choice.provider,
+                    lambda choice=choice: choice.secret,
+                    prompt,
+                    self.keys_dir,
+                    moment,
+                )
             except model.ModelError:
                 continue
-            return self._answered(choice.provider, reply, ask, digest, pages, prompt, where)
+            if reply is not None:
+                return self._answered(choice.provider, reply, ask, digest, pages, prompt, where)
         return self._plain(where, ask, pages, prompt, skip_settled)
 
     def _answered(
@@ -544,6 +569,8 @@ class Vault:
         """
         page, actor, at, cause, depth = where
         trailers = [(Trailer.MODEL, found.page), (Trailer.MODEL_NAME, found.name)]
+        if reply.cached:
+            trailers.append((Trailer.CACHE, CACHE_HIT))
         if reply.tokens_in is not None:
             trailers.append((Trailer.TOKENS_IN, str(reply.tokens_in)))
         if reply.tokens_out is not None:
