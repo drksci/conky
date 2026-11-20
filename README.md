@@ -8,13 +8,19 @@
 
 <p align="center">Agents, rules and data are all pages in one Git folder.<br>Everything is a living page. It notices, therefore it is.</p>
 
-### Copy pasta
+### Lemonade Stand
+
+A lemonade stand with one house rule, a supplier that reorders by itself and a daybook that knows when it has gone on too long.
 
 ```
 🍋 user@lemonstand ❯ uvx --from git+https://github.com/drksci/conky conky demo lemonade
 ```
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/demo.dark.svg"><img src="docs/assets/figures/demo.light.svg" alt="Left, a terminal playing the demo: Maya sets up a lemonade stand with one house rule, fills the cooler, a cup count below zero is refused, a busy hour empties the cooler and the supplier orders lemons by itself. Right, a wireframe of the same thing as a screen, in the pages' own words: the house rule, the cooler's count, the supplier's order and lines from the daybook, updating in step." width="800"></picture></p>
+
+### Oregon Trail
+
+Your agents wake up inside a computer game from 1978, The Oregon Trail, and have to get the wagon to Oregon.
 
 ```
 🛸 user@thething ❯ uvx --from git+https://github.com/drksci/conky conky assimilate
