@@ -125,25 +125,33 @@ Candidates, not requirements. Each states its rung.
 - [ideas/felt-sense.md](ideas/felt-sense.md): A felt sense of magnitude
 - [ideas/house-style.md](ideas/house-style.md): Taste is a page
 - [ideas/inheritance.md](ideas/inheritance.md): What a space hands down
+- [ideas/keys.md](ideas/keys.md): Keys that change hands
 - [ideas/learned-reactions.md](ideas/learned-reactions.md): Learned reactions
 - [ideas/ledger.md](ideas/ledger.md): Ledger
 - [ideas/codec.md](ideas/codec.md): A codec: one tree into another, written once and applied by reflex
 - [ideas/measures.md](ideas/measures.md): Measures
 - [ideas/model-pages.md](ideas/model-pages.md): Pages that ask a model
+- [ideas/model-choice.md](ideas/model-choice.md): Which model answers is a page
 - [ideas/obsidian-view.md](ideas/obsidian-view.md): Obsidian view
+- [ideas/outside-reading.md](ideas/outside-reading.md): Reading the field
 - [ideas/patterns.md](ideas/patterns.md): Patterns
+- [ideas/provenance.md](ideas/provenance.md): Where a value came from
 - [ideas/rename.md](ideas/rename.md): Renaming without breaking anything
+- [ideas/reviewer.md](ideas/reviewer.md): A page that reviews
 - [ideas/seeds-and-faces.md](ideas/seeds-and-faces.md): A seed, an identity and a face
 - [ideas/staleness.md](ideas/staleness.md): Nothing goes stale
+- [ideas/streaming.md](ideas/streaming.md): Text as it arrives
 - [ideas/stepping.md](ideas/stepping.md): One step at a time
 - [ideas/tables.md](ideas/tables.md): Tables
 - [ideas/thought-to-change.md](ideas/thought-to-change.md): Thought to change
 - [ideas/tools.md](ideas/tools.md): The outside arrives as pages
 - [ideas/trace.md](ideas/trace.md): The history is the trace
 - [ideas/vault-splitting.md](ideas/vault-splitting.md): Vault splitting
+- [ideas/writers.md](ideas/writers.md): Several writers at once
 
 ### Project
 
 - [project/open-questions.md](project/open-questions.md): Open questions
 - [project/roadmap.md](project/roadmap.md): Roadmap
+- [project/seams.md](project/seams.md): Seams: where each missing capability would land
 - [project/status.md](project/status.md): Status

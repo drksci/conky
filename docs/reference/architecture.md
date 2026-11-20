@@ -69,6 +69,7 @@ Every concept word and verb of the [vocabulary](vocabulary.md), and each named p
 | <a id="part.key"></a>`part.key` | [`layer.git`](#layer.git) | A signing key of one actor, kept outside the vault. | [vault-format.md#identity-and-signing](vault-format.md#identity-and-signing) | `conky.git.register` | - | built |
 | <a id="part.seal"></a>`part.seal` | [`layer.git`](#layer.git) | The signature on an event, made with Git's SSH signing. | [vault-format.md#identity-and-signing](vault-format.md#identity-and-signing) | `conky.git.commit` | - | built |
 | <a id="part.core.rust"></a>`part.core.rust` | [`layer.git`](#layer.git) | A core in Rust, compiled natively and to WebAssembly, passing the same golden vault. | [0012-rust-core-planned.md](../decisions/0012-rust-core-planned.md) | - | R19 | planned |
+| <a id="part.key.rotate"></a>`part.key.rotate` | [`layer.git`](#layer.git) | Adding, retiring and revoking a signer as recorded events, with each event judged against the signers in force when it was made. | [keys.md](../ideas/keys.md) | - | R32 | idea |
 | <a id="part.embed"></a>`part.embed` | [`layer.history`](#layer.history) | `![[page]]`, `![[page#field]]` or `![[space#members]]`, resolved on read and in prompts. | [vault-format.md#pages](vault-format.md#pages) | `conky.page.resolve_text` | - | built |
 | <a id="part.error"></a>`part.error` | [`layer.history`](#layer.history) | A message that says what went wrong and what to do next. | [cli.md#errors](cli.md#errors) | `conky.errors.BadInput` | - | built |
 | <a id="part.event"></a>`part.event` | [`layer.history`](#layer.history) | A commit: one write or one refusal. | [vault-format.md#commits](vault-format.md#commits) | `conky.vault.Vault._record` | - | built |
@@ -79,6 +80,7 @@ Every concept word and verb of the [vocabulary](vocabulary.md), and each named p
 | <a id="part.write.group"></a>`part.write.group` | [`layer.history`](#layer.history) | Several pages changed in one commit, with rules that see the whole group. | [patterns.md](../ideas/patterns.md) | - | R24 | planned |
 | <a id="part.link"></a>`part.link` | [`layer.history`](#layer.history) | A page name written in a page so that one page points at another. No runtime code reads one, so it stays a convention. | [auto-linking.md](../ideas/auto-linking.md) | - | R15 | idea |
 | <a id="part.rename"></a>`part.rename` | [`layer.history`](#layer.history) | One change that also rewrites every link and embed that points at a page. | [rename.md](../ideas/rename.md) | - | R15 | idea |
+| <a id="part.write.serial"></a>`part.write.serial` | [`layer.history`](#layer.history) | Writes from several processes to one vault taken one at a time, each judged against the state the one before it left. | [writers.md](../ideas/writers.md) | - | R33 | idea |
 | <a id="part.rule"></a>`part.rule` | [`layer.reflex`](#layer.reflex) | A CEL expression judged before a write is kept. | [rules-and-reactions.md#expressions](rules-and-reactions.md#expressions) | `conky.rules.holds` | - | built |
 | <a id="part.rule.captures"></a>`part.rule.captures` | [`layer.reflex`](#layer.reflex) | The groups of the first match of a pattern, else an empty list. | [rules-and-reactions.md#text-functions](rules-and-reactions.md#text-functions) | `conky.rules._captures` | - | built |
 | <a id="part.rule.indexof"></a>`part.rule.indexof` | [`layer.reflex`](#layer.reflex) | The position of a substring from an optional start, or -1. | [rules-and-reactions.md#text-functions](rules-and-reactions.md#text-functions) | `conky.rules._index_of` | - | built |
@@ -90,6 +92,7 @@ Every concept word and verb of the [vocabulary](vocabulary.md), and each named p
 | <a id="part.rule.trim"></a>`part.rule.trim` | [`layer.reflex`](#layer.reflex) | Remove leading and trailing whitespace. | [rules-and-reactions.md#text-functions](rules-and-reactions.md#text-functions) | `conky.rules._trim` | - | built |
 | <a id="part.watch"></a>`part.watch` | [`layer.reflex`](#layer.reflex) | Name a page whose writes make this page react. | [rules-and-reactions.md#reactions](rules-and-reactions.md#reactions) | `conky.vault.Vault._react` | - | built |
 | <a id="part.seal.signer"></a>`part.seal.signer` | [`layer.reflex`](#layer.reflex) | Rules that can see who signed a change and how it arose. | [approvals.md](../ideas/approvals.md) | - | R14 | planned |
+| <a id="part.rule.origin"></a>`part.rule.origin` | [`layer.reflex`](#layer.reflex) | Rules that can see where a page's content came from: a person, a character, a model or a connector, and what a model read. | [provenance.md](../ideas/provenance.md) | - | R31 | idea |
 | <a id="part.space"></a>`part.space` | [`layer.space`](#layer.space) | A page that others lie within, handing down its rules, with leaving judged. | [rules-and-reactions.md#rules-and-spaces](rules-and-reactions.md#rules-and-spaces) | `conky.vault.Vault._walk` | R29 | built |
 | <a id="part.space.context"></a>`part.space.context` | [`layer.space`](#layer.space) | A space handing down its context and its reactions, and a page within several spaces. | [inheritance.md](../ideas/inheritance.md) | - | R22 | building |
 | <a id="part.answer.cache"></a>`part.answer.cache` | [`layer.character`](#layer.character) | Model answers kept outside the history, keyed to the moment. | [providers.md#cache](providers.md#cache) | `conky.cache.Cache` | R30 | built |
@@ -111,6 +114,7 @@ Every concept word and verb of the [vocabulary](vocabulary.md), and each named p
 | <a id="part.test.bench"></a>`part.test.bench` | [`layer.edge`](#layer.edge) | Scenarios, adapters and raw traces, with the trail trial first. Results come only from unscripted runs. | [0013-evidence-not-scripts.md](../decisions/0013-evidence-not-scripts.md) | - | R8 | planned |
 | <a id="part.test.resume"></a>`part.test.resume` | [`layer.edge`](#layer.edge) | The model-backed resume test: a fresh model-driven consumer handed only a stopped vault, with behavioural continuity scored apart from state continuity. | [assimilation-test.md](../ideas/assimilation-test.md) | - | R7 | planned |
 | <a id="part.test.trial"></a>`part.test.trial` | [`layer.edge`](#layer.edge) | The exploratory trail trial: a party plays a text Oregon Trail through the terminal connector, run by Conky and by a plain single-loop baseline. | [0025-the-screen-is-built-in-small-steps.md](../decisions/0025-the-screen-is-built-in-small-steps.md) | - | R27 | planned |
+| <a id="part.screen.live"></a>`part.screen.live` | [`layer.edge`](#layer.edge) | A model's answer shown to a person while it arrives, as derived data, with only the finished answer written. | [streaming.md](../ideas/streaming.md) | - | R36 | idea |
 
 ## 3. Layers
 
@@ -118,12 +122,12 @@ From the store upwards. Each layer sits on the one before.
 
 | Layer, from the store upwards | Holds | Built parts | Planned parts |
 |---|---|---|---|
-| Git (<a id="layer.git"></a>`layer.git`) | The repository, signed commits, clone, bundle, `ssh-keygen`, `git fsck`. | [`part.key`](#part.key), [`part.seal`](#part.seal) | [`part.core.rust`](#part.core.rust) |
-| Pages and history (<a id="layer.history"></a>`layer.history`) | The page format, the write path, trailers, refusals. | [`part.embed`](#part.embed), [`part.error`](#part.error), [`part.event`](#part.event), [`part.page`](#part.page), [`part.read`](#part.read), [`part.vault`](#part.vault), [`part.write`](#part.write) | [`part.write.group`](#part.write.group), [`part.link`](#part.link), [`part.rename`](#part.rename) |
-| Reflexes (<a id="layer.reflex"></a>`layer.reflex`) | CEL rules, reactions, the depth bound, measures, pressure. | [`part.rule`](#part.rule), [`part.rule.captures`](#part.rule.captures), [`part.rule.indexof`](#part.rule.indexof), [`part.rule.join`](#part.rule.join), [`part.rule.lowerascii`](#part.rule.lowerascii), [`part.rule.replace`](#part.rule.replace), [`part.rule.split`](#part.rule.split), [`part.rule.substring`](#part.rule.substring), [`part.rule.trim`](#part.rule.trim), [`part.watch`](#part.watch) | [`part.seal.signer`](#part.seal.signer) |
+| Git (<a id="layer.git"></a>`layer.git`) | The repository, signed commits, clone, bundle, `ssh-keygen`, `git fsck`. | [`part.key`](#part.key), [`part.seal`](#part.seal) | [`part.core.rust`](#part.core.rust), [`part.key.rotate`](#part.key.rotate) |
+| Pages and history (<a id="layer.history"></a>`layer.history`) | The page format, the write path, trailers, refusals. | [`part.embed`](#part.embed), [`part.error`](#part.error), [`part.event`](#part.event), [`part.page`](#part.page), [`part.read`](#part.read), [`part.vault`](#part.vault), [`part.write`](#part.write) | [`part.write.group`](#part.write.group), [`part.link`](#part.link), [`part.rename`](#part.rename), [`part.write.serial`](#part.write.serial) |
+| Reflexes (<a id="layer.reflex"></a>`layer.reflex`) | CEL rules, reactions, the depth bound, measures, pressure. | [`part.rule`](#part.rule), [`part.rule.captures`](#part.rule.captures), [`part.rule.indexof`](#part.rule.indexof), [`part.rule.join`](#part.rule.join), [`part.rule.lowerascii`](#part.rule.lowerascii), [`part.rule.replace`](#part.rule.replace), [`part.rule.split`](#part.rule.split), [`part.rule.substring`](#part.rule.substring), [`part.rule.trim`](#part.rule.trim), [`part.watch`](#part.watch) | [`part.seal.signer`](#part.seal.signer), [`part.rule.origin`](#part.rule.origin) |
 | Spaces (<a id="layer.space"></a>`layer.space`) | `within`, rules handed down, leaving judged. | [`part.space`](#part.space), [`part.space.context`](#part.space.context) | - |
 | Characters (<a id="layer.character"></a>`layer.character`) | Pages that ask a model, providers, answers that are pages. | [`part.answer.cache`](#part.answer.cache), [`part.answer.format`](#part.answer.format), [`part.provider.detect`](#part.provider.detect) | [`part.character.face`](#part.character.face), [`part.character.self`](#part.character.self), [`part.pattern.make`](#part.pattern.make), [`part.character.habit`](#part.character.habit) |
-| The edge (<a id="layer.edge"></a>`layer.edge`) | The command line, presenters, connectors, `demo`, `assimilate`. | [`part.cli.command`](#part.cli.command), [`part.cli.demo`](#part.cli.demo), [`part.cli.present`](#part.cli.present), [`part.connect.terminal`](#part.connect.terminal), [`part.vault.assimilate`](#part.vault.assimilate) | [`part.connect.protocol`](#part.connect.protocol), [`part.screen`](#part.screen), [`part.screen.page`](#part.screen.page), [`part.screen.update`](#part.screen.update), [`part.test.bench`](#part.test.bench), [`part.test.resume`](#part.test.resume), [`part.test.trial`](#part.test.trial) |
+| The edge (<a id="layer.edge"></a>`layer.edge`) | The command line, presenters, connectors, `demo`, `assimilate`. | [`part.cli.command`](#part.cli.command), [`part.cli.demo`](#part.cli.demo), [`part.cli.present`](#part.cli.present), [`part.connect.terminal`](#part.connect.terminal), [`part.vault.assimilate`](#part.vault.assimilate) | [`part.connect.protocol`](#part.connect.protocol), [`part.screen`](#part.screen), [`part.screen.page`](#part.screen.page), [`part.screen.update`](#part.screen.update), [`part.test.bench`](#part.test.bench), [`part.test.resume`](#part.test.resume), [`part.test.trial`](#part.test.trial), [`part.screen.live`](#part.screen.live) |
 
 ## 4. Archetypes
 
@@ -150,6 +154,9 @@ A kind of page is a way pages are used and never a type the runtime knows. Who m
 | <a id="kind.tool"></a>`kind.tool` | a connector | One page per tool of a tool server. A call is a write to it. | [tools.md](../ideas/tools.md) | - | R25 | planned |
 | <a id="kind.archive"></a>`kind.archive` | a character | An archived page stays readable and drops out of attention. Whether it is a field or a space is open. | [staleness.md](../ideas/staleness.md) | - | R3 | idea |
 | <a id="kind.codec"></a>`kind.codec` | a character | A page of bindings from one tree to another, written once by thought and applied by reflex. | [codec.md](../ideas/codec.md) | - | R11g | idea |
+| <a id="kind.feed"></a>`kind.feed` | a connector | A page for each outside source a vault follows, read on the clock by a connector that writes each new item as a page. | [outside-reading.md](../ideas/outside-reading.md) | - | R37 | idea |
+| <a id="kind.reviewer"></a>`kind.reviewer` | a person or a character | A model page that reads a proposed change and writes a signed verdict page, which a rule counts. | [reviewer.md](../ideas/reviewer.md) | - | R35 | idea |
+| <a id="kind.router"></a>`kind.router` | a person or a character | A page that orders the providers a space may use from cheapest up, with the recorded outcome that sends a question to the next. | [model-choice.md](../ideas/model-choice.md) | - | R34 | idea |
 
 ## 5. Slots
 
@@ -1230,6 +1237,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`part.error`](#part.error) | built | - | - | none |
 | [`part.event`](#part.event) | built | - | - | none |
 | [`part.key`](#part.key) | built | - | - | none |
+| [`part.key.rotate`](#part.key.rotate) | idea | not built | - | - |
 | [`part.link`](#part.link) | idea | not built | - | - |
 | [`part.page`](#part.page) | built | - | - | none |
 | [`part.pattern.make`](#part.pattern.make) | planned | not built | - | - |
@@ -1241,11 +1249,13 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`part.rule.indexof`](#part.rule.indexof) | built | - | - | none |
 | [`part.rule.join`](#part.rule.join) | built | - | - | none |
 | [`part.rule.lowerascii`](#part.rule.lowerascii) | built | - | - | none |
+| [`part.rule.origin`](#part.rule.origin) | idea | not built | - | - |
 | [`part.rule.replace`](#part.rule.replace) | built | - | - | none |
 | [`part.rule.split`](#part.rule.split) | built | - | - | none |
 | [`part.rule.substring`](#part.rule.substring) | built | - | - | none |
 | [`part.rule.trim`](#part.rule.trim) | built | - | - | none |
 | [`part.screen`](#part.screen) | planned | not built | - | - |
+| [`part.screen.live`](#part.screen.live) | idea | not built | - | - |
 | [`part.screen.page`](#part.screen.page) | planned | not built | - | - |
 | [`part.screen.update`](#part.screen.update) | planned | not built | - | - |
 | [`part.seal`](#part.seal) | built | - | - | none |
@@ -1260,6 +1270,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`part.watch`](#part.watch) | built | - | - | none |
 | [`part.write`](#part.write) | built | - | - | none |
 | [`part.write.group`](#part.write.group) | planned | not built | - | - |
+| [`part.write.serial`](#part.write.serial) | idea | not built | - | - |
 
 | Judged check | Question | Evidence | Scale | Checks |
 |---|---|---|---|---|
@@ -1295,21 +1306,28 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [habit](../ideas/habit.md) | idea | [`part.answer.cache`](#part.answer.cache), [`part.provider.detect`](#part.provider.detect), [`check.habit.keep`](#check.habit.keep), [`part.character.habit`](#part.character.habit) |
 | [house-style](../ideas/house-style.md) | idea | [`kind.taste`](#kind.taste) |
 | [inheritance](../ideas/inheritance.md) | idea | [`part.space`](#part.space), [`part.space.context`](#part.space.context), [`flow.space.inherit`](#flow.space.inherit) |
+| [keys](../ideas/keys.md) | idea | [`part.key.rotate`](#part.key.rotate) |
 | [learned-reactions](../ideas/learned-reactions.md) | idea | - |
 | [ledger](../ideas/ledger.md) | idea | - |
 | [measures](../ideas/measures.md) | enforced | [`law.pressure.notice`](#law.pressure.notice), [`law.measure.watch`](#law.measure.watch), [`flow.watch.measure`](#flow.watch.measure), [`kind.measure`](#kind.measure), [`stage.attention.measure`](#stage.attention.measure) |
+| [model-choice](../ideas/model-choice.md) | idea | [`kind.router`](#kind.router) |
 | [model-pages](../ideas/model-pages.md) | enforced | [`flow.ask.model`](#flow.ask.model), [`kind.provider`](#kind.provider), [`stage.think.ask`](#stage.think.ask), [`stage.think.context`](#stage.think.context) |
 | [obsidian-view](../ideas/obsidian-view.md) | idea | - |
+| [outside-reading](../ideas/outside-reading.md) | idea | [`kind.feed`](#kind.feed) |
 | [patterns](../ideas/patterns.md) | idea | [`part.write.group`](#part.write.group), [`kind.pattern`](#kind.pattern) |
+| [provenance](../ideas/provenance.md) | idea | [`part.rule.origin`](#part.rule.origin) |
 | [rename](../ideas/rename.md) | idea | [`part.rename`](#part.rename) |
+| [reviewer](../ideas/reviewer.md) | idea | [`kind.reviewer`](#kind.reviewer) |
 | [seeds-and-faces](../ideas/seeds-and-faces.md) | idea | [`part.character.face`](#part.character.face) |
 | [staleness](../ideas/staleness.md) | idea | [`kind.archive`](#kind.archive), [`stage.attention.stale`](#stage.attention.stale) |
 | [stepping](../ideas/stepping.md) | idea | [`law.vault.hold`](#law.vault.hold), [`kind.hold`](#kind.hold), [`flow.vault.step`](#flow.vault.step) |
+| [streaming](../ideas/streaming.md) | idea | [`part.screen.live`](#part.screen.live) |
 | [tables](../ideas/tables.md) | idea | [`data.file`](#data.file), [`data.table`](#data.table), [`data.engine`](#data.engine), [`data.stream.beside`](#data.stream.beside), [`flow.table.append`](#flow.table.append), [`flow.engine.query`](#flow.engine.query), [`flow.table.watch`](#flow.table.watch) |
 | [thought-to-change](../ideas/thought-to-change.md) | idea | [`flow.ask.pages`](#flow.ask.pages), [`law.answer.pages`](#law.answer.pages) |
 | [tools](../ideas/tools.md) | idea | [`kind.tool`](#kind.tool), [`kind.shelf`](#kind.shelf), [`stage.act.tool`](#stage.act.tool), [`flow.tool.call`](#flow.tool.call) |
 | [trace](../ideas/trace.md) | idea | [`stage.attention.strip`](#stage.attention.strip) |
 | [vault-splitting](../ideas/vault-splitting.md) | idea | [`flow.vault.link`](#flow.vault.link) |
+| [writers](../ideas/writers.md) | idea | [`part.write.serial`](#part.write.serial) |
 
 ### Decisions
 
