@@ -101,7 +101,7 @@ Abstract level: the arXiv title is "Synthetic Computers at Scale for Long-Horizo
 
 ### MerchantBench
 
-Abstract level: the arXiv title is "MerchantBench: Benchmarking LLM Agents for Long-Term Coherence in E-Commerce Operations". A seller-side e-commerce simulation covering sourcing, listing and pricing, cash flow and feedback adaptation, with delayed order outcomes. Bears on [decision 0014](../decisions/0014-benchmark-shape.md) and [Drift and coherence](../ideas/drift-and-coherence.md). Numbers, as reported: 365 simulated days, 98,843 real product records, 26 tools, eight LLMs under two agent frameworks across 48 runs; the best configuration reached 27.3% of the mean final net assets of human participants.
+Abstract level: the arXiv title is "MerchantBench: Benchmarking LLM Agents for Long-Term Coherence in E-Commerce Operations". A seller-side e-commerce simulation covering sourcing, listing and pricing, cash flow and feedback adaptation, with delayed order outcomes. Bears on [decision 0014](../decisions/0014-benchmark-shape.md) and [Direction and drift](../ideas/direction-and-drift.md). Numbers, as reported: 365 simulated days, 98,843 real product records, 26 tools, eight LLMs under two agent frameworks across 48 runs; the best configuration reached 27.3% of the mean final net assets of human participants.
 
 ### OneManCompany
 

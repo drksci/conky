@@ -23,3 +23,4 @@ Any other implementation, including that one, must pass the same conformance sui
 - Until the format is settled, the Python code is the reference and the tests are the specification.
 - The vault format is documented in [the vault format](../reference/vault-format.md) so that another implementation can be written from it.
 - The golden vault must not be regenerated to make a test pass.
+- A feasibility test showed that a Rust-only core can write a Git repository that Git accepts, sign and verify commits in Git's SSH format, evaluate rule expressions, and compile to WebAssembly. The WebAssembly build was not run, and reading packed repositories was not attempted.

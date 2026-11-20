@@ -12,6 +12,8 @@ source: maintainers
 
 Free-form thinking is turned into validated changes by a background process. The thinker must be able to see and override the translation.
 
+The translation is always shown to the thinker and never bypasses rules: a translated change is an ordinary write, checked like any other.
+
 ## Composes from
 
 Writes checked by rules; [background minds](background-minds.md).

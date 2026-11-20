@@ -46,6 +46,7 @@ One record per decision, each with context, decision and consequences.
 - [decisions/0015-ideas-climb-rungs.md](decisions/0015-ideas-climb-rungs.md): Ideas climb rungs
 - [decisions/0016-docs-in-repo.md](decisions/0016-docs-in-repo.md): Docs live in the repository
 - [decisions/0017-derived-data.md](decisions/0017-derived-data.md): Derived data sits on top, never underneath
+- [decisions/0018-not-doing.md](decisions/0018-not-doing.md): What conky will not do
 
 ### Research
 
@@ -70,19 +71,27 @@ Longer pieces that make the case for one idea each and stand alone.
 
 Candidates that are not yet requirements. Each states its rung.
 
+- [ideas/approvals.md](ideas/approvals.md): Approvals as a pattern
 - [ideas/arcs.md](ideas/arcs.md): Arcs
 - [ideas/assimilation-test.md](ideas/assimilation-test.md): Assimilation test
 - [ideas/auto-linking.md](ideas/auto-linking.md): Auto-linking
 - [ideas/background-minds.md](ideas/background-minds.md): Background minds
-- [ideas/drift-and-coherence.md](ideas/drift-and-coherence.md): Drift and coherence
+- [ideas/cascading-context.md](ideas/cascading-context.md): Context that flows down
+- [ideas/clock.md](ideas/clock.md): Time as an ordinary change
+- [ideas/direction-and-drift.md](ideas/direction-and-drift.md): Direction and drift
+- [ideas/dry-run.md](ideas/dry-run.md): Trying a change first
 - [ideas/energy-unit.md](ideas/energy-unit.md): Energy unit
 - [ideas/learned-reactions.md](ideas/learned-reactions.md): Learned reactions
 - [ideas/ledger.md](ideas/ledger.md): Ledger
 - [ideas/measures.md](ideas/measures.md): Measures
+- [ideas/model-pages.md](ideas/model-pages.md): Pages that ask a model
 - [ideas/obsidian-view.md](ideas/obsidian-view.md): Obsidian view
 - [ideas/patterns.md](ideas/patterns.md): Patterns
+- [ideas/rename.md](ideas/rename.md): Renaming without breaking anything
+- [ideas/staleness.md](ideas/staleness.md): Nothing goes stale
 - [ideas/tables.md](ideas/tables.md): Tables
 - [ideas/thought-to-change.md](ideas/thought-to-change.md): Thought to change
+- [ideas/trace.md](ideas/trace.md): The history is the trace
 - [ideas/vault-splitting.md](ideas/vault-splitting.md): Vault splitting
 
 ### Project

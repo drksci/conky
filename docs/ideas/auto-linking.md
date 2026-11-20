@@ -12,6 +12,8 @@ source: maintainers
 
 New domain terms are linked automatically by the runtime rather than by hand.
 
+This needs a deterministic rule for what counts as a term. A [model page](model-pages.md) may be used only to propose links, never to make them.
+
 ## Composes from
 
 Links and reactions.

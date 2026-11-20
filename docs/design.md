@@ -43,12 +43,18 @@ Two design questions are open and recorded in [open questions](project/open-ques
 
 ## Not built yet
 
-1. Tables stored as Parquet beside their page, with large data by pointer ([decision 0003](decisions/0003-data-beside-pages.md)).
-2. Relief: something that acts on pressure.
-3. Model-backed pages: a page that asks a question state cannot answer.
-4. Rules that see a group of pages changed in one commit, and a pattern maker (accounting as a pattern, not a runtime feature).
-5. The assimilation test: hand a fresh consumer only a stopped vault and score whether it resumes correctly.
-6. The harness-neutral benchmark against other agent harnesses.
-7. A core in Rust that runs without Git and in a browser ([decision 0012](decisions/0012-rust-core-planned.md)).
+In roadmap order:
+
+1. Model pages and provider pages: a page that asks a question state cannot answer ([decision 0007](decisions/0007-inference-for-real-thinking.md)).
+2. The clock: time as an ordinary write.
+3. Staleness and relief: something that acts on pressure from size or age.
+4. Dry run, approvals as a pattern, rename with link repair, and cascading context.
+5. Background minds, and direction and drift.
+6. Tables stored as Parquet beside their page, with large data by pointer ([decision 0003](decisions/0003-data-beside-pages.md)).
+7. The pattern maker, and rules that see several pages changed in one commit.
+8. Trace summaries and a view for people, as derived data.
+9. The resume test and the harness-neutral benchmark.
+10. Vault splitting.
+11. A core in Rust that runs without Git and in a browser ([decision 0012](decisions/0012-rust-core-planned.md)).
 
 The full list, with identifiers, is the [roadmap](project/roadmap.md).

@@ -26,4 +26,7 @@ A sequence of recorded writes in which the total changes without a recorded sour
 
 ## Standing
 
+The ledger stays a pattern and is never a runtime feature; cost recorded for model calls would be one use of it.
+
+
 A built-in ledger was judged a bad idea. Accounting should be a pattern, not a runtime feature; see [patterns](patterns.md). The conservation need survives as the grouped write described there.

@@ -54,9 +54,10 @@ Working and tested today:
 
 Not built yet:
 
+- Pages that put a question to an AI model, with a choice of provider.
+- Time as a change that pages can react to.
+- Anything that acts when a page becomes crowded or goes untouched.
 - Tables of data kept beside the pages.
-- Anything that acts when a page becomes crowded.
-- Pages that put a question to an AI model.
 - Rules that look at several pages changed together.
 - Measured comparisons with other systems. No measurements have been made.
 
