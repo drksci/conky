@@ -80,15 +80,15 @@ A bar a run, from Independence to Oregon; conky reached Oregon in 4 of 5. Model 
 
 #### What each harness left behind
 
-<a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/became.dark.svg"><img src="docs/results/pilot-3/became.light.svg" alt="Horizontal bars, one a harness, of the parts its median run ended with." width="720"></picture></a>
+<a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/became.dark.svg"><img src="docs/results/pilot-3/became.light.svg" alt="Stacked horizontal bars, one a harness, of the parts its median run ended with." width="720"></picture></a>
 
-The parts each median run ended with; conky ended with 11 pages, 2 of them its own. Model `haiku`, 5 runs a harness, a pilot.
+The parts each median run ended with; conky ended with 11 pages, 2 of them its own. A harness with no bar kept nothing that was counted. Model `haiku`, 5 runs a harness, a pilot.
 
-#### What a run cost
+#### What a run cost and how far it got
 
-<a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/cost.dark.svg"><img src="docs/results/pilot-3/cost.light.svg" alt="Horizontal bars, one a harness that uses a model, of a median run's cost." width="720"></picture></a>
+<a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/cost.dark.svg"><img src="docs/results/pilot-3/cost.light.svg" alt="Dots, one a run that used a model, of dollars against miles reached, a colour a harness." width="720"></picture></a>
 
-Dollars a median run, at list price; conky cost least, $0.0039. Model `haiku`, 5 runs a harness, a pilot.
+Dollars a run at list price against miles reached, a dot a run; conky cost least, $0.0039 for a median run. Model `haiku`, 5 runs a harness, a pilot.
 
 #### Where the time went
 
@@ -100,7 +100,7 @@ Seconds a median run, waiting on the model or working in the harness; conky spen
 
 <a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/text.dark.svg"><img src="docs/results/pilot-3/text.light.svg" alt="Stacked horizontal bars, one a harness that uses a model, of a median run's text." width="720"></picture></a>
 
-Characters the median run sent, by where they came from; conky sent 32% less than bare. Model `haiku`, 5 runs a harness, a pilot.
+Characters the median run sent, by where they came from; conky sent 32% less than bare. A harness with no bar made no recorded model calls. Model `haiku`, 5 runs a harness, a pilot.
 
 #### Scores
 

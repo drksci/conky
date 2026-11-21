@@ -8,7 +8,7 @@ source: src/conky/tokens.json, decisions 0046 and 0048
 
 # Design
 
-Everything a person sees on the front page (the schematic figures, the demo recording and the benchmark charts) is drawn from one token file, `src/conky/tokens.json`. Nothing a model is shown is in scope: a prompt is text, not design. The decisions are [0046](../decisions/0046-figures-are-drawn-from-the-shared-tokens.md) for the tokens and [0048](../decisions/0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown.md) for the charts.
+Everything a person sees on the front page (the schematic figures and the demo recording) is drawn from one token file, `src/conky/tokens.json`; the benchmark charts are drawn with Plotly's own themes (see Charts). Nothing a model is shown is in scope: a prompt is text, not design. The decisions are [0046](../decisions/0046-figures-are-drawn-from-the-shared-tokens.md) for the tokens and [0048](../decisions/0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown.md) and [0057](../decisions/0057-charts-use-plotlys-built-in-themes-and-default-styles.md) for the charts.
 
 By day a figure reads like a page of a printed scientific magazine; by night like a console. It is almost monochrome, and a pen appears only where it carries meaning.
 
@@ -34,36 +34,13 @@ The dark ink is a neutral near-white because the figures sit on GitHub's own dar
 | teal | `#007c84` | `#58efd9` | what was kept or passed; success |
 | violet | `#6c46d6` | `#c6acff` | a model's thought |
 
-Five pens only: a pen is retuned, never added. The pens are for diagrams and schematics; charts take their colours from the chart palette below.
-
-## Ramp
-
-`ramp.ink` is one hue in four steps, mixed once from ink into each page colour and written as plain hex so it holds on a transparent ground.
-
-| Step | 1 | 2 | 3 | 4 |
-|---|---|---|---|---|
-| Light | `#dedede` | `#b4b4b3` | `#777776` | `#141413` |
-| Dark | `#2d3035` | `#56595c` | `#929494` | `#f2f2ef` |
+Five pens only: a pen is retuned, never added. The pens are for diagrams and schematics.
 
 ## Charts
 
-Charts are a carve-out from the five pens. A chart with several categories needs a palette built for telling series apart, and readers expect chart colour by convention, so the `chart` section of the token file holds a palette for charts only, and charts read nothing else for colour. It is the reference palette of a published data-visualisation method, stepped for a light and a dark page.
+Charts are not drawn from the tokens. A benchmark chart is drawn with Plotly's built-in `plotly_white` theme (the light file) or `plotly_dark` theme (the dark file) and Plotly's default style for its chart type: its colours, gridlines, axes, bars, legends and text sizes. Standard charts should look like standard charts, and a maintained theme beats a hand-made one.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="chart-palette.dark.svg"><img src="chart-palette.light.svg" alt="Nine labelled squares: the subject blue, four categorical colours, the quiet grey and three steps of the sequential blue." width="720"></picture>
-
-| Token | Light | Dark | Role |
-|---|---|---|---|
-| `chart.subject` | `#2a78d6` | `#3987e5` | the harness a chart is about |
-| `chart.categorical` 1 | `#eb6834` | `#d95926` | the next category; one notable thing, such as a broken rule |
-| `chart.categorical` 2 to 4 | `#1baf7a`, `#eda100`, `#e87ba4` | `#199e70`, `#c98500`, `#d55181` | further categories, in this order, not yet used |
-| `chart.sequential` | `#cde2fb` to `#6da7ec` | `#0d366b` to `#1c5cab` | a shaded grid, pale worst to deep best |
-| `chart.quiet` | `ramp2` | `ramp2` | whatever is not singled out |
-
-A chart is black and white first: ink outlines and text, fills in ink, the page and the grey steps of the ramp, with a one-bit pattern only where two greys would be hard to tell apart. Colour is added only where it helps the reader: the subject, a category that greys cannot carry, or one notable thing. Typically one or two colours in a chart, never every bar a different colour when its label already names it. The same thing keeps the same treatment in every chart.
-
-The palette's order is part of the palette: each colour stays at least 15 apart from the next in OKLab for normal vision, and at least 8 under simulated protanopia and deuteranopia. In the light look the second to fourth categorical colours sit below 3 to 1 on the page, so a chart that uses them carries direct labels.
-
-Charts are drawn by Plotly from one template in `bench/kit.py` (`template(look)`), which sets the transparent ground, the face, 12-pixel text, no gridlines and no chart border; a chart names roles (`subject`, `other`, `model`, `harness`, `idle`, `notable`), never a value. The swatches above are written by `python -m bench.kit`.
+One small overlay, `conky` in `bench/kit.py`, sits on top of each theme so a chart can stand on a README page in either mode: a transparent ground, so GitHub's own page colour shows; the faces GitHub renders the page in (`type.embedded_text`); tight margins; and the fixed export width. A chart sets its data mapping and its chart type, and nothing else visual. Harnesses are listed in one order, the subject first, so Plotly's default colour sequence gives the subject its first colour in every chart.
 
 ## Weights, dashes, sizes
 
@@ -81,12 +58,12 @@ Radius is 0 and there are no shadows.
 ## Figure rules
 
 - Text is text. A heading, label or sentence is never an image; images are for figures and marks only.
-- Every colour, weight, dash and size comes from the tokens. A literal colour on a figure fails the audit.
+- Every colour, weight, dash and size comes from the tokens. A literal colour on a schematic figure fails the audit; a chart takes its colours from its Plotly theme.
 - Backgrounds are transparent: a figure paints no paper. Each has a light and a dark file.
-- Text is ink by default. Text clears 4.5 to 1 against the page it is shown on, and a data stroke 3 to 1; the test computes both.
-- Charts are flat: bars filled with ink, a ramp step or a chart colour, outlined in one pixel of ink, square, parted by a small gap of empty page. No gradients, gridlines, boxes, tick marks, rounded corners or shadows.
-- Words about a chart sit in Markdown beside it: a heading above, one caption sentence below with the conditions of its numbers, and a footer line for method, data and units. The image carries only row labels, a few direct values and a small legend. A table is a Markdown table, never an image.
-- No text on a figure or chart is smaller than about 11 pixels at the width the README shows it. A figure sets its sizes as classes on its root, so the test reads the smallest class, the figure's width and the width the README gives it.
+- Text is ink by default. A schematic's text clears 4.5 to 1 against the page it is shown on, and a data stroke 3 to 1; the test computes both.
+- Charts keep Plotly's default look for the theme: nothing is restyled by hand.
+- Words about a chart sit in Markdown beside it: a heading above, one caption sentence below with the conditions of its numbers, and a footer line for method, data and units. The image carries only what Plotly draws by default for its data: axes, axis titles and a legend. A table is a Markdown table, never an image.
+- No text on a schematic figure is smaller than about 11 pixels at the width the README shows it. A figure sets its sizes as classes on its root, so the test reads the smallest class, the figure's width and the width the README gives it.
 - Words about a schematic sit in Markdown too: the heading it sits under, one caption line below it that opens with "Schematic" or "Example", and alt text that describes the picture. The image keeps short names on its parts.
 - Separate with space, not rules. Lines appear only inside tables and charts.
 - A caption says what a figure shows, not what kind of figure it is. No heading or figure title opens with "The". A number keeps its conditions beside it.

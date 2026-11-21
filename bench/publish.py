@@ -29,29 +29,28 @@ REPOSITORY = "https://github.com/drksci/conky"
 PAGE = "docs/research/results.md"
 START, END = "<!-- bench:start -->", "<!-- bench:end -->"
 SHOWN = ("reached", "became", "cost", "time", "text")  # on the front page, in this order
-PAGE_ONLY = ("progress", "spend", "rules", "board")
+PAGE_ONLY = ("progress", "spend", "rules")
 HEADS = {
     "reached": "How far each run got",
     "became": "What each harness left behind",
-    "cost": "What a run cost",
+    "cost": "What a run cost and how far it got",
     "time": "Where the time went",
     "text": "Where the text came from",
     "progress": "Distance left, turn by turn",
     "spend": "Model calls, turn by turn",
     "rules": "House rules broken",
-    "board": "Every measure on one board",
 }
 ALT = {
     "reached": "Horizontal bars, one a run, grouped by harness, each running from {start} "
     "toward {end}.",
-    "became": "Horizontal bars, one a harness, of the parts its median run ended with.",
-    "cost": "Horizontal bars, one a harness that uses a model, of a median run's cost.",
+    "became": "Stacked horizontal bars, one a harness, of the parts its median run ended with.",
+    "cost": "Dots, one a run that used a model, of dollars against {unit} reached, a colour a "
+    "harness.",
     "time": "Stacked horizontal bars, one a harness, of a median run's seconds.",
     "text": "Stacked horizontal bars, one a harness that uses a model, of a median run's text.",
     "progress": "Step lines of {unit} left against turn, one a harness.",
     "spend": "Step lines of model calls made against turn, one a harness that uses a model.",
-    "rules": "A row a run with a square at each turn a house rule was broken.",
-    "board": "A shaded grid: a row a harness, a column a measure, the median in each cell.",
+    "rules": "A row a run with a dot at each turn a house rule was broken.",
 }
 
 
@@ -252,20 +251,20 @@ def captions(kind: str, f: dict, runs: list[charts.Run]) -> dict[str, str]:
         "reached": f"A bar a run, from {p['start']} to {p['end']}; {who} reached {p['end']} "
         f"in {got} of {len(arms[lead])}.",
         "became": f"The parts each median run ended with; {who} ended with {ends['all']} "
-        f"{ends['unit']}, {ends['own']} of them its own.",
-        "cost": f"Dollars a median run, at list price; {record.label(cheapest)} cost least, "
-        f"${cost.get(cheapest, 0):.4f}."
+        f"{ends['unit']}, {ends['own']} of them its own. A harness with no bar kept "
+        "nothing that was counted.",
+        "cost": f"Dollars a run at list price against {p['unit']} reached, a dot a run; "
+        f"{record.label(cheapest)} cost least, ${cost.get(cheapest, 0):.4f} for a median run."
         if cost
         else "No harness here uses a model.",
         "time": f"Seconds a median run, waiting on the model or working in the harness; "
         f"{who} spent {model_s:,.0f} of its {run.wall:,.0f} seconds waiting on the model.",
-        "text": text + ".",
+        "text": text + ". A harness with no bar made no recorded model calls.",
         "progress": f"{p['unit'].capitalize()} left to {p['end']} at each turn, the median "
         "over seeds.",
         "spend": "Model calls made by each turn, the median over seeds.",
-        "rules": "A square at each turn a house rule was broken in the game.",
-        "board": "The median of each measure, each column shaded from worst (pale) to best "
-        "(deep) on its own scale.",
+        "rules": "A dot at each turn a house rule was broken in the game; a run with no dot "
+        "broke none.",
     }
     tail = conditions(kind, f)
     return {k: f"{v} {tail}" for k, v in words.items()}

@@ -7,8 +7,8 @@ source: maintainers
 arch:
   items:
   - kind: unplaced
-    name: charts are drawn by Plotly from one template
-    text: Every benchmark chart is drawn by Plotly from one template built on src/conky/tokens.json, black and white with one spot colour, and its heading, caption and conditions are written beside it in Markdown.
+    name: charts are drawn by Plotly and words sit in Markdown
+    text: Every benchmark chart is drawn by Plotly, and its heading, caption and conditions are written beside it in Markdown. How it is styled is decision 0056.
 ---
 
 # 0048 Charts are drawn by Plotly and words sit in Markdown
@@ -18,6 +18,8 @@ arch:
 After [0046](0046-figures-are-drawn-from-the-shared-tokens.md) the benchmark charts took their colours from the tokens but were still drawn by hand in `bench/plate.py` and `bench/charts.py`: about a thousand lines of SVG arithmetic, two drawing styles, and a scoreboard drawn as a picture of a table. Readers found them garish (solid pink bars), noisy and slow to read. Each image carried its own title, conditions, source and footnotes, set small enough to land below 11 pixels at README width, and none of it could be selected, searched or read by a screen reader.
 
 ## Decision
+
+[0057](0057-charts-use-plotlys-built-in-themes-and-default-styles.md) amends this record: the template, the palette, the black and white look and the board below are replaced by Plotly's built-in themes and default styles. The old behaviour is removed, with no alias.
 
 - Standard charts are drawn by Plotly's Python library from one template, `kit.template(look)` in `bench/kit.py`, built on the tokens: transparent ground, the faces GitHub renders the page in, text at 12 pixels, no gridlines, no chart border, no tick marks. A chart sets nothing visual beyond its data mapping and the role of each mark.
 - A chart is black and white first: ink outlines and text, fills in ink, the page and the grey steps of `ramp.ink`, with a one-bit pattern (`marker.pattern`) only where two greys would be hard to tell apart. Colour is added only where it helps: the subject of a chart, or one notable thing such as a broken rule. Bars are flat, square, outlined in one pixel of ink and parted by a small gap.

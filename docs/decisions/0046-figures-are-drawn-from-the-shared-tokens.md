@@ -27,7 +27,7 @@ Every figure a person sees on the front page is drawn from `src/conky/tokens.jso
 - Five pens, each used only where it means something: pink for a refusal and for the subject of a chart, amber for something a character added and for a broken rule, blue for what is heard, teal for what was kept or passed, violet for a model's thought.
 - Backgrounds are transparent. Each figure has a light and a dark file, switched by `<picture>` and `prefers-color-scheme`. The dark ink is a neutral near-white, `#f2f2ef`, and mute `#a3a7ad`, because the figures sit on GitHub's own dark page, where a neutral white reads best.
 - Text in a front-page figure uses the faces GitHub renders the page in (`type.embedded_text`, and `type.embedded_code` for code and tabular numbers), named once on each figure.
-- Charts are flat, like a contribution heatmap: blocks in a four-step ink ramp (`ramp.ink`, mixed once into each page colour and written as plain hex), pink only for the subject, separated by a small gap of empty page. No gridlines, boxes or tick marks.
+- Charts are drawn by Plotly with its own themes, not from the tokens ([0057](0057-charts-use-plotlys-built-in-themes-and-default-styles.md)); the ink ramp and chart colours are gone.
 - Text is text: the README title is a heading, not an image. Images are for figures and marks.
 - Brand marks are not restyled and keep their own colours: the sponsor wordmark and the three-band ornament are exempt from the colour audit, by name.
 

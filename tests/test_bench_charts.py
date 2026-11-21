@@ -133,30 +133,52 @@ def drawn(runs, chart: str, look: str = "light") -> dict:
     return charts.FIGURES[chart](runs, look).to_plotly_json()
 
 
-def test_every_chart_is_drawn_on_the_one_template(results: Path) -> None:
+def test_every_chart_is_drawn_in_the_built_in_theme_for_its_file(results: Path) -> None:
+    import plotly.io as pio
+
     runs = charts.load(results)
     for chart in charts.FIGURES:
         for look in kit.LOOKS:
-            fig = drawn(runs, chart, look)
-            layout = fig["layout"]
-            assert layout["template"]["layout"]["font"]["family"] == kit.TEXT
-            assert layout["template"]["layout"]["paper_bgcolor"] == "rgba(0,0,0,0)"
+            layout = drawn(runs, chart, look)["layout"]
+            theme = pio.templates[kit.THEMES[look]].layout
+            made = layout["template"]["layout"]
+            # the grid colour is set by the theme alone, and differs between the two
+            assert made["xaxis"]["gridcolor"] == theme.xaxis.gridcolor
+            assert made["colorway"] == list(theme.colorway)
+            assert made["paper_bgcolor"] == made["plot_bgcolor"] == "rgba(0,0,0,0)"
+            assert made["font"]["family"] == kit.TEXT
             assert "title" not in layout, f"{chart}: a title belongs in the Markdown"
+    assert kit.THEMES == {"light": "plotly_white", "dark": "plotly_dark"}
+    assert (
+        pio.templates["plotly_white"].layout.xaxis.gridcolor
+        != pio.templates["plotly_dark"].layout.xaxis.gridcolor
+    )
+
+
+def test_a_chart_sets_no_colour_of_its_own(results: Path) -> None:
+    runs = charts.load(results)
+    for chart in charts.FIGURES:
+        fig = drawn(runs, chart)
+        for trace in fig["data"]:
+            for key in ("marker", "line"):
+                assert "color" not in trace.get(key, {}), f"{chart}: a trace sets a colour"
+        assert "colorway" not in fig["layout"]
 
 
 def test_rows_keep_one_order_in_every_chart(results: Path) -> None:
     runs = charts.load(results)
     assert charts.rows(charts.by_arm(runs)) == ["loop", "floor-random"]
-    became = drawn(runs, "became")["layout"]["yaxis"]["categoryarray"]
-    assert became == ["random", "bare"]  # listed bottom to top
+    became = drawn(runs, "became")
+    assert list(became["data"][0]["y"]) == ["bare", "random"]
+    assert became["layout"]["yaxis"]["autorange"] == "reversed"  # listed top to bottom
 
 
 def test_reached_draws_a_bar_a_run_to_its_distance(results: Path) -> None:
     fig = drawn(charts.load(results), "reached")
     bars = {t["name"]: t["x"] for t in fig["data"]}
     assert list(bars["bare"]) == [2040.0]
-    assert list(bars["random"]) == [pytest.approx(2040 * 0.004)]  # a run that went nowhere
-    assert [a["text"] for a in fig["layout"]["annotations"]] == ["1 of 1", "0 of 1"]
+    assert [t["y"][0] for t in fig["data"]] == ["bare 1", "random 1"]
+    assert fig["layout"]["shapes"][0]["x0"] == 2040  # the goal, as one line
 
 
 def test_time_splits_the_median_run_between_model_and_harness(results: Path) -> None:
@@ -175,9 +197,9 @@ def test_text_stacks_each_source_of_the_median_run(results: Path) -> None:
 
 def test_rules_marks_the_turn_of_each_break(results: Path) -> None:
     fig = drawn(charts.load(results), "rules")
-    broken = fig["data"][1]
-    assert list(broken["x"]) == [1, 1]  # one in each arm, at turn 1
-    assert broken["marker"]["color"] == kit.colour("notable", "light")
+    broken = fig["data"][0]
+    assert [list(t["x"]) for t in fig["data"][:2]] == [[1], [1]]  # one in each arm, at turn 1
+    assert list(broken["y"]) == ["bare 1"]
 
 
 def test_proposals_that_did_not_reach_the_game_are_hollow(tmp_path: Path) -> None:
@@ -186,16 +208,8 @@ def test_proposals_that_did_not_reach_the_game_are_hollow(tmp_path: Path) -> Non
     rows = [json.loads(x) for x in meter.read_text().splitlines()]
     rows[2]["note"] = {"proposed": "attack-friendly"}
     write(meter, rows)
-    hollow = drawn(charts.load(root), "rules")["data"][2]
-    assert hollow["marker"]["symbol"] == "square-open" and list(hollow["x"]) == [2]
-
-
-def test_board_shades_each_column_on_its_own_scale(results: Path) -> None:
-    order, shades, words = charts.board(charts.load(results))
-    assert order == ["loop", "floor-random"]
-    assert words[0][0] == "1 of 1" and words[1][0] == "0 of 1"
-    assert shades[0][0] == 1.0 and shades[1][0] == 0.0  # arrived: loop best, random worst
-    assert shades[0][3] == 0.0  # calls: loop made more, so it is the worse of the two
+    hollow = drawn(charts.load(root), "rules")["data"][-2]
+    assert hollow["marker"]["symbol"] == "circle-open" and list(hollow["x"]) == [2]
 
 
 def test_export_is_byte_stable(results: Path, tmp_path: Path) -> None:
@@ -207,7 +221,7 @@ def test_export_is_byte_stable(results: Path, tmp_path: Path) -> None:
     kit.export({second: (charts.draw_text(runs, "dark"), "text-dark")})
     svg = parsed(first)
     assert first.read_bytes() == second.read_bytes()
-    assert svg.count("font-family") == 1 and "rgb(" not in svg
+    assert svg.count("font-family") == 1 and "<image" not in svg
 
 
 def test_without_plotly_the_data_is_written_and_the_charts_left_alone(
@@ -275,6 +289,24 @@ def test_publishing_writes_the_page_the_data_and_the_readme_block_and_is_repeata
     readme.write_text("no markers", encoding="utf-8")
     with pytest.raises(SystemExit, match="markers"):
         publish.publish(results, "sample", "pilot", root)
+
+
+def test_each_caption_describes_what_its_chart_shows(results: Path) -> None:
+    from bench import publish
+
+    runs = charts.load(results)
+    said = publish.captions("pilot", publish.facts(runs), runs)
+    assert set(said) == set(charts.FIGURES) == {*publish.SHOWN, *publish.PAGE_ONLY}
+    assert said["reached"].startswith("A bar a run, from ")
+    assert said["cost"].startswith("Dollars a run at list price against ")
+    assert (
+        "a dot a run" in said["cost"]
+        and publish.HEADS["cost"] == "What a run cost and how far it got"
+    )
+    assert "a run with no dot broke none" in said["rules"]
+    assert said["time"].startswith("Seconds a median run") and "no bar" in said["text"]
+    assert publish.ALT["became"].startswith("Stacked horizontal bars")
+    assert publish.ALT["rules"].startswith("A row a run with a dot")
 
 
 def test_a_result_is_refused_when_the_arms_are_not_comparable(
