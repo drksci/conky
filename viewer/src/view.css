@@ -110,11 +110,11 @@ html:has(.is-bare) body {
 /* ---------------------------------------------------------------- the one cell */
 
 .react-flow__node > .cell {
-  width: 100%;
-  height: 100%;
+  position: absolute;
 }
 
 .measure .react-flow__node > .cell {
+  position: relative;
   width: max-content;
   height: auto;
 }
@@ -183,7 +183,7 @@ html:has(.is-bare) body {
 .panel-more,
 .region-label,
 .socket-label,
-.slot-label,
+.row-tie,
 .foot-tail,
 .foot-expr-label {
   font-family: var(--ds-font-code);
@@ -360,47 +360,21 @@ html:has(.is-bare) body {
   font-style: italic;
 }
 
-/* the footer row of slots */
+/* the footer: a slot's function block, and the counts at the right */
 
 .cell-foot {
   margin-top: var(--ds-space-fine);
   padding-top: var(--ds-space-fine);
   border-top: var(--ds-weight-hair) solid var(--ds-color-hair);
-  margin-bottom: calc(-1 * var(--cell-pad));
 }
 
 .foot-expr {
   margin-bottom: var(--ds-space-fine);
 }
 
-.foot-row {
-  display: flex;
-  align-items: flex-end;
-  gap: var(--ds-space-wide);
-}
-
-.slot {
-  position: relative;
-  display: inline-flex;
-  align-items: flex-end;
-  gap: var(--ds-space-fine);
-}
-
-.slot-label,
-.slot-value {
-  line-height: var(--line);
-  padding-bottom: var(--ds-space-hair);
-}
-
-.slot.is-hollow .slot-value {
-  color: var(--ds-color-mute);
-}
-
 .foot-tail {
-  margin-left: auto;
-  padding-left: var(--ds-space-wide);
+  text-align: right;
   line-height: var(--line);
-  padding-bottom: var(--ds-space-hair);
 }
 
 /* the members of a space sit between its panels and its footer */
@@ -409,10 +383,137 @@ html:has(.is-bare) body {
   flex: 1;
 }
 
-/* sockets: small squares inset in the frame, a mark in the pen of their signal */
+/* a row's small number, shared with its socket on a board when the two are not side by side */
 
-.react-flow__handle.socket {
+.row-tie {
+  margin-left: var(--ds-space-fine);
+  text-transform: none;
+}
+
+/* port boards: a thin rectangle of its own outside an edge of the cell, sockets in a row */
+
+.board {
   position: absolute;
+  box-sizing: border-box;
+  border: var(--ds-weight-hair) solid var(--ds-color-mute);
+  background: transparent;
+}
+
+.board-west {
+  border-right: none;
+}
+
+.board-east {
+  border-left: none;
+}
+
+.board-north {
+  border-bottom: none;
+}
+
+.board-south {
+  border-top: none;
+}
+
+.board-entry {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-fine);
+  height: var(--line);
+}
+
+.board-west .board-entry,
+.board-east .board-entry {
+  align-items: flex-start;
+}
+
+.board-west .board-entry:not(.is-above) > .socket-seat,
+.board-east .board-entry:not(.is-above) > .socket-seat {
+  margin-top: calc((var(--line) - var(--socket)) / 2);
+}
+
+/* a side board is thin and fixed: its words wrap there */
+.board-west .socket-label,
+.board-east .socket-label,
+.board-side-words .socket-label {
+  display: flex;
+  flex-wrap: wrap;
+  white-space: normal;
+  row-gap: 0;
+}
+
+.board-east .socket-label {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.board-side-words {
+  display: block;
+}
+
+.board-west .board-entry {
+  padding-left: calc((var(--line) - var(--socket)) / 2);
+}
+
+.board-east .board-entry {
+  flex-direction: row-reverse;
+  padding-right: calc((var(--line) - var(--socket)) / 2);
+}
+
+/* on an edge running up and down, a wall's words sit on the line above its socket, clear of the
+   jumper that goes on through */
+.board-entry.is-above {
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0;
+}
+
+.board-east .board-entry.is-above {
+  align-items: flex-end;
+}
+
+.board-entry.is-above > .socket-seat {
+  margin: calc((var(--line) - var(--socket)) / 2) 0;
+}
+
+.board-north .board-entry.is-above,
+.board-south .board-entry.is-above {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--ds-space-fine);
+}
+
+.board-north .board-entry.is-above > .socket-seat,
+.board-south .board-entry.is-above > .socket-seat {
+  margin: 0;
+}
+
+.board-words {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* sockets: small squares on a board, a mark in the pen of their signal */
+
+.socket-seat {
+  position: relative;
+  flex: none;
+  width: var(--socket);
+  height: var(--socket);
+}
+
+.react-flow__handle.socket,
+.react-flow__handle.socket-through {
+  position: absolute;
+  left: 0;
+  top: 0;
   box-sizing: border-box;
   width: var(--socket);
   height: var(--socket);
@@ -432,6 +533,10 @@ html:has(.is-bare) body {
   background: var(--signal);
 }
 
+.react-flow__handle.socket-through {
+  opacity: 0;
+}
+
 .react-flow__handle.socket.is-hollow {
   border-color: var(--ds-color-mute);
 }
@@ -440,48 +545,30 @@ html:has(.is-bare) body {
   display: none;
 }
 
-.react-flow__handle.socket-west {
-  left: calc(-1 * var(--cell-pad));
-  top: calc((var(--line) - var(--socket)) / 2 + var(--ds-space-hair));
-}
-
-.cell-head > .react-flow__handle.socket-west,
-.cell-head > .react-flow__handle.socket-east {
-  top: calc((var(--line) - var(--socket)) / 2);
-}
-
-.react-flow__handle.socket-east {
-  left: auto;
-  right: calc(-1 * var(--cell-pad));
-  top: calc((var(--line) - var(--socket)) / 2 + var(--ds-space-hair));
-}
-
-.rule-label > .react-flow__handle.socket-west {
-  top: calc((var(--line) - var(--socket)) / 2);
-}
-
-
-.react-flow__handle.socket-south {
-  position: relative;
-  left: auto;
-  top: auto;
-  bottom: auto;
-  flex: none;
-}
-
 .socket-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-fine);
   text-transform: none;
-  position: absolute;
-  left: 0;
-  top: 0;
-  line-height: 1;
+  line-height: var(--line);
   white-space: nowrap;
   color: var(--signal);
-  pointer-events: none;
+  pointer-events: auto;
 }
 
-.measure .socket-label {
-  position: static;
+.socket-label .symbol {
+  margin-right: 0;
+}
+
+.socket-value {
+  font-family: var(--ds-font-text);
+  font-size: var(--ds-size-small);
+  letter-spacing: 0;
+  color: var(--ds-color-ink);
+}
+
+.socket-tie {
+  color: var(--ds-color-mute);
 }
 
 /* notes in a crowd, and the regions they are drawn in */
@@ -551,14 +638,16 @@ html:has(.is-bare) body {
 .cell,
 .region,
 .react-flow__edge,
-.socket-label {
+.board,
+.board-entry {
   transition: opacity 0.3s, color 0.3s, border-color 0.3s;
 }
 
 .is-bare .cell,
 .is-bare .region,
 .is-bare .react-flow__edge,
-.is-bare .socket-label {
+.is-bare .board,
+.is-bare .board-entry {
   transition: none;
 }
 
@@ -589,8 +678,8 @@ html:has(.is-bare) body {
 .when-row.is-subject .when-words,
 .when-row.is-subject .then-words,
 .record-row.is-subject,
-.slot.is-subject .slot-label,
-.slot.is-subject .slot-value,
+.board-entry.is-subject .socket-label,
+.socket-value.is-subject,
 .panel-text.is-subject .cell-text {
   color: var(--pen);
 }
@@ -600,7 +689,7 @@ html:has(.is-bare) body {
   border-left-color: var(--pen);
 }
 
-.react-flow__handle.socket.is-subject {
+.board-entry.is-subject .react-flow__handle.socket {
   border-color: var(--pen);
 }
 
@@ -638,16 +727,6 @@ html:has(.is-bare) body {
 
 .react-flow__edge.edge.is-subject .react-flow__edge-path {
   stroke-width: var(--ds-weight-base);
-}
-
-.edge-mark {
-  position: absolute;
-  color: var(--signal);
-  pointer-events: none;
-}
-
-.edge-mark.is-hidden {
-  opacity: 0;
 }
 
 /* ---------------------------------------------------------------- symbols and legend */

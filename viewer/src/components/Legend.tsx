@@ -1,5 +1,5 @@
 import tokens from "../../../src/conky/tokens.json";
-import { densityOf, panelsIn, socketsIn, type Graph, type Mode } from "../graph";
+import { densityOf, panelsIn, socketsIn, wiredIn, type Graph, type Mode } from "../graph";
 import { socketLabel } from "./Socket";
 import { Symbol, wordOf } from "./Symbol";
 
@@ -13,7 +13,8 @@ export function Legend({ graph, mode }: { graph: Graph; mode: Mode }) {
     ...graph.steps.map((s) => s.symbol),
   ];
   const names = [...new Set(used)];
-  const kinds = new Set(graph.nodes.flatMap((n) => socketsIn(n, density).map((s) => s.kind)));
+  const wired = wiredIn(graph);
+  const kinds = new Set(graph.nodes.flatMap((n) => socketsIn(n, density, wired).map((s) => s.kind)));
   const sockets = Object.keys(tokens.socket).filter((k) => kinds.has(k));
   return (
     <div className="legend">

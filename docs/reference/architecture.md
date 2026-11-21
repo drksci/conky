@@ -1412,6 +1412,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0049-a-cell-shows-the-whole-page](../decisions/0049-a-cell-shows-the-whole-page.md) | accepted | - |
 | [0050-a-theatre-knows-itself](../decisions/0050-a-theatre-knows-itself.md) | accepted | - |
 | [0051-the-theatre-is-a-page](../decisions/0051-the-theatre-is-a-page.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`law.context.down`](#law.context.down), [`law.embed.context`](#law.embed.context), [`part.space`](#part.space) |
+| [0052-wires-attach-to-port-boards-and-parents-broker-crossings](../decisions/0052-wires-attach-to-port-boards-and-parents-broker-crossings.md) | accepted | - |
 
 ### Unplaced
 
@@ -1421,6 +1422,7 @@ Found in the documents and fitting no row above.
 |---|---|---|
 | a cell shows the whole page | [0049-a-cell-shows-the-whole-page.md](../decisions/0049-a-cell-shows-the-whole-page.md) | Every page in a drawn trial is one cell with a header, panels in a fixed order and a footer of slots, and its connections run between sockets that carry one kind of signal each. |
 | a generated index for a notes application | [obsidian-view.md](../ideas/obsidian-view.md) | Derived data under R11. Nothing is designed beyond the idea. |
+| a parent brokers what crosses its wall | [0052-wires-attach-to-port-boards-and-parents-broker-crossings.md](../decisions/0052-wires-attach-to-port-boards-and-parents-broker-crossings.md) | In a drawn trial every connection is a list of hops, and a hop that crosses a space's wall ends at a socket on that space's port board, where the space's rules judge a write into it. |
 | a theatre knows itself | [0050-a-theatre-knows-itself.md](../decisions/0050-a-theatre-knows-itself.md) | A vault and the settings true only on this machine, in an optional marionette.md outside the history, found from any folder in the vault. |
 | a trial is drawn as it happened | [0043-a-trial-is-drawn-as-it-happened.md](../decisions/0043-a-trial-is-drawn-as-it-happened.md) | A card's recorded draw is published as a graph with steps, read from the vault's own history, and one view draws it, in a browser and as the pictures in the README. |
 | ahead or different with each step | [0033-ahead-or-different-with-each-step.md](../decisions/0033-ahead-or-different-with-each-step.md) | Every step states the difference it makes against other harnesses and how that is shown; parity work waits until a difference depends on it. |

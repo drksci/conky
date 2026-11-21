@@ -9,7 +9,7 @@ const picture = (a: string) => /^(https?:|data:|\.{0,2}\/)|\.(png|jpe?g|gif|svg|
  * kind words under it in the small label style, and at the right end the count of model calls
  * and of writes turned away, each only when there is one. A second, smaller line says which
  * spaces the page is within and the phrases it is known as. */
-export function CellHeader({ node, sockets }: { node: GraphNode; sockets?: React.ReactNode }) {
+export function CellHeader({ node }: { node: GraphNode }) {
   const seen = useSeen();
   const { header } = node;
   const thought = Number(valueOf(seen, header.thought) || 0);
@@ -63,7 +63,6 @@ export function CellHeader({ node, sockets }: { node: GraphNode; sockets?: React
           )}
         </div>
       )}
-      {sockets}
     </div>
   );
 }

@@ -75,8 +75,7 @@
          }
         }
        ],
-       "in": "clerk/when/within:sets heard#heard:west",
-       "out": "clerk/when/within:sets heard#wrote:east",
+       "mark": null,
        "key": true
       },
       {
@@ -97,8 +96,7 @@
          "expr": null
         }
        ],
-       "in": "clerk/when/clerk:asks helper#heard:west",
-       "out": "clerk/when/clerk:asks helper#wrote:east",
+       "mark": null,
        "key": true
       }
      ],
@@ -112,7 +110,7 @@
       "slot": "asks",
       "label": "asks",
       "filled": true,
-      "socket": "clerk/slot/asks:helper#asks:south",
+      "socket": "clerk/slot/asks:helper#asks:slot",
       "expr": null,
       "key": true
      },
@@ -121,7 +119,7 @@
       "slot": "writes",
       "label": "writes into",
       "filled": false,
-      "socket": "clerk/slot/writes:#writes:south",
+      "socket": "clerk/slot/writes:#writes:slot",
       "expr": null,
       "key": false
      },
@@ -130,7 +128,7 @@
       "slot": "hands",
       "label": "hands down",
       "filled": false,
-      "socket": "clerk/slot/hands#hands:south",
+      "socket": "clerk/slot/hands#hands:slot",
       "expr": null,
       "key": false
      },
@@ -139,7 +137,7 @@
       "slot": "shows",
       "label": "shows",
       "filled": true,
-      "socket": "clerk/slot/shows#shows:south",
+      "socket": "clerk/slot/shows#shows:slot",
       "expr": {
        "reads": [
         "space",
@@ -159,70 +157,46 @@
     "members": "clerk/members",
     "changed": "clerk/changed"
    },
-   "sockets": [
+   "board": [
     {
-     "id": "clerk/when/within:sets heard#heard:west",
-     "kind": "heard",
-     "side": "WEST",
-     "row": "clerk/when/within:sets heard",
-     "order": 0,
-     "plugged": false
-    },
-    {
-     "id": "clerk/when/clerk:asks helper#heard:west",
-     "kind": "heard",
-     "side": "WEST",
-     "row": "clerk/when/clerk:asks helper",
-     "order": 1,
-     "plugged": false
-    },
-    {
-     "id": "clerk/when/within:sets heard#wrote:east",
-     "kind": "wrote",
-     "side": "EAST",
-     "row": "clerk/when/within:sets heard",
-     "order": 2,
-     "plugged": false
-    },
-    {
-     "id": "clerk/when/clerk:asks helper#wrote:east",
-     "kind": "wrote",
-     "side": "EAST",
-     "row": "clerk/when/clerk:asks helper",
-     "order": 3,
-     "plugged": false
-    },
-    {
-     "id": "clerk/slot/asks:helper#asks:south",
+     "id": "clerk/slot/asks:helper#asks:slot",
      "kind": "asks",
-     "side": "SOUTH",
+     "face": "slot",
      "row": "clerk/slot/asks:helper",
-     "order": 4,
-     "plugged": true
+     "order": 0,
+     "label": "asks",
+     "mark": null,
+     "rules": []
     },
     {
-     "id": "clerk/slot/writes:#writes:south",
+     "id": "clerk/slot/writes:#writes:slot",
      "kind": "writes",
-     "side": "SOUTH",
+     "face": "slot",
      "row": "clerk/slot/writes:",
-     "order": 5,
-     "plugged": false
+     "order": 1,
+     "label": "writes into",
+     "mark": null,
+     "rules": []
     },
     {
-     "id": "clerk/slot/hands#hands:south",
+     "id": "clerk/slot/hands#hands:slot",
      "kind": "hands",
-     "side": "SOUTH",
+     "face": "slot",
      "row": "clerk/slot/hands",
-     "order": 6,
-     "plugged": false
+     "order": 2,
+     "label": "hands down",
+     "mark": null,
+     "rules": []
     },
     {
-     "id": "clerk/slot/shows#shows:south",
+     "id": "clerk/slot/shows#shows:slot",
      "kind": "shows",
-     "side": "SOUTH",
+     "face": "slot",
      "row": "clerk/slot/shows",
-     "order": 7,
-     "plugged": false
+     "order": 3,
+     "label": "shows",
+     "mark": null,
+     "rules": []
     }
    ],
    "versions": [
@@ -431,7 +405,7 @@
     "members": null,
     "changed": "note-01/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -470,7 +444,7 @@
     "members": null,
     "changed": "note-02/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -509,7 +483,7 @@
     "members": null,
     "changed": "note-03/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -548,7 +522,7 @@
     "members": null,
     "changed": "note-04/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -587,7 +561,7 @@
     "members": null,
     "changed": "note-05/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -626,7 +600,7 @@
     "members": null,
     "changed": "note-06/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -665,7 +639,7 @@
     "members": null,
     "changed": "note-07/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -704,7 +678,7 @@
     "members": null,
     "changed": "note-08/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -743,7 +717,7 @@
     "members": null,
     "changed": "note-09/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -782,7 +756,7 @@
     "members": null,
     "changed": "note-10/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -821,7 +795,7 @@
     "members": null,
     "changed": "note-11/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -860,7 +834,7 @@
     "members": null,
     "changed": "note-12/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -899,7 +873,7 @@
     "members": null,
     "changed": "note-13/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -938,7 +912,7 @@
     "members": null,
     "changed": "note-14/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -977,7 +951,7 @@
     "members": null,
     "changed": "note-15/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -1016,7 +990,7 @@
     "members": null,
     "changed": "note-16/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -1055,7 +1029,7 @@
     "members": null,
     "changed": "note-17/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -1094,7 +1068,7 @@
     "members": null,
     "changed": "note-18/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -1133,7 +1107,7 @@
     "members": null,
     "changed": "note-19/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -1172,7 +1146,7 @@
     "members": null,
     "changed": "note-20/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -1211,7 +1185,7 @@
     "members": null,
     "changed": "note-21/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -1250,7 +1224,7 @@
     "members": null,
     "changed": "note-22/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 1,
@@ -1289,7 +1263,7 @@
     "members": null,
     "changed": "note-23/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 4,
@@ -1328,7 +1302,7 @@
     "members": null,
     "changed": "note-24/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 4,
@@ -1367,7 +1341,7 @@
     "members": null,
     "changed": "note-25/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 4,
@@ -1406,7 +1380,7 @@
     "members": null,
     "changed": "note-26/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 4,
@@ -1445,7 +1419,7 @@
     "members": null,
     "changed": "note-27/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 4,
@@ -1484,7 +1458,7 @@
     "members": null,
     "changed": "note-28/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 4,
@@ -1523,7 +1497,7 @@
     "members": null,
     "changed": "note-29/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 5,
@@ -1562,7 +1536,7 @@
     "members": null,
     "changed": "note-30/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 5,
@@ -1601,7 +1575,7 @@
     "members": null,
     "changed": "note-31/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 5,
@@ -1640,7 +1614,7 @@
     "members": null,
     "changed": "note-32/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 5,
@@ -1679,7 +1653,7 @@
     "members": null,
     "changed": "note-33/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 5,
@@ -1718,7 +1692,7 @@
     "members": null,
     "changed": "note-34/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 5,
@@ -1757,7 +1731,7 @@
     "members": null,
     "changed": "note-35/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 6,
@@ -1796,7 +1770,7 @@
     "members": null,
     "changed": "note-36/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 6,
@@ -1835,7 +1809,7 @@
     "members": null,
     "changed": "note-37/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 6,
@@ -1874,7 +1848,7 @@
     "members": null,
     "changed": "note-38/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 6,
@@ -1913,7 +1887,7 @@
     "members": null,
     "changed": "note-39/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 6,
@@ -1952,7 +1926,7 @@
     "members": null,
     "changed": "note-40/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 7,
@@ -2006,14 +1980,16 @@
     "members": null,
     "changed": "helper/changed"
    },
-   "sockets": [
+   "board": [
     {
-     "id": "helper#asks:west",
+     "id": "helper#asks:in",
      "kind": "asks",
-     "side": "WEST",
+     "face": "in",
      "row": null,
      "order": 0,
-     "plugged": true
+     "label": "asks",
+     "mark": null,
+     "rules": []
     }
    ],
    "versions": [
@@ -2026,15 +2002,26 @@
  ],
  "edges": [
   {
-   "id": "asks:clerk/slot/asks:helper#asks:south->helper#asks:west",
+   "id": "asks:clerk/slot/asks:helper#asks:slot->helper#asks:in",
    "kind": "asks",
    "signal": "asks",
    "source": "clerk",
-   "sourceSocket": "clerk/slot/asks:helper#asks:south",
+   "sourceSocket": "clerk/slot/asks:helper#asks:slot",
    "target": "helper",
-   "targetSocket": "helper#asks:west",
+   "targetSocket": "helper#asks:in",
    "modes": [
     "topology"
+   ],
+   "hops": [
+    {
+     "id": "asks:clerk/slot/asks:helper#asks:slot->helper#asks:in/0",
+     "source": "clerk",
+     "sourceSocket": "clerk/slot/asks:helper#asks:slot",
+     "target": "helper",
+     "targetSocket": "helper#asks:in",
+     "within": null,
+     "jumper": false
+    }
    ]
   }
  ],
@@ -2445,16 +2432,12 @@
     "clerk/slot/writes:",
     "clerk/slot/hands",
     "clerk/slot/shows",
-    "asks:clerk/slot/asks:helper#asks:south->helper#asks:west",
-    "clerk/when/within:sets heard#heard:west",
-    "clerk/when/within:sets heard#wrote:east",
-    "clerk/when/clerk:asks helper#heard:west",
-    "clerk/when/clerk:asks helper#wrote:east",
-    "clerk/slot/asks:helper#asks:south",
-    "clerk/slot/writes:#writes:south",
-    "clerk/slot/hands#hands:south",
-    "clerk/slot/shows#shows:south",
-    "helper#asks:west"
+    "asks:clerk/slot/asks:helper#asks:slot->helper#asks:in/0",
+    "clerk/slot/asks:helper#asks:slot",
+    "clerk/slot/writes:#writes:slot",
+    "clerk/slot/hands#hands:slot",
+    "clerk/slot/shows#shows:slot",
+    "helper#asks:in"
    ],
    "change": [
     {

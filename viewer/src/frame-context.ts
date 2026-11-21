@@ -9,7 +9,7 @@ export interface Seen {
 }
 
 export const FrameContext = createContext<Seen>({
-  frame: { shown: new Set(), values: new Map(), pens: new Map(), dim: new Set(), regions: [], step: 0 },
+  frame: { shown: new Set(), values: new Map(), pens: new Map(), dim: new Set(), plugged: new Set(), regions: [], step: 0 },
   mode: "dynamics",
   density: "compact",
 });

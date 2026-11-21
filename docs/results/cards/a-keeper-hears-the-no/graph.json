@@ -69,7 +69,7 @@
          "page.amount <= space.cash - 20"
         ]
        },
-       "in": "den/bound/page.amount <= space.cash - 20#refused:west",
+       "mark": 1,
        "key": true
       }
      ]
@@ -97,8 +97,7 @@
          }
         }
        ],
-       "in": "den/when/refusal:sets turned_away#heard:west",
-       "out": "den/when/refusal:sets turned_away#wrote:east",
+       "mark": null,
        "key": true
       }
      ],
@@ -112,7 +111,7 @@
       "slot": "hands",
       "label": "hands down",
       "filled": true,
-      "socket": "den/slot/hands#hands:south",
+      "socket": "den/slot/hands#hands:slot",
       "expr": null,
       "key": false
      },
@@ -121,7 +120,7 @@
       "slot": "shows",
       "label": "shows",
       "filled": false,
-      "socket": "den/slot/shows#shows:south",
+      "socket": "den/slot/shows#shows:slot",
       "expr": null,
       "key": false
      }
@@ -129,46 +128,78 @@
     "members": "den/members",
     "changed": "den/changed"
    },
-   "sockets": [
+   "board": [
     {
-     "id": "den/when/refusal:sets turned_away#heard:west",
+     "id": "den#heard:wall:1",
      "kind": "heard",
-     "side": "WEST",
-     "row": "den/when/refusal:sets turned_away",
+     "face": "wall",
+     "row": null,
      "order": 0,
-     "plugged": false
+     "label": "heard",
+     "mark": null,
+     "rules": []
     },
     {
-     "id": "den/bound/page.amount <= space.cash - 20#refused:west",
+     "id": "den#refused:wall:2",
      "kind": "refused",
-     "side": "WEST",
-     "row": "den/bound/page.amount <= space.cash - 20",
+     "face": "wall",
+     "row": null,
      "order": 1,
-     "plugged": true
+     "label": "turned away",
+     "mark": null,
+     "rules": [
+      {
+       "row": "den/bound/page.amount <= space.cash - 20",
+       "says": "no",
+       "mark": 1
+      }
+     ]
     },
     {
-     "id": "den/when/refusal:sets turned_away#wrote:east",
-     "kind": "wrote",
-     "side": "EAST",
-     "row": "den/when/refusal:sets turned_away",
+     "id": "den#refused:wall:3",
+     "kind": "refused",
+     "face": "wall",
+     "row": null,
      "order": 2,
-     "plugged": false
+     "label": "turned away",
+     "mark": null,
+     "rules": [
+      {
+       "row": "den/bound/page.amount <= space.cash - 20",
+       "says": "no",
+       "mark": 1
+      }
+     ]
     },
     {
-     "id": "den/slot/hands#hands:south",
-     "kind": "hands",
-     "side": "SOUTH",
-     "row": "den/slot/hands",
+     "id": "den#asks:wall:4",
+     "kind": "asks",
+     "face": "wall",
+     "row": null,
      "order": 3,
-     "plugged": false
+     "label": "asks",
+     "mark": null,
+     "rules": []
     },
     {
-     "id": "den/slot/shows#shows:south",
-     "kind": "shows",
-     "side": "SOUTH",
-     "row": "den/slot/shows",
+     "id": "den/slot/hands#hands:slot",
+     "kind": "hands",
+     "face": "slot",
+     "row": "den/slot/hands",
      "order": 4,
-     "plugged": false
+     "label": "hands down",
+     "mark": null,
+     "rules": []
+    },
+    {
+     "id": "den/slot/shows#shows:slot",
+     "kind": "shows",
+     "face": "slot",
+     "row": "den/slot/shows",
+     "order": 5,
+     "label": "shows",
+     "mark": null,
+     "rules": []
     }
    ],
    "versions": [
@@ -234,7 +265,7 @@
          "page.amount <= space.cash - 20"
         ]
        },
-       "in": null,
+       "mark": null,
        "key": false
       }
      ]
@@ -254,15 +285,14 @@
          "expr": null
         }
        ],
-       "in": "keeper/when/order:asks helper#heard:west",
-       "out": "keeper/when/order:asks helper#wrote:east",
+       "mark": 1,
        "key": true
       }
      ],
      "record": [
       {
        "id": "keeper/record/watch:den",
-       "out": "keeper/record/watch:den#wrote:east",
+       "mark": null,
        "key": true
       }
      ]
@@ -275,7 +305,7 @@
       "slot": "asks",
       "label": "asks",
       "filled": true,
-      "socket": "keeper/slot/asks:helper#asks:south",
+      "socket": "keeper/slot/asks:helper#asks:slot",
       "expr": null,
       "key": true
      },
@@ -284,7 +314,7 @@
       "slot": "writes",
       "label": "writes into",
       "filled": true,
-      "socket": "keeper/slot/writes:den#writes:south",
+      "socket": "keeper/slot/writes:den#writes:slot",
       "expr": null,
       "key": false
      }
@@ -292,46 +322,36 @@
     "members": null,
     "changed": "keeper/changed"
    },
-   "sockets": [
+   "board": [
     {
-     "id": "keeper/when/order:asks helper#heard:west",
+     "id": "keeper/when/order:asks helper#heard:in",
      "kind": "heard",
-     "side": "WEST",
+     "face": "in",
      "row": "keeper/when/order:asks helper",
      "order": 0,
-     "plugged": true
+     "label": "heard",
+     "mark": 1,
+     "rules": []
     },
     {
-     "id": "keeper/when/order:asks helper#wrote:east",
-     "kind": "wrote",
-     "side": "EAST",
-     "row": "keeper/when/order:asks helper",
-     "order": 1,
-     "plugged": false
-    },
-    {
-     "id": "keeper/record/watch:den#wrote:east",
-     "kind": "wrote",
-     "side": "EAST",
-     "row": "keeper/record/watch:den",
-     "order": 2,
-     "plugged": false
-    },
-    {
-     "id": "keeper/slot/asks:helper#asks:south",
+     "id": "keeper/slot/asks:helper#asks:slot",
      "kind": "asks",
-     "side": "SOUTH",
+     "face": "slot",
      "row": "keeper/slot/asks:helper",
-     "order": 3,
-     "plugged": true
+     "order": 1,
+     "label": "asks",
+     "mark": null,
+     "rules": []
     },
     {
-     "id": "keeper/slot/writes:den#writes:south",
+     "id": "keeper/slot/writes:den#writes:slot",
      "kind": "writes",
-     "side": "SOUTH",
+     "face": "slot",
      "row": "keeper/slot/writes:den",
-     "order": 4,
-     "plugged": false
+     "order": 2,
+     "label": "writes into",
+     "mark": null,
+     "rules": []
     }
    ],
    "versions": [
@@ -391,14 +411,16 @@
     "members": null,
     "changed": "helper/changed"
    },
-   "sockets": [
+   "board": [
     {
-     "id": "helper#asks:west",
+     "id": "helper#asks:in",
      "kind": "asks",
-     "side": "WEST",
+     "face": "in",
      "row": null,
      "order": 0,
-     "plugged": true
+     "label": "asks",
+     "mark": null,
+     "rules": []
     }
    ],
    "versions": [
@@ -444,14 +466,16 @@
     "members": null,
     "changed": "order/changed"
    },
-   "sockets": [
+   "board": [
     {
-     "id": "order#heard:east",
+     "id": "order#heard:out",
      "kind": "heard",
-     "side": "EAST",
+     "face": "out",
      "row": null,
      "order": 0,
-     "plugged": true
+     "label": "heard",
+     "mark": null,
+     "rules": []
     }
    ],
    "versions": [
@@ -497,7 +521,7 @@
      "record": [
       {
        "id": "landlord-payment/record/refused",
-       "out": "landlord-payment/record/refused#refused:east",
+       "mark": 1,
        "key": true
       }
      ]
@@ -508,14 +532,16 @@
     "members": null,
     "changed": "landlord-payment/changed"
    },
-   "sockets": [
+   "board": [
     {
-     "id": "landlord-payment/record/refused#refused:east",
+     "id": "landlord-payment/record/refused#refused:out",
      "kind": "refused",
-     "side": "EAST",
+     "face": "out",
      "row": "landlord-payment/record/refused",
      "order": 0,
-     "plugged": true
+     "label": "turned away",
+     "mark": 1,
+     "rules": []
     }
    ],
    "versions": []
@@ -552,7 +578,7 @@
      "record": [
       {
        "id": "tailor-payment/record/refused",
-       "out": "tailor-payment/record/refused#refused:east",
+       "mark": 1,
        "key": true
       }
      ]
@@ -563,14 +589,16 @@
     "members": null,
     "changed": "tailor-payment/changed"
    },
-   "sockets": [
+   "board": [
     {
-     "id": "tailor-payment/record/refused#refused:east",
+     "id": "tailor-payment/record/refused#refused:out",
      "kind": "refused",
-     "side": "EAST",
+     "face": "out",
      "row": "tailor-payment/record/refused",
      "order": 0,
-     "plugged": true
+     "label": "turned away",
+     "mark": 1,
+     "rules": []
     }
    ],
    "versions": []
@@ -578,54 +606,116 @@
  ],
  "edges": [
   {
-   "id": "asks:keeper/slot/asks:helper#asks:south->helper#asks:west",
+   "id": "asks:keeper/slot/asks:helper#asks:slot->helper#asks:in",
    "kind": "asks",
    "signal": "asks",
    "source": "keeper",
-   "sourceSocket": "keeper/slot/asks:helper#asks:south",
+   "sourceSocket": "keeper/slot/asks:helper#asks:slot",
    "target": "helper",
-   "targetSocket": "helper#asks:west",
+   "targetSocket": "helper#asks:in",
    "modes": [
     "topology"
+   ],
+   "hops": [
+    {
+     "id": "asks:keeper/slot/asks:helper#asks:slot->helper#asks:in/0",
+     "source": "keeper",
+     "sourceSocket": "keeper/slot/asks:helper#asks:slot",
+     "target": "den",
+     "targetSocket": "den#asks:wall:4",
+     "within": "den",
+     "jumper": true
+    },
+    {
+     "id": "asks:keeper/slot/asks:helper#asks:slot->helper#asks:in/1",
+     "source": "den",
+     "sourceSocket": "den#asks:wall:4",
+     "target": "helper",
+     "targetSocket": "helper#asks:in",
+     "within": null,
+     "jumper": false
+    }
    ]
   },
   {
-   "id": "heard:order#heard:east->keeper/when/order:asks helper#heard:west",
+   "id": "heard:order#heard:out->keeper/when/order:asks helper#heard:in",
    "kind": "heard",
    "signal": "heard",
    "source": "order",
-   "sourceSocket": "order#heard:east",
+   "sourceSocket": "order#heard:out",
    "target": "keeper",
-   "targetSocket": "keeper/when/order:asks helper#heard:west",
+   "targetSocket": "keeper/when/order:asks helper#heard:in",
    "modes": [
     "dynamics",
     "topology"
+   ],
+   "hops": [
+    {
+     "id": "heard:order#heard:out->keeper/when/order:asks helper#heard:in/0",
+     "source": "order",
+     "sourceSocket": "order#heard:out",
+     "target": "den",
+     "targetSocket": "den#heard:wall:1",
+     "within": null,
+     "jumper": false
+    },
+    {
+     "id": "heard:order#heard:out->keeper/when/order:asks helper#heard:in/1",
+     "source": "den",
+     "sourceSocket": "den#heard:wall:1",
+     "target": "keeper",
+     "targetSocket": "keeper/when/order:asks helper#heard:in",
+     "within": "den",
+     "jumper": true
+    }
    ]
   },
   {
-   "id": "turned-away:landlord-payment/record/refused#refused:east->den/bound/page.amount <= space.cash - 20#refused:west",
+   "id": "turned-away:landlord-payment/record/refused#refused:out->den",
    "kind": "turned-away",
    "signal": "refused",
    "source": "landlord-payment",
-   "sourceSocket": "landlord-payment/record/refused#refused:east",
+   "sourceSocket": "landlord-payment/record/refused#refused:out",
    "target": "den",
-   "targetSocket": "den/bound/page.amount <= space.cash - 20#refused:west",
+   "targetSocket": "den#refused:wall:2",
    "modes": [
     "dynamics",
     "topology"
+   ],
+   "hops": [
+    {
+     "id": "turned-away:landlord-payment/record/refused#refused:out->den/0",
+     "source": "landlord-payment",
+     "sourceSocket": "landlord-payment/record/refused#refused:out",
+     "target": "den",
+     "targetSocket": "den#refused:wall:2",
+     "within": null,
+     "jumper": false
+    }
    ]
   },
   {
-   "id": "turned-away:tailor-payment/record/refused#refused:east->den/bound/page.amount <= space.cash - 20#refused:west",
+   "id": "turned-away:tailor-payment/record/refused#refused:out->den",
    "kind": "turned-away",
    "signal": "refused",
    "source": "tailor-payment",
-   "sourceSocket": "tailor-payment/record/refused#refused:east",
+   "sourceSocket": "tailor-payment/record/refused#refused:out",
    "target": "den",
-   "targetSocket": "den/bound/page.amount <= space.cash - 20#refused:west",
+   "targetSocket": "den#refused:wall:3",
    "modes": [
     "dynamics",
     "topology"
+   ],
+   "hops": [
+    {
+     "id": "turned-away:tailor-payment/record/refused#refused:out->den/0",
+     "source": "tailor-payment",
+     "sourceSocket": "tailor-payment/record/refused#refused:out",
+     "target": "den",
+     "targetSocket": "den#refused:wall:3",
+     "within": null,
+     "jumper": false
+    }
    ]
   }
  ],
@@ -688,17 +778,19 @@
     "den/slot/shows",
     "keeper/slot/asks:helper",
     "keeper/slot/writes:den",
-    "asks:keeper/slot/asks:helper#asks:south->helper#asks:west",
-    "heard:order#heard:east->keeper/when/order:asks helper#heard:west",
-    "den/bound/page.amount <= space.cash - 20#refused:west",
-    "keeper/when/order:asks helper#heard:west",
-    "keeper/when/order:asks helper#wrote:east",
-    "den/slot/hands#hands:south",
-    "den/slot/shows#shows:south",
-    "keeper/slot/asks:helper#asks:south",
-    "keeper/slot/writes:den#writes:south",
-    "helper#asks:west",
-    "order#heard:east"
+    "asks:keeper/slot/asks:helper#asks:slot->helper#asks:in/0",
+    "asks:keeper/slot/asks:helper#asks:slot->helper#asks:in/1",
+    "heard:order#heard:out->keeper/when/order:asks helper#heard:in/0",
+    "heard:order#heard:out->keeper/when/order:asks helper#heard:in/1",
+    "den/slot/hands#hands:slot",
+    "den/slot/shows#shows:slot",
+    "keeper/slot/asks:helper#asks:slot",
+    "keeper/slot/writes:den#writes:slot",
+    "keeper/when/order:asks helper#heard:in",
+    "order#heard:out",
+    "den#heard:wall:1",
+    "helper#asks:in",
+    "den#asks:wall:4"
    ],
    "change": [],
    "subject": [],
@@ -768,10 +860,7 @@
    "arrangement": 0,
    "appear": [
     "den/when/refusal:sets turned_away",
-    "keeper/record/watch:den",
-    "den/when/refusal:sets turned_away#heard:west",
-    "den/when/refusal:sets turned_away#wrote:east",
-    "keeper/record/watch:den#wrote:east"
+    "keeper/record/watch:den"
    ],
    "change": [
     {
@@ -800,8 +889,9 @@
    "appear": [
     "landlord-payment",
     "landlord-payment/record/refused",
-    "turned-away:landlord-payment/record/refused#refused:east->den/bound/page.amount <= space.cash - 20#refused:west",
-    "landlord-payment/record/refused#refused:east"
+    "turned-away:landlord-payment/record/refused#refused:out->den/0",
+    "landlord-payment/record/refused#refused:out",
+    "den#refused:wall:2"
    ],
    "change": [
     {
@@ -819,15 +909,15 @@
      "pen": "refused"
     },
     {
-     "id": "turned-away:landlord-payment/record/refused#refused:east->den/bound/page.amount <= space.cash - 20#refused:west",
+     "id": "turned-away:landlord-payment/record/refused#refused:out->den/0",
+     "pen": "refused"
+    },
+    {
+     "id": "den#refused:wall:2",
      "pen": "refused"
     },
     {
      "id": "den/bound/page.amount <= space.cash - 20",
-     "pen": "refused"
-    },
-    {
-     "id": "den/bound/page.amount <= space.cash - 20#refused:west",
      "pen": "refused"
     }
    ],
@@ -871,8 +961,9 @@
    "appear": [
     "tailor-payment",
     "tailor-payment/record/refused",
-    "turned-away:tailor-payment/record/refused#refused:east->den/bound/page.amount <= space.cash - 20#refused:west",
-    "tailor-payment/record/refused#refused:east"
+    "turned-away:tailor-payment/record/refused#refused:out->den/0",
+    "tailor-payment/record/refused#refused:out",
+    "den#refused:wall:3"
    ],
    "change": [
     {
@@ -890,15 +981,15 @@
      "pen": "refused"
     },
     {
-     "id": "turned-away:tailor-payment/record/refused#refused:east->den/bound/page.amount <= space.cash - 20#refused:west",
+     "id": "turned-away:tailor-payment/record/refused#refused:out->den/0",
+     "pen": "refused"
+    },
+    {
+     "id": "den#refused:wall:3",
      "pen": "refused"
     },
     {
      "id": "den/bound/page.amount <= space.cash - 20",
-     "pen": "refused"
-    },
-    {
-     "id": "den/bound/page.amount <= space.cash - 20#refused:west",
      "pen": "refused"
     }
    ],

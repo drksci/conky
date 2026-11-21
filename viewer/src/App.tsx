@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { ReactFlow, ReactFlowProvider, useReactFlow, type Node } from "@xyflow/react";
+import { ConnectionMode, ReactFlow, ReactFlowProvider, useReactFlow, type Node } from "@xyflow/react";
 import { densityOf, frame, inMode, lastStep, widest, type Graph, type GraphNode, type Mode, type Region } from "./graph";
 import { FrameContext, type Seen } from "./frame-context";
 import { NODE_TYPES, typeOf } from "./node-types";
@@ -8,9 +8,8 @@ import { EDGE_TYPES } from "./components/Edge";
 import { Caption } from "./components/Caption";
 import { Scrubber } from "./components/Scrubber";
 import { Legend } from "./components/Legend";
-import { socketLabel } from "./components/Socket";
 import type { CellData } from "./components/Cell";
-import { place, type Measured, type Placed, type Port } from "./layout";
+import { place, type Measured, type Placed } from "./layout";
 import { MAX_ZOOM, MIN_ZOOM, SHEET, SPACE } from "./metrics";
 
 const SidePanel = lazy(() => import("./components/SidePanel"));
@@ -68,7 +67,7 @@ function flowNodes(graph: Graph, regions: Region[], placed: Placed | null): Node
   regions.filter((r) => r.space === null).forEach((r) => out.push(regionNode(r)));
   for (const n of graph.nodes) {
     const parent = inRegion.get(n.id) ?? n.parent;
-    out.push({ id: n.id, type: typeOf(n.form, n.archetype), data: { node: n, labels: placed?.labels[n.id] } satisfies CellData, ...at(n.id, parent) });
+    out.push({ id: n.id, type: typeOf(n.form, n.archetype), data: { node: n, box: placed?.nodes[n.id] } satisfies CellData, ...at(n.id, parent) });
     regions.filter((r) => r.space === n.id).forEach((r) => out.push(regionNode(r)));
   }
   // React Flow wants a parent before its children: regions of a space follow the space, and
@@ -81,8 +80,9 @@ function flowNodes(graph: Graph, regions: Region[], placed: Placed | null): Node
 }
 
 /** Draw every cell once, placed nowhere and unseen, with each value at its longest, and read
- * back what React Flow measured: each cell's size, where its sockets sit, the band above a
- * space's members and its footer below them, and the size of each socket's label. */
+ * back what React Flow measured: each cell's body, the band above a space's members and its
+ * footer below them, the bottom of its header, where each row sits, and the size of the words
+ * each of its sockets has on a board. */
 function Measure({ graph, seen, onDone }: { graph: Graph; seen: Seen; onDone: (size: Record<string, Measured>) => void }) {
   const box = useRef<HTMLDivElement>(null);
   const nodes = useMemo(
@@ -96,48 +96,45 @@ function Measure({ graph, seen, onDone }: { graph: Graph; seen: Seen; onDone: (s
   useLayoutEffect(() => {
     if (!ready || !box.current) return;
     const size: Record<string, Measured> = {};
-    const labels = new Map<string, { width: number; height: number }>();
-    box.current.querySelectorAll<HTMLElement>("[data-socket-label]").forEach((l) => {
-      const r = l.getBoundingClientRect();
-      labels.set(l.dataset.socketLabel!, { width: Math.ceil(r.width), height: Math.ceil(r.height) });
-    });
     for (const n of graph.nodes) {
-      const cell = box.current.querySelector<HTMLElement>(`[data-cell="${CSS.escape(n.id)}"]`);
-      if (!cell) continue;
+      const wrap = box.current.querySelector<HTMLElement>(`.react-flow__node[data-id="${CSS.escape(n.id)}"]`);
+      const cell = wrap?.querySelector<HTMLElement>("[data-cell]");
+      if (!wrap || !cell) continue;
       const c = cell.getBoundingClientRect();
       const width = Math.ceil(c.width);
       const height = Math.ceil(c.height);
-      const ports: Port[] = [];
-      cell.querySelectorAll<HTMLElement>("[data-socket]").forEach((el) => {
+      const rows: Measured["rows"] = {};
+      cell.querySelectorAll<HTMLElement>("[data-row]").forEach((el) => {
         const r = el.getBoundingClientRect();
-        const side = el.dataset.side as Port["side"];
-        const kind = n.sockets.find((s) => s.id === el.dataset.socket)?.kind ?? "";
-        const label = labels.get(kind) ?? { width: 0, height: 0 };
-        if (side === "SOUTH") ports.push({ id: el.dataset.socket!, side, x: r.left + r.width / 2 - c.left, y: height, label });
-        else ports.push({ id: el.dataset.socket!, side, x: side === "WEST" ? 0 : width, y: r.top + r.height / 2 - c.top, label });
+        rows[el.dataset.row!] = { top: r.top - c.top, bottom: r.bottom - c.top };
       });
+      const labels: Measured["labels"] = {};
+      wrap.querySelectorAll<HTMLElement>("[data-words]").forEach((el) => {
+        const words = el.firstElementChild?.getBoundingClientRect();
+        labels[el.dataset.words!] = { width: Math.ceil(words?.width ?? 0), height: Math.ceil(words?.height ?? 0) };
+      });
+      const sides: Measured["sides"] = {};
+      wrap.querySelectorAll<HTMLElement>("[data-side-words]").forEach((el) => {
+        sides[el.dataset.sideWords!] = Math.ceil(el.firstElementChild?.getBoundingClientRect().height ?? 0);
+      });
+      const head = cell.querySelector<HTMLElement>("[data-head]")?.getBoundingClientRect();
       const members = cell.querySelector<HTMLElement>("[data-members]");
       const band = members ? Math.ceil(members.getBoundingClientRect().top - c.top) : 0;
-      size[n.id] = { width, height, ports, band, foot: members ? height - band : 0 };
+      size[n.id] = { width, height, band, foot: members ? height - band : 0, head: head ? head.bottom - c.top : 0, rows, labels, sides };
     }
     onDone(size);
   }, [ready, onDone, graph]);
-  const kinds = [...new Set(graph.nodes.flatMap((n) => n.sockets.map((s) => s.kind)))];
   return (
     <div className="measure" ref={box} aria-hidden>
       <FrameContext.Provider value={seen}>
         <ReactFlow nodes={nodes} edges={[]} nodeTypes={NODE_TYPES} defaultViewport={{ x: 0, y: 0, zoom: 1 }} proOptions={{ hideAttribution: true }} />
       </FrameContext.Provider>
-      {kinds.map((k) => (
-        <span key={k} className="socket-label" data-socket-label={k}>
-          {socketLabel(k, seen.density)}
-        </span>
-      ))}
     </div>
   );
 }
 
-/** Cells whose content came out larger than the box the layout gave them, with what they need. */
+/** Cells whose content came out larger than the body the layout gave them, with what the body
+ * needs. */
 function outgrown(root: HTMLElement, placed: Placed): Record<string, { width: number; height: number }> {
   const out: Record<string, { width: number; height: number }> = {};
   root.querySelectorAll<HTMLElement>(".react-flow__node [data-cell]").forEach((el) => {
@@ -145,7 +142,7 @@ function outgrown(root: HTMLElement, placed: Placed): Record<string, { width: nu
     const p = placed.nodes[id];
     if (!p || el.querySelector("[data-members]")) return;
     if (el.scrollWidth > el.clientWidth + 0.5 || el.scrollHeight > el.clientHeight + 0.5)
-      out[id] = { width: p.width + el.scrollWidth - el.clientWidth, height: p.height + el.scrollHeight - el.clientHeight };
+      out[id] = { width: p.body.width + el.scrollWidth - el.clientWidth, height: p.body.height + el.scrollHeight - el.clientHeight };
   });
   return out;
 }
@@ -154,7 +151,10 @@ function Drawn({ graph, placed, seen, bare, onReady, onOutgrown }: { graph: Grap
   const flow = useReactFlow();
   const box = useRef<HTMLDivElement>(null);
   const nodes = useMemo(() => flowNodes(graph, seen.frame.regions, placed), [graph, seen.frame.regions, placed]);
-  const edges = useMemo(() => graph.edges.map((e) => edgeOf(e, seen, placed.edges[e.id])), [graph, seen, placed]);
+  const edges = useMemo(() => {
+    const walls = new Set(graph.nodes.flatMap((n) => n.board.filter((s) => s.face === "wall").map((s) => s.id)));
+    return graph.edges.flatMap((e) => e.hops.map((h) => edgeOf(e, h, seen, placed.edges[h.id], walls)));
+  }, [graph, seen, placed]);
   const ready = useDrawn(nodes.length, edges.length, placed);
   useEffect(() => {
     if (!ready || !box.current) return;
@@ -172,6 +172,7 @@ function Drawn({ graph, placed, seen, bare, onReady, onOutgrown }: { graph: Grap
           edgeTypes={EDGE_TYPES}
           nodesDraggable={false}
           nodesConnectable={false}
+          connectionMode={ConnectionMode.Loose}
           elementsSelectable={false}
           panOnDrag={!bare}
           zoomOnScroll={!bare}

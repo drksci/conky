@@ -17,8 +17,9 @@ from the published files alone.
 
 The project describes and the view draws: nothing here places or styles anything, and the view
 classifies and infers nothing. A node's archetype comes from `bench.timeline.classify`; its rows
-are grouped in panels in a fixed order (text, holds, bound by, when and then), its slots in a
-footer, and every edge runs between two sockets of the same kind of signal; a step names its
+are grouped in panels in a fixed order (text, holds, bound by, when and then), its sockets on a
+board in the standard order, and every connection runs as hops between sockets of one kind of
+signal, through a socket on the board of each space wall it crosses; a step names its
 subject and the meaning of the pen it takes, one of the meanings in `src/conky/tokens.json`.
 """
 
@@ -63,8 +64,7 @@ HEADER_FIELDS = ("avatar", "known_as")
 FOOTER_FIELDS = ("shows",)
 BOOKKEEPING = ("secret",)
 SOCKET = TOKENS["socket"]  # each kind of socket: the pen meaning of its signal, mark and word
-SOCKET_ORDER = TOKENS["socket_order"]  # the fixed order of sockets along each edge of a cell
-SIDES = ("WEST", "EAST", "SOUTH")
+BOARD_ORDER = tuple(SOCKET)  # the standard order of sockets on every board: the table's order
 WORDS = TOKENS["words"] | {k: v["word"] for k, v in SOCKET.items()}
 HEARD = {"refusal": "a write turned away", "within": "a page written within it",
          "link": "a link to it"}  # fmt: skip
@@ -495,83 +495,123 @@ def graph(events: list[dict], card: str, draw: int) -> dict:
             and not (holds(a, b) or holds(b, a))
         )
 
-    # Sockets and the edges between them. A row's socket is part of the row; a cell-wide one is
-    # made only when an edge needs it. Each socket carries one kind of signal (`SOCKET`).
+    # Sockets and the connections between them. A socket is made only where something plugs
+    # in, and for a slot, filled or empty. A connection runs from an output socket to an input
+    # socket of the same kind of signal as a list of hops: nothing crosses a space's wall
+    # directly. A hop ends at a socket on the board of each space the connection leaves or
+    # enters, and the next hop, a jumper, goes on from the inside of that socket. A write into a
+    # space is judged there by the space's rules for every page within it, as they stood at that
+    # write, and a write turned away ends at the board of the space whose rule refused it.
     sockets: dict[str, dict] = {}
 
-    def socket(node: str, kind: str, side: str, row: str | None = None, at: int = 0) -> str:
-        sid = f"{row or node}#{kind}:{side.lower()}"
-        sockets.setdefault(sid, {"id": sid, "node": node, "kind": kind, "side": side,
-                                 "row": row, "appears": at, "plugged": False})  # fmt: skip
+    def socket(node: str, kind: str, face: str, row: str | None = None, at: int = 0) -> str:
+        sid = f"{row or node}#{kind}:{face}"
+        sockets.setdefault(sid, {"id": sid, "node": node, "kind": kind, "face": face,
+                                 "row": row, "appears": at, "rules": []})  # fmt: skip
         return sid
 
-    for rid, r in rows.items():
-        if r["panel"] == "when":
-            r["in"] = socket(r["node"], "heard", "WEST", rid, r["appears"])
-            r["out"] = socket(r["node"], "wrote", "EAST", rid, r["appears"])
-        elif r["panel"] == "record":
-            r["out"] = socket(r["node"], r["signal"], "EAST", rid, r["appears"])
-        elif r["panel"] == "bound" and r.get("each") and not r.get("from"):
-            r["in"] = socket(r["node"], "refused", "WEST", rid, r["appears"])
-        elif r["panel"] == "slot":
-            r["socket"] = socket(r["node"], r["slot"], "SOUTH", rid, r["appears"])
-    for name, node in nodes.items():
-        if node["archetype"] == "provider":
-            socket(name, "asks", "WEST", None, node["appears"])
+    def chain(page: str) -> list[str]:
+        """The spaces a page is in, the innermost first."""
+        out, up = [], nodes.get(page, {}).get("parent")
+        while up:
+            out.append(up)
+            up = nodes.get(up, {}).get("parent")
+        return out
+
+    def judged(space: str, at: int, why: str | None) -> list[dict]:
+        """The space's own rules for every page within it as they stood at a step, each with
+        whether it let the write through; `why` is the reason a write was turned away."""
+        return [
+            {"row": rid, "says": "no" if why and rows[rid]["expr"]["body"] in why else "yes"}
+            for rid in nodes[space]["rows"]
+            if rows[rid]["panel"] == "bound" and rows[rid].get("each")
+            and not rows[rid].get("from") and rows[rid]["appears"] <= at
+        ]  # fmt: skip
 
     edges: dict[str, dict] = {}
 
-    def edge(kind: str, source: str, target: str, at: int) -> None:
-        a, b = sockets[source], sockets[target]
+    def connect(kind: str, source: str, target: str, at: int, why: str | None = None) -> str:
+        """A connection from a socket to a socket, or, for a write turned away (`why`), to the
+        board of the space that refused it, named by `target`."""
+        a = sockets[source]
+        end = target if why is not None else sockets[target]["node"]
         eid = f"{kind}:{source}->{target}"
-        if eid not in edges:
-            a["plugged"] = b["plugged"] = True
-            edges[eid] = {"id": eid, "kind": kind, "signal": a["kind"], "source": a["node"],
-                          "sourceSocket": source, "target": b["node"], "targetSocket": target,
-                          "appears": at}  # fmt: skip
+        if eid in edges:
+            return eid
+        leave = [s for s in chain(a["node"]) if s not in chain(end) and s != end]
+        enter = [s for s in reversed(chain(end)) if s not in chain(a["node"]) and s != a["node"]]
+        enter += [end] if why is not None else []
+        writes = a["kind"] in ("wrote", "refused")
+        ends = [source]
+        for s in leave + enter:
+            n = sum(1 for x in sockets.values() if x["node"] == s and x["face"] == "wall") + 1
+            sid = f"{s}#{a['kind']}:wall:{n}"
+            rules = judged(s, at, why if s == end else None) if writes and s in enter else []
+            sockets[sid] = {"id": sid, "node": s, "kind": a["kind"], "face": "wall", "row": None,
+                            "appears": at, "rules": rules}  # fmt: skip
+            ends.append(sid)
+        if why is None:
+            ends.append(target)
+        shared = next((s for s in chain(a["node"]) if s in chain(end)), None)
+        hops = []
+        for k, (x, y) in enumerate(zip(ends, ends[1:], strict=False)):
+            # the first hops run inside the spaces it leaves, the last inside those it enters,
+            # each a jumper from or to the inside of a wall; the one between runs where both are
+            jumper = k != len(leave)
+            within = shared
+            if k < len(leave):
+                within = leave[k]
+            elif k > len(leave):
+                within = enter[k - len(leave) - 1]
+            hops.append({"id": f"{eid}/{k}", "source": sockets[x]["node"], "sourceSocket": x,
+                         "target": sockets[y]["node"], "targetSocket": y, "within": within,
+                         "jumper": jumper})  # fmt: skip
+        edges[eid] = {"id": eid, "kind": kind, "signal": a["kind"], "source": a["node"],
+                      "sourceSocket": source, "target": end, "targetSocket": ends[-1],
+                      "appears": at, "hops": hops}  # fmt: skip
+        return eid
 
-    for r in rows.values():
+    for rid, r in rows.items():
+        if r["panel"] == "slot":
+            r["socket"] = socket(r["node"], r["slot"], "slot", rid, r["appears"])
+    for r in list(rows.values()):
         at = max(r["appears"], nodes.get(r.get("to") or r.get("hears") or "", {}).get("appears", 0))
         if r["panel"] == "when" and apart(r.get("hears"), r["node"]):
-            out = socket(r["hears"], "heard", "EAST", None, nodes[r["hears"]]["appears"])
-            edge("heard", out, r["in"], max(at, nodes[r["hears"]]["appears"]))
+            r["in"] = socket(r["node"], "heard", "in", r["id"], r["appears"])
+            out = socket(r["hears"], "heard", "out", None, nodes[r["hears"]]["appears"])
+            connect("heard", out, r["in"], max(at, nodes[r["hears"]]["appears"]))
         elif r["panel"] == "slot" and r["slot"] == "asks" and apart(r["node"], r.get("to")):
-            edge(
-                "asks",
-                r["socket"],
-                socket(r["to"], "asks", "WEST"),
-                max(at, nodes[r["to"]]["appears"]),
-            )
+            into = socket(r["to"], "asks", "in", None, nodes[r["to"]]["appears"])
+            connect("asks", r["socket"], into, max(at, nodes[r["to"]]["appears"]))
         elif r["panel"] == "record" and r["signal"] == "wrote" and apart(r["node"], r["to"]):
-            edge("wrote", r["out"], socket(r["to"], "wrote", "WEST", None, at), at)
+            r["out"] = socket(r["node"], "wrote", "out", r["id"], r["appears"])
+            connect("wrote", r["out"], socket(r["to"], "wrote", "in", None, at), at)
         elif r["panel"] == "record" and r["signal"] == "refused" and r["to"] in nodes:
-            wall = next(
-                (h for h in nodes[r["to"]]["rows"]
-                 if rows[h]["panel"] == "bound" and rows[h].get("in")
-                 and rows[h]["expr"]["body"] in by_reason(events, r["node"])),
-                None,
-            )  # fmt: skip
-            target = rows[wall]["in"] if wall else socket(r["to"], "refused", "WEST", None, at)
+            why = by_reason(events, r["node"])
+            said = re.search(r"\(from ([^)]*)\) is false", why)
+            space = said[1] if said and said[1] in nodes else r["to"]
+            r["out"] = socket(r["node"], "refused", "out", r["id"], r["appears"])
             first = min(step_of[e["n"]] for e in events if e["page"] == r["node"])
-            edge("turned-away", r["out"], target, first)
+            eid = connect("turned-away", r["out"], space, first, why)
+            wall = edges[eid]["targetSocket"]
             for e in events:
                 if e["page"] == r["node"] and e["kind"] == "refused":
-                    told[step_of[e["n"]]]["subject"][f"turned-away:{r['out']}->{target}"] = (
-                        "refused"
-                    )
-                    if wall:
-                        told[step_of[e["n"]]]["subject"][wall] = "refused"
-                        told[step_of[e["n"]]]["subject"][rows[wall]["in"]] = "refused"
+                    subject = told[step_of[e["n"]]]["subject"]
+                    subject |= {h["id"]: "refused" for h in edges[eid]["hops"]}
+                    subject[wall] = "refused"
+                    for rule in sockets[wall]["rules"]:
+                        if rule["says"] == "no":
+                            subject[rule["row"]] = "refused"
     heard = {(x["source"], x["target"]) for x in edges.values()}
     for e in events:
         cause = by_n.get(e["cause"])
         if not cause or "refused" in (e["kind"], cause["kind"]) or e["by"] == cause["page"]:
             continue  # a refusal is drawn as turned away, and what a page does by its own rows
         if apart(cause["page"], e["page"]) and (cause["page"], e["page"]) not in heard:
-            out = socket(cause["page"], "heard", "EAST", None, nodes[cause["page"]]["appears"])
-            edge("caused", out, socket(e["page"], "heard", "WEST"), step_of[e["n"]])
+            out = socket(cause["page"], "heard", "out", None, nodes[cause["page"]]["appears"])
+            connect("caused", out, socket(e["page"], "heard", "in"), step_of[e["n"]])
     for x in sorted(edges.values(), key=lambda x: (x["appears"], x["id"])):
-        told[x["appears"]]["appear"].append(x["id"])
+        told[x["appears"]]["appear"].extend(h["id"] for h in x["hops"])
     for s in sockets.values():
         told[s["appears"]]["appear"].append(s["id"])
 
@@ -604,6 +644,7 @@ def graph(events: list[dict], card: str, draw: int) -> dict:
         for end in ("sourceSocket", "targetSocket")
         if sockets[x[end]]["row"] and not {x["source"], x["target"]} & providers
     }  # the rows that matter to the steps: a subject, a change, or the end of an edge drawn
+    key |= {r["row"] for s in sockets.values() for r in s["rules"] if r["says"] == "no"}
     out_nodes = [
         cell(nodes[name], rows, sockets, key, spaces, crowd, providers) for name in _ordered(nodes)
     ]
@@ -619,6 +660,7 @@ def graph(events: list[dict], card: str, draw: int) -> dict:
             "modes": ["topology"]
             if {x["source"], x["target"]} & providers
             else ["dynamics", "topology"],
+            "hops": x["hops"],
         }
         for x in sorted(edges.values(), key=lambda x: x["id"])
     ]
@@ -741,9 +783,22 @@ def excerpt(body: str) -> str:
 
 def cell(node: dict, rows: dict, sockets: dict, key: set, spaces: set, crowd: set,
          providers: set) -> dict:  # fmt: skip
-    """One node of graph.json: header, panels in their order, footer, and sockets."""
+    """One node of graph.json: header, panels in their order, footer, and its board: every
+    socket it has, in the standard order, each tied to its row by a small mark. Which edge of
+    the cell a socket sits on is left to the layout."""
     name = node["id"]
     mine = [rows[r] for r in node["rows"]]
+    board = sorted(
+        (s for s in sockets.values() if s["node"] == name),
+        key=lambda s: (BOARD_ORDER.index(s["kind"]),
+                       node["rows"].index(s["row"]) if s["row"] else -1, s["id"]),
+    )  # fmt: skip
+    marks: dict[str, int] = {}
+    for s in board:
+        for rid in ([s["row"]] if s["row"] and s["face"] in ("in", "out") else []) + [
+            r["row"] for r in s["rules"]
+        ]:
+            marks.setdefault(rid, len(marks) + 1)
     kinds = kinds_of(node, spaces, crowd)
     symbol = next((k for k in ("character", "provider") if k in kinds), kinds[0])
     text = next((r for r in mine if r["panel"] == "text"), None)
@@ -761,25 +816,20 @@ def cell(node: dict, rows: dict, sockets: dict, key: set, spaces: set, crowd: se
     if bound:
         panels.append({"kind": "bound", "title": WORDS["bound"], "rows": [
             {"id": r["id"], "label": WORDS["each"] if r["each"] else WORDS["itself"],
-             "from": r["from"], "expr": r["expr"], "in": r.get("in"), "key": r["id"] in key}
+             "from": r["from"], "expr": r["expr"], "mark": marks.get(r["id"]),
+             "key": r["id"] in key}
             for r in bound]})  # fmt: skip
     when = [r for r in mine if r["panel"] == "when"]
     record = [r for r in mine if r["panel"] == "record"]
     if when or record:
         panels.append({"kind": "when", "title": WORDS["when"], "then": WORDS["then"], "rows": [
             {"id": r["id"], "when": r["name"], "expr": r["expr"], "then": r["then"],
-             "in": r["in"], "out": r["out"], "key": r["id"] in key} for r in when
-        ], "record": [{"id": r["id"], "out": r["out"], "key": r["id"] in key}
+             "mark": marks.get(r["id"]), "key": r["id"] in key} for r in when
+        ], "record": [{"id": r["id"], "mark": marks.get(r["id"]), "key": r["id"] in key}
                       for r in record]})  # fmt: skip
     slots = sorted(
-        (r for r in mine if r["panel"] == "slot"),
-        key=lambda r: SOCKET_ORDER["SOUTH"].index(r["slot"]),
+        (r for r in mine if r["panel"] == "slot"), key=lambda r: BOARD_ORDER.index(r["slot"])
     )
-    mine_sockets = sorted(
-        (s for s in sockets.values() if s["node"] == name),
-        key=lambda s: (SIDES.index(s["side"]), SOCKET_ORDER[s["side"]].index(s["kind"]),
-                       node["rows"].index(s["row"]) if s["row"] else -1),
-    )  # fmt: skip
     body = text["body"] if text else ""
     return {
         "id": name,
@@ -816,16 +866,18 @@ def cell(node: dict, rows: dict, sockets: dict, key: set, spaces: set, crowd: se
             "members": f"{name}/members" if name in spaces else None,
             "changed": f"{name}/changed",
         },  # fmt: skip
-        "sockets": [
+        "board": [
             {
                 "id": s["id"],
                 "kind": s["kind"],
-                "side": s["side"],
+                "face": s["face"],
                 "row": s["row"],
                 "order": k,
-                "plugged": s["plugged"],
+                "label": WORDS[s["kind"]],
+                "mark": marks.get(s["row"]) if s["face"] in ("in", "out") else None,
+                "rules": [{**r, "mark": marks[r["row"]]} for r in s["rules"]],
             }
-            for k, s in enumerate(mine_sockets)
+            for k, s in enumerate(board)
         ],  # fmt: skip
         "versions": node["versions"],
     }
@@ -995,11 +1047,14 @@ def board(root: Path) -> str:
         "`viewer/`, and the picture under it is the same draw's final state. Every page is one "
         "cell: its name and what it is, then its text, the fields it holds, the rules it is "
         "bound by, and what it does when it hears something, then a footer naming who it asks "
-        "and where it writes. A space is a frame holding its members. Connections run between "
-        "small sockets on the cells' edges, coloured by what flows: blue is heard, amber is "
-        "written or added, pink is a write turned away, violet is a model asked, teal is what "
-        "was kept or shown. Otherwise ink is the structure, and a colour marks the subject of "
-        "a step with the same meanings.",
+        "and where it writes. A space is a frame holding its members. Connections plug into "
+        "small sockets on port boards, thin strips along the edges of a cell that face what "
+        "they connect to, and are coloured by what flows: blue is heard, amber is written or "
+        "added, pink is a write turned away, violet is a model asked, teal is what was kept or "
+        "shown. Nothing crosses a space's wall directly: a connection goes to a socket on the "
+        "space's board and on inside, and a write into the space is judged there by its rules, "
+        "so one turned away stops at that board. Otherwise ink is the structure, and a colour "
+        "marks the subject of a step with the same meanings.",
         "",
     ]
     for c in found:

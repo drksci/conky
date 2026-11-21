@@ -25,11 +25,11 @@ Edit only `src/view.css` or the token file `src/conky/tokens.json`. Every colour
 
 ## Parts
 
-- `src/components/`: the cell and its header, panels (text, holds, bound by, when and then) and footer of slots; the socket; the space, the note and the region a crowded space draws its notes in; the function block of an expression; a symbol; the connector; the caption, the legend, the scrubber and the side panel, one file each.
+- `src/components/`: the cell and its header, panels (text, holds, bound by, when and then) and footer; the port board, a thin rectangle outside an edge of the cell that runs its whole length, and the socket on it with its words; the space, the note and the region a crowded space draws its notes in; the function block of an expression; a symbol; the connector; the caption, the legend, the scrubber and the side panel, one file each.
 - `src/graph.ts`: the shape of `graph.json` and what one frame and one density (compact in the steps, detailed in the final state) show of it.
 - `src/node-types.ts`: the one table of node types, keyed by the archetypes the Python side emits. Adding an archetype is one entry there and one class in the stylesheet.
-- `src/layout.ts`: the graph in ELK's terms and back. Sockets are fixed-side ports at the positions React Flow measured, with their labels as ELK port labels; only ELK's options are tuned there.
+- `src/layout.ts`: the graph in ELK's terms and back. A first pass with free ports lets ELK turn each socket toward what it connects to; the second lays the graph out with a board on each edge that has sockets, the sockets in the standard order. Every hop of a connection is one ELK edge, so a connection into a space runs to a port on the space's border and on inside, as the record says. Only ELK's options are tuned there.
 - `scripts/render.mjs`: the headless pictures, with Playwright's Chromium already on the machine and ffmpeg.
-- `test/smoke.mjs`: every published card, both densities and both looks, checked for overflow, overlap, containment, socket kinds and contrast.
+- `test/smoke.mjs`: every published card, both densities and both looks, checked for overflow, overlap, containment, socket kinds, contrast, and the boards: every wire ends on two sockets on boards, boards keep clear of bodies and each other and run the whole length of their edge, sockets on a board are in the standard order, and no wire enters a space except through a socket on its board.
 
 Clicking a cell in the interactive view opens the page as of the current step, rendered or as its highlighted source.

@@ -90,22 +90,27 @@ def test_the_graph_has_a_node_a_page_with_its_archetype(tiny: Vault) -> None:
     assert parents["keeper"] == "den" and parents["payment-baker"] == "den"
 
 
-def test_every_panel_kind_appears_and_edges_run_between_sockets(tiny: Vault) -> None:
+def test_every_panel_kind_appears_and_connections_run_between_sockets(tiny: Vault) -> None:
     g = tiny_graph(tiny)
     panels = {p["kind"] for n in g["nodes"] for p in n["panels"]}
     assert panels == {"text", "holds", "bound", "when"}
-    sockets = {s["id"]: s for n in g["nodes"] for s in n["sockets"]}
+    sockets = {s["id"]: s for n in g["nodes"] for s in n["board"]}
     kinds = {e["kind"] for e in g["edges"]}
     assert {"turned-away", "asks", "heard"} <= kinds
-    for e in g["edges"]:  # socket to socket, output to input, one kind of signal
-        a, b = sockets[e["sourceSocket"]], sockets[e["targetSocket"]]
-        assert a["kind"] == b["kind"] == e["signal"] and a["plugged"] and b["plugged"]
-        assert a["side"] in ("EAST", "SOUTH") and b["side"] == "WEST"
-    for n in g["nodes"]:  # sockets in the one fixed order: west, east, south, each by the table
-        order = [(dynamics.SIDES.index(s["side"]),
-                  dynamics.SOCKET_ORDER[s["side"]].index(s["kind"]))
-                 for s in n["sockets"]]  # fmt: skip
-        assert order == sorted(order) and [s["order"] for s in n["sockets"]] == list(
+    for e in g["edges"]:  # socket to socket, output to input, one kind of signal, hop by hop
+        hops = e["hops"]
+        assert hops[0]["sourceSocket"] == e["sourceSocket"]
+        assert hops[-1]["targetSocket"] == e["targetSocket"]
+        for h in hops:
+            a, b = sockets[h["sourceSocket"]], sockets[h["targetSocket"]]
+            assert a["kind"] == b["kind"] == e["signal"]
+        assert sockets[e["sourceSocket"]]["face"] in ("out", "slot")
+        assert sockets[e["targetSocket"]]["face"] in (
+            ("wall",) if e["kind"] == "turned-away" else ("in",)
+        )
+    for n in g["nodes"]:  # a board in the standard order: the socket table's
+        order = [dynamics.BOARD_ORDER.index(s["kind"]) for s in n["board"]]
+        assert order == sorted(order) and [s["order"] for s in n["board"]] == list(
             range(len(order))
         )
         for p in n["panels"]:
@@ -120,6 +125,66 @@ def test_every_panel_kind_appears_and_edges_run_between_sockets(tiny: Vault) -> 
     payment = next(n for n in g["nodes"] if n["id"] == "payment-baker")
     handed = [r for p in payment["panels"] if p["kind"] == "bound" for r in p["rows"]]
     assert [r["from"] for r in handed] == ["den"]  # the rule den hands down, said to come from den
+
+
+def crossings(g: dict) -> None:
+    """The properties every connection keeps: its hops are continuous, each hop runs in one
+    place (the outside of both ends, or the inside of a wall it leaves from or comes to), so
+    nothing enters a space except through a socket on that space's board, and a write turned
+    away goes no further than the board of the space that refused it."""
+    parent = {n["id"]: n["parent"] for n in g["nodes"]}
+    sockets = {s["id"]: (n["id"], s) for n in g["nodes"] for s in n["board"]}
+    for e in g["edges"]:
+        hops = e["hops"]
+        for x, y in zip(hops, hops[1:], strict=False):
+            assert x["targetSocket"] == y["sourceSocket"]  # continuous
+        for k, h in enumerate(hops):
+            (a, sa), (b, sb) = sockets[h["sourceSocket"]], sockets[h["targetSocket"]]
+            assert (a, b) == (h["source"], h["target"])
+            # where each end is reached from: a wall from inside when the hop is a jumper in
+            # that wall's space, else from outside, like any socket
+            ends = []
+            for me, s in ((a, sa), (b, sb)):
+                inside = s["face"] == "wall" and h["jumper"] and h["within"] == me
+                ends.append(me if inside else parent[me])
+            assert ends[0] == ends[1] == h["within"], (e["id"], k, ends)
+            assert h["jumper"] == (sa["face"] == "wall" and h["within"] == a
+                                   or sb["face"] == "wall" and h["within"] == b)  # fmt: skip
+        if e["kind"] == "turned-away":
+            wall = sockets[e["targetSocket"]][1]
+            assert wall["face"] == "wall" and e["target"] == sockets[e["targetSocket"]][0]
+            assert any(r["says"] == "no" for r in wall["rules"])
+            assert not any(parent.get(h["target"]) == e["target"] for h in hops)
+
+
+def test_a_connection_crosses_a_wall_only_through_its_board(tiny: Vault) -> None:
+    g = tiny_graph(tiny)
+    crossings(g)
+    edges = {e["kind"]: e for e in g["edges"]}
+    heard = edges["heard"]["hops"]  # order is outside den, the keeper inside: two hops
+    assert [h["target"] for h in heard] == ["den", "keeper"] and heard[1]["jumper"]
+    refused = edges["turned-away"]  # stops at den's board, with the rule that said no
+    den = next(n for n in g["nodes"] if n["id"] == "den")
+    wall = next(s for s in den["board"] if s["id"] == refused["targetSocket"])
+    assert [r["says"] for r in wall["rules"]] == ["no"] and len(refused["hops"]) == 1
+    rule = next(r for p in den["panels"] if p["kind"] == "bound" for r in p["rows"])
+    assert wall["rules"][0]["row"] == rule["id"] and wall["rules"][0]["mark"] == rule["mark"]
+    assert not next(s for s in den["board"] if s["kind"] == "heard")["rules"]  # heard, not written
+
+
+def test_a_page_two_spaces_deep_is_reached_through_two_boards(vault: Vault) -> None:
+    hears = {"on": "order", "when": "true", "set": {"n": "page.n + 1"}}
+    w(vault, "house", {})
+    w(vault, "den", {"within": "house", "cash": 10, "rules": [{"each": "page.amount <= 5"}]})
+    w(vault, "order", {})
+    w(vault, "keeper", {"within": "den", "n": 0, "watch": [hears]})
+    w(vault, "order", {"due": 1})
+    w(vault, "big-payment", {"within": "den", "amount": 9})
+    g = dynamics.graph(timeline(vault.pages_dir.parent), "deep", 1)
+    crossings(g)
+    edges = {e["kind"]: e for e in g["edges"]}
+    assert [h["target"] for h in edges["heard"]["hops"]] == ["house", "den", "keeper"]
+    assert [h["target"] for h in edges["turned-away"]["hops"]] == ["house", "den"]
 
 
 def test_an_empty_slot_is_hollow_and_a_self_watch_is_said_plainly(vault: Vault) -> None:
@@ -139,7 +204,8 @@ def test_an_empty_slot_is_hollow_and_a_self_watch_is_said_plainly(vault: Vault) 
 def test_steps_reference_only_what_exists_and_pens_mean_something(tiny: Vault) -> None:
     g = tiny_graph(tiny)
     ids = {n["id"] for n in g["nodes"]} | {e["id"] for e in g["edges"]}
-    ids |= {s["id"] for n in g["nodes"] for s in n["sockets"]}
+    ids |= {s["id"] for n in g["nodes"] for s in n["board"]}
+    ids |= {h["id"] for e in g["edges"] for h in e["hops"]}
     ids |= {s["id"] for n in g["nodes"] for s in n["footer"]["slots"]}
     for n in g["nodes"]:
         for p in n["panels"]:
@@ -173,10 +239,8 @@ def test_every_symbol_named_is_in_the_one_table(tiny: Vault) -> None:
     known = set(TOKENS["symbol"])
     assert named <= known and archetypes <= known
     assert set(dynamics.STEP_SYMBOL.values()) <= known
-    sockets = {s["kind"] for n in g["nodes"] for s in n["sockets"]}
-    assert sockets <= set(TOKENS["socket"]) and set(TOKENS["socket"]) == {
-        k for side in TOKENS["socket_order"].values() for k in side
-    }  # every kind of socket has its place in the order, and nothing else has
+    sockets = {s["kind"] for n in g["nodes"] for s in n["board"]}
+    assert sockets <= set(TOKENS["socket"]) == set(dynamics.BOARD_ORDER)
     marks = [v["mark"] for v in TOKENS["socket"].values()]
     assert len(set(marks)) == len(marks)  # one mark a kind, never two kinds alike
 
@@ -226,6 +290,7 @@ def test_published_graphs_are_what_their_records_describe() -> None:
         events = json.loads((folder / "timeline.json").read_text())[str(info["shown"])]
         drawn = json.loads((folder / "graph.json").read_text())
         assert drawn == dynamics.graph(events, info["card"], info["shown"])
+        crossings(drawn)
         for name in dynamics.PICTURES:
             assert (folder / name).exists(), f"{folder.name}/{name}: run npm run render in viewer/"
 

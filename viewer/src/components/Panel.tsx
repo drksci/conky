@@ -1,11 +1,14 @@
 import tokens from "../../../src/conky/tokens.json";
-import type { BoundPanel, GraphNode, HoldsPanel, Panel as PanelData, Socket as SocketData, TextPanel, WhenPanel } from "../graph";
+import type { BoundPanel, HoldsPanel, Panel as PanelData, TextPanel, WhenPanel } from "../graph";
 import { standing, useSeen, valueOf } from "../frame-context";
 import { Expression } from "./Expression";
-import { Socket } from "./Socket";
 import { Symbol } from "./Symbol";
 
-type Sockets = Map<string, SocketData>;
+/** The small numbers rows share with their sockets on a board, by row. */
+type Ties = Map<string, number>;
+
+/** The number a row shares with its socket, when the socket is not beside it. */
+const Tie = ({ id, ties }: { id: string; ties: Ties }) => (ties.has(id) ? <span className="row-tie">{ties.get(id)}</span> : null);
 
 /** Prose as printed: a name with a hyphen in it (note-07) is never split across two lines. */
 const unbroken = (text: string) => text.replace(/(\w)-(?=\w)/g, "$1\u2011");
@@ -47,7 +50,7 @@ function Holds({ panel }: { panel: HoldsPanel }) {
 /** The rules a page is bound by: its own, then those handed down to it, each with the space it
  * comes from, and each with its function block. A space's own rule for its members has the
  * socket a write turned away at its wall plugs into. */
-function Bound({ panel, sockets }: { panel: BoundPanel; sockets: Sockets }) {
+function Bound({ panel, ties }: { panel: BoundPanel; ties: Ties }) {
   const seen = useSeen();
   return (
     <div className="panel panel-bound">
@@ -63,7 +66,7 @@ function Bound({ panel, sockets }: { panel: BoundPanel; sockets: Sockets }) {
                 · {tokens.words.from} {r.from}
               </span>
             )}
-            {r.in && <Socket socket={sockets.get(r.in)} />}
+            <Tie id={r.id} ties={ties} />
           </div>
           <Expression expr={r.expr} />
         </div>
@@ -73,10 +76,9 @@ function Bound({ panel, sockets }: { panel: BoundPanel; sockets: Sockets }) {
 }
 
 /** The heart of a cell: one row a watch entry in two aligned columns, "when" (what it listens
- * for, with its condition) and "then" (what it does), with the input socket on the left edge
- * and the output socket on the right; then the rows from the record that no watch entry
- * explains, each with its output socket. */
-function When({ panel, sockets }: { panel: WhenPanel; sockets: Sockets }) {
+ * for, with its condition) and "then" (what it does); then the rows from the record that no
+ * watch entry explains. Their sockets are on the cell's boards. */
+function When({ panel, ties }: { panel: WhenPanel; ties: Ties }) {
   const seen = useSeen();
   return (
     <div className="panel panel-when">
@@ -85,14 +87,14 @@ function When({ panel, sockets }: { panel: WhenPanel; sockets: Sockets }) {
           <div className="panel-head">{panel.title}</div>
           <div className="panel-head">{panel.then}</div>
           {panel.rows.map((r) => (
-            <div key={r.id} className={`when-row ${standing(seen, r.id)}`} data-row={r.id}>
-              <div className="when-cell">
+            <div key={r.id} className={`when-row ${standing(seen, r.id)}`}>
+              <div className="when-cell" data-row={r.id}>
                 <span className="when-words">
                   <Symbol name="hears" />
                   {r.when}
                 </span>
                 {r.expr && <Expression expr={r.expr} />}
-                <Socket socket={sockets.get(r.in)} />
+                <Tie id={r.id} ties={ties} />
               </div>
               <div className="then-cell">
                 {r.then.map((t, k) => (
@@ -101,7 +103,6 @@ function When({ panel, sockets }: { panel: WhenPanel; sockets: Sockets }) {
                     {t.expr && <Expression expr={t.expr} />}
                   </div>
                 ))}
-                <Socket socket={sockets.get(r.out)} />
               </div>
             </div>
           ))}
@@ -110,17 +111,16 @@ function When({ panel, sockets }: { panel: WhenPanel; sockets: Sockets }) {
       {panel.record.map((r) => (
         <div key={r.id} className={`record-row ${standing(seen, r.id)}`} data-row={r.id}>
           <span className="record-words">{unbroken(valueOf(seen, r.id))}</span>
-          <Socket socket={sockets.get(r.out)} />
+          <Tie id={r.id} ties={ties} />
         </div>
       ))}
     </div>
   );
 }
 
-export function Panel({ panel, node }: { panel: PanelData; node: GraphNode }) {
-  const sockets = new Map(node.sockets.map((s) => [s.id, s]));
+export function Panel({ panel, ties }: { panel: PanelData; ties: Ties }) {
   if (panel.kind === "text") return <Text panel={panel} />;
   if (panel.kind === "holds") return <Holds panel={panel} />;
-  if (panel.kind === "bound") return <Bound panel={panel} sockets={sockets} />;
-  return <When panel={panel} sockets={sockets} />;
+  if (panel.kind === "bound") return <Bound panel={panel} ties={ties} />;
+  return <When panel={panel} ties={ties} />;
 }

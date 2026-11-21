@@ -65,17 +65,20 @@ try {
     const graph = JSON.parse(readFileSync(join(cardsDir, card, "graph.json"), "utf-8"));
     const named = new Set([...graph.nodes.map((n) => n.header.symbol), ...graph.steps.map((s) => s.symbol)]);
     for (const name of named) assert.ok(t.symbol[name], `${card}: symbol ${name} is not in tokens.json`);
-    const sockets = new Map(graph.nodes.flatMap((n) => n.sockets.map((s) => [s.id, s])));
-    for (const e of graph.edges) {
-      const [a, b] = [sockets.get(e.sourceSocket), sockets.get(e.targetSocket)];
-      assert.ok(a && b, `${card}: edge ${e.id} does not end on two sockets`);
-      assert.equal(a.kind, e.signal, `${card}: ${e.id} leaves a ${a.kind} socket`);
-      assert.equal(b.kind, e.signal, `${card}: ${e.id} plugs into a ${b.kind} socket`);
-      assert.ok(t.socket[a.kind], `${card}: socket kind ${a.kind} is not in tokens.json`);
+    const sockets = new Map(graph.nodes.flatMap((n) => n.board.map((s) => [s.id, s])));
+    const kinds = Object.keys(t.socket); // the standard order
+    for (const e of graph.edges)
+      for (const h of e.hops) {
+        const [a, b] = [sockets.get(h.sourceSocket), sockets.get(h.targetSocket)];
+        assert.ok(a && b, `${card}: hop ${h.id} does not end on two sockets`);
+        assert.equal(a.kind, e.signal, `${card}: ${h.id} leaves a ${a.kind} socket`);
+        assert.equal(b.kind, e.signal, `${card}: ${h.id} plugs into a ${b.kind} socket`);
+        assert.ok(t.socket[a.kind], `${card}: socket kind ${a.kind} is not in tokens.json`);
+      }
+    for (const n of graph.nodes) {
+      const order = n.board.map((s) => kinds.indexOf(s.kind));
+      assert.deepEqual(order, [...order].sort((x, y) => x - y), `${card}: ${n.id}'s board is not in the standard order`);
     }
-    for (const n of graph.nodes)
-      for (const p of n.panels)
-        if (p.kind === "when") for (const r of p.rows) assert.ok(sockets.get(r.in)?.side === "WEST" && sockets.get(r.out)?.side === "EAST", `${card}: ${r.id} lacks its sockets`);
     // the last step of each arrangement in the animation, and the final state
     const views = [...new Set(graph.steps.map((s) => s.arrangement))].map((a) => ["dynamics", Math.max(...graph.steps.filter((s) => s.arrangement === a).map((s) => s.i))]);
     views.push(["topology", graph.steps.length - 1]);
@@ -95,7 +98,7 @@ try {
           const sockets = [...document.querySelectorAll(".view-graph [data-socket]")].filter((el) => !hidden(el));
           const socketBoxes = sockets.map((el) => ({ id: el.dataset.socket, hollow: el.classList.contains("is-hollow"), ...box(el) }));
           sockets.forEach((el) => (el.style.display = "none"));
-          const overflow = [...document.querySelectorAll(".view-graph [data-cell], .view-graph .cell-head-row, .view-graph .holds-row > *, .view-graph .rule, .view-graph .when-cell, .view-graph .then-cell, .view-graph .record-row, .view-graph .slot, .view-graph .expr, .view-graph .region")]
+          const overflow = [...document.querySelectorAll(".view-graph [data-cell], .view-graph .cell-head-row, .view-graph .holds-row > *, .view-graph .rule, .view-graph .when-cell, .view-graph .then-cell, .view-graph .record-row, .view-graph .board-entry, .view-graph .expr, .view-graph .region")]
             .filter((el) => el.scrollWidth > el.clientWidth + 0.5 || el.scrollHeight > el.clientHeight + 0.5)
             .map((el) => `${el.dataset.cell ?? el.className} ${el.scrollWidth}/${el.clientWidth} ${el.scrollHeight}/${el.clientHeight}`);
           sockets.forEach((el) => (el.style.display = ""));
@@ -108,6 +111,23 @@ try {
             hidden: hidden(el),
           }));
           const regions = [...document.querySelectorAll("[data-region]")].map((el) => ({ id: el.dataset.region, ...box(el), hidden: hidden(el) }));
+          const boards = [...document.querySelectorAll(".view-graph [data-board]")]
+            .filter((el) => !hidden(el))
+            .map((el) => ({ id: el.dataset.board, ...box(el), sockets: [...el.querySelectorAll("[data-socket]")].map((s) => ({ id: s.dataset.socket, ...box(s) })) }));
+          const hops = [...document.querySelectorAll(".view-graph .react-flow__edge")]
+            .filter((el) => !el.classList.contains("is-hidden"))
+            .map((el) => {
+              const path = el.querySelector(".react-flow__edge-path");
+              const m = path.getScreenCTM();
+              const len = path.getTotalLength();
+              const at = (k) => {
+                const p = path.getPointAtLength(k).matrixTransform(m);
+                return { x: p.x, y: p.y };
+              };
+              const points = [];
+              for (let k = 0; k < len; k += 2) points.push(at(k));
+              return { id: el.dataset.id, points, start: at(0), end: at(len) };
+            });
           const texts = [];
           const walker = document.createTreeWalker(document.querySelector(".view"), NodeFilter.SHOW_TEXT);
           for (let n = walker.nextNode(); n; n = walker.nextNode()) {
@@ -117,7 +137,7 @@ try {
           }
           const strokes = [...document.querySelectorAll(".view-graph .react-flow__edge:not(.is-hidden) .react-flow__edge-path")].map((el) => getComputedStyle(el).stroke);
           const zoom = new DOMMatrix(getComputedStyle(document.querySelector(".view-graph .react-flow__viewport")).transform).a;
-          return { overflow, cells, regions, socketBoxes, texts, strokes, zoom };
+          return { overflow, cells, regions, socketBoxes, boards, hops, texts, strokes, zoom };
         });
         const ground = rgb(GROUND[look]);
         assert.deepEqual(seen.overflow, [], `${where}: content overflows`);
@@ -151,13 +171,45 @@ try {
             const apart = a.x + a.w <= b.x + 0.5 || b.x + b.w <= a.x + 0.5 || a.y + a.h <= b.y + 0.5 || b.y + b.h <= a.y + 0.5;
             assert.ok(apart, `${where}: sockets ${a.id} and ${b.id} overlap`);
           }
+        // boards: every wire ends in a plug on a board, boards keep clear of every body but the
+        // spaces that hold them and of each other, sockets on a board in the standard order, and
+        // no wire enters a space except through a socket on that space's board
+        const meet = (a, b) => !(a.x + a.w <= b.x + 0.5 || b.x + b.w <= a.x + 0.5 || a.y + a.h <= b.y + 0.5 || b.y + b.h <= a.y + 0.5);
+        const onBoard = new Map(seen.boards.flatMap((b) => b.sockets.map((s) => [s.id, s])));
+        const near = (p, s) => p.x >= s.x - 1.5 && p.x <= s.x + s.w + 1.5 && p.y >= s.y - 1.5 && p.y <= s.y + s.h + 1.5;
+        const hopOf = new Map(graph.edges.flatMap((e) => e.hops.map((h) => [h.id, h])));
+        for (const d of seen.hops) {
+          const h = hopOf.get(d.id);
+          const [a, b] = [onBoard.get(h.sourceSocket), onBoard.get(h.targetSocket)];
+          assert.ok(a && b, `${where}: ${d.id} does not run between two sockets on boards`);
+          assert.ok(near(d.start, a) && near(d.end, b), `${where}: ${d.id} is not plugged into its sockets`);
+        }
+        for (const [k, a] of seen.boards.entries()) {
+          for (const b of seen.boards.slice(k + 1)) assert.ok(!meet(a, b), `${where}: boards ${a.id} and ${b.id} overlap`);
+          const owner = a.id.split(":")[0];
+          for (const c of seen.cells.filter((c) => !c.hidden)) if (!holds(c.id, owner)) assert.ok(!meet(a, c), `${where}: board ${a.id} lies on ${c.id}`);
+          // a board runs the whole edge it is on: a side board the body's height, a top or bottom
+          // board the body's width with the side boards it covers at the corners
+          const body = seen.cells.find((c) => c.id === owner);
+          const sides = seen.boards.filter((b) => b.id === `${owner}:west` || b.id === `${owner}:east`).reduce((w, b) => w + b.w, 0);
+          const long = a.id.endsWith(":west") || a.id.endsWith(":east") ? [a.h, body.h] : [a.w, body.w + sides];
+          assert.ok(Math.abs(long[0] - long[1]) <= 1, `${where}: board ${a.id} is ${long[0]} long on an edge ${long[1]} long`);
+          const along = a.id.endsWith(":west") || a.id.endsWith(":east") ? "y" : "x";
+          const order = [...a.sockets].sort((p, q) => p[along] - q[along]).map((s) => kinds.indexOf(sockets.get(s.id).kind));
+          assert.deepEqual(order, [...order].sort((x, y) => x - y), `${where}: board ${a.id} is not in the standard order`);
+        }
+        const spaceCells = seen.cells.filter((c) => !c.hidden && graph.nodes.find((n) => n.id === c.id)?.form === "space");
+        for (const d of seen.hops) {
+          const h = hopOf.get(d.id);
+          for (const s of spaceCells) {
+            if (s.id === h.within || (h.within && holds(s.id, h.within))) continue;
+            const inside = d.points.find((p) => p.x > s.x + 1 && p.x < s.x + s.w - 1 && p.y > s.y + 1 && p.y < s.y + s.h - 1);
+            assert.ok(!inside, `${where}: ${d.id} enters ${s.id} away from its board`);
+          }
+        }
         const hollow = new Map(seen.socketBoxes.map((s) => [s.id, s.hollow]));
         for (const n of graph.nodes)
           for (const s of n.footer.slots) if (!s.filled && hollow.has(s.socket)) assert.ok(hollow.get(s.socket), `${where}: empty slot ${s.id} is not hollow`);
-        for (const e of graph.edges.filter((e) => e.modes.includes(mode))) {
-          const drawn = await page.locator(`[data-socket="${e.sourceSocket}"]`).count();
-          assert.ok(drawn > 0 || !seen.strokes.length, `${where}: ${e.id} has no socket to leave from`);
-        }
         for (const x of seen.texts) assert.ok(contrast(parse(x.colour), ground) >= 4.5, `${where}: "${x.text}" in ${x.colour} is too faint`);
         for (const c of seen.cells.filter((c) => !c.hidden)) assert.ok(contrast(parse(c.border), ground) >= 3, `${where}: ${c.id}'s edge in ${c.border} is too faint`);
         for (const s of seen.strokes) assert.ok(contrast(parse(s), ground) >= 3, `${where}: a connector in ${s} is too faint`);

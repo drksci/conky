@@ -1,6 +1,5 @@
-import { BaseEdge, EdgeLabelRenderer, type Edge as FlowEdge, type EdgeProps } from "@xyflow/react";
+import { BaseEdge, type Edge as FlowEdge, type EdgeProps } from "@xyflow/react";
 import { SPACE } from "../metrics";
-import { Symbol } from "./Symbol";
 
 const JOG = SPACE.wide; // how far before a border a route turns onto its socket
 const NEAR = SPACE.fine; // an end this close to its socket is moved onto it, keeping square corners
@@ -11,7 +10,9 @@ export interface Point {
   y: number;
 }
 
-export type RoutedEdge = FlowEdge<{ points: Point[]; kind: string; standing: string }, "routed">;
+/** `plugs`: the ends a plug is seated at. A jumper has none at a wall: it goes on from the
+ * socket there, through the wall. */
+export type RoutedEdge = FlowEdge<{ points: Point[]; plugs: { source: boolean; target: boolean } }, "routed">;
 
 const horizontal = (a: Point, b: Point) => Math.abs(a.y - b.y) < 0.5;
 
@@ -56,26 +57,17 @@ function plug(points: Point[]): string {
   return `M${t.x - (t.x - b.x) * k},${t.y - (t.y - b.y) * k} L${t.x},${t.y}`;
 }
 
-/** A connector along the route ELK found for it, drawn by React Flow's own BaseEdge, from an
- * output socket to an input socket and ending in a plug. Its line is by kind and its pen by
- * the signal it carries, both classes on the edge. A write turned away carries the refusal
- * symbol where it meets the wall. */
+/** One hop of a connector along the route ELK found for it, drawn by React Flow's own
+ * BaseEdge from socket to socket and ending in a plug. Its line is by kind and its pen by the
+ * signal it carries, both classes on the edge. */
 export function RoutedEdgeView({ data, sourceX, sourceY, targetX, targetY, sourcePosition }: EdgeProps<RoutedEdge>) {
   const points = onto(data?.points ?? [], { x: sourceX, y: sourceY }, { x: targetX, y: targetY }, sourcePosition === "bottom");
   const path = points.map((p, k) => `${k ? "L" : "M"}${p.x},${p.y}`).join(" ");
-  const end = points[points.length - 1];
   return (
     <>
       <BaseEdge path={path} />
-      <path className="edge-plug" d={plug(points)} />
-      <path className="edge-plug edge-plug-source" d={plug([...points].reverse())} />
-      {data?.kind === "turned-away" && end && (
-        <EdgeLabelRenderer>
-          <div className={`edge-mark ${data.standing}`} style={{ transform: `translate(${end.x - SPACE.far + SPACE.fine}px, ${end.y - SPACE.wide}px)` }}>
-            <Symbol name="refusal" />
-          </div>
-        </EdgeLabelRenderer>
-      )}
+      {data?.plugs.target && <path className="edge-plug" d={plug(points)} />}
+      {data?.plugs.source && <path className="edge-plug edge-plug-source" d={plug([...points].reverse())} />}
     </>
   );
 }

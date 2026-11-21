@@ -5,7 +5,8 @@ export type Mode = "dynamics" | "topology";
 /** How much a cell shows: compact in the animations, detailed in the final state and the
  * interactive view. The side panel shows a page in full. */
 export type Density = "compact" | "detailed";
-export type Side = "WEST" | "EAST" | "SOUTH";
+/** The edge of a cell a port board sits on: chosen by the layout, never by the record. */
+export type Side = "WEST" | "EAST" | "NORTH" | "SOUTH";
 
 export interface Expr {
   reads: string[];
@@ -13,13 +14,30 @@ export interface Expr {
   lines: string[];
 }
 
+/** A socket on a cell's port board. `face` says what plugs in: a connector arriving (in) or
+ * leaving (out), a slot's standing connection, or, on a space, a connection crossing its wall,
+ * with the space's rules judged there. A board lists them in the standard order. */
 export interface Socket {
   id: string;
   kind: string; // a key of the socket table in src/conky/tokens.json
-  side: Side;
+  face: "in" | "out" | "slot" | "wall";
   row: string | null;
   order: number;
-  plugged: boolean;
+  label: string;
+  mark: number | null; // the small number it shares with its row
+  rules: { row: string; says: "yes" | "no"; mark: number }[];
+}
+
+/** One stretch of a connection, from a socket to the next: a jumper when it runs inside a
+ * space from or to the inner face of the socket on that space's wall. */
+export interface Hop {
+  id: string;
+  source: string;
+  sourceSocket: string;
+  target: string;
+  targetSocket: string;
+  within: string | null;
+  jumper: boolean;
 }
 
 export interface TextPanel {
@@ -37,15 +55,14 @@ export interface HoldsPanel {
 export interface BoundPanel {
   kind: "bound";
   title: string;
-  rows: { id: string; label: string; from: string | null; expr: Expr; in: string | null; key: boolean }[];
+  rows: { id: string; label: string; from: string | null; expr: Expr; mark: number | null; key: boolean }[];
 }
 export interface WhenRow {
   id: string;
   when: string;
   expr: Expr | null;
   then: { words: string; expr: Expr | null }[];
-  in: string;
-  out: string;
+  mark: number | null;
   key: boolean;
 }
 export interface WhenPanel {
@@ -53,7 +70,7 @@ export interface WhenPanel {
   title: string;
   then: string;
   rows: WhenRow[];
-  record: { id: string; out: string; key: boolean }[];
+  record: { id: string; mark: number | null; key: boolean }[];
 }
 export type Panel = TextPanel | HoldsPanel | BoundPanel | WhenPanel;
 
@@ -87,7 +104,7 @@ export interface GraphNode {
   };
   panels: Panel[];
   footer: { slots: Slot[]; members: string | null; changed: string };
-  sockets: Socket[];
+  board: Socket[];
   versions: { step: number; source: string }[];
 }
 
@@ -100,6 +117,7 @@ export interface GraphEdge {
   target: string;
   targetSocket: string;
   modes: Mode[];
+  hops: Hop[];
 }
 
 export interface Region {
@@ -142,6 +160,7 @@ export interface Frame {
   values: Map<string, string>;
   pens: Map<string, string>;
   dim: Set<string>;
+  plugged: Set<string>; // the sockets a connector shown in this frame plugs into
   regions: Region[];
   step: number;
 }
@@ -167,9 +186,9 @@ export function frame(graph: Graph, mode: Mode, step: number): Frame {
   }
   if (mode === "topology") {
     graph.nodes.forEach((n) => shown.add(n.id));
-    graph.edges.forEach((e) => shown.add(e.id));
+    hopsOf(graph).forEach((h) => shown.add(h.id));
   }
-  return { shown, values, pens, dim, regions: graph.arrangements[now?.arrangement ?? 0] ?? [], step: last };
+  return { shown, values, pens, dim, plugged: pluggedIn(graph, shown), regions: graph.arrangements[now?.arrangement ?? 0] ?? [], step: last };
 }
 
 /** The frame a cell is measured in before layout: everything shown, and every value at the
@@ -181,8 +200,8 @@ export function widest(graph: Graph, regions: Region[]): Frame {
       if ((values.get(c.id) ?? "").length <= c.value.length) values.set(c.id, c.value); // a tie goes to the later value: a count of 0 draws nothing, 1 does
     });
   const shown = new Set<string>([...graph.nodes.map((n) => n.id), ...values.keys()]);
-  graph.edges.forEach((e) => shown.add(e.id));
-  return { shown, values, pens: new Map(), dim: new Set(), regions, step: graph.steps.length - 1 };
+  hopsOf(graph).forEach((h) => shown.add(h.id));
+  return { shown, values, pens: new Map(), dim: new Set(), plugged: pluggedIn(graph, shown), regions, step: graph.steps.length - 1 };
 }
 
 /** A cell's panels in a density: every panel in detailed; in compact only the rows that matter
@@ -212,17 +231,29 @@ export function slotsIn(node: GraphNode, density: Density): Slot[] {
   return density === "detailed" ? node.footer.slots : node.footer.slots.filter((s) => s.key);
 }
 
-/** The sockets a cell draws in a density: those of the rows and slots it shows, and its own. */
-export function socketsIn(node: GraphNode, density: Density): Socket[] {
-  if (density === "detailed") return node.sockets;
+/** Every hop of a graph's connections. */
+export const hopsOf = (graph: Graph): Hop[] => graph.edges.flatMap((e) => e.hops);
+
+/** The sockets a connector shown plugs into: a socket is filled from the step its connector
+ * arrives, not before. */
+export const pluggedIn = (graph: Graph, shown: Set<string>): Set<string> =>
+  new Set(hopsOf(graph).filter((h) => shown.has(h.id)).flatMap((h) => [h.sourceSocket, h.targetSocket]));
+
+/** The sockets something plugs into: the ends of the hops. */
+export const wiredIn = (graph: Graph): Set<string> => new Set(hopsOf(graph).flatMap((h) => [h.sourceSocket, h.targetSocket]));
+
+/** The sockets a cell draws on its boards in a density: the slots it shows, and the sockets a
+ * connector plugs into, of the rows it shows or of the cell itself. */
+export function socketsIn(node: GraphNode, density: Density, wired: Set<string>): Socket[] {
+  const slots = new Set(slotsIn(node, density).map((s) => s.socket));
+  if (density === "detailed") return node.board.filter((s) => slots.has(s.id) || wired.has(s.id));
   const rows = new Set<string>();
   for (const p of panelsIn(node, density)) {
     if (p.kind === "text") continue;
     p.rows.forEach((r) => rows.add(r.id));
     if (p.kind === "when") p.record.forEach((r) => rows.add(r.id));
   }
-  slotsIn(node, density).forEach((s) => rows.add(s.id));
-  return node.sockets.filter((s) => (s.row === null ? s.plugged : rows.has(s.row)));
+  return node.board.filter((s) => slots.has(s.id) || (wired.has(s.id) && (s.row === null || rows.has(s.row))));
 }
 
 export function inMode(graph: Graph, mode: Mode): Graph {

@@ -60,7 +60,7 @@
       "slot": "hands",
       "label": "hands down",
       "filled": false,
-      "socket": "den/slot/hands#hands:south",
+      "socket": "den/slot/hands#hands:slot",
       "expr": null,
       "key": false
      },
@@ -69,7 +69,7 @@
       "slot": "shows",
       "label": "shows",
       "filled": false,
-      "socket": "den/slot/shows#shows:south",
+      "socket": "den/slot/shows#shows:slot",
       "expr": null,
       "key": false
      }
@@ -77,22 +77,46 @@
     "members": "den/members",
     "changed": "den/changed"
    },
-   "sockets": [
+   "board": [
     {
-     "id": "den/slot/hands#hands:south",
-     "kind": "hands",
-     "side": "SOUTH",
-     "row": "den/slot/hands",
+     "id": "den#heard:wall:1",
+     "kind": "heard",
+     "face": "wall",
+     "row": null,
      "order": 0,
-     "plugged": false
+     "label": "heard",
+     "mark": null,
+     "rules": []
     },
     {
-     "id": "den/slot/shows#shows:south",
-     "kind": "shows",
-     "side": "SOUTH",
-     "row": "den/slot/shows",
+     "id": "den#asks:wall:2",
+     "kind": "asks",
+     "face": "wall",
+     "row": null,
      "order": 1,
-     "plugged": false
+     "label": "asks",
+     "mark": null,
+     "rules": []
+    },
+    {
+     "id": "den/slot/hands#hands:slot",
+     "kind": "hands",
+     "face": "slot",
+     "row": "den/slot/hands",
+     "order": 2,
+     "label": "hands down",
+     "mark": null,
+     "rules": []
+    },
+    {
+     "id": "den/slot/shows#shows:slot",
+     "kind": "shows",
+     "face": "slot",
+     "row": "den/slot/shows",
+     "order": 3,
+     "label": "shows",
+     "mark": null,
+     "rules": []
     }
    ],
    "versions": [
@@ -159,8 +183,7 @@
          "expr": null
         }
        ],
-       "in": "keeper/when/order:asks helper#heard:west",
-       "out": "keeper/when/order:asks helper#wrote:east",
+       "mark": 1,
        "key": true
       }
      ],
@@ -174,7 +197,7 @@
       "slot": "asks",
       "label": "asks",
       "filled": true,
-      "socket": "keeper/slot/asks:helper#asks:south",
+      "socket": "keeper/slot/asks:helper#asks:slot",
       "expr": null,
       "key": true
      },
@@ -183,7 +206,7 @@
       "slot": "writes",
       "label": "writes into",
       "filled": false,
-      "socket": "keeper/slot/writes:#writes:south",
+      "socket": "keeper/slot/writes:#writes:slot",
       "expr": null,
       "key": false
      }
@@ -191,38 +214,36 @@
     "members": null,
     "changed": "keeper/changed"
    },
-   "sockets": [
+   "board": [
     {
-     "id": "keeper/when/order:asks helper#heard:west",
+     "id": "keeper/when/order:asks helper#heard:in",
      "kind": "heard",
-     "side": "WEST",
+     "face": "in",
      "row": "keeper/when/order:asks helper",
      "order": 0,
-     "plugged": true
+     "label": "heard",
+     "mark": 1,
+     "rules": []
     },
     {
-     "id": "keeper/when/order:asks helper#wrote:east",
-     "kind": "wrote",
-     "side": "EAST",
-     "row": "keeper/when/order:asks helper",
-     "order": 1,
-     "plugged": false
-    },
-    {
-     "id": "keeper/slot/asks:helper#asks:south",
+     "id": "keeper/slot/asks:helper#asks:slot",
      "kind": "asks",
-     "side": "SOUTH",
+     "face": "slot",
      "row": "keeper/slot/asks:helper",
-     "order": 2,
-     "plugged": true
+     "order": 1,
+     "label": "asks",
+     "mark": null,
+     "rules": []
     },
     {
-     "id": "keeper/slot/writes:#writes:south",
+     "id": "keeper/slot/writes:#writes:slot",
      "kind": "writes",
-     "side": "SOUTH",
+     "face": "slot",
      "row": "keeper/slot/writes:",
-     "order": 3,
-     "plugged": false
+     "order": 2,
+     "label": "writes into",
+     "mark": null,
+     "rules": []
     }
    ],
    "versions": [
@@ -290,14 +311,16 @@
     "members": null,
     "changed": "helper/changed"
    },
-   "sockets": [
+   "board": [
     {
-     "id": "helper#asks:west",
+     "id": "helper#asks:in",
      "kind": "asks",
-     "side": "WEST",
+     "face": "in",
      "row": null,
      "order": 0,
-     "plugged": true
+     "label": "asks",
+     "mark": null,
+     "rules": []
     }
    ],
    "versions": [
@@ -343,7 +366,7 @@
     "members": null,
     "changed": "night-shift/changed"
    },
-   "sockets": [],
+   "board": [],
    "versions": [
     {
      "step": 0,
@@ -391,14 +414,16 @@
     "members": null,
     "changed": "order/changed"
    },
-   "sockets": [
+   "board": [
     {
-     "id": "order#heard:east",
+     "id": "order#heard:out",
      "kind": "heard",
-     "side": "EAST",
+     "face": "out",
      "row": null,
      "order": 0,
-     "plugged": true
+     "label": "heard",
+     "mark": null,
+     "rules": []
     }
    ],
    "versions": [
@@ -419,28 +444,68 @@
  ],
  "edges": [
   {
-   "id": "asks:keeper/slot/asks:helper#asks:south->helper#asks:west",
+   "id": "asks:keeper/slot/asks:helper#asks:slot->helper#asks:in",
    "kind": "asks",
    "signal": "asks",
    "source": "keeper",
-   "sourceSocket": "keeper/slot/asks:helper#asks:south",
+   "sourceSocket": "keeper/slot/asks:helper#asks:slot",
    "target": "helper",
-   "targetSocket": "helper#asks:west",
+   "targetSocket": "helper#asks:in",
    "modes": [
     "topology"
+   ],
+   "hops": [
+    {
+     "id": "asks:keeper/slot/asks:helper#asks:slot->helper#asks:in/0",
+     "source": "keeper",
+     "sourceSocket": "keeper/slot/asks:helper#asks:slot",
+     "target": "den",
+     "targetSocket": "den#asks:wall:2",
+     "within": "den",
+     "jumper": true
+    },
+    {
+     "id": "asks:keeper/slot/asks:helper#asks:slot->helper#asks:in/1",
+     "source": "den",
+     "sourceSocket": "den#asks:wall:2",
+     "target": "helper",
+     "targetSocket": "helper#asks:in",
+     "within": null,
+     "jumper": false
+    }
    ]
   },
   {
-   "id": "heard:order#heard:east->keeper/when/order:asks helper#heard:west",
+   "id": "heard:order#heard:out->keeper/when/order:asks helper#heard:in",
    "kind": "heard",
    "signal": "heard",
    "source": "order",
-   "sourceSocket": "order#heard:east",
+   "sourceSocket": "order#heard:out",
    "target": "keeper",
-   "targetSocket": "keeper/when/order:asks helper#heard:west",
+   "targetSocket": "keeper/when/order:asks helper#heard:in",
    "modes": [
     "dynamics",
     "topology"
+   ],
+   "hops": [
+    {
+     "id": "heard:order#heard:out->keeper/when/order:asks helper#heard:in/0",
+     "source": "order",
+     "sourceSocket": "order#heard:out",
+     "target": "den",
+     "targetSocket": "den#heard:wall:1",
+     "within": null,
+     "jumper": false
+    },
+    {
+     "id": "heard:order#heard:out->keeper/when/order:asks helper#heard:in/1",
+     "source": "den",
+     "sourceSocket": "den#heard:wall:1",
+     "target": "keeper",
+     "targetSocket": "keeper/when/order:asks helper#heard:in",
+     "within": "den",
+     "jumper": true
+    }
    ]
   }
  ],
@@ -500,16 +565,19 @@
     "den/slot/shows",
     "keeper/slot/asks:helper",
     "keeper/slot/writes:",
-    "asks:keeper/slot/asks:helper#asks:south->helper#asks:west",
-    "heard:order#heard:east->keeper/when/order:asks helper#heard:west",
-    "keeper/when/order:asks helper#heard:west",
-    "keeper/when/order:asks helper#wrote:east",
-    "den/slot/hands#hands:south",
-    "den/slot/shows#shows:south",
-    "keeper/slot/asks:helper#asks:south",
-    "keeper/slot/writes:#writes:south",
-    "helper#asks:west",
-    "order#heard:east"
+    "asks:keeper/slot/asks:helper#asks:slot->helper#asks:in/0",
+    "asks:keeper/slot/asks:helper#asks:slot->helper#asks:in/1",
+    "heard:order#heard:out->keeper/when/order:asks helper#heard:in/0",
+    "heard:order#heard:out->keeper/when/order:asks helper#heard:in/1",
+    "den/slot/hands#hands:slot",
+    "den/slot/shows#shows:slot",
+    "keeper/slot/asks:helper#asks:slot",
+    "keeper/slot/writes:#writes:slot",
+    "keeper/when/order:asks helper#heard:in",
+    "order#heard:out",
+    "den#heard:wall:1",
+    "helper#asks:in",
+    "den#asks:wall:2"
    ],
    "change": [],
    "subject": [],

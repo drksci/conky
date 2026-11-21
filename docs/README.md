@@ -88,6 +88,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0049-a-cell-shows-the-whole-page.md](decisions/0049-a-cell-shows-the-whole-page.md): A cell shows the whole page, with sockets
 - [decisions/0050-a-theatre-knows-itself.md](decisions/0050-a-theatre-knows-itself.md): A theatre knows itself
 - [decisions/0051-the-theatre-is-a-page.md](decisions/0051-the-theatre-is-a-page.md): The theatre is a page, the outermost space
+- [decisions/0052-wires-attach-to-port-boards-and-parents-broker-crossings.md](decisions/0052-wires-attach-to-port-boards-and-parents-broker-crossings.md): Wires attach to port boards, and a parent brokers what crosses its wall
 
 ### Research
 
