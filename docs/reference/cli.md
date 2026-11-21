@@ -155,6 +155,7 @@ A theatre is one distinct conky system, the outermost thing everything in it liv
 | `model` | The model for that provider, the same as `CONKY_MODEL`. | None. |
 | `command` | A mapping of a command name to its command line, the same as `CONKY_COMMAND_<NAME>`. | None. |
 | `carrier` | The carrier a peer page names none for: `local`. An unknown name is refused, and the message lists the carriers that exist. | `local` |
+| `outboxes` | The folder that holds an outbox for each peer, as `<folder>/<peer>`. A folder inside the vault is refused, because an outbox is derived data and stays outside the history. Relative to the file's folder. | `<vault folder>.outboxes`, beside the vault |
 
 **Precedence.** A command-line flag, then an environment variable, then `marionette.md`, then the default. `name`, `domain`, `provider` and `model` have no flag; `keys` has no variable.
 
@@ -233,13 +234,15 @@ Errors, each on one line beginning `error: `, include:
 ### connect post
 
 ```
+conky connect post send PEER [--vault V] [--keys K] [--out FILE]
 conky connect post publish [--vault V] [--keys K] [--out FILE]
 conky connect post take PEER [--vault V] [--keys K] [--from FILE]
 ```
 
 Runs the [post connector](connectors.md#the-post-connector): letters cross between two theatres in a Git bundle.
 
-- `publish` runs in the sender's outbox vault. It verifies the outbox, hands it to the carrier, and prints where it went and the public key that signs it, which the receiver pins on the peer page after checking it by another route. `--out FILE` is where the `local` carrier puts the bundle. Default: beside the outbox, as `<outbox folder>.bundle`.
+- `send PEER` runs in the sending vault. It carries each page lying directly within the page `PEER` whose latest kept write was not made by `PEER` and has not been carried yet into the outbox `<outboxes>/PEER`, creating it on the first send, as a write by the actor `post` with `Cause` naming the local commit it came from. It then publishes the outbox as `publish` does and prints the key line to pin. It prints one line per letter, or `nothing to send to PEER` and exits 0, and exits 1 with advice when the page `PEER` does not exist or the outboxes folder lies inside the vault. `--out FILE` is where the `local` carrier puts the bundle. Default: `<outboxes>/PEER.bundle`.
+- `publish` runs in an outbox vault written by hand, or one `send` filled. It verifies the outbox, hands it to the carrier, and prints where it went and the public key that signs it, which the receiver pins on the peer page after checking it by another route. `--out FILE` is where the `local` carrier puts the bundle. Default: beside the outbox, as `<outbox folder>.bundle`.
 - `take PEER` runs in the receiving vault. `PEER` is the page that stands for the other theatre. It asks the carrier for the peer's bundle, clones it into a temporary folder, verifies it, checks every commit against the one key on the peer page and writes each letter not yet taken as an ordinary write by the peer. `--from FILE` takes that bundle file instead of the one the peer page names.
 
 `take` prints one line per letter, `written` or `refused` with the reason, or `nothing new`, and exits 0. It exits 1 only when the bundle cannot be read or trusted, and then nothing is written. Errors include:

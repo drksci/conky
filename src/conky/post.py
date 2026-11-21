@@ -1,6 +1,7 @@
 """The post connector: letters cross between two theatres in a sealed bag.
 
-A sender's outbox is a small vault of its own. A carrier hands it over as a Git bundle. The
+A sender's outbox is a small vault of its own, written by hand or filled by `send` from the
+pages written within a peer's space. A carrier hands it over as a Git bundle. The
 receiver clones the bundle into a temporary folder, checks every commit against the one key its
 peer page pins, and takes each letter not yet taken as an ordinary write into the peer's space,
 authored by the peer and judged by the receiver's own rules. The connector holds no state: what
@@ -13,16 +14,17 @@ import tempfile
 from collections.abc import Callable
 from pathlib import Path
 
-from conky import arch, carrier, git, present
+from conky import arch, carrier, export, git, present
 from conky.cache import Cache
 from conky.errors import BadInput, VerifyFailed
-from conky.page import NAME, Page, ShapeError, check_name, parse
+from conky.page import NAME, Page, ShapeError, check_name, parse, spaces
 from conky.vault import Trailer, Vault
 
 KEY = "key"
 CARRIER = "carrier"
 _FORMAT = "%x1e%H%x1f%an%x1f%G?%x1f%GS%x1f%B"
 _KEPT = "write"
+SENDER = "post"
 
 
 def _commits(repo: Path, *options: str) -> list[tuple[str, str, str, str, dict[str, str]]]:
@@ -120,8 +122,13 @@ def _pinned(repo: Path, peer: str, key: str | None, folder: Path) -> None:
             )
 
 
+def _identity(commit: str, trailers: dict[str, str]) -> str:
+    """Return who a letter is: the commit it came from in the sender's theatre, else its own."""
+    return trailers.get(Trailer.CAUSE) or commit
+
+
 def _taken(vault: Vault, peer: str) -> set[str]:
-    """Return the foreign commits already taken: the causes of what the peer authored here."""
+    """Return the letters already taken: the causes of what the peer authored here."""
     try:
         found = _commits(vault.path, f"--author=^{peer} <")
     except BadInput:
@@ -171,11 +178,16 @@ def take(
         repo = _clone(bundle, folder / "bag", peer, vault.cache).path
         _pinned(repo, peer, key if isinstance(key, str) else None, folder)
         done = _taken(vault, peer)
-        fresh = [c for c in _commits(repo) if c[4].get(Trailer.KIND) == _KEPT and c[0] not in done]
+        fresh = [
+            c
+            for c in _commits(repo)
+            if c[4].get(Trailer.KIND) == _KEPT and _identity(c[0], c[4]) not in done
+        ]
         if not fresh:
             say(f"nothing new from {peer}")
         for commit, _, _, _, found in fresh:
-            say(_one(vault, repo, peer, commit, found[Trailer.PAGE], now, ui))
+            who = _identity(commit, found)
+            say(_one(vault, repo, peer, commit, who, found[Trailer.PAGE], now, ui))
     return 0
 
 
@@ -184,6 +196,7 @@ def _one(
     repo: Path,
     peer: str,
     commit: str,
+    who: str,
     name: str,
     now: Callable[[], str],
     ui: present.Plain,
@@ -198,8 +211,87 @@ def _one(
         return f"{label}: not taken, the page cannot be read: {exc}"
     dropped = [k for k, v in (("rules", letter.rules), ("watch", letter.watch)) if v]
     changes = {**letter.fields, "within": peer}
-    done = vault.write(name, changes, letter.body, actor=peer, at=now(), cause=commit, bound=peer)
+    done = vault.write(name, changes, letter.body, actor=peer, at=now(), cause=who, bound=peer)
     if not done.ok:
         return f"{label}: {ui.refused(done.id[:7], done.reason or '')}"
     kept = f", without its {' and '.join(dropped)}" if dropped else ""
     return f"{label}: {ui.written(done.id[:7])}{kept}"
+
+
+def _sent(outbox: Path) -> set[str]:
+    """Return the local commits already carried: the causes of the outbox's kept writes."""
+    try:
+        found = _commits(outbox)
+    except BadInput:
+        return set()
+    return {t[Trailer.CAUSE] for _, _, _, _, t in found if Trailer.CAUSE in t}
+
+
+def _unsent(vault: Vault, peer: str, sent: set[str]) -> list[tuple[str, str]]:
+    """Return the letters to carry, oldest first: page and the local commit of its latest write.
+
+    A letter is a page lying directly within the peer page whose latest kept write is not the
+    peer's own, so an arrival is never sent back.
+    """
+    pages = export.committed(vault)
+    if peer not in pages:
+        raise BadInput(f"no peer page named {peer!r}: write it first, such as `conky write {peer}`")
+    latest: dict[str, tuple[str, str]] = {}
+    for commit, author, _, _, found in reversed(_commits(vault.path)):
+        name = found.get(Trailer.PAGE)
+        if found.get(Trailer.KIND) == _KEPT and name and name not in latest:
+            latest[name] = (commit, author)
+    return [
+        (name, commit)
+        for name, (commit, author) in reversed(latest.items())
+        if name != peer
+        and name in pages
+        and peer in spaces(pages[name].within)
+        and author != peer
+        and commit not in sent
+    ]
+
+
+@arch.change(
+    "place.beside.send",
+    "An outbox filled from the pages written within a peer's space: the out-tray.",
+    doc="connectors.md#sending-letters",
+    roadmap="R45",
+)
+def send(
+    vault: Vault,
+    peer: str,
+    outboxes: Path,
+    name: str,
+    to: str | None,
+    now: Callable[[], str],
+    say: Callable[[str], None],
+) -> int:
+    """Carry each unsent page within the peer's space into the peer's outbox and publish it.
+
+    The outbox is derived data: `outboxes/PEER`, a vault beside this one, authored by `post`.
+    Raises BadInput when the peer page does not exist or the outbox would lie in this vault.
+    """
+    check_name(peer)
+    here = outboxes.resolve()
+    if here == vault.path.resolve() or vault.path.resolve() in here.parents:
+        raise BadInput(
+            f"the outboxes folder {outboxes} is inside the vault, so it would enter its history: "
+            "set `outboxes` in marionette.md to a folder beside it"
+        )
+    place = here / peer
+    letters = _unsent(vault, peer, _sent(place) if place.is_dir() else set())
+    if not letters:
+        say(f"nothing to send to {peer}")
+        return 0
+    if place.is_dir():
+        out = Vault(place, vault.keys_dir, vault.cache)
+    else:
+        place.parent.mkdir(parents=True, exist_ok=True)
+        out = Vault.init(place, vault.keys_dir, vault.cache)
+    for page, commit in letters:
+        letter = _letter(vault.path, commit, page)
+        done = out.write(page, letter.fields, letter.body, actor=SENDER, at=now(), cause=commit)
+        label = f"{page} ({commit[:7]})"
+        say(f"{label}: carried" if done.ok else f"{label}: not carried, {done.reason}")
+    return publish(out, to, name, say)

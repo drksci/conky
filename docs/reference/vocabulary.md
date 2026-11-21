@@ -30,9 +30,10 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `theatre` | One distinct conky system, the outermost thing everything in it lives in: its vault together with `marionette.md`, the settings true only of the machine it is running on. Also the page named `theatre`, the outermost space: when a vault has it, every other page lies within it, and the id of the vault's first commit is the theatre's identity. |
 | `marionette.md` | The optional settings file at the root of a vault's folder: Markdown with frontmatter, kept out of the vault's history, never a page. |
 | `peer` | A page that stands for another theatre: its `key` pins that theatre's public key, it is the actor name on what arrives from there, and it is the space those letters land in. |
-| `letter` | A page written in another theatre's outbox and taken into this one as an ordinary write by the peer. |
+| `letter` | A page written within a peer's space and carried to that theatre, or written in an outbox, and taken into the other theatre as an ordinary write by the peer. |
+| `outbox` | A small vault of derived data, one for each peer, that holds the letters carried to it, authored by `post`. It sits outside the main vault's history and can be deleted and rebuilt. |
 | `carrier` | A plug that makes an outbox available as a Git bundle and brings a peer's bundle here. The `local` driver hands over a file. |
-| `post` | The connector that publishes an outbox and takes a peer's letters in. |
+| `post` | The connector that sends the letters written within a peer's space, publishes an outbox and takes a peer's letters in. |
 | `error` | A message that says what went wrong and what to do next. |
 
 ## Verbs
@@ -107,13 +108,14 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `model` | The model for that provider, the same as `CONKY_MODEL`. |
 | `command` | A mapping of command name to command line, the same as `CONKY_COMMAND_<NAME>`. |
 | `carrier` | The carrier a peer page names none for: `local`. |
+| `outboxes` | The folder that holds an outbox for each peer. |
 
 ## Connectors
 
 | Name | Meaning |
 |---|---|
 | `terminal` | Gives a vault eyes and hands on a terminal program. |
-| `post` | Publishes an outbox vault and takes a peer's letters into this one. |
+| `post` | Sends the letters written within a peer's space, publishes an outbox vault and takes a peer's letters into this one. |
 
 ## Reserved keys
 

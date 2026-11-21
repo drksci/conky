@@ -117,12 +117,15 @@ def _parser() -> argparse.ArgumentParser:
     term.add_argument("program", nargs="+", metavar="COMMAND", help="after --, the program to run")
     mail = kinds.add_parser("post", help="send letters to another theatre, or take its letters in")
     posts = mail.add_subparsers(dest="action", required=True)
+    sender = posts.add_parser("send", help="carry the letters written within a peer to it")
+    sender.add_argument("peer", help="the peer page, named for the other theatre")
+    sender.add_argument("--out", default=None, help="where to put the bundle (default: beside it)")
     send = posts.add_parser("publish", help="hand this outbox vault to the carrier")
     send.add_argument("--out", default=None, help="where to put the bundle (default: beside it)")
     receive = posts.add_parser("take", help="take in the letters of a peer not yet taken")
     receive.add_argument("peer", help="the peer page, named for the other theatre")
     receive.add_argument("--from", dest="source", default=None, help="the bundle file to take")
-    for one in (send, receive):
+    for one in (sender, send, receive):
         one.add_argument("--vault", default=argparse.SUPPRESS, help="vault directory")
         one.add_argument(
             "--keys",
@@ -269,6 +272,9 @@ def _in(
         if args.action == "publish":
             return post.publish(vault, args.out, settings.carrier.value or carrier.DEFAULT, print)
         name = settings.carrier.value or carrier.DEFAULT
+        if args.action == "send":
+            where = settings.outboxes_dir()
+            return post.send(vault, args.peer, where, name, args.out, _now, print)
         return post.take(vault, args.peer, name, args.source, _now, ui, print)
     if args.command == "connect":
         settings = connect.Settings(

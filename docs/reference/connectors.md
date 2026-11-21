@@ -66,6 +66,7 @@ One line for each screen written, one for each set of keys sent and one for the 
 ## The post connector
 
 ```
+conky connect post send PEER [--vault V] [--keys K] [--out FILE]
 conky connect post publish [--vault V] [--keys K] [--out FILE]
 conky connect post take PEER [--vault V] [--keys K] [--from FILE]
 ```
@@ -73,6 +74,20 @@ conky connect post take PEER [--vault V] [--keys K] [--from FILE]
 The options are in the [command line reference](cli.md#connect-post). A letter is a page that crosses from one theatre to another. The image is a diplomatic bag: letters cross, laws do not, and the bag is sealed. Each theatre keeps its own rules, and the receiver judges every letter by them.
 
 **The outbox.** The sender's outbox is a small vault of its own, made with `conky init` and written with ordinary writes, so nothing else of the sender's vault leaves with it. Git bundles by commit range, not by path, and a signed commit covers a whole tree, so a separate vault is the one way to share a part. `publish` verifies it and hands it to the carrier.
+
+### Sending letters
+
+A character or a person sends a letter by writing a page within the peer page, which is the space that theatre's letters land in. The image is the out-tray on a desk: the letter is written and put in the tray, and the post is collected later. `send PEER` is the collection.
+
+1. A letter is a page lying directly within the peer page whose latest kept write was not made by the peer, so what arrived is never sent back. It is sent when that latest local commit has not been carried yet.
+2. For each, it writes the page's fields and body, and nothing of its `rules`, `watch` or `within`, into the outbox `<outboxes>/PEER`, a vault made on the first send, as the actor `post`. The commit's `Cause` is the id of the local commit it came from.
+3. It publishes the outbox through the carrier, as `publish` does, and prints the key of `post` to pin on the other side after checking it by another route.
+
+The sending actor is `post`, one name for the whole outbox. Its key is made in the theatre's key folder at the first send, and it is the one key the other side pins. The outbox is derived data: a folder beside the vault (the `outboxes` key of `marionette.md`, by default `<vault folder>.outboxes`), outside the history, rebuilt from the vault alone and safe to delete. A vault whose `outboxes` lies inside it is refused.
+
+**Who may send.** What may be written within the peer page is judged as for any space, so the rules of the peer page say who may send. Only staff may write to this peer: `each: "within(event.by, 'staff')"` on the peer page. A page that rule refused was never written, so it is not carried.
+
+**Who a letter is.** `take` knows a letter by the `Cause` its outbox commit carries, which is the commit it came from in the sender's theatre, and by the outbox commit's own id only when it has none, as for a letter written straight into an outbox. A rebuilt outbox has new commit ids and the same causes, so nothing is taken twice. The arrival's `Cause` records that identity. The signature checked is still the outbox commit's, by the pinned key, and it covers the `Cause` line, so the sender cannot be made to claim another commit. An edit of a letter already sent is a new local commit, is carried again, and arrives as an update to the same page.
 
 **What a bundle reveals.** There is no encryption. Whoever can fetch a bundle can read every page and every version in that outbox, every refusal, and the public keys of its actors. Use one outbox for each recipient where letters must stay apart.
 
@@ -121,7 +136,7 @@ The first real carrier planned is [Radicle](../research/discovery.md#what-fits-c
 ### Limits of the post connector
 
 - The `local` driver only. Announcing and finding peers are not built, because nothing consumes them.
-- A person writes a letter by writing into the outbox vault. A character in the main vault sending by writing into a space is the next increment.
+- Sending is a command, not a watcher: nothing is sent until `send` runs. A field a later edit removes stays in the receiver's page, as for any write. A letter is carried only while its page lies within the peer page.
 - One key for each outbox: every commit must be signed by the key on the peer page. A key change is a new peer write after a check by another route.
 - No encryption, and no address resolved across a network.
 

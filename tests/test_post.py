@@ -309,3 +309,186 @@ def test_a_marionette_names_the_carrier_and_refuses_an_unknown_one(world: World,
     assert (
         post(world, "theatre") == 0 and "carrier: local (marionette.md)" in capsys.readouterr().out
     )
+
+
+@dataclass
+class Pair:
+    """Two theatres, each a vault with its own keys, that know each other by a peer page."""
+
+    root: Path
+    a: Vault
+    b: Vault
+
+    def theatre(self, name: str) -> Vault:
+        return self.a if name == "a" else self.b
+
+    def bundle(self, sender: str) -> Path:
+        peer = "b" if sender == "a" else "a"
+        return self.root / f"{sender}.outboxes" / f"{peer}.bundle"
+
+    def outbox(self, sender: str) -> Path:
+        return self.root / f"{sender}.outboxes" / ("b" if sender == "a" else "a")
+
+
+def tell(vault: Vault, *args: str) -> int:
+    return run("--vault", str(vault.path), "--keys", str(vault.keys_dir), *args)
+
+
+def carry(pair: Pair, sender: str) -> int:
+    """Send from one theatre, then pin the sender's key and its bundle on the other."""
+    peer = "b" if sender == "a" else "a"
+    here, there = pair.theatre(sender), pair.theatre(peer)
+    code = tell(here, "connect", "post", "send", peer)
+    if code == 0 and pair.bundle(sender).is_file():
+        kind, blob = (here.keys_dir / "post.pub").read_text().split()[:2]
+        fields = {"key": f"{kind} {blob}", "bundle": str(pair.bundle(sender))}
+        assert say(there, sender, fields).ok
+    return code
+
+
+def pull(pair: Pair, receiver: str) -> int:
+    peer = "b" if receiver == "a" else "a"
+    return tell(pair.theatre(receiver), "connect", "post", "take", peer)
+
+
+@pytest.fixture
+def pair(tmp_path: Path) -> Pair:
+    a = Vault.init(tmp_path / "a", tmp_path / "ka")
+    b = Vault.init(tmp_path / "b", tmp_path / "kb")
+    assert say(a, "b", {}).ok and say(b, "a", {}).ok
+    return Pair(tmp_path, a, b)
+
+
+def where(vault: Vault, page: str) -> str | list[str] | None:
+    return vault.read(page).within
+
+
+@arch.holds("law.write.only", "law.post.pinned")
+def test_a_letter_written_within_a_peer_crosses_and_so_does_the_reply(
+    pair: Pair, capsys: pytest.CaptureFixture[str]
+) -> None:
+    assert say(pair.a, "a-letter", {"within": "b", "text": "hi"}, "Hello B.\n").ok
+    before = head(pair.a)
+    assert carry(pair, "a") == 0
+    shown = capsys.readouterr().out
+    assert "a-letter" in shown and "carried" in shown and "key of post: ssh-ed25519" in shown
+    assert head(pair.a) == before
+    assert pull(pair, "b") == 0
+    assert where(pair.b, "a-letter") == "a" and pair.b.read("a-letter").body == "Hello B.\n"
+    sent = [c[0] for c in log(pair.a) if c[2].get("Page") == "a-letter"][0]
+    made = [c for c in log(Vault(pair.outbox("a"))) if "Cause" in c[2]]
+    assert [(c[1], c[2]["Cause"]) for c in made] == [("post", sent)]
+    assert signed_by(pair.outbox("a")) == "post@conky"
+    arrived = [c for c in log(pair.b) if c[1] == "a" and c[2].get("Page") == "a-letter"]
+    assert [c[2]["Cause"] for c in arrived] == [sent]
+    assert say(pair.b, "reply", {"within": "a", "text": "hello"}, "Hello A.\n").ok
+    assert carry(pair, "b") == 0 and pull(pair, "a") == 0
+    assert where(pair.a, "reply") == "b" and pair.a.read("reply").body == "Hello A.\n"
+    pair.a.verify()
+    pair.b.verify()
+    after = (head(pair.a), head(pair.b))
+    capsys.readouterr()
+    assert tell(pair.a, "connect", "post", "send", "b") == 0
+    assert "nothing to send" in capsys.readouterr().out
+    assert tell(pair.b, "connect", "post", "send", "a") == 0
+    assert pull(pair, "a") == 0 and pull(pair, "b") == 0
+    assert (head(pair.a), head(pair.b)) == after
+
+
+def test_a_rebuilt_outbox_is_never_taken_twice(
+    pair: Pair, capsys: pytest.CaptureFixture[str]
+) -> None:
+    assert say(pair.a, "a-letter", {"within": "b", "text": "hi"}).ok
+    assert carry(pair, "a") == 0 and pull(pair, "b") == 0
+    taken = [c for c in log(pair.b) if c[1] == "a"]
+    shutil.rmtree(pair.root / "a.outboxes")
+    capsys.readouterr()
+    assert carry(pair, "a") == 0 and "a-letter" in capsys.readouterr().out
+    assert pair.bundle("a").is_file()
+    assert pull(pair, "b") == 0 and "nothing new" in capsys.readouterr().out
+    assert [c for c in log(pair.b) if c[1] == "a"] == taken
+    pair.a.verify()
+
+
+def test_arrivals_are_never_sent_back(pair: Pair, capsys: pytest.CaptureFixture[str]) -> None:
+    assert say(pair.a, "a-letter", {"within": "b", "text": "hi"}).ok
+    assert carry(pair, "a") == 0 and pull(pair, "b") == 0
+    capsys.readouterr()
+    assert tell(pair.b, "connect", "post", "send", "a") == 0
+    assert "nothing to send" in capsys.readouterr().out
+    assert not pair.outbox("b").exists()
+
+
+def test_an_edit_of_a_sent_letter_is_carried_again_as_an_update(pair: Pair) -> None:
+    assert say(pair.a, "a-letter", {"within": "b", "text": "hi"}).ok
+    assert carry(pair, "a") == 0 and pull(pair, "b") == 0
+    assert say(pair.a, "a-letter", {"text": "hello again"}, by="bob").ok
+    assert carry(pair, "a") == 0 and pull(pair, "b") == 0
+    assert pair.b.read("a-letter").fields["text"] == "hello again"
+    assert [c[2]["Page"] for c in log(pair.b) if c[1] == "a" and "Cause" in c[2]] == [
+        "a-letter",
+        "a-letter",
+    ]
+
+
+def test_the_rules_of_the_peer_space_say_who_may_send(
+    pair: Pair, capsys: pytest.CaptureFixture[str]
+) -> None:
+    assert say(pair.a, "staff", {}).ok and say(pair.a, "alice", {"within": "staff"}).ok
+    assert say(pair.a, "b", {"rules": [{"each": "within(event.by, 'staff')"}]}).ok
+    assert not say(pair.a, "a-letter", {"within": "b", "text": "hi"}, by="mallory").ok
+    capsys.readouterr()
+    assert tell(pair.a, "connect", "post", "send", "b") == 0
+    assert "nothing to send" in capsys.readouterr().out and not pair.outbox("a").exists()
+    assert say(pair.a, "a-letter", {"within": "b", "text": "hi"}, by="alice").ok
+    assert carry(pair, "a") == 0 and pull(pair, "b") == 0
+    assert where(pair.b, "a-letter") == "a"
+
+
+def test_a_character_sends_by_writing(
+    pair: Pair, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    program = tmp_path / "stand.py"
+    program.write_text(
+        "print('=== page: note ===\\n---\\nwithin: b\\ntext: hello\\n---\\nDear B.\\n"
+        "=== end ===')\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("CONKY_COMMAND_STAND", f"{sys.executable} {program}")
+    assert say(pair.a, "helper", {"api": "command", "command": "stand"}).ok
+    assert say(pair.a, "scribe", {}).ok
+    done = pair.a.ask(
+        "scribe", writes="b", provider="helper", prompt="write", actor="scribe", at=AT
+    )
+    assert done.ok and all(landed.ok for _, landed in done.pages)
+    assert carry(pair, "a") == 0 and pull(pair, "b") == 0
+    assert where(pair.b, "note") == "a" and pair.b.read("note").fields["text"] == "hello"
+    assert pair.b.read("note").body == "Dear B.\n"
+    pair.b.verify()
+
+
+def test_the_outbox_is_derived_data_beside_the_vault_and_can_be_placed(
+    pair: Pair, capsys: pytest.CaptureFixture[str]
+) -> None:
+    assert say(pair.a, "a-letter", {"within": "b", "text": "hi"}).ok
+    assert carry(pair, "a") == 0
+    assert pair.outbox("a").is_dir() and not (pair.a.path / "a.outboxes").exists()
+    assert {line.split()[2] for line in pair.a.log()} == {"alice"}
+    settings = pair.a.path / "marionette.md"
+    settings.write_text("---\noutboxes: inside\n---\n", encoding="utf-8")
+    capsys.readouterr()
+    assert tell(pair.a, "connect", "post", "send", "b") == 1
+    assert "inside the vault" in capsys.readouterr().err
+    settings.write_text("---\noutboxes: ../tray\n---\n", encoding="utf-8")
+    assert tell(pair.a, "connect", "post", "send", "b") == 0
+    assert (pair.root / "tray" / "b").is_dir()
+    assert tell(pair.a, "theatre") == 0
+    assert f"outboxes: {pair.root / 'tray'}" in capsys.readouterr().out
+    pair.a.verify()
+
+
+def test_sending_to_a_peer_with_no_page_says_what_to_write(
+    pair: Pair, capsys: pytest.CaptureFixture[str]
+) -> None:
+    assert tell(pair.a, "connect", "post", "send", "nobody") == 1
+    assert "no peer page named 'nobody'" in capsys.readouterr().err

@@ -47,4 +47,4 @@ A bundle holds the whole history of an outbox, every page and every version, eve
 - A theatre now has an edge: what arrives is judged by its own rules, and an inbox can say which peers may write with `within(event.by, 'peers')`.
 - A letter updates a page it names that the peer already made, as any write does. A field the new letter leaves out stays.
 - One key for each outbox: a bundle with a commit by any other key is refused whole. Changing a peer's key is a later step, and today is a new write to the peer page after a check by another route.
-- Not built: a character in the main vault sending by writing into a space, which carries pages into the outbox; real carriers, Radicle first; finding peers or resolving an address across a network; encryption.
+- Not built: real carriers, Radicle first; finding peers or resolving an address across a network; encryption.

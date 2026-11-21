@@ -16,7 +16,7 @@ from conky.page import NAME, THEATRE, ShapeError, given
 
 FILE = "marionette.md"
 EXCLUDE = Path(".git") / "info" / "exclude"
-KEYS = ("name", "domain", "keys", "cache", "provider", "model", "command", "carrier")
+KEYS = ("name", "domain", "keys", "cache", "provider", "model", "command", "carrier", "outboxes")
 DEFAULT_DOMAIN = "local"
 DEFAULT_NAME = "theatre"
 DEFAULT_KEYS = "~/.conky/keys"
@@ -49,6 +49,7 @@ class Theatre:
     model: Setting
     commands: Mapping[str, Setting]
     carrier: Setting
+    outboxes: Setting
     identity: str | None = None
 
     @property
@@ -65,6 +66,12 @@ class Theatre:
     def keys_dir(self) -> Path | None:
         """Return the private key directory, or nothing when the default applies."""
         return Path(self.keys.value).expanduser() if self.keys.value else None
+
+    def outboxes_dir(self) -> Path:
+        """Return the folder that holds a vault for each peer's outbox, which is derived data."""
+        if self.outboxes.value:
+            return Path(str(self.outboxes.value)).expanduser()
+        return self.root.resolve().parent / f"{self.root.resolve().name}.outboxes"
 
     def cache_dir(self) -> Path:
         """Return the cache directory."""
@@ -102,6 +109,7 @@ class Theatre:
             f"provider: {show(self.provider, 'not set, so a model is detected')}",
             f"model: {show(self.model, 'not set')}",
             f"carrier: {show(self.carrier, '')}",
+            f"outboxes: {show(self.outboxes, str(self.outboxes_dir()))}",
         ]
         lines += [f"command {n}: {show(s, '')}" for n, s in sorted(self.commands.items())]
         names = [*model.KEY_VARIABLES.values()]
@@ -156,7 +164,7 @@ def _checked(head: dict[str, Any]) -> dict[str, Any]:
     if unknown:
         raise _refuse(f"{unknown[0]} is not a setting: use one of {', '.join(KEYS)}")
     out: dict[str, Any] = {}
-    for key in ("name", "domain", "keys", "cache", "provider", "model", "carrier"):
+    for key in ("name", "domain", "keys", "cache", "provider", "model", "carrier", "outboxes"):
         if key in head:
             out[key] = _text(key, head[key], {"name": "lemon", "domain": "home"}.get(key, "value"))
     if "name" in out and not NAME.match(out["name"]):
@@ -264,6 +272,9 @@ def resolve(
             commands[variable[len(model.COMMAND_PREFIX) :].lower()] = Setting(
                 line.strip(), ENVIRONMENT
             )
+    outboxes = own("outboxes")
+    if outboxes.source == FILE_SOURCE:
+        outboxes = Setting(str(Path(place(str(outboxes.value))).resolve()), FILE_SOURCE)
     return Theatre(
         root=root,
         file=root / FILE if head is not None else None,
@@ -275,6 +286,7 @@ def resolve(
         model=chosen(None, model.MODEL_VARIABLE, "model"),
         commands=commands,
         carrier=own("carrier") if "carrier" in mine else Setting(carrier.DEFAULT, DEFAULT),
+        outboxes=outboxes,
         identity=identity(root),
     )
 
