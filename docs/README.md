@@ -92,6 +92,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0053-a-rule-sees-who-acts-and-a-name-cannot-be-borrowed.md](decisions/0053-a-rule-sees-who-acts-and-a-name-cannot-be-borrowed.md): A rule sees who acts, and a name cannot be borrowed
 - [decisions/0054-a-letter-crosses-between-two-theatres-over-a-carrier.md](decisions/0054-a-letter-crosses-between-two-theatres-over-a-carrier.md): A letter crosses between two theatres, over a carrier that can be swapped
 - [decisions/0055-a-letter-is-a-page-written-within-a-peer.md](decisions/0055-a-letter-is-a-page-written-within-a-peer.md): A letter is a page written within a peer, carried from an outbox that is derived data
+- [decisions/0056-a-space-hands-down-reactions.md](decisions/0056-a-space-hands-down-reactions.md): A space hands down reactions: an `each` watch entry is a reflex every page within has
 
 ### Research
 

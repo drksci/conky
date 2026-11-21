@@ -24,11 +24,11 @@ RESERVED = arch.constant(
     doc="vocabulary.md#reserved-keys",
 )
 WATCH_KEYS = arch.constant(
-    ("on", "when", "set", "ask"),
+    ("on", "when", "set", "ask", "each"),
     "watch key",
     "conky.page.WATCH_KEYS",
     "slot.watch",
-    "Keys of a watch entry.",
+    "Keys of a watch entry, `each` being the wrapper of one a space hands down.",
     doc="vocabulary.md#watch-keys",
 )
 RELATIONS = arch.constant(
@@ -145,6 +145,15 @@ def check_name(name: str) -> str:
 
 
 def _check_watch(entry: Any) -> None:
+    """Refuse a watch entry that is malformed, or reads a name a watch entry does not have.
+
+    An entry may be wrapped as `{each: ENTRY}`, a reflex handed to the pages within a space.
+    """
+    if isinstance(entry, dict) and "each" in entry:
+        inner = entry["each"]
+        if set(entry) != {"each"} or not isinstance(inner, dict) or "each" in inner:
+            raise ShapeError(voice.line("each-watch-shape"))
+        entry = inner
     ok = (
         isinstance(entry, dict)
         and {"on", "when"} <= set(entry)
@@ -314,6 +323,8 @@ def _check_rule(entry: Any) -> None:
 
 
 def _watch_head(entry: dict[str, Any]) -> dict[str, Any]:
+    if "each" in entry:
+        return {"each": _watch_head(entry["each"])}
     head = {"on": entry["on"], "when": entry["when"]}
     for part in ("set", "ask"):
         if part in entry:

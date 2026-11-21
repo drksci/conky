@@ -33,7 +33,7 @@ Conky has five parts: page, space, rule, watch and key. Nearly everything propos
 
 | # | Capability | State |
 |---|---|---|
-| 1 | Spaces hand down rules, context and reactions, and a page may join several spaces | Rules built. The rest is not built. |
+| 1 | Spaces hand down rules, context and reactions, and a page may join several spaces | Rules, context, reactions with `set` and several spaces are built. Asks handed down are not. |
 | 2 | Time as an ordinary change: a clock page | Not built. |
 | 3 | Several pages changed in one commit, with rules that can see the whole group | Not built. |
 | 4 | Rules that can see who signed a change and how it arose | Not built. |
@@ -44,7 +44,7 @@ Conky has five parts: page, space, rule, watch and key. Nearly everything propos
 
 Outside the eight is how two vaults relate, which is an open question.
 
-1. **Handing down.** A space hands down its rules today. It should also hand down context and reactions, and a page may join several spaces. A pattern is then a space, and permission and identity ride on the same chain. See [what a space hands down](ideas/inheritance.md), [permission that stays out of the way](ideas/gatekeeper.md) and [a seed, an identity and a face](ideas/seeds-and-faces.md).
+1. **Handing down.** A space hands down its rules, its context and its `set` reactions, and a page may join several spaces. Asks handed down wait for budgets. A pattern is then a space, and permission and identity ride on the same chain. See [what a space hands down](ideas/inheritance.md), [permission that stays out of the way](ideas/gatekeeper.md) and [a seed, an identity and a face](ideas/seeds-and-faces.md).
 2. **Time.** There is no hidden timer. Time passes when a clock page is written, and anything that depends on time watches that page. See [the clock](ideas/clock.md) and [staleness](ideas/staleness.md).
 3. **Groups.** Git can commit several files together, but a write changes one page per commit today. A write that changes several pages, and a rule over the whole group, which a ledger-like pattern needs, are not built. See [patterns](ideas/patterns.md).
 4. **Who signed.** A rule should be able to see who signed a change and what caused it, so approvals and permission need no new mechanism. See [approvals](ideas/approvals.md).
@@ -80,17 +80,16 @@ Two design questions are open, in [open questions](project/open-questions.md). R
 
 In roadmap order:
 
-1. Spaces that hand down context and reactions, and pages that join several spaces.
-2. Seeds, faces and a self for every page.
-3. The clock, then budgets for model pages and the first background mind, then staleness and relief.
-4. Several pages in one commit, with rules that see the group.
-5. Rules that see who signed, with approvals and the gatekeeper.
-6. Dry run.
-7. Rename with link repair, then tables stored as Parquet beside their page ([decision 0003](decisions/0003-data-beside-pages.md)).
-8. Derived data: trace summaries, the people's view and the A2UI screen.
-9. The pattern maker, then direction and drift.
-10. The model-backed resume test and the harness-neutral benchmark.
-11. A core in Rust that runs without Git and in a browser ([decision 0012](decisions/0012-rust-core-planned.md)).
-12. How two vaults relate, after a vault is split.
+1. Seeds, faces and a self for every page.
+2. The clock, then budgets for model pages and the first background mind, then staleness and relief.
+3. Several pages in one commit, with rules that see the group.
+4. Rules that see who signed, with approvals and the gatekeeper.
+5. Dry run.
+6. Rename with link repair, then tables stored as Parquet beside their page ([decision 0003](decisions/0003-data-beside-pages.md)).
+7. Derived data: trace summaries, the people's view and the A2UI screen.
+8. The pattern maker, then direction and drift.
+9. The model-backed resume test and the harness-neutral benchmark.
+10. A core in Rust that runs without Git and in a browser ([decision 0012](decisions/0012-rust-core-planned.md)).
+11. How two vaults relate, after a vault is split.
 
 The full list, with identifiers, is the [roadmap](project/roadmap.md).

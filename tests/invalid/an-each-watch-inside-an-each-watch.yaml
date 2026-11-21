@@ -1,0 +1,9 @@
+pages:
+  den: {cash: 10}
+write:
+  page: den
+  set:
+    watch:
+      - each:
+          each: {on: bell, when: "true", set: {n: "1"}}
+refused: shape

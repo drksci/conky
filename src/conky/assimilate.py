@@ -118,7 +118,7 @@ def _room(vault: Vault) -> list[str]:
                 todo += page_spaces(pages[space].within)
         own = sum(not isinstance(entry, dict) for entry in page.rules)
         rules = _plural(own + inherited, "rule")
-        watched = sorted({entry["on"] for entry in page.watch})
+        watched = sorted({e["on"] for e in page.watch if "each" not in e})
         where = f"in {', '.join(page_spaces(page.within))}" if page.within else "not in a space"
         watches = f"watches {', '.join(watched)}" if watched else "watches nothing"
         lines.append(f"{name}: {where}; {rules} ({own} own, {inherited} inherited); {watches}")

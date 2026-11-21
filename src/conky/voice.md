@@ -83,6 +83,14 @@ A rule is a condition written as text, or a mapping with the one key each whose 
 
 A watch entry needs on (page name, within, link or refusal), when (text) and either set (field: text) or ask (prompt, with into or writes or both, and optional provider and otherwise).
 
+## each-watch-shape
+
+A watch entry for the pages within a space is a mapping with the one key each, whose value is an ordinary watch entry with on, when and set. It cannot hold another each.
+
+## each-watch-ask
+
+A space hands down reactions that set fields, not asks, because nothing meters an ask yet. Replace the ask in the each entry on {space} with a set, or put the ask on the page that should ask.
+
 ## within-shape
 
 A page says which spaces it is within with the name of one space or with a list of names, as in within: [den, choir]. Write within as a page name or a list of page names, or leave it out.

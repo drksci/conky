@@ -1,0 +1,14 @@
+# An answer may give its space handed-down reflexes, not asks.
+pages:
+  den: {cash: 10}
+answer: |
+  === page: den ===
+  ---
+  watch:
+    - each:
+        on: refusal
+        when: "true"
+        ask: {provider: helper, prompt: hi, into: said}
+  ---
+  === end ===
+refused: limit

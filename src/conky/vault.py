@@ -569,6 +569,9 @@ class Vault:
             check_theatre(page, result)
         except ShapeError as exc:
             return refuse(f"{Refusal.SHAPE}: {exc}")
+        if any("ask" in entry.get("each", {}) for entry in result.watch):
+            asked_down = voice.line("each-watch-ask", space=page)
+            return refuse(f"{Refusal.LIMIT}: {asked_down}")
         if bound is not None and page != bound:
             breach = self._breach(page, before, result, bound)
             if breach:
@@ -939,11 +942,41 @@ class Vault:
         terms = Terms(self._all)
         linked = cache(lambda: links(written, terms, source))
         for watcher in sorted(p.stem for p in self.pages_dir.glob("*.md")):
-            for entry in (self._load(watcher) or Page()).watch:
+            for entry, owner in self._reflexes(watcher):
                 if self._notices(entry["on"], watcher, source, written, linked):
                     other = (written.fields, source, _size(written), written.body)
                     event = {"id": commit, "kind": "write", "by": actor, "reason": ""}
-                    self._reaction(watcher, entry, other, event, at, depth)
+                    self._reaction(watcher, entry, other, event, at, depth, owner)
+
+    @arch.part(
+        "part.space.context",
+        "layer.space",
+        "A space handing down its fields, its words and its reflexes, and a page within several.",
+        doc="rules-and-reactions.md#reactions-handed-down",
+        roadmap="R22",
+    )
+    @arch.law(
+        "law.reflex.down",
+        "A space hands down reflexes: an `each` watch entry of a space is carried by every page "
+        "within it, after the page's own, from the nearest space outward.",
+        doc="../decisions/0056-a-space-hands-down-reactions.md",
+        roadmap="R22",
+    )
+    def _reflexes(self, watcher: str) -> list[tuple[dict[str, Any], str | None]]:
+        """Return the watch entries a page has, each with the space it came from, if any.
+
+        The page's own entries come first, in the order written. The entries its spaces hand
+        down follow, nearest space first, as `page.above` orders them, each space once however
+        many paths lead to it. A space is not given its own entries, even through a loop.
+        """
+        current = self._load(watcher) or Page()
+        found: list[tuple[dict[str, Any], str | None]] = [
+            (entry, None) for entry in current.watch if "each" not in entry
+        ]
+        for owner, space, _ in self._above(watcher, current.within):
+            if space is not None and owner != watcher:
+                found += [(e["each"], owner) for e in space.watch if "each" in e]
+        return found
 
     @arch.law(
         "law.event.notice",
@@ -986,9 +1019,9 @@ class Vault:
                 or watcher == actor
                 or self._inside(place, watcher, page)
             )
-            for entry in (self._load(watcher) or Page()).watch if told else []:
+            for entry, owner in self._reflexes(watcher) if told else []:
                 if entry["on"] == "refusal":
-                    self._reaction(watcher, entry, other, event, at, depth)
+                    self._reaction(watcher, entry, other, event, at, depth, owner)
 
     def _reaction(
         self,
@@ -998,8 +1031,13 @@ class Vault:
         event: dict[str, Any],
         at: str,
         depth: int,
+        owner: str | None = None,
     ) -> None:
-        """Run one watch entry for what happened: judge `when`, then write `set` or ask."""
+        """Run one watch entry for what happened: judge `when`, then write `set` or ask.
+
+        `owner` is the space that handed the entry down. Such an entry speaks only of pages that
+        have the fields it reads off `page`, as an `each` rule does, and does nothing for the rest.
+        """
         fields, name, size, text = other
         current = self._load(watcher) or Page()
         scope = {
@@ -1013,6 +1051,10 @@ class Vault:
             "text": current.body,
             "event": event,
         }
+        if owner is not None and not all(
+            concerns(e, scope) for e in (entry["when"], *entry.get("set", {}).values())
+        ):
+            return
         try:
             terms = Terms(self._all)
             if not holds(entry["when"], scope, terms):
@@ -1025,7 +1067,8 @@ class Vault:
                 if isinstance(exc, ShapeError)
                 else missing([entry["when"], *entry.get("set", {}).values()], scope)
             )
-            failed = f"{Refusal.WATCH}: {entry['when']} (on {watcher}) failed: {why}"
+            home = f" from {owner}" if owner else ""
+            failed = f"{Refusal.WATCH}: {entry['when']} (on {watcher}{home}) failed: {why}"
             self._refuse(watcher, {}, None, watcher, at, event["id"], failed, depth + 1)
             return
         if "ask" in entry:

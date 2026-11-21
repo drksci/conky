@@ -470,6 +470,25 @@ def test_an_answer_adds_a_rule_to_its_space_signed_by_the_asker(den: Vault, stan
     den.verify()
 
 
+@arch.holds("law.reflex.down", "law.rule.tighten")
+def test_an_answer_gives_its_space_a_reflex_every_member_has(den: Vault, stand: Stand) -> None:
+    block = (
+        "=== page: den ===\n---\nwatch:\n  - each:\n      on: ticket\n"
+        "      when: has(page.cups)\n      set:\n        seen: other_name\n---\n"
+    )
+    stand.says("Kept.\n" + block)
+    trigger(den, "bind")
+    assert w(den, "mug", {"within": "den", "cups": 1}).ok
+    assert w(den, "ticket", {"text": "again"}).ok
+    assert den.read("mug").fields["seen"] == "ticket"
+    assert den.read("den").watch == [
+        {"each": {"on": "ticket", "when": "has(page.cups)", "set": {"seen": "other_name"}}}
+    ]
+    reacted = [c for c, t in history(den) if t["Page"] == "mug" and "Cause" in t]
+    assert reacted and signed_by(den.path, reacted[-1]) == "mug@conky"
+    den.verify()
+
+
 def test_an_answer_keeps_the_rules_its_space_has_and_ignores_a_duplicate(
     den: Vault, stand: Stand
 ) -> None:

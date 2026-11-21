@@ -149,6 +149,27 @@ Watchers are visited in order of name, and the reactions to one reaction finish 
 
 A reaction that would leave the watching page unchanged is skipped, which is what ends a stable state. Reactions nest to a depth of 12, and a deeper one is refused with reason `cycle`. A refused write changes no page, so it triggers only the entries that name a refusal.
 
+### Reactions handed down
+
+A space may hand a reaction down as it hands down rules. A watch entry written `each: ENTRY`, where ENTRY is an ordinary entry with `on`, `when` and `set`, is carried by every page within the space as if the page had written it, at any depth and by any path, including every page when the entry is on the `theatre`. `page` is the member, `space` the fields of its spaces, and `other`, `event` and `text` are as for any entry of that member.
+
+```yaml
+watch:
+  - each:
+      on: bell
+      when: has(page.cups)        # only a page that has cups
+      set:
+        rang: other.n
+```
+
+- The space does not carry what it hands down, and a page carries an entry from each space once however many paths lead to the space.
+- A page reacts by its own entries first, in the order written, then by those handed down, from the nearest space outward in the order of the spaces above it (see [context from spaces](#context-from-spaces)), the theatre last. Each reaction is written by the member, signed by the member, with `Cause` the commit it answered, and the reactions to it finish before the next begins.
+- `on` means what it means for the member: a page name, or `within`, `link` or `refusal` relative to the member. A handed-down entry cannot say "when this page itself is written": no word names the member, and a space cannot name a page it does not know.
+- Like an `each` rule, the entry speaks only of members that have the fields it reads off `page`. For a member without one, the entry does nothing and nothing is refused.
+- Only `set` is handed down. An entry with `ask` is refused for `limit`, because nothing meters an ask yet, and a character that gives its space reflexes may add `each` entries with `set` only.
+- The cost is one evaluation of each entry per member per event, and one write for each member whose `when` holds. The depth limit of 12 applies to the whole chain, so a handed-down entry that feeds itself ends in a refusal for `cycle`.
+- To find which entry fired for a write in the history, read the commit's `Cause` and the `watch` of the spaces the page lies within; the commit is the member's, and the entry is the space's.
+
 ### Noticing a refusal
 
 An entry with `on: refusal` reacts to a refused write of any kind, after the refusal commit is recorded ([decision 0039](../decisions/0039-an-event-can-be-noticed.md)). A page is told when the refused write was to it and it exists, when it was the actor, or when the page written lies within it, by its kept `within` or else the one the write attempted, at any depth. In the entry, `event.kind` is `refused`, `event.reason` is the reason on one line, `event.by` is the actor, `other_name` is the page the write was to and `other` is the changes attempted, with no body. The reaction is an ordinary write by the watching page, caused by the refusal, one level deeper. A refusal recorded past the depth limit tells nobody, and a reaction that is itself refused may tell others within the same limit. The refused write returns the same result as before.

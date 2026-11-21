@@ -87,7 +87,7 @@ def _relations(pages: dict[str, Page]) -> list[tuple[str, str, str]]:
         page = pages[name]
         for space in spaces(page.within):
             found.append(("within", name, space))
-        for entry in page.watch:
+        for entry in (e for e in page.watch if "each" not in e):
             found.append(("watch", name, entry["on"]))
             ask = entry.get("ask")
             if isinstance(ask, dict):

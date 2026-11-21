@@ -1,0 +1,12 @@
+# A space hands down reflexes that set fields: nothing meters an ask yet.
+pages:
+  den: {cash: 10}
+write:
+  page: den
+  set:
+    watch:
+      - each:
+          on: bell
+          when: "true"
+          ask: {provider: helper, prompt: hi, into: said}
+refused: limit

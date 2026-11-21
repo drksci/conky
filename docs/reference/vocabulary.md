@@ -42,7 +42,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 |---|---|
 | `read` | Return a page with its embeds resolved. |
 | `write` | Commit a change to a page, or commit the refusal of it. |
-| `watch` | Name a page whose writes make this page react. |
+| `watch` | Name a page whose writes make this page react, or, wrapped in `each`, every page within a space. |
 
 ## Commands
 
@@ -140,6 +140,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `when` | The expression that must hold for the entry to act. |
 | `set` | Fields to write, each from an expression. |
 | `ask` | A question to put to a model, in place of `set`. |
+| `each` | Wraps a whole watch entry of a space, which every page within the space has as if it carried the entry itself. |
 
 ## Watch relations
 
