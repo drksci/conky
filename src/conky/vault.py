@@ -41,7 +41,7 @@ from conky.page import (
     spaces,
     unshown,
 )
-from conky.rules import RuleError, concerns, evaluate, holds, missing
+from conky.rules import RuleError, concerns, evaluate, holds, missing, says
 
 MAX_DEPTH = 12
 KINDS = arch.constant(
@@ -663,14 +663,12 @@ class Vault:
                     continue
                 try:
                     ok = holds(rule, scope, terms)
-                    why = "is false"
+                    why = ""
                 except RuleError:
                     ok, why = False, f"failed to evaluate: {missing([rule], scope)}"
                 if not ok:
-                    return (
-                        f"{Refusal.RULE}: {rule} (from {name}) {why} for {member}, within it",
-                        name,
-                    )
+                    said = f"{rule} (from {name}) {why}" if why else _false(rule, name)
+                    return f"{Refusal.RULE}: {said} for {member}, within it", name
         return None
 
     @arch.law(
@@ -809,7 +807,7 @@ class Vault:
                 why = missing([rule], scope)
                 return f"{Refusal.RULE}: {rule} (from {name}) failed to evaluate: {why}", name
             if not held:
-                return f"{Refusal.RULE}: {rule} (from {name}) is false", name
+                return f"{Refusal.RULE}: {_false(rule, name)}", name
         return None
 
     @arch.part(
@@ -858,7 +856,7 @@ class Vault:
                     why = missing([rule], scope)
                     return f"{Refusal.RULE}: {rule} (from {owner}) failed to evaluate: {why}", owner
                 if not held:
-                    return f"{Refusal.RULE}: {rule} (from {owner}) is false", owner
+                    return f"{Refusal.RULE}: {_false(rule, owner)}", owner
         return None
 
     def _notices(
@@ -1457,6 +1455,12 @@ class Vault:
         changes = {ask.into: text}
         result = self._write(page, changes, None, actor, at, cause, depth, (trailers, prompt))
         return Result(result.ok, result.id, result.reason, plain=True)
+
+
+def _false(rule: str, owner: str) -> str:
+    """Return what a refusal says of a rule that is false: its own words, or else the rule."""
+    words = says(rule)
+    return f"{words} (from {owner})" if words else f"{rule} (from {owner}) is false"
 
 
 def _sentence(reason: str | None) -> str:

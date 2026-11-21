@@ -79,6 +79,10 @@ event has no field {name} here: it has {keys}. Read one of those, as in event.by
 
 A rule is a condition written as text, or a mapping with the one key each whose value is a condition written as text. This one is {entry}.
 
+## rule-words
+
+A rule is a condition, and words after // say what to do instead when it is false, as in page.cups <= 50 // Sell 50 cups at most. This one is {entry}: write the condition first and the words after the //, or leave the // out.
+
 ## watch-shape
 
 A watch entry needs on (page name, within, link or refusal), when (text) and either set (field: text) or ask (prompt, with into or writes or both, and optional provider and otherwise).

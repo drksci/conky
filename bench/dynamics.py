@@ -147,11 +147,15 @@ def _crowd(events: list[dict], at: int, seen: set[str], eventful: set[int]) -> l
     return run if fresh >= 2 else []
 
 
+# A refusal by a rule that is false: the rule and `is false`, or the words the rule carries.
+_FALSE = r"rule: .* \(from ([^)]*)\)(?: is false|$)"
+
+
 def _describe(e: dict, events: list[dict]) -> dict:
     page, by = e["page"], e["by"]
     if e["kind"] == "refused":
-        rule = re.match(r"rule: (.*) \(from ([^)]*)\) is false", e.get("reason", ""))
-        why = f": it breaks a rule {rule[2]} hands down" if rule else ""
+        rule = re.match(_FALSE, e.get("reason", ""))
+        why = f": it breaks a rule {rule[1]} hands down" if rule else ""
         return {"kind": "refused", "words": f"{page} is turned away{why}."}
     if e["rules"]:
         many = "rules" if len(e["rules"]) > 1 else "a rule"
@@ -595,7 +599,7 @@ def graph(events: list[dict], card: str, draw: int) -> dict:
             connect("wrote", r["out"], socket(r["to"], "wrote", "in", None, at), at)
         elif r["panel"] == "record" and r["signal"] == "refused" and r["to"] in nodes:
             why = by_reason(events, r["node"])
-            said = re.search(r"\(from ([^)]*)\) is false", why)
+            said = re.match(_FALSE, why)
             space = said[1] if said and said[1] in nodes else r["to"]
             r["out"] = socket(r["node"], "refused", "out", r["id"], r["appears"])
             first = min(step_of[e["n"]] for e in events if e["page"] == r["node"])

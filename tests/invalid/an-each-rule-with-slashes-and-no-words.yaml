@@ -1,0 +1,8 @@
+# Words follow `//` in an `each` rule too.
+pages:
+  stand: {}
+write:
+  page: stand
+  set:
+    rules: [{each: "!has(page.cups) || page.cups <= 50 //   "}]
+refused: shape

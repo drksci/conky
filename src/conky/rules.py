@@ -339,6 +339,52 @@ def reads(expression: str) -> tuple[set[str], list[tuple[str, str]]]:
     return names, fields
 
 
+def _remarks(expression: str) -> list[str]:
+    """Return the text of each `//` comment in an expression that parses, in order.
+
+    A `//` inside a text literal is part of the text: the parsed tree says where each literal
+    lies, and only slashes outside every one start a comment.
+    """
+    tree = _ENV.compile(expression)
+    held = [(t.start_pos, t.end_pos) for t in tree.scan_values(lambda v: hasattr(v, "start_pos"))]
+    found: list[str] = []
+    at = expression.find("//")
+    while at >= 0:
+        if any(start <= at < end for start, end in held):
+            at = expression.find("//", at + 2)
+            continue
+        end = expression.find("\n", at)
+        end = len(expression) if end < 0 else end
+        found.append(expression[at + 2 : end].strip())
+        at = expression.find("//", end)
+    return found
+
+
+@arch.law(
+    "law.rule.says",
+    "A rule may say what to do instead in words after `//`, and a refusal for it gives those "
+    "words where it would have quoted the rule.",
+    doc="rules-and-reactions.md#a-rule-that-says-why",
+)
+def says(expression: str) -> str | None:
+    """Return the words a rule carries after `//`, joined in order, or None when it has none."""
+    try:
+        return " ".join(remark for remark in _remarks(expression) if remark) or None
+    except celpy.CELParseError:
+        return None
+
+
+def wordless(expression: str) -> bool:
+    """Say whether a rule has `//` with no words after it, or words and no condition."""
+    lines = [line.strip() for line in expression.splitlines() if line.strip()]
+    if lines and all(line.startswith("//") for line in lines):
+        return True
+    try:
+        return "" in _remarks(expression)
+    except celpy.CELParseError:
+        return False
+
+
 def concerns(expression: str, scope: dict[str, Any]) -> bool:
     """Say whether an `each` rule speaks about this page: the page has every field it reads.
 

@@ -13,7 +13,15 @@ import yaml
 
 from conky import arch, voice
 from conky.errors import BadInput
-from conky.rules import RULE_NAMES, WATCH_NAMES, RuleError, check, concerns, evaluate
+from conky.rules import (
+    RULE_NAMES,
+    WATCH_NAMES,
+    RuleError,
+    check,
+    concerns,
+    evaluate,
+    wordless,
+)
 
 RESERVED = arch.constant(
     ("within", "rules", "watch"),
@@ -330,6 +338,8 @@ def _check_rule(entry: Any) -> None:
         entry = entry["each"]
     if not isinstance(entry, str):
         raise ShapeError(voice.line("rule-shape", entry=repr(entry)))
+    if wordless(entry):
+        raise ShapeError(voice.line("rule-words", entry=entry.strip()))
     try:
         check(entry, RULE_NAMES)
     except RuleError as exc:

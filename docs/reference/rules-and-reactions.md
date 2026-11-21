@@ -28,6 +28,23 @@ A number is whole or has a fraction, and arithmetic keeps the kind: `0.0 - page.
 
 cel-python alone does none of this: it evaluates both sides and every item first, quotes both errors inside a new one whenever two meet, which doubles the message for each item of a list, gives joined text and the sum, difference or product of two numbers with a fraction back as values with no methods that cannot be stored, and takes a whole number beside a fraction on one side only, with a wrong answer for division. The runtime replaces those four folds and the five arithmetic functions ([`rules.py`](../../src/conky/rules.py)).
 
+### A rule that says why
+
+A rule may carry words after `//`, the comment of the rule language, saying what to do instead:
+
+```yaml
+rules:
+  - each: "!has(page.cups) || page.cups <= 50 // Sell 50 cups at most."
+```
+
+When the rule is false the refusal gives those words where it would have quoted the rule: `rule: Sell 50 cups at most. (from stand)`. The same reason is recorded on the refused commit and shown to a model in the note before its one retry ([decision 0063](../decisions/0063-a-rule-says-why-in-its-own-words.md)). A rule with no words is refused as `rule: EXPRESSION (from stand) is false`.
+
+- Remarks on several lines are joined in order with a space. A `//` inside a text literal, as in `'http://'`, is part of the text.
+- A rule that cannot be evaluated is still shown whole, remark included, with what went wrong: the words say what to do when the rule is false.
+- A rule with `//` and no words after it, or with words and no condition, is refused when written with reason `shape`.
+- Only rules are read this way. A remark in a watch `when`, a `set` value or a `first` is a comment.
+- Not built: the instruction a model is given for writing pages does not teach the form.
+
 ### Text functions
 
 An expression can take text apart with these functions. All but `captures` and `capturesAll` take their names and shapes from the strings extension of the CEL project ([cel-go `ext/README.md`](https://github.com/google/cel-go/blob/master/ext/README.md#strings), read 2026-11-20). Each can be called as a method (`text.split(',')`) or as a function (`split(text, ',')`). Positions count characters from zero.
@@ -130,7 +147,7 @@ A write that cannot hold is refused and recorded as an empty signed commit that 
 | Reason | When |
 |---|---|
 | `shape` | A reserved key or field is malformed: `within` is not a page name, `rules` is not a list of conditions and `each` mappings, `watch` is not a list of entries with `on`, `when` and exactly one of `set` or `ask` (an `ask` has a `prompt` and `into`, `writes` or both, and no keys beyond those in [Asking a model](#asking-a-model)), or a field name is not text. A rule or a watch expression does not parse or reads a name its place does not have (see [Rules and spaces](#rules-and-spaces)). |
-| `rule` | A rule is false, fails to evaluate, or cannot be reached, or an `each` rule being added breaks a page already within the space: the `within` chain loops back on itself, or names a space that does not exist. The reason names the rule and the space it came from. |
+| `rule` | A rule is false, fails to evaluate, or cannot be reached, or an `each` rule being added breaks a page already within the space: the `within` chain loops back on itself, or names a space that does not exist. The reason names the rule and the space it came from, or gives the rule's own words in place of the rule ([a rule that says why](#a-rule-that-says-why)). |
 | `cycle` | Reactions are nested deeper than 12. |
 | `watch` | A watch condition or value failed to evaluate. The refusal is recorded against the watching page. |
 | `model` | A question to a model could not be asked or was not answered. The refusal is recorded against the asking page. See [Asking a model](#asking-a-model). |

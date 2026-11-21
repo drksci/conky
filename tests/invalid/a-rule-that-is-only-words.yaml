@@ -1,0 +1,8 @@
+# The words say why; the condition still comes first.
+pages:
+  stall: {}
+write:
+  page: stall
+  set:
+    rules: ["// Sell 50 cups at most."]
+refused: shape

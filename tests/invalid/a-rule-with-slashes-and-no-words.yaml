@@ -1,0 +1,8 @@
+# Words follow `//`: a rule that has the slashes says what to do instead.
+pages:
+  stall: {}
+write:
+  page: stall
+  set:
+    rules: ["!has(page.cups) || page.cups <= 50 //"]
+refused: shape

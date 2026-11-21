@@ -99,6 +99,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0060-charts-take-the-minty-theme-with-monochrome-text.md](decisions/0060-charts-take-the-minty-theme-with-monochrome-text.md): Charts take the Minty theme with monochrome text
 - [decisions/0061-figures-take-the-chart-themes-colours.md](decisions/0061-figures-take-the-chart-themes-colours.md): Figures take the chart theme's colours
 - [decisions/0062-an-order-that-fails-says-so.md](decisions/0062-an-order-that-fails-says-so.md): An order that fails says so
+- [decisions/0063-a-rule-says-why-in-its-own-words.md](decisions/0063-a-rule-says-why-in-its-own-words.md): A rule says why in its own words
 
 ### Research
 
