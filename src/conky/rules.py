@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Callable
 from typing import Any
 
 import celpy
@@ -135,6 +136,14 @@ def _captures_all(text: str, pattern: str) -> celtypes.ListType:
     return _strs(_search(text, pattern, False))
 
 
+def _terms(known: Callable[[str], list[str]]) -> Callable[[str], celtypes.ListType]:
+    def terms(text: str) -> celtypes.ListType:
+        _text(text)
+        return _strs(known(text))
+
+    return terms
+
+
 _ENV = celpy.Environment()
 
 
@@ -265,10 +274,19 @@ def missing(expressions: list[str], scope: dict[str, Any]) -> str:
     "Rules and measures are pure: no clock, randomness or input and output.",
     doc="rules-and-reactions.md#expressions",
 )
-def evaluate(expression: str, variables: dict[str, Any]) -> Any:
-    """Evaluate expression with the given variables and return a plain Python value."""
+def evaluate(
+    expression: str,
+    variables: dict[str, Any],
+    terms: Callable[[str], list[str]] | None = None,
+) -> Any:
+    """Evaluate expression with the given variables and return a plain Python value.
+
+    With terms, the expression may call `terms(TEXT)`, which gives the sorted names of the pages
+    the text uses a phrase of. It reads the pages that exist when it is called and nothing else.
+    """
+    functions = _FUNCTIONS if terms is None else {**_FUNCTIONS, "terms": _terms(terms)}
     try:
-        program = _ENV.program(_ENV.compile(expression), functions=_FUNCTIONS)
+        program = _ENV.program(_ENV.compile(expression), functions=functions)
         result = program.evaluate({k: celpy.json_to_cel(v) for k, v in variables.items()})
     except (celpy.CELParseError, celpy.CELEvalError) as exc:
         raise RuleError(str(exc).strip().splitlines()[0] if str(exc).strip() else "error") from exc
@@ -286,6 +304,10 @@ def evaluate(expression: str, variables: dict[str, Any]) -> Any:
     "A CEL expression judged before a write is kept.",
     doc="rules-and-reactions.md#expressions",
 )
-def holds(expression: str, variables: dict[str, Any]) -> bool:
+def holds(
+    expression: str,
+    variables: dict[str, Any],
+    terms: Callable[[str], list[str]] | None = None,
+) -> bool:
     """Return True only if expression evaluates to the boolean true."""
-    return evaluate(expression, variables) is True
+    return evaluate(expression, variables, terms) is True

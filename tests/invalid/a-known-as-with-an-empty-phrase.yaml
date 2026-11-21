@@ -1,0 +1,8 @@
+# A phrase is not empty.
+pages:
+  okafor: {}
+write:
+  page: okafor
+  set:
+    known_as: ["Mrs Okafor", ""]
+refused: shape

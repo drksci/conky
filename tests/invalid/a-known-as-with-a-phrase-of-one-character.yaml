@@ -1,0 +1,8 @@
+# A phrase is at least two characters, so one letter cannot link every page that has it.
+pages:
+  okafor: {}
+write:
+  page: okafor
+  set:
+    known_as: ["x"]
+refused: shape

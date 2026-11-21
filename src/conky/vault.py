@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from enum import StrEnum
+from functools import cache
 from pathlib import Path
 from typing import Any
 
@@ -20,6 +22,7 @@ from conky.page import (
     RELATIONS,
     Page,
     ShapeError,
+    Terms,
     apply,
     check_name,
     embedded,
@@ -548,6 +551,7 @@ class Vault:
         rules = [r["each"] for r in page.rules if isinstance(r, dict) and r not in old]
         if not rules:
             return None
+        terms = Terms(self._all)
         for member in sorted(p.stem for p in self.pages_dir.glob("*.md")):
             held = self._load(member)
             if member == name or held is None or not self._inside(held.within, name):
@@ -557,7 +561,7 @@ class Vault:
                 if not concerns(rule, scope):
                     continue
                 try:
-                    ok = holds(rule, scope)
+                    ok = holds(rule, scope, terms)
                     why = "is false"
                 except RuleError:
                     ok, why = False, f"failed to evaluate: {missing([rule], scope)}"
@@ -715,6 +719,7 @@ class Vault:
         comes from a space above the page.
         """
         seen = {name}
+        terms = Terms(self._all)
         while True:
             for entry in space.rules:
                 if isinstance(entry, dict):
@@ -728,7 +733,7 @@ class Vault:
                 if isinstance(entry, dict) and not concerns(rule, scope):
                     continue
                 try:
-                    held = holds(rule, scope)
+                    held = holds(rule, scope, terms)
                 except RuleError:
                     why = missing([rule], scope)
                     return f"{Refusal.RULE}: {rule} (from {owner}) failed to evaluate: {why}", owner
@@ -745,12 +750,17 @@ class Vault:
                 return f"{Refusal.RULE}: space {owner} does not exist", name
             space = found
 
-    def _notices(self, on: str, watcher: str, source: str, written: Page) -> bool:
-        """Return whether a watch entry's `on` matches the page just written."""
+    def _notices(
+        self, on: str, watcher: str, source: str, written: Page, linked: Callable[[], set[str]]
+    ) -> bool:
+        """Return whether a watch entry's `on` matches the page just written.
+
+        `linked` gives the names the page just written links to, worked out once per reaction pass.
+        """
         if on == "within":
             return source != watcher and self._inside(written.within, watcher)
         if on == "link":
-            return source != watcher and watcher in links(written)
+            return source != watcher and watcher in linked()
         return on == source
 
     @arch.law(
@@ -836,9 +846,11 @@ class Vault:
     def _react(
         self, source: str, written: Page, commit: str, actor: str, at: str, depth: int
     ) -> None:
+        terms = Terms(self._all)
+        linked = cache(lambda: links(written, terms, source))
         for watcher in sorted(p.stem for p in self.pages_dir.glob("*.md")):
             for entry in (self._load(watcher) or Page()).watch:
-                if self._notices(entry["on"], watcher, source, written):
+                if self._notices(entry["on"], watcher, source, written, linked):
                     other = (written.fields, source, _size(written), written.body)
                     event = {"id": commit, "kind": "write", "by": actor, "reason": ""}
                     self._reaction(watcher, entry, other, event, at, depth)
@@ -913,9 +925,10 @@ class Vault:
             "event": event,
         }
         try:
-            if not holds(entry["when"], scope):
+            terms = Terms(self._all)
+            if not holds(entry["when"], scope, terms):
                 return
-            changes = {k: evaluate(v, scope) for k, v in entry.get("set", {}).items()}
+            changes = {k: evaluate(v, scope, terms) for k, v in entry.get("set", {}).items()}
             unchanged = serialize(apply(current, changes, None)) == serialize(current)
         except (RuleError, ShapeError) as exc:
             why = (

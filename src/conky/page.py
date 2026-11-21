@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -123,10 +124,68 @@ def _check_watch(entry: Any) -> None:
         raise ShapeError(f"watch on {entry['on']}: {exc}") from exc
 
 
-def links(page: Page) -> set[str]:
-    """Return the names the body and the text fields of a page link to."""
+KNOWN_AS = "known_as"
+KNOWN_AS_MIN = 2
+
+
+@arch.law(
+    "law.link.known",
+    "A page is known by the phrases it lists, and text that uses one counts as linking to it.",
+    doc="../decisions/0044-a-page-is-known-by-its-phrases.md",
+    roadmap="R41",
+)
+class Terms:
+    """The phrases the pages of a vault are known by, built once from the pages when first asked.
+
+    A phrase is recognised in a text when it occurs as whole words, compared without regard to
+    case, with any run of whitespace standing for one space and a trailing possessive (`'s` or
+    `’s`) allowed on its last word. A page's own name is not a phrase unless it is listed.
+    """
+
+    def __init__(self, load: Callable[[], dict[str, Page]]) -> None:
+        self._load = load
+        self._found: list[tuple[re.Pattern[str], str]] | None = None
+
+    def _index(self) -> list[tuple[re.Pattern[str], str]]:
+        if self._found is None:
+            self._found = []
+            for name, page in sorted(self._load().items()):
+                phrases = page.fields.get(KNOWN_AS)
+                for phrase in phrases if isinstance(phrases, list) else []:
+                    if not isinstance(phrase, str) or len(phrase.strip()) < KNOWN_AS_MIN:
+                        continue
+                    words = r"\s+".join(re.escape(w) for w in phrase.split())
+                    pattern = rf"(?<!\w){words}(?:['’]s)?(?!\w)"
+                    self._found.append((re.compile(pattern, re.IGNORECASE), name))
+        return self._found
+
+    def __call__(self, text: str) -> list[str]:
+        """Return the sorted names of the pages one of whose phrases the text uses."""
+        return sorted({name for pattern, name in self._index() if pattern.search(text)})
+
+
+def links(page: Page, terms: Terms | None = None, name: str = "") -> set[str]:
+    """Return the names a page, called name, links to.
+
+    These are the names its body and text fields write in brackets, and with terms every page
+    whose phrases its body uses. A page does not link to itself by its phrases.
+    """
     texts = [page.body, *(v for v in page.fields.values() if isinstance(v, str))]
-    return {found.group(1).strip() for text in texts for found in LINK.finditer(text)}
+    found = {m.group(1).strip() for text in texts for m in LINK.finditer(text)}
+    if terms is not None:
+        found |= {n for n in terms(page.body) if n != name}
+    return found
+
+
+def _check_known_as(value: Any) -> None:
+    """Refuse a `known_as` that is not a list of phrases of at least two characters."""
+    ok = (
+        isinstance(value, list)
+        and bool(value)
+        and all(isinstance(p, str) and len(p.strip()) >= KNOWN_AS_MIN for p in value)
+    )
+    if not ok:
+        raise ShapeError(voice.line("known-as-shape", least=KNOWN_AS_MIN))
 
 
 def _set_ok(value: Any) -> bool:
@@ -185,6 +244,10 @@ def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
         elif key == SHOWS:
             if value is not None:
                 _check_shows(value)
+            fields[key] = value
+        elif key == KNOWN_AS:
+            if value is not None:
+                _check_known_as(value)
             fields[key] = value
         else:
             fields[key] = value
@@ -352,11 +415,11 @@ def _check_shows(value: Any) -> None:
             raise ShapeError(voice.line("shows-first", reason=str(exc))) from exc
 
 
-def _score(expression: str, member: Page, space: Page) -> float | None:
+def _score(expression: str, member: Page, space: Page, terms: Terms) -> float | None:
     """Return what `first` makes of one member, or None when it is not a number."""
     scope = {"page": member.fields, "text": member.body, "space": space.fields}
     try:
-        value = evaluate(expression, scope)
+        value = evaluate(expression, scope, terms)
     except RuleError:
         return None
     if isinstance(value, bool) or not isinstance(value, int | float) or value != value:
@@ -383,7 +446,8 @@ def _members_text(space: str, lookup: dict[str, Page]) -> str | None:
     if isinstance(shows, dict):
         cap = shows.get("most", MEMBERS_CAP)
         if "first" in shows:
-            scores = {n: _score(shows["first"], lookup[n], lookup[space]) for n in names}
+            terms = Terms(lambda: lookup)
+            scores = {n: _score(shows["first"], lookup[n], lookup[space], terms) for n in names}
             names.sort(key=lambda n: (scores[n] is None, -(scores[n] or 0)))
     lines = []
     for name in names[:cap]:

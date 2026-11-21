@@ -20,6 +20,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `page` | A Markdown file with frontmatter: a character with fields, rules, watches and a body. |
 | `key` | A signing key that belongs to one actor and never enters the vault. |
 | `link` | A page name written in a page so that one page points at another. |
+| `term` | A page that lists the phrases it is known by in a field `known_as`. Text that uses one of the phrases counts as linking to the page, and `terms(TEXT)` names the pages a text uses. |
 | `embed` | `![[page]]`, replaced by a field, a body or, for a space, the list of its members when a page is read. `#` selects the part. |
 | `rule` | An expression the runtime evaluates before a write is kept. |
 | `event` | A commit: one write or one refusal. |
@@ -121,7 +122,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | Name | Meaning |
 |---|---|
 | `within` | Reacts to a write of any page within the watching page, at any depth. |
-| `link` | Reacts to a write of a page whose text links to the watching page. |
+| `link` | Reacts to a write of a page whose text links to the watching page, by brackets or by a phrase the watching page is known by. |
 | `refusal` | Reacts to a refused write to the watching page, by it, or within it. |
 
 ## Ask keys

@@ -1,0 +1,8 @@
+# A phrase is text.
+pages:
+  okafor: {}
+write:
+  page: okafor
+  set:
+    known_as: ["Mrs Okafor", 7]
+refused: shape

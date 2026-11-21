@@ -1,0 +1,24 @@
+# A term page counts for pages written before it, with no pass: nobody who watched is told late.
+pages:
+  broken: {api: command, command: no-such-program-here}
+  den:
+    heard: "the landlady"
+    shows: {first: "terms(space.heard).filter(t, terms(text).contains(t)).size()"}
+  a: {within: den}
+  b: {within: den}
+  reader:
+    seen: ""
+    watch:
+      - on: ticket
+        when: "true"
+        ask: {provider: broken, prompt: p, otherwise: "![[den#members]]", into: seen}
+  ticket: {text: one}
+steps:
+  - write: {page: a, body: "zebra"}
+  - write: {page: b, body: "the landlady's keys"}
+  - write: {page: ticket, fields: {text: two}}
+  - expect: {fields: {reader.seen: "a: zebra\nb: the landlady's keys"}}
+  - write: {page: landlady, fields: {known_as: ["the landlady"], n: 0, watch: [{on: link, when: "true", set: {n: "page.n + 1"}}]}}
+  - expect: {fields: {landlady.n: 0}}
+  - write: {page: ticket, fields: {text: three}}
+  - expect: {fields: {reader.seen: "b: the landlady's keys\na: zebra"}, verify: true}

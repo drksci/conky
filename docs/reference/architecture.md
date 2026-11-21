@@ -40,6 +40,7 @@ The capability and the three laws of [decision 0029](../decisions/0029-autonomy-
 | <a id="law.event.notice"></a>`law.event.notice` | Every recorded event can be noticed by the pages in relation to it, and the entry says what picks it up: a reflex, a faculty or the character. | [0039-an-event-can-be-noticed.md](../decisions/0039-an-event-can-be-noticed.md) | `conky.vault.Vault._tell` | `tests/test_laws.py::test_a_refusal_can_be_noticed_and_stays_a_refusal`<br>`tests/test_laws.py::test_a_character_gives_its_space_a_reflex_that_counts_later_refusals` | R38 | built |
 | <a id="law.event.seal"></a>`law.event.seal` | Every change is signed and says what caused it. | [vault-format.md#a-write](vault-format.md#a-write) | `conky.vault.Vault._record` | `tests/test_laws.py::test_write_is_a_signed_commit_with_trailers_and_dates`<br>`tests/test_laws.py::test_reaction_is_caused_by_and_signed_by_the_reacting_page` | - | built |
 | <a id="law.fallback.always"></a>`law.fallback.always` | Everything works with nothing configured, and rules stay strict. | [0026-it-always-works.md](../decisions/0026-it-always-works.md) | `conky.model.detect` | `tests/test_command.py::test_detection_lists_anthropic_then_openai_then_claude_then_codex`<br>`tests/test_command.py::test_a_failing_detected_model_falls_to_the_next_and_then_to_a_sentence`<br>`tests/test_command.py::test_with_no_model_an_ask_writes_a_sentence_that_names_the_question` | R26 | built |
+| <a id="law.link.known"></a>`law.link.known` | A page is known by the phrases it lists, and text that uses one counts as linking to it. | [0044-a-page-is-known-by-its-phrases.md](../decisions/0044-a-page-is-known-by-its-phrases.md) | `conky.page.Terms` | `tests/test_terms.py::test_a_vault_with_no_phrases_links_only_by_brackets`<br>`tests/test_terms.py::test_a_write_that_uses_a_phrase_tells_its_watchers_and_the_vault_verifies` | R41 | built |
 | <a id="law.measure.watch"></a>`law.measure.watch` | A measure is a page watching itself, and its value is a recorded event. | [0008-measures-are-self-watches.md](../decisions/0008-measures-are-self-watches.md) | `conky.vault.Vault._react` | `tests/test_laws.py::test_other_size_is_visible_to_a_watcher`<br>`tests/test_laws.py::test_history_needs_no_expressions` | R2 | built |
 | <a id="law.output.out"></a>`law.output.out` | Runtime output never enters the repository, except the golden vault. | [CLAUDE.md](../../CLAUDE.md) | `.gitignore` | review | - | built |
 | <a id="law.page.commit"></a>`law.page.commit` | Pages are the committed files, and a stray edit is refused or discarded. | [vault-format.md#what-verify-checks](vault-format.md#what-verify-checks) | `conky.vault.Vault.verify` | `tests/test_laws.py::test_hand_edited_page_fails_verify_and_blocks_writes`<br>`tests/test_laws.py::test_rebuild_discards_stray_files` | - | built |
@@ -1215,6 +1216,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`law.event.notice`](#law.event.notice) | built | 2 | - |  |
 | [`law.event.seal`](#law.event.seal) | built | 2 | - |  |
 | [`law.fallback.always`](#law.fallback.always) | built | 3 | - |  |
+| [`law.link.known`](#law.link.known) | built | 2 | - |  |
 | [`law.measure.watch`](#law.measure.watch) | built | 2 | - |  |
 | [`law.output.out`](#law.output.out) | built | - | - | review only |
 | [`law.page.commit`](#law.page.commit) | built | 2 | - |  |
@@ -1396,6 +1398,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0041-a-character-gives-its-space-reflexes](../decisions/0041-a-character-gives-its-space-reflexes.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`law.event.notice`](#law.event.notice) |
 | [0042-a-space-shows-what-bears-first](../decisions/0042-a-space-shows-what-bears-first.md) | accepted | [`law.embed.shows`](#law.embed.shows) |
 | [0043-a-trial-is-drawn-as-it-happened](../decisions/0043-a-trial-is-drawn-as-it-happened.md) | accepted | - |
+| [0044-a-page-is-known-by-its-phrases](../decisions/0044-a-page-is-known-by-its-phrases.md) | accepted | [`law.link.known`](#law.link.known) |
 
 ### Unplaced
 

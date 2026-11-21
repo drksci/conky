@@ -1,0 +1,22 @@
+# Text that uses a phrase a page is known by links to that page with no brackets typed.
+pages:
+  okafor:
+    known_as: ["Mrs Okafor", "the landlady"]
+    n: 0
+    watch:
+      - on: link
+        when: "true"
+        set: {n: "page.n + 1"}
+steps:
+  - write: {page: a, body: "Mrs Okafor's rent is late"}
+  - expect: {fields: {okafor.n: 1}, verify: true}
+  - write: {page: b, body: "MRS   okafor paid\nin full"}
+  - expect: {fields: {okafor.n: 2}}
+  - write: {page: c, body: "The Landlady called"}
+  - expect: {fields: {okafor.n: 3}}
+  - write: {page: d, body: "Mrs Okaforish and the landladys keys"}
+  - expect: {fields: {okafor.n: 3}}
+  - write: {page: e, body: "okafor called"}
+  - expect: {fields: {okafor.n: 3}}
+  - write: {page: okafor, body: "Mrs Okafor lives here"}
+  - expect: {fields: {okafor.n: 3}, verify: true}

@@ -1,0 +1,8 @@
+# known_as holds at least one phrase.
+pages:
+  okafor: {}
+write:
+  page: okafor
+  set:
+    known_as: []
+refused: shape

@@ -1,0 +1,24 @@
+# `terms` in `first` puts on top the member that shares a term with what was heard, although
+# they share no ordinary word.
+pages:
+  broken: {api: command, command: no-such-program-here}
+  landlady: {known_as: ["the landlady", "Mrs Okafor"]}
+  den:
+    heard: "Mrs Okafor called"
+    shows: {first: "terms(space.heard).filter(t, terms(text).contains(t)).size()"}
+  a: {within: den}
+  b: {within: den}
+  c: {within: den}
+  reader:
+    seen: ""
+    watch:
+      - on: ticket
+        when: "true"
+        ask: {provider: broken, prompt: p, otherwise: "![[den#members]]", into: seen}
+  ticket: {text: one}
+steps:
+  - write: {page: a, body: "zebra"}
+  - write: {page: b, body: "the landlady's keys"}
+  - write: {page: c, body: "nothing"}
+  - write: {page: ticket, fields: {text: two}}
+  - expect: {fields: {reader.seen: "b: the landlady's keys\na: zebra\nc: nothing"}}
