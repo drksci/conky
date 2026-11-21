@@ -112,7 +112,7 @@ Best first. A score is out of 100: reaching the goal gives 70, and cost and the 
 <!-- dynamics:start -->
 ### Dynamics
 
-Each trial is drawn from the history of one of its draws, step by step. Every page is one cell with its rows, a space is a frame around its members, and a colour marks only what a step is about: amber for what a character added, blue for what is heard, pink for a write turned away, teal for what was kept or shown, violet for a model's thought.
+Each trial is drawn from the history of one of its draws, step by step. Every page is one cell, a space is a frame around its members, and a colour says what flows or what a step is about: amber for what a character added, blue for what is heard, pink for a write turned away, teal for what was kept or shown, violet for a model's thought.
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/cards/a-keeper-binds-itself/dynamics-dark.webp"><img src="docs/results/cards/a-keeper-binds-itself/dynamics-light.webp" alt="a keeper binds itself, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
 <p align="center"><sub>A character states a standing limit on the space it works in, and that limit refuses a payment that breaks it. Draw 1 of 5, the first that passed.</sub></p>

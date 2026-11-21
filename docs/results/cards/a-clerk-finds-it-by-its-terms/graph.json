@@ -14,89 +14,388 @@
    "id": "clerk",
    "name": "clerk",
    "archetype": "character",
-   "kind": "space \u00b7 character",
-   "symbol": "character",
    "form": "space",
-   "label": "clerk",
    "parent": null,
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
+   "header": {
+    "kinds": [
+     "space",
+     "character"
+    ],
+    "symbol": "character",
+    "avatar": null,
+    "label": "clerk",
+    "line": "",
+    "within": [],
+    "known_as": [],
+    "thought": "clerk/count/thought",
+    "refused": "clerk/count/refused"
+   },
    "panels": [
     {
-     "kind": "fields",
-     "title": "fields",
-     "symbol": "fields",
+     "kind": "holds",
+     "title": "holds",
      "more": 0,
      "rows": [
       {
-       "id": "clerk/fields/heard",
+       "id": "clerk/holds/heard",
        "name": "heard",
-       "value": "",
-       "key": true,
-       "expr": null
+       "key": true
       },
       {
-       "id": "clerk/fields/said",
+       "id": "clerk/holds/said",
        "name": "said",
-       "value": "",
-       "key": true,
-       "expr": null
+       "key": true
       }
      ]
     },
     {
-     "kind": "hears",
-     "title": "listens for",
-     "symbol": "hears",
-     "more": 0,
+     "kind": "when",
+     "title": "when",
+     "then": "then",
      "rows": [
       {
-       "id": "clerk/hears/within:sets heard",
-       "name": "a page put in it",
-       "value": "sets heard",
-       "key": true,
-       "expr": null
+       "id": "clerk/when/within:sets heard",
+       "when": "a page written within it",
+       "expr": null,
+       "then": [
+        {
+         "words": "sets heard",
+         "expr": {
+          "reads": [
+           "other_text"
+          ],
+          "body": "other_text",
+          "lines": [
+           "other_text"
+          ]
+         }
+        }
+       ],
+       "in": "clerk/when/within:sets heard#heard:west",
+       "out": "clerk/when/within:sets heard#wrote:east",
+       "key": true
       },
       {
-       "id": "clerk/hears/clerk:asks helper",
-       "name": "clerk",
-       "value": "asks helper",
-       "key": false,
-       "expr": null
-      }
-     ]
-    },
-    {
-     "kind": "plugs",
-     "title": "reaches",
-     "symbol": "connector",
-     "more": 0,
-     "rows": [
-      {
-       "id": "clerk/plugs/asks:helper",
-       "name": "asks",
-       "value": "helper",
-       "key": false,
-       "expr": null
-      },
-      {
-       "id": "clerk/plugs/shows",
-       "name": "shows first",
-       "value": "8 at most",
-       "key": true,
+       "id": "clerk/when/clerk:asks helper",
+       "when": "its own page changing",
        "expr": {
         "reads": [
-         "space",
-         "text"
+         "page"
         ],
-        "body": "terms(space.heard).filter(t, terms(text).contains(t)).size()"
-       }
+        "body": "page.heard.trim().endsWith('?')",
+        "lines": [
+         "page.heard.trim().endsWith('?')"
+        ]
+       },
+       "then": [
+        {
+         "words": "asks helper, puts the answer in said",
+         "expr": null
+        }
+       ],
+       "in": "clerk/when/clerk:asks helper#heard:west",
+       "out": "clerk/when/clerk:asks helper#wrote:east",
+       "key": true
       }
-     ]
+     ],
+     "record": []
+    }
+   ],
+   "footer": {
+    "slots": [
+     {
+      "id": "clerk/slot/asks:helper",
+      "slot": "asks",
+      "label": "asks",
+      "filled": true,
+      "socket": "clerk/slot/asks:helper#asks:south",
+      "expr": null,
+      "key": true
+     },
+     {
+      "id": "clerk/slot/writes:",
+      "slot": "writes",
+      "label": "writes into",
+      "filled": false,
+      "socket": "clerk/slot/writes:#writes:south",
+      "expr": null,
+      "key": false
+     },
+     {
+      "id": "clerk/slot/hands",
+      "slot": "hands",
+      "label": "hands down",
+      "filled": false,
+      "socket": "clerk/slot/hands#hands:south",
+      "expr": null,
+      "key": false
+     },
+     {
+      "id": "clerk/slot/shows",
+      "slot": "shows",
+      "label": "shows",
+      "filled": true,
+      "socket": "clerk/slot/shows#shows:south",
+      "expr": {
+       "reads": [
+        "space",
+        "text"
+       ],
+       "body": "terms(space.heard).filter(t, terms(text).contains(t)).size()",
+       "lines": [
+        "terms(space.heard)",
+        "  .filter(t, terms(text).contains(t))",
+        "  .size()"
+       ]
+      },
+      "key": true
+     }
+    ],
+    "members": "clerk/members",
+    "changed": "clerk/changed"
+   },
+   "sockets": [
+    {
+     "id": "clerk/when/within:sets heard#heard:west",
+     "kind": "heard",
+     "side": "WEST",
+     "row": "clerk/when/within:sets heard",
+     "order": 0,
+     "plugged": false
+    },
+    {
+     "id": "clerk/when/clerk:asks helper#heard:west",
+     "kind": "heard",
+     "side": "WEST",
+     "row": "clerk/when/clerk:asks helper",
+     "order": 1,
+     "plugged": false
+    },
+    {
+     "id": "clerk/when/within:sets heard#wrote:east",
+     "kind": "wrote",
+     "side": "EAST",
+     "row": "clerk/when/within:sets heard",
+     "order": 2,
+     "plugged": false
+    },
+    {
+     "id": "clerk/when/clerk:asks helper#wrote:east",
+     "kind": "wrote",
+     "side": "EAST",
+     "row": "clerk/when/clerk:asks helper",
+     "order": 3,
+     "plugged": false
+    },
+    {
+     "id": "clerk/slot/asks:helper#asks:south",
+     "kind": "asks",
+     "side": "SOUTH",
+     "row": "clerk/slot/asks:helper",
+     "order": 4,
+     "plugged": true
+    },
+    {
+     "id": "clerk/slot/writes:#writes:south",
+     "kind": "writes",
+     "side": "SOUTH",
+     "row": "clerk/slot/writes:",
+     "order": 5,
+     "plugged": false
+    },
+    {
+     "id": "clerk/slot/hands#hands:south",
+     "kind": "hands",
+     "side": "SOUTH",
+     "row": "clerk/slot/hands",
+     "order": 6,
+     "plugged": false
+    },
+    {
+     "id": "clerk/slot/shows#shows:south",
+     "kind": "shows",
+     "side": "SOUTH",
+     "row": "clerk/slot/shows",
+     "order": 7,
+     "plugged": false
+    }
+   ],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: ''\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The lady at number nine is Mrs Okafor.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mr Lindqvist''s parcel is on shelf 4.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The stationery order arrives on Thursday.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s umbrella is in the stand by the door.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The spare key for the side gate hangs on hook 3.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The printer in the back room needs a new drum.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s parcel is on shelf 12.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Miss Adeyemi''s parcel is on shelf 9.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The window cleaner comes on the first Friday.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The float in the till is forty pounds.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mr Okafor rang about the meter reading.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The fire extinguisher was checked in March.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The shelf by the stairs is loose and should hold nothing heavy.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Dr Mbeki''s letters go in the red tray.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The heating timer is set for seven.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The courier collects at half past three.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The visitor book is in the top drawer.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Castellanos left a parcel for the surveyor.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The lamp in the hall takes a bayonet bulb.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The recycling goes out on Wednesday night.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The back door sticks in wet weather.\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 2,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: ''\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 3,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 4,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The guest network password is on the card by the phone.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 4,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The parcel for the bakery was collected yesterday.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 4,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mr Haddad''s bicycle is in the yard.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 4,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The first aid box is under the counter.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 4,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The tea money tin is nearly empty.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 4,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The meeting room is booked on Tuesday afternoon.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 5,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The ladder is kept behind the boiler.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 5,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Shelf 2 is reserved for returns.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 5,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The post box outside is emptied at five.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 5,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The stamp book has six first class left.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 5,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The plant on the sill is watered on Mondays.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 5,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The carpet fitter is coming next week.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 6,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The shredder jams on more than five sheets.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 6,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor asked for her newspaper to be kept.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 6,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The clock in the hall runs four minutes fast.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 6,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The cellar light switch is on the left.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 6,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'The umbrella stand was emptied on Friday.\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 8,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Where did we put the package for the lady from number nine?\n\n  '\nsaid: I can't tell from the notes on my desk. None of the eight visible notes mention the morning post. They cover parcels, an umbrella, a spare key, the printer, and a stationery order due Thursday. Fourteen more notes aren't shown, so one of those may say something about it.\nsaid_asked: ddf410dba7132bf7ea6004b9d58e541d87bd7f5176ed356dd24a8d26f8beb7f4\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
+    },
+    {
+     "step": 9,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard.trim().endsWith('?')\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Where did we put the package for the lady from number nine?\n\n  '\nsaid: 'The package for the lady from number nine, Mrs Okafor, is on **shelf 12** (note-07).\n\n\n  Note-01 confirms that Mrs Okafor is the lady at number nine. Thirty-two notes aren''t shown, so a later note could have moved the parcel.'\nsaid_asked: 123c72b7d52f3a1db39592913ad225878f47240637d13c37de373eeb5138119e\nshows:\n  most: 8\n  first: terms(space.heard).filter(t, terms(text).contains(t)).size()\n---\n"
     }
    ]
   },
@@ -104,711 +403,1622 @@
    "id": "note-01",
    "name": "note-01",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "1",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "1",
+    "line": "The lady at number nine is Mrs...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-01/count/thought",
+    "refused": "note-01/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-01/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe lady at number nine is Mrs Okafor.\n"
+    }
+   ]
   },
   {
    "id": "note-02",
    "name": "note-02",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "2",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "2",
+    "line": "Mr Lindqvist's parcel is on she...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-02/count/thought",
+    "refused": "note-02/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-02/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nMr Lindqvist's parcel is on shelf 4.\n"
+    }
+   ]
   },
   {
    "id": "note-03",
    "name": "note-03",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "3",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "3",
+    "line": "The stationery order arrives on...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-03/count/thought",
+    "refused": "note-03/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-03/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe stationery order arrives on Thursday.\n"
+    }
+   ]
   },
   {
    "id": "note-04",
    "name": "note-04",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "4",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "4",
+    "line": "Mrs Okafor's umbrella is in the...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-04/count/thought",
+    "refused": "note-04/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-04/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nMrs Okafor's umbrella is in the stand by the door.\n"
+    }
+   ]
   },
   {
    "id": "note-05",
    "name": "note-05",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "5",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "5",
+    "line": "The spare key for the side gate...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-05/count/thought",
+    "refused": "note-05/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-05/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe spare key for the side gate hangs on hook 3.\n"
+    }
+   ]
   },
   {
    "id": "note-06",
    "name": "note-06",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "6",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "6",
+    "line": "The printer in the back room ne...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-06/count/thought",
+    "refused": "note-06/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-06/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe printer in the back room needs a new drum.\n"
+    }
+   ]
   },
   {
    "id": "note-07",
    "name": "note-07",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "7",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "7",
+    "line": "Mrs Okafor's parcel is on shelf...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-07/count/thought",
+    "refused": "note-07/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-07/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nMrs Okafor's parcel is on shelf 12.\n"
+    }
+   ]
   },
   {
    "id": "note-08",
    "name": "note-08",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "8",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "8",
+    "line": "Miss Adeyemi's parcel is on she...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-08/count/thought",
+    "refused": "note-08/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-08/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nMiss Adeyemi's parcel is on shelf 9.\n"
+    }
+   ]
   },
   {
    "id": "note-09",
    "name": "note-09",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "9",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "9",
+    "line": "The window cleaner comes on the...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-09/count/thought",
+    "refused": "note-09/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-09/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe window cleaner comes on the first Friday.\n"
+    }
+   ]
   },
   {
    "id": "note-10",
    "name": "note-10",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "10",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "10",
+    "line": "The float in the till is forty...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-10/count/thought",
+    "refused": "note-10/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-10/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe float in the till is forty pounds.\n"
+    }
+   ]
   },
   {
    "id": "note-11",
    "name": "note-11",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "11",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "11",
+    "line": "Mr Okafor rang about the meter...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-11/count/thought",
+    "refused": "note-11/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-11/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nMr Okafor rang about the meter reading.\n"
+    }
+   ]
   },
   {
    "id": "note-12",
    "name": "note-12",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "12",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "12",
+    "line": "The fire extinguisher was check...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-12/count/thought",
+    "refused": "note-12/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-12/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe fire extinguisher was checked in March.\n"
+    }
+   ]
   },
   {
    "id": "note-13",
    "name": "note-13",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "13",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "13",
+    "line": "The shelf by the stairs is loos...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-13/count/thought",
+    "refused": "note-13/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-13/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe shelf by the stairs is loose and should hold nothing heavy.\n"
+    }
+   ]
   },
   {
    "id": "note-14",
    "name": "note-14",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "14",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "14",
+    "line": "Dr Mbeki's letters go in the re...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-14/count/thought",
+    "refused": "note-14/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-14/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nDr Mbeki's letters go in the red tray.\n"
+    }
+   ]
   },
   {
    "id": "note-15",
    "name": "note-15",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "15",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "15",
+    "line": "The heating timer is set for se...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-15/count/thought",
+    "refused": "note-15/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-15/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe heating timer is set for seven.\n"
+    }
+   ]
   },
   {
    "id": "note-16",
    "name": "note-16",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "16",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "16",
+    "line": "The courier collects at half pa...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-16/count/thought",
+    "refused": "note-16/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-16/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe courier collects at half past three.\n"
+    }
+   ]
   },
   {
    "id": "note-17",
    "name": "note-17",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "17",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "17",
+    "line": "The visitor book is in the top...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-17/count/thought",
+    "refused": "note-17/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-17/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe visitor book is in the top drawer.\n"
+    }
+   ]
   },
   {
    "id": "note-18",
    "name": "note-18",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "18",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "18",
+    "line": "Mrs Castellanos left a parcel f...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-18/count/thought",
+    "refused": "note-18/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-18/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nMrs Castellanos left a parcel for the surveyor.\n"
+    }
+   ]
   },
   {
    "id": "note-19",
    "name": "note-19",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "19",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "19",
+    "line": "The lamp in the hall takes a ba...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-19/count/thought",
+    "refused": "note-19/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-19/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe lamp in the hall takes a bayonet bulb.\n"
+    }
+   ]
   },
   {
    "id": "note-20",
    "name": "note-20",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "20",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "20",
+    "line": "The recycling goes out on Wedne...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-20/count/thought",
+    "refused": "note-20/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-20/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe recycling goes out on Wednesday night.\n"
+    }
+   ]
   },
   {
    "id": "note-21",
    "name": "note-21",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "21",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "21",
+    "line": "The back door sticks in wet wea...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-21/count/thought",
+    "refused": "note-21/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-21/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: clerk\n---\nThe back door sticks in wet weather.\n"
+    }
+   ]
   },
   {
    "id": "note-22",
    "name": "note-22",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "22",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "22",
+    "line": "Has the morning post come?",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-22/count/thought",
+    "refused": "note-22/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-22/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 1,
+     "source": "---\nwithin: clerk\n---\nHas the morning post come?\n"
+    }
+   ]
   },
   {
    "id": "note-23",
    "name": "note-23",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "23",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "23",
+    "line": "The guest network password is o...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-23/count/thought",
+    "refused": "note-23/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-23/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 4,
+     "source": "---\nwithin: clerk\n---\nThe guest network password is on the card by the phone.\n"
+    }
+   ]
   },
   {
    "id": "note-24",
    "name": "note-24",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "24",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "24",
+    "line": "The parcel for the bakery was c...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-24/count/thought",
+    "refused": "note-24/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-24/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 4,
+     "source": "---\nwithin: clerk\n---\nThe parcel for the bakery was collected yesterday.\n"
+    }
+   ]
   },
   {
    "id": "note-25",
    "name": "note-25",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "25",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "25",
+    "line": "Mr Haddad's bicycle is in the y...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-25/count/thought",
+    "refused": "note-25/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-25/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 4,
+     "source": "---\nwithin: clerk\n---\nMr Haddad's bicycle is in the yard.\n"
+    }
+   ]
   },
   {
    "id": "note-26",
    "name": "note-26",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "26",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "26",
+    "line": "The first aid box is under the...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-26/count/thought",
+    "refused": "note-26/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-26/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 4,
+     "source": "---\nwithin: clerk\n---\nThe first aid box is under the counter.\n"
+    }
+   ]
   },
   {
    "id": "note-27",
    "name": "note-27",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "27",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "27",
+    "line": "The tea money tin is nearly empty.",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-27/count/thought",
+    "refused": "note-27/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-27/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 4,
+     "source": "---\nwithin: clerk\n---\nThe tea money tin is nearly empty.\n"
+    }
+   ]
   },
   {
    "id": "note-28",
    "name": "note-28",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "28",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "28",
+    "line": "The meeting room is booked on T...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-28/count/thought",
+    "refused": "note-28/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-28/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 4,
+     "source": "---\nwithin: clerk\n---\nThe meeting room is booked on Tuesday afternoon.\n"
+    }
+   ]
   },
   {
    "id": "note-29",
    "name": "note-29",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "29",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "29",
+    "line": "The ladder is kept behind the b...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-29/count/thought",
+    "refused": "note-29/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-29/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 5,
+     "source": "---\nwithin: clerk\n---\nThe ladder is kept behind the boiler.\n"
+    }
+   ]
   },
   {
    "id": "note-30",
    "name": "note-30",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "30",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "30",
+    "line": "Shelf 2 is reserved for returns.",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-30/count/thought",
+    "refused": "note-30/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-30/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 5,
+     "source": "---\nwithin: clerk\n---\nShelf 2 is reserved for returns.\n"
+    }
+   ]
   },
   {
    "id": "note-31",
    "name": "note-31",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "31",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "31",
+    "line": "The post box outside is emptied...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-31/count/thought",
+    "refused": "note-31/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-31/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 5,
+     "source": "---\nwithin: clerk\n---\nThe post box outside is emptied at five.\n"
+    }
+   ]
   },
   {
    "id": "note-32",
    "name": "note-32",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "32",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "32",
+    "line": "The stamp book has six first cl...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-32/count/thought",
+    "refused": "note-32/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-32/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 5,
+     "source": "---\nwithin: clerk\n---\nThe stamp book has six first class left.\n"
+    }
+   ]
   },
   {
    "id": "note-33",
    "name": "note-33",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "33",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "33",
+    "line": "The plant on the sill is watere...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-33/count/thought",
+    "refused": "note-33/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-33/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 5,
+     "source": "---\nwithin: clerk\n---\nThe plant on the sill is watered on Mondays.\n"
+    }
+   ]
   },
   {
    "id": "note-34",
    "name": "note-34",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "34",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "34",
+    "line": "The carpet fitter is coming nex...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-34/count/thought",
+    "refused": "note-34/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-34/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 5,
+     "source": "---\nwithin: clerk\n---\nThe carpet fitter is coming next week.\n"
+    }
+   ]
   },
   {
    "id": "note-35",
    "name": "note-35",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "35",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "35",
+    "line": "The shredder jams on more than...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-35/count/thought",
+    "refused": "note-35/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-35/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 6,
+     "source": "---\nwithin: clerk\n---\nThe shredder jams on more than five sheets.\n"
+    }
+   ]
   },
   {
    "id": "note-36",
    "name": "note-36",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "36",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "36",
+    "line": "Mrs Okafor asked for her newspa...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-36/count/thought",
+    "refused": "note-36/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-36/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 6,
+     "source": "---\nwithin: clerk\n---\nMrs Okafor asked for her newspaper to be kept.\n"
+    }
+   ]
   },
   {
    "id": "note-37",
    "name": "note-37",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "37",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "37",
+    "line": "The clock in the hall runs four...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-37/count/thought",
+    "refused": "note-37/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-37/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 6,
+     "source": "---\nwithin: clerk\n---\nThe clock in the hall runs four minutes fast.\n"
+    }
+   ]
   },
   {
    "id": "note-38",
    "name": "note-38",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "38",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "38",
+    "line": "The cellar light switch is on t...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-38/count/thought",
+    "refused": "note-38/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-38/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 6,
+     "source": "---\nwithin: clerk\n---\nThe cellar light switch is on the left.\n"
+    }
+   ]
   },
   {
    "id": "note-39",
    "name": "note-39",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "39",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "39",
+    "line": "The umbrella stand was emptied...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-39/count/thought",
+    "refused": "note-39/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-39/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 6,
+     "source": "---\nwithin: clerk\n---\nThe umbrella stand was emptied on Friday.\n"
+    }
+   ]
   },
   {
    "id": "note-40",
    "name": "note-40",
    "archetype": "page",
-   "kind": "note",
-   "symbol": "note",
    "form": "note",
-   "label": "40",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "note"
+    ],
+    "symbol": "note",
+    "avatar": null,
+    "label": "40",
+    "line": "Where did we put the package fo...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-40/count/thought",
+    "refused": "note-40/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-40/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 7,
+     "source": "---\nwithin: clerk\n---\nWhere did we put the package for the lady from number nine?\n"
+    }
+   ]
   },
   {
    "id": "helper",
    "name": "helper",
    "archetype": "provider",
-   "kind": "provider",
-   "symbol": "provider",
    "form": "cell",
-   "label": "helper",
    "parent": null,
-   "avatar": null,
-   "refused": false,
    "modes": [
     "topology"
    ],
+   "header": {
+    "kinds": [
+     "provider"
+    ],
+    "symbol": "provider",
+    "avatar": null,
+    "label": "helper",
+    "line": "",
+    "within": [],
+    "known_as": [],
+    "thought": "helper/count/thought",
+    "refused": "helper/count/refused"
+   },
    "panels": [
     {
-     "kind": "fields",
-     "title": "fields",
-     "symbol": "fields",
+     "kind": "holds",
+     "title": "holds",
      "more": 0,
      "rows": [
       {
-       "id": "helper/fields/command",
+       "id": "helper/holds/api",
+       "name": "api",
+       "key": false
+      },
+      {
+       "id": "helper/holds/command",
        "name": "command",
-       "value": "stand",
-       "key": false,
-       "expr": null
+       "key": false
       }
      ]
+    }
+   ],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "helper/changed"
+   },
+   "sockets": [
+    {
+     "id": "helper#asks:west",
+     "kind": "asks",
+     "side": "WEST",
+     "row": null,
+     "order": 0,
+     "plugged": true
+    }
+   ],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\napi: command\ncommand: stand\n---\n"
     }
    ]
   },
@@ -816,50 +2026,478 @@
    "id": "mrs-okafor",
    "name": "mrs-okafor",
    "archetype": "page",
-   "kind": "page",
-   "symbol": "page",
    "form": "cell",
-   "label": "mrs-okafor",
    "parent": null,
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "term"
+    ],
+    "symbol": "term",
+    "avatar": null,
+    "label": "mrs-okafor",
+    "line": "",
+    "within": [],
+    "known_as": [
+     "Mrs Okafor",
+     "the lady from number nine",
+     "the lady at number nine"
+    ],
+    "thought": "mrs-okafor/count/thought",
+    "refused": "mrs-okafor/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "mrs-okafor/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nknown_as:\n- Mrs Okafor\n- the lady from number nine\n- the lady at number nine\n---\n"
+    }
+   ]
   },
   {
    "id": "parcel",
    "name": "parcel",
    "archetype": "page",
-   "kind": "page",
-   "symbol": "page",
    "form": "cell",
-   "label": "parcel",
    "parent": null,
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "term"
+    ],
+    "symbol": "term",
+    "avatar": null,
+    "label": "parcel",
+    "line": "",
+    "within": [],
+    "known_as": [
+     "parcel",
+     "package"
+    ],
+    "thought": "parcel/count/thought",
+    "refused": "parcel/count/refused"
+   },
+   "panels": [],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "parcel/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nknown_as:\n- parcel\n- package\n---\n"
+    }
+   ]
   }
  ],
  "edges": [
   {
-   "id": "plugs:clerk/plugs/asks:helper->helper",
-   "kind": "plugs",
-   "label": "asks",
+   "id": "asks:clerk/slot/asks:helper#asks:south->helper#asks:west",
+   "kind": "asks",
+   "signal": "asks",
    "source": "clerk",
-   "sourceRow": "clerk/plugs/asks:helper",
+   "sourceSocket": "clerk/slot/asks:helper#asks:south",
    "target": "helper",
-   "targetRow": null,
+   "targetSocket": "helper#asks:west",
    "modes": [
     "topology"
    ]
   }
+ ],
+ "values": {
+  "clerk/changed": "changed at step 1",
+  "clerk/count/refused": "0",
+  "clerk/count/thought": "0",
+  "clerk/holds/heard": "",
+  "clerk/holds/said": "",
+  "clerk/members": "21 members",
+  "clerk/slot/asks:helper": "helper",
+  "clerk/slot/hands": "nothing",
+  "clerk/slot/shows": "8 of 21",
+  "clerk/slot/writes:": "no space named",
+  "helper/changed": "changed at step 1",
+  "helper/count/refused": "0",
+  "helper/count/thought": "0",
+  "helper/holds/api": "command",
+  "helper/holds/command": "stand",
+  "mrs-okafor/changed": "changed at step 1",
+  "mrs-okafor/count/refused": "0",
+  "mrs-okafor/count/thought": "0",
+  "note-01/changed": "changed at step 1",
+  "note-01/count/refused": "0",
+  "note-01/count/thought": "0",
+  "note-01/text": "The lady at number nine is Mrs Okafor.",
+  "note-02/changed": "changed at step 1",
+  "note-02/count/refused": "0",
+  "note-02/count/thought": "0",
+  "note-02/text": "Mr Lindqvist's parcel is on shelf 4.",
+  "note-03/changed": "changed at step 1",
+  "note-03/count/refused": "0",
+  "note-03/count/thought": "0",
+  "note-03/text": "The stationery order arrives on Thursday.",
+  "note-04/changed": "changed at step 1",
+  "note-04/count/refused": "0",
+  "note-04/count/thought": "0",
+  "note-04/text": "Mrs Okafor's umbrella is in the stand by the door.",
+  "note-05/changed": "changed at step 1",
+  "note-05/count/refused": "0",
+  "note-05/count/thought": "0",
+  "note-05/text": "The spare key for the side gate hangs on hook 3.",
+  "note-06/changed": "changed at step 1",
+  "note-06/count/refused": "0",
+  "note-06/count/thought": "0",
+  "note-06/text": "The printer in the back room needs a new drum.",
+  "note-07/changed": "changed at step 1",
+  "note-07/count/refused": "0",
+  "note-07/count/thought": "0",
+  "note-07/text": "Mrs Okafor's parcel is on shelf 12.",
+  "note-08/changed": "changed at step 1",
+  "note-08/count/refused": "0",
+  "note-08/count/thought": "0",
+  "note-08/text": "Miss Adeyemi's parcel is on shelf 9.",
+  "note-09/changed": "changed at step 1",
+  "note-09/count/refused": "0",
+  "note-09/count/thought": "0",
+  "note-09/text": "The window cleaner comes on the first Friday.",
+  "note-10/changed": "changed at step 1",
+  "note-10/count/refused": "0",
+  "note-10/count/thought": "0",
+  "note-10/text": "The float in the till is forty pounds.",
+  "note-11/changed": "changed at step 1",
+  "note-11/count/refused": "0",
+  "note-11/count/thought": "0",
+  "note-11/text": "Mr Okafor rang about the meter reading.",
+  "note-12/changed": "changed at step 1",
+  "note-12/count/refused": "0",
+  "note-12/count/thought": "0",
+  "note-12/text": "The fire extinguisher was checked in March.",
+  "note-13/changed": "changed at step 1",
+  "note-13/count/refused": "0",
+  "note-13/count/thought": "0",
+  "note-13/text": "The shelf by the stairs is loose and should hold nothing heavy.",
+  "note-14/changed": "changed at step 1",
+  "note-14/count/refused": "0",
+  "note-14/count/thought": "0",
+  "note-14/text": "Dr Mbeki's letters go in the red tray.",
+  "note-15/changed": "changed at step 1",
+  "note-15/count/refused": "0",
+  "note-15/count/thought": "0",
+  "note-15/text": "The heating timer is set for seven.",
+  "note-16/changed": "changed at step 1",
+  "note-16/count/refused": "0",
+  "note-16/count/thought": "0",
+  "note-16/text": "The courier collects at half past three.",
+  "note-17/changed": "changed at step 1",
+  "note-17/count/refused": "0",
+  "note-17/count/thought": "0",
+  "note-17/text": "The visitor book is in the top drawer.",
+  "note-18/changed": "changed at step 1",
+  "note-18/count/refused": "0",
+  "note-18/count/thought": "0",
+  "note-18/text": "Mrs Castellanos left a parcel for the surveyor.",
+  "note-19/changed": "changed at step 1",
+  "note-19/count/refused": "0",
+  "note-19/count/thought": "0",
+  "note-19/text": "The lamp in the hall takes a bayonet bulb.",
+  "note-20/changed": "changed at step 1",
+  "note-20/count/refused": "0",
+  "note-20/count/thought": "0",
+  "note-20/text": "The recycling goes out on Wednesday night.",
+  "note-21/changed": "changed at step 1",
+  "note-21/count/refused": "0",
+  "note-21/count/thought": "0",
+  "note-21/text": "The back door sticks in wet weather.",
+  "note-22/changed": "changed at step 2",
+  "note-22/count/refused": "0",
+  "note-22/count/thought": "0",
+  "note-22/text": "Has the morning post come?",
+  "note-23/changed": "changed at step 5",
+  "note-23/count/refused": "0",
+  "note-23/count/thought": "0",
+  "note-23/text": "The guest network password is on the card by the phone.",
+  "note-24/changed": "changed at step 5",
+  "note-24/count/refused": "0",
+  "note-24/count/thought": "0",
+  "note-24/text": "The parcel for the bakery was collected yesterday.",
+  "note-25/changed": "changed at step 5",
+  "note-25/count/refused": "0",
+  "note-25/count/thought": "0",
+  "note-25/text": "Mr Haddad's bicycle is in the yard.",
+  "note-26/changed": "changed at step 5",
+  "note-26/count/refused": "0",
+  "note-26/count/thought": "0",
+  "note-26/text": "The first aid box is under the counter.",
+  "note-27/changed": "changed at step 5",
+  "note-27/count/refused": "0",
+  "note-27/count/thought": "0",
+  "note-27/text": "The tea money tin is nearly empty.",
+  "note-28/changed": "changed at step 5",
+  "note-28/count/refused": "0",
+  "note-28/count/thought": "0",
+  "note-28/text": "The meeting room is booked on Tuesday afternoon.",
+  "note-29/changed": "changed at step 6",
+  "note-29/count/refused": "0",
+  "note-29/count/thought": "0",
+  "note-29/text": "The ladder is kept behind the boiler.",
+  "note-30/changed": "changed at step 6",
+  "note-30/count/refused": "0",
+  "note-30/count/thought": "0",
+  "note-30/text": "Shelf 2 is reserved for returns.",
+  "note-31/changed": "changed at step 6",
+  "note-31/count/refused": "0",
+  "note-31/count/thought": "0",
+  "note-31/text": "The post box outside is emptied at five.",
+  "note-32/changed": "changed at step 6",
+  "note-32/count/refused": "0",
+  "note-32/count/thought": "0",
+  "note-32/text": "The stamp book has six first class left.",
+  "note-33/changed": "changed at step 6",
+  "note-33/count/refused": "0",
+  "note-33/count/thought": "0",
+  "note-33/text": "The plant on the sill is watered on Mondays.",
+  "note-34/changed": "changed at step 6",
+  "note-34/count/refused": "0",
+  "note-34/count/thought": "0",
+  "note-34/text": "The carpet fitter is coming next week.",
+  "note-35/changed": "changed at step 7",
+  "note-35/count/refused": "0",
+  "note-35/count/thought": "0",
+  "note-35/text": "The shredder jams on more than five sheets.",
+  "note-36/changed": "changed at step 7",
+  "note-36/count/refused": "0",
+  "note-36/count/thought": "0",
+  "note-36/text": "Mrs Okafor asked for her newspaper to be kept.",
+  "note-37/changed": "changed at step 7",
+  "note-37/count/refused": "0",
+  "note-37/count/thought": "0",
+  "note-37/text": "The clock in the hall runs four minutes fast.",
+  "note-38/changed": "changed at step 7",
+  "note-38/count/refused": "0",
+  "note-38/count/thought": "0",
+  "note-38/text": "The cellar light switch is on the left.",
+  "note-39/changed": "changed at step 7",
+  "note-39/count/refused": "0",
+  "note-39/count/thought": "0",
+  "note-39/text": "The umbrella stand was emptied on Friday.",
+  "note-40/changed": "changed at step 8",
+  "note-40/count/refused": "0",
+  "note-40/count/thought": "0",
+  "note-40/text": "Where did we put the package for the lady from number nine?",
+  "parcel/changed": "changed at step 1",
+  "parcel/count/refused": "0",
+  "parcel/count/thought": "0"
+ },
+ "arrangements": [
+  [
+   {
+    "id": "clerk::desk",
+    "space": "clerk",
+    "kind": "desk",
+    "label": "on the desk",
+    "members": [
+     "note-01",
+     "note-02",
+     "note-03",
+     "note-04",
+     "note-05",
+     "note-06",
+     "note-07",
+     "note-08",
+     "note-09",
+     "note-10",
+     "note-11",
+     "note-12",
+     "note-13",
+     "note-14",
+     "note-15",
+     "note-16",
+     "note-17",
+     "note-18",
+     "note-19",
+     "note-20",
+     "note-21",
+     "note-22",
+     "note-23",
+     "note-24",
+     "note-25",
+     "note-26",
+     "note-27",
+     "note-28",
+     "note-29",
+     "note-30",
+     "note-31",
+     "note-32",
+     "note-33",
+     "note-34",
+     "note-35",
+     "note-36",
+     "note-37",
+     "note-38",
+     "note-39",
+     "note-40"
+    ]
+   },
+   {
+    "id": "::terms",
+    "space": null,
+    "kind": "terms",
+    "label": "terms",
+    "members": [
+     "mrs-okafor",
+     "parcel"
+    ]
+   }
+  ],
+  [
+   {
+    "id": "clerk::shown",
+    "space": "clerk",
+    "kind": "shown",
+    "label": "shown to clerk",
+    "members": [
+     "note-01",
+     "note-02",
+     "note-03",
+     "note-04",
+     "note-05",
+     "note-06",
+     "note-07",
+     "note-08"
+    ]
+   },
+   {
+    "id": "clerk::hidden",
+    "space": "clerk",
+    "kind": "hidden",
+    "label": "not shown",
+    "members": [
+     "note-09",
+     "note-10",
+     "note-11",
+     "note-12",
+     "note-13",
+     "note-14",
+     "note-15",
+     "note-16",
+     "note-17",
+     "note-18",
+     "note-19",
+     "note-20",
+     "note-21",
+     "note-22",
+     "note-23",
+     "note-24",
+     "note-25",
+     "note-26",
+     "note-27",
+     "note-28",
+     "note-29",
+     "note-30",
+     "note-31",
+     "note-32",
+     "note-33",
+     "note-34",
+     "note-35",
+     "note-36",
+     "note-37",
+     "note-38",
+     "note-39",
+     "note-40"
+    ]
+   },
+   {
+    "id": "::terms",
+    "space": null,
+    "kind": "terms",
+    "label": "terms",
+    "members": [
+     "mrs-okafor",
+     "parcel"
+    ]
+   }
+  ],
+  [
+   {
+    "id": "clerk::shown",
+    "space": "clerk",
+    "kind": "shown",
+    "label": "shown to clerk",
+    "members": [
+     "note-07",
+     "note-40",
+     "note-01",
+     "note-02",
+     "note-04",
+     "note-08",
+     "note-18",
+     "note-24"
+    ]
+   },
+   {
+    "id": "clerk::hidden",
+    "space": "clerk",
+    "kind": "hidden",
+    "label": "not shown",
+    "members": [
+     "note-03",
+     "note-05",
+     "note-06",
+     "note-09",
+     "note-10",
+     "note-11",
+     "note-12",
+     "note-13",
+     "note-14",
+     "note-15",
+     "note-16",
+     "note-17",
+     "note-19",
+     "note-20",
+     "note-21",
+     "note-22",
+     "note-23",
+     "note-25",
+     "note-26",
+     "note-27",
+     "note-28",
+     "note-29",
+     "note-30",
+     "note-31",
+     "note-32",
+     "note-33",
+     "note-34",
+     "note-35",
+     "note-36",
+     "note-37",
+     "note-38",
+     "note-39"
+    ]
+   },
+   {
+    "id": "::terms",
+    "space": null,
+    "kind": "terms",
+    "label": "terms",
+    "members": [
+     "mrs-okafor",
+     "parcel"
+    ]
+   }
+  ]
  ],
  "steps": [
   {
@@ -867,46 +2505,79 @@
    "kind": "room",
    "symbol": "space",
    "caption": "The room as given.",
+   "arrangement": 0,
    "appear": [
     "helper",
-    "helper/fields/command",
+    "helper/holds/api",
+    "helper/holds/command",
     "mrs-okafor",
     "parcel",
     "clerk",
-    "clerk/fields/heard",
-    "clerk/fields/said",
-    "clerk/hears/within:sets heard",
-    "clerk/hears/clerk:asks helper",
-    "clerk/plugs/asks:helper",
-    "clerk/plugs/shows",
+    "clerk/holds/heard",
+    "clerk/holds/said",
+    "clerk/when/within:sets heard",
+    "clerk/when/clerk:asks helper",
     "note-01",
+    "note-01/text",
     "note-02",
+    "note-02/text",
     "note-03",
+    "note-03/text",
     "note-04",
+    "note-04/text",
     "note-05",
+    "note-05/text",
     "note-06",
+    "note-06/text",
     "note-07",
+    "note-07/text",
     "note-08",
+    "note-08/text",
     "note-09",
+    "note-09/text",
     "note-10",
+    "note-10/text",
     "note-11",
+    "note-11/text",
     "note-12",
+    "note-12/text",
     "note-13",
+    "note-13/text",
     "note-14",
+    "note-14/text",
     "note-15",
+    "note-15/text",
     "note-16",
+    "note-16/text",
     "note-17",
+    "note-17/text",
     "note-18",
+    "note-18/text",
     "note-19",
+    "note-19/text",
     "note-20",
+    "note-20/text",
     "note-21",
-    "note-22",
-    "plugs:clerk/plugs/asks:helper->helper"
+    "note-21/text",
+    "clerk/slot/asks:helper",
+    "clerk/slot/writes:",
+    "clerk/slot/hands",
+    "clerk/slot/shows",
+    "asks:clerk/slot/asks:helper#asks:south->helper#asks:west",
+    "clerk/when/within:sets heard#heard:west",
+    "clerk/when/within:sets heard#wrote:east",
+    "clerk/when/clerk:asks helper#heard:west",
+    "clerk/when/clerk:asks helper#wrote:east",
+    "clerk/slot/asks:helper#asks:south",
+    "clerk/slot/writes:#writes:south",
+    "clerk/slot/hands#hands:south",
+    "clerk/slot/shows#shows:south",
+    "helper#asks:west"
    ],
    "change": [
     {
-     "row": "clerk/fields/heard",
-     "value": "The back door sticks in wet wea..."
+     "id": "clerk/holds/heard",
+     "value": "The back door sticks in wet weather."
     }
    ],
    "subject": [],
@@ -914,38 +2585,80 @@
   },
   {
    "i": 1,
-   "kind": "reflex",
-   "symbol": "reflex",
-   "caption": "clerk sets heard by itself: Has the morning post come?",
-   "appear": [],
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice keeps note-22 in clerk.",
+   "arrangement": 0,
+   "appear": [
+    "note-22",
+    "note-22/text"
+   ],
    "change": [
     {
-     "row": "clerk/fields/heard",
-     "value": "Has the morning post come?"
+     "id": "clerk/members",
+     "value": "22 members"
+    },
+    {
+     "id": "clerk/slot/shows",
+     "value": "8 of 22"
     }
    ],
    "subject": [
     {
-     "id": "clerk/fields/heard",
-     "pen": "heard"
-    },
-    {
-     "id": "clerk/hears/within:sets heard",
-     "pen": "heard"
+     "id": "note-22",
+     "pen": "kept"
     }
    ],
    "dim": []
   },
   {
    "i": 2,
-   "kind": "answer",
-   "symbol": "thought",
-   "caption": "clerk is shown 8 of its 22 pages, and answers.",
+   "kind": "reflex",
+   "symbol": "reflex",
+   "caption": "clerk sets heard by itself: Has the morning post come?",
+   "arrangement": 0,
    "appear": [],
    "change": [
     {
-     "row": "clerk/fields/said",
-     "value": "I can't tell from the notes on..."
+     "id": "clerk/holds/heard",
+     "value": "Has the morning post come?"
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 3"
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk/holds/heard",
+     "pen": "heard"
+    },
+    {
+     "id": "clerk/when/within:sets heard",
+     "pen": "heard"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 3,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "clerk is shown 8 of its 22 pages, and answers.",
+   "arrangement": 1,
+   "appear": [],
+   "change": [
+    {
+     "id": "clerk/count/thought",
+     "value": "1"
+    },
+    {
+     "id": "clerk/holds/said",
+     "value": "I can't tell from the notes on my desk. None of the eight visible notes mention the morning post...."
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 4"
     }
    ],
    "subject": [
@@ -954,43 +2667,19 @@
      "pen": "thought"
     },
     {
-     "id": "clerk/fields/said",
+     "id": "clerk/slot/asks:helper",
      "pen": "thought"
     },
     {
-     "id": "note-01",
-     "pen": "kept"
+     "id": "clerk/when/clerk:asks helper",
+     "pen": "thought"
     },
     {
-     "id": "note-02",
-     "pen": "kept"
+     "id": "clerk/holds/said",
+     "pen": "thought"
     },
     {
-     "id": "note-03",
-     "pen": "kept"
-    },
-    {
-     "id": "note-04",
-     "pen": "kept"
-    },
-    {
-     "id": "note-05",
-     "pen": "kept"
-    },
-    {
-     "id": "note-06",
-     "pen": "kept"
-    },
-    {
-     "id": "note-07",
-     "pen": "kept"
-    },
-    {
-     "id": "note-08",
-     "pen": "kept"
-    },
-    {
-     "id": "clerk/plugs/shows",
+     "id": "clerk/slot/shows",
      "pen": "kept"
     }
    ],
@@ -1030,34 +2719,41 @@
    ]
   },
   {
-   "i": 3,
+   "i": 4,
    "kind": "bulk",
    "symbol": "kept",
-   "caption": "alice keeps 18 more pages in clerk.",
+   "caption": "alice keeps 6 more pages in clerk.",
+   "arrangement": 1,
    "appear": [
     "note-23",
+    "note-23/text",
     "note-24",
+    "note-24/text",
     "note-25",
+    "note-25/text",
     "note-26",
+    "note-26/text",
     "note-27",
+    "note-27/text",
     "note-28",
-    "note-29",
-    "note-30",
-    "note-31",
-    "note-32",
-    "note-33",
-    "note-34",
-    "note-35",
-    "note-36",
-    "note-37",
-    "note-38",
-    "note-39",
-    "note-40"
+    "note-28/text"
    ],
    "change": [
     {
-     "row": "clerk/fields/heard",
-     "value": "Where did we put the package fo..."
+     "id": "clerk/holds/heard",
+     "value": "The meeting room is booked on Tuesday afternoon."
+    },
+    {
+     "id": "clerk/members",
+     "value": "28 members"
+    },
+    {
+     "id": "clerk/slot/shows",
+     "value": "8 of 28"
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 5"
     }
    ],
    "subject": [
@@ -1084,7 +2780,49 @@
     {
      "id": "note-28",
      "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 5,
+   "kind": "bulk",
+   "symbol": "kept",
+   "caption": "alice keeps 6 more pages in clerk.",
+   "arrangement": 1,
+   "appear": [
+    "note-29",
+    "note-29/text",
+    "note-30",
+    "note-30/text",
+    "note-31",
+    "note-31/text",
+    "note-32",
+    "note-32/text",
+    "note-33",
+    "note-33/text",
+    "note-34",
+    "note-34/text"
+   ],
+   "change": [
+    {
+     "id": "clerk/holds/heard",
+     "value": "The carpet fitter is coming next week."
     },
+    {
+     "id": "clerk/members",
+     "value": "34 members"
+    },
+    {
+     "id": "clerk/slot/shows",
+     "value": "8 of 34"
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 6"
+    }
+   ],
+   "subject": [
     {
      "id": "note-29",
      "pen": "kept"
@@ -1108,7 +2846,47 @@
     {
      "id": "note-34",
      "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 6,
+   "kind": "bulk",
+   "symbol": "kept",
+   "caption": "alice keeps 5 more pages in clerk.",
+   "arrangement": 1,
+   "appear": [
+    "note-35",
+    "note-35/text",
+    "note-36",
+    "note-36/text",
+    "note-37",
+    "note-37/text",
+    "note-38",
+    "note-38/text",
+    "note-39",
+    "note-39/text"
+   ],
+   "change": [
+    {
+     "id": "clerk/holds/heard",
+     "value": "The umbrella stand was emptied on Friday."
     },
+    {
+     "id": "clerk/members",
+     "value": "39 members"
+    },
+    {
+     "id": "clerk/slot/shows",
+     "value": "8 of 39"
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 7"
+    }
+   ],
+   "subject": [
     {
      "id": "note-35",
      "pen": "kept"
@@ -1128,7 +2906,31 @@
     {
      "id": "note-39",
      "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 7,
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice keeps note-40 in clerk.",
+   "arrangement": 1,
+   "appear": [
+    "note-40",
+    "note-40/text"
+   ],
+   "change": [
+    {
+     "id": "clerk/members",
+     "value": "40 members"
     },
+    {
+     "id": "clerk/slot/shows",
+     "value": "8 of 40"
+    }
+   ],
+   "subject": [
     {
      "id": "note-40",
      "pen": "kept"
@@ -1137,15 +2939,53 @@
    "dim": []
   },
   {
-   "i": 4,
-   "kind": "answer",
-   "symbol": "thought",
-   "caption": "clerk is shown 8 of its 40 pages, and answers.",
+   "i": 8,
+   "kind": "reflex",
+   "symbol": "reflex",
+   "caption": "clerk sets heard by itself: Where did we put the package for the...",
+   "arrangement": 1,
    "appear": [],
    "change": [
     {
-     "row": "clerk/fields/said",
-     "value": "The package for the lady from n..."
+     "id": "clerk/holds/heard",
+     "value": "Where did we put the package for the lady from number nine?"
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 9"
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk/holds/heard",
+     "pen": "heard"
+    },
+    {
+     "id": "clerk/when/within:sets heard",
+     "pen": "heard"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 9,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "clerk is shown 8 of its 40 pages, and answers.",
+   "arrangement": 2,
+   "appear": [],
+   "change": [
+    {
+     "id": "clerk/count/thought",
+     "value": "2"
+    },
+    {
+     "id": "clerk/holds/said",
+     "value": "The package for the lady from number nine, Mrs Okafor, is on shelf 12 (note-07). Note-01 confirms..."
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 10"
     }
    ],
    "subject": [
@@ -1154,7 +2994,15 @@
      "pen": "thought"
     },
     {
-     "id": "clerk/fields/said",
+     "id": "clerk/slot/asks:helper",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/when/clerk:asks helper",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/holds/said",
      "pen": "thought"
     },
     {
@@ -1162,35 +3010,7 @@
      "pen": "kept"
     },
     {
-     "id": "note-40",
-     "pen": "kept"
-    },
-    {
-     "id": "note-01",
-     "pen": "kept"
-    },
-    {
-     "id": "note-02",
-     "pen": "kept"
-    },
-    {
-     "id": "note-04",
-     "pen": "kept"
-    },
-    {
-     "id": "note-08",
-     "pen": "kept"
-    },
-    {
-     "id": "note-18",
-     "pen": "kept"
-    },
-    {
-     "id": "note-24",
-     "pen": "kept"
-    },
-    {
-     "id": "clerk/plugs/shows",
+     "id": "clerk/slot/shows",
      "pen": "kept"
     }
    ],

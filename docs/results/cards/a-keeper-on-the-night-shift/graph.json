@@ -14,32 +14,95 @@
    "id": "den",
    "name": "den",
    "archetype": "page",
-   "kind": "space",
-   "symbol": "space",
    "form": "space",
-   "label": "den",
    "parent": null,
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
+   "header": {
+    "kinds": [
+     "space"
+    ],
+    "symbol": "space",
+    "avatar": null,
+    "label": "den",
+    "line": "The den pays its suppliers prom...",
+    "within": [],
+    "known_as": [],
+    "thought": "den/count/thought",
+    "refused": "den/count/refused"
+   },
    "panels": [
     {
-     "kind": "fields",
-     "title": "fields",
-     "symbol": "fields",
+     "kind": "text",
+     "id": "den/text",
+     "body": "The den pays its suppliers promptly and keeps its books straight.",
+     "key": false
+    },
+    {
+     "kind": "holds",
+     "title": "holds",
      "more": 0,
      "rows": [
       {
-       "id": "den/fields/cash",
+       "id": "den/holds/cash",
        "name": "cash",
-       "value": "80",
-       "key": false,
-       "expr": null
+       "key": false
       }
      ]
+    }
+   ],
+   "footer": {
+    "slots": [
+     {
+      "id": "den/slot/hands",
+      "slot": "hands",
+      "label": "hands down",
+      "filled": false,
+      "socket": "den/slot/hands#hands:south",
+      "expr": null,
+      "key": false
+     },
+     {
+      "id": "den/slot/shows",
+      "slot": "shows",
+      "label": "shows",
+      "filled": false,
+      "socket": "den/slot/shows#shows:south",
+      "expr": null,
+      "key": false
+     }
+    ],
+    "members": "den/members",
+    "changed": "den/changed"
+   },
+   "sockets": [
+    {
+     "id": "den/slot/hands#hands:south",
+     "kind": "hands",
+     "side": "SOUTH",
+     "row": "den/slot/hands",
+     "order": 0,
+     "plugged": false
+    },
+    {
+     "id": "den/slot/shows#shows:south",
+     "kind": "shows",
+     "side": "SOUTH",
+     "row": "den/slot/shows",
+     "order": 1,
+     "plugged": false
+    }
+   ],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\ncash: 80\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\ncash: 80\n---\nThe den pays its suppliers promptly and keeps its books straight.\n"
     }
    ]
   },
@@ -47,62 +110,137 @@
    "id": "keeper",
    "name": "keeper",
    "archetype": "character",
-   "kind": "character",
-   "symbol": "character",
    "form": "cell",
-   "label": "keeper",
    "parent": "den",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
+   "header": {
+    "kinds": [
+     "character"
+    ],
+    "symbol": "character",
+    "avatar": null,
+    "label": "keeper",
+    "line": "",
+    "within": [
+     "den"
+    ],
+    "known_as": [],
+    "thought": "keeper/count/thought",
+    "refused": "keeper/count/refused"
+   },
    "panels": [
     {
-     "kind": "fields",
-     "title": "fields",
-     "symbol": "fields",
+     "kind": "holds",
+     "title": "holds",
      "more": 0,
      "rows": [
       {
-       "id": "keeper/fields/said",
+       "id": "keeper/holds/said",
        "name": "said",
-       "value": "",
-       "key": true,
-       "expr": null
+       "key": true
       }
      ]
     },
     {
-     "kind": "hears",
-     "title": "listens for",
-     "symbol": "hears",
-     "more": 0,
+     "kind": "when",
+     "title": "when",
+     "then": "then",
      "rows": [
       {
-       "id": "keeper/hears/order:asks helper",
-       "name": "order",
-       "value": "asks helper",
-       "key": true,
-       "expr": null
+       "id": "keeper/when/order:asks helper",
+       "when": "order changing",
+       "expr": null,
+       "then": [
+        {
+         "words": "asks helper, puts the answer in said",
+         "expr": null
+        }
+       ],
+       "in": "keeper/when/order:asks helper#heard:west",
+       "out": "keeper/when/order:asks helper#wrote:east",
+       "key": true
       }
-     ]
+     ],
+     "record": []
+    }
+   ],
+   "footer": {
+    "slots": [
+     {
+      "id": "keeper/slot/asks:helper",
+      "slot": "asks",
+      "label": "asks",
+      "filled": true,
+      "socket": "keeper/slot/asks:helper#asks:south",
+      "expr": null,
+      "key": true
+     },
+     {
+      "id": "keeper/slot/writes:",
+      "slot": "writes",
+      "label": "writes into",
+      "filled": false,
+      "socket": "keeper/slot/writes:#writes:south",
+      "expr": null,
+      "key": false
+     }
+    ],
+    "members": null,
+    "changed": "keeper/changed"
+   },
+   "sockets": [
+    {
+     "id": "keeper/when/order:asks helper#heard:west",
+     "kind": "heard",
+     "side": "WEST",
+     "row": "keeper/when/order:asks helper",
+     "order": 0,
+     "plugged": true
     },
     {
-     "kind": "plugs",
-     "title": "reaches",
-     "symbol": "connector",
-     "more": 0,
-     "rows": [
-      {
-       "id": "keeper/plugs/asks:helper",
-       "name": "asks",
-       "value": "helper",
-       "key": false,
-       "expr": null
-      }
-     ]
+     "id": "keeper/when/order:asks helper#wrote:east",
+     "kind": "wrote",
+     "side": "EAST",
+     "row": "keeper/when/order:asks helper",
+     "order": 1,
+     "plugged": false
+    },
+    {
+     "id": "keeper/slot/asks:helper#asks:south",
+     "kind": "asks",
+     "side": "SOUTH",
+     "row": "keeper/slot/asks:helper",
+     "order": 2,
+     "plugged": true
+    },
+    {
+     "id": "keeper/slot/writes:#writes:south",
+     "kind": "writes",
+     "side": "SOUTH",
+     "row": "keeper/slot/writes:",
+     "order": 3,
+     "plugged": false
+    }
+   ],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin:\n- den\n- night-shift\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: ''\n---\n"
+    },
+    {
+     "step": 2,
+     "source": "---\nwithin:\n- den\n- night-shift\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: HELD. The payment is 30, and night-shift requires any payment over 10 to be held until the owner has been asked, which conflicts with den's general promptness rule.\nsaid_asked: cb83f49f61d80011095f7f381cf549a21d940ea65638513b888342d3e112dad3\n---\n"
+    },
+    {
+     "step": 3,
+     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: HELD. The payment is 30, and night-shift requires any payment over 10 to be held until the owner has been asked, which conflicts with den's general promptness rule.\nsaid_asked: cb83f49f61d80011095f7f381cf549a21d940ea65638513b888342d3e112dad3\n---\n"
+    },
+    {
+     "step": 5,
+     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: APPROVED. Paying the miller 30 is an ordinary supplier payment, and the den's stated practice is to pay suppliers promptly, with nothing in the order suggesting an irregularity.\nsaid_asked: c5179e23e3c5237c44a486bfac1bb75eadedeefb9e92ec07843cb844c3f62785\n---\n"
     }
    ]
   },
@@ -110,31 +248,62 @@
    "id": "helper",
    "name": "helper",
    "archetype": "provider",
-   "kind": "provider",
-   "symbol": "provider",
    "form": "cell",
-   "label": "helper",
    "parent": null,
-   "avatar": null,
-   "refused": false,
    "modes": [
     "topology"
    ],
+   "header": {
+    "kinds": [
+     "provider"
+    ],
+    "symbol": "provider",
+    "avatar": null,
+    "label": "helper",
+    "line": "",
+    "within": [],
+    "known_as": [],
+    "thought": "helper/count/thought",
+    "refused": "helper/count/refused"
+   },
    "panels": [
     {
-     "kind": "fields",
-     "title": "fields",
-     "symbol": "fields",
+     "kind": "holds",
+     "title": "holds",
      "more": 0,
      "rows": [
       {
-       "id": "helper/fields/command",
+       "id": "helper/holds/api",
+       "name": "api",
+       "key": false
+      },
+      {
+       "id": "helper/holds/command",
        "name": "command",
-       "value": "stand",
-       "key": false,
-       "expr": null
+       "key": false
       }
      ]
+    }
+   ],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "helper/changed"
+   },
+   "sockets": [
+    {
+     "id": "helper#asks:west",
+     "kind": "asks",
+     "side": "WEST",
+     "row": null,
+     "order": 0,
+     "plugged": true
+    }
+   ],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\napi: command\ncommand: stand\n---\n"
     }
    ]
   },
@@ -142,63 +311,170 @@
    "id": "night-shift",
    "name": "night-shift",
    "archetype": "page",
-   "kind": "page",
-   "symbol": "page",
    "form": "cell",
-   "label": "night-shift",
    "parent": null,
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "page"
+    ],
+    "symbol": "page",
+    "avatar": null,
+    "label": "night-shift",
+    "line": "Everyone on the night shift hol...",
+    "within": [],
+    "known_as": [],
+    "thought": "night-shift/count/thought",
+    "refused": "night-shift/count/refused"
+   },
+   "panels": [
+    {
+     "kind": "text",
+     "id": "night-shift/text",
+     "body": "Everyone on the night shift holds any payment over 10 until the owner has been asked.",
+     "key": false
+    }
+   ],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "night-shift/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\n---\n"
+    },
+    {
+     "step": 0,
+     "source": "---\n---\nEveryone on the night shift holds any payment over 10 until the owner has been asked.\n"
+    }
+   ]
   },
   {
    "id": "order",
    "name": "order",
    "archetype": "page",
-   "kind": "page",
-   "symbol": "page",
    "form": "cell",
-   "label": "order",
    "parent": null,
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "page"
+    ],
+    "symbol": "page",
+    "avatar": null,
+    "label": "order",
+    "line": "Pay the miller 30.",
+    "within": [],
+    "known_as": [],
+    "thought": "order/count/thought",
+    "refused": "order/count/refused"
+   },
+   "panels": [
+    {
+     "kind": "text",
+     "id": "order/text",
+     "body": "Pay the miller 30.",
+     "key": true
+    }
+   ],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "order/changed"
+   },
+   "sockets": [
+    {
+     "id": "order#heard:east",
+     "kind": "heard",
+     "side": "EAST",
+     "row": null,
+     "order": 0,
+     "plugged": true
+    }
+   ],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\n---\n"
+    },
+    {
+     "step": 1,
+     "source": "---\n---\nPay the baker 30.\n"
+    },
+    {
+     "step": 4,
+     "source": "---\n---\nPay the miller 30.\n"
+    }
+   ]
   }
  ],
  "edges": [
   {
-   "id": "heard:order->keeper/hears/order:asks helper",
-   "kind": "heard",
-   "label": "heard",
-   "source": "order",
-   "sourceRow": null,
-   "target": "keeper",
-   "targetRow": "keeper/hears/order:asks helper",
+   "id": "asks:keeper/slot/asks:helper#asks:south->helper#asks:west",
+   "kind": "asks",
+   "signal": "asks",
+   "source": "keeper",
+   "sourceSocket": "keeper/slot/asks:helper#asks:south",
+   "target": "helper",
+   "targetSocket": "helper#asks:west",
    "modes": [
-    "dynamics",
     "topology"
    ]
   },
   {
-   "id": "plugs:keeper/plugs/asks:helper->helper",
-   "kind": "plugs",
-   "label": "asks",
-   "source": "keeper",
-   "sourceRow": "keeper/plugs/asks:helper",
-   "target": "helper",
-   "targetRow": null,
+   "id": "heard:order#heard:east->keeper/when/order:asks helper#heard:west",
+   "kind": "heard",
+   "signal": "heard",
+   "source": "order",
+   "sourceSocket": "order#heard:east",
+   "target": "keeper",
+   "targetSocket": "keeper/when/order:asks helper#heard:west",
    "modes": [
+    "dynamics",
     "topology"
    ]
   }
+ ],
+ "values": {
+  "den/changed": "changed at step 1",
+  "den/count/refused": "0",
+  "den/count/thought": "0",
+  "den/holds/cash": "80",
+  "den/members": "1 member",
+  "den/slot/hands": "nothing",
+  "den/slot/shows": "every member",
+  "den/text": "The den pays its suppliers promptly and keeps its books straight.",
+  "helper/changed": "changed at step 1",
+  "helper/count/refused": "0",
+  "helper/count/thought": "0",
+  "helper/holds/api": "command",
+  "helper/holds/command": "stand",
+  "keeper/changed": "changed at step 1",
+  "keeper/count/refused": "0",
+  "keeper/count/thought": "0",
+  "keeper/holds/said": "",
+  "keeper/slot/asks:helper": "helper",
+  "keeper/slot/writes:": "no space named",
+  "night-shift/changed": "changed at step 1",
+  "night-shift/count/refused": "0",
+  "night-shift/count/thought": "0",
+  "night-shift/text": "Everyone on the night shift holds any payment over 10 until the owner has been asked.",
+  "order/changed": "changed at step 1",
+  "order/count/refused": "0",
+  "order/count/thought": "0",
+  "order/text": "Pay the baker 30."
+ },
+ "arrangements": [
+  []
  ],
  "steps": [
   {
@@ -206,19 +482,34 @@
    "kind": "room",
    "symbol": "space",
    "caption": "The room as given.",
+   "arrangement": 0,
    "appear": [
     "helper",
-    "helper/fields/command",
+    "helper/holds/api",
+    "helper/holds/command",
     "den",
-    "den/fields/cash",
+    "den/holds/cash",
     "night-shift",
     "order",
     "keeper",
-    "keeper/fields/said",
-    "keeper/hears/order:asks helper",
-    "keeper/plugs/asks:helper",
-    "heard:order->keeper/hears/order:asks helper",
-    "plugs:keeper/plugs/asks:helper->helper"
+    "keeper/holds/said",
+    "keeper/when/order:asks helper",
+    "den/text",
+    "night-shift/text",
+    "den/slot/hands",
+    "den/slot/shows",
+    "keeper/slot/asks:helper",
+    "keeper/slot/writes:",
+    "asks:keeper/slot/asks:helper#asks:south->helper#asks:west",
+    "heard:order#heard:east->keeper/when/order:asks helper#heard:west",
+    "keeper/when/order:asks helper#heard:west",
+    "keeper/when/order:asks helper#wrote:east",
+    "den/slot/hands#hands:south",
+    "den/slot/shows#shows:south",
+    "keeper/slot/asks:helper#asks:south",
+    "keeper/slot/writes:#writes:south",
+    "helper#asks:west",
+    "order#heard:east"
    ],
    "change": [],
    "subject": [],
@@ -229,11 +520,19 @@
    "kind": "write",
    "symbol": "kept",
    "caption": "alice writes order.",
-   "appear": [],
-   "change": [],
+   "arrangement": 0,
+   "appear": [
+    "order/text"
+   ],
+   "change": [
+    {
+     "id": "order/changed",
+     "value": "changed at step 2"
+    }
+   ],
    "subject": [
     {
-     "id": "order",
+     "id": "order/text",
      "pen": "kept"
     }
    ],
@@ -244,11 +543,20 @@
    "kind": "answer",
    "symbol": "thought",
    "caption": "keeper reads order and answers.",
+   "arrangement": 0,
    "appear": [],
    "change": [
     {
-     "row": "keeper/fields/said",
-     "value": "HELD. The payment is 30, and ni..."
+     "id": "keeper/count/thought",
+     "value": "1"
+    },
+    {
+     "id": "keeper/holds/said",
+     "value": "HELD. The payment is 30, and night-shift requires any payment over 10 to be held until the owner..."
+    },
+    {
+     "id": "keeper/changed",
+     "value": "changed at step 3"
     }
    ],
    "subject": [
@@ -257,7 +565,15 @@
      "pen": "thought"
     },
     {
-     "id": "keeper/fields/said",
+     "id": "keeper/slot/asks:helper",
+     "pen": "thought"
+    },
+    {
+     "id": "keeper/when/order:asks helper",
+     "pen": "thought"
+    },
+    {
+     "id": "keeper/holds/said",
      "pen": "thought"
     }
    ],
@@ -268,8 +584,14 @@
    "kind": "write",
    "symbol": "kept",
    "caption": "alice keeps keeper in den.",
+   "arrangement": 0,
    "appear": [],
-   "change": [],
+   "change": [
+    {
+     "id": "keeper/changed",
+     "value": "changed at step 4"
+    }
+   ],
    "subject": [
     {
      "id": "keeper",
@@ -283,11 +605,21 @@
    "kind": "write",
    "symbol": "kept",
    "caption": "alice writes order.",
+   "arrangement": 0,
    "appear": [],
-   "change": [],
+   "change": [
+    {
+     "id": "order/text",
+     "value": "Pay the miller 30."
+    },
+    {
+     "id": "order/changed",
+     "value": "changed at step 5"
+    }
+   ],
    "subject": [
     {
-     "id": "order",
+     "id": "order/text",
      "pen": "kept"
     }
    ],
@@ -298,11 +630,20 @@
    "kind": "answer",
    "symbol": "thought",
    "caption": "keeper reads order and answers.",
+   "arrangement": 0,
    "appear": [],
    "change": [
     {
-     "row": "keeper/fields/said",
-     "value": "APPROVED. Paying the miller 30..."
+     "id": "keeper/count/thought",
+     "value": "2"
+    },
+    {
+     "id": "keeper/holds/said",
+     "value": "APPROVED. Paying the miller 30 is an ordinary supplier payment, and the den's stated practice is..."
+    },
+    {
+     "id": "keeper/changed",
+     "value": "changed at step 6"
     }
    ],
    "subject": [
@@ -311,7 +652,15 @@
      "pen": "thought"
     },
     {
-     "id": "keeper/fields/said",
+     "id": "keeper/slot/asks:helper",
+     "pen": "thought"
+    },
+    {
+     "id": "keeper/when/order:asks helper",
+     "pen": "thought"
+    },
+    {
+     "id": "keeper/holds/said",
      "pen": "thought"
     }
    ],

@@ -16,7 +16,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\napi: command\ncommand: stand\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -48,7 +52,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\ncash: 80\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -74,7 +82,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -95,7 +107,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -121,20 +137,33 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den",
+     "night-shift"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin:\n- den\n- night-shift\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: ''\n---\n"
    },
    "rules": [],
    "watch": [
     {
      "on": "order",
      "hears": "order",
+     "when": "true",
      "sets": [],
+     "set": {},
+     "into": "said",
      "asks": true,
      "provider": "helper",
      "writes": null
@@ -164,7 +193,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "The den pays its suppliers promptly and keeps its books straight.\n",
+    "source": "---\ncash: 80\n---\nThe den pays its suppliers promptly and keeps its books straight.\n"
    },
    "rules": [],
    "watch": [],
@@ -185,7 +218,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Everyone on the night shift holds any payment over 10 until the owner has been asked.\n",
+    "source": "---\n---\nEveryone on the night shift holds any payment over 10 until the owner has been asked.\n"
    },
    "rules": [],
    "watch": [],
@@ -206,7 +243,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Pay the baker 30.\n",
+    "source": "---\n---\nPay the baker 30.\n"
    },
    "rules": [],
    "watch": [],
@@ -232,13 +273,23 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den",
+     "night-shift"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin:\n- den\n- night-shift\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: HELD. The payment is 30, and night-shift requires any payment over 10 to be held until the owner has been asked, which conflicts with den's general promptness rule.\nsaid_asked: cb83f49f61d80011095f7f381cf549a21d940ea65638513b888342d3e112dad3\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -273,13 +324,22 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: HELD. The payment is 30, and night-shift requires any payment over 10 to be held until the owner has been asked, which conflicts with den's general promptness rule.\nsaid_asked: cb83f49f61d80011095f7f381cf549a21d940ea65638513b888342d3e112dad3\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -300,7 +360,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Pay the miller 30.\n",
+    "source": "---\n---\nPay the miller 30.\n"
    },
    "rules": [],
    "watch": [],
@@ -326,13 +390,22 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: APPROVED. Paying the miller 30 is an ordinary supplier payment, and the den's stated practice is to pay suppliers promptly, with nothing in the order suggesting an irregularity.\nsaid_asked: c5179e23e3c5237c44a486bfac1bb75eadedeefb9e92ec07843cb844c3f62785\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -367,7 +440,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\napi: command\ncommand: stand\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -399,7 +476,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\ncash: 80\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -425,7 +506,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -446,7 +531,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -472,20 +561,33 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den",
+     "night-shift"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin:\n- den\n- night-shift\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: ''\n---\n"
    },
    "rules": [],
    "watch": [
     {
      "on": "order",
      "hears": "order",
+     "when": "true",
      "sets": [],
+     "set": {},
+     "into": "said",
      "asks": true,
      "provider": "helper",
      "writes": null
@@ -515,7 +617,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "The den pays its suppliers promptly and keeps its books straight.\n",
+    "source": "---\ncash: 80\n---\nThe den pays its suppliers promptly and keeps its books straight.\n"
    },
    "rules": [],
    "watch": [],
@@ -536,7 +642,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Everyone on the night shift holds any payment over 10 until the owner has been asked.\n",
+    "source": "---\n---\nEveryone on the night shift holds any payment over 10 until the owner has been asked.\n"
    },
    "rules": [],
    "watch": [],
@@ -557,7 +667,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Pay the baker 30.\n",
+    "source": "---\n---\nPay the baker 30.\n"
    },
    "rules": [],
    "watch": [],
@@ -583,13 +697,23 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den",
+     "night-shift"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin:\n- den\n- night-shift\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: 'HELD: the order is to pay 30, which is over the night shift''s limit of 10, so it must wait until the owner has been asked, even though the den generally pays suppliers promptly.'\nsaid_asked: 5b99308be0fd49274630529da87edd674397a823ce5f4a38ffcb0565bca8c3f4\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -624,13 +748,22 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: 'HELD: the order is to pay 30, which is over the night shift''s limit of 10, so it must wait until the owner has been asked, even though the den generally pays suppliers promptly.'\nsaid_asked: 5b99308be0fd49274630529da87edd674397a823ce5f4a38ffcb0565bca8c3f4\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -651,7 +784,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Pay the miller 30.\n",
+    "source": "---\n---\nPay the miller 30.\n"
    },
    "rules": [],
    "watch": [],
@@ -677,13 +814,22 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: 'APPROVED: the den pays its suppliers promptly, and nothing in the order suggests the miller''s payment is irregular.'\nsaid_asked: 03d900bc9b82f22eb29b7f17e0a6c44d6bbf47700614a965f23b2b28f7644e4c\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -718,7 +864,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\napi: command\ncommand: stand\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -750,7 +900,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\ncash: 80\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -776,7 +930,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -797,7 +955,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -823,20 +985,33 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den",
+     "night-shift"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin:\n- den\n- night-shift\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: ''\n---\n"
    },
    "rules": [],
    "watch": [
     {
      "on": "order",
      "hears": "order",
+     "when": "true",
      "sets": [],
+     "set": {},
+     "into": "said",
      "asks": true,
      "provider": "helper",
      "writes": null
@@ -866,7 +1041,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "The den pays its suppliers promptly and keeps its books straight.\n",
+    "source": "---\ncash: 80\n---\nThe den pays its suppliers promptly and keeps its books straight.\n"
    },
    "rules": [],
    "watch": [],
@@ -887,7 +1066,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Everyone on the night shift holds any payment over 10 until the owner has been asked.\n",
+    "source": "---\n---\nEveryone on the night shift holds any payment over 10 until the owner has been asked.\n"
    },
    "rules": [],
    "watch": [],
@@ -908,7 +1091,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Pay the baker 30.\n",
+    "source": "---\n---\nPay the baker 30.\n"
    },
    "rules": [],
    "watch": [],
@@ -934,13 +1121,23 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den",
+     "night-shift"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin:\n- den\n- night-shift\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: 'HELD: The night-shift rule holds any payment over 10 until the owner has been asked, and this 30 payment is over that limit with no sign the owner has approved it.'\nsaid_asked: f110b39533b1accf17f13825c2e8b839d99c0b198b1b87b1625f114131fd3e41\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -975,13 +1172,22 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: 'HELD: The night-shift rule holds any payment over 10 until the owner has been asked, and this 30 payment is over that limit with no sign the owner has approved it.'\nsaid_asked: f110b39533b1accf17f13825c2e8b839d99c0b198b1b87b1625f114131fd3e41\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1002,7 +1208,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Pay the miller 30.\n",
+    "source": "---\n---\nPay the miller 30.\n"
    },
    "rules": [],
    "watch": [],
@@ -1028,13 +1238,22 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: 'APPROVED: the den pays its suppliers promptly, and paying the miller 30 is a routine supplier payment that fits that policy.'\nsaid_asked: 4689c82e9c8c67e2a1d90bc3af9f18e7bee025596cb680ff0ca2e5ed0e0db20a\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1069,7 +1288,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\napi: command\ncommand: stand\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1101,7 +1324,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\ncash: 80\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1127,7 +1354,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1148,7 +1379,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1174,20 +1409,33 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den",
+     "night-shift"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin:\n- den\n- night-shift\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: ''\n---\n"
    },
    "rules": [],
    "watch": [
     {
      "on": "order",
      "hears": "order",
+     "when": "true",
      "sets": [],
+     "set": {},
+     "into": "said",
      "asks": true,
      "provider": "helper",
      "writes": null
@@ -1217,7 +1465,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "The den pays its suppliers promptly and keeps its books straight.\n",
+    "source": "---\ncash: 80\n---\nThe den pays its suppliers promptly and keeps its books straight.\n"
    },
    "rules": [],
    "watch": [],
@@ -1238,7 +1490,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Everyone on the night shift holds any payment over 10 until the owner has been asked.\n",
+    "source": "---\n---\nEveryone on the night shift holds any payment over 10 until the owner has been asked.\n"
    },
    "rules": [],
    "watch": [],
@@ -1259,7 +1515,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Pay the baker 30.\n",
+    "source": "---\n---\nPay the baker 30.\n"
    },
    "rules": [],
    "watch": [],
@@ -1285,13 +1545,23 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den",
+     "night-shift"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin:\n- den\n- night-shift\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: 'HELD: The payment is 30, which is over the night shift''s limit of 10, so it must wait until the owner has been asked.'\nsaid_asked: d309d1fc223145632865c3883ded6bfc22ec50d31396fe61444f20b41897883b\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1326,13 +1596,22 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: 'HELD: The payment is 30, which is over the night shift''s limit of 10, so it must wait until the owner has been asked.'\nsaid_asked: d309d1fc223145632865c3883ded6bfc22ec50d31396fe61444f20b41897883b\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1353,7 +1632,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Pay the miller 30.\n",
+    "source": "---\n---\nPay the miller 30.\n"
    },
    "rules": [],
    "watch": [],
@@ -1379,13 +1662,22 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: APPROVED. The den pays its suppliers promptly, and an order to pay the miller 30 is a routine supplier payment that fits that policy.\nsaid_asked: 1ad840c52ff7e366efb969b51e998fdf48f7bb283654c1c52a6aeeecafa7a493\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1420,7 +1712,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\napi: command\ncommand: stand\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1452,7 +1748,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\ncash: 80\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1478,7 +1778,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1499,7 +1803,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1525,20 +1833,33 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den",
+     "night-shift"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin:\n- den\n- night-shift\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: ''\n---\n"
    },
    "rules": [],
    "watch": [
     {
      "on": "order",
      "hears": "order",
+     "when": "true",
      "sets": [],
+     "set": {},
+     "into": "said",
      "asks": true,
      "provider": "helper",
      "writes": null
@@ -1568,7 +1889,11 @@
     },
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "The den pays its suppliers promptly and keeps its books straight.\n",
+    "source": "---\ncash: 80\n---\nThe den pays its suppliers promptly and keeps its books straight.\n"
    },
    "rules": [],
    "watch": [],
@@ -1589,7 +1914,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Everyone on the night shift holds any payment over 10 until the owner has been asked.\n",
+    "source": "---\n---\nEveryone on the night shift holds any payment over 10 until the owner has been asked.\n"
    },
    "rules": [],
    "watch": [],
@@ -1610,7 +1939,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Pay the baker 30.\n",
+    "source": "---\n---\nPay the baker 30.\n"
    },
    "rules": [],
    "watch": [],
@@ -1636,13 +1969,23 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den",
+     "night-shift"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin:\n- den\n- night-shift\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: 'HELD: The order is for 30, and the night-shift rule holds any payment over 10 until the owner has been asked, with no sign that the owner has been asked.'\nsaid_asked: 09510f7b21918b1532c47e7f8123d85527c82b471db86659710dbaf02eb6d901\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1677,13 +2020,22 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: 'HELD: The order is for 30, and the night-shift rule holds any payment over 10 until the owner has been asked, with no sign that the owner has been asked.'\nsaid_asked: 09510f7b21918b1532c47e7f8123d85527c82b471db86659710dbaf02eb6d901\n---\n"
    },
    "rules": [],
    "watch": [],
@@ -1704,7 +2056,11 @@
     "fields": {},
     "rules": [],
     "watch": [],
-    "shows": null
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "Pay the miller 30.\n",
+    "source": "---\n---\nPay the miller 30.\n"
    },
    "rules": [],
    "watch": [],
@@ -1730,13 +2086,22 @@
      {
       "on": "order",
       "hears": "order",
+      "when": "true",
       "sets": [],
+      "set": {},
+      "into": "said",
       "asks": true,
       "provider": "helper",
       "writes": null
      }
     ],
-    "shows": null
+    "shows": null,
+    "within": [
+     "den"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.\n\n\n      ![[keeper#context]]\n\n\n      The order reads: ![[order]]\n\n\n      Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.\n\n      '\n    provider: helper\nsaid: APPROVED. The den pays its suppliers promptly and the order to pay the miller 30 is a routine settlement of a supplier obligation, so it goes ahead.\nsaid_asked: 68ccf857b7edbc4ff34680f560233ba608c2db5c139edee95d53a810a8ecfac8\n---\n"
    },
    "rules": [],
    "watch": [],

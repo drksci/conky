@@ -85,6 +85,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0046-figures-are-drawn-from-the-shared-tokens.md](decisions/0046-figures-are-drawn-from-the-shared-tokens.md): Figures are drawn from the shared tokens
 - [decisions/0047-a-character-is-shown-what-its-spaces-say.md](decisions/0047-a-character-is-shown-what-its-spaces-say.md): A character is shown what its spaces say
 - [decisions/0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown.md](decisions/0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown.md): Charts are drawn by Plotly and words sit in Markdown
+- [decisions/0049-a-cell-shows-the-whole-page.md](decisions/0049-a-cell-shows-the-whole-page.md): A cell shows the whole page, with sockets
 
 ### Research
 

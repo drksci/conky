@@ -83,38 +83,71 @@ def test_the_graph_has_a_node_a_page_with_its_archetype(tiny: Vault) -> None:
     final = {e["page"]: e["role"] for e in events if e["kind"] == "write"}
     for node in g["nodes"]:
         assert node["archetype"] == final.get(node["id"], "page")
-    kinds = {n["id"]: n["kind"] for n in g["nodes"]}
-    assert kinds["den"].startswith("space") and kinds["keeper"] == "character"
-    assert kinds["helper"] == "provider" and kinds["payment-baker"] == "page"
+    kinds = {n["id"]: n["header"]["kinds"] for n in g["nodes"]}
+    assert kinds["den"] == ["space"] and kinds["keeper"] == ["character"]
+    assert kinds["helper"] == ["provider"] and kinds["payment-baker"] == ["page"]
     parents = {n["id"]: n["parent"] for n in g["nodes"]}
     assert parents["keeper"] == "den" and parents["payment-baker"] == "den"
 
 
-def test_every_panel_kind_appears_and_edges_end_on_rows(tiny: Vault) -> None:
+def test_every_panel_kind_appears_and_edges_run_between_sockets(tiny: Vault) -> None:
     g = tiny_graph(tiny)
     panels = {p["kind"] for n in g["nodes"] for p in n["panels"]}
-    assert panels == set(dynamics.PANELS)
-    rows = {r["id"] for n in g["nodes"] for p in n["panels"] for r in p["rows"]}
+    assert panels == {"text", "holds", "bound", "when"}
+    sockets = {s["id"]: s for n in g["nodes"] for s in n["sockets"]}
     kinds = {e["kind"] for e in g["edges"]}
-    assert {"turned-away", "plugs"} <= kinds
-    assert any(e["targetRow"] in rows for e in g["edges"] if e["kind"] == "turned-away")
-    assert any(e["sourceRow"] in rows for e in g["edges"] if e["kind"] == "plugs")
-    for e in g["edges"]:
-        assert e["sourceRow"] in rows | {None} and e["targetRow"] in rows | {None}
-    for n in g["nodes"]:  # every expression carries its body and the names it reads
+    assert {"turned-away", "asks", "heard"} <= kinds
+    for e in g["edges"]:  # socket to socket, output to input, one kind of signal
+        a, b = sockets[e["sourceSocket"]], sockets[e["targetSocket"]]
+        assert a["kind"] == b["kind"] == e["signal"] and a["plugged"] and b["plugged"]
+        assert a["side"] in ("EAST", "SOUTH") and b["side"] == "WEST"
+    for n in g["nodes"]:  # sockets in the one fixed order: west, east, south, each by the table
+        order = [(dynamics.SIDES.index(s["side"]),
+                  dynamics.SOCKET_ORDER[s["side"]].index(s["kind"]))
+                 for s in n["sockets"]]  # fmt: skip
+        assert order == sorted(order) and [s["order"] for s in n["sockets"]] == list(
+            range(len(order))
+        )
         for p in n["panels"]:
-            for r in p["rows"]:
-                if p["kind"] == "rules":
-                    assert r["expr"]["body"] and r["expr"]["reads"] == ["page", "space"]
+            if p["kind"] == "bound":  # every expression carries its body, lines and names read
+                assert all(r["expr"]["lines"] and r["expr"]["reads"] == ["page", "space"]
+                           for r in p["rows"])  # fmt: skip
+    den = next(n for n in g["nodes"] if n["id"] == "den")
+    slots = {s["slot"]: s for s in den["footer"]["slots"]}
+    assert slots["hands"]["filled"] and slots["shows"]["filled"] and den["footer"]["members"]
+    keeper = next(n for n in g["nodes"] if n["id"] == "keeper")
+    assert [s["slot"] for s in keeper["footer"]["slots"]] == ["asks", "writes"]
+    payment = next(n for n in g["nodes"] if n["id"] == "payment-baker")
+    handed = [r for p in payment["panels"] if p["kind"] == "bound" for r in p["rows"]]
+    assert [r["from"] for r in handed] == ["den"]  # the rule den hands down, said to come from den
+
+
+def test_an_empty_slot_is_hollow_and_a_self_watch_is_said_plainly(vault: Vault) -> None:
+    ask = {"on": "clerk", "when": "page.heard != ''", "ask": {"prompt": "p", "into": "said"}}
+    w(vault, "clerk", {"heard": "", "watch": [ask]})
+    g = dynamics.graph(timeline(vault.pages_dir.parent), "self", 1)
+    clerk = g["nodes"][0]
+    slots = {s["slot"]: s for s in clerk["footer"]["slots"]}
+    assert not slots["asks"]["filled"] and g["values"][slots["asks"]["id"]] == "default provider"
+    assert not slots["writes"]["filled"]
+    when = next(p for p in clerk["panels"] if p["kind"] == "when")["rows"][0]
+    assert when["when"] == "its own page changing"
+    assert when["then"] == [{"words": "asks the default provider, puts the answer in said",
+                             "expr": None}]  # fmt: skip
 
 
 def test_steps_reference_only_what_exists_and_pens_mean_something(tiny: Vault) -> None:
     g = tiny_graph(tiny)
     ids = {n["id"] for n in g["nodes"]} | {e["id"] for e in g["edges"]}
-    ids |= {r["id"] for n in g["nodes"] for p in n["panels"] for r in p["rows"]}
+    ids |= {s["id"] for n in g["nodes"] for s in n["sockets"]}
+    ids |= {s["id"] for n in g["nodes"] for s in n["footer"]["slots"]}
+    for n in g["nodes"]:
+        for p in n["panels"]:
+            ids |= {p["id"]} if p["kind"] == "text" else {r["id"] for r in p["rows"]}
+            ids |= {r["id"] for r in p.get("record", [])}
     for step in g["steps"]:
         assert set(step["appear"]) <= ids and set(step["dim"]) <= ids
-        assert {c["row"] for c in step["change"]} <= ids
+        assert {c["id"] for c in step["change"]} <= set(g["values"])
         assert {s["id"] for s in step["subject"]} <= ids
         assert {s["pen"] for s in step["subject"]} <= set(TOKENS["meaning"])
         assert len({s["pen"] for s in step["subject"]}) <= 2
@@ -129,19 +162,23 @@ def test_captions_are_plain_sentences(tiny: Vault) -> None:
         assert words[0].isupper() or words.split()[0].islower()
     events = timeline(tiny.pages_dir.parent)
     refused = dynamics._describe(next(e for e in events if e["kind"] == "refused"), events)
-    assert refused["words"] == (
-        "landlord-payment is turned away: it breaks den's rule page.amount <= space.cash - 20."
-    )
+    assert refused["words"] == ("landlord-payment is turned away: it breaks a rule den hands down.")
 
 
 def test_every_symbol_named_is_in_the_one_table(tiny: Vault) -> None:
     g = tiny_graph(tiny)
-    named = {n["symbol"] for n in g["nodes"]} | {s["symbol"] for s in g["steps"]}
-    named |= {p["symbol"] for n in g["nodes"] for p in n["panels"]}
+    named = {n["header"]["symbol"] for n in g["nodes"]} | {s["symbol"] for s in g["steps"]}
+    named |= {k for n in g["nodes"] for k in n["header"]["kinds"]}
     archetypes = {"character", "provider", "measure", "reflex", "screen", "hands", "page"}
     known = set(TOKENS["symbol"])
     assert named <= known and archetypes <= known
-    assert set(dynamics.PANEL_SYMBOL.values()) | set(dynamics.STEP_SYMBOL.values()) <= known
+    assert set(dynamics.STEP_SYMBOL.values()) <= known
+    sockets = {s["kind"] for n in g["nodes"] for s in n["sockets"]}
+    assert sockets <= set(TOKENS["socket"]) and set(TOKENS["socket"]) == {
+        k for side in TOKENS["socket_order"].values() for k in side
+    }  # every kind of socket has its place in the order, and nothing else has
+    marks = [v["mark"] for v in TOKENS["socket"].values()]
+    assert len(set(marks)) == len(marks)  # one mark a kind, never two kinds alike
 
 
 def test_publishing_writes_the_records_the_graph_the_board_and_the_block(
@@ -199,25 +236,60 @@ def test_the_crowded_desk_shows_the_notes_the_prompt_showed() -> None:
     assert len(notes) == 40 and all(n["parent"] == "clerk" for n in notes)
     last = g["steps"][-1]
     kept = [s["id"] for s in last["subject"] if s["pen"] == "kept" and s["id"].startswith("note")]
-    assert len(kept) == 8 and "note-07" in kept and len(last["dim"]) == 32
+    assert kept == ["note-07"] and len(last["dim"]) == 32  # the note the answer was found in
+    regions = {r["kind"]: r for r in g["arrangements"][last["arrangement"]]}
+    assert len(regions["shown"]["members"]) == 8 and len(regions["hidden"]["members"]) == 32
+    assert "note-07" in regions["shown"]["members"]
+    beats = [s for s in g["steps"] if s["kind"] == "answer"]
+    assert len(beats) == 2 and len(g["arrangements"]) == 3  # the desk, then one a question
+    bulk = [s for s in g["steps"] if s["kind"] == "bulk"]
+    assert bulk and all(2 <= len([a for a in s["appear"] if a.startswith("note-")
+                                  and "/" not in a and "#" not in a]) <= dynamics.CHUNK
+                        for s in bulk)  # fmt: skip
 
 
 def complete(events: list[dict], g: dict) -> None:
-    """Every field a page ends with is a row of its node, counted in its "N more", or a field
-    the graph leaves out on purpose (`dynamics.HIDDEN`, with its reason); every rule and watch
-    entry is a row; every commit is part of a step."""
+    """Every top-level field of every page is drawn where it belongs (header, a panel, the
+    footer) or is bookkeeping the runtime keeps (`dynamics.bookkeeping`); every rule and watch
+    entry is a row; every provider and space a watch entry names is a footer slot; the body is
+    the text panel, or a crowded note's line; every commit is part of a step."""
     last = {e["page"]: e["state"] for e in events if e["state"]}
     nodes = {n["id"]: n for n in g["nodes"]}
     for page, state in last.items():
-        node = nodes[page]
-        fields = [p for p in node["panels"] if p["kind"] == "fields"]
-        named = {r["name"] for p in fields for r in p["rows"]}
-        more = sum(p["more"] for p in fields)
-        missing = [f for f in state["fields"] if f not in named and f not in dynamics.HIDDEN]
+        node, whole = nodes[page], dynamics.full(state)
+        panels = {p["kind"]: p for p in node["panels"]}
+
+        def rows(kind: str, panels: dict = panels) -> list[dict]:
+            return panels[kind]["rows"] if kind in panels else []
+
+        slots = {(s["slot"], g["values"][s["id"]]) for s in node["footer"]["slots"]}
+        drawn = {r["name"] for r in rows("holds")}
+        more = panels["holds"]["more"] if "holds" in panels else 0
+        missing = []
+        for key, value in whole.fields.items():
+            if key == "avatar":
+                assert node["header"]["avatar"] == str(value)
+            elif key == "known_as":
+                assert node["header"]["known_as"] == [str(v) for v in value]
+            elif key == "shows":
+                assert any(s["slot"] == "shows" and s["filled"] for s in node["footer"]["slots"])
+            elif not dynamics.bookkeeping(key) and key not in drawn:
+                missing.append(key)
         assert len(missing) <= more, f"{page}: {missing} are not in its cell"
-        rules = [r for p in node["panels"] if p["kind"] == "rules" for r in p["rows"]]
-        hears = [r for p in node["panels"] if p["kind"] == "hears" for r in p["rows"]]
-        assert len(rules) == len(state["rules"]) and len(hears) == len(state["watch"])
+        assert node["header"]["within"] == state["within"]
+        own = [r for r in rows("bound") if not r["from"]]
+        assert len(own) == len(whole.rules) and len(rows("when")) == len(whole.watch)
+        for entry in state["watch"]:
+            if entry["asks"]:
+                assert ("asks", entry["provider"] or "default provider") in slots
+                assert ("writes", entry["writes"] or "no space named") in slots
+        if node["form"] == "note":
+            assert node["header"]["line"] == dynamics.plain(
+                whole.body.strip().splitlines()[0], dynamics.NOTE_WIDTH
+            )
+        elif whole.body.strip():
+            assert panels["text"]["body"] == whole.body.strip()
+        assert node["versions"][-1]["source"] == state["source"]
     told = sum(len(s["events"]) for s in dynamics.story(events))
     assert told == len(events)
 

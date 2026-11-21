@@ -1,14 +1,17 @@
 import { createContext, useContext } from "react";
-import type { Frame, Mode } from "./graph";
+import type { Density, Frame, Mode } from "./graph";
 
 export interface Seen {
   frame: Frame;
   mode: Mode;
+  density: Density;
+  open?: (id: string) => void; // the side panel, in the interactive view only
 }
 
 export const FrameContext = createContext<Seen>({
-  frame: { shown: new Set(), values: new Map(), pens: new Map(), dim: new Set() },
+  frame: { shown: new Set(), values: new Map(), pens: new Map(), dim: new Set(), regions: [], step: 0 },
   mode: "dynamics",
+  density: "compact",
 });
 
 export const useSeen = () => useContext(FrameContext);
@@ -25,3 +28,6 @@ export function standing(seen: Seen, id: string): string {
     .filter(Boolean)
     .join(" ");
 }
+
+/** A value as it stands in this frame. */
+export const valueOf = (seen: Seen, id: string | null | undefined): string => (id ? seen.frame.values.get(id) ?? "" : "");

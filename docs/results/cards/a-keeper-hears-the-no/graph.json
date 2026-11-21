@@ -14,75 +14,179 @@
    "id": "den",
    "name": "den",
    "archetype": "reflex",
-   "kind": "space",
-   "symbol": "space",
    "form": "space",
-   "label": "den",
    "parent": null,
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
+   "header": {
+    "kinds": [
+     "space"
+    ],
+    "symbol": "space",
+    "avatar": null,
+    "label": "den",
+    "line": "",
+    "within": [],
+    "known_as": [],
+    "thought": "den/count/thought",
+    "refused": "den/count/refused"
+   },
    "panels": [
     {
-     "kind": "fields",
-     "title": "fields",
-     "symbol": "fields",
+     "kind": "holds",
+     "title": "holds",
      "more": 0,
      "rows": [
       {
-       "id": "den/fields/cash",
+       "id": "den/holds/cash",
        "name": "cash",
-       "value": "80",
-       "key": false,
-       "expr": null
+       "key": false
       },
       {
-       "id": "den/fields/turned_away",
+       "id": "den/holds/turned_away",
        "name": "turned_away",
-       "value": "0",
-       "key": true,
-       "expr": null
+       "key": true
       }
      ]
     },
     {
-     "kind": "rules",
-     "title": "rules",
-     "symbol": "rule",
-     "more": 0,
+     "kind": "bound",
+     "title": "bound by",
      "rows": [
       {
-       "id": "den/rules/page.amount <= space.cash - 20",
-       "name": "for every page within",
-       "value": "",
-       "key": true,
+       "id": "den/bound/page.amount <= space.cash - 20",
+       "label": "for every page within",
+       "from": null,
        "expr": {
         "reads": [
          "page",
          "space"
         ],
-        "body": "page.amount <= space.cash - 20"
-       }
+        "body": "page.amount <= space.cash - 20",
+        "lines": [
+         "page.amount <= space.cash - 20"
+        ]
+       },
+       "in": "den/bound/page.amount <= space.cash - 20#refused:west",
+       "key": true
       }
      ]
     },
     {
-     "kind": "hears",
-     "title": "listens for",
-     "symbol": "hears",
-     "more": 0,
+     "kind": "when",
+     "title": "when",
+     "then": "then",
      "rows": [
       {
-       "id": "den/hears/refusal:sets turned_away",
-       "name": "a write turned away",
-       "value": "sets turned_away",
-       "key": true,
-       "expr": null
+       "id": "den/when/refusal:sets turned_away",
+       "when": "a write turned away",
+       "expr": null,
+       "then": [
+        {
+         "words": "sets turned_away",
+         "expr": {
+          "reads": [
+           "page"
+          ],
+          "body": "page.turned_away + 1",
+          "lines": [
+           "page.turned_away + 1"
+          ]
+         }
+        }
+       ],
+       "in": "den/when/refusal:sets turned_away#heard:west",
+       "out": "den/when/refusal:sets turned_away#wrote:east",
+       "key": true
       }
-     ]
+     ],
+     "record": []
+    }
+   ],
+   "footer": {
+    "slots": [
+     {
+      "id": "den/slot/hands",
+      "slot": "hands",
+      "label": "hands down",
+      "filled": true,
+      "socket": "den/slot/hands#hands:south",
+      "expr": null,
+      "key": false
+     },
+     {
+      "id": "den/slot/shows",
+      "slot": "shows",
+      "label": "shows",
+      "filled": false,
+      "socket": "den/slot/shows#shows:south",
+      "expr": null,
+      "key": false
+     }
+    ],
+    "members": "den/members",
+    "changed": "den/changed"
+   },
+   "sockets": [
+    {
+     "id": "den/when/refusal:sets turned_away#heard:west",
+     "kind": "heard",
+     "side": "WEST",
+     "row": "den/when/refusal:sets turned_away",
+     "order": 0,
+     "plugged": false
+    },
+    {
+     "id": "den/bound/page.amount <= space.cash - 20#refused:west",
+     "kind": "refused",
+     "side": "WEST",
+     "row": "den/bound/page.amount <= space.cash - 20",
+     "order": 1,
+     "plugged": true
+    },
+    {
+     "id": "den/when/refusal:sets turned_away#wrote:east",
+     "kind": "wrote",
+     "side": "EAST",
+     "row": "den/when/refusal:sets turned_away",
+     "order": 2,
+     "plugged": false
+    },
+    {
+     "id": "den/slot/hands#hands:south",
+     "kind": "hands",
+     "side": "SOUTH",
+     "row": "den/slot/hands",
+     "order": 3,
+     "plugged": false
+    },
+    {
+     "id": "den/slot/shows#shows:south",
+     "kind": "shows",
+     "side": "SOUTH",
+     "row": "den/slot/shows",
+     "order": 4,
+     "plugged": false
+    }
+   ],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\ncash: 80\nturned_away: 0\n---\n"
+    },
+    {
+     "step": 3,
+     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 0\n---\n"
+    },
+    {
+     "step": 5,
+     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 1\n---\n"
+    },
+    {
+     "step": 7,
+     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 2\n---\n"
     }
    ]
   },
@@ -90,54 +194,154 @@
    "id": "keeper",
    "name": "keeper",
    "archetype": "character",
-   "kind": "character",
-   "symbol": "character",
    "form": "cell",
-   "label": "keeper",
    "parent": "den",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
+   "header": {
+    "kinds": [
+     "character"
+    ],
+    "symbol": "character",
+    "avatar": null,
+    "label": "keeper",
+    "line": "",
+    "within": [
+     "den"
+    ],
+    "known_as": [],
+    "thought": "keeper/count/thought",
+    "refused": "keeper/count/refused"
+   },
    "panels": [
     {
-     "kind": "hears",
-     "title": "listens for",
-     "symbol": "hears",
-     "more": 0,
+     "kind": "bound",
+     "title": "bound by",
      "rows": [
       {
-       "id": "keeper/hears/order:asks helper",
-       "name": "order",
-       "value": "asks helper",
-       "key": true,
-       "expr": null
+       "id": "keeper/bound/from:den:page.amount <= space.cash - 20",
+       "label": "for every page within",
+       "from": "den",
+       "expr": {
+        "reads": [
+         "page",
+         "space"
+        ],
+        "body": "page.amount <= space.cash - 20",
+        "lines": [
+         "page.amount <= space.cash - 20"
+        ]
+       },
+       "in": null,
+       "key": false
       }
      ]
     },
     {
-     "kind": "plugs",
-     "title": "reaches",
-     "symbol": "connector",
-     "more": 0,
+     "kind": "when",
+     "title": "when",
+     "then": "then",
      "rows": [
       {
-       "id": "keeper/plugs/asks:helper",
-       "name": "asks",
-       "value": "helper",
-       "key": false,
-       "expr": null
-      },
+       "id": "keeper/when/order:asks helper",
+       "when": "order changing",
+       "expr": null,
+       "then": [
+        {
+         "words": "asks helper, writes pages into den",
+         "expr": null
+        }
+       ],
+       "in": "keeper/when/order:asks helper#heard:west",
+       "out": "keeper/when/order:asks helper#wrote:east",
+       "key": true
+      }
+     ],
+     "record": [
       {
-       "id": "keeper/plugs/writes:den",
-       "name": "writes into",
-       "value": "den",
-       "key": false,
-       "expr": null
+       "id": "keeper/record/watch:den",
+       "out": "keeper/record/watch:den#wrote:east",
+       "key": true
       }
      ]
+    }
+   ],
+   "footer": {
+    "slots": [
+     {
+      "id": "keeper/slot/asks:helper",
+      "slot": "asks",
+      "label": "asks",
+      "filled": true,
+      "socket": "keeper/slot/asks:helper#asks:south",
+      "expr": null,
+      "key": true
+     },
+     {
+      "id": "keeper/slot/writes:den",
+      "slot": "writes",
+      "label": "writes into",
+      "filled": true,
+      "socket": "keeper/slot/writes:den#writes:south",
+      "expr": null,
+      "key": false
+     }
+    ],
+    "members": null,
+    "changed": "keeper/changed"
+   },
+   "sockets": [
+    {
+     "id": "keeper/when/order:asks helper#heard:west",
+     "kind": "heard",
+     "side": "WEST",
+     "row": "keeper/when/order:asks helper",
+     "order": 0,
+     "plugged": true
+    },
+    {
+     "id": "keeper/when/order:asks helper#wrote:east",
+     "kind": "wrote",
+     "side": "EAST",
+     "row": "keeper/when/order:asks helper",
+     "order": 1,
+     "plugged": false
+    },
+    {
+     "id": "keeper/record/watch:den#wrote:east",
+     "kind": "wrote",
+     "side": "EAST",
+     "row": "keeper/record/watch:den",
+     "order": 2,
+     "plugged": false
+    },
+    {
+     "id": "keeper/slot/asks:helper#asks:south",
+     "kind": "asks",
+     "side": "SOUTH",
+     "row": "keeper/slot/asks:helper",
+     "order": 3,
+     "plugged": true
+    },
+    {
+     "id": "keeper/slot/writes:den#writes:south",
+     "kind": "writes",
+     "side": "SOUTH",
+     "row": "keeper/slot/writes:den",
+     "order": 4,
+     "plugged": false
+    }
+   ],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n      '\n    provider: helper\n    writes: den\n---\n"
+    },
+    {
+     "step": 2,
+     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n      '\n    provider: helper\n    writes: den\nwrites_asked: 2f8d6fd9555a6ed397ff5277b8ff2ab5afde26b10a1972ab9bd4641b930b5199\n---\n"
     }
    ]
   },
@@ -145,31 +349,62 @@
    "id": "helper",
    "name": "helper",
    "archetype": "provider",
-   "kind": "provider",
-   "symbol": "provider",
    "form": "cell",
-   "label": "helper",
    "parent": null,
-   "avatar": null,
-   "refused": false,
    "modes": [
     "topology"
    ],
+   "header": {
+    "kinds": [
+     "provider"
+    ],
+    "symbol": "provider",
+    "avatar": null,
+    "label": "helper",
+    "line": "",
+    "within": [],
+    "known_as": [],
+    "thought": "helper/count/thought",
+    "refused": "helper/count/refused"
+   },
    "panels": [
     {
-     "kind": "fields",
-     "title": "fields",
-     "symbol": "fields",
+     "kind": "holds",
+     "title": "holds",
      "more": 0,
      "rows": [
       {
-       "id": "helper/fields/command",
+       "id": "helper/holds/api",
+       "name": "api",
+       "key": false
+      },
+      {
+       "id": "helper/holds/command",
        "name": "command",
-       "value": "stand",
-       "key": false,
-       "expr": null
+       "key": false
       }
      ]
+    }
+   ],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "helper/changed"
+   },
+   "sockets": [
+    {
+     "id": "helper#asks:west",
+     "kind": "asks",
+     "side": "WEST",
+     "row": null,
+     "order": 0,
+     "plugged": true
+    }
+   ],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\napi: command\ncommand: stand\n---\n"
     }
    ]
   },
@@ -177,106 +412,258 @@
    "id": "order",
    "name": "order",
    "archetype": "page",
-   "kind": "page",
-   "symbol": "page",
    "form": "cell",
-   "label": "order",
    "parent": null,
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "page"
+    ],
+    "symbol": "page",
+    "avatar": null,
+    "label": "order",
+    "line": "The den refuses payments that w...",
+    "within": [],
+    "known_as": [],
+    "thought": "order/count/thought",
+    "refused": "order/count/refused"
+   },
+   "panels": [
+    {
+     "kind": "text",
+     "id": "order/text",
+     "body": "The den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from now on and without anyone being asked again. A page listens with a watch entry: on refusal, when true, set a field.",
+     "key": true
+    }
+   ],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "order/changed"
+   },
+   "sockets": [
+    {
+     "id": "order#heard:east",
+     "kind": "heard",
+     "side": "EAST",
+     "row": null,
+     "order": 0,
+     "plugged": true
+    }
+   ],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\n---\n"
+    },
+    {
+     "step": 1,
+     "source": "---\n---\nThe den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from now on and without anyone being asked again. A page listens with a watch entry: on refusal, when true, set a field.\n"
+    }
+   ]
   },
   {
    "id": "landlord-payment",
    "name": "landlord-payment",
    "archetype": "page",
-   "kind": "page",
-   "symbol": "page",
    "form": "cell",
-   "label": "landlord-payment",
    "parent": null,
-   "avatar": null,
-   "refused": true,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "page"
+    ],
+    "symbol": "page",
+    "avatar": null,
+    "label": "landlord-payment",
+    "line": "",
+    "within": [],
+    "known_as": [],
+    "thought": "landlord-payment/count/thought",
+    "refused": "landlord-payment/count/refused"
+   },
+   "panels": [
+    {
+     "kind": "when",
+     "title": "when",
+     "then": "then",
+     "rows": [],
+     "record": [
+      {
+       "id": "landlord-payment/record/refused",
+       "out": "landlord-payment/record/refused#refused:east",
+       "key": true
+      }
+     ]
+    }
+   ],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "landlord-payment/changed"
+   },
+   "sockets": [
+    {
+     "id": "landlord-payment/record/refused#refused:east",
+     "kind": "refused",
+     "side": "EAST",
+     "row": "landlord-payment/record/refused",
+     "order": 0,
+     "plugged": true
+    }
+   ],
+   "versions": []
   },
   {
    "id": "tailor-payment",
    "name": "tailor-payment",
    "archetype": "page",
-   "kind": "page",
-   "symbol": "page",
    "form": "cell",
-   "label": "tailor-payment",
    "parent": null,
-   "avatar": null,
-   "refused": true,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "page"
+    ],
+    "symbol": "page",
+    "avatar": null,
+    "label": "tailor-payment",
+    "line": "",
+    "within": [],
+    "known_as": [],
+    "thought": "tailor-payment/count/thought",
+    "refused": "tailor-payment/count/refused"
+   },
+   "panels": [
+    {
+     "kind": "when",
+     "title": "when",
+     "then": "then",
+     "rows": [],
+     "record": [
+      {
+       "id": "tailor-payment/record/refused",
+       "out": "tailor-payment/record/refused#refused:east",
+       "key": true
+      }
+     ]
+    }
+   ],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "tailor-payment/changed"
+   },
+   "sockets": [
+    {
+     "id": "tailor-payment/record/refused#refused:east",
+     "kind": "refused",
+     "side": "EAST",
+     "row": "tailor-payment/record/refused",
+     "order": 0,
+     "plugged": true
+    }
+   ],
+   "versions": []
   }
  ],
  "edges": [
   {
-   "id": "heard:order->keeper/hears/order:asks helper",
-   "kind": "heard",
-   "label": "heard",
-   "source": "order",
-   "sourceRow": null,
-   "target": "keeper",
-   "targetRow": "keeper/hears/order:asks helper",
-   "modes": [
-    "dynamics",
-    "topology"
-   ]
-  },
-  {
-   "id": "plugs:keeper/plugs/asks:helper->helper",
-   "kind": "plugs",
-   "label": "asks",
+   "id": "asks:keeper/slot/asks:helper#asks:south->helper#asks:west",
+   "kind": "asks",
+   "signal": "asks",
    "source": "keeper",
-   "sourceRow": "keeper/plugs/asks:helper",
+   "sourceSocket": "keeper/slot/asks:helper#asks:south",
    "target": "helper",
-   "targetRow": null,
+   "targetSocket": "helper#asks:west",
    "modes": [
     "topology"
    ]
   },
   {
-   "id": "turned-away:landlord-payment->den/rules/page.amount <= space.cash - 20",
-   "kind": "turned-away",
-   "label": "turned away",
-   "source": "landlord-payment",
-   "sourceRow": null,
-   "target": "den",
-   "targetRow": "den/rules/page.amount <= space.cash - 20",
+   "id": "heard:order#heard:east->keeper/when/order:asks helper#heard:west",
+   "kind": "heard",
+   "signal": "heard",
+   "source": "order",
+   "sourceSocket": "order#heard:east",
+   "target": "keeper",
+   "targetSocket": "keeper/when/order:asks helper#heard:west",
    "modes": [
     "dynamics",
     "topology"
    ]
   },
   {
-   "id": "turned-away:tailor-payment->den/rules/page.amount <= space.cash - 20",
+   "id": "turned-away:landlord-payment/record/refused#refused:east->den/bound/page.amount <= space.cash - 20#refused:west",
    "kind": "turned-away",
-   "label": "turned away",
-   "source": "tailor-payment",
-   "sourceRow": null,
+   "signal": "refused",
+   "source": "landlord-payment",
+   "sourceSocket": "landlord-payment/record/refused#refused:east",
    "target": "den",
-   "targetRow": "den/rules/page.amount <= space.cash - 20",
+   "targetSocket": "den/bound/page.amount <= space.cash - 20#refused:west",
+   "modes": [
+    "dynamics",
+    "topology"
+   ]
+  },
+  {
+   "id": "turned-away:tailor-payment/record/refused#refused:east->den/bound/page.amount <= space.cash - 20#refused:west",
+   "kind": "turned-away",
+   "signal": "refused",
+   "source": "tailor-payment",
+   "sourceSocket": "tailor-payment/record/refused#refused:east",
+   "target": "den",
+   "targetSocket": "den/bound/page.amount <= space.cash - 20#refused:west",
    "modes": [
     "dynamics",
     "topology"
    ]
   }
+ ],
+ "values": {
+  "den/changed": "changed at step 1",
+  "den/count/refused": "0",
+  "den/count/thought": "0",
+  "den/holds/cash": "80",
+  "den/holds/turned_away": "0",
+  "den/members": "1 member",
+  "den/slot/hands": "1 rule",
+  "den/slot/shows": "every member",
+  "helper/changed": "changed at step 1",
+  "helper/count/refused": "0",
+  "helper/count/thought": "0",
+  "helper/holds/api": "command",
+  "helper/holds/command": "stand",
+  "keeper/changed": "changed at step 1",
+  "keeper/count/refused": "0",
+  "keeper/count/thought": "0",
+  "keeper/record/watch:den": "made den listen for a write turned away",
+  "keeper/slot/asks:helper": "helper",
+  "keeper/slot/writes:den": "den",
+  "landlord-payment/changed": "changed at step 5",
+  "landlord-payment/count/refused": "0",
+  "landlord-payment/count/thought": "0",
+  "landlord-payment/record/refused": "was turned away once",
+  "order/changed": "changed at step 1",
+  "order/count/refused": "0",
+  "order/count/thought": "0",
+  "order/text": "The den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from...",
+  "tailor-payment/changed": "changed at step 7",
+  "tailor-payment/count/refused": "0",
+  "tailor-payment/count/thought": "0",
+  "tailor-payment/record/refused": "was turned away once"
+ },
+ "arrangements": [
+  []
  ],
  "steps": [
   {
@@ -284,20 +671,34 @@
    "kind": "room",
    "symbol": "space",
    "caption": "The room as given.",
+   "arrangement": 0,
    "appear": [
     "helper",
-    "helper/fields/command",
+    "helper/holds/api",
+    "helper/holds/command",
     "den",
-    "den/fields/cash",
-    "den/fields/turned_away",
-    "den/rules/page.amount <= space.cash - 20",
+    "den/holds/cash",
+    "den/holds/turned_away",
+    "den/bound/page.amount <= space.cash - 20",
     "order",
     "keeper",
-    "keeper/hears/order:asks helper",
-    "keeper/plugs/asks:helper",
-    "keeper/plugs/writes:den",
-    "heard:order->keeper/hears/order:asks helper",
-    "plugs:keeper/plugs/asks:helper->helper"
+    "keeper/when/order:asks helper",
+    "keeper/bound/from:den:page.amount <= space.cash - 20",
+    "den/slot/hands",
+    "den/slot/shows",
+    "keeper/slot/asks:helper",
+    "keeper/slot/writes:den",
+    "asks:keeper/slot/asks:helper#asks:south->helper#asks:west",
+    "heard:order#heard:east->keeper/when/order:asks helper#heard:west",
+    "den/bound/page.amount <= space.cash - 20#refused:west",
+    "keeper/when/order:asks helper#heard:west",
+    "keeper/when/order:asks helper#wrote:east",
+    "den/slot/hands#hands:south",
+    "den/slot/shows#shows:south",
+    "keeper/slot/asks:helper#asks:south",
+    "keeper/slot/writes:den#writes:south",
+    "helper#asks:west",
+    "order#heard:east"
    ],
    "change": [],
    "subject": [],
@@ -308,11 +709,19 @@
    "kind": "write",
    "symbol": "kept",
    "caption": "alice writes order.",
-   "appear": [],
-   "change": [],
+   "arrangement": 0,
+   "appear": [
+    "order/text"
+   ],
+   "change": [
+    {
+     "id": "order/changed",
+     "value": "changed at step 2"
+    }
+   ],
    "subject": [
     {
-     "id": "order",
+     "id": "order/text",
      "pen": "kept"
     }
    ],
@@ -323,11 +732,29 @@
    "kind": "answer",
    "symbol": "thought",
    "caption": "keeper reads order and answers.",
+   "arrangement": 0,
    "appear": [],
-   "change": [],
+   "change": [
+    {
+     "id": "keeper/count/thought",
+     "value": "1"
+    },
+    {
+     "id": "keeper/changed",
+     "value": "changed at step 3"
+    }
+   ],
    "subject": [
     {
      "id": "keeper",
+     "pen": "thought"
+    },
+    {
+     "id": "keeper/slot/asks:helper",
+     "pen": "thought"
+    },
+    {
+     "id": "keeper/when/order:asks helper",
      "pen": "thought"
     }
    ],
@@ -338,13 +765,27 @@
    "kind": "watch",
    "symbol": "hears",
    "caption": "keeper makes den listen for a write turned away.",
+   "arrangement": 0,
    "appear": [
-    "den/hears/refusal:sets turned_away"
+    "den/when/refusal:sets turned_away",
+    "keeper/record/watch:den",
+    "den/when/refusal:sets turned_away#heard:west",
+    "den/when/refusal:sets turned_away#wrote:east",
+    "keeper/record/watch:den#wrote:east"
    ],
-   "change": [],
+   "change": [
+    {
+     "id": "den/changed",
+     "value": "changed at step 4"
+    }
+   ],
    "subject": [
     {
-     "id": "den/hears/refusal:sets turned_away",
+     "id": "keeper/record/watch:den",
+     "pen": "added"
+    },
+    {
+     "id": "den/when/refusal:sets turned_away",
      "pen": "added"
     }
    ],
@@ -354,23 +795,39 @@
    "i": 4,
    "kind": "refused",
    "symbol": "refusal",
-   "caption": "landlord-payment is turned away: it breaks den's rule page.amount <= space.cash - 20.",
+   "caption": "landlord-payment is turned away: it breaks a rule den hands down.",
+   "arrangement": 0,
    "appear": [
     "landlord-payment",
-    "turned-away:landlord-payment->den/rules/page.amount <= space.cash - 20"
+    "landlord-payment/record/refused",
+    "turned-away:landlord-payment/record/refused#refused:east->den/bound/page.amount <= space.cash - 20#refused:west",
+    "landlord-payment/record/refused#refused:east"
    ],
-   "change": [],
+   "change": [
+    {
+     "id": "landlord-payment/count/refused",
+     "value": "1"
+    }
+   ],
    "subject": [
     {
      "id": "landlord-payment",
      "pen": "refused"
     },
     {
-     "id": "turned-away:landlord-payment->den/rules/page.amount <= space.cash - 20",
+     "id": "landlord-payment/record/refused",
      "pen": "refused"
     },
     {
-     "id": "den/rules/page.amount <= space.cash - 20",
+     "id": "turned-away:landlord-payment/record/refused#refused:east->den/bound/page.amount <= space.cash - 20#refused:west",
+     "pen": "refused"
+    },
+    {
+     "id": "den/bound/page.amount <= space.cash - 20",
+     "pen": "refused"
+    },
+    {
+     "id": "den/bound/page.amount <= space.cash - 20#refused:west",
      "pen": "refused"
     }
    ],
@@ -381,20 +838,25 @@
    "kind": "reflex",
    "symbol": "reflex",
    "caption": "den counts it by itself: turned_away is now 1.",
+   "arrangement": 0,
    "appear": [],
    "change": [
     {
-     "row": "den/fields/turned_away",
+     "id": "den/holds/turned_away",
      "value": "1"
+    },
+    {
+     "id": "den/changed",
+     "value": "changed at step 6"
     }
    ],
    "subject": [
     {
-     "id": "den/fields/turned_away",
+     "id": "den/holds/turned_away",
      "pen": "heard"
     },
     {
-     "id": "den/hears/refusal:sets turned_away",
+     "id": "den/when/refusal:sets turned_away",
      "pen": "heard"
     }
    ],
@@ -404,23 +866,39 @@
    "i": 6,
    "kind": "refused",
    "symbol": "refusal",
-   "caption": "tailor-payment is turned away: it breaks den's rule page.amount <= space.cash - 20.",
+   "caption": "tailor-payment is turned away: it breaks a rule den hands down.",
+   "arrangement": 0,
    "appear": [
     "tailor-payment",
-    "turned-away:tailor-payment->den/rules/page.amount <= space.cash - 20"
+    "tailor-payment/record/refused",
+    "turned-away:tailor-payment/record/refused#refused:east->den/bound/page.amount <= space.cash - 20#refused:west",
+    "tailor-payment/record/refused#refused:east"
    ],
-   "change": [],
+   "change": [
+    {
+     "id": "tailor-payment/count/refused",
+     "value": "1"
+    }
+   ],
    "subject": [
     {
      "id": "tailor-payment",
      "pen": "refused"
     },
     {
-     "id": "turned-away:tailor-payment->den/rules/page.amount <= space.cash - 20",
+     "id": "tailor-payment/record/refused",
      "pen": "refused"
     },
     {
-     "id": "den/rules/page.amount <= space.cash - 20",
+     "id": "turned-away:tailor-payment/record/refused#refused:east->den/bound/page.amount <= space.cash - 20#refused:west",
+     "pen": "refused"
+    },
+    {
+     "id": "den/bound/page.amount <= space.cash - 20",
+     "pen": "refused"
+    },
+    {
+     "id": "den/bound/page.amount <= space.cash - 20#refused:west",
      "pen": "refused"
     }
    ],
@@ -431,20 +909,25 @@
    "kind": "reflex",
    "symbol": "reflex",
    "caption": "den counts it by itself: turned_away is now 2.",
+   "arrangement": 0,
    "appear": [],
    "change": [
     {
-     "row": "den/fields/turned_away",
+     "id": "den/holds/turned_away",
      "value": "2"
+    },
+    {
+     "id": "den/changed",
+     "value": "changed at step 8"
     }
    ],
    "subject": [
     {
-     "id": "den/fields/turned_away",
+     "id": "den/holds/turned_away",
      "pen": "heard"
     },
     {
-     "id": "den/hears/refusal:sets turned_away",
+     "id": "den/when/refusal:sets turned_away",
      "pen": "heard"
     }
    ],

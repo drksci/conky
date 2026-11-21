@@ -14,76 +14,241 @@
    "id": "clerk",
    "name": "clerk",
    "archetype": "character",
-   "kind": "space \u00b7 character",
-   "symbol": "character",
    "form": "space",
-   "label": "clerk",
    "parent": null,
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
+   "header": {
+    "kinds": [
+     "space",
+     "character"
+    ],
+    "symbol": "character",
+    "avatar": null,
+    "label": "clerk",
+    "line": "",
+    "within": [],
+    "known_as": [],
+    "thought": "clerk/count/thought",
+    "refused": "clerk/count/refused"
+   },
    "panels": [
     {
-     "kind": "fields",
-     "title": "fields",
-     "symbol": "fields",
+     "kind": "holds",
+     "title": "holds",
      "more": 0,
      "rows": [
       {
-       "id": "clerk/fields/heard",
+       "id": "clerk/holds/heard",
        "name": "heard",
-       "value": "",
-       "key": true,
-       "expr": null
+       "key": true
       },
       {
-       "id": "clerk/fields/said",
+       "id": "clerk/holds/said",
        "name": "said",
-       "value": "",
-       "key": true,
-       "expr": null
+       "key": true
       }
      ]
     },
     {
-     "kind": "hears",
-     "title": "listens for",
-     "symbol": "hears",
-     "more": 0,
+     "kind": "when",
+     "title": "when",
+     "then": "then",
      "rows": [
       {
-       "id": "clerk/hears/within:sets heard",
-       "name": "a page put in it",
-       "value": "sets heard",
-       "key": true,
-       "expr": null
+       "id": "clerk/when/within:sets heard",
+       "when": "a page written within it",
+       "expr": null,
+       "then": [
+        {
+         "words": "sets heard",
+         "expr": {
+          "reads": [
+           "other_text"
+          ],
+          "body": "other_text",
+          "lines": [
+           "other_text"
+          ]
+         }
+        }
+       ],
+       "in": "clerk/when/within:sets heard#heard:west",
+       "out": "clerk/when/within:sets heard#wrote:east",
+       "key": true
       },
       {
-       "id": "clerk/hears/clerk:asks helper",
-       "name": "clerk",
-       "value": "asks helper",
-       "key": false,
-       "expr": null
+       "id": "clerk/when/clerk:asks helper",
+       "when": "its own page changing",
+       "expr": {
+        "reads": [
+         "page"
+        ],
+        "body": "page.heard != ''",
+        "lines": [
+         "page.heard != ''"
+        ]
+       },
+       "then": [
+        {
+         "words": "asks helper, puts the answer in said",
+         "expr": null
+        }
+       ],
+       "in": "clerk/when/clerk:asks helper#heard:west",
+       "out": "clerk/when/clerk:asks helper#wrote:east",
+       "key": true
       }
-     ]
+     ],
+     "record": []
+    }
+   ],
+   "footer": {
+    "slots": [
+     {
+      "id": "clerk/slot/asks:helper",
+      "slot": "asks",
+      "label": "asks",
+      "filled": true,
+      "socket": "clerk/slot/asks:helper#asks:south",
+      "expr": null,
+      "key": true
+     },
+     {
+      "id": "clerk/slot/writes:",
+      "slot": "writes",
+      "label": "writes into",
+      "filled": false,
+      "socket": "clerk/slot/writes:#writes:south",
+      "expr": null,
+      "key": false
+     },
+     {
+      "id": "clerk/slot/hands",
+      "slot": "hands",
+      "label": "hands down",
+      "filled": false,
+      "socket": "clerk/slot/hands#hands:south",
+      "expr": null,
+      "key": false
+     },
+     {
+      "id": "clerk/slot/shows",
+      "slot": "shows",
+      "label": "shows",
+      "filled": false,
+      "socket": "clerk/slot/shows#shows:south",
+      "expr": null,
+      "key": true
+     }
+    ],
+    "members": "clerk/members",
+    "changed": "clerk/changed"
+   },
+   "sockets": [
+    {
+     "id": "clerk/when/within:sets heard#heard:west",
+     "kind": "heard",
+     "side": "WEST",
+     "row": "clerk/when/within:sets heard",
+     "order": 0,
+     "plugged": false
     },
     {
-     "kind": "plugs",
-     "title": "reaches",
-     "symbol": "connector",
-     "more": 0,
-     "rows": [
-      {
-       "id": "clerk/plugs/asks:helper",
-       "name": "asks",
-       "value": "helper",
-       "key": false,
-       "expr": null
-      }
-     ]
+     "id": "clerk/when/clerk:asks helper#heard:west",
+     "kind": "heard",
+     "side": "WEST",
+     "row": "clerk/when/clerk:asks helper",
+     "order": 1,
+     "plugged": false
+    },
+    {
+     "id": "clerk/when/within:sets heard#wrote:east",
+     "kind": "wrote",
+     "side": "EAST",
+     "row": "clerk/when/within:sets heard",
+     "order": 2,
+     "plugged": false
+    },
+    {
+     "id": "clerk/when/clerk:asks helper#wrote:east",
+     "kind": "wrote",
+     "side": "EAST",
+     "row": "clerk/when/clerk:asks helper",
+     "order": 3,
+     "plugged": false
+    },
+    {
+     "id": "clerk/slot/asks:helper#asks:south",
+     "kind": "asks",
+     "side": "SOUTH",
+     "row": "clerk/slot/asks:helper",
+     "order": 4,
+     "plugged": true
+    },
+    {
+     "id": "clerk/slot/writes:#writes:south",
+     "kind": "writes",
+     "side": "SOUTH",
+     "row": "clerk/slot/writes:",
+     "order": 5,
+     "plugged": false
+    },
+    {
+     "id": "clerk/slot/hands#hands:south",
+     "kind": "hands",
+     "side": "SOUTH",
+     "row": "clerk/slot/hands",
+     "order": 6,
+     "plugged": false
+    },
+    {
+     "id": "clerk/slot/shows#shows:south",
+     "kind": "shows",
+     "side": "SOUTH",
+     "row": "clerk/slot/shows",
+     "order": 7,
+     "plugged": false
+    }
+   ],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: ''\nsaid: ''\n---\n"
+    },
+    {
+     "step": 2,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s parcel is on shelf 12.\n\n  '\nsaid: ''\n---\n"
+    },
+    {
+     "step": 3,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s parcel is on shelf 12.\n\n  '\nsaid: 'Noted: Mrs Okafor''s parcel is on shelf 12, as the desk note says.'\nsaid_asked: 0df9bdf0c3f3ec19aee5cc002156e3fa1213eff0a83ff98a156efac488f074ef\n---\n"
+    },
+    {
+     "step": 5,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: 'Noted: Mrs Okafor''s parcel is on shelf 12, as the desk note says.'\nsaid_asked: 0df9bdf0c3f3ec19aee5cc002156e3fa1213eff0a83ff98a156efac488f074ef\n---\n"
+    },
+    {
+     "step": 6,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: I can't tell from the desk. Nothing here records the morning post arriving. My notes only mention Mrs Okafor's parcel on shelf 12. If the post has come, it should be logged or left in the tray, so check there or ask whoever handles incoming mail.\nsaid_asked: 9f869b03292045922594d72f306913548e300e07393542ea7211f65a558d28e0\n---\n"
+    },
+    {
+     "step": 8,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Is the lamp lit?\n\n  '\nsaid: I can't tell from the desk. Nothing here records the morning post arriving. My notes only mention Mrs Okafor's parcel on shelf 12. If the post has come, it should be logged or left in the tray, so check there or ask whoever handles incoming mail.\nsaid_asked: 9f869b03292045922594d72f306913548e300e07393542ea7211f65a558d28e0\n---\n"
+    },
+    {
+     "step": 9,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Is the lamp lit?\n\n  '\nsaid: I can't tell from the desk. My notes cover Mrs Okafor's parcel on shelf 12 and the morning post, but nothing about the lamp. If you can see it, tell me whether it's lit and I'll note it. Otherwise, someone will need to check it.\nsaid_asked: dbe0f77053419117a14fb513570a25c048ecd01eee5335390ceb1c41285fdaa5\n---\n"
+    },
+    {
+     "step": 11,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Which shelf is Mrs Okafor''s parcel on?\n\n  '\nsaid: I can't tell from the desk. My notes cover Mrs Okafor's parcel on shelf 12 and the morning post, but nothing about the lamp. If you can see it, tell me whether it's lit and I'll note it. Otherwise, someone will need to check it.\nsaid_asked: dbe0f77053419117a14fb513570a25c048ecd01eee5335390ceb1c41285fdaa5\n---\n"
+    },
+    {
+     "step": 12,
+     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Which shelf is Mrs Okafor''s parcel on?\n\n  '\nsaid: Mrs Okafor's parcel is on **shelf 12**, according to note-1.\nsaid_asked: 6eb0c558662ad882d39ef9df850a27c38f55f54d3341e5cd68b730e63ee3d88c\n---\n"
     }
    ]
   },
@@ -91,116 +256,299 @@
    "id": "note-1",
    "name": "note-1",
    "archetype": "page",
-   "kind": "page",
-   "symbol": "page",
    "form": "cell",
-   "label": "note-1",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "page"
+    ],
+    "symbol": "page",
+    "avatar": null,
+    "label": "note-1",
+    "line": "Mrs Okafor's parcel is on shelf...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-1/count/thought",
+    "refused": "note-1/count/refused"
+   },
+   "panels": [
+    {
+     "kind": "text",
+     "id": "note-1/text",
+     "body": "Mrs Okafor's parcel is on shelf 12.",
+     "key": true
+    }
+   ],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-1/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 1,
+     "source": "---\nwithin: clerk\n---\nMrs Okafor's parcel is on shelf 12.\n"
+    }
+   ]
   },
   {
    "id": "note-2",
    "name": "note-2",
    "archetype": "page",
-   "kind": "page",
-   "symbol": "page",
    "form": "cell",
-   "label": "note-2",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "page"
+    ],
+    "symbol": "page",
+    "avatar": null,
+    "label": "note-2",
+    "line": "Has the morning post come?",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-2/count/thought",
+    "refused": "note-2/count/refused"
+   },
+   "panels": [
+    {
+     "kind": "text",
+     "id": "note-2/text",
+     "body": "Has the morning post come?",
+     "key": true
+    }
+   ],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-2/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 4,
+     "source": "---\nwithin: clerk\n---\nHas the morning post come?\n"
+    }
+   ]
   },
   {
    "id": "note-3",
    "name": "note-3",
    "archetype": "page",
-   "kind": "page",
-   "symbol": "page",
    "form": "cell",
-   "label": "note-3",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "page"
+    ],
+    "symbol": "page",
+    "avatar": null,
+    "label": "note-3",
+    "line": "Is the lamp lit?",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-3/count/thought",
+    "refused": "note-3/count/refused"
+   },
+   "panels": [
+    {
+     "kind": "text",
+     "id": "note-3/text",
+     "body": "Is the lamp lit?",
+     "key": true
+    }
+   ],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-3/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 7,
+     "source": "---\nwithin: clerk\n---\nIs the lamp lit?\n"
+    }
+   ]
   },
   {
    "id": "note-4",
    "name": "note-4",
    "archetype": "page",
-   "kind": "page",
-   "symbol": "page",
    "form": "cell",
-   "label": "note-4",
    "parent": "clerk",
-   "avatar": null,
-   "refused": false,
    "modes": [
     "dynamics",
     "topology"
    ],
-   "panels": []
+   "header": {
+    "kinds": [
+     "page"
+    ],
+    "symbol": "page",
+    "avatar": null,
+    "label": "note-4",
+    "line": "Which shelf is Mrs Okafor's par...",
+    "within": [
+     "clerk"
+    ],
+    "known_as": [],
+    "thought": "note-4/count/thought",
+    "refused": "note-4/count/refused"
+   },
+   "panels": [
+    {
+     "kind": "text",
+     "id": "note-4/text",
+     "body": "Which shelf is Mrs Okafor's parcel on?",
+     "key": true
+    }
+   ],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "note-4/changed"
+   },
+   "sockets": [],
+   "versions": [
+    {
+     "step": 10,
+     "source": "---\nwithin: clerk\n---\nWhich shelf is Mrs Okafor's parcel on?\n"
+    }
+   ]
   },
   {
    "id": "helper",
    "name": "helper",
    "archetype": "provider",
-   "kind": "provider",
-   "symbol": "provider",
    "form": "cell",
-   "label": "helper",
    "parent": null,
-   "avatar": null,
-   "refused": false,
    "modes": [
     "topology"
    ],
+   "header": {
+    "kinds": [
+     "provider"
+    ],
+    "symbol": "provider",
+    "avatar": null,
+    "label": "helper",
+    "line": "",
+    "within": [],
+    "known_as": [],
+    "thought": "helper/count/thought",
+    "refused": "helper/count/refused"
+   },
    "panels": [
     {
-     "kind": "fields",
-     "title": "fields",
-     "symbol": "fields",
+     "kind": "holds",
+     "title": "holds",
      "more": 0,
      "rows": [
       {
-       "id": "helper/fields/command",
+       "id": "helper/holds/api",
+       "name": "api",
+       "key": false
+      },
+      {
+       "id": "helper/holds/command",
        "name": "command",
-       "value": "stand",
-       "key": false,
-       "expr": null
+       "key": false
       }
      ]
+    }
+   ],
+   "footer": {
+    "slots": [],
+    "members": null,
+    "changed": "helper/changed"
+   },
+   "sockets": [
+    {
+     "id": "helper#asks:west",
+     "kind": "asks",
+     "side": "WEST",
+     "row": null,
+     "order": 0,
+     "plugged": true
+    }
+   ],
+   "versions": [
+    {
+     "step": 0,
+     "source": "---\napi: command\ncommand: stand\n---\n"
     }
    ]
   }
  ],
  "edges": [
   {
-   "id": "plugs:clerk/plugs/asks:helper->helper",
-   "kind": "plugs",
-   "label": "asks",
+   "id": "asks:clerk/slot/asks:helper#asks:south->helper#asks:west",
+   "kind": "asks",
+   "signal": "asks",
    "source": "clerk",
-   "sourceRow": "clerk/plugs/asks:helper",
+   "sourceSocket": "clerk/slot/asks:helper#asks:south",
    "target": "helper",
-   "targetRow": null,
+   "targetSocket": "helper#asks:west",
    "modes": [
     "topology"
    ]
   }
+ ],
+ "values": {
+  "clerk/changed": "changed at step 1",
+  "clerk/count/refused": "0",
+  "clerk/count/thought": "0",
+  "clerk/holds/heard": "",
+  "clerk/holds/said": "",
+  "clerk/members": "0 members",
+  "clerk/slot/asks:helper": "helper",
+  "clerk/slot/hands": "nothing",
+  "clerk/slot/shows": "every member",
+  "clerk/slot/writes:": "no space named",
+  "helper/changed": "changed at step 1",
+  "helper/count/refused": "0",
+  "helper/count/thought": "0",
+  "helper/holds/api": "command",
+  "helper/holds/command": "stand",
+  "note-1/changed": "changed at step 2",
+  "note-1/count/refused": "0",
+  "note-1/count/thought": "0",
+  "note-1/text": "Mrs Okafor's parcel is on shelf 12.",
+  "note-2/changed": "changed at step 5",
+  "note-2/count/refused": "0",
+  "note-2/count/thought": "0",
+  "note-2/text": "Has the morning post come?",
+  "note-3/changed": "changed at step 8",
+  "note-3/count/refused": "0",
+  "note-3/count/thought": "0",
+  "note-3/text": "Is the lamp lit?",
+  "note-4/changed": "changed at step 11",
+  "note-4/count/refused": "0",
+  "note-4/count/thought": "0",
+  "note-4/text": "Which shelf is Mrs Okafor's parcel on?"
+ },
+ "arrangements": [
+  []
  ],
  "steps": [
   {
@@ -208,17 +556,30 @@
    "kind": "room",
    "symbol": "space",
    "caption": "The room as given.",
+   "arrangement": 0,
    "appear": [
     "helper",
-    "helper/fields/command",
+    "helper/holds/api",
+    "helper/holds/command",
     "clerk",
-    "clerk/fields/heard",
-    "clerk/fields/said",
-    "clerk/hears/within:sets heard",
-    "clerk/hears/clerk:asks helper",
-    "clerk/plugs/asks:helper",
-    "note-1",
-    "plugs:clerk/plugs/asks:helper->helper"
+    "clerk/holds/heard",
+    "clerk/holds/said",
+    "clerk/when/within:sets heard",
+    "clerk/when/clerk:asks helper",
+    "clerk/slot/asks:helper",
+    "clerk/slot/writes:",
+    "clerk/slot/hands",
+    "clerk/slot/shows",
+    "asks:clerk/slot/asks:helper#asks:south->helper#asks:west",
+    "clerk/when/within:sets heard#heard:west",
+    "clerk/when/within:sets heard#wrote:east",
+    "clerk/when/clerk:asks helper#heard:west",
+    "clerk/when/clerk:asks helper#wrote:east",
+    "clerk/slot/asks:helper#asks:south",
+    "clerk/slot/writes:#writes:south",
+    "clerk/slot/hands#hands:south",
+    "clerk/slot/shows#shows:south",
+    "helper#asks:west"
    ],
    "change": [],
    "subject": [],
@@ -226,49 +587,21 @@
   },
   {
    "i": 1,
-   "kind": "reflex",
-   "symbol": "reflex",
-   "caption": "clerk sets heard by itself: Mrs Okafor's parcel is on shelf 12.",
-   "appear": [],
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice keeps note-1 in clerk.",
+   "arrangement": 0,
+   "appear": [
+    "note-1",
+    "note-1/text"
+   ],
    "change": [
     {
-     "row": "clerk/fields/heard",
-     "value": "Mrs Okafor's parcel is on shelf..."
+     "id": "clerk/members",
+     "value": "1 member"
     }
    ],
    "subject": [
-    {
-     "id": "clerk/fields/heard",
-     "pen": "heard"
-    },
-    {
-     "id": "clerk/hears/within:sets heard",
-     "pen": "heard"
-    }
-   ],
-   "dim": []
-  },
-  {
-   "i": 2,
-   "kind": "answer",
-   "symbol": "thought",
-   "caption": "clerk is shown 1 of its 1 page, and answers.",
-   "appear": [],
-   "change": [
-    {
-     "row": "clerk/fields/said",
-     "value": "Noted: Mrs Okafor's parcel is o..."
-    }
-   ],
-   "subject": [
-    {
-     "id": "clerk",
-     "pen": "thought"
-    },
-    {
-     "id": "clerk/fields/said",
-     "pen": "thought"
-    },
     {
      "id": "note-1",
      "pen": "kept"
@@ -277,17 +610,74 @@
    "dim": []
   },
   {
-   "i": 3,
-   "kind": "write",
-   "symbol": "kept",
-   "caption": "alice keeps note-2 in clerk.",
-   "appear": [
-    "note-2"
+   "i": 2,
+   "kind": "reflex",
+   "symbol": "reflex",
+   "caption": "clerk sets heard by itself: Mrs Okafor's parcel is on shelf 12.",
+   "arrangement": 0,
+   "appear": [],
+   "change": [
+    {
+     "id": "clerk/holds/heard",
+     "value": "Mrs Okafor's parcel is on shelf 12."
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 3"
+    }
    ],
-   "change": [],
    "subject": [
     {
-     "id": "note-2",
+     "id": "clerk/holds/heard",
+     "pen": "heard"
+    },
+    {
+     "id": "clerk/when/within:sets heard",
+     "pen": "heard"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 3,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "clerk is shown 1 of its 1 page, and answers.",
+   "arrangement": 0,
+   "appear": [],
+   "change": [
+    {
+     "id": "clerk/count/thought",
+     "value": "1"
+    },
+    {
+     "id": "clerk/holds/said",
+     "value": "Noted: Mrs Okafor's parcel is on shelf 12, as the desk note says."
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 4"
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/slot/asks:helper",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/when/clerk:asks helper",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/holds/said",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/slot/shows",
      "pen": "kept"
     }
    ],
@@ -295,53 +685,21 @@
   },
   {
    "i": 4,
-   "kind": "reflex",
-   "symbol": "reflex",
-   "caption": "clerk sets heard by itself: Has the morning post come?",
-   "appear": [],
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice keeps note-2 in clerk.",
+   "arrangement": 0,
+   "appear": [
+    "note-2",
+    "note-2/text"
+   ],
    "change": [
     {
-     "row": "clerk/fields/heard",
-     "value": "Has the morning post come?"
+     "id": "clerk/members",
+     "value": "2 members"
     }
    ],
    "subject": [
-    {
-     "id": "clerk/fields/heard",
-     "pen": "heard"
-    },
-    {
-     "id": "clerk/hears/within:sets heard",
-     "pen": "heard"
-    }
-   ],
-   "dim": []
-  },
-  {
-   "i": 5,
-   "kind": "answer",
-   "symbol": "thought",
-   "caption": "clerk is shown 2 of its 2 pages, and answers.",
-   "appear": [],
-   "change": [
-    {
-     "row": "clerk/fields/said",
-     "value": "I can't tell from the desk. Not..."
-    }
-   ],
-   "subject": [
-    {
-     "id": "clerk",
-     "pen": "thought"
-    },
-    {
-     "id": "clerk/fields/said",
-     "pen": "thought"
-    },
-    {
-     "id": "note-1",
-     "pen": "kept"
-    },
     {
      "id": "note-2",
      "pen": "kept"
@@ -350,17 +708,74 @@
    "dim": []
   },
   {
-   "i": 6,
-   "kind": "write",
-   "symbol": "kept",
-   "caption": "alice keeps note-3 in clerk.",
-   "appear": [
-    "note-3"
+   "i": 5,
+   "kind": "reflex",
+   "symbol": "reflex",
+   "caption": "clerk sets heard by itself: Has the morning post come?",
+   "arrangement": 0,
+   "appear": [],
+   "change": [
+    {
+     "id": "clerk/holds/heard",
+     "value": "Has the morning post come?"
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 6"
+    }
    ],
-   "change": [],
    "subject": [
     {
-     "id": "note-3",
+     "id": "clerk/holds/heard",
+     "pen": "heard"
+    },
+    {
+     "id": "clerk/when/within:sets heard",
+     "pen": "heard"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 6,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "clerk is shown 2 of its 2 pages, and answers.",
+   "arrangement": 0,
+   "appear": [],
+   "change": [
+    {
+     "id": "clerk/count/thought",
+     "value": "2"
+    },
+    {
+     "id": "clerk/holds/said",
+     "value": "I can't tell from the desk. Nothing here records the morning post arriving. My notes only mention..."
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 7"
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/slot/asks:helper",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/when/clerk:asks helper",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/holds/said",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/slot/shows",
      "pen": "kept"
     }
    ],
@@ -368,57 +783,21 @@
   },
   {
    "i": 7,
-   "kind": "reflex",
-   "symbol": "reflex",
-   "caption": "clerk sets heard by itself: Is the lamp lit?",
-   "appear": [],
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice keeps note-3 in clerk.",
+   "arrangement": 0,
+   "appear": [
+    "note-3",
+    "note-3/text"
+   ],
    "change": [
     {
-     "row": "clerk/fields/heard",
-     "value": "Is the lamp lit?"
+     "id": "clerk/members",
+     "value": "3 members"
     }
    ],
    "subject": [
-    {
-     "id": "clerk/fields/heard",
-     "pen": "heard"
-    },
-    {
-     "id": "clerk/hears/within:sets heard",
-     "pen": "heard"
-    }
-   ],
-   "dim": []
-  },
-  {
-   "i": 8,
-   "kind": "answer",
-   "symbol": "thought",
-   "caption": "clerk is shown 3 of its 3 pages, and answers.",
-   "appear": [],
-   "change": [
-    {
-     "row": "clerk/fields/said",
-     "value": "I can't tell from the desk. My..."
-    }
-   ],
-   "subject": [
-    {
-     "id": "clerk",
-     "pen": "thought"
-    },
-    {
-     "id": "clerk/fields/said",
-     "pen": "thought"
-    },
-    {
-     "id": "note-1",
-     "pen": "kept"
-    },
-    {
-     "id": "note-2",
-     "pen": "kept"
-    },
     {
      "id": "note-3",
      "pen": "kept"
@@ -427,17 +806,74 @@
    "dim": []
   },
   {
-   "i": 9,
-   "kind": "write",
-   "symbol": "kept",
-   "caption": "alice keeps note-4 in clerk.",
-   "appear": [
-    "note-4"
+   "i": 8,
+   "kind": "reflex",
+   "symbol": "reflex",
+   "caption": "clerk sets heard by itself: Is the lamp lit?",
+   "arrangement": 0,
+   "appear": [],
+   "change": [
+    {
+     "id": "clerk/holds/heard",
+     "value": "Is the lamp lit?"
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 9"
+    }
    ],
-   "change": [],
    "subject": [
     {
-     "id": "note-4",
+     "id": "clerk/holds/heard",
+     "pen": "heard"
+    },
+    {
+     "id": "clerk/when/within:sets heard",
+     "pen": "heard"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 9,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "clerk is shown 3 of its 3 pages, and answers.",
+   "arrangement": 0,
+   "appear": [],
+   "change": [
+    {
+     "id": "clerk/count/thought",
+     "value": "3"
+    },
+    {
+     "id": "clerk/holds/said",
+     "value": "I can't tell from the desk. My notes cover Mrs Okafor's parcel on shelf 12 and the morning post,..."
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 10"
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/slot/asks:helper",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/when/clerk:asks helper",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/holds/said",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/slot/shows",
      "pen": "kept"
     }
    ],
@@ -445,38 +881,76 @@
   },
   {
    "i": 10,
-   "kind": "reflex",
-   "symbol": "reflex",
-   "caption": "clerk sets heard by itself: Which shelf is Mrs Okafor's parcel on?",
-   "appear": [],
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice keeps note-4 in clerk.",
+   "arrangement": 0,
+   "appear": [
+    "note-4",
+    "note-4/text"
+   ],
    "change": [
     {
-     "row": "clerk/fields/heard",
-     "value": "Which shelf is Mrs Okafor's par..."
+     "id": "clerk/members",
+     "value": "4 members"
     }
    ],
    "subject": [
     {
-     "id": "clerk/fields/heard",
-     "pen": "heard"
-    },
-    {
-     "id": "clerk/hears/within:sets heard",
-     "pen": "heard"
+     "id": "note-4",
+     "pen": "kept"
     }
    ],
    "dim": []
   },
   {
    "i": 11,
-   "kind": "answer",
-   "symbol": "thought",
-   "caption": "clerk is shown 4 of its 4 pages, and answers.",
+   "kind": "reflex",
+   "symbol": "reflex",
+   "caption": "clerk sets heard by itself: Which shelf is Mrs Okafor's parcel on?",
+   "arrangement": 0,
    "appear": [],
    "change": [
     {
-     "row": "clerk/fields/said",
-     "value": "Mrs Okafor's parcel is on shelf..."
+     "id": "clerk/holds/heard",
+     "value": "Which shelf is Mrs Okafor's parcel on?"
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 12"
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk/holds/heard",
+     "pen": "heard"
+    },
+    {
+     "id": "clerk/when/within:sets heard",
+     "pen": "heard"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 12,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "clerk is shown 4 of its 4 pages, and answers.",
+   "arrangement": 0,
+   "appear": [],
+   "change": [
+    {
+     "id": "clerk/count/thought",
+     "value": "4"
+    },
+    {
+     "id": "clerk/holds/said",
+     "value": "Mrs Okafor's parcel is on shelf 12, according to note-1."
+    },
+    {
+     "id": "clerk/changed",
+     "value": "changed at step 13"
     }
    ],
    "subject": [
@@ -485,7 +959,15 @@
      "pen": "thought"
     },
     {
-     "id": "clerk/fields/said",
+     "id": "clerk/slot/asks:helper",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/when/clerk:asks helper",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/holds/said",
      "pen": "thought"
     },
     {
@@ -493,15 +975,7 @@
      "pen": "kept"
     },
     {
-     "id": "note-2",
-     "pen": "kept"
-    },
-    {
-     "id": "note-3",
-     "pen": "kept"
-    },
-    {
-     "id": "note-4",
+     "id": "clerk/slot/shows",
      "pen": "kept"
     }
    ],

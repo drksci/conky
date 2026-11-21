@@ -15,15 +15,15 @@ import re
 from pathlib import Path
 
 from conky import git as vault_git
-from conky.page import RELATIONS, Page, home, links, parse
+from conky.page import RELATIONS, Page, home, links, parse, spaces
 
 SCALARS = (str, int, float, bool)
 LONGEST = 60
 PROVIDER = {"api", "url", "model", "secret", "command"}
 
 
-def _page_at(vault: Path, commit: str, name: str) -> Page:
-    return parse(vault_git.run(["show", f"{commit}:pages/{name}.md"], vault))
+def _source_at(vault: Path, commit: str, name: str) -> str:
+    return vault_git.run(["show", f"{commit}:pages/{name}.md"], vault)
 
 
 def _scalar(value: object) -> object:
@@ -66,7 +66,10 @@ def _watch(old: Page, new: Page) -> list[dict]:
         {
             "on": str(entry.get("on")),
             "hears": None if entry.get("on") in RELATIONS else str(entry.get("on")),
+            "when": None if entry.get("when") is None else str(entry.get("when")),
             "sets": sorted(entry.get("set") or {}),
+            "set": {k: str(v) for k, v in sorted((entry.get("set") or {}).items())},
+            "into": (entry.get("ask") or {}).get("into"),
             "asks": "ask" in entry,
             "provider": (entry.get("ask") or {}).get("provider"),
             "writes": (entry.get("ask") or {}).get("writes"),
@@ -95,9 +98,11 @@ def _shown(message: str, known: set[str]) -> list[str]:
     return [name for name in SHOWN.findall(prompt) if name in known]
 
 
-def snapshot(name: str, page: Page) -> dict:
-    """The whole page after a write, compact: plain fields, rules, watch entries and `shows`."""
+def snapshot(name: str, page: Page, source: str = "") -> dict:
+    """The whole page after a write: plain fields, rules, watch entries, `shows`, the spaces it
+    is within, the phrases it is known by, its body, and its source as committed."""
     shows = page.fields.get("shows")
+    known = page.fields.get("known_as")
     return {
         "fields": {
             k: _scalar(v)
@@ -107,6 +112,10 @@ def snapshot(name: str, page: Page) -> dict:
         "rules": _rules(Page(), page),
         "watch": _watch(Page(), page),
         "shows": shows if isinstance(shows, dict) else None,
+        "within": spaces(page.within),
+        "known_as": [str(k) for k in known] if isinstance(known, list) else [],
+        "body": page.body,
+        "source": source,
     }
 
 
@@ -153,12 +162,13 @@ def timeline(vault: Path) -> list[dict]:
             }
         else:
             old = state.get(name, Page())
-            new = state[name] = _page_at(vault, commit, name)
+            source = _source_at(vault, commit, name)
+            new = state[name] = parse(source)
             event |= {
                 "within": home(new.within),
                 "role": classify(name, new),
                 "links": sorted(links(new)),
-                "state": snapshot(name, new),
+                "state": snapshot(name, new, source),
                 "rules": _rules(old, new),
                 "watch": _watch(old, new),
                 "fields": _fields(old, new),

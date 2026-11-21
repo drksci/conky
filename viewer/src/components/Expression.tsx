@@ -1,7 +1,10 @@
+import type { Expr } from "../graph";
+
 /** An expression shown as what it is: a small function of the names it reads, its body in
- * braces. The body is only split into tokens for display (names, operators, literals), never
- * parsed; it wraps at spaces, never inside a token. */
-const TOKEN = /("[^"]*"|'[^']*'|\d+(?:\.\d+)?|[A-Za-z_][A-Za-z0-9_]*|\s+|.)/g;
+ * braces, in the lines bench/expression.py laid it out in. The lines are printed as written
+ * (white-space: pre), never reflowed; each is only split into tokens to colour names,
+ * operators and literals. */
+const TOKEN = /("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|\d+(?:\.\d+)?|[A-Za-z_][A-Za-z0-9_]*|\s+|.)/g;
 
 function kind(token: string, next: string): string {
   if (/^\s+$/.test(token)) return "";
@@ -10,25 +13,50 @@ function kind(token: string, next: string): string {
   return "expr-op";
 }
 
-export function Expression({ reads, body }: { reads: string[]; body: string }) {
-  const tokens = body.match(TOKEN) ?? [];
+function Line({ text }: { text: string }) {
+  const tokens = text.match(TOKEN) ?? [];
   return (
-    <code className="expr">
-      <span className="expr-mark">ƒ</span>
-      <span className="expr-op">(</span>
-      {reads.map((name, k) => (
-        <span key={name}>
-          {k > 0 && <span className="expr-op">, </span>}
-          <span className="expr-name">{name}</span>
-        </span>
-      ))}
-      <span className="expr-op">) {"{"} </span>
+    <>
       {tokens.map((tok, k) => (
         <span key={k} className={kind(tok, tokens[k + 1] ?? "")}>
           {tok}
         </span>
       ))}
-      <span className="expr-op"> {"}"}</span>
+    </>
+  );
+}
+
+export function Expression({ expr }: { expr: Expr }) {
+  const head = (
+    <>
+      <span className="expr-mark">ƒ</span>
+      <span className="expr-op">(</span>
+      {expr.reads.map((name, k) => (
+        <span key={name}>
+          {k > 0 && <span className="expr-op">, </span>}
+          <span className="expr-name">{name}</span>
+        </span>
+      ))}
+      <span className="expr-op">) {"{"}</span>
+    </>
+  );
+  if (expr.lines.length <= 1)
+    return (
+      <code className="expr">
+        {head} <Line text={expr.lines[0] ?? ""} /> <span className="expr-op">{"}"}</span>
+      </code>
+    );
+  return (
+    <code className="expr">
+      {head}
+      {expr.lines.map((line, k) => (
+        <span key={k}>
+          {"\n  "}
+          <Line text={line} />
+        </span>
+      ))}
+      {"\n"}
+      <span className="expr-op">{"}"}</span>
     </code>
   );
 }

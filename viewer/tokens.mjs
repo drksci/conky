@@ -5,7 +5,8 @@
 // data-theme="light" or data-theme="dark" on the root. Weights, dashes, sizes and spaces become
 // --ds-weight-*, --ds-dash-*, --ds-size-* and --ds-space-* in px. Each meaning gets a class,
 // .is-<meaning>, that sets --pen to the pen carrying it: a stylesheet colours a subject with
-// var(--pen) and never names a pen itself.
+// var(--pen) and never names a pen itself. Each kind of socket gets .signal-<kind>, setting
+// --signal to the pen of the signal it carries, for sockets and the connectors plugged into them.
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
@@ -35,6 +36,9 @@ export function tokensCss(t = tokens()) {
   const meanings = Object.entries(t.meaning)
     .map(([meaning, pen]) => `.is-${meaning} { --pen: var(--ds-pen-${pen}); }`)
     .join("\n");
+  const signals = Object.entries(t.socket)
+    .map(([kind, s]) => `.signal-${kind} { --signal: var(--ds-pen-${t.meaning[s.meaning]}); }`)
+    .join("\n");
   return [
     "/* generated from src/conky/tokens.json by viewer/tokens.mjs; edit the token file */",
     `:root {\n${scale}\n${look("light")}\n}`,
@@ -42,6 +46,7 @@ export function tokensCss(t = tokens()) {
     `:root[data-theme="dark"] {\n${look("dark")}\n}`,
     `:root[data-theme="light"] {\n${look("light")}\n}`,
     meanings,
+    signals,
     "",
   ].join("\n");
 }

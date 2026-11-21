@@ -1405,6 +1405,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0046-figures-are-drawn-from-the-shared-tokens](../decisions/0046-figures-are-drawn-from-the-shared-tokens.md) | accepted | - |
 | [0047-a-character-is-shown-what-its-spaces-say](../decisions/0047-a-character-is-shown-what-its-spaces-say.md) | accepted | [`law.embed.context`](#law.embed.context), [`part.embed`](#part.embed) |
 | [0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown](../decisions/0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown.md) | accepted | - |
+| [0049-a-cell-shows-the-whole-page](../decisions/0049-a-cell-shows-the-whole-page.md) | accepted | - |
 
 ### Unplaced
 
@@ -1412,6 +1413,7 @@ Found in the documents and fitting no row above.
 
 | Item | Where | Note |
 |---|---|---|
+| a cell shows the whole page | [0049-a-cell-shows-the-whole-page.md](../decisions/0049-a-cell-shows-the-whole-page.md) | Every page in a drawn trial is one cell with a header, panels in a fixed order and a footer of slots, and its connections run between sockets that carry one kind of signal each. |
 | a generated index for a notes application | [obsidian-view.md](../ideas/obsidian-view.md) | Derived data under R11. Nothing is designed beyond the idea. |
 | a trial is drawn as it happened | [0043-a-trial-is-drawn-as-it-happened.md](../decisions/0043-a-trial-is-drawn-as-it-happened.md) | A card's recorded draw is published as a graph with steps, read from the vault's own history, and one view draws it, in a browser and as the pictures in the README. |
 | ahead or different with each step | [0033-ahead-or-different-with-each-step.md](../decisions/0033-ahead-or-different-with-each-step.md) | Every step states the difference it makes against other harnesses and how that is shown; parity work waits until a difference depends on it. |

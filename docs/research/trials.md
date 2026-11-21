@@ -12,7 +12,7 @@ This page is generated from the cards and their published runs by `bench/dynamic
 
 Each card states its objective and the bar it must clear before it runs. A draw is one fresh vault and one pass of the card with a real model. Five draws of one small model support no claim: a met bar is a pilot, and a missed one says where to look. Cards that have not been drawn are listed with the rest.
 
-The animation under a card is drawn from one draw's vault history by the view in `viewer/`, and the picture under it is the same draw's final state. Every page is one cell: a small line saying what it is, its name, then its rows, grouped as fields, rules, what it hears and what it plugs into. A space is a frame holding its members. Ink is the structure; a colour marks only the subject of a step: amber is what a character added, pink is a write turned away, blue is what is heard, teal is what was kept or shown and violet is a model's thought.
+The animation under a card is drawn from one draw's vault history by the view in `viewer/`, and the picture under it is the same draw's final state. Every page is one cell: its name and what it is, then its text, the fields it holds, the rules it is bound by, and what it does when it hears something, then a footer naming who it asks and where it writes. A space is a frame holding its members. Connections run between small sockets on the cells' edges, coloured by what flows: blue is heard, amber is written or added, pink is a write turned away, violet is a model asked, teal is what was kept or shown. Otherwise ink is the structure, and a colour marks the subject of a step with the same meanings.
 
 ## a clerk finds it by its terms
 
