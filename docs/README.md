@@ -97,6 +97,7 @@ Outside work, compared on a fixed basis, with the depth of reading stated.
 - [research/findings-rubric.md](research/findings-rubric.md): What the research says a harness must do, and where Conky stands
 - [research/gaps.md](research/gaps.md): What others have that Conky lacks: skip, covered or rethought
 - [research/papers.md](research/papers.md): Paper register
+- [research/discovery.md](research/discovery.md): How worlds could be found: discovery, registries and federation compared
 - [research/observability.md](research/observability.md): Observability standards for an agent runtime
 - [research/protocols.md](research/protocols.md): Protocols for agents, tools and interfaces
 - [research/streams-and-trees.md](research/streams-and-trees.md): Standards for trees, paths, patches and streams
