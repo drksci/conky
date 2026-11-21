@@ -1,4 +1,4 @@
-<h3 align="center"><img src="docs/assets/conky-mark.png" alt="" width="48" height="48" align="absmiddle">&nbsp;<picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/name.dark.svg"><img src="docs/assets/figures/name.light.svg" alt="Conky" height="48" align="absmiddle"></picture></h3>
+<h1 align="center"><img src="docs/assets/conky-mark.png" alt="" width="48" height="48" align="absmiddle">&nbsp;conky</h1>
 
 <h3 align="center">The Unharnessed Harness&nbsp;&nbsp;<a href="https://github.com/drksci/conky/actions/workflows/ci.yml"><img src="https://github.com/drksci/conky/actions/workflows/ci.yml/badge.svg" alt="CI" align="absmiddle"></a></h3>
 
@@ -64,16 +64,16 @@ Conky is... different, for many reasons, but here are some:
 
 <p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/reached.dark.svg"><img src="docs/results/pilot-3/reached.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, under the model, seeds, budget and commit that were held equal." width="720"></picture></a></p>
 
-<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/became.dark.svg"><img src="docs/results/pilot-3/became.light.svg" alt="The parts each harness was made of when its median run stopped." width="720"></picture></a></p>
+<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/became.dark.svg"><img src="docs/results/pilot-3/became.light.svg" alt="Parts each harness was made of when its median run stopped, with counts beneath." width="720"></picture></a></p>
 
-<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/cost.dark.svg"><img src="docs/results/pilot-3/cost.light.svg" alt="Text sent against progress made, one line for every run." width="720"></picture></a></p>
+<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/cost.dark.svg"><img src="docs/results/pilot-3/cost.light.svg" alt="Cost against progress made, one line for every run, with the median run drawn heavy." width="720"></picture></a></p>
 
-<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/time.dark.svg"><img src="docs/results/pilot-3/time.light.svg" alt="The median run of each harness along a time axis: steps above, model calls below." width="720"></picture></a></p>
+<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/time.dark.svg"><img src="docs/results/pilot-3/time.light.svg" alt="Time each harness took in its median run, as a flame graph: the run, each turn, then time in the model or in the harness." width="720"></picture></a></p>
 
-<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/text.dark.svg"><img src="docs/results/pilot-3/text.light.svg" alt="The text each harness sent in its median run, cut by where it came from." width="720"></picture></a></p>
+<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/text.dark.svg"><img src="docs/results/pilot-3/text.light.svg" alt="Text each harness sent in its median run, as a flame graph: the run, each turn, each call, then where its text came from." width="720"></picture></a></p>
 
 
-<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/scores.dark.svg"><img src="docs/results/pilot-3/scores.light.svg" alt="The scores: one line a harness, best first, with version, model, runs that reached the goal, cost, seconds and a score out of 100." width="720"></picture></a></p>
+<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/scores.dark.svg"><img src="docs/results/pilot-3/scores.light.svg" alt="Scores as a table, one line a harness, best first: version, model, runs that reached the goal, cost, seconds in the model and in the harness, and a score out of 100." width="720"></picture></a></p>
 
 <p align="center"><sub><a href="https://github.com/drksci/conky">conky</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/loop">bare</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://claude.com/claude-code">claude code</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/floor">constant</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/floor">random</a></sub></p>
 

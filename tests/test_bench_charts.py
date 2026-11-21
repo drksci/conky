@@ -13,7 +13,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import pytest
-from bench import charts, record
+from bench import charts, kit, record
 
 HEADER = "FOOD, BULLETS, CLOTHING, SUPPLIES, CASH\n 100 50 50 50 100\n"
 ACTION = "DO YOU WANT TO (1) HUNT, (2) CONTINUE"
@@ -146,7 +146,9 @@ def test_every_chart_renders_light_and_dark(results: Path, tmp_path: Path) -> No
         assert "SCRIPTED: NOT A RESULT" in svg
         if path.name.split(".")[0] in charts.CHARTS:
             assert "trail / model stand-in / seeds 1 / 2026-11-20" in svg
-        ink = charts.INKS["light" if ".light." in path.name else "dark"]
+        look = "light" if ".light." in path.name else "dark"
+        drawn_by_plate = path.name.split(".")[0] not in charts.CHARTS
+        ink = kit.palette(look)["ink"] if drawn_by_plate else charts.INKS[look]
         assert ink in svg
     assert charts.INKS == {"light": "#1E1E1E", "dark": "#EDEDED"}
 

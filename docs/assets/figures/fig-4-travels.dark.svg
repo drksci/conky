@@ -1,22 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 240.2" width="880" height="240.2" role="img" aria-labelledby="t">
 <title id="t">A vault travels alone</title>
 <style>
-:root{--ink:#EDEDED}
+:root{--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}
+svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif}
+.m,.g,.tx,.pt{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
-.k{stroke:var(--ink);stroke-width:0.75}
+.k{stroke:var(--ink);stroke-width:0.8}
 .a{stroke:var(--ink);stroke-width:2.4}
-.h{stroke:var(--ink);stroke-width:0.6}
-.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
-.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
+.h{stroke:var(--ink);stroke-width:0.8}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 3}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 3}
 .d{fill:var(--ink);stroke:none}
 .s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
 .f12,.f25,.f50{stroke:none;fill-rule:evenodd}
 .f12{fill:url(#d12)}
 .f25{fill:url(#d25)}
 .f50{fill:url(#d50)}
-.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.t{fill:var(--ink);letter-spacing:.14em}
 .b{font-weight:700}
+.rf{fill:var(--pink);stroke:none}
+.x1{fill:none;stroke:var(--paper);stroke-width:1.6;stroke-linecap:round}
+.mu{fill:var(--mute)}
 </style>
 <defs><pattern id="d12" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d25" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern></defs>
 <g transform="translate(0 -21)">

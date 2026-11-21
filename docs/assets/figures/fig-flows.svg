@@ -1,29 +1,34 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 258" width="880" height="258" role="img" aria-labelledby="t">
 <title id="t">Plate 6, the flows, as a swimlane: a stimulus reaches a connector, which writes a page; the runtime checks the rules and either records a refusal or signs and appends the change; watching pages react, may ask a provider, and their answers go round the same loop; writes to a connector's page leave as actions; the screen and a returning prompt are planned.</title>
 <style>
-:root{--ink:#1E1E1E}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
-:root[data-theme="dark"]{--ink:#EDEDED}
+:root{--paper:#fbfaf7;--ink:#141413;--mute:#595854;--sunken:#f1f0ec;--raised:#ffffff;--hair:#c9c8c3;--pink:#cc2a68;--blue:#2c4fd0;--teal:#007c84;--amber:#a2600c;--violet:#6c46d6;--blend:multiply}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}}
+:root[data-theme="dark"]{--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}
+svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif}
+.m,.g,.tx,.pt{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
-.k{stroke:var(--ink);stroke-width:0.75}
+.k{stroke:var(--ink);stroke-width:0.8}
 .a{stroke:var(--ink);stroke-width:2.4}
-.h{stroke:var(--ink);stroke-width:0.6}
-.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
-.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
+.h{stroke:var(--ink);stroke-width:0.8}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 3}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 3}
 .d{fill:var(--ink);stroke:none}
 .s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
 .f12,.f25,.f50{stroke:none;fill-rule:evenodd}
 .f12{fill:url(#d12)}
 .f25{fill:url(#d25)}
 .f50{fill:url(#d50)}
-.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.t{fill:var(--ink);letter-spacing:.14em}
 .b{font-weight:700}
-.m{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em}
-.pl{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:1.2 3.4;stroke-linecap:round;stroke-linejoin:round}
-.x1{fill:none;stroke:#1E1E1E;stroke-width:1.6;stroke-linecap:round}
+.rf{fill:var(--pink);stroke:none}
+.x1{fill:none;stroke:var(--paper);stroke-width:1.6;stroke-linecap:round}
+.mu{fill:var(--mute)}
+.m{fill:var(--ink);letter-spacing:.02em}
+.pl{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:1 3;stroke-linecap:round;stroke-linejoin:round}
+.th{stroke:var(--violet);mix-blend-mode:var(--blend)}
 </style>
-<text class="t" x="24" y="30" font-size="9.24" fill-opacity="1" text-anchor="start">6 · THE FLOWS</text>
+<text class="t" x="24" y="30" font-size="9.24" fill-opacity="1" text-anchor="start">6 · FLOWS</text>
 <path class="i" d="M24 236h16v9h-16Z"/>
 <text class="t" x="48" y="244" font-size="7.14" fill-opacity="1" text-anchor="start">BUILT</text>
 <path class="pl" d="M104 236h16v9h-16Z"/>
@@ -91,7 +96,7 @@
 <path class="pl" d="M209.97 70.96L208 75L206.03 70.96"/>
 <path class="k" d="M344 143L344 153.5"/>
 <path class="k" d="M345.97 150.96L344 155L342.03 150.96"/>
-<rect x="338.5" y="155.5" width="11" height="11" fill="#F4C430"/>
+<rect x="338.5" y="155.5" width="11" height="11" class="rf"/>
 <path class="x1" d="M341.4 158.4L346.6 163.6"/>
 <path class="x1" d="M341.4 163.6L346.6 158.4"/>
 <text class="m" x="356" y="164" font-size="8" text-anchor="start" xml:space="preserve">refused</text>

@@ -1,30 +1,34 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 210" width="800" height="210" role="img" aria-labelledby="t">
 <title id="t">A graph of pages composing itself: the screen changes and Ma and Jed notice; Ma reads The Art of War from the patterns shelf; Jed's wish to hunt stops at the house rules; Ma pushes on at the campfire; the hands type back to the game; the diary gains a line</title>
 <style>
-:root{--ink:#1E1E1E}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
-:root[data-theme="dark"]{--ink:#EDEDED}
+:root{--paper:#fbfaf7;--ink:#141413;--mute:#595854;--sunken:#f1f0ec;--raised:#ffffff;--hair:#c9c8c3;--pink:#cc2a68;--blue:#2c4fd0;--teal:#007c84;--amber:#a2600c;--violet:#6c46d6;--blend:multiply}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}}
+:root[data-theme="dark"]{--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}
+svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif}
+.m,.g,.tx,.pt{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
-.k{stroke:var(--ink);stroke-width:0.75}
+.k{stroke:var(--ink);stroke-width:0.8}
 .a{stroke:var(--ink);stroke-width:2.4}
-.h{stroke:var(--ink);stroke-width:0.6}
-.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
-.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
+.h{stroke:var(--ink);stroke-width:0.8}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 3}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 3}
 .d{fill:var(--ink);stroke:none}
 .s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
 .f12,.f25,.f50{stroke:none;fill-rule:evenodd}
 .f12{fill:url(#d12)}
 .f25{fill:url(#d25)}
 .f50{fill:url(#d50)}
-.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.t{fill:var(--ink);letter-spacing:.14em}
 .b{font-weight:700}
-.m{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em}
-.sn{fill:var(--ink);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif}
-.sp{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:1.2 3.6;stroke-linecap:round}
-.x1{fill:none;stroke:#1E1E1E;stroke-width:1.6;stroke-linecap:round}
-.dr{fill:none;stroke:#fff;stroke-width:9;stroke-dasharray:1;stroke-dashoffset:0}
-.dl{fill:none;stroke:var(--ink);stroke-width:.75;stroke-dasharray:1;stroke-dashoffset:0}
+.rf{fill:var(--pink);stroke:none}
+.x1{fill:none;stroke:var(--paper);stroke-width:1.6;stroke-linecap:round}
+.mu{fill:var(--mute)}
+.m{fill:var(--ink);letter-spacing:.02em}
+.sn{fill:var(--ink);}
+.sp{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:1 3;stroke-linecap:round}
+.dr{fill:none;stroke:#ffffff;stroke-width:9;stroke-dasharray:1;stroke-dashoffset:0}
+.dl{fill:none;stroke:var(--ink);stroke-width:0.8;stroke-dasharray:1;stroke-dashoffset:0}
 .pl{fill:none;stroke:var(--ink);stroke-width:5;stroke-linecap:round;stroke-dasharray:.0001 3;opacity:0}
 @keyframes a0{0%,1.667%{opacity:0}3.333%,96.667%{opacity:1}100%{opacity:0}}.a0{animation:a0 18s linear -16s infinite}
 @keyframes a1{0%,7.222%{opacity:0}8.889%,96.667%{opacity:1}100%{opacity:0}}.a1{animation:a1 18s linear -16s infinite}
@@ -104,7 +108,7 @@
 <path class="z" mask="url(#md)" d="M394 120L394 158"/>
 <g class="a22 an"><path class="i" d="M397.07 153.71L394 160L390.93 153.71"/></g>
 <path class="pl p23 an" pathLength="1" d="M394 120L394 140"/>
-<g class="a24 an"><rect x="387.5" y="140.5" width="13" height="13" fill="#F4C430"/><path class="x1" d="M391 144L397 150"/><path class="x1" d="M391 150L397 144"/></g>
+<g class="a24 an"><rect x="387.5" y="140.5" width="13" height="13" class="rf"/><path class="x1" d="M391 144L397 150"/><path class="x1" d="M391 150L397 144"/></g>
 <mask id="me" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="210"><path class="dr d25 an" pathLength="1" d="M300 120L300 156"/></mask>
 <path class="z" mask="url(#me)" d="M300 120L300 156"/>
 <g class="a26 an"><path class="i" d="M303.07 151.71L300 158L296.93 151.71"/></g>

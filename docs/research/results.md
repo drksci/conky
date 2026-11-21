@@ -45,15 +45,15 @@ Counts are runs. Other columns are the median over seeds.
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/reached.dark.svg"><img src="../results/pilot-3/reached.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, under the model, seeds, budget and commit that were held equal." width="720"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/became.dark.svg"><img src="../results/pilot-3/became.light.svg" alt="The parts each harness was made of when its median run stopped." width="720"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/became.dark.svg"><img src="../results/pilot-3/became.light.svg" alt="Parts each harness was made of when its median run stopped, with counts beneath." width="720"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/cost.dark.svg"><img src="../results/pilot-3/cost.light.svg" alt="Text sent against progress made, one line for every run." width="720"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/cost.dark.svg"><img src="../results/pilot-3/cost.light.svg" alt="Cost against progress made, one line for every run, with the median run drawn heavy." width="720"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/time.dark.svg"><img src="../results/pilot-3/time.light.svg" alt="The median run of each harness along a time axis: steps above, model calls below." width="720"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/time.dark.svg"><img src="../results/pilot-3/time.light.svg" alt="Time each harness took in its median run, as a flame graph: the run, each turn, then time in the model or in the harness." width="720"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/text.dark.svg"><img src="../results/pilot-3/text.light.svg" alt="The text each harness sent in its median run, cut by where it came from." width="720"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/text.dark.svg"><img src="../results/pilot-3/text.light.svg" alt="Text each harness sent in its median run, as a flame graph: the run, each turn, each call, then where its text came from." width="720"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/scores.dark.svg"><img src="../results/pilot-3/scores.light.svg" alt="The scores: one line a harness, best first, with version, model, runs that reached the goal, cost, seconds and a score out of 100." width="720"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/scores.dark.svg"><img src="../results/pilot-3/scores.light.svg" alt="Scores as a table, one line a harness, best first: version, model, runs that reached the goal, cost, seconds in the model and in the harness, and a score out of 100." width="720"></picture></p>
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/progress.dark.svg"><img src="../results/pilot-3/progress.light.svg" alt="miles left to Oregon against turn, one line per arm." width="720"></picture></p>
 

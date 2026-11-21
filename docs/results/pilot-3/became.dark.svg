@@ -1,108 +1,108 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="276" viewBox="0 0 720 276" role="img" aria-label="The parts each harness was made of when its median run stopped.">
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="276" viewBox="0 0 720 276" role="img" aria-label="The parts each harness was made of when its median run stopped." font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif">
 <title>The parts each harness was made of when its median run stopped.</title>
-<defs><pattern id="dots" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1z" fill="#EDEDED" shape-rendering="crispEdges"/></pattern><pattern id="dense" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#EDEDED" shape-rendering="crispEdges"/></pattern><pattern id="dense-accent" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#FFE066" shape-rendering="crispEdges"/></pattern></defs>
-<text x="24.0" y="28.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="start" fill="#EDEDED">What it became</text>
-<text x="696.0" y="28.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5" font-weight="normal" text-anchor="end" fill="#9AA0A8" letter-spacing="0.14em">THE PARTS AT THE END OF A RUN</text>
-<line x1="24.0" y1="40.0" x2="696.0" y2="40.0" stroke="#EDEDED" stroke-width="0.75" stroke-linecap="round"/>
-<text x="24.0" y="62.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="bold" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">CLAUDE CODE</text>
-<circle cx="44.0" cy="136.0" r="11" fill="none" stroke="#EDEDED" stroke-width="1"/>
-<text x="44.0" y="160.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="middle" fill="#9AA0A8" letter-spacing="0.14em">MODEL</text>
-<rect x="80.0" y="82.0" width="141.3" height="110.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<line x1="55.0" y1="136.0" x2="80.0" y2="136.0" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round" stroke-dasharray="1 3"/>
-<line x1="86.0" y1="88.0" x2="131.3" y2="88.0" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<text x="150.7" y="206.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="middle" fill="#9AA0A8" letter-spacing="0.14em">ONE CONVERSATION</text>
-<text x="24.0" y="238.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#EDEDED">0</text>
-<text x="24.0" y="252.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">messages</text>
-<text x="92.4" y="238.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#EDEDED">0</text>
-<text x="92.4" y="252.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">characters in</text>
-<text x="92.4" y="263.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">the last call</text>
-<text x="160.9" y="238.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#EDEDED">0</text>
-<text x="160.9" y="252.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">kept after it</text>
-<text x="160.9" y="263.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">stops</text>
-<text x="257.3" y="62.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="bold" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">BARE</text>
-<circle cx="277.3" cy="136.0" r="11" fill="none" stroke="#EDEDED" stroke-width="1"/>
-<text x="277.3" y="160.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="middle" fill="#9AA0A8" letter-spacing="0.14em">MODEL</text>
-<rect x="313.3" y="82.0" width="141.3" height="110.0" fill="none" stroke="#EDEDED" stroke-width="1.0"/>
-<line x1="288.3" y1="136.0" x2="313.3" y2="136.0" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round" stroke-dasharray="1 3"/>
-<line x1="319.3" y1="88.0" x2="364.6" y2="88.0" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="90.4" x2="423.4" y2="90.4" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="92.8" x2="398.2" y2="92.8" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="95.1" x2="373.0" y2="95.1" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="97.5" x2="431.9" y2="97.5" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="99.9" x2="406.6" y2="99.9" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="102.3" x2="381.4" y2="102.3" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="104.7" x2="440.3" y2="104.7" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="107.0" x2="415.0" y2="107.0" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="109.4" x2="389.8" y2="109.4" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="111.8" x2="364.6" y2="111.8" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="114.2" x2="423.4" y2="114.2" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="116.6" x2="398.2" y2="116.6" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="119.0" x2="373.0" y2="119.0" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="121.3" x2="431.9" y2="121.3" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="123.7" x2="406.6" y2="123.7" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="126.1" x2="381.4" y2="126.1" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="128.5" x2="440.3" y2="128.5" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="130.9" x2="415.0" y2="130.9" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="133.2" x2="389.8" y2="133.2" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="135.6" x2="364.6" y2="135.6" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="138.0" x2="423.4" y2="138.0" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="140.4" x2="398.2" y2="140.4" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="142.8" x2="373.0" y2="142.8" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="145.1" x2="431.9" y2="145.1" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="147.5" x2="406.6" y2="147.5" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="149.9" x2="381.4" y2="149.9" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="152.3" x2="440.3" y2="152.3" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="154.7" x2="415.0" y2="154.7" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="157.0" x2="389.8" y2="157.0" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="159.4" x2="364.6" y2="159.4" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="161.8" x2="423.4" y2="161.8" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="164.2" x2="398.2" y2="164.2" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="166.6" x2="373.0" y2="166.6" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="169.0" x2="431.9" y2="169.0" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="171.3" x2="406.6" y2="171.3" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="173.7" x2="381.4" y2="173.7" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="176.1" x2="440.3" y2="176.1" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="178.5" x2="415.0" y2="178.5" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="180.9" x2="389.8" y2="180.9" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="183.2" x2="364.6" y2="183.2" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<line x1="319.3" y1="185.6" x2="423.4" y2="185.6" stroke="#EDEDED" stroke-width="0.9" stroke-linecap="round"/>
-<text x="384.0" y="206.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="middle" fill="#9AA0A8" letter-spacing="0.14em">ONE CONVERSATION</text>
-<text x="257.3" y="238.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#EDEDED">42</text>
-<text x="257.3" y="252.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">messages</text>
-<text x="325.8" y="238.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#EDEDED">6,544</text>
-<text x="325.8" y="252.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">characters in</text>
-<text x="325.8" y="263.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">the last call</text>
-<text x="394.2" y="238.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#EDEDED">0</text>
-<text x="394.2" y="252.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">kept after it</text>
-<text x="394.2" y="263.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">stops</text>
-<text x="490.7" y="62.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="10.5" font-weight="bold" text-anchor="start" fill="#FFE066" letter-spacing="0.14em">CONKY</text>
-<path d="M559.1,84.0 l6,6 l-6,6 l-6,-6 Z" fill="none" stroke="#EDEDED" stroke-width="1.0" stroke-linejoin="round" stroke-linecap="round"/>
-<text x="554.1" y="107.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="start" fill="#9AA0A8" letter-spacing="0.14em">METER</text>
-<rect x="623.1" y="85.5" width="9.0" height="9.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="1.0"/>
-<text x="622.6" y="107.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="start" fill="#FFE066" letter-spacing="0.14em">SCREEN</text>
-<rect x="490.7" y="132.0" width="96.7" height="64" rx="6" fill="none" stroke="#EDEDED" stroke-width="1" stroke-dasharray="1 4" stroke-linecap="round"/>
-<text x="498.7" y="146.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" font-weight="bold" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">DEN</text>
-<rect x="498.7" y="156.0" width="12.0" height="12.0" fill="#EDEDED" stroke="#EDEDED" stroke-width="1.0"/>
-<text x="499.7" y="178.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="start" fill="#9AA0A8" letter-spacing="0.14em">TRAVELLER</text>
-<rect x="522.2" y="157.5" width="9.0" height="9.0" fill="url(#dense-accent)" stroke="#FFE066" stroke-width="1.0"/>
-<text x="521.7" y="188.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="7.5" font-weight="normal" text-anchor="start" fill="#FFE066" letter-spacing="0.14em">TRAVELLER-NOTES</text>
-<rect x="599.3" y="132.0" width="96.7" height="64" rx="6" fill="none" stroke="#EDEDED" stroke-width="1" stroke-dasharray="1 4" stroke-linecap="round"/>
-<text x="607.3" y="146.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8" font-weight="bold" text-anchor="start" fill="#EDEDED" letter-spacing="0.14em">SHELF</text>
-<rect x="608.8" y="157.5" width="9.0" height="9.0" fill="url(#dots)" stroke="#EDEDED" stroke-width="1.0"/>
-<rect x="625.0" y="157.5" width="9.0" height="9.0" fill="url(#dots)" stroke="#EDEDED" stroke-width="1.0"/>
-<rect x="641.1" y="157.5" width="9.0" height="9.0" fill="url(#dots)" stroke="#EDEDED" stroke-width="1.0"/>
-<rect x="657.2" y="157.5" width="9.0" height="9.0" fill="url(#dots)" stroke="#EDEDED" stroke-width="1.0"/>
-<rect x="673.4" y="157.5" width="9.0" height="9.0" fill="url(#dots)" stroke="#EDEDED" stroke-width="1.0"/>
-<line x1="504.7" y1="169.0" x2="627.6" y2="83.0" stroke="#FFE066" stroke-width="0.9" stroke-linecap="round" stroke-dasharray="1 3"/>
-<line x1="504.7" y1="169.0" x2="627.6" y2="83.0" stroke="#FFE066" stroke-width="0.9" stroke-linecap="round" stroke-dasharray="1 3"/>
-<line x1="504.7" y1="169.0" x2="559.1" y2="83.0" stroke="#FFE066" stroke-width="0.9" stroke-linecap="round" stroke-dasharray="1 3"/>
-<line x1="504.7" y1="169.0" x2="539.0" y2="132.0" stroke="#FFE066" stroke-width="0.9" stroke-linecap="round" stroke-dasharray="1 3"/>
-<text x="490.7" y="238.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#FFE066">9</text>
-<text x="490.7" y="252.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">pages at start</text>
-<text x="542.0" y="238.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#FFE066">11</text>
-<text x="542.0" y="252.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">pages at end</text>
-<text x="593.3" y="238.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#FFE066">2</text>
-<text x="593.3" y="252.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">pages it wrote</text>
-<text x="644.7" y="238.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start" fill="#FFE066">134</text>
-<text x="644.7" y="252.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="8.5" font-weight="normal" text-anchor="start" fill="#9AA0A8">signed changes</text>
+<style>.c{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace}</style>
+<defs><pattern id="checker-amber" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1zM2 2h1v1h-1z" fill="#ffc95c" shape-rendering="crispEdges"/></pattern><pattern id="dots-ink" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h1v1h-1z" fill="#f2f2ef" shape-rendering="crispEdges"/></pattern></defs>
+<text x="24.0" y="30.0" font-size="22" text-anchor="start" fill="#f2f2ef">What it became</text>
+<text x="696.0" y="30.0" font-size="8.5" text-anchor="end" fill="#a3a7ad" letter-spacing="0.1em">THE PARTS AT THE END OF A RUN</text>
+<text x="24.0" y="62.0" font-size="10" font-weight="bold" text-anchor="start" fill="#f2f2ef" letter-spacing="0.1em">CLAUDE CODE</text>
+<circle cx="44.0" cy="136.0" r="11" fill="none" stroke="#c6acff" stroke-width="1.2"/>
+<text x="44.0" y="160.0" font-size="7" text-anchor="middle" fill="#f2f2ef" letter-spacing="0.1em">MODEL</text>
+<rect x="80.0" y="82.0" width="141.3" height="110.0" fill="none" stroke="#f2f2ef" stroke-width="1.2"/>
+<line x1="55.0" y1="136.0" x2="80.0" y2="136.0" stroke="#f2f2ef" stroke-width="0.8" stroke-linecap="round" stroke-dasharray="1 3"/>
+<line x1="86.0" y1="88.0" x2="131.3" y2="88.0" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<text x="150.7" y="206.0" font-size="7" text-anchor="middle" fill="#f2f2ef" letter-spacing="0.1em">ONE CONVERSATION</text>
+<text x="24.0" y="238.0" class="c" font-size="12" font-weight="bold" text-anchor="start" fill="#f2f2ef">0</text>
+<text x="24.0" y="252.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">messages</text>
+<text x="92.4" y="238.0" class="c" font-size="12" font-weight="bold" text-anchor="start" fill="#f2f2ef">0</text>
+<text x="92.4" y="252.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">characters in</text>
+<text x="92.4" y="263.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">the last call</text>
+<text x="160.9" y="238.0" class="c" font-size="12" font-weight="bold" text-anchor="start" fill="#f2f2ef">0</text>
+<text x="160.9" y="252.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">kept after it</text>
+<text x="160.9" y="263.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">stops</text>
+<text x="257.3" y="62.0" font-size="10" font-weight="bold" text-anchor="start" fill="#f2f2ef" letter-spacing="0.1em">BARE</text>
+<circle cx="277.3" cy="136.0" r="11" fill="none" stroke="#c6acff" stroke-width="1.2"/>
+<text x="277.3" y="160.0" font-size="7" text-anchor="middle" fill="#f2f2ef" letter-spacing="0.1em">MODEL</text>
+<rect x="313.3" y="82.0" width="141.3" height="110.0" fill="none" stroke="#f2f2ef" stroke-width="1.2"/>
+<line x1="288.3" y1="136.0" x2="313.3" y2="136.0" stroke="#f2f2ef" stroke-width="0.8" stroke-linecap="round" stroke-dasharray="1 3"/>
+<line x1="319.3" y1="88.0" x2="364.6" y2="88.0" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="90.4" x2="423.4" y2="90.4" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="92.8" x2="398.2" y2="92.8" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="95.1" x2="373.0" y2="95.1" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="97.5" x2="431.9" y2="97.5" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="99.9" x2="406.6" y2="99.9" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="102.3" x2="381.4" y2="102.3" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="104.7" x2="440.3" y2="104.7" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="107.0" x2="415.0" y2="107.0" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="109.4" x2="389.8" y2="109.4" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="111.8" x2="364.6" y2="111.8" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="114.2" x2="423.4" y2="114.2" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="116.6" x2="398.2" y2="116.6" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="119.0" x2="373.0" y2="119.0" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="121.3" x2="431.9" y2="121.3" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="123.7" x2="406.6" y2="123.7" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="126.1" x2="381.4" y2="126.1" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="128.5" x2="440.3" y2="128.5" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="130.9" x2="415.0" y2="130.9" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="133.2" x2="389.8" y2="133.2" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="135.6" x2="364.6" y2="135.6" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="138.0" x2="423.4" y2="138.0" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="140.4" x2="398.2" y2="140.4" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="142.8" x2="373.0" y2="142.8" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="145.1" x2="431.9" y2="145.1" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="147.5" x2="406.6" y2="147.5" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="149.9" x2="381.4" y2="149.9" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="152.3" x2="440.3" y2="152.3" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="154.7" x2="415.0" y2="154.7" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="157.0" x2="389.8" y2="157.0" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="159.4" x2="364.6" y2="159.4" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="161.8" x2="423.4" y2="161.8" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="164.2" x2="398.2" y2="164.2" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="166.6" x2="373.0" y2="166.6" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="169.0" x2="431.9" y2="169.0" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="171.3" x2="406.6" y2="171.3" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="173.7" x2="381.4" y2="173.7" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="176.1" x2="440.3" y2="176.1" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="178.5" x2="415.0" y2="178.5" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="180.9" x2="389.8" y2="180.9" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="183.2" x2="364.6" y2="183.2" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<line x1="319.3" y1="185.6" x2="423.4" y2="185.6" stroke="#f2f2ef" stroke-width="1.2" stroke-linecap="round"/>
+<text x="384.0" y="206.0" font-size="7" text-anchor="middle" fill="#f2f2ef" letter-spacing="0.1em">ONE CONVERSATION</text>
+<text x="257.3" y="238.0" class="c" font-size="12" font-weight="bold" text-anchor="start" fill="#f2f2ef">42</text>
+<text x="257.3" y="252.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">messages</text>
+<text x="325.8" y="238.0" class="c" font-size="12" font-weight="bold" text-anchor="start" fill="#f2f2ef">6,544</text>
+<text x="325.8" y="252.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">characters in</text>
+<text x="325.8" y="263.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">the last call</text>
+<text x="394.2" y="238.0" class="c" font-size="12" font-weight="bold" text-anchor="start" fill="#f2f2ef">0</text>
+<text x="394.2" y="252.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">kept after it</text>
+<text x="394.2" y="263.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">stops</text>
+<text x="490.7" y="62.0" font-size="10" font-weight="bold" text-anchor="start" fill="#ff7fb2" letter-spacing="0.1em">CONKY</text>
+<path d="M559.1,84.0 l6,6 l-6,6 l-6,-6 Z" fill="none" stroke="#f2f2ef" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="554.1" y="107.0" font-size="7" text-anchor="start" fill="#a3a7ad" letter-spacing="0.1em">METER</text>
+<rect x="623.1" y="85.5" width="9.0" height="9.0" fill="url(#checker-amber)" stroke="#ffc95c" stroke-width="1.2"/>
+<text x="622.6" y="107.0" font-size="7" text-anchor="start" fill="#ffc95c" letter-spacing="0.1em">SCREEN</text>
+<rect x="490.7" y="132.0" width="96.7" height="64" fill="none" stroke="#f2f2ef" stroke-width="1.2" stroke-dasharray="1 3" stroke-linecap="round"/>
+<text x="498.7" y="146.0" font-size="8.5" font-weight="bold" text-anchor="start" fill="#f2f2ef" letter-spacing="0.1em">DEN</text>
+<rect x="498.7" y="156.0" width="12.0" height="12.0" fill="#f2f2ef" stroke="#f2f2ef" stroke-width="1.2"/>
+<text x="499.7" y="178.0" font-size="7" text-anchor="start" fill="#a3a7ad" letter-spacing="0.1em">TRAVELLER</text>
+<rect x="522.2" y="157.5" width="9.0" height="9.0" fill="url(#checker-amber)" stroke="#ffc95c" stroke-width="1.2"/>
+<text x="521.7" y="188.0" font-size="7" text-anchor="start" fill="#ffc95c" letter-spacing="0.1em">TRAVELLER-NOTES</text>
+<rect x="599.3" y="132.0" width="96.7" height="64" fill="none" stroke="#f2f2ef" stroke-width="1.2" stroke-dasharray="1 3" stroke-linecap="round"/>
+<text x="607.3" y="146.0" font-size="8.5" font-weight="bold" text-anchor="start" fill="#f2f2ef" letter-spacing="0.1em">SHELF</text>
+<rect x="608.8" y="157.5" width="9.0" height="9.0" fill="url(#dots-ink)" stroke="#f2f2ef" stroke-width="1.2"/>
+<rect x="625.0" y="157.5" width="9.0" height="9.0" fill="url(#dots-ink)" stroke="#f2f2ef" stroke-width="1.2"/>
+<rect x="641.1" y="157.5" width="9.0" height="9.0" fill="url(#dots-ink)" stroke="#f2f2ef" stroke-width="1.2"/>
+<rect x="657.2" y="157.5" width="9.0" height="9.0" fill="url(#dots-ink)" stroke="#f2f2ef" stroke-width="1.2"/>
+<rect x="673.4" y="157.5" width="9.0" height="9.0" fill="url(#dots-ink)" stroke="#f2f2ef" stroke-width="1.2"/>
+<line x1="504.7" y1="169.0" x2="627.6" y2="83.0" stroke="#ff7fb2" stroke-width="0.8" stroke-linecap="round" stroke-dasharray="1 3"/>
+<line x1="504.7" y1="169.0" x2="627.6" y2="83.0" stroke="#ff7fb2" stroke-width="0.8" stroke-linecap="round" stroke-dasharray="1 3"/>
+<line x1="504.7" y1="169.0" x2="559.1" y2="83.0" stroke="#ff7fb2" stroke-width="0.8" stroke-linecap="round" stroke-dasharray="1 3"/>
+<line x1="504.7" y1="169.0" x2="539.0" y2="132.0" stroke="#ff7fb2" stroke-width="0.8" stroke-linecap="round" stroke-dasharray="1 3"/>
+<text x="490.7" y="238.0" class="c" font-size="12" font-weight="bold" text-anchor="start" fill="#ff7fb2">9</text>
+<text x="490.7" y="252.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">pages at start</text>
+<text x="542.0" y="238.0" class="c" font-size="12" font-weight="bold" text-anchor="start" fill="#ff7fb2">11</text>
+<text x="542.0" y="252.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">pages at end</text>
+<text x="593.3" y="238.0" class="c" font-size="12" font-weight="bold" text-anchor="start" fill="#ff7fb2">2</text>
+<text x="593.3" y="252.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">pages it wrote</text>
+<text x="644.7" y="238.0" class="c" font-size="12" font-weight="bold" text-anchor="start" fill="#ff7fb2">134</text>
+<text x="644.7" y="252.0" font-size="8.5" text-anchor="start" fill="#a3a7ad">signed changes</text>
 </svg>

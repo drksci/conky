@@ -1,27 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 260" width="880" height="260" role="img" aria-labelledby="t">
 <title id="t">Plate 7, the same shape at every depth. One membrane is drawn five times, each zooming into a member of the last: a vault holds a space, a space holds a character, a character holds lobes, the habit lobe holds cases, and a case has four parts: when, then, because, expect. Solid is built, dotted is planned.</title>
 <style>
-:root{--ink:#1E1E1E}
+:root{--paper:#fbfaf7;--ink:#141413;--mute:#595854;--sunken:#f1f0ec;--raised:#ffffff;--hair:#c9c8c3;--pink:#cc2a68;--blue:#2c4fd0;--teal:#007c84;--amber:#a2600c;--violet:#6c46d6;--blend:multiply}
+svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif}
+.m,.g,.tx,.pt{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
-.k{stroke:var(--ink);stroke-width:0.75}
+.k{stroke:var(--ink);stroke-width:0.8}
 .a{stroke:var(--ink);stroke-width:2.4}
-.h{stroke:var(--ink);stroke-width:0.6}
-.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
-.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
+.h{stroke:var(--ink);stroke-width:0.8}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 3}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 3}
 .d{fill:var(--ink);stroke:none}
 .s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
 .f12,.f25,.f50{stroke:none;fill-rule:evenodd}
 .f12{fill:url(#d12)}
 .f25{fill:url(#d25)}
 .f50{fill:url(#d50)}
-.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.t{fill:var(--ink);letter-spacing:.14em}
 .b{font-weight:700}
-.m{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em}
-.pl{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:1.2 3.4;stroke-linecap:round;stroke-linejoin:round}
-.x1{fill:none;stroke:#1E1E1E;stroke-width:1.6;stroke-linecap:round}
+.rf{fill:var(--pink);stroke:none}
+.x1{fill:none;stroke:var(--paper);stroke-width:1.6;stroke-linecap:round}
+.mu{fill:var(--mute)}
+.m{fill:var(--ink);letter-spacing:.02em}
+.pl{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:1 3;stroke-linecap:round;stroke-linejoin:round}
+.th{stroke:var(--violet);mix-blend-mode:var(--blend)}
 </style>
-<text class="t" x="24" y="30" font-size="9.24" fill-opacity="1" text-anchor="start">7 · THE SAME SHAPE AT EVERY DEPTH</text>
+<text class="t" x="24" y="30" font-size="9.24" fill-opacity="1" text-anchor="start">7 · ONE SHAPE AT EVERY DEPTH</text>
 <path class="i" d="M24 238h16v9h-16Z"/>
 <text class="t" x="48" y="246" font-size="7.14" fill-opacity="1" text-anchor="start">BUILT</text>
 <path class="pl" d="M104 238h16v9h-16Z"/>
@@ -68,9 +73,9 @@
 <path class="k" d="M233.8 150.5L239.4 150.5"/>
 <text class="m" x="238" y="170" font-size="8" text-anchor="middle" xml:space="preserve">page</text>
 <path class="k" d="M287 130H305.35L313 137.65V162H287Z"/>
-<circle class="k" cx="310" cy="132" r="1.1"/>
-<circle class="k" cx="312.5" cy="129" r="1.8"/>
-<circle class="k" cx="317" cy="124.5" r="3.4"/>
+<circle class="k th" cx="310" cy="132" r="1.1"/>
+<circle class="k th" cx="312.5" cy="129" r="1.8"/>
+<circle class="k th" cx="317" cy="124.5" r="3.4"/>
 <text class="m" x="300" y="176" font-size="8" text-anchor="middle" xml:space="preserve">character</text>
 <path class="h" d="M314 130L368.73 107.38"/>
 <path class="h" d="M314 162L367.47 161.09"/>

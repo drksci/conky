@@ -31,12 +31,14 @@ SHOWN = (*PLATES, BOARD, "progress", "spend", "rules", "board")
 ALT = {
     "reached": "Every run drawn as a bar from {start} to {end}, one band per harness, under "
     "the model, seeds, budget and commit that were held equal.",
-    "scores": "The scores: one line a harness, best first, with version, model, runs that "
-    "reached the goal, cost, seconds and a score out of 100.",
-    "became": "The parts each harness was made of when its median run stopped.",
-    "cost": "Text sent against progress made, one line for every run.",
-    "text": "The text each harness sent in its median run, cut by where it came from.",
-    "time": "The median run of each harness along a time axis: steps above, model calls below.",
+    "scores": "Scores as a table, one line a harness, best first: version, model, runs that "
+    "reached the goal, cost, seconds in the model and in the harness, and a score out of 100.",
+    "became": "Parts each harness was made of when its median run stopped, with counts beneath.",
+    "cost": "Cost against progress made, one line for every run, with the median run drawn heavy.",
+    "text": "Text each harness sent in its median run, as a flame graph: the run, each turn, "
+    "each call, then where its text came from.",
+    "time": "Time each harness took in its median run, as a flame graph: the run, each turn, "
+    "then time in the model or in the harness.",
     "progress": "{unit} left to {end} against turn, one line per arm.",
     "spend": "Model calls and text sent against turn, one line per arm.",
     "rules": "House rules broken in the game, by turn, for each run.",

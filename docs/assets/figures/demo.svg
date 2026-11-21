@@ -1,27 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400" role="img" aria-labelledby="t">
 <title id="t">A terminal running conky demo beside a drawing of the lemonade stand's noticeboard: the stand, the cooler, the supplier and the daybook</title>
 <style>
-:root{--ink:#1E1E1E}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EDEDED}}
-:root[data-theme="dark"]{--ink:#EDEDED}
+:root{--paper:#fbfaf7;--ink:#141413;--mute:#595854;--sunken:#f1f0ec;--raised:#ffffff;--hair:#c9c8c3;--pink:#cc2a68;--blue:#2c4fd0;--teal:#007c84;--amber:#a2600c;--violet:#6c46d6;--blend:multiply}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}}
+:root[data-theme="dark"]{--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}
+svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif}
+.m,.g,.tx,.pt{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
-.k{stroke:var(--ink);stroke-width:0.75}
+.k{stroke:var(--ink);stroke-width:0.8}
 .a{stroke:var(--ink);stroke-width:2.4}
-.h{stroke:var(--ink);stroke-width:0.6}
-.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
-.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
+.h{stroke:var(--ink);stroke-width:0.8}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 3}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 3}
 .d{fill:var(--ink);stroke:none}
 .s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
 .f12,.f25,.f50{stroke:none;fill-rule:evenodd}
 .f12{fill:url(#d12)}
 .f25{fill:url(#d25)}
 .f50{fill:url(#d50)}
-.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.t{fill:var(--ink);letter-spacing:.14em}
 .b{font-weight:700}
-.tx{fill:#e6edf3;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace;font-size:10.5px}
+.rf{fill:var(--pink);stroke:none}
+.x1{fill:none;stroke:var(--paper);stroke-width:1.6;stroke-linecap:round}
+.mu{fill:var(--mute)}
+.tx{fill:var(--ink);font-size:10.5px}
 .bd{font-weight:700}
-.sn{fill:var(--ink);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif}
+.sn{fill:var(--ink);}
 .rv{transform-box:fill-box;transform-origin:0 50%}
 @keyframes rv{0%,49%{transform:scaleX(0);animation-timing-function:steps(24,end)}54%,100%{transform:scaleX(1)}}
 .rv{animation:rv 20s linear -15.5s infinite}
@@ -65,27 +70,23 @@
 @media (prefers-reduced-motion:reduce){.an,.rv{animation:none!important}}
 </style>
 <defs><pattern id="d25" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d50" width="4" height="4" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM2 2h2v2h-2z"/></pattern></defs>
-<rect x="4" y="4" width="412" height="392" rx="10" fill="#0d1117" stroke="#30363d"/>
-<circle cx="22" cy="19" r="4.5" fill="#484f58"/>
-<circle cx="38" cy="19" r="4.5" fill="#484f58"/>
-<circle cx="54" cy="19" r="4.5" fill="#484f58"/>
-<text class="tx" x="74" y="22.5" fill="#6C6C6C">$ conky demo</text>
-<g class="a0 an"><rect x="20.5" y="34.5" width="383" height="24" rx="6" fill="none" stroke="#874BFD"/><text class="tx bd" x="31" y="50.5" fill="#FF5FAF">A lemonade stand</text></g>
-<g class="a1 an"><rect x="20" y="68.4" width="18.9" height="12.6" rx="2" fill="#874BFD"/><text class="tx bd" x="29.45" y="78" fill="#EEEEEE" text-anchor="middle">1</text><text class="tx" x="45.2" y="78">Maya sets up the stand and writes down its one house</text><text class="tx" x="45.2" y="90.6">rule. The cooler never holds less than nothing.</text></g>
-<g class="a2 an"><rect x="45.2" y="93.6" width="69.3" height="12.6" fill="#04B575"/><text class="tx bd" x="51.5" y="103.2" fill="#000" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="103.2" fill="#EEEEEE">stand</text></g>
-<g class="a3 an"><rect x="20" y="111.2" width="18.9" height="12.6" rx="2" fill="#874BFD"/><text class="tx bd" x="29.45" y="120.8" fill="#EEEEEE" text-anchor="middle">2</text><text class="tx" x="45.2" y="120.8">She fills the cooler with 40 cups. From now on it</text><text class="tx" x="45.2" y="133.4">follows the house rule.</text></g>
-<g class="a4 an"><rect x="45.2" y="136.4" width="69.3" height="12.6" fill="#04B575"/><text class="tx bd" x="51.5" y="146" fill="#000" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="146" fill="#EEEEEE">cooler</text></g>
-<g class="a5 an"><rect x="20" y="154" width="18.9" height="12.6" rx="2" fill="#874BFD"/><text class="tx bd" x="29.45" y="163.6" fill="#EEEEEE" text-anchor="middle">3</text><text class="tx" x="45.2" y="163.6">The supplier is asked to keep an eye on the cooler. If</text><text class="tx" x="45.2" y="176.2">it drops below 10 cups, lemons are ordered.</text></g>
-<g class="a6 an"><rect x="45.2" y="179.2" width="69.3" height="12.6" fill="#04B575"/><text class="tx bd" x="51.5" y="188.8" fill="#000" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="188.8" fill="#EEEEEE">supplier</text></g>
-<g class="a7 an"><rect x="20" y="196.8" width="18.9" height="12.6" rx="2" fill="#874BFD"/><text class="tx bd" x="29.45" y="206.4" fill="#EEEEEE" text-anchor="middle">4</text><text class="tx" x="45.2" y="206.4">Sam tries to write down minus one cup. The house rule</text><text class="tx" x="45.2" y="219">turns him away.</text></g>
-<g class="a8 an"><rect x="45.2" y="222" width="69.3" height="12.6" fill="#FF5F87"/><text class="tx bd" x="51.5" y="231.6" fill="#000" textLength="56.7" lengthAdjust="spacing">✗ refused</text><text class="tx" x="127.1" y="231.6" fill="#EEEEEE">cooler</text></g>
-<g class="a9 an"><text class="tx" x="57.8" y="244.2" fill="#6C6C6C">because rule: !has(page.cups) || page.cups &gt;= 0 (from</text><text class="tx" x="57.8" y="256.8" fill="#6C6C6C">stand) is false</text></g>
-<g class="a10 an"><rect x="20" y="264.8" width="18.9" height="12.6" rx="2" fill="#874BFD"/><text class="tx bd" x="29.45" y="274.4" fill="#EEEEEE" text-anchor="middle">5</text><text class="tx" x="45.2" y="274.4">A busy hour takes the cooler down to 4 cups. Nobody</text><text class="tx" x="45.2" y="287">calls the supplier, and the order goes in anyway.</text></g>
-<g class="a11 an"><rect x="45.2" y="290" width="69.3" height="12.6" fill="#04B575"/><text class="tx bd" x="51.5" y="299.6" fill="#000" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="299.6" fill="#EEEEEE">cooler</text></g>
-<g class="a12 an"><text class="tx" x="51.5" y="312.2"><tspan fill="#6C6C6C">↳ </tspan><tspan fill="#FFB454">supplier</tspan><tspan fill="#6C6C6C"> changed by itself</tspan></text></g>
-<g class="a13 an"><rect x="20" y="320.2" width="18.9" height="12.6" rx="2" fill="#874BFD"/><text class="tx bd" x="29.45" y="329.8" fill="#EEEEEE" text-anchor="middle">7</text><text class="tx" x="45.2" y="329.8">A long entry goes into the daybook, and the daybook</text><text class="tx" x="45.2" y="342.4">notices its own weight.</text></g>
-<g class="a14 an"><rect x="45.2" y="345.4" width="69.3" height="12.6" fill="#04B575"/><text class="tx bd" x="51.5" y="355" fill="#000" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="355" fill="#EEEEEE">daybook</text></g>
-<g class="a15 an"><text class="tx" x="51.5" y="367.6"><tspan fill="#6C6C6C">↳ </tspan><tspan fill="#FFB454">daybook</tspan><tspan fill="#6C6C6C"> changed by itself</tspan></text></g>
+<text class="tx" x="20" y="22.5" style="fill:var(--mute)">$ conky demo</text>
+<g class="a0 an"><text class="tx bd" x="20" y="50.5">A lemonade stand</text></g>
+<g class="a1 an"><text class="tx bd" x="29.45" y="78" style="fill:var(--mute)" text-anchor="middle">1</text><text class="tx" x="45.2" y="78">Maya sets up the stand and writes down its one house</text><text class="tx" x="45.2" y="90.6">rule. The cooler never holds less than nothing.</text></g>
+<g class="a2 an"><rect x="45.2" y="93.6" width="69.3" height="12.6" style="fill:var(--teal)"/><text class="tx bd" x="51.5" y="103.2" style="fill:var(--paper)" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="103.2">stand</text></g>
+<g class="a3 an"><text class="tx bd" x="29.45" y="120.8" style="fill:var(--mute)" text-anchor="middle">2</text><text class="tx" x="45.2" y="120.8">She fills the cooler with 40 cups. From now on it</text><text class="tx" x="45.2" y="133.4">follows the house rule.</text></g>
+<g class="a4 an"><rect x="45.2" y="136.4" width="69.3" height="12.6" style="fill:var(--teal)"/><text class="tx bd" x="51.5" y="146" style="fill:var(--paper)" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="146">cooler</text></g>
+<g class="a5 an"><text class="tx bd" x="29.45" y="163.6" style="fill:var(--mute)" text-anchor="middle">3</text><text class="tx" x="45.2" y="163.6">The supplier is asked to keep an eye on the cooler. If</text><text class="tx" x="45.2" y="176.2">it drops below 10 cups, lemons are ordered.</text></g>
+<g class="a6 an"><rect x="45.2" y="179.2" width="69.3" height="12.6" style="fill:var(--teal)"/><text class="tx bd" x="51.5" y="188.8" style="fill:var(--paper)" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="188.8">supplier</text></g>
+<g class="a7 an"><text class="tx bd" x="29.45" y="206.4" style="fill:var(--mute)" text-anchor="middle">4</text><text class="tx" x="45.2" y="206.4">Sam tries to write down minus one cup. The house rule</text><text class="tx" x="45.2" y="219">turns him away.</text></g>
+<g class="a8 an"><rect x="45.2" y="222" width="69.3" height="12.6" style="fill:var(--pink)"/><text class="tx bd" x="51.5" y="231.6" style="fill:var(--paper)" textLength="56.7" lengthAdjust="spacing">✗ refused</text><text class="tx" x="127.1" y="231.6">cooler</text></g>
+<g class="a9 an"><text class="tx" x="57.8" y="244.2"  style="fill:var(--mute)">because rule: !has(page.cups) || page.cups &gt;= 0 (from</text><text class="tx" x="57.8" y="256.8"  style="fill:var(--mute)">stand) is false</text></g>
+<g class="a10 an"><text class="tx bd" x="29.45" y="274.4" style="fill:var(--mute)" text-anchor="middle">5</text><text class="tx" x="45.2" y="274.4">A busy hour takes the cooler down to 4 cups. Nobody</text><text class="tx" x="45.2" y="287">calls the supplier, and the order goes in anyway.</text></g>
+<g class="a11 an"><rect x="45.2" y="290" width="69.3" height="12.6" style="fill:var(--teal)"/><text class="tx bd" x="51.5" y="299.6" style="fill:var(--paper)" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="299.6">cooler</text></g>
+<g class="a12 an"><text class="tx" x="51.5" y="312.2"><tspan style="fill:var(--mute)">↳ </tspan><tspan style="fill:var(--amber)">supplier</tspan><tspan style="fill:var(--mute)"> changed by itself</tspan></text></g>
+<g class="a13 an"><text class="tx bd" x="29.45" y="329.8" style="fill:var(--mute)" text-anchor="middle">7</text><text class="tx" x="45.2" y="329.8">A long entry goes into the daybook, and the daybook</text><text class="tx" x="45.2" y="342.4">notices its own weight.</text></g>
+<g class="a14 an"><rect x="45.2" y="345.4" width="69.3" height="12.6" style="fill:var(--teal)"/><text class="tx bd" x="51.5" y="355" style="fill:var(--paper)" textLength="56.7" lengthAdjust="spacing">✓ written</text><text class="tx" x="127.1" y="355">daybook</text></g>
+<g class="a15 an"><text class="tx" x="51.5" y="367.6"><tspan style="fill:var(--mute)">↳ </tspan><tspan style="fill:var(--amber)">daybook</tspan><tspan style="fill:var(--mute)"> changed by itself</tspan></text></g>
 <text class="t" x="464" y="22" font-size="10.08" fill-opacity="1" text-anchor="start">A2UI</text>
 <text class="t" x="876" y="22" font-size="8.4" fill-opacity="1" text-anchor="end">WIREFRAME</text>
 <path class="f50" d="M468 378H880V38H876V378Z"/>
@@ -119,7 +120,7 @@
 <text class="t" x="486" y="201" font-size="9.24" fill-opacity="1" text-anchor="start">SUPPLIER</text>
 <g class="a22 an x"><path class="k" d="M476 207L864 236"/><path class="k" d="M864 207L476 236"/><path class="k" d="M476 207L864 207"/></g>
 <g class="a23 an x"><path class="k" d="M486 222L726 222"/></g>
-<mask id="wr" maskUnits="userSpaceOnUse" x="476" y="206" width="388" height="24"><rect class="rv" x="476" y="206" width="388" height="24" fill="#fff"/></mask>
+<mask id="wr" maskUnits="userSpaceOnUse" x="476" y="206" width="388" height="24"><rect class="rv" x="476" y="206" width="388" height="24" fill="#ffffff"/></mask>
 <g class="a24 an"><g mask="url(#wr)"><text class="sn" x="486" y="222" font-size="13.5">Two bags of lemons, please. We are nearly out.</text></g></g>
 <g class="a25 an x"><path class="a" d="M473 181H867V239H473Z"/></g>
 <path class="k" d="M476 242H864V352H476Z"/>

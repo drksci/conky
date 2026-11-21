@@ -52,6 +52,7 @@ From [design](../design.md) and the [reference](../reference/vault-format.md):
 - One open design question, recorded without an answer in [open questions](open-questions.md): removing the last commit is not detectable from one copy alone.
 - Rules are not enforced on commits made outside conky or pushed from elsewhere. `verify` catches unsigned or unlisted-key commits, not rule violations ([decision 0002](../decisions/0002-git-is-the-store.md)).
 - Write throughput is limited by one signed commit per write, in the order of tens per second.
+- Front-page figures follow [the design rules](../reference/design.md), but the smallest labels in the schematic figures land near 8 pixels at README width, under the 11 the rules ask for, and the results-page charts the README does not show keep their own colours.
 - Temperament and voice for pages are not built. Pages in the example vaults carry human-written content, and nothing gives a page a generated temperament or voice ([a page with a self](../ideas/character.md)).
 - Everything on the [roadmap](roadmap.md) is unbuilt except the first slice of measures, the demo, model pages, pages as answers, the mechanical form of the resume test and the terminal connector. A character has no budget on how many pages it writes.
 - The resume test with a model is not built, so nothing shows that a consumer other than conky's own commands can resume from a stopped vault.

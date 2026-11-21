@@ -1,9 +1,12 @@
 """The front-page plates: who got there, where the text went and where the time went.
 
 Drawn from the standard record alone (`bench/record.py`), so it names no scenario and no harness.
-The look is a pen-plotter printout: one ink, grey for what is secondary, dot textures where a
-tone is wanted, filled and hollow squares for marks. Colour is two soft neon pens and no more: one
-for the harness whose `adapter.json` says `accent`, one for a broken rule.
+The look is a pen-plotter printout on a transparent ground: ink, mute for what is secondary, dot
+textures where a tone is wanted, filled and hollow squares for marks. Every colour, weight, dash,
+size and type stack comes from the kit (`bench/kit.py`, read from `src/conky/tokens.json`). A pen
+appears only where it means something: pink for the harness whose `adapter.json` says `accent`
+(the subject and the focus), amber for a broken rule (a warning), and in the flame graphs one pen
+for each kind of frame. Other harnesses are told apart by weight and texture, not by hue.
 """
 
 from __future__ import annotations
@@ -12,68 +15,76 @@ import math
 import statistics
 from xml.sax.saxutils import escape
 
-from bench import record
+from bench import kit, record
 
 WIDTH = 720
-MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+SIZE, WEIGHT, DASH = kit.SIZE, kit.WEIGHT, kit.DASH
+# What each colour role draws, by token name: the subject takes the focus pen, a broken rule the
+# warning pen. A plate names roles or tokens, never a value.
+ROLES = {"accent": "pink", "mark": "amber", "grey": "mute"}
 LOOKS = {
-    "light": {
-        "ink": "#1E1E1E",
-        "grey": "#77777A",
-        "accent": "#C99A00",
-        "mark": "#0097A7",
-        "paper": "#FFFFFF",
-        "warm": "#C6502C",
-    },
-    "dark": {
-        "ink": "#EDEDED",
-        "grey": "#9AA0A8",
-        "accent": "#FFE066",
-        "mark": "#7DF9FF",
-        "paper": "#0D1117",
-        "warm": "#FF9E80",
-    },
+    look: kit.palette(look) | {r: kit.palette(look)[t] for r, t in ROLES.items()}
+    for look in kit.LOOKS
 }
-TITLE = (
-    "Every run drawn as a bar from start to goal, one band per harness, "
-    "with what was held equal above and what it cost below."
-)
 X0, X1 = 172.0, 520.0  # the span every progress axis shares, so the panels line up
 SIDE = 548.0  # where the right-hand column starts
 
 
 class Sheet:
-    """A list of SVG parts with the few marks the plate is made of."""
+    """A list of SVG parts with the few marks the plate is made of.
+
+    The face is named once, on the root: text inherits the embedded text stack, and code and
+    tabular numbers take the one `c` class. An area is filled only with a kit pattern, ink or a
+    pen at full value.
+    """
 
     def __init__(self, look: str) -> None:
         self.c = LOOKS[look]
         self.parts: list[str] = []
+        self.used: dict[str, str] = {}
 
     def add(self, text: str) -> None:
         self.parts.append(text)
 
+    def fill(self, kind: str, colour: str) -> str:
+        """A kit pattern in a colour, as a paint: `solid` is the colour itself."""
+        if kind == "solid":
+            return colour
+        name = f"{kind}-{colour}"
+        self.used.setdefault(name, kit.pattern(name, kind, self.c[colour]))
+        return f"url(#{name})"
+
     def text(
-        self, x, y, s, size=8, fill="ink", font=MONO, weight="normal", anchor="start", gap=0.0
+        self,
+        x,
+        y,
+        s,
+        size=SIZE["small"],
+        fill="ink",
+        font="text",
+        weight="normal",
+        anchor="start",
+        gap=0.0,
     ):
         spacing = f' letter-spacing="{gap}em"' if gap else ""
+        face = ' class="c"' if font == "code" else ""
+        bold = ' font-weight="bold"' if weight == "bold" else ""
         self.add(
-            f'<text x="{x:.1f}" y="{y:.1f}" font-family="{font}" font-size="{size}" '
-            f'font-weight="{weight}" text-anchor="{anchor}" fill="{self.c[fill]}"{spacing}>'
-            f"{escape(str(s))}</text>"
+            f'<text x="{x:.1f}" y="{y:.1f}"{face} font-size="{size}"{bold} '
+            f'text-anchor="{anchor}" fill="{self.c[fill]}"{spacing}>{escape(str(s))}</text>'
         )
 
-    def caps(self, x, y, s, fill="grey", anchor="start", size=8.5, weight="normal"):
-        self.text(x, y, str(s).upper(), size, fill, MONO, weight, anchor, 0.14)
+    def caps(self, x, y, s, fill="ink", anchor="start", size=SIZE["small"], weight="normal"):
+        self.text(x, y, str(s).upper(), size, fill, "text", weight, anchor, 0.1)
 
-    def line(self, x1, y1, x2, y2, width=0.75, stroke="ink", dash=""):
+    def line(self, x1, y1, x2, y2, width=WEIGHT["fine"], stroke="ink", dash=""):
         extra = f' stroke-dasharray="{dash}"' if dash else ""
         self.add(
             f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
             f'stroke="{self.c[stroke]}" stroke-width="{width}" stroke-linecap="round"{extra}/>'
         )
 
-    def box(self, x, y, w, h, fill="none", stroke="ink", width=0.75):
+    def box(self, x, y, w, h, fill="none", stroke="ink", width=WEIGHT["fine"]):
         paint = fill if fill.startswith("url") or fill == "none" else self.c[fill]
         line = "none" if stroke == "none" else self.c[stroke]
         self.add(
@@ -81,7 +92,7 @@ class Sheet:
             f'fill="{paint}" stroke="{line}" stroke-width="{width}"/>'
         )
 
-    def path(self, d, fill="none", stroke="ink", width=1.2):
+    def path(self, d, fill="none", stroke="ink", width=WEIGHT["fine"]):
         paint = fill if fill.startswith("url") or fill == "none" else self.c[fill]
         line = "none" if stroke == "none" else self.c[stroke]
         self.add(
@@ -89,28 +100,14 @@ class Sheet:
             f'stroke-linejoin="round" stroke-linecap="round"/>'
         )
 
-    def defs(self) -> str:
-        def tile(name: str, size: int, squares: str, colour: str) -> str:
-            return (
-                f'<pattern id="{name}" width="{size}" height="{size}" '
-                f'patternUnits="userSpaceOnUse"><path d="{squares}" fill="{self.c[colour]}" '
-                f'shape-rendering="crispEdges"/></pattern>'
-            )
-
-        dots, dense = "M0 0h1v1h-1z", "M0 0h1v1h-1zM2 2h1v1h-1z"
-        return (
-            "<defs>"
-            + tile("dots", 4, dots, "ink")
-            + tile("dense", 4, dense, "ink")
-            + tile("dense-accent", 4, dense, "accent")
-            + "</defs>"
-        )
-
     def svg(self, height: float, title: str) -> str:
+        defs = "<defs>" + "".join(self.used[k] for k in sorted(self.used)) + "</defs>\n"
         return (
             f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{height:.0f}" '
-            f'viewBox="0 0 {WIDTH} {height:.0f}" role="img" aria-label="{escape(title)}">\n'
-            f"<title>{escape(title)}</title>\n{self.defs()}\n"
+            f'viewBox="0 0 {WIDTH} {height:.0f}" role="img" aria-label="{escape(title)}" '
+            f'font-family="{escape(kit.TEXT)}">\n'
+            f"<title>{escape(title)}</title>\n<style>.c{{font-family:{kit.CODE}}}</style>\n"
+            + (defs if self.used else "")
             + "\n".join(self.parts)
             + "\n</svg>\n"
         )
@@ -118,7 +115,7 @@ class Sheet:
 
 def end_mark(s: Sheet, x: float, y: float, ending: str, colour: str) -> None:
     """A filled square reached the goal; a hollow one did not."""
-    s.box(x - 3, y - 3, 6, 6, colour if ending == "reached" else "none", colour, 1.0)
+    s.box(x - 3, y - 3, 6, 6, colour if ending == "reached" else "none", colour, WEIGHT["fine"])
 
 
 def short(number: float) -> str:
@@ -142,10 +139,9 @@ def _setup(rows: list[dict]) -> tuple[list[str], dict, dict, list[str]]:
 
 
 def _head(s: Sheet, title: str, right: str = "") -> None:
-    s.text(24, 28, title, 15, "ink", SANS, "bold")
+    s.text(24, 30, title, SIZE["display"], "ink", "text")
     if right:
-        s.caps(WIDTH - 24, 28, right, "grey", "end")
-    s.line(24, 40, WIDTH - 24, 40)
+        s.caps(WIDTH - 24, 30, right, "grey", "end")
 
 
 def _state(rows: list[dict], words: str) -> str:
@@ -177,8 +173,8 @@ def reached(rows: list[dict], series: list[dict], progress: dict, kind: str, loo
 
     def fill(h: str) -> str:
         if accent[h]:
-            return "url(#dense-accent)"
-        return "url(#dense)" if h in thinking else "url(#dots)"
+            return s.fill("checker", "accent")
+        return s.fill("checker" if h in thinking else "dots", "ink")
 
     def px(value: float) -> float:
         return X0 + (X1 - X0) * min(max(value, 0.0), goal) / goal
@@ -198,7 +194,7 @@ def reached(rows: list[dict], series: list[dict], progress: dict, kind: str, loo
     cell = (WIDTH - 48) / max(len(facts), 4)
     for i, (name, value) in enumerate(facts):
         s.caps(24 + i * cell, 60, name)
-        s.text(24 + i * cell, 77, value, 12.5, "ink", SANS, "bold")
+        s.text(24 + i * cell, 77, value, SIZE["large"], "ink", "code", "bold")
 
     top, bar, gap = 116.0, 5.0, 3.0
     lane = max(len(seeds) * (bar + gap) + 14, 50.0)
@@ -206,7 +202,7 @@ def reached(rows: list[dict], series: list[dict], progress: dict, kind: str, loo
     s.caps(X1, top - 10, progress["end"], anchor="end")
     bottom = top + lane * len(order)
     for tick in sorted({0.0, goal, *(m["at"] for m in progress.get("milestones", []))}):
-        s.line(px(tick), top - 4, px(tick), bottom, 0.75, "grey", "1 4")
+        s.line(px(tick), top - 4, px(tick), bottom, WEIGHT["hair"], "grey", DASH["dot"])
         s.caps(px(tick), bottom + 12, f"{tick:,.0f}", anchor="middle")
     for stone in progress.get("milestones", []):
         s.caps(px(stone["at"]), top - 10, stone["name"], anchor="middle")
@@ -214,8 +210,8 @@ def reached(rows: list[dict], series: list[dict], progress: dict, kind: str, loo
     for i, h in enumerate(order):
         rs = arms[h]
         y = top + i * lane
-        s.caps(24, y + 14, record.label(h), colour(h), size=10.5, weight="bold")
-        s.text(24, y + 29, rs[0]["gloss"], 9.5, "grey", SANS)
+        s.caps(24, y + 14, record.label(h), colour(h), size=SIZE["base"], weight="bold")
+        s.text(24, y + 29, rs[0]["gloss"], SIZE["base"], "grey", "text")
         first = y + (lane - 8 - len(rs) * (bar + gap) + gap) / 2
         for k, r in enumerate(rs):
             by = first + k * (bar + gap)
@@ -230,19 +226,19 @@ def reached(rows: list[dict], series: list[dict], progress: dict, kind: str, loo
         mid = y + lane / 2 - 4
         for k, r in enumerate(rs):
             end_mark(s, SIDE + 4 + k * 12, mid - 8, r["ending"], colour(h))
-        s.text(SIDE, mid + 14, f"{got} of {len(rs)}", 14, colour(h), SANS, "bold")
+        s.text(SIDE, mid + 14, f"{got} of {len(rs)}", SIZE["large"], colour(h), "code", "bold")
         broken = sum(r["violations"] for r in rs)
         if broken:
-            s.text(WIDTH - 24, mid + 14, f"{broken}", 14, "mark", SANS, "bold", "end")
+            s.text(WIDTH - 24, mid + 14, f"{broken}", SIZE["large"], "mark", "code", "bold", "end")
             s.caps(WIDTH - 24, mid - 5, "rules broken", anchor="end")
         if rs[0]["kept"] is not None:
             s.text(
                 WIDTH - 24,
                 mid + 14,
                 f"{sum(r['kept'] or 0 for r in rs)}",
-                14,
+                SIZE["large"],
                 colour(h),
-                SANS,
+                "code",
                 "bold",
                 "end",
             )
@@ -252,37 +248,33 @@ def reached(rows: list[dict], series: list[dict], progress: dict, kind: str, loo
 
 SHARES = (("task", "task"), ("screen", "screen"), ("scaffold", "scaffolding"), ("answer", "answer"))
 FLAME = (24.0, WIDTH - 24.0)  # a flame graph takes the full width, its harness named above it
-ROW = 19.0
-# Flame-graph fills: one soft hue a kind of frame, the same in both looks, lettered in dark ink.
+ROW = 20.0
+# Flame-graph blocks are flat, like a contribution heatmap: a step of the ink ramp, with pink
+# only for the subject's run. Blocks are parted by a small gap of empty page, never by a stroke.
 TINTS = {
-    "total": "#C9CDD6",
-    "accent": "#FFE066",
-    "step": ("#B8A6FF", "#9F8CF5"),
-    "call": "#8CBEFF",
-    "idle": "#5B6370",
-    "task": "#D6C2FF",
-    "screen": "#7FE3DC",
-    "scaffold": "#F7B0DE",
-    "answer": "#FFBE7A",
+    "total": "ramp4",
+    "accent": "accent",
+    "step": ("ramp2", "ramp1"),
+    "idle": "ramp1",
+    "model": "ramp3",
+    "screen": "ramp3",
+    "task": "ramp2",
+    "scaffold": "ramp4",
+    "answer": "ramp1",
 }
-LETTER = "#14161A"
+GAP = 2.0  # the empty space between blocks
+NAMED = {"step"}  # only the turns carry a name, and only where it fits whole
 
 
 def _frames(s: Sheet, node: tuple, x: float, y: float, scale: float) -> float:
-    """Draw one frame and everything under it; return the lowest edge reached."""
+    """Draw one block and everything under it; return the lowest edge reached."""
     label, value, tint, children = node
     w = value * scale
     if w < 0.4:
         return y
-    s.add(
-        f'<rect x="{x:.2f}" y="{y:.1f}" width="{max(w - 1, 0.4):.2f}" height="{ROW - 1.5}" '
-        f'rx="1.5" fill="{tint}"/>'
-    )
-    if label and w > len(label) * 5.9 + 8:
-        s.add(
-            f'<text x="{x + 4:.1f}" y="{y + ROW - 6.5:.1f}" font-family="{MONO}" font-size="9.5" '
-            f'fill="{LETTER}">{escape(label)}</text>'
-        )
+    s.box(x, y, max(w - GAP, 0.4), ROW - GAP, tint, "none", 0)
+    if label.startswith("turn") and w > len(label) * 6.2 + 10:
+        s.text(x + 4, y + ROW - 8, label, SIZE["base"], "ink")
     low, at = y + ROW, x
     for child in children:
         low = max(low, _frames(s, child, at, y + ROW, scale))
@@ -293,9 +285,9 @@ def _frames(s: Sheet, node: tuple, x: float, y: float, scale: float) -> float:
 def _key(s: Sheet, y: float, kinds: tuple[tuple[str, str], ...]) -> None:
     x = FLAME[0]
     for tint, word in kinds:
-        s.add(f'<rect x="{x:.1f}" y="{y - 8:.1f}" width="9" height="9" rx="1.5" fill="{tint}"/>')
-        s.caps(x + 14, y, word, "ink", size=8)
-        x += 14 + len(word) * 6.6 + 18
+        s.box(x, y - 9, 10, 10, tint, "none", 0)
+        s.caps(x + 15, y, word, "ink")
+        x += 15 + len(word) * 7.2 + 20
 
 
 def _flames(s: Sheet, trees: dict[str, tuple], accent: dict, unit: str) -> float:
@@ -305,8 +297,10 @@ def _flames(s: Sheet, trees: dict[str, tuple], accent: dict, unit: str) -> float
     y = 86.0
     for h, tree in trees.items():
         colour = "accent" if accent[h] else "ink"
-        s.caps(FLAME[0], y, record.label(h), colour, size=10.5, weight="bold")
-        s.text(FLAME[1], y, f"{short(tree[1])} {unit}", 13, colour, SANS, "bold", "end")
+        s.caps(FLAME[0], y, record.label(h), colour, size=SIZE["base"], weight="bold")
+        s.text(
+            FLAME[1], y, f"{short(tree[1])} {unit}", SIZE["large"], colour, "code", "bold", "end"
+        )
         y = _frames(s, tree, FLAME[0], y + 8, scale) + 24
     return y - 12
 
@@ -318,7 +312,7 @@ def text(rows: list[dict], calls: list[dict], look: str) -> str:
     made = {(e["harness"], e["seed"]): e["calls"] for e in calls}
     thinking = [h for h in thinking if any(made.get((h, r["seed"])) for r in arms[h])]
     _head(s, "Where the text went", _state(rows, "characters · median run"))
-    _key(s, 62, tuple((TINTS[k], word) for k, word in SHARES))
+    _key(s, 62, tuple((TINTS[k], word) for k, word in sorted(SHARES, key=lambda kw: TINTS[kw[0]])))
     trees = {}
     for h in thinking:
         cs = made.get((h, _median_run(arms[h], "chars")["seed"]), [])
@@ -327,15 +321,7 @@ def text(rows: list[dict], calls: list[dict], look: str) -> str:
             turns.setdefault(c["step"], []).append(c)
         steps = []
         for n, (step, group) in enumerate(sorted(turns.items())):
-            leaves = [
-                (
-                    "call",
-                    sum(c.get(k, 0) for k, _ in SHARES),
-                    TINTS["call"],
-                    [(word, c.get(k, 0), TINTS[k], []) for k, word in SHARES],
-                )
-                for c in group
-            ]
+            leaves = [(word, sum(c.get(k, 0) for c in group), TINTS[k], []) for k, word in SHARES]
             steps.append(
                 (f"turn {step}", sum(leaf[1] for leaf in leaves), TINTS["step"][n % 2], leaves)
             )
@@ -352,7 +338,7 @@ def time(rows: list[dict], calls: list[dict], look: str) -> str:
     made = {(e["harness"], e["seed"]): e["calls"] for e in calls}
     thinking = [h for h in thinking if any(made.get((h, r["seed"])) for r in arms[h])]
     _head(s, "Where the time went", _state(rows, "seconds · median run"))
-    _key(s, 62, ((TINTS["call"], "in the model"), (TINTS["idle"], "in the harness")))
+    _key(s, 62, ((TINTS["model"], "in the model"), (TINTS["idle"], "in the harness")))
     trees = {}
     for h in thinking:
         cs = made.get((h, _median_run(arms[h], "wall_s")["seed"]), [])
@@ -362,7 +348,7 @@ def time(rows: list[dict], calls: list[dict], look: str) -> str:
             parts = turns.setdefault(c["step"], [])
             if c["at"] - clock > 0.05:
                 parts.append(("", c["at"] - clock, TINTS["idle"], []))
-            parts.append(("model", c["seconds"], TINTS["call"], []))
+            parts.append(("model", c["seconds"], TINTS["model"], []))
             clock = c["at"] + c["seconds"]
         steps = [
             (f"turn {step}", sum(part[1] for part in parts), TINTS["step"][n % 2], parts)
@@ -390,19 +376,17 @@ def _vault(s: Sheet, x: float, y: float, w: float, shape: dict, colour: str) -> 
 
     def page(n: dict, px_: float, py_: float, named: bool, drop: float = 17) -> None:
         fresh = n["id"] not in start
-        ink = "accent" if fresh else "ink"
+        ink = kit.MEANING["added"] if fresh else "ink"  # a page the character added
         side = 12 if n["kind"] == "character" else 9
-        paint = (
-            ink if n["kind"] == "character" else ("url(#dense-accent)" if fresh else "url(#dots)")
-        )
+        paint = ink if n["kind"] == "character" else s.fill("checker" if fresh else "dots", ink)
         if n["kind"] == "provider":
-            s.path(f"M{px_:.1f},{py_ - 6:.1f} l6,6 l-6,6 l-6,-6 Z", "none", ink, 1.0)
+            s.path(f"M{px_:.1f},{py_ - 6:.1f} l6,6 l-6,6 l-6,-6 Z", "none", ink, WEIGHT["fine"])
         else:
-            s.box(px_ - side / 2, py_ - side / 2, side, side, paint, ink, 1.0)
+            s.box(px_ - side / 2, py_ - side / 2, side, side, paint, ink, WEIGHT["fine"])
         at[n["id"]] = (px_, py_)
         if named or fresh or n["kind"] != "page":
-            tone = "accent" if fresh else "grey"
-            s.caps(px_ - 5, py_ + drop, n["id"][:16], tone, "start", 7.5)
+            tone = kit.MEANING["added"] if fresh else "grey"
+            s.caps(px_ - 5, py_ + drop, n["id"][:16], tone, "start", SIZE["micro"])
 
     gap = w / (len(loose) + 1)
     for i, n in enumerate(sorted(loose, key=lambda n: (n["kind"] != "character", n["id"]))):
@@ -411,11 +395,11 @@ def _vault(s: Sheet, x: float, y: float, w: float, shape: dict, colour: str) -> 
     each = (w - 12 * (len(spaces) - 1)) / max(len(spaces), 1)
     for space in spaces:
         s.add(
-            f'<rect x="{sx:.1f}" y="{y + 56:.1f}" width="{each:.1f}" height="64" rx="6" '
-            f'fill="none" stroke="{s.c["ink"]}" stroke-width="1" stroke-dasharray="1 4" '
-            f'stroke-linecap="round"/>'
+            f'<rect x="{sx:.1f}" y="{y + 56:.1f}" width="{each:.1f}" height="64" '
+            f'fill="none" stroke="{s.c["ink"]}" stroke-width="{WEIGHT["fine"]}" '
+            f'stroke-dasharray="{DASH["dot"]}" stroke-linecap="round"/>'
         )
-        s.caps(sx + 8, y + 70, space["id"], "ink", size=8, weight="bold")
+        s.caps(sx + 8, y + 70, space["id"], "ink", weight="bold")
         at[space["id"]] = (sx + each / 2, y + 56)
         members = sorted(inside.get(space["id"], []), key=lambda n: n["id"])
         step = min(22.0, (each - 16) / max(len(members), 1))
@@ -430,22 +414,22 @@ def _vault(s: Sheet, x: float, y: float, w: float, shape: dict, colour: str) -> 
                 ay + 7,
                 bx,
                 by - (0 if e["to"] in {n["id"] for n in spaces} else 7),
-                0.9,
+                WEIGHT["hair"],
                 colour,
-                "1 3",
+                DASH["dot"],
             )
 
 
 def _conversation(s: Sheet, x: float, y: float, w: float, shape: dict, facts: dict) -> None:
     """A conversation's end state: a model and the one list that grew, a line a message."""
     s.add(
-        f'<circle cx="{x + 20:.1f}" cy="{y + 60:.1f}" r="11" fill="none" stroke="{s.c["ink"]}" '
-        f'stroke-width="1"/>'
+        f'<circle cx="{x + 20:.1f}" cy="{y + 60:.1f}" r="11" fill="none" '
+        f'stroke="{s.c[kit.MEANING["thought"]]}" stroke-width="{WEIGHT["fine"]}"/>'
     )
-    s.caps(x + 20, y + 84, "model", anchor="middle", size=7.5)
+    s.caps(x + 20, y + 84, "model", anchor="middle", size=SIZE["micro"])
     left, right = x + 56, x + w - 8
-    s.box(left, y + 6, right - left, 110, "none", "ink", 1.0)
-    s.line(x + 31, y + 60, left, y + 60, 0.9, "ink", "1 3")
+    s.box(left, y + 6, right - left, 110, "none", "ink", WEIGHT["fine"])
+    s.line(x + 31, y + 60, left, y + 60, WEIGHT["hair"], "ink", DASH["dot"])
     lines = int(facts.get("messages", 0)) or 1
     step = min(4.0, 100.0 / lines)
     for i in range(lines):
@@ -455,9 +439,9 @@ def _conversation(s: Sheet, x: float, y: float, w: float, shape: dict, facts: di
             ly,
             left + 6 + (right - left - 12) * (0.35 + 0.65 * ((i * 37) % 10) / 10),
             ly,
-            0.9,
+            WEIGHT["fine"],
         )
-    s.caps((left + right) / 2, y + 130, "one conversation", anchor="middle", size=7.5)
+    s.caps((left + right) / 2, y + 130, "one conversation", anchor="middle", size=SIZE["micro"])
 
 
 def became(rows: list[dict], shapes: list[dict], look: str) -> str:
@@ -471,7 +455,7 @@ def became(rows: list[dict], shapes: list[dict], look: str) -> str:
         colour = "accent" if accent[h] else "ink"
         x = 24 + i * (width + 28)
         shape = found.get((h, _median_run(arms[h], "chars")["seed"]))
-        s.caps(x, 62, record.label(h), colour, size=10.5, weight="bold")
+        s.caps(x, 62, record.label(h), colour, size=SIZE["base"], weight="bold")
         if shape is None:
             continue
         facts = {f["name"]: f["value"] for f in shape["facts"]}
@@ -483,7 +467,7 @@ def became(rows: list[dict], shapes: list[dict], look: str) -> str:
         for k, (name, value) in enumerate(shown):
             fx = x + k * width / len(shown)
             number = f"{value:,}" if isinstance(value, int) else str(value)
-            s.text(fx, 238, number, 14, colour, SANS, "bold")
+            s.text(fx, 238, number, SIZE["large"], colour, "code", "bold")
             line, lines = "", []
             for word in str(name).split(" "):
                 if line and len(line) + len(word) > 15:
@@ -492,7 +476,7 @@ def became(rows: list[dict], shapes: list[dict], look: str) -> str:
                 else:
                     line = f"{line} {word}".strip()
             for j, part in enumerate([*lines, line][:2]):
-                s.text(fx, 252 + j * 11, part, 8.5, "grey", SANS)
+                s.text(fx, 252 + j * 11, part, SIZE["small"], "grey", "text")
     return s.svg(276, "The parts each harness was made of when its median run stopped.")
 
 
@@ -533,9 +517,9 @@ def cost(rows: list[dict], series: list[dict], calls: list[dict], progress: dict
                 f"{price['priced_as']} @ ${price['input']:.2f} in · ${price['output']:.2f} out "
                 f"per million tokens"
             )
-            s.text(x, 62, words, 9.5, "ink", MONO)
+            s.text(x, 62, words, SIZE["small"], "ink", "code")
             x += len(words) * 5.9 + 24
-        s.text(WIDTH - 24, 62, basis, 9.5, "grey", MONO, anchor="end")
+        s.text(WIDTH - 24, 62, basis, SIZE["small"], "grey", "code", anchor="end")
     most = max((worth(h, r, r["chars"]) for h in thinking for r in arms[h]), default=1) or 1
     grid = _nice(most / 4)
     ceiling = grid * (int(most / grid) + 1)
@@ -548,7 +532,6 @@ def cost(rows: list[dict], series: list[dict], calls: list[dict], progress: dict
 
     level = 0.0
     while level <= ceiling + grid / 2:
-        s.line(left, py(level), right, py(level), 0.75, "grey", "1 4")
         s.caps(left - 8, py(level) + 3, show(level) if level else "0", anchor="end")
         level += grid
     for tick in sorted({0.0, goal, *(m["at"] for m in progress.get("milestones", []))}):
@@ -567,12 +550,12 @@ def cost(rows: list[dict], series: list[dict], calls: list[dict], progress: dict
                 d += f" L{at:.1f},{last:.1f} L{at:.1f},{up:.1f}"
                 last = up
             end = px(points[-1]["progress"] * goal)
-            s.path(d, "none", colour, 2.0 if r["seed"] == middle else 0.8)
+            s.path(d, "none", colour, WEIGHT["bold"] if r["seed"] == middle else WEIGHT["fine"])
             if r["ending"] != "reached":
                 end_mark(s, end, last, r["ending"], colour)
         typical = statistics.median(worth(h, r, r["chars"]) for r in arms[h])
-        s.text(right + 8, py(typical) + 4, show(typical), 13, colour, SANS, "bold")
-        s.caps(right + 8, py(typical) + 16, f"{record.label(h)}, a run", colour, size=8)
+        s.text(right + 8, py(typical) + 4, show(typical), SIZE["large"], colour, "code", "bold")
+        s.caps(right + 8, py(typical) + 16, f"{record.label(h)}, a run", colour)
     return s.svg(bottom + 26, "What each run cost against progress made, one line for every run.")
 
 
@@ -588,8 +571,8 @@ def scoreboard(lines: list[dict], look: str) -> str:
     """The scores as a small printed table: one line a harness, best first.
 
     Each line has `name`, `accent` and `cells`, a list of (text, standing) where standing is
-    `best`, `worst` or nothing. Colour is in the lettering only: the best of a column in the
-    cool pen, the worst in the warm one.
+    `best`, `worst` or nothing. Emphasis is by weight, not hue: the best of a column in bold ink,
+    the worst in mute; the subject's name in the focus pen.
     """
     s = Sheet(look)
     heads = ("harness", "version", "model", "reached", "cost", "model s", "own s", "score")
@@ -597,17 +580,22 @@ def scoreboard(lines: list[dict], look: str) -> str:
     ends = ("start", "start", "start", "end", "end", "end", "end", "end")
     for head, x, anchor in zip(heads, at, ends, strict=True):
         s.caps(x, 22, head, anchor=anchor)
-    s.line(24, 32, WIDTH - 24, 32)
+    s.line(24, 32, WIDTH - 24, 32, WEIGHT["fine"])
     y = 54.0
     for line in lines:
         s.caps(
-            at[0], y, line["name"], "accent" if line["accent"] else "ink", size=10.5, weight="bold"
+            at[0],
+            y,
+            line["name"],
+            "accent" if line["accent"] else "ink",
+            size=SIZE["base"],
+            weight="bold",
         )
         for k, (words, standing) in enumerate(line["cells"], start=1):
-            tone = {"best": "mark", "worst": "warm"}.get(standing, "ink")
+            tone = "grey" if standing == "worst" else "ink"
             last = k == len(heads) - 1
-            s.text(at[k], y, words, 15 if last else 11.5, tone, SANS if last else MONO,
-                   "bold" if last or standing else "normal", ends[k])  # fmt: skip
-        s.line(24, y + 11, WIDTH - 24, y + 11, 0.75, "grey", "1 4")
+            s.text(at[k], y, words, SIZE["large"] if last else SIZE["base"], tone, "code",
+                   "bold" if last or standing == "best" else "normal", ends[k])  # fmt: skip
+        s.line(24, y + 11, WIDTH - 24, y + 11, WEIGHT["hair"], "grey", DASH["dot"])
         y += 28
     return s.svg(y - 8, "The scores: one line a harness, best first.")

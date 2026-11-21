@@ -4,6 +4,8 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ## [Unreleased]
 
+- The front page's figures and charts are drawn from the shared tokens: a monochrome ground, five pens used only where they carry meaning, transparent light and dark files, the faces GitHub renders the page in, and flat charts in a four-step ink ramp. The README title is a heading, not an image. The rules are in `docs/reference/design.md`.
+
 - New card `a-clerk-finds-it-by-its-terms`: the crowded desk with a question put in other words, found through two pages that say what they are known as.
 - New card `a-clerk-reads-a-crowded-desk`: forty notes on the desk and eight shown, in order of the words they share with what was just said; the clerk is asked only when a note is a question.
 - New card `a-clerk-reads-its-desk`: nothing is stored twice. Each thing said stays as a note within the clerk and the clerk is shown its notes, so a fact given once is given again three notes later with no memory kept.

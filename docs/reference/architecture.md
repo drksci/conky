@@ -1400,6 +1400,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0043-a-trial-is-drawn-as-it-happened](../decisions/0043-a-trial-is-drawn-as-it-happened.md) | accepted | - |
 | [0044-a-page-is-known-by-its-phrases](../decisions/0044-a-page-is-known-by-its-phrases.md) | accepted | [`law.link.known`](#law.link.known) |
 | [0045-a-page-may-be-within-several-spaces](../decisions/0045-a-page-may-be-within-several-spaces.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`law.context.down`](#law.context.down), [`part.space`](#part.space) |
+| [0046-figures-are-drawn-from-the-shared-tokens](../decisions/0046-figures-are-drawn-from-the-shared-tokens.md) | accepted | - |
 
 ### Unplaced
 
@@ -1415,6 +1416,7 @@ Found in the documents and fitting no row above.
 | build on bedrock | [0031-build-on-bedrock.md](../decisions/0031-build-on-bedrock.md) | Walk a new layer one step at a time before building on it. A working rule whose check is the benchmark walkthrough. |
 | energy unit | [energy-unit.md](../ideas/energy-unit.md) | A unit of value flow that conserves only if its conversion is recorded. It waits on a grouped write and a measure of spend, and has no step of its own. |
 | faculties | [faculties.md](../ideas/faculties.md) | A page that watches another and writes the rule, entry or link a sentence asks for, tried aside before it binds. A reflex kind costs nothing and a thinking kind costs a small call. |
+| figures are drawn from the shared tokens | [0046-figures-are-drawn-from-the-shared-tokens.md](../decisions/0046-figures-are-drawn-from-the-shared-tokens.md) | Every figure and chart on the front page takes its colours, weights, sizes and faces from src/conky/tokens.json, on a transparent ground in a light and a dark file. |
 | key rotation and revocation | [0002-git-is-the-store.md](../decisions/0002-git-is-the-store.md) | How keys are rotated and revoked is an open question with no idea or decision. |
 | learned reactions | [learned-reactions.md](../ideas/learned-reactions.md) | A repeated model answer becomes a reaction and the model is no longer asked. It is carried by the codec idea. |
 | ledger | [ledger.md](../ideas/ledger.md) | A built-in ledger was judged a bad idea. The need survives as a grouped write, in the patterns idea. |

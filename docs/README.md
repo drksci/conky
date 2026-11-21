@@ -26,6 +26,7 @@ Every document starts with frontmatter (`kind`, `title`, `status`, `date`, `sour
 - [reference/providers.md](reference/providers.md): Providers
 - [reference/connectors.md](reference/connectors.md): Connectors
 - [reference/vocabulary.md](reference/vocabulary.md): Vocabulary
+- [reference/design.md](reference/design.md): Design: the tokens and rules every front-page figure is drawn from
 - [reference/architecture.md](reference/architecture.md): Architecture index, generated from the code and the documents
 
 ### Design
@@ -81,6 +82,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0043-a-trial-is-drawn-as-it-happened.md](decisions/0043-a-trial-is-drawn-as-it-happened.md): A trial is drawn as it happened
 - [decisions/0044-a-page-is-known-by-its-phrases.md](decisions/0044-a-page-is-known-by-its-phrases.md): A page is known by its phrases
 - [decisions/0045-a-page-may-be-within-several-spaces.md](decisions/0045-a-page-may-be-within-several-spaces.md): A page may be within several spaces
+- [decisions/0046-figures-are-drawn-from-the-shared-tokens.md](decisions/0046-figures-are-drawn-from-the-shared-tokens.md): Figures are drawn from the shared tokens
 
 ### Research
 

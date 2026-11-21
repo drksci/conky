@@ -1,33 +1,38 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="880" height="440" role="img" aria-labelledby="t">
 <title id="t">Plate 1, the whole. On the left the parts: vault, page, space, rule, watch, key, link, event and seal. On the right Conky as a cross-section made of those parts: git at the centre, then pages, reflexes, spaces, characters and an outer wall of lenses, with connectors, models and people plugging into ports in the wall. Solid is built, dotted is planned.</title>
 <style>
-:root{--ink:#1E1E1E}
+:root{--paper:#fbfaf7;--ink:#141413;--mute:#595854;--sunken:#f1f0ec;--raised:#ffffff;--hair:#c9c8c3;--pink:#cc2a68;--blue:#2c4fd0;--teal:#007c84;--amber:#a2600c;--violet:#6c46d6;--blend:multiply}
+svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif}
+.m,.g,.tx,.pt{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
-.k{stroke:var(--ink);stroke-width:0.75}
+.k{stroke:var(--ink);stroke-width:0.8}
 .a{stroke:var(--ink);stroke-width:2.4}
-.h{stroke:var(--ink);stroke-width:0.6}
-.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 6}
-.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 6}
+.h{stroke:var(--ink);stroke-width:0.8}
+.z{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:6 3}
+.y{stroke:var(--ink);stroke-width:2.4;stroke-dasharray:6 3}
 .d{fill:var(--ink);stroke:none}
 .s{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
 .f12,.f25,.f50{stroke:none;fill-rule:evenodd}
 .f12{fill:url(#d12)}
 .f25{fill:url(#d25)}
 .f50{fill:url(#d50)}
-.t{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em}
+.t{fill:var(--ink);letter-spacing:.14em}
 .b{font-weight:700}
-.m{fill:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em}
-.pl{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:1.2 3.4;stroke-linecap:round;stroke-linejoin:round}
-.x1{fill:none;stroke:#1E1E1E;stroke-width:1.6;stroke-linecap:round}
+.rf{fill:var(--pink);stroke:none}
+.x1{fill:none;stroke:var(--paper);stroke-width:1.6;stroke-linecap:round}
+.mu{fill:var(--mute)}
+.m{fill:var(--ink);letter-spacing:.02em}
+.pl{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:1 3;stroke-linecap:round;stroke-linejoin:round}
+.th{stroke:var(--violet);mix-blend-mode:var(--blend)}
 </style>
-<text class="t" x="24" y="30" font-size="9.24" fill-opacity="1" text-anchor="start">1 · THE WHOLE</text>
+<text class="t" x="24" y="30" font-size="9.24" fill-opacity="1" text-anchor="start">1 · WHOLE SYSTEM</text>
 <path class="i" d="M24 418h16v9h-16Z"/>
 <text class="t" x="48" y="426" font-size="7.14" fill-opacity="1" text-anchor="start">BUILT</text>
 <path class="pl" d="M104 418h16v9h-16Z"/>
 <text class="t" x="128" y="426" font-size="7.14" fill-opacity="1" text-anchor="start">PLANNED</text>
 <text class="t" x="856" y="426" font-size="6.72" fill-opacity="1" text-anchor="end">SCHEMATIC</text>
-<text class="t" x="24" y="62" font-size="9.24" fill-opacity="1" text-anchor="start">THE PARTS</text>
+<text class="t" x="24" y="62" font-size="9.24" fill-opacity="1" text-anchor="start">PARTS</text>
 <path class="i" d="M83.65 124L83.64 124.76L83.56 125.51L83.41 126.27L83.21 127.01L82.94 127.74L82.62 128.46L82.23 129.16L81.8 129.84L81.31 130.5L80.78 131.14L80.2 131.75L79.58 132.34L78.93 132.91L78.23 133.44L77.51 133.95L76.75 134.43L75.97 134.89L75.15 135.31L74.32 135.71L73.46 136.07L72.58 136.41L71.68 136.71L70.76 136.98L69.83 137.22L68.88 137.42L67.92 137.59L66.95 137.73L65.97 137.82L64.99 137.88L64 137.9L63.01 137.89L62.03 137.83L61.05 137.73L60.08 137.6L59.12 137.42L58.18 137.2L57.25 136.95L56.35 136.66L55.47 136.33L54.62 135.97L53.8 135.58L53.01 135.15L52.25 134.7L51.52 134.21L50.83 133.7L50.17 133.17L49.56 132.62L48.98 132.04L48.43 131.45L47.93 130.84L47.46 130.21L47.02 129.57L46.63 128.91L46.28 128.24L45.96 127.56L45.68 126.87L45.45 126.16L45.26 125.45L45.11 124.73L45.01 124L44.95 123.26L44.95 122.52L44.99 121.78L45.09 121.04L45.24 120.3L45.46 119.56L45.72 118.83L46.05 118.11L46.44 117.41L46.89 116.72L47.39 116.05L47.96 115.41L48.58 114.8L49.25 114.21L49.97 113.66L50.74 113.15L51.56 112.68L52.41 112.25L53.3 111.86L54.21 111.51L55.15 111.21L56.11 110.95L57.09 110.74L58.08 110.57L59.07 110.44L60.06 110.35L61.06 110.31L62.05 110.3L63.03 110.32L64 110.38L64.96 110.47L65.91 110.59L66.85 110.73L67.78 110.91L68.69 111.1L69.59 111.33L70.47 111.57L71.35 111.84L72.21 112.13L73.05 112.45L73.88 112.79L74.7 113.15L75.5 113.54L76.28 113.95L77.03 114.4L77.77 114.86L78.48 115.36L79.16 115.89L79.8 116.44L80.41 117.02L80.97 117.63L81.49 118.26L81.97 118.92L82.39 119.6L82.75 120.3L83.06 121.02L83.3 121.75L83.48 122.49L83.6 123.24L83.65 124Z"/>
 <path class="k" d="M79.51 124L79.5 124.54L79.44 125.08L79.33 125.62L79.16 126.15L78.95 126.67L78.7 127.18L78.4 127.68L78.05 128.17L77.67 128.64L77.25 129.1L76.79 129.54L76.3 129.96L75.78 130.36L75.24 130.75L74.66 131.11L74.07 131.45L73.45 131.78L72.81 132.08L72.15 132.36L71.47 132.62L70.77 132.86L70.06 133.08L69.34 133.27L68.6 133.44L67.85 133.59L67.1 133.71L66.33 133.8L65.56 133.87L64.78 133.92L64 133.93L63.22 133.92L62.44 133.88L61.67 133.81L60.9 133.71L60.15 133.58L59.4 133.43L58.67 133.25L57.96 133.04L57.27 132.81L56.59 132.55L55.95 132.27L55.32 131.96L54.72 131.64L54.15 131.29L53.6 130.93L53.09 130.55L52.6 130.16L52.14 129.75L51.71 129.32L51.31 128.88L50.94 128.44L50.6 127.98L50.29 127.51L50.01 127.03L49.76 126.54L49.54 126.05L49.36 125.55L49.2 125.04L49.09 124.52L49 124L48.96 123.47L48.96 122.95L48.99 122.42L49.07 121.88L49.19 121.35L49.36 120.83L49.57 120.31L49.83 119.79L50.14 119.29L50.49 118.8L50.89 118.32L51.33 117.87L51.82 117.43L52.35 117.01L52.93 116.62L53.53 116.25L54.18 115.91L54.85 115.6L55.55 115.33L56.27 115.08L57.02 114.86L57.77 114.68L58.55 114.53L59.32 114.4L60.11 114.31L60.89 114.25L61.68 114.22L62.46 114.21L63.23 114.23L64 114.27L64.76 114.33L65.51 114.42L66.25 114.52L66.98 114.65L67.7 114.79L68.41 114.95L69.11 115.12L69.8 115.31L70.48 115.52L71.15 115.75L71.8 115.99L72.45 116.25L73.08 116.53L73.69 116.82L74.29 117.14L74.87 117.47L75.43 117.83L75.96 118.2L76.47 118.6L76.95 119.01L77.4 119.45L77.81 119.9L78.18 120.37L78.52 120.86L78.8 121.36L79.04 121.87L79.24 122.39L79.38 122.92L79.47 123.46L79.51 124Z"/>
 <text class="m" x="64" y="154" font-size="9" text-anchor="middle" xml:space="preserve">vault</text>
@@ -76,7 +81,7 @@
 <path class="i" d="M636.38 83.67L639 85.84L645.97 92.03L652.64 98.57L658.99 105.45L664.98 112.66L670.61 120.19L675.84 128.03L680.66 136.14L685.03 144.52L688.95 153.14L692.4 161.99L695.34 171.02L697.79 180.21L699.71 189.54L701.09 198.97L701.95 208.46L702.26 218L702.03 227.54L701.26 237.05L699.96 246.5L698.13 255.86L695.79 265.1L692.94 274.19L689.6 283.1L685.79 291.81L681.52 300.3L676.81 308.53L671.68 316.5L666.15 324.18L660.24 331.56L653.96 338.62L647.34 345.34L640.4 351.72L633.15 357.73L625.62 363.37L617.82 368.63L609.77 373.48L601.49 377.93L593 381.95L584.31 385.54L575.46 388.69L566.46 391.38L557.33 393.61L548.09 395.37L538.78 396.64L529.4 397.42L520 397.71L510.59 397.5L501.21 396.79L497.68 396.39"/>
 <circle class="i" cx="506.56" cy="231.44" r="4.4"/>
 <path class="i" d="M504.56 231.64L505.96 233.04L508.76 229.84"/>
-<rect x="495.5" y="212.5" width="11" height="11" fill="#F4C430"/>
+<rect x="495.5" y="212.5" width="11" height="11" class="rf"/>
 <path class="x1" d="M498.4 215.4L503.6 220.6"/>
 <path class="x1" d="M498.4 220.6L503.6 215.4"/>
 <circle class="i" cx="506.56" cy="204.56" r="4.4"/>
