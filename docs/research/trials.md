@@ -93,3 +93,14 @@ The animation under a card is drawn from one draw's vault history by the view in
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-keeper-on-the-night-shift/dynamics-dark.webp"><img src="../results/cards/a-keeper-on-the-night-shift/dynamics-light.webp" alt="a keeper on the night shift, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-keeper-on-the-night-shift/topology-dark.png"><img src="../results/cards/a-keeper-on-the-night-shift/topology-light.png" alt="a keeper on the night shift, its final state" width="720"></picture></p>
+
+## a resident notices the ovens
+
+- Objective: a character notices when its surroundings change in ways that cannot be, and says so in its own words, while carrying on
+- Bar: at least 4 of 5 draws pass, median calls a draw at most 3
+- Latest verdict: met
+- Run: 5 draws, 4 passed, model `claude`, 2026-11-21, code at `bfbcfd5`
+- Data: [rows](../results/cards/a-resident-notices-the-ovens/rows.jsonl), [what each draw left](../results/cards/a-resident-notices-the-ovens/observations.jsonl), [its history](../results/cards/a-resident-notices-the-ovens/timeline.json), [the graph drawn](../results/cards/a-resident-notices-the-ovens/graph.json)
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-resident-notices-the-ovens/dynamics-dark.webp"><img src="../results/cards/a-resident-notices-the-ovens/dynamics-light.webp" alt="a resident notices the ovens, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-resident-notices-the-ovens/topology-dark.png"><img src="../results/cards/a-resident-notices-the-ovens/topology-light.png" alt="a resident notices the ovens, its final state" width="720"></picture></p>

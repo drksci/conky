@@ -1,0 +1,9 @@
+{
+ "card": "a-resident-notices-the-ovens",
+ "model": "claude",
+ "date": "2026-11-21",
+ "draws": 5,
+ "passed": 4,
+ "shown": 1,
+ "commit": "bfbcfd5"
+}
