@@ -80,6 +80,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0042-a-space-shows-what-bears-first.md](decisions/0042-a-space-shows-what-bears-first.md): A space shows what bears first
 - [decisions/0043-a-trial-is-drawn-as-it-happened.md](decisions/0043-a-trial-is-drawn-as-it-happened.md): A trial is drawn as it happened
 - [decisions/0044-a-page-is-known-by-its-phrases.md](decisions/0044-a-page-is-known-by-its-phrases.md): A page is known by its phrases
+- [decisions/0045-a-page-may-be-within-several-spaces.md](decisions/0045-a-page-may-be-within-several-spaces.md): A page may be within several spaces
 
 ### Research
 

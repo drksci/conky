@@ -1,0 +1,8 @@
+# Each space is named once in within.
+pages:
+  den: {}
+write:
+  page: kid
+  set:
+    within: [den, den]
+refused: shape

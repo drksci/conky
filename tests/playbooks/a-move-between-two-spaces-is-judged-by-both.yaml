@@ -1,0 +1,18 @@
+# A write that changes within is judged by the spaces joined and by the spaces left.
+pages:
+  club:
+    rules: [{each: "size <= 60"}]
+  street: {}
+  gate:
+    rules: [{each: "!has(page.badge)"}]
+  member:
+    within: club
+steps:
+  - write: {page: member, fields: {within: [street, club]}, body: "short"}
+  - expect: {verify: true}
+  - write: {page: member, fields: {within: street}, body: "long text long text long text long text long text long text long text long text long text"}
+  - expect: {refused: rule}
+  - write: {page: member, fields: {within: [street, gate], badge: 1}}
+  - expect: {refused: rule}
+  - write: {page: member, fields: {within: [street, gate]}}
+  - expect: {verify: true}

@@ -89,11 +89,39 @@ class ShapeError(Exception):
 class Page:
     """One page: its space, rules, watches, own fields and body."""
 
-    within: str | None = None
+    within: str | list[str] | None = None
     rules: list[str | dict[str, str]] = field(default_factory=list)
     watch: list[dict[str, Any]] = field(default_factory=list)
     fields: dict[str, Any] = field(default_factory=dict)
     body: str = ""
+
+
+def spaces(within: Any) -> list[str]:
+    """Return the spaces a `within` names, in order: none, one name or a list of names."""
+    if isinstance(within, str):
+        return [within]
+    if isinstance(within, list):
+        return [name for name in within if isinstance(name, str)]
+    return []
+
+
+def home(within: Any) -> str | None:
+    """Return the first of the spaces a `within` names, the page's home, or None."""
+    return next(iter(spaces(within)), None)
+
+
+def _check_within(value: Any) -> str | list[str] | None:
+    """Return a `within` as it is stored, or raise ShapeError with what to write instead."""
+    if value is None or (isinstance(value, str) and NAME.match(value)):
+        return value
+    if not isinstance(value, list):
+        raise ShapeError(voice.line("within-shape"))
+    for entry in value:
+        if not (isinstance(entry, str) and NAME.match(entry)):
+            raise ShapeError(voice.line("within-entry", entry=repr(entry)))
+    if len(set(value)) != len(value):
+        raise ShapeError(voice.line("within-repeat"))
+    return value[0] if len(value) == 1 else (value or None)
 
 
 def check_name(name: str) -> str:
@@ -220,9 +248,7 @@ def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
         if not isinstance(key, str) or not key:
             raise ShapeError(f"field name {key!r} must be non-empty text")
         if key == "within":
-            if value is not None and not (isinstance(value, str) and NAME.match(value)):
-                raise ShapeError("within must be a page name")
-            within = value
+            within = _check_within(value)
         elif key == "rules":
             if value is None:
                 value = []
@@ -389,12 +415,14 @@ SHOWS_NAMES = ("page", "space", "text")
 def _within(name: str, space: str, lookup: dict[str, Page]) -> bool:
     """Return whether the page name lies within space, directly or through spaces."""
     seen: set[str] = set()
-    found = lookup.get(name)
-    while found is not None and found.within and found.within not in seen:
-        if found.within == space:
+    todo = spaces(lookup[name].within) if name in lookup else []
+    while todo:
+        found = todo.pop()
+        if found == space:
             return True
-        seen.add(found.within)
-        found = lookup.get(found.within)
+        if found not in seen:
+            seen.add(found)
+            todo += spaces(lookup[found].within) if found in lookup else []
     return False
 
 

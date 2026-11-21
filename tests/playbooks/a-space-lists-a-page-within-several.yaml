@@ -1,0 +1,21 @@
+# An embed of a space's members lists a page under every space it is within.
+pages:
+  den: {}
+  choir: {}
+  scribe:
+    within: den
+    seen: ""
+    watch:
+      - on: ticket
+        when: "true"
+        ask:
+          provider: broken
+          prompt: "Den:\n![[den#members]]"
+          otherwise: "![[choir#members]]"
+          into: seen
+  broken: {api: command, command: no-such-program-here}
+  ticket: {text: one}
+steps:
+  - write: {page: singer, actor: alice, fields: {within: [den, choir]}, body: "Hums"}
+  - write: {page: ticket, fields: {text: two}}
+  - expect: {fields: {scribe.seen: "singer: Hums"}}

@@ -14,6 +14,7 @@ from pathlib import Path
 from conky import arch, demo, git
 from conky.errors import BadInput, VerifyFailed
 from conky.page import Page, check_name, load_value, parse
+from conky.page import spaces as page_spaces
 from conky.present import Plain
 from conky.vault import Vault
 
@@ -87,7 +88,7 @@ def _plural(count: int, word: str) -> str:
 
 def _facts(vault: Vault) -> str:
     log, pages = vault.log(), _pages(vault)
-    spaces = {page.within for page in pages.values() if page.within}
+    spaces = {one for page in pages.values() for one in page_spaces(page.within)}
     counts = f"{_plural(len(log), 'commit')}, {_plural(len(pages), 'page')}"
     counts += f", {_plural(len(spaces), 'space')}"
     if not log:
@@ -108,15 +109,17 @@ def _room(vault: Vault) -> list[str]:
     pages = _pages(vault)
     lines = []
     for name, page in pages.items():
-        inherited, seen, space = 0, {name}, page.within
-        while space and space in pages and space not in seen:
-            seen.add(space)
-            inherited += sum(isinstance(entry, dict) for entry in pages[space].rules)
-            space = pages[space].within
+        inherited, seen, todo = 0, {name}, page_spaces(page.within)
+        while todo:
+            space = todo.pop(0)
+            if space in pages and space not in seen:
+                seen.add(space)
+                inherited += sum(isinstance(entry, dict) for entry in pages[space].rules)
+                todo += page_spaces(pages[space].within)
         own = sum(not isinstance(entry, dict) for entry in page.rules)
         rules = _plural(own + inherited, "rule")
         watched = sorted({entry["on"] for entry in page.watch})
-        where = f"in {page.within}" if page.within else "not in a space"
+        where = f"in {', '.join(page_spaces(page.within))}" if page.within else "not in a space"
         watches = f"watches {', '.join(watched)}" if watched else "watches nothing"
         lines.append(f"{name}: {where}; {rules} ({own} own, {inherited} inherited); {watches}")
     return lines or ["no pages"]

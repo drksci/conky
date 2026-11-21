@@ -1,0 +1,26 @@
+# on: within tells each space the written page is within, once, and on: refusal likewise.
+pages:
+  den:
+    count: 0
+    watch:
+      - on: within
+        when: "true"
+        set: {count: "page.count + 1"}
+  choir:
+    count: 0
+    turned: 0
+    rules: [{each: "!has(page.cups) || page.cups >= 0"}]
+    watch:
+      - on: within
+        when: "true"
+        set: {count: "page.count + 1"}
+      - on: refusal
+        when: "true"
+        set: {turned: "page.turned + 1"}
+  tent:
+    within: den
+steps:
+  - write: {page: singer, fields: {within: [tent, choir]}}  # den hears tent at setup, then singer once
+  - expect: {fields: {den.count: 2, choir.count: 1}}
+  - write: {page: singer, fields: {cups: -1}}
+  - expect: {refused: rule, fields: {choir.turned: 1}, verify: true}

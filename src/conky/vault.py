@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections import deque
 from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -32,6 +33,7 @@ from conky.page import (
     resolve,
     resolve_text,
     serialize,
+    spaces,
 )
 from conky.rules import RuleError, concerns, evaluate, holds, missing
 
@@ -519,16 +521,32 @@ class Vault:
         self._react(page, result, commit, actor, at, depth)
         return Result(True, commit)
 
-    def _inside(self, name: str | None, space: str) -> bool:
-        """Return whether name is space or lies within it, directly or through spaces."""
+    def _above(self, name: str, within: Any) -> list[tuple[str, Page | None, int]]:
+        """Return the spaces above a page named name that is within `within`, each once.
+
+        Each comes with its page (None when it does not exist) and its distance: a space the
+        page names is at 1, the spaces it lies within at 2, and a space reached by two paths
+        at the nearer. They are ordered nearest first, and among spaces at one distance by the
+        order they were reached, which follows the order the page lists its spaces in. The
+        page itself appears when a loop leads back to it, and is not climbed past.
+        """
+        found: list[tuple[str, Page | None, int]] = []
+        queue = deque((space, 1) for space in spaces(within))
         seen: set[str] = set()
-        while name is not None and name not in seen:
-            if name == space:
-                return True
-            seen.add(name)
-            found = self._load(name)
-            name = found.within if found is not None else None
-        return False
+        while queue:
+            space, distance = queue.popleft()
+            if space in seen:
+                continue
+            seen.add(space)
+            held = None if space == name else self._load(space)
+            found.append((space, held, distance))
+            if held is not None:
+                queue.extend((up, distance + 1) for up in spaces(held.within))
+        return found
+
+    def _inside(self, within: Any, space: str) -> bool:
+        """Return whether a `within` is space or lies within it, directly or through spaces."""
+        return any(owner == space for owner, _, _ in self._above("", within))
 
     def _scope(self, name: str, page: Page) -> dict[str, Any]:
         """Return what a rule reads for a page: its fields, its space, its size and its text."""
@@ -595,9 +613,11 @@ class Vault:
         The page must lie within the space before the write, when it exists, and after it.
         The space page itself is judged by `_bind`.
         """
+        if isinstance(page.within, list):
+            return voice.line("breach-several", name=name, space=space)
         if not self._inside(page.within, space):
             return f"page {name} is not within space {space}: set within to it or a space inside it"
-        if before is not None and not self._inside(before.within, space):
+        if before is not None and not self._all_inside(before.within, space):
             return f"page {name} lies outside space {space}, so an answer cannot change it"
         if "secret" in page.fields or "command" in page.fields:
             return (
@@ -612,6 +632,10 @@ class Vault:
                     f"name {space} or a space inside it"
                 )
         return None
+
+    def _all_inside(self, within: Any, space: str) -> bool:
+        """Return whether a page has spaces and every one of them is space or lies within it."""
+        return bool(spaces(within)) and all(self._inside(one, space) for one in spaces(within))
 
     @arch.change(
         "place.runtime.bind",
@@ -649,27 +673,21 @@ class Vault:
 
     @arch.law(
         "law.context.down",
-        "A space hands its fields down: the nearest space wins, and a rule reads them as `space`.",
+        "A space hands its fields down: the nearest space wins, the first listed wins a tie, "
+        "and a rule reads them as `space`.",
         doc="rules-and-reactions.md#context-from-spaces",
         roadmap="R22",
     )
-    def _context(self, name: str, within: str | None) -> dict[str, Any]:
+    def _context(self, name: str, within: Any) -> dict[str, Any]:
         """Return the fields of the spaces above a page, the nearest overriding the rest.
 
-        A missing space or a loop ends the climb; `_walk` is what refuses those.
+        At one distance the space reached first, which is the one listed first, overrides the
+        later. A missing space is passed over; `_walk` is what refuses it.
         """
-        chain: list[Page] = []
-        seen = {name}
-        while within is not None and within not in seen:
-            seen.add(within)
-            found = self._load(within)
-            if found is None:
-                break
-            chain.append(found)
-            within = found.within
         context: dict[str, Any] = {}
-        for found in reversed(chain):
-            context.update(found.fields)
+        for owner, found, _ in reversed(self._above(name, within)):
+            if found is not None and owner != name:
+                context.update(found.fields)
         return context
 
     @arch.law(
@@ -688,13 +706,26 @@ class Vault:
         was in before it.
         """
         scope = self._scope(name, page)
-        found = self._walk(name, page, name, scope)
-        if found or before is None or not before.within or before.within == page.within:
+        found = self._own(name, page, scope) or self._walk(name, page.within, scope)
+        if found or before is None or before.within == page.within:
             return found
-        left = self._load(before.within)
-        if left is None:
-            return f"{Refusal.RULE}: space {before.within} does not exist", name
-        return self._walk(name, left, before.within, scope)
+        stays = frozenset(owner for owner, _, _ in self._above(name, page.within))
+        return self._walk(name, before.within, scope, stays)
+
+    def _own(self, name: str, page: Page, scope: dict[str, Any]) -> tuple[str, str] | None:
+        """Judge the plain rules of the page itself against scope."""
+        terms = Terms(self._all)
+        for rule in page.rules:
+            if isinstance(rule, dict):
+                continue
+            try:
+                held = holds(rule, scope, terms)
+            except RuleError:
+                why = missing([rule], scope)
+                return f"{Refusal.RULE}: {rule} (from {name}) failed to evaluate: {why}", name
+            if not held:
+                return f"{Refusal.RULE}: {rule} (from {name}) is false", name
+        return None
 
     @arch.part(
         "part.space",
@@ -711,26 +742,30 @@ class Vault:
         roadmap="R29",
     )
     def _walk(
-        self, name: str, space: Page, owner: str, scope: dict[str, Any]
+        self,
+        name: str,
+        within: Any,
+        scope: dict[str, Any],
+        skip: frozenset[str] = frozenset(),
     ) -> tuple[str, str] | None:
-        """Judge the rules of space and of the spaces above it against scope.
+        """Judge the `each` rules of every space above a page that is within `within`.
 
-        A plain rule is judged only when it is the page's own, and an `each` rule only when it
-        comes from a space above the page.
+        Each space is judged once, nearest first, whatever paths lead to it, and the spaces in
+        skip are passed over. A space that does not exist, or a loop back to the page, is refused.
         """
-        seen = {name}
         terms = Terms(self._all)
-        while True:
+        for owner, space, _ in self._above(name, within):
+            if owner == name:
+                return f"{Refusal.RULE}: within chain loops back to {owner}", name
+            if space is None:
+                return f"{Refusal.RULE}: space {owner} does not exist", name
+            if owner in skip:
+                continue
             for entry in space.rules:
-                if isinstance(entry, dict):
-                    if owner == name:
-                        continue
-                    rule = entry["each"]
-                elif owner == name:
-                    rule = entry
-                else:
+                if not isinstance(entry, dict):
                     continue
-                if isinstance(entry, dict) and not concerns(rule, scope):
+                rule = entry["each"]
+                if not concerns(rule, scope):
                     continue
                 try:
                     held = holds(rule, scope, terms)
@@ -739,16 +774,7 @@ class Vault:
                     return f"{Refusal.RULE}: {rule} (from {owner}) failed to evaluate: {why}", owner
                 if not held:
                     return f"{Refusal.RULE}: {rule} (from {owner}) is false", owner
-            if not space.within:
-                return None
-            owner = space.within
-            if owner in seen:
-                return f"{Refusal.RULE}: within chain loops back to {owner}", name
-            seen.add(owner)
-            found = self._load(owner)
-            if found is None:
-                return f"{Refusal.RULE}: space {owner} does not exist", name
-            space = found
+        return None
 
     def _notices(
         self, on: str, watcher: str, source: str, written: Page, linked: Callable[[], set[str]]
@@ -883,7 +909,6 @@ class Vault:
             return
         kept = self._load(page)
         place = kept.within if kept is not None else changes.get("within")
-        place = place if isinstance(place, str) else None
         other = (changes, page, 0, "")
         event = {
             "id": refusal.id,

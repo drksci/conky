@@ -15,7 +15,7 @@ import re
 from pathlib import Path
 
 from conky import git as vault_git
-from conky.page import RELATIONS, Page, links, parse
+from conky.page import RELATIONS, Page, home, links, parse
 
 SCALARS = (str, int, float, bool)
 LONGEST = 60
@@ -147,7 +147,7 @@ def timeline(vault: Path) -> list[dict]:
         if tags["Kind"] == "refused":
             attempt = json.loads(tags.get("Attempt") or "{}")
             event |= {
-                "within": attempt.get("within"),
+                "within": home(attempt.get("within")),
                 "reason": tags.get("Reason", ""),
                 "from": tags.get("From"),
             }
@@ -155,7 +155,7 @@ def timeline(vault: Path) -> list[dict]:
             old = state.get(name, Page())
             new = state[name] = _page_at(vault, commit, name)
             event |= {
-                "within": new.within,
+                "within": home(new.within),
                 "role": classify(name, new),
                 "links": sorted(links(new)),
                 "state": snapshot(name, new),

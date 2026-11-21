@@ -15,6 +15,7 @@ from pathlib import Path
 
 from bench import record
 from conky.page import parse
+from conky.page import spaces as page_spaces
 
 
 def _git(vault: Path, *args: str) -> str:
@@ -37,7 +38,7 @@ def _asks(page) -> list[dict]:
 
 
 def _graph(pages: dict) -> dict:
-    spaces = {p.within for p in pages.values() if p.within}
+    spaces = {s for p in pages.values() for s in page_spaces(p.within)}
     nodes, edges = [], []
     for name, page in sorted(pages.items()):
         kind = "page"
@@ -48,8 +49,8 @@ def _graph(pages: dict) -> dict:
         if _asks(page):
             kind = "character"
         nodes.append({"id": name, "kind": kind, "size": len(page.body)})
-        if page.within:
-            edges.append({"from": name, "to": page.within, "kind": "within"})
+        for space in page_spaces(page.within):
+            edges.append({"from": name, "to": space, "kind": "within"})
         for entry in page.watch:
             edges.append({"from": name, "to": entry["on"], "kind": "watch"})
         for ask in _asks(page):

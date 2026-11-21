@@ -1,0 +1,8 @@
+# Each entry of within is a page name.
+pages:
+  den: {}
+write:
+  page: kid
+  set:
+    within: [den, 5]
+refused: shape

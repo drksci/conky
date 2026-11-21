@@ -19,7 +19,7 @@ from pathlib import Path
 
 from conky import arch, git
 from conky.errors import BadInput
-from conky.page import Page, parse, serialize
+from conky.page import Page, home, parse, serialize, spaces
 from conky.vault import Trailer, Vault
 
 DIST = "dist"
@@ -56,15 +56,15 @@ def committed(vault: Vault) -> dict[str, Page]:
 def _chain(name: str, pages: dict[str, Page]) -> list[str]:
     """Return the spaces a page sits in, outermost first. A loop of spaces stops at the repeat."""
     chain: list[str] = []
-    space = pages[name].within
+    space = home(pages[name].within)
     while space in pages and space not in chain and space != name:
         chain.append(space)
-        space = pages[space].within
+        space = home(pages[space].within)
     return chain[::-1]
 
 
 def _spaces(pages: dict[str, Page]) -> set[str]:
-    return {p.within for p in pages.values() if p.within in pages}
+    return {s for p in pages.values() for s in spaces(p.within) if s in pages}
 
 
 def _path(name: str, pages: dict[str, Page], spaces: set[str]) -> str:
@@ -85,8 +85,8 @@ def _relations(pages: dict[str, Page]) -> list[tuple[str, str, str]]:
     found = []
     for name in sorted(pages):
         page = pages[name]
-        if page.within:
-            found.append(("within", name, page.within))
+        for space in spaces(page.within):
+            found.append(("within", name, space))
         for entry in page.watch:
             found.append(("watch", name, entry["on"]))
             ask = entry.get("ask")
@@ -129,7 +129,7 @@ def _layout(space: str | None, pages: dict[str, Page], spaces: set[str], seen: s
     """Return a group for the space, holding its note, its pages and its inner spaces."""
     seen.add(space or "")
     own = [] if space is None else [space]
-    members = [n for n in sorted(pages) if pages[n].within == space and n != space]
+    members = [n for n in sorted(pages) if home(pages[n].within) == space and n != space]
     items: list[dict] = []
     for name in own + [n for n in members if n not in spaces]:
         items.append(
@@ -207,7 +207,7 @@ def _overview(space: str, pages: dict[str, Page], spaces: set[str], seen: set[st
     inner = [
         _overview(n, pages, spaces, seen)
         for n in sorted(spaces)
-        if n not in seen and pages[n].within == space
+        if n not in seen and home(pages[n].within) == space
     ]
     count = sum(1 for n in pages if n != space and space in _chain(n, pages))
     pad = GAP if inner else 0
@@ -230,7 +230,7 @@ def _overview(space: str, pages: dict[str, Page], spaces: set[str], seen: set[st
 def _overview_canvas(pages: dict[str, Page], spaces: set[str]) -> str:
     """Return a JSON Canvas of only the spaces, nested as they are, each with its page count."""
     seen: set[str] = set()
-    tops = [n for n in sorted(spaces) if pages[n].within not in spaces]
+    tops = [n for n in sorted(spaces) if home(pages[n].within) not in spaces]
     groups = [_overview(n, pages, spaces, seen) for n in tops]
     groups += [_overview(n, pages, spaces, seen) for n in sorted(spaces) if n not in seen]
     _block(groups)

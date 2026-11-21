@@ -1,0 +1,8 @@
+# Every space a page names must exist.
+pages:
+  den: {}
+write:
+  page: kid
+  set:
+    within: [den, nowhere]
+refused: rule

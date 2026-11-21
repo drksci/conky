@@ -13,7 +13,7 @@ arch:
 
 ## Idea
 
-A page sees the shared facts of the spaces above it (a season, a budget, a house style) in its rules, reactions and embeds, so they are neither repeated nor hidden. Context is one of the three things a space hands down, with rules and reactions; see [what a space hands down](inheritance.md). Rules are inherited, and the fields of the spaces are readable as `space` in rules, watch conditions and `set` values; embeds of context and reactions are not built. Rung: idea.
+A page sees the shared facts of the spaces above it (a season, a budget, a house style) in its rules, reactions and embeds, so they are neither repeated nor hidden. Context is one of the three things a space hands down, with rules and reactions; see [what a space hands down](inheritance.md). Rules are inherited, and the fields of the spaces are readable as `space` in rules, watch conditions and `set` values; a page within several spaces merges them (nearer wins, then the first listed, [decision 0045](../decisions/0045-a-page-may-be-within-several-spaces.md)); embeds of context and reactions are not built. Rung: idea.
 
 ## What a character is shown of a space
 

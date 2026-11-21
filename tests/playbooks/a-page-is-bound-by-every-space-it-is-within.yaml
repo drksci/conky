@@ -1,0 +1,23 @@
+# A page within two spaces is bound by the rules of both, and sheds them when it leaves.
+pages:
+  shift:
+    rules: [{each: "!has(page.cups) || page.cups >= 0"}]
+  choir:
+    rules: [{each: "!has(page.cups) || page.cups <= 5"}]
+  singer:
+    within: [shift, choir]
+steps:
+  - write: {page: singer, fields: {cups: -1}}
+  - expect: {refused: rule}
+  - write: {page: singer, fields: {cups: 9}}
+  - expect: {refused: rule}
+  - write: {page: singer, fields: {cups: 3}}
+  - expect: {fields: {singer.cups: 3}, verify: true}
+  - write: {page: singer, fields: {within: shift}}
+  - write: {page: singer, fields: {cups: 9}}
+  - expect: {fields: {singer.cups: 9}, verify: true}
+  - write: {page: singer, fields: {within: choir}}
+  - expect: {refused: rule}
+  - write: {page: singer, fields: {within: choir, cups: 4}}
+  - write: {page: singer, fields: {cups: -4}}
+  - expect: {fields: {singer.cups: -4}, verify: true}

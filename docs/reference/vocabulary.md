@@ -97,7 +97,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 
 | Name | Meaning |
 |---|---|
-| `within` | The space a page lies within. |
+| `within` | The space a page lies within, or a list of spaces when it lies within several; the first is its home. |
 | `rules` | The list of rules a page and the pages in its space must satisfy. |
 | `watch` | The list of watch entries that say how a page reacts. |
 
@@ -121,7 +121,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 
 | Name | Meaning |
 |---|---|
-| `within` | Reacts to a write of any page within the watching page, at any depth. |
+| `within` | Reacts to a write of any page within the watching page, at any depth and by any path, once. |
 | `link` | Reacts to a write of a page whose text links to the watching page, by brackets or by a phrase the watching page is known by. |
 | `refusal` | Reacts to a refused write to the watching page, by it, or within it. |
 

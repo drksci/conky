@@ -79,6 +79,22 @@ A rule is a condition written as text, or a mapping with the one key each whose 
 
 A watch entry needs on (page name, within, link or refusal), when (text) and either set (field: text) or ask (prompt, with into or writes or both, and optional provider and otherwise).
 
+## within-shape
+
+A page says which spaces it is within with the name of one space or with a list of names, as in within: [den, choir]. Write within as a page name or a list of page names, or leave it out.
+
+## within-entry
+
+Each entry of within is the name of a page, and {entry} is not one. Write the names of the spaces as a list, as in within: [den, choir].
+
+## within-repeat
+
+A space is named once in within. Write each space of the list one time, the first as the home.
+
+## breach-several
+
+Page {name} is written by an answer into {space}, so within is the name {space} or a space inside it, and not a list: an answer cannot join a page to further spaces.
+
 ## members-name
 
 The name members is taken: it lists the pages within a space. Another name is needed.

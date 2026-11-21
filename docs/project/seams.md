@@ -132,7 +132,7 @@ Core means the design's claims depend on it. Optional means a vault works fully 
 - **What.** A page within more than one space, taking rules, context and reactions from each.
 - **Why.** A pattern lies over existing pages by membership ([patterns](../ideas/patterns.md)). Not recorded in the comparison.
 - **Seam.** [`part.space.context`](../reference/architecture.md#part.space.context) and [`law.rule.tighten`](../reference/architecture.md#law.rule.tighten). Constrained by [decision 0022](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md).
-- **Placeholder.** [What a space hands down](../ideas/inheritance.md), R22 (`next`).
+- **Placeholder.** [What a space hands down](../ideas/inheritance.md), R22 (`next`). Several spaces are built ([decision 0045](../decisions/0045-a-page-may-be-within-several-spaces.md)); reactions handed down are not.
 - **Refactor risk.** The most serious on this page; see the first item below.
 - **Standing.** Core.
 
@@ -330,7 +330,7 @@ Core means the design's claims depend on it. Optional means a vault works fully 
 
 For the maintainers, most serious first. Nothing here has been changed.
 
-1. **`within` is one name.** `Page.within` is a string, `Vault._context`, `Vault._inside` and `Vault._walk` climb a single chain, `page.py` checks `within` as one page name, and rules read `space` as one map with the nearest winning. A page in several spaces (entry 9, R22, the `next` step) needs a list, a stated order for a graph rather than a chain, and a rule for which space wins a field. The golden vault fixes the format, so the shape of `within` should be decided once, with a forward re-projection, before anything else depends on it.
+1. **Reactions are not handed down.** `within` is a name or a list ([decision 0045](../decisions/0045-a-page-may-be-within-several-spaces.md)), and `Vault._above` orders the spaces above a page for rules, context and notice. A space's watch entries do not yet run for its members, so handing reactions down (entry 9, R22, the `next` step) needs a rule for whose scope the entry reads, over a graph where a member may hear one space twice.
 2. **A write is one page.** `Vault.write` takes one page, `Vault._record` stores one page file, the `Page` trailer names one page, and `_write` runs reactions straight after its own commit. A grouped write (entry 10, R24) needs several pages per event, a refusal of the whole group, and reactions held until the group is kept. An answer that is pages is written today as one commit for each page; under groups it would be one event, which changes what the history of R29 looks like.
 3. **Rules see only the page.** `Vault._rule_reason` passes `page`, `space`, `size` and `text`. Rules that see who signed (R14), the origin of content (entry 7) and a reviewer's verdict (entry 6) all add to this scope. One decision should fix the names and shapes of all three, or the scope is redone at each step.
 4. **Reactions leave no record of being due.** `Vault._react` runs in the same process right after the commit. A crash between the two loses the reactions, and a reaction whose `when` was false leaves no event, so the history cannot tell "not yet run" from "ran and declined". Stepping (R28), background minds (R17) and entry 13 all need "due" derived from the history alone.

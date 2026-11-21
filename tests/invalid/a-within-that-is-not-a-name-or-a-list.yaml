@@ -1,0 +1,8 @@
+# within is a name or a list of names.
+pages:
+  den: {}
+write:
+  page: kid
+  set:
+    within: {den: 1}
+refused: shape

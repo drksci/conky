@@ -1,0 +1,8 @@
+# A page cannot be within itself, even in a list.
+pages:
+  den: {}
+write:
+  page: kid
+  set:
+    within: [den, kid]
+refused: rule

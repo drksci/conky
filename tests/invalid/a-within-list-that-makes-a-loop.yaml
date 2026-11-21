@@ -1,0 +1,9 @@
+# A list of spaces that leads back to the page is a loop.
+pages:
+  den: {}
+  tent: {within: den}
+write:
+  page: den
+  set:
+    within: [tent]
+refused: rule
