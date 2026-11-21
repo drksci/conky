@@ -21,9 +21,10 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `key` | A signing key that belongs to one actor and never enters the vault. |
 | `link` | A page name written in a page so that one page points at another. |
 | `term` | A page that lists the phrases it is known by in a field `known_as`. Text that uses one of the phrases counts as linking to the page, and `terms(TEXT)` names the pages a text uses. |
+| `within(NAME, SPACE)` | A function in expressions: whether a page called NAME exists and lies within SPACE, so a space can say who may write. |
 | `embed` | `![[page]]`, replaced by a field, a body or, for a space, the list of its members, or with `#context` what the spaces above a page say (each introduced by `NAME says:`, nearest first, the nearest 5 shown), when a page is read. `#` selects the part. |
 | `rule` | An expression the runtime evaluates before a write is kept. |
-| `event` | A commit: one write or one refusal. |
+| `event` | A commit: one write or one refusal. In a rule it is the write being judged, with `kind`, `by`, `reason` and `id`; in a watch it is the event reacted to. |
 | `seal` | The signature on an event. |
 | `space` | A page that other pages lie within, handing down its rules. A space may carry `shows`, which says how many of its members an embedded list shows and in what order. |
 | `theatre` | One distinct conky system, the outermost thing everything in it lives in: its vault together with `marionette.md`, the settings true only of the machine it is running on. Also the page named `theatre`, the outermost space: when a vault has it, every other page lies within it, and the id of the vault's first commit is the theatre's identity. |

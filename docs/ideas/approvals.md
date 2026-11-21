@@ -55,7 +55,7 @@ arch:
 
 A change that needs several parties to agree is a proposal page, signed agreement from each approver, a rule that counts them, and a reaction that applies the change once the rule is met.
 
-The same shape serves an owner signing off, a practice promoted to a shared pattern ([patterns](patterns.md)) and a dispute being settled. It is a pattern, not a runtime feature ([decision 0009](../decisions/0009-patterns-not-features.md)). Nothing of this is built.
+The same shape serves an owner signing off, a practice promoted to a shared pattern ([patterns](patterns.md)) and a dispute being settled. It is a pattern, not a runtime feature ([decision 0009](../decisions/0009-patterns-not-features.md)). A single signer's identity is now readable in a rule (`event.by`, `within(NAME, SPACE)`, [decision 0053](../decisions/0053-a-rule-sees-who-acts-and-a-name-cannot-be-borrowed.md)); the proposal page, the counting of several signers and the applying reaction are not built.
 
 ## Somebody is told
 

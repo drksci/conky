@@ -144,6 +144,20 @@ def _terms(known: Callable[[str], list[str]]) -> Callable[[str], celtypes.ListTy
     return terms
 
 
+@arch.part(
+    "part.rule.within",
+    "layer.reflex",
+    "Whether a named page lies within a space, so a space can say who may write.",
+    doc="rules-and-reactions.md#who-may-write",
+)
+def _within(lies: Callable[[str, str], bool]) -> Callable[[str, str], celtypes.BoolType]:
+    def within(name: str, space: str) -> celtypes.BoolType:
+        _text(name, space)
+        return celtypes.BoolType(lies(name, space))
+
+    return within
+
+
 _ENV = celpy.Environment()
 
 
@@ -169,8 +183,9 @@ def _plain(value: Any) -> Any:
     raise RuleError(f"result of type {type(value).__name__} cannot be stored")
 
 
-RULE_NAMES = ("page", "space", "size", "text")
-WATCH_NAMES = (*RULE_NAMES, "other", "other_text", "other_size", "other_name", "event")
+RULE_NAMES = ("page", "space", "size", "text", "event")
+WATCH_NAMES = (*RULE_NAMES, "other", "other_text", "other_size", "other_name")
+EVENT_FIELDS = ("kind", "by", "reason", "id")
 _BINDING = ("all", "exists", "exists_one", "map", "filter")
 
 
@@ -232,8 +247,11 @@ def concerns(expression: str, scope: dict[str, Any]) -> bool:
 
 
 def check(expression: str, allowed: tuple[str, ...]) -> None:
-    """Raise RuleError unless expression parses and reads only the names allowed."""
-    names, _ = reads(expression)
+    """Raise RuleError unless expression parses and reads only allowed names and event fields."""
+    names, fields = reads(expression)
+    for root, field in fields:
+        if root == "event" and field not in EVENT_FIELDS:
+            raise RuleError(voice.line("event-field", name=field, keys=", ".join(EVENT_FIELDS)))
     unknown = sorted(names - set(allowed))
     if unknown:
         raise RuleError(
@@ -282,9 +300,16 @@ def evaluate(
     """Evaluate expression with the given variables and return a plain Python value.
 
     With terms, the expression may call `terms(TEXT)`, which gives the sorted names of the pages
-    the text uses a phrase of. It reads the pages that exist when it is called and nothing else.
+    the text uses a phrase of. When terms also has a `within(NAME, SPACE)` method, the expression
+    may call `within(NAME, SPACE)`, which says whether the page NAME lies within SPACE. Both read
+    the pages that exist when they are called and nothing else.
     """
-    functions = _FUNCTIONS if terms is None else {**_FUNCTIONS, "terms": _terms(terms)}
+    functions = dict(_FUNCTIONS)
+    if terms is not None:
+        functions["terms"] = _terms(terms)
+        lies = getattr(terms, "within", None)
+        if lies is not None:
+            functions["within"] = _within(lies)
     try:
         program = _ENV.program(_ENV.compile(expression), functions=functions)
         result = program.evaluate({k: celpy.json_to_cel(v) for k, v in variables.items()})

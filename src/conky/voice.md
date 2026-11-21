@@ -71,6 +71,10 @@ The prompt is all there is. No tools or files exist to consult, and nothing abou
 
 The header {shown} does not name a page. A header reads `=== page: <name> ===`, with a name of lowercase letters, digits, dashes and underscores.
 
+## event-field
+
+event has no field {name} here: it has {keys}. Read one of those, as in event.by.
+
 ## rule-shape
 
 A rule is a condition written as text, or a mapping with the one key each whose value is a condition written as text. This one is {entry}.

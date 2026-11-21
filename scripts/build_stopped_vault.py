@@ -2,10 +2,14 @@
 
     python scripts/build_stopped_vault.py src/conky/stopped/lemonade.bundle
 
-The vault is the first four steps of the `lemonade` example, at fixed instants, signed by a key
-derived from a fixed seed. Ed25519 signatures are deterministic, so every run gives the same
-commit ids. The seed stands in for a key that is never kept: nothing it signs needs trust, and the
-packaged vault holds only the public half.
+The vault is the first four steps of the `lemonade` example, at fixed instants, signed by one key
+per name, each derived from a fixed seed and the name. Ed25519 signatures are deterministic, so
+every run gives the same commit ids. The seeds stand in for keys that are never kept: nothing they
+sign needs trust, and the packaged vault holds only the public halves.
+
+The seeds are in this file, so anyone can make these two keys again and sign as either name in
+this one example vault. That is accepted for an example and for nothing else: a vault that matters
+is signed with keys made on the machine and never derived from anything published.
 """
 
 from __future__ import annotations
@@ -22,7 +26,6 @@ from pathlib import Path
 from conky import demo
 from conky.vault import Vault
 
-SEED = hashlib.sha256(b"conky stopped vault: lemonade").digest()
 START = datetime(2026, 1, 1, 9, 0, 0, tzinfo=UTC)
 STOPPED_AFTER = 4
 
@@ -67,15 +70,21 @@ def _string(data: bytes) -> bytes:
     return struct.pack(">I", len(data)) + data
 
 
+def _seed(actor: str) -> bytes:
+    """Return the fixed seed of an actor's key: each name has its own."""
+    return hashlib.sha256(f"conky stopped vault: lemonade: {actor}".encode()).digest()
+
+
 def write_key(keys_dir: Path, actor: str) -> None:
-    """Write the OpenSSH private and public key files for actor from the fixed seed."""
-    public = _public(SEED)
+    """Write the OpenSSH private and public key files for actor from its fixed seed."""
+    seed = _seed(actor)
+    public = _public(seed)
     blob = _string(b"ssh-ed25519") + _string(public)
     private = (
         struct.pack(">II", 1, 1)
         + _string(b"ssh-ed25519")
         + _string(public)
-        + _string(SEED + public)
+        + _string(seed + public)
         + _string(actor.encode())
     )
     private += bytes(range(1, 8 - len(private) % 8 + 1)) if len(private) % 8 else b""

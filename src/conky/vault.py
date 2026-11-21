@@ -320,10 +320,18 @@ class Vault:
         if not self._has_commits():
             return
         files = self._changed_files()
-        out = git.run(["log", "--reverse", "--format=%x1e%H%x1f%G?%x1f%B", "main"], self.path)
+        fmt = "%x1e%H%x1f%G?%x1f%GS%x1f%an%x1f%B"
+        out = git.run(["log", "--reverse", f"--format={fmt}", "main"], self.path)
         for record in out.split("\x1e")[1:]:
-            commit, signature, message = record.split("\x1f", 2)
+            commit, signature, signer, author, message = record.split("\x1f", 4)
             self._check_commit(commit[:7], signature, git.trailers(message), files[commit])
+            if signer != f"{author}@conky":
+                raise VerifyFailed(
+                    f"commit {commit[:7]} names {author!r} but was signed as {signer!r}: a name "
+                    "cannot be borrowed, so restore the vault from another clone"
+                )
+            if git.SIGNERS in files[commit]:
+                self._check_signers(commit)
 
     @arch.change(
         "place.runtime.rebuild",
@@ -355,6 +363,35 @@ class Vault:
         if allowed != files:
             stray = next(f for f in files if f not in allowed)
             raise VerifyFailed(f"commit {short} ({kind}) changes {stray}, which a {kind} must not")
+
+    @arch.law(
+        "law.name.claimed",
+        "A name is claimed by first use and signs only as itself: a commit is signed by the key "
+        "of the name it carries, and the signers only grow.",
+        doc="vault-format.md#what-verify-checks",
+    )
+    def _check_signers(self, commit: str) -> None:
+        """Raise VerifyFailed unless a commit only appends lines for names not yet listed.
+
+        A name is claimed by first use. Changing a key is a later step, not a quiet edit.
+        """
+
+        def lines(revision: str) -> list[str]:
+            try:
+                shown = git.run(["show", f"{revision}:{git.SIGNERS}"], self.path)
+            except BadInput:
+                return []
+            return [line for line in shown.splitlines() if line.strip()]
+
+        old, new = lines(f"{commit}^"), lines(commit)
+        names = [line.split()[0] for line in old]
+        added = [line.split()[0] for line in new[len(old) :]]
+        if new[: len(old)] != old or len(set(added)) != len(added) or set(added) & set(names):
+            raise VerifyFailed(
+                f"commit {commit[:7]} changes or removes a line of {git.SIGNERS}, or lists a name "
+                "twice: a name is claimed by first use and its key cannot change, so restore the "
+                "vault from another clone (changing a key is not built yet)"
+            )
 
     def _changed_files(self) -> dict[str, list[str]]:
         out = git.run(["log", "--name-only", "--format=%x1e%H", "main"], self.path)
@@ -527,7 +564,9 @@ class Vault:
             breach = self._breach(page, before, result, bound)
             if breach:
                 return refuse(f"{Refusal.LIMIT}: {breach}")
-        refused = self._rule_reason(page, result, before) or self._each_reason(page, result, before)
+        refused = self._rule_reason(page, result, before, actor) or self._each_reason(
+            page, result, before, actor
+        )
         if refused:
             reason, space = refused
             if space != page:
@@ -551,13 +590,22 @@ class Vault:
         """
         return any(owner == space for owner, _, _ in self._above(who, within, theatre))
 
-    def _scope(self, name: str, page: Page) -> dict[str, Any]:
-        """Return what a rule reads for a page: its fields, its space, its size and its text."""
+    @arch.law(
+        "law.rule.who",
+        "A rule sees who is acting, `event.by`, and can ask whether a page lies within a space.",
+        doc="rules-and-reactions.md#who-may-write",
+    )
+    def _scope(self, name: str, page: Page, actor: str) -> dict[str, Any]:
+        """Return what a rule reads for a page: its fields, its space, its size and its text.
+
+        `event` is the write being judged: its commit does not exist yet, so `id` is empty.
+        """
         return {
             "page": page.fields,
             "space": self._context(name, page.within),
             "size": _size(page),
             "text": page.body,
+            "event": {"id": "", "kind": "write", "by": actor, "reason": ""},
         }
 
     @arch.law(
@@ -566,7 +614,9 @@ class Vault:
         "if it can be evaluated and holds for them.",
         doc="rules-and-reactions.md#rules-and-spaces",
     )
-    def _each_reason(self, name: str, page: Page, before: Page | None) -> tuple[str, str] | None:
+    def _each_reason(
+        self, name: str, page: Page, before: Page | None, actor: str
+    ) -> tuple[str, str] | None:
         """Return the reason an `each` rule just added fails for a page already within it."""
         old = before.rules if before else []
         rules = [r["each"] for r in page.rules if isinstance(r, dict) and r not in old]
@@ -577,7 +627,7 @@ class Vault:
             held = self._load(member)
             if member == name or held is None or not self._inside(held.within, name, member):
                 continue
-            scope = self._scope(member, held)
+            scope = self._scope(member, held, actor)
             for rule in rules:
                 if not concerns(rule, scope):
                     continue
@@ -702,7 +752,7 @@ class Vault:
         roadmap="R29",
     )
     def _rule_reason(
-        self, name: str, page: Page, before: Page | None = None
+        self, name: str, page: Page, before: Page | None, actor: str
     ) -> tuple[str, str] | None:
         """Return the reason a rule refuses the page and the page the rule came from.
 
@@ -710,7 +760,7 @@ class Vault:
         write that changes `within` is also judged by the `each` rules of the spaces the page
         was in before it.
         """
-        scope = self._scope(name, page)
+        scope = self._scope(name, page, actor)
         found = self._own(name, page, scope) or self._walk(name, page.within, scope)
         if found or before is None or before.within == page.within:
             return found

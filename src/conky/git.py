@@ -116,22 +116,31 @@ def register(keys_dir: Path, signers: Path, actor: str) -> tuple[Path, str | Non
     """Return the actor's private key path, creating the key on first use.
 
     The second value is the allowed_signers line to add when the file does not list the actor.
+    A name already listed is refused a key other than the one listed: a name is claimed by first
+    use and cannot be taken over.
     """
     private = keys_dir / actor
-    listed = signers.exists() and any(
-        line.startswith(f"{actor}@conky ") for line in signers.read_text().splitlines()
+    listing = (
+        [line for line in signers.read_text().splitlines() if line.startswith(f"{actor}@conky ")]
+        if signers.exists()
+        else []
     )
     if not private.exists():
-        if listed:
+        if listing:
             raise BadInput(f"no private key for {actor!r} in {keys_dir}: pass --keys <directory>")
         keys_dir.mkdir(parents=True, exist_ok=True)
         _run(
             ["ssh-keygen", "-q", "-t", "ed25519", "-N", "", "-C", actor, "-f", str(private)],
             keys_dir,
         )
-    if listed:
-        return private, None
     kind, blob = private.with_name(f"{actor}.pub").read_text().split()[:2]
+    if listing:
+        if blob not in listing[0].split():
+            raise BadInput(
+                f"the key for {actor!r} in {keys_dir} is not the one {SIGNERS} lists for that "
+                "name, and a name cannot be taken over: pass --keys <directory> with its key"
+            )
+        return private, None
     return private, f'{actor}@conky namespaces="git" {kind} {blob}\n'
 
 

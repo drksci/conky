@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime
@@ -646,4 +647,68 @@ def test_an_answer_cannot_remove_or_replace_what_its_space_has(
     assert w(vault, "ticket", {"n": 2}).ok
     assert vault.read("den").watch == kept.watch
     assert "must use set" in git(vault.path, "log", "--format=%B", "-8")
+    vault.verify()
+
+
+def _signed_commit(vault: Vault, author: str, key: Path, message: str) -> None:
+    """Make a signed commit of whatever is staged, naming author, as a hand-made history would."""
+    who = {f"GIT_{r}_NAME": author for r in ("AUTHOR", "COMMITTER")}
+    who |= {f"GIT_{r}_EMAIL": f"{author}@conky" for r in ("AUTHOR", "COMMITTER")}
+    subprocess.run(
+        ["git", "-c", "gpg.format=ssh", "-c", f"user.signingkey={key}", "commit", "-qS"]
+        + ["--allow-empty", "-m", message],
+        cwd=vault.path,
+        env={**os.environ, **who, "GIT_CONFIG_GLOBAL": "/dev/null", "GIT_CONFIG_NOSYSTEM": "1"},
+        check=True,
+    )
+
+
+@arch.holds("law.name.claimed")
+def test_a_commit_signed_by_one_name_and_made_as_another_fails_verify(
+    vault: Vault, keys_dir: Path
+) -> None:
+    make_history(vault)
+    assert w(vault, "ledger", {"n": 1}, actor="bob").ok
+    vault.verify()
+    _signed_commit(vault, "bob", keys_dir / "alice", "write ledger\n\nKind: write\nPage: ledger")
+    with pytest.raises(VerifyFailed, match="names 'bob' but was signed as 'alice@conky'"):
+        vault.verify()
+
+
+@pytest.mark.parametrize(
+    "edit",
+    [
+        lambda lines: "".join(lines[1:]),
+        lambda lines: lines[0].replace("ssh-ed25519 ", "ssh-ed25519 AAAA") + "".join(lines[1:]),
+        lambda lines: "".join(lines) + lines[0],
+        lambda lines: "".join(lines[::-1]),
+    ],
+    ids=["removed", "changed", "duplicated", "reordered"],
+)
+@arch.holds("law.name.claimed")
+def test_the_signers_only_grow_and_a_name_is_claimed_by_first_use(
+    vault: Vault, keys_dir: Path, edit
+) -> None:
+    make_history(vault)
+    assert w(vault, "ledger", {"n": 1}, actor="bob").ok
+    vault.signers.write_text(edit(vault.signers.read_text().splitlines(keepends=True)))
+    git(vault.path, "add", "--", "keys/allowed_signers")
+    _signed_commit(vault, "alice", keys_dir / "alice", "write x\n\nKind: write\nPage: x")
+    with pytest.raises(VerifyFailed, match="first use|no good signature"):
+        vault.verify()
+
+
+@arch.holds("law.name.claimed")
+def test_a_name_cannot_be_taken_over_with_another_key(vault: Vault, tmp_path: Path) -> None:
+    make_history(vault)
+    other = tmp_path / "other-keys"
+    other.mkdir()
+    subprocess.run(
+        ["ssh-keygen", "-q", "-t", "ed25519", "-N", "", "-f", str(other / "alice")], check=True
+    )
+    before = commits(vault)
+    taker = Vault(vault.path, other)
+    with pytest.raises(BadInput, match="cannot be taken over"):
+        taker.write("cooler", {"stock": 9}, None, actor="alice", at=AT)
+    assert commits(vault) == before
     vault.verify()

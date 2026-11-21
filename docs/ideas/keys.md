@@ -18,6 +18,8 @@ arch:
 
 ## Idea
 
+Built so far ([decision 0053](../decisions/0053-a-rule-sees-who-acts-and-a-name-cannot-be-borrowed.md)): `verify` requires each commit's signer to be the actor it names, and the signers only grow, so a name is claimed by first use and its key cannot change. Rotation, retirement and revocation are what remain, and they will replace that last rule.
+
 A vault outlives its keys. A key is retired when its owner stops writing and revoked when it is lost. Both are changes to `keys/allowed_signers`, which is already a committed file, so both can be ordinary signed events. What changes is how `verify` judges: today it checks every commit against the signers file as it stands now, so removing a line would make that key's past events fail. Under this idea each event is judged against the signers as of the event before it. A retired key still verifies what it signed while it was in force, and anything it signs afterwards fails.
 
 ## Composes from

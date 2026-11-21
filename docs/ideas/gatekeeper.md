@@ -20,7 +20,7 @@ arch:
 
 A space can name a gatekeeper page, and a change that needs permission is held as a proposal until the gatekeeper answers, so the actor never handles permission itself.
 
-Identity is already the bottom layer: every actor has a key and every change is signed. Permission sits just above it and is inherited like everything else on a space ([what a space hands down](inheritance.md)).
+Identity is already the bottom layer: every actor has a key and every change is signed, a name cannot be borrowed, and a rule can read who is writing and whether they lie within a space ([decision 0053](../decisions/0053-a-rule-sees-who-acts-and-a-name-cannot-be-borrowed.md)). What waits is the held proposal and the gatekeeper's answer. Permission sits just above it and is inherited like everything else on a space ([what a space hands down](inheritance.md)).
 
 The gatekeeper may be plain rules, a person who is asked, or an agent with a posture set once, permissive or restrictive. It answers allow once, allow always, or use discretion. "Always" writes a standing grant into the space, so it applies to everything below and is not asked again. Repeated identical answers are promoted to standing grants, so the asking fades with use.
 

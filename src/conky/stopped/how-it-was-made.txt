@@ -3,12 +3,14 @@ Git bundle of the first four steps of the `lemonade` example: the stand, the coo
 exist and one write has been refused, but the busy hour has not happened. lemonade.yaml says how to
 carry on.
 
-It is made at fixed instants, one minute apart from 2026-01-01T09:00:00Z, by a key derived from a
-fixed seed, so rebuilding it gives the same commit ids:
+It is made at fixed instants, one minute apart from 2026-01-01T09:00:00Z, by one key per name, each
+derived from a fixed seed and the name, so rebuilding it gives the same commit ids:
 
     python scripts/build_stopped_vault.py src/conky/stopped/lemonade.bundle
 
-The bundle holds only the public half of that key, in keys/allowed_signers. The private half is
+The bundle holds only the public half of each key, in keys/allowed_signers. The seeds are
+published in the script that builds it, so the two names in this example can be signed for by
+anyone; it is an example and nothing in it should be trusted for who wrote it. The private halves are
 never written anywhere the command can reach. tests/test_assimilate.py rebuilds the bundle and
 compares commit ids with this one. Rebuild it only when the vault format changes, and say so in
 the changelog.

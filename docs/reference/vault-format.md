@@ -122,10 +122,13 @@ Each actor's private key is an OpenSSH ed25519 key file named after the actor, i
 
 Then, for each commit on `main`, oldest first:
 
-3. It has a good signature from a key in `keys/allowed_signers`.
+3. It has a good signature from a key in `keys/allowed_signers`, and the principal of that key is `<author>@conky`, the actor the commit names. A commit signed as one name and made as another fails.
 4. It has a `Kind` trailer of `write` or `refused`. Other trailers, such as `Read`, `From` and those of a model answer, are accepted and not checked.
 5. A write changes only files under `pages/` and `keys/allowed_signers`.
 6. A refusal changes nothing except `keys/allowed_signers`, and only in an actor's first commit.
+7. A commit that changes `keys/allowed_signers` only appends lines for names not yet listed. A name is claimed by first use: changing, reordering or removing a line, or listing a name twice, fails. Changing a key is a later step ([decision 0053](../decisions/0053-a-rule-sees-who-acts-and-a-name-cannot-be-borrowed.md)).
+
+A vault made before this check in which two names share one key does not verify; refound it with a key per name. Within one machine the key folder is the credential: whoever holds it can act under the names whose keys are in it. What cannot happen is a history in which a write claims a name its signature does not carry.
 
 `verify` does not evaluate rules. A commit made outside conky, signed by a listed key and shaped like a write, passes whatever it says. Rules are enforced when a write goes through conky.
 

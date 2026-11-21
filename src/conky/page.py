@@ -204,6 +204,11 @@ class Terms:
         """Return the sorted names of the pages one of whose phrases the text uses."""
         return sorted({name for pattern, name in self._index() if pattern.search(text)})
 
+    def within(self, name: str, space: str) -> bool:
+        """Return whether a page called name exists and lies within space, by any path."""
+        lookup = self._load()
+        return name in lookup and _within(name, space, lookup)
+
 
 def links(page: Page, terms: Terms | None = None, name: str = "") -> set[str]:
     """Return the names a page, called name, links to.

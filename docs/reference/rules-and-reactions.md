@@ -32,7 +32,7 @@ An expression can take text apart with these functions. All but `captures` and `
 | `captures(text, pattern)` | The groups of the first match of a Python regular expression as a list of text, or the whole match when the pattern has no group, or an empty list when it does not match. Not in the standard. | `'x=1 y=2'.captures('x=(\\d+) y=(\\d+)')` is `['1', '2']` |
 | `capturesAll(text, pattern)` | The first group of every match of a Python regular expression as a list of text, or the whole match when the pattern has no group, or an empty list when nothing matches. Not in the standard. | `'**a** and **b**'.capturesAll('\\*\\*(.+?)\\*\\*')` is `['a', 'b']` |
 
-One more function reads the vault. `terms(text)` gives the sorted names of the pages whose `known_as` phrases the text uses, as a list of text ([decision 0044](../decisions/0044-a-page-is-known-by-its-phrases.md)). It is usable in rules, in watch `when` and `set` and in `shows.first`, and it reads the pages that exist when the expression is evaluated. A phrase is recognised as whole words, without regard to case, with runs of whitespace as one space and a trailing `'s` allowed. `terms(space.heard).filter(t, terms(text).contains(t)).size()` is how many terms a member shares with what a space heard.
+One more function reads the vault. `terms(text)` gives the sorted names of the pages whose `known_as` phrases the text uses, as a list of text ([decision 0044](../decisions/0044-a-page-is-known-by-its-phrases.md)). It is usable in rules, in watch `when` and `set` and in `shows.first`, and it reads the pages that exist when the expression is evaluated. So does `within(name, space)`, which is true when the page `name` exists and lies within `space` ([Who may write](#who-may-write)). A phrase is recognised as whole words, without regard to case, with runs of whitespace as one space and a trailing `'s` allowed. `terms(space.heard).filter(t, terms(text).contains(t)).size()` is how many terms a member shares with what a space heard.
 
 The standard has no `captures`. Its regular-expression extension has `regex.extract` and `regex.extractAll`, which need optional values, allow one group and carry a namespaced name that cel-python cannot register as a method, so `captures` and `capturesAll` stand in until a need for the standard form is shown. The standard `int('12')` and `double('1.5')` already turn captured text into a number, so `int(line.captures('n=(\\d+)')[0])` reads a number out of a line. A pattern that does not match gives an empty list, and indexing it is an evaluation error, so a rule that reads such a number refuses a line without one.
 
@@ -46,6 +46,7 @@ Every function is pure. Text over 65536 characters, a result over 65536 characte
 | Rule | `space` | The fields handed down by the spaces the page is within, nearest winning (see [Context from spaces](#context-from-spaces)). |
 | Rule | `size` | The byte length of the serialised page as it would be after the write. |
 | Rule | `text` | The body of the page as it would be after the write, empty when the page has none. |
+| Rule | `event` | The write being judged, with the fields a watch sees: `kind` is `write`, `by` is the actor, `reason` is empty text and `id` is empty text, because the commit does not exist yet. |
 | Watch | `page` | The fields of the watching page as it is now. |
 | Watch | `space` | The same, for the watching page. |
 | Watch | `size` | The byte length of the watching page as it is now. |
@@ -74,13 +75,27 @@ rules:
   - each: page.amount <= space.cash - 20    # every page within this one, not this one
 ```
 
-A rule is proven when it is written. Every rule and every watch `when` and `set` expression is parsed at the write, and a syntax error is refused for shape. A rule may read only `page`, `space`, `size` and `text`, and a watch entry those and `other`, `other_text`, `other_size`, `other_name` and `event`, a map with `id`, `kind`, `by` and `reason`; any other name is refused for shape, and the reason lists the names allowed there. The names are found from the structure of the parsed expression, so nothing is evaluated, and a variable bound by `all`, `exists`, `exists_one`, `map` or `filter` is not a name read from outside. An `each` rule that is added is also tried against every page already within the space, at any depth, and the write is refused for rule, naming the page, if it is false or cannot be evaluated for one ([decision 0038](../decisions/0038-a-rule-is-proven-when-written.md)). The names are judged by the shape of the expression and the fields by the pages, so a rule that reads a field some page lacks lands when the pages within it already have the field.
+A rule is proven when it is written. Every rule and every watch `when` and `set` expression is parsed at the write, and a syntax error is refused for shape. A rule may read only `page`, `space`, `size`, `text` and `event`, and a watch entry those and `other`, `other_text`, `other_size` and `other_name`; `event` is a map with `id`, `kind`, `by` and `reason`, and a field of it other than those is refused too; any other name is refused for shape, and the reason lists the names allowed there. The names are found from the structure of the parsed expression, so nothing is evaluated, and a variable bound by `all`, `exists`, `exists_one`, `map` or `filter` is not a name read from outside. An `each` rule that is added is also tried against every page already within the space, at any depth, and the write is refused for rule, naming the page, if it is false or cannot be evaluated for one ([decision 0038](../decisions/0038-a-rule-is-proven-when-written.md)). The names are judged by the shape of the expression and the fields by the pages, so a rule that reads a field some page lacks lands when the pages within it already have the field.
 
 Every page within the space is judged, including a space page that lies within it, so a page that lacks the field fails the rule as any missing field does. Any other mapping is refused for shape, and the reason says what is allowed. A refusal names the condition and the space it came from, whichever form it had ([decision 0034](../decisions/0034-a-rule-for-the-pages-within.md), the key renamed by [decision 0035](../decisions/0035-a-character-binds-its-own-space.md)).
 
 A write that changes the `within` of a page that already exists is judged twice: by the page's own rules and the `each` rules of the spaces it will be in, as above, and by the `each` rules of every space it was in before and is not in now, evaluated against the page as it would be after the write ([decision 0022](../decisions/0022-leaving-a-space-is-a-write-the-space-can-refuse.md)). A space that says nothing about leaving lets its members go. A space that wants to bind states it as a rule. A refusal by a space the page is leaving names that space, as any refusal from a space does.
 
 An `each` rule speaks only of the pages that have the fields it reads off `page`. A rule about payments reads `page.amount`; a page within the same space that has no `amount` is not a payment, and the rule is not judged against it, when the rule is written or afterwards. A field read off `space` must exist, and a plain rule must be able to read every field it names on its own page.
+
+### Who may write
+
+A rule can see who is writing. `event.by` is the name of the actor of the write being judged, and `within(NAME, SPACE)` says whether a page called NAME exists and lies within SPACE, by any path and including the theatre when that page exists. A name that is not a page is within nothing. So a space can say who may write in it, and the answer is read from the pages, not from a list kept beside them.
+
+In plain words: "only the owner changes the price" is a rule on the shop, and "staff may write here" is a rule on the shop that asks whether the writer lies within `staff`.
+
+```yaml
+rules:
+  - each: "event.by == 'owner' || !has(page.price)"   # only the owner writes a price
+  - each: "within(event.by, 'staff')"                 # only staff write here
+```
+
+The first speaks only of pages that have a `price`, as any `each` rule speaks only of the pages that have the fields it reads. A write that breaks either is refused for rule and recorded as a refusal. A member who leaves `staff` stops being admitted at its next write, since the rule reads the pages as they are. A rule on the `theatre` page speaks for the whole vault, and a plain rule on it says who may write the theatre itself. A name is bound to its key by `verify` ([decision 0053](../decisions/0053-a-rule-sees-who-acts-and-a-name-cannot-be-borrowed.md)), so `event.by` is the name the signature carries; within one machine the key folder is the credential.
 
 ### The theatre
 
