@@ -66,18 +66,6 @@ The animation under a card is drawn from one draw's vault history by the view in
 - Latest verdict: not drawn
 - Run: none yet
 
-## a house with a hidden hand
-
-- Objective: one character changes another's surroundings unseen, and the other notices and says so, with each acting only by writing pages
-- Bar: at least 4 of 5 draws pass, median calls a draw at most 6
-- Checks: measured
-- Latest verdict: not met
-- Run: 5 draws, 1 passed, model `claude`, 2026-11-21, code at `4ddbd94`
-- Data: [rows](../results/cards/a-house-with-a-hidden-hand/rows.jsonl), [what each draw left](../results/cards/a-house-with-a-hidden-hand/observations.jsonl), [its history](../results/cards/a-house-with-a-hidden-hand/timeline.json), [the graph drawn](../results/cards/a-house-with-a-hidden-hand/graph.json)
-
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-house-with-a-hidden-hand/dynamics-dark.webp"><img src="../results/cards/a-house-with-a-hidden-hand/dynamics-light.webp" alt="a house with a hidden hand, drawn as it happened in draw 2, the first that passed" width="720"></picture></p>
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-house-with-a-hidden-hand/topology-dark.png"><img src="../results/cards/a-house-with-a-hidden-hand/topology-light.png" alt="a house with a hidden hand, its final state" width="720"></picture></p>
-
 ## a keeper binds itself
 
 - Objective: a character states a standing limit on the space it works in, and that limit refuses a payment that breaks it
@@ -113,15 +101,3 @@ The animation under a card is drawn from one draw's vault history by the view in
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-keeper-on-the-night-shift/dynamics-dark.webp"><img src="../results/cards/a-keeper-on-the-night-shift/dynamics-light.webp" alt="a keeper on the night shift, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-keeper-on-the-night-shift/topology-dark.png"><img src="../results/cards/a-keeper-on-the-night-shift/topology-light.png" alt="a keeper on the night shift, its final state" width="720"></picture></p>
-
-## a resident notices the ovens
-
-- Objective: a character notices when its surroundings change in ways that cannot be, and says so in its own words, while carrying on
-- Bar: at least 4 of 5 draws pass, median calls a draw at most 3
-- Checks: measured
-- Latest verdict: met
-- Run: 5 draws, 4 passed, model `claude`, 2026-11-21, code at `bfbcfd5`
-- Data: [rows](../results/cards/a-resident-notices-the-ovens/rows.jsonl), [what each draw left](../results/cards/a-resident-notices-the-ovens/observations.jsonl), [its history](../results/cards/a-resident-notices-the-ovens/timeline.json), [the graph drawn](../results/cards/a-resident-notices-the-ovens/graph.json)
-
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-resident-notices-the-ovens/dynamics-dark.webp"><img src="../results/cards/a-resident-notices-the-ovens/dynamics-light.webp" alt="a resident notices the ovens, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-resident-notices-the-ovens/topology-dark.png"><img src="../results/cards/a-resident-notices-the-ovens/topology-light.png" alt="a resident notices the ovens, its final state" width="720"></picture></p>

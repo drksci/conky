@@ -1,9 +1,0 @@
-{
- "card": "a-house-with-a-hidden-hand",
- "model": "claude",
- "date": "2026-11-21",
- "draws": 5,
- "passed": 1,
- "shown": 2,
- "commit": "4ddbd94"
-}
