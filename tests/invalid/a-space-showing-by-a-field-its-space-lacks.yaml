@@ -1,0 +1,9 @@
+# `first` can be worked out for the members it reads.
+pages:
+  den: {}
+  near: {within: den, steps: 2}
+write:
+  page: den
+  set:
+    shows: {first: "page.steps - space.origin"}
+refused: shape

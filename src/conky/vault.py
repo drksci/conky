@@ -23,6 +23,7 @@ from conky.page import (
     MEMBERS,
     NAME,
     RELATIONS,
+    SHOWS,
     Page,
     ShapeError,
     Terms,
@@ -38,6 +39,7 @@ from conky.page import (
     resolve_text,
     serialize,
     spaces,
+    unshown,
 )
 from conky.rules import RuleError, concerns, evaluate, holds, missing
 
@@ -577,6 +579,10 @@ class Vault:
             check_theatre(page, result)
         except ShapeError as exc:
             return refuse(f"{Refusal.SHAPE}: {exc}")
+        if SHOWS in changes:
+            unscored = unshown(page, {**self._all(), page: result})
+            if unscored:
+                return refuse(f"{Refusal.SHAPE}: {unscored}")
         if any("ask" in entry.get("each", {}) for entry in result.watch):
             asked_down = voice.line("each-watch-ask", space=page)
             return refuse(f"{Refusal.LIMIT}: {asked_down}")

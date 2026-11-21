@@ -1,4 +1,4 @@
-# A member that `first` cannot score is shown after the scored ones, ties and unscored by name, and nothing is refused.
+# A member that `first` cannot score is shown after the scored ones, ties and unscored by name, and nothing is refused. One that has the field and gets no number is named in a last line.
 pages:
   broken: {api: command, command: no-such-program-here}
   den:
@@ -17,4 +17,4 @@ pages:
   ticket: {text: one}
 steps:
   - write: {page: ticket, fields: {text: two}}
-  - expect: {fields: {reader.seen: "b\na\nm\nn\nz"}}
+  - expect: {fields: {reader.seen: "b\na\nm\nn\nz\n(1 not ordered: first gives no number for n)"}}

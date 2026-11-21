@@ -1,0 +1,10 @@
+# `first` gives a number for the members it reads: a whole number and a fraction do not mix.
+pages:
+  den: {}
+  near: {within: den, steps: 2}
+  far: {within: den, steps: 9}
+write:
+  page: den
+  set:
+    shows: {first: "page.steps - 0.5"}
+refused: shape

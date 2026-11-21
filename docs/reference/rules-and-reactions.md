@@ -24,7 +24,9 @@ The answers are the ones the CEL standard gives. `true` beside an error is still
 
 `+` joins two texts or two lists into a text or a list like any other, so `('\n' + page.can + '\n').contains('\nb\n')` works and a `set` value can be a joined text.
 
-cel-python alone does none of this: it evaluates both sides and every item first, quotes both errors inside a new one whenever two meet, which doubles the message for each item of a list, and gives joined text back as a value with no methods. The runtime replaces those four folds and the `+` function ([`rules.py`](../../src/conky/rules.py)).
+A number is whole or has a fraction, and arithmetic keeps the kind: `0.0 - page.distance` is a number with a fraction and `page.steps + 1` a whole one. The two kinds do not mix in `+`, `-`, `*`, `/` and `%`, on either side, as in the CEL standard; `double(page.steps) - 0.5` turns the whole number first, and `int(...)` goes the other way. A comparison such as `page.steps > 0.5` may mix them ([decision 0062](../decisions/0062-an-order-that-fails-says-so.md)).
+
+cel-python alone does none of this: it evaluates both sides and every item first, quotes both errors inside a new one whenever two meet, which doubles the message for each item of a list, gives joined text and the sum, difference or product of two numbers with a fraction back as values with no methods that cannot be stored, and takes a whole number beside a fraction on one side only, with a wrong answer for division. The runtime replaces those four folds and the five arithmetic functions ([`rules.py`](../../src/conky/rules.py)).
 
 ### Text functions
 

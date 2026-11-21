@@ -38,6 +38,7 @@ The capability and the three laws of [decision 0029](../decisions/0029-autonomy-
 | <a id="law.docs.check"></a>`law.docs.check` | Ideas climb rungs, and the documents, links and this index are checked. | [0015-ideas-climb-rungs.md](../decisions/0015-ideas-climb-rungs.md) | `scripts/check_docs.py` | `tests/test_docs.py::test_docs_pass_the_check` | - | built |
 | <a id="law.embed.anonymous"></a>`law.embed.anonymous` | An embed shows a page's words and nothing about who wrote them. | [vault-format.md#pages](vault-format.md#pages) | `conky.page.resolve_text` | `tests/test_laws.py::test_nothing_a_model_is_shown_says_whether_a_page_was_written_by_a_person_or_a_model` | - | built |
 | <a id="law.embed.context"></a>`law.embed.context` | A prompt that embeds a page's context is told what its spaces say, so joining a space changes what a character is told and leaving it takes that away. | [vault-format.md#pages](vault-format.md#pages) | `conky.page.resolve_text` | `tests/test_context.py::test_joining_a_space_changes_what_is_asked_and_leaving_takes_it_away`<br>`tests/test_outermost.py::test_the_theatre_body_is_the_last_block_of_a_context` | - | built |
+| <a id="law.embed.proven"></a>`law.embed.proven` | A `first` is tried on the members already within when it is written and lands only if it gives one of those it reads a number; a failure met on reading is said in what is shown. | [vault-format.md#pages](vault-format.md#pages) | `conky.page.unshown` | `tests/test_shows.py::test_a_first_that_fails_when_read_says_so_in_what_is_shown`<br>`tests/test_shows.py::test_a_first_that_scores_no_member_it_reads_is_refused_when_written` | - | built |
 | <a id="law.embed.shows"></a>`law.embed.shows` | A space says how its members are shown, and the order is worked out on reading, never stored. | [vault-format.md#pages](vault-format.md#pages) | `conky.page._members_text` | `tests/test_shows.py::test_a_space_that_shows_orders_by_first_and_cuts_to_most`<br>`tests/test_shows.py::test_reading_a_space_that_shows_writes_nothing` | R40 | built |
 | <a id="law.event.notice"></a>`law.event.notice` | Every recorded event can be noticed by the pages in relation to it, and the entry says what picks it up: a reflex, a faculty or the character. | [0039-an-event-can-be-noticed.md](../decisions/0039-an-event-can-be-noticed.md) | `conky.vault.Vault._tell` | `tests/test_laws.py::test_a_refusal_can_be_noticed_and_stays_a_refusal`<br>`tests/test_laws.py::test_a_character_gives_its_space_a_reflex_that_counts_later_refusals` | R38 | built |
 | <a id="law.event.seal"></a>`law.event.seal` | Every change is signed and says what caused it. | [vault-format.md#a-write](vault-format.md#a-write) | `conky.vault.Vault._record` | `tests/test_laws.py::test_write_is_a_signed_commit_with_trailers_and_dates`<br>`tests/test_laws.py::test_reaction_is_caused_by_and_signed_by_the_reacting_page` | - | built |
@@ -1199,6 +1200,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`law.docs.check`](#law.docs.check) | built | 1 | - |  |
 | [`law.embed.anonymous`](#law.embed.anonymous) | built | 1 | - |  |
 | [`law.embed.context`](#law.embed.context) | built | 2 | - |  |
+| [`law.embed.proven`](#law.embed.proven) | built | 2 | - |  |
 | [`law.embed.shows`](#law.embed.shows) | built | 2 | - |  |
 | [`law.event.notice`](#law.event.notice) | built | 2 | - |  |
 | [`law.event.seal`](#law.event.seal) | built | 2 | - |  |
@@ -1412,6 +1414,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0059-ports-are-bright-labelled-blocks-on-paired-boards](../decisions/0059-ports-are-bright-labelled-blocks-on-paired-boards.md) | accepted | - |
 | [0060-charts-take-the-minty-theme-with-monochrome-text](../decisions/0060-charts-take-the-minty-theme-with-monochrome-text.md) | accepted | - |
 | [0061-figures-take-the-chart-themes-colours](../decisions/0061-figures-take-the-chart-themes-colours.md) | accepted | - |
+| [0062-an-order-that-fails-says-so](../decisions/0062-an-order-that-fails-says-so.md) | accepted | [`law.embed.proven`](#law.embed.proven) |
 
 ### Unplaced
 

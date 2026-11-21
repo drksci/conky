@@ -214,3 +214,31 @@ def test_an_error_nothing_decides_is_still_an_error(expression):
 )
 def test_joined_text_and_joined_lists_keep_their_methods(expression, expected):
     assert evaluate(expression, {"page": {"can": "a\nb", "list": ["a", "b"]}}) == expected
+
+
+@pytest.mark.parametrize(
+    ("expression", "expected"),
+    [
+        ("0.0 - page.distance", -2.5),
+        ("page.distance + 1.0", 3.5),
+        ("page.distance * 2.0", 5.0),
+        ("page.distance / 2.0", 1.25),
+        ("-page.distance", -2.5),
+        ("[1.5, 2.5].map(x, x * 2.0)", [3.0, 5.0]),
+        ("(page.distance - 0.5) * 2.0 > 3.0", True),
+        ("page.steps - 1", 2),
+    ],
+)
+def test_arithmetic_on_numbers_with_a_fraction_gives_a_number(expression, expected):
+    found = evaluate(expression, {"page": {"distance": 2.5, "steps": 3}})
+    assert found == expected and type(found) is type(expected)
+
+
+@pytest.mark.parametrize("sign", ["+", "-", "*", "/"])
+def test_a_whole_number_and_a_fraction_do_not_mix_on_either_side(sign):
+    scope = {"page": {"distance": 2.5, "steps": 3}}
+    for expression in (f"page.steps {sign} page.distance", f"page.distance {sign} page.steps"):
+        with pytest.raises(RuleError):
+            evaluate(expression, scope)
+    assert evaluate(f"double(page.steps) {sign} page.distance", scope) is not None
+    assert evaluate(f"page.steps {sign} 2", scope) is not None

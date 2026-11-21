@@ -13,7 +13,7 @@ import yaml
 
 from conky import arch, voice
 from conky.errors import BadInput
-from conky.rules import RULE_NAMES, WATCH_NAMES, RuleError, check, evaluate
+from conky.rules import RULE_NAMES, WATCH_NAMES, RuleError, check, concerns, evaluate
 
 RESERVED = arch.constant(
     ("within", "rules", "watch"),
@@ -525,6 +525,44 @@ def _score(expression: str, member: Page, space: Page, terms: Terms) -> float | 
     return value
 
 
+def _scores(space: str, names: list[str], lookup: dict[str, Page]) -> dict[str, float | None]:
+    """Return what the `first` of space makes of each named member."""
+    first = lookup[space].fields[SHOWS]["first"]
+    terms = Terms(lambda: lookup)
+    return {n: _score(first, lookup[n], lookup[space], terms) for n in names}
+
+
+def _unordered(space: str, scores: dict[str, float | None], lookup: dict[str, Page]) -> list[str]:
+    """Return the members `first` reads and gives no number for, as against those it passes by.
+
+    A member that lacks a field `first` reads off `page` is not what the order is about, as an
+    `each` rule is not about a page without the fields it reads. A member that has them all
+    and still gets no number is a failure of the expression.
+    """
+    first = lookup[space].fields[SHOWS]["first"]
+    read = [n for n in scores if concerns(first, {"page": lookup[n].fields})]
+    return [n for n in read if scores[n] is None]
+
+
+@arch.law(
+    "law.embed.proven",
+    "A `first` is tried on the members already within when it is written and lands only if it "
+    "gives one of those it reads a number; a failure met on reading is said in what is shown.",
+    doc="vault-format.md#pages",
+)
+def unshown(space: str, lookup: dict[str, Page]) -> str | None:
+    """Return why the `first` of space cannot land: it reads members and scores none of them."""
+    shows = lookup[space].fields.get(SHOWS)
+    if not isinstance(shows, dict) or "first" not in shows:
+        return None
+    names = sorted(n for n in lookup if _within(n, space, lookup))
+    scores = _scores(space, names, lookup)
+    failed = _unordered(space, scores, lookup)
+    if not failed or any(score is not None for score in scores.values()):
+        return None
+    return voice.line("shows-scores", space=space, name=failed[0])
+
+
 @arch.law(
     "law.embed.shows",
     "A space says how its members are shown, and the order is worked out on reading, never stored.",
@@ -536,16 +574,18 @@ def _members_text(space: str, lookup: dict[str, Page]) -> str | None:
 
     The lines are sorted by name and cut at MEMBERS_CAP. A space that carries `shows` orders
     them by `first`, highest first, with ties and members it cannot score after by name, and
-    cuts at `most`. Nothing is written: the order is worked out each time the embed is resolved.
+    cuts at `most`. A last line names the members `first` reads and gives no number for.
+    Nothing is written: the order is worked out each time the embed is resolved.
     """
     names = sorted(n for n in lookup if _within(n, space, lookup))
     shows = lookup[space].fields.get(SHOWS)
     cap = MEMBERS_CAP
+    failed: list[str] = []
     if isinstance(shows, dict):
         cap = shows.get("most", MEMBERS_CAP)
         if "first" in shows:
-            terms = Terms(lambda: lookup)
-            scores = {n: _score(shows["first"], lookup[n], lookup[space], terms) for n in names}
+            scores = _scores(space, names, lookup)
+            failed = _unordered(space, scores, lookup)
             names.sort(key=lambda n: (scores[n] is None, -(scores[n] or 0)))
     lines = []
     for name in names[:cap]:
@@ -553,6 +593,10 @@ def _members_text(space: str, lookup: dict[str, Page]) -> str | None:
         lines.append(f"{name}: {first}" if first else name)
     if len(names) > cap:
         lines.append(f"({len(names) - cap} more not shown)")
+    if failed:
+        rest = f" and {len(failed) - 3} more" if len(failed) > 3 else ""
+        named = ", ".join(failed[:3]) + rest
+        lines.append(voice.line("shows-unordered", count=len(failed), names=named))
     return "\n".join(lines) or None
 
 

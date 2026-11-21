@@ -1,0 +1,9 @@
+# `first` gives a number, not text and not true or false.
+pages:
+  den: {}
+  near: {within: den, place: hall}
+write:
+  page: den
+  set:
+    shows: {first: "page.place"}
+refused: shape

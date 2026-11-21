@@ -151,6 +151,14 @@ The most a space shows is a whole number from 1 to {cap}. Write most with a numb
 
 The first of a space is an expression that gives a number for each member, and it can read page, space and text only: {reason}
 
+## shows-scores
+
+The first of {space} reads the pages within {space} and gives none of them a number, {name} for one. It must give a number for each page it reads. A whole number and a number with a fraction do not mix: write double(page.FIELD) to make a whole number one with a fraction, and double(page.FIELD) or int(page.FIELD) to read a number out of text.
+
+## shows-unordered
+
+({count} not ordered: first gives no number for {names})
+
 ## aka-shape
 
 A page says what it is known as with a list of phrases of at least {least} characters each, as in aka: ["Mrs Okafor", "the landlady"]. Write aka as a list with at least one phrase, or leave it out.

@@ -166,12 +166,35 @@ def _typed(value: Any) -> Any:
         return _str(value)
     if type(value) is list:
         return celtypes.ListType(value)
+    if type(value) is float:
+        return celtypes.DoubleType(value)
     return value
 
 
-# cel-python maps `+` to Python's own, which joins two texts or two lists into a plain Python
-# value: one with no CEL methods, and one that cannot be given back as a result.
-_OPERATORS: dict[str, Any] = {"_+_": lambda left, right: _typed(operator.add(left, right))}
+_MIXED = {celtypes.IntType, celtypes.DoubleType}
+
+
+def _retyped(fn: Callable[[Any, Any], Any]) -> Callable[[Any, Any], Any]:
+    def typed(left: Any, right: Any) -> Any:
+        if {type(left), type(right)} == _MIXED:
+            raise TypeError("a whole number and a number with a fraction do not mix")
+        return _typed(fn(left, right))
+
+    return typed
+
+
+# cel-python maps the arithmetic operators to Python's own. `+`, `-` and `*` then give a plain
+# Python value for two texts, two lists or two numbers with a fraction: one with no CEL methods,
+# and one that cannot be given back as a result. A whole number beside a number with a fraction
+# is an error in CEL, and Python's own takes it on one side and not the other, so it is refused
+# on both.
+_OPERATORS: dict[str, Any] = {
+    "_+_": _retyped(operator.add),
+    "_-_": _retyped(operator.sub),
+    "_*_": _retyped(operator.mul),
+    "_/_": _retyped(operator.truediv),
+    "_%_": _retyped(operator.mod),
+}
 
 
 @arch.law(

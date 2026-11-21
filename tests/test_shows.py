@@ -39,7 +39,61 @@ def test_a_member_first_cannot_score_comes_after_the_scored() -> None:
     found["a"] = Page("den", [], [], {"weight": "heavy"}, "")
     found["b"] = Page("den", [], [], {}, "")
     shown = resolve_text(EMBED, found).splitlines()
-    assert shown == ["n2: note 2", "n1: note 1", "n0: note 0", "a", "b"]
+    said = "(1 not ordered: first gives no number for a)"
+    assert shown == ["n2: note 2", "n1: note 1", "n0: note 0", "a", "b", said]
+
+
+def test_things_are_ordered_by_distance_nearest_first() -> None:
+    found = {"den": Page(None, [], [], {"shows": {"first": "0.0 - page.distance"}}, "")}
+    for name, distance in (("far", 9.5), ("near", 0.25), ("mid", 3.0)):
+        found[name] = Page("den", [], [], {"distance": distance}, "")
+    assert resolve_text(EMBED, found).splitlines() == ["near", "mid", "far"]
+
+
+@arch.holds("law.embed.proven")
+def test_a_first_that_fails_when_read_says_so_in_what_is_shown() -> None:
+    found = desk({"first": "page.weight - 0.5"}, 5)
+    found["z"] = Page("den", [], [], {}, "no weight")
+    shown = resolve_text(EMBED, found).splitlines()
+    assert shown[:6] == [f"n{i}: note {i}" for i in range(5)] + ["z: no weight"]
+    assert shown[6] == "(5 not ordered: first gives no number for n0, n1, n2 and 2 more)"
+    cut = resolve_text(EMBED, desk({"most": 1, "first": "page.weight - 0.5"}, 2)).splitlines()
+    assert cut == [
+        "n0: note 0",
+        "(1 more not shown)",
+        "(2 not ordered: first gives no number for n0, n1)",
+    ]
+
+
+@arch.holds("law.embed.proven")
+def test_a_first_that_scores_no_member_it_reads_is_refused_when_written(vault: Vault) -> None:
+    def w(page: str, changes: dict):
+        return vault.write(page, changes, None, actor="alice", at=AT)
+
+    assert w("den", {}).ok and w("a", {"within": "den", "weight": 1}).ok
+    assert w("b", {"within": "den", "weight": 2}).ok and w("c", {"within": "den"}).ok
+    for wrong in ("page.weight - 0.5", "page.weight > 1", "space.gone + page.weight"):
+        refused = w("den", {"shows": {"first": wrong}})
+        assert not refused.ok and refused.reason.startswith("shape: ")
+        assert "den" in refused.reason and "double(page.FIELD)" in refused.reason
+    assert "shows" not in vault.read("den").fields
+    assert w("den", {"shows": {"first": "double(page.weight) - 0.5"}}).ok
+    assert w("a", {"weight": "heavy"}).ok
+    assert w("den", {"shows": {"most": 5, "first": "double(page.weight) - 0.5"}}).ok
+    assert w("den", {"shows": {"first": "page.size"}}).ok
+
+
+def test_a_first_written_before_any_member_is_accepted_and_speaks_when_read(vault: Vault) -> None:
+    def w(page: str, changes: dict):
+        return vault.write(page, changes, None, actor="alice", at=AT)
+
+    assert w("den", {"shows": {"first": "page.weight - 0.5"}}).ok
+    assert w("a", {"within": "den", "weight": 1}).ok
+    assert vault.write("reader", {}, EMBED, actor="alice", at=AT).ok
+    assert vault.read("reader").body.splitlines() == [
+        "a",
+        "(1 not ordered: first gives no number for a)",
+    ]
 
 
 @pytest.mark.parametrize(
