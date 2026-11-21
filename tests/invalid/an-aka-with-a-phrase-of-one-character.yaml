@@ -4,5 +4,5 @@ pages:
 write:
   page: okafor
   set:
-    known_as: ["x"]
+    aka: ["x"]
 refused: shape

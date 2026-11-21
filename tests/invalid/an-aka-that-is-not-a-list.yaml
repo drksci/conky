@@ -1,8 +1,8 @@
-# A phrase is not empty.
+# aka is a list, not one phrase.
 pages:
   okafor: {}
 write:
   page: okafor
   set:
-    known_as: ["Mrs Okafor", ""]
+    aka: "Mrs Okafor"
 refused: shape

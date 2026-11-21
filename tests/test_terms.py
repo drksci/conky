@@ -11,8 +11,8 @@ from .conftest import AT
 
 def desk() -> dict[str, Page]:
     return {
-        "okafor": Page(None, [], [], {"known_as": ["Mrs Okafor", "the landlady"]}, ""),
-        "rent": Page(None, [], [], {"known_as": ["rent"]}, ""),
+        "okafor": Page(None, [], [], {"aka": ["Mrs Okafor", "the landlady"]}, ""),
+        "rent": Page(None, [], [], {"aka": ["rent"]}, ""),
         "plain": Page(None, [], [], {}, "Mrs Okafor"),
     }
 
@@ -37,7 +37,7 @@ def test_a_phrase_is_recognised_as_whole_words(text: str, found: list[str]) -> N
 
 def test_a_page_does_not_link_to_itself_by_its_phrases() -> None:
     pages = desk()
-    page = Page(None, [], [], {"known_as": ["Mrs Okafor"]}, "Mrs Okafor and [[rent]]")
+    page = Page(None, [], [], {"aka": ["Mrs Okafor"]}, "Mrs Okafor and [[rent]]")
     assert links(page, Terms(lambda: pages), "okafor") == {"rent"}
     assert links(page, Terms(lambda: pages), "other") == {"okafor", "rent"}
 
@@ -73,7 +73,7 @@ def test_terms_is_a_function_of_the_pages_when_it_is_called() -> None:
 @arch.holds("law.link.known")
 def test_a_write_that_uses_a_phrase_tells_its_watchers_and_the_vault_verifies(vault: Vault) -> None:
     watch = [{"on": "link", "when": "true", "set": {"n": "page.n + 1"}}]
-    fields = {"known_as": ["Mrs Okafor"], "n": 0, "watch": watch}
+    fields = {"aka": ["Mrs Okafor"], "n": 0, "watch": watch}
     assert vault.write("okafor", fields, None, actor="alice", at=AT).ok
     assert vault.write("note", {}, "Mrs Okafor is late", actor="alice", at=AT).ok
     assert vault.read("okafor").fields["n"] == 1

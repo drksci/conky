@@ -174,8 +174,8 @@ def _check_watch(entry: Any) -> None:
         raise ShapeError(f"watch on {entry['on']}: {exc}") from exc
 
 
-KNOWN_AS = "known_as"
-KNOWN_AS_MIN = 2
+AKA = "aka"
+AKA_MIN = 2
 
 
 @arch.law(
@@ -200,9 +200,9 @@ class Terms:
         if self._found is None:
             self._found = []
             for name, page in sorted(self._load().items()):
-                phrases = page.fields.get(KNOWN_AS)
+                phrases = page.fields.get(AKA)
                 for phrase in phrases if isinstance(phrases, list) else []:
-                    if not isinstance(phrase, str) or len(phrase.strip()) < KNOWN_AS_MIN:
+                    if not isinstance(phrase, str) or len(phrase.strip()) < AKA_MIN:
                         continue
                     words = r"\s+".join(re.escape(w) for w in phrase.split())
                     pattern = rf"(?<!\w){words}(?:['’]s)?(?!\w)"
@@ -240,15 +240,15 @@ def _check_budget(value: Any) -> None:
         raise ShapeError(voice.line("budget-shape", keys=", ".join(BUDGET_KEYS)))
 
 
-def _check_known_as(value: Any) -> None:
-    """Refuse a `known_as` that is not a list of phrases of at least two characters."""
+def _check_aka(value: Any) -> None:
+    """Refuse a `aka` that is not a list of phrases of at least two characters."""
     ok = (
         isinstance(value, list)
         and bool(value)
-        and all(isinstance(p, str) and len(p.strip()) >= KNOWN_AS_MIN for p in value)
+        and all(isinstance(p, str) and len(p.strip()) >= AKA_MIN for p in value)
     )
     if not ok:
-        raise ShapeError(voice.line("known-as-shape", least=KNOWN_AS_MIN))
+        raise ShapeError(voice.line("aka-shape", least=AKA_MIN))
 
 
 def _set_ok(value: Any) -> bool:
@@ -314,9 +314,9 @@ def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
             if value is not None:
                 _check_shows(value)
             fields[key] = value
-        elif key == KNOWN_AS:
+        elif key == AKA:
             if value is not None:
-                _check_known_as(value)
+                _check_aka(value)
             fields[key] = value
         else:
             fields[key] = value

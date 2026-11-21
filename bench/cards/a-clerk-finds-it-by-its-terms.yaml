@@ -14,8 +14,8 @@ dial: the two term pages are given at the start; the next notch has a background
 if_not: look first at the eight lines the clerk was shown at the last note and whether the seventh note led them, then at whether the note saying who lives at number nine was among them
 pages:
   helper: {api: command, command: stand}
-  mrs-okafor: {known_as: ["Mrs Okafor", "the lady from number nine", "the lady at number nine"]}
-  parcel: {known_as: [parcel, package]}
+  mrs-okafor: {aka: ["Mrs Okafor", "the lady from number nine", "the lady at number nine"]}
+  parcel: {aka: [parcel, package]}
   clerk:
     heard: ""
     said: ""

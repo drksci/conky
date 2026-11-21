@@ -1,8 +1,8 @@
-# known_as holds at least one phrase.
+# A phrase is not empty.
 pages:
   okafor: {}
 write:
   page: okafor
   set:
-    known_as: []
+    aka: ["Mrs Okafor", ""]
 refused: shape

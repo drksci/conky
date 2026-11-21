@@ -1,0 +1,8 @@
+# aka holds at least one phrase.
+pages:
+  okafor: {}
+write:
+  page: okafor
+  set:
+    aka: []
+refused: shape

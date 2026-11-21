@@ -4,5 +4,5 @@ pages:
 write:
   page: okafor
   set:
-    known_as: ["Mrs Okafor", 7]
+    aka: ["Mrs Okafor", 7]
 refused: shape

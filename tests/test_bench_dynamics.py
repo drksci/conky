@@ -374,8 +374,8 @@ def complete(events: list[dict], g: dict) -> None:
         for key, value in whole.fields.items():
             if key == "avatar":
                 assert node["header"]["avatar"] == str(value)
-            elif key == "known_as":
-                assert node["header"]["known_as"] == [str(v) for v in value]
+            elif key == "aka":
+                assert node["header"]["aka"] == [str(v) for v in value]
             elif key == "shows":
                 assert any(s["slot"] == "shows" and s["filled"] for s in node["footer"]["slots"])
             elif not dynamics.bookkeeping(key) and key not in drawn:

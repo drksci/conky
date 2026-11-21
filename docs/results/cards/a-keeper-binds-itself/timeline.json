@@ -18,7 +18,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -54,7 +54,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\ncash: 80\n---\n"
    },
@@ -84,7 +84,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\n---\n"
    },
@@ -123,7 +123,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n\n      Every payment the den makes must leave at least 20 in cash. The den holds its cash in the field cash. Make that impossible to break, not merely intended. Then record the payment as a page with an amount.\n\n      '\n    provider: helper\n    writes: den\n---\n"
    },
@@ -160,7 +160,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "Pay the baker 30.\n",
     "source": "---\n---\nPay the baker 30.\n"
    },
@@ -199,7 +199,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n\n      Every payment the den makes must leave at least 20 in cash. The den holds its cash in the field cash. Make that impossible to break, not merely intended. Then record the payment as a page with an amount.\n\n      '\n    provider: helper\n    writes: den\nwrites_asked: eb23b4fc627854ac6896fa7629b0f1e6fe1869662eaaedf84b418a47bf1f2b48\n---\n"
    },
@@ -236,7 +236,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: space.cash - page.amount >= 20\ncash: 80\n---\n"
    },
@@ -270,7 +270,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Paid the baker 30.\n",
     "source": "---\nwithin: den\namount: 30\n---\nPaid the baker 30.\n"
    },
@@ -323,7 +323,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -359,7 +359,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\ncash: 80\n---\n"
    },
@@ -389,7 +389,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\n---\n"
    },
@@ -428,7 +428,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n\n      Every payment the den makes must leave at least 20 in cash. The den holds its cash in the field cash. Make that impossible to break, not merely intended. Then record the payment as a page with an amount.\n\n      '\n    provider: helper\n    writes: den\n---\n"
    },
@@ -465,7 +465,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "Pay the baker 30.\n",
     "source": "---\n---\nPay the baker 30.\n"
    },
@@ -504,7 +504,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n\n      Every payment the den makes must leave at least 20 in cash. The den holds its cash in the field cash. Make that impossible to break, not merely intended. Then record the payment as a page with an amount.\n\n      '\n    provider: helper\n    writes: den\nwrites_asked: eb23b4fc627854ac6896fa7629b0f1e6fe1869662eaaedf84b418a47bf1f2b48\n---\n"
    },
@@ -541,7 +541,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: space.cash - page.amount >= 20\ncash: 80\n---\n"
    },
@@ -575,7 +575,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Paid the baker 30.\n",
     "source": "---\nwithin: den\namount: 30\n---\nPaid the baker 30.\n"
    },
@@ -628,7 +628,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -664,7 +664,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\ncash: 80\n---\n"
    },
@@ -694,7 +694,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\n---\n"
    },
@@ -733,7 +733,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n\n      Every payment the den makes must leave at least 20 in cash. The den holds its cash in the field cash. Make that impossible to break, not merely intended. Then record the payment as a page with an amount.\n\n      '\n    provider: helper\n    writes: den\n---\n"
    },
@@ -770,7 +770,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "Pay the baker 30.\n",
     "source": "---\n---\nPay the baker 30.\n"
    },
@@ -809,7 +809,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n\n      Every payment the den makes must leave at least 20 in cash. The den holds its cash in the field cash. Make that impossible to break, not merely intended. Then record the payment as a page with an amount.\n\n      '\n    provider: helper\n    writes: den\nwrites_asked: eb23b4fc627854ac6896fa7629b0f1e6fe1869662eaaedf84b418a47bf1f2b48\n---\n"
    },
@@ -846,7 +846,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: space.cash - page.amount >= 20\ncash: 80\n---\n"
    },
@@ -880,7 +880,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Pay the baker 30.\n",
     "source": "---\nwithin: den\namount: 30\n---\nPay the baker 30.\n"
    },
@@ -933,7 +933,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -969,7 +969,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\ncash: 80\n---\n"
    },
@@ -999,7 +999,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\n---\n"
    },
@@ -1038,7 +1038,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n\n      Every payment the den makes must leave at least 20 in cash. The den holds its cash in the field cash. Make that impossible to break, not merely intended. Then record the payment as a page with an amount.\n\n      '\n    provider: helper\n    writes: den\n---\n"
    },
@@ -1075,7 +1075,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "Pay the baker 30.\n",
     "source": "---\n---\nPay the baker 30.\n"
    },
@@ -1114,7 +1114,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n\n      Every payment the den makes must leave at least 20 in cash. The den holds its cash in the field cash. Make that impossible to break, not merely intended. Then record the payment as a page with an amount.\n\n      '\n    provider: helper\n    writes: den\nwrites_asked: eb23b4fc627854ac6896fa7629b0f1e6fe1869662eaaedf84b418a47bf1f2b48\n---\n"
    },
@@ -1151,7 +1151,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: space.cash - page.amount >= 20\ncash: 80\n---\n"
    },
@@ -1222,7 +1222,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -1258,7 +1258,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\ncash: 80\n---\n"
    },
@@ -1288,7 +1288,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\n---\n"
    },
@@ -1327,7 +1327,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n\n      Every payment the den makes must leave at least 20 in cash. The den holds its cash in the field cash. Make that impossible to break, not merely intended. Then record the payment as a page with an amount.\n\n      '\n    provider: helper\n    writes: den\n---\n"
    },
@@ -1364,7 +1364,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "Pay the baker 30.\n",
     "source": "---\n---\nPay the baker 30.\n"
    },
@@ -1403,7 +1403,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n\n      Every payment the den makes must leave at least 20 in cash. The den holds its cash in the field cash. Make that impossible to break, not merely intended. Then record the payment as a page with an amount.\n\n      '\n    provider: helper\n    writes: den\nwrites_asked: eb23b4fc627854ac6896fa7629b0f1e6fe1869662eaaedf84b418a47bf1f2b48\n---\n"
    },
@@ -1440,7 +1440,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: space.cash - page.amount >= 20\ncash: 80\n---\n"
    },
@@ -1474,7 +1474,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Pay the baker 30.\n",
     "source": "---\nwithin: den\namount: 30\n---\nPay the baker 30.\n"
    },

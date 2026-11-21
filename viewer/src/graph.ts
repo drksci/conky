@@ -101,7 +101,7 @@ export interface GraphNode {
     label: string;
     line: string;
     within: string[];
-    known_as: string[];
+    aka: string[];
     thought: string; // ids of values
     refused: string;
   };

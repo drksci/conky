@@ -102,7 +102,7 @@ def snapshot(name: str, page: Page, source: str = "") -> dict:
     """The whole page after a write: plain fields, rules, watch entries, `shows`, the spaces it
     is within, the phrases it is known by, its body, and its source as committed."""
     shows = page.fields.get("shows")
-    known = page.fields.get("known_as")
+    known = page.fields.get("aka")
     return {
         "fields": {
             k: _scalar(v)
@@ -113,7 +113,7 @@ def snapshot(name: str, page: Page, source: str = "") -> dict:
         "watch": _watch(Page(), page),
         "shows": shows if isinstance(shows, dict) else None,
         "within": spaces(page.within),
-        "known_as": [str(k) for k in known] if isinstance(known, list) else [],
+        "aka": [str(k) for k in known] if isinstance(known, list) else [],
         "body": page.body,
         "source": source,
     }

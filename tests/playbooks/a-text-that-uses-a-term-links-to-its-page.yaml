@@ -1,7 +1,7 @@
 # Text that uses a phrase a page is known by links to that page with no brackets typed.
 pages:
   okafor:
-    known_as: ["Mrs Okafor", "the landlady"]
+    aka: ["Mrs Okafor", "the landlady"]
     n: 0
     watch:
       - on: link

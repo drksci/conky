@@ -2,7 +2,7 @@
 # they share no ordinary word.
 pages:
   broken: {api: command, command: no-such-program-here}
-  landlady: {known_as: ["the landlady", "Mrs Okafor"]}
+  landlady: {aka: ["the landlady", "Mrs Okafor"]}
   den:
     heard: "Mrs Okafor called"
     shows: {first: "terms(space.heard).filter(t, terms(text).contains(t)).size()"}

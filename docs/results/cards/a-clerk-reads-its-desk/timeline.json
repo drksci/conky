@@ -18,7 +18,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -82,7 +82,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: ''\nsaid: ''\n---\n"
    },
@@ -145,7 +145,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Mrs Okafor's parcel is on shelf 12.\n",
     "source": "---\nwithin: clerk\n---\nMrs Okafor's parcel is on shelf 12.\n"
    },
@@ -200,7 +200,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s parcel is on shelf 12.\n\n  '\nsaid: ''\n---\n"
    },
@@ -260,7 +260,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s parcel is on shelf 12.\n\n  '\nsaid: 'Noted: Mrs Okafor''s parcel is on shelf 12, as the desk note says.'\nsaid_asked: 0df9bdf0c3f3ec19aee5cc002156e3fa1213eff0a83ff98a156efac488f074ef\n---\n"
    },
@@ -298,7 +298,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Has the morning post come?\n",
     "source": "---\nwithin: clerk\n---\nHas the morning post come?\n"
    },
@@ -353,7 +353,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: 'Noted: Mrs Okafor''s parcel is on shelf 12, as the desk note says.'\nsaid_asked: 0df9bdf0c3f3ec19aee5cc002156e3fa1213eff0a83ff98a156efac488f074ef\n---\n"
    },
@@ -413,7 +413,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: I can't tell from the desk. Nothing here records the morning post arriving. My notes only mention Mrs Okafor's parcel on shelf 12. If the post has come, it should be logged or left in the tray, so check there or ask whoever handles incoming mail.\nsaid_asked: 9f869b03292045922594d72f306913548e300e07393542ea7211f65a558d28e0\n---\n"
    },
@@ -452,7 +452,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Is the lamp lit?\n",
     "source": "---\nwithin: clerk\n---\nIs the lamp lit?\n"
    },
@@ -507,7 +507,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Is the lamp lit?\n\n  '\nsaid: I can't tell from the desk. Nothing here records the morning post arriving. My notes only mention Mrs Okafor's parcel on shelf 12. If the post has come, it should be logged or left in the tray, so check there or ask whoever handles incoming mail.\nsaid_asked: 9f869b03292045922594d72f306913548e300e07393542ea7211f65a558d28e0\n---\n"
    },
@@ -567,7 +567,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Is the lamp lit?\n\n  '\nsaid: I can't tell from the desk. My notes cover Mrs Okafor's parcel on shelf 12 and the morning post, but nothing about the lamp. If you can see it, tell me whether it's lit and I'll note it. Otherwise, someone will need to check it.\nsaid_asked: dbe0f77053419117a14fb513570a25c048ecd01eee5335390ceb1c41285fdaa5\n---\n"
    },
@@ -607,7 +607,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Which shelf is Mrs Okafor's parcel on?\n",
     "source": "---\nwithin: clerk\n---\nWhich shelf is Mrs Okafor's parcel on?\n"
    },
@@ -662,7 +662,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Which shelf is Mrs Okafor''s parcel on?\n\n  '\nsaid: I can't tell from the desk. My notes cover Mrs Okafor's parcel on shelf 12 and the morning post, but nothing about the lamp. If you can see it, tell me whether it's lit and I'll note it. Otherwise, someone will need to check it.\nsaid_asked: dbe0f77053419117a14fb513570a25c048ecd01eee5335390ceb1c41285fdaa5\n---\n"
    },
@@ -722,7 +722,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Which shelf is Mrs Okafor''s parcel on?\n\n  '\nsaid: Mrs Okafor's parcel is on **shelf 12**, according to note-1.\nsaid_asked: 6eb0c558662ad882d39ef9df850a27c38f55f54d3341e5cd68b730e63ee3d88c\n---\n"
    },
@@ -766,7 +766,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -830,7 +830,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: ''\nsaid: ''\n---\n"
    },
@@ -893,7 +893,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Mrs Okafor's parcel is on shelf 12.\n",
     "source": "---\nwithin: clerk\n---\nMrs Okafor's parcel is on shelf 12.\n"
    },
@@ -948,7 +948,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s parcel is on shelf 12.\n\n  '\nsaid: ''\n---\n"
    },
@@ -1008,7 +1008,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s parcel is on shelf 12.\n\n  '\nsaid: 'Noted: Mrs Okafor''s parcel is on shelf 12.'\nsaid_asked: 951f462cedd4dbee2f354dd97efa8f6b6f22d4beeff368c2adbb885c4cfcd1ec\n---\n"
    },
@@ -1046,7 +1046,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Has the morning post come?\n",
     "source": "---\nwithin: clerk\n---\nHas the morning post come?\n"
    },
@@ -1101,7 +1101,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: 'Noted: Mrs Okafor''s parcel is on shelf 12.'\nsaid_asked: 951f462cedd4dbee2f354dd97efa8f6b6f22d4beeff368c2adbb885c4cfcd1ec\n---\n"
    },
@@ -1161,7 +1161,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: I don't have any record of the morning post arriving. The desk notes only say that Mrs Okafor's parcel is on shelf 12 and ask whether the post has come, so I can't confirm either way. Someone would need to check the post tray or the mail log to be sure.\nsaid_asked: b05b038f4bb35b16b7cb63e58e11c03a95511f35229e288f3005ce59c7fd023a\n---\n"
    },
@@ -1200,7 +1200,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Is the lamp lit?\n",
     "source": "---\nwithin: clerk\n---\nIs the lamp lit?\n"
    },
@@ -1255,7 +1255,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Is the lamp lit?\n\n  '\nsaid: I don't have any record of the morning post arriving. The desk notes only say that Mrs Okafor's parcel is on shelf 12 and ask whether the post has come, so I can't confirm either way. Someone would need to check the post tray or the mail log to be sure.\nsaid_asked: b05b038f4bb35b16b7cb63e58e11c03a95511f35229e288f3005ce59c7fd023a\n---\n"
    },
@@ -1315,7 +1315,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Is the lamp lit?\n\n  '\nsaid: 'I can''t see the lamp from the desk, so I don''t know whether it''s lit. The notes don''t say either. If someone needs to know, they''ll have to go check it or switch it on.\n\n\n  Mrs Okafor''s parcel is still on shelf 12, and I have no word yet on whether the morning post has come.'\nsaid_asked: 3409f48150bbaffd56c5ba254174c3fb1c7e2f0a1012b25125f1a7984c9bd0a0\n---\n"
    },
@@ -1355,7 +1355,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Which shelf is Mrs Okafor's parcel on?\n",
     "source": "---\nwithin: clerk\n---\nWhich shelf is Mrs Okafor's parcel on?\n"
    },
@@ -1410,7 +1410,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Which shelf is Mrs Okafor''s parcel on?\n\n  '\nsaid: 'I can''t see the lamp from the desk, so I don''t know whether it''s lit. The notes don''t say either. If someone needs to know, they''ll have to go check it or switch it on.\n\n\n  Mrs Okafor''s parcel is still on shelf 12, and I have no word yet on whether the morning post has come.'\nsaid_asked: 3409f48150bbaffd56c5ba254174c3fb1c7e2f0a1012b25125f1a7984c9bd0a0\n---\n"
    },
@@ -1470,7 +1470,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Which shelf is Mrs Okafor''s parcel on?\n\n  '\nsaid: Mrs Okafor's parcel is on **shelf 12**, according to note-1.\nsaid_asked: 6eb0c558662ad882d39ef9df850a27c38f55f54d3341e5cd68b730e63ee3d88c\n---\n"
    },
@@ -1514,7 +1514,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -1578,7 +1578,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: ''\nsaid: ''\n---\n"
    },
@@ -1641,7 +1641,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Mrs Okafor's parcel is on shelf 12.\n",
     "source": "---\nwithin: clerk\n---\nMrs Okafor's parcel is on shelf 12.\n"
    },
@@ -1696,7 +1696,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s parcel is on shelf 12.\n\n  '\nsaid: ''\n---\n"
    },
@@ -1756,7 +1756,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s parcel is on shelf 12.\n\n  '\nsaid: 'Noted: Mrs Okafor''s parcel is on shelf 12.'\nsaid_asked: 951f462cedd4dbee2f354dd97efa8f6b6f22d4beeff368c2adbb885c4cfcd1ec\n---\n"
    },
@@ -1794,7 +1794,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Has the morning post come?\n",
     "source": "---\nwithin: clerk\n---\nHas the morning post come?\n"
    },
@@ -1849,7 +1849,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: 'Noted: Mrs Okafor''s parcel is on shelf 12.'\nsaid_asked: 951f462cedd4dbee2f354dd97efa8f6b6f22d4beeff368c2adbb885c4cfcd1ec\n---\n"
    },
@@ -1909,7 +1909,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: I don't have any record of the morning post arriving. My desk only notes that Mrs Okafor's parcel is on shelf 12. If the post has come, someone will need to check the incoming tray or the mail log, or confirm with the post office.\nsaid_asked: ef28110c82d53af45a9634911e9a9f95686db619d24ac1966963ad649bf54ce4\n---\n"
    },
@@ -1948,7 +1948,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Is the lamp lit?\n",
     "source": "---\nwithin: clerk\n---\nIs the lamp lit?\n"
    },
@@ -2003,7 +2003,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Is the lamp lit?\n\n  '\nsaid: I don't have any record of the morning post arriving. My desk only notes that Mrs Okafor's parcel is on shelf 12. If the post has come, someone will need to check the incoming tray or the mail log, or confirm with the post office.\nsaid_asked: ef28110c82d53af45a9634911e9a9f95686db619d24ac1966963ad649bf54ce4\n---\n"
    },
@@ -2063,7 +2063,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Is the lamp lit?\n\n  '\nsaid: I can't tell from here. Nothing on the desk says whether the lamp is lit, and I can't see or check it. If you tell me its state, I'll note it on the desk. Otherwise, someone will need to look at the lamp.\nsaid_asked: fd7f4b92b71cc0ded11d2ccb7ea886d405f38c8bde5b4c2c75c690beb18cf2a2\n---\n"
    },
@@ -2103,7 +2103,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Which shelf is Mrs Okafor's parcel on?\n",
     "source": "---\nwithin: clerk\n---\nWhich shelf is Mrs Okafor's parcel on?\n"
    },
@@ -2158,7 +2158,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Which shelf is Mrs Okafor''s parcel on?\n\n  '\nsaid: I can't tell from here. Nothing on the desk says whether the lamp is lit, and I can't see or check it. If you tell me its state, I'll note it on the desk. Otherwise, someone will need to look at the lamp.\nsaid_asked: fd7f4b92b71cc0ded11d2ccb7ea886d405f38c8bde5b4c2c75c690beb18cf2a2\n---\n"
    },
@@ -2218,7 +2218,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Which shelf is Mrs Okafor''s parcel on?\n\n  '\nsaid: Shelf 12. Mrs Okafor's parcel is there, according to note-1.\nsaid_asked: 354892a5b53e3c847c11148f1a31213ebe00d8c4b234b117cb50738acd87b158\n---\n"
    },
@@ -2262,7 +2262,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -2326,7 +2326,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: ''\nsaid: ''\n---\n"
    },
@@ -2389,7 +2389,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Mrs Okafor's parcel is on shelf 12.\n",
     "source": "---\nwithin: clerk\n---\nMrs Okafor's parcel is on shelf 12.\n"
    },
@@ -2444,7 +2444,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s parcel is on shelf 12.\n\n  '\nsaid: ''\n---\n"
    },
@@ -2504,7 +2504,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s parcel is on shelf 12.\n\n  '\nsaid: Mrs Okafor's parcel is on shelf 12.\nsaid_asked: c1d8cf3c5866cb4e0bd8d2ca15e96f13413d58d8b0c50813d699a823dfd8ed35\n---\n"
    },
@@ -2542,7 +2542,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Has the morning post come?\n",
     "source": "---\nwithin: clerk\n---\nHas the morning post come?\n"
    },
@@ -2597,7 +2597,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: Mrs Okafor's parcel is on shelf 12.\nsaid_asked: c1d8cf3c5866cb4e0bd8d2ca15e96f13413d58d8b0c50813d699a823dfd8ed35\n---\n"
    },
@@ -2657,7 +2657,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: I don't know. My notes only mention Mrs Okafor's parcel on shelf 12 and the question itself, with nothing recording whether the morning post has arrived. Check the front door or the post tray, or ask whoever handles incoming mail.\nsaid_asked: 10c855a87866f944408c2338caa969ad8c15a78bf995deb10ab1d8c1dca6c1d5\n---\n"
    },
@@ -2696,7 +2696,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Is the lamp lit?\n",
     "source": "---\nwithin: clerk\n---\nIs the lamp lit?\n"
    },
@@ -2751,7 +2751,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Is the lamp lit?\n\n  '\nsaid: I don't know. My notes only mention Mrs Okafor's parcel on shelf 12 and the question itself, with nothing recording whether the morning post has arrived. Check the front door or the post tray, or ask whoever handles incoming mail.\nsaid_asked: 10c855a87866f944408c2338caa969ad8c15a78bf995deb10ab1d8c1dca6c1d5\n---\n"
    },
@@ -2811,7 +2811,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Is the lamp lit?\n\n  '\nsaid: 'I can''t see the lamp from here, so I can''t say whether it''s lit. The desk notes don''t record that either. If you tell me its state, I''ll update note-3. Otherwise, someone at the desk will need to look.\n\n\n  While you''re checking the lamp, note-1 says Mrs Okafor''s parcel is on shelf 12, and note-2 is still open: I don''t know whether the morning post has come.'\nsaid_asked: 4d6ae3f501afb5bcad959eabe972e60ac2b9e89e83bc6476370b6571b91364a6\n---\n"
    },
@@ -2851,7 +2851,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Which shelf is Mrs Okafor's parcel on?\n",
     "source": "---\nwithin: clerk\n---\nWhich shelf is Mrs Okafor's parcel on?\n"
    },
@@ -2906,7 +2906,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Which shelf is Mrs Okafor''s parcel on?\n\n  '\nsaid: 'I can''t see the lamp from here, so I can''t say whether it''s lit. The desk notes don''t record that either. If you tell me its state, I''ll update note-3. Otherwise, someone at the desk will need to look.\n\n\n  While you''re checking the lamp, note-1 says Mrs Okafor''s parcel is on shelf 12, and note-2 is still open: I don''t know whether the morning post has come.'\nsaid_asked: 4d6ae3f501afb5bcad959eabe972e60ac2b9e89e83bc6476370b6571b91364a6\n---\n"
    },
@@ -2966,7 +2966,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Which shelf is Mrs Okafor''s parcel on?\n\n  '\nsaid: Mrs Okafor's parcel is on **shelf 12**.\nsaid_asked: e5e13bb520dbba1d42360b369d1c9894df603be42825b0aa28540b008f58c51d\n---\n"
    },
@@ -3010,7 +3010,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -3074,7 +3074,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: ''\nsaid: ''\n---\n"
    },
@@ -3137,7 +3137,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Mrs Okafor's parcel is on shelf 12.\n",
     "source": "---\nwithin: clerk\n---\nMrs Okafor's parcel is on shelf 12.\n"
    },
@@ -3192,7 +3192,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s parcel is on shelf 12.\n\n  '\nsaid: ''\n---\n"
    },
@@ -3252,7 +3252,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Mrs Okafor''s parcel is on shelf 12.\n\n  '\nsaid: Mrs Okafor's parcel is on shelf 12.\nsaid_asked: c1d8cf3c5866cb4e0bd8d2ca15e96f13413d58d8b0c50813d699a823dfd8ed35\n---\n"
    },
@@ -3290,7 +3290,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Has the morning post come?\n",
     "source": "---\nwithin: clerk\n---\nHas the morning post come?\n"
    },
@@ -3345,7 +3345,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: Mrs Okafor's parcel is on shelf 12.\nsaid_asked: c1d8cf3c5866cb4e0bd8d2ca15e96f13413d58d8b0c50813d699a823dfd8ed35\n---\n"
    },
@@ -3405,7 +3405,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Has the morning post come?\n\n  '\nsaid: I don't have any record that the morning post has arrived. My notes only mention Mrs Okafor's parcel, which is on shelf 12. If the post has come, it's probably in the post tray or with the mail room, and someone will need to check and log it.\nsaid_asked: fb0ccbec84cdf1c909c3b65db06236efef29c923dd80905c2cb043f8332024b2\n---\n"
    },
@@ -3444,7 +3444,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Is the lamp lit?\n",
     "source": "---\nwithin: clerk\n---\nIs the lamp lit?\n"
    },
@@ -3499,7 +3499,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Is the lamp lit?\n\n  '\nsaid: I don't have any record that the morning post has arrived. My notes only mention Mrs Okafor's parcel, which is on shelf 12. If the post has come, it's probably in the post tray or with the mail room, and someone will need to check and log it.\nsaid_asked: fb0ccbec84cdf1c909c3b65db06236efef29c923dd80905c2cb043f8332024b2\n---\n"
    },
@@ -3559,7 +3559,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Is the lamp lit?\n\n  '\nsaid: 'I can''t see the lamp, so I don''t know whether it''s lit. Nothing on the desk says either way. Note-3 is still asking the question.\n\n\n  Note-1 says Mrs Okafor''s parcel is on shelf 12, and note-2 asks whether the morning post has come, which the desk doesn''t answer either. If you tell me the lamp''s state, I''ll update the notes.'\nsaid_asked: 5cbdf8808e6f166b46096fd10ac92ff55eefe6e15a27c0181c755252185c3855\n---\n"
    },
@@ -3599,7 +3599,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "Which shelf is Mrs Okafor's parcel on?\n",
     "source": "---\nwithin: clerk\n---\nWhich shelf is Mrs Okafor's parcel on?\n"
    },
@@ -3654,7 +3654,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Which shelf is Mrs Okafor''s parcel on?\n\n  '\nsaid: 'I can''t see the lamp, so I don''t know whether it''s lit. Nothing on the desk says either way. Note-3 is still asking the question.\n\n\n  Note-1 says Mrs Okafor''s parcel is on shelf 12, and note-2 asks whether the morning post has come, which the desk doesn''t answer either. If you tell me the lamp''s state, I''ll update the notes.'\nsaid_asked: 5cbdf8808e6f166b46096fd10ac92ff55eefe6e15a27c0181c755252185c3855\n---\n"
    },
@@ -3714,7 +3714,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwatch:\n- on: within\n  when: 'true'\n  set:\n    heard: other_text\n- on: clerk\n  when: page.heard != ''\n  ask:\n    into: said\n    prompt: 'You are the clerk at this desk.\n\n\n      On your desk: ![[clerk#members]]\n\n\n      Just now the desk says: ![[clerk#heard]]\n\n      '\n    provider: helper\nheard: 'Which shelf is Mrs Okafor''s parcel on?\n\n  '\nsaid: Mrs Okafor's parcel is on **shelf 12**, according to note-1.\nsaid_asked: 6eb0c558662ad882d39ef9df850a27c38f55f54d3341e5cd68b730e63ee3d88c\n---\n"
    },

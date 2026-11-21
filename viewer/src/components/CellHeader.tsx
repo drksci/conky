@@ -49,16 +49,16 @@ export function CellHeader({ node }: { node: GraphNode }) {
           </span>
         )}
       </div>
-      {(within.length > 0 || header.known_as.length > 0) && (detailed || header.known_as.length > 0) && (
+      {(within.length > 0 || header.aka.length > 0) && (detailed || header.aka.length > 0) && (
         <div className="cell-sub">
           {within.length > 0 && (
             <span>
               {tokens.words.within} {within.join(", ")}
             </span>
           )}
-          {header.known_as.length > 0 && (
+          {header.aka.length > 0 && (
             <span>
-              {tokens.words.known_as} {header.known_as.map((k) => `“${k}”`).join(", ")}
+              {tokens.words.aka} {header.aka.map((k) => `“${k}”`).join(", ")}
             </span>
           )}
         </div>

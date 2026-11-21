@@ -18,7 +18,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -60,7 +60,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\ncash: 80\nturned_away: 0\n---\n"
    },
@@ -99,7 +99,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\n---\n"
    },
@@ -138,7 +138,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n      '\n    provider: helper\n    writes: den\n---\n"
    },
@@ -175,7 +175,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "The den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from now on and without anyone being asked again. A page listens with a watch entry: on refusal, when true, set a field.\n",
     "source": "---\n---\nThe den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from now on and without anyone being asked again. A page listens with a watch entry: on refusal, when true, set a field.\n"
    },
@@ -214,7 +214,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n      '\n    provider: helper\n    writes: den\nwrites_asked: 2f8d6fd9555a6ed397ff5277b8ff2ab5afde26b10a1972ab9bd4641b930b5199\n---\n"
    },
@@ -268,7 +268,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 0\n---\n"
    },
@@ -351,7 +351,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 1\n---\n"
    },
@@ -423,7 +423,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 2\n---\n"
    },
@@ -458,7 +458,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -500,7 +500,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\ncash: 80\nturned_away: 0\n---\n"
    },
@@ -539,7 +539,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\n---\n"
    },
@@ -578,7 +578,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n      '\n    provider: helper\n    writes: den\n---\n"
    },
@@ -615,7 +615,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "The den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from now on and without anyone being asked again. A page listens with a watch entry: on refusal, when true, set a field.\n",
     "source": "---\n---\nThe den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from now on and without anyone being asked again. A page listens with a watch entry: on refusal, when true, set a field.\n"
    },
@@ -654,7 +654,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n      '\n    provider: helper\n    writes: den\nwrites_asked: 2f8d6fd9555a6ed397ff5277b8ff2ab5afde26b10a1972ab9bd4641b930b5199\n---\n"
    },
@@ -712,7 +712,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\n- each: space.cash - page.payment >= 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 0\n---\n"
    },
@@ -804,7 +804,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\n- each: space.cash - page.payment >= 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 1\n---\n"
    },
@@ -880,7 +880,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\n- each: space.cash - page.payment >= 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 2\n---\n"
    },
@@ -915,7 +915,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -957,7 +957,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\ncash: 80\nturned_away: 0\n---\n"
    },
@@ -996,7 +996,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\n---\n"
    },
@@ -1035,7 +1035,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n      '\n    provider: helper\n    writes: den\n---\n"
    },
@@ -1072,7 +1072,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "The den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from now on and without anyone being asked again. A page listens with a watch entry: on refusal, when true, set a field.\n",
     "source": "---\n---\nThe den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from now on and without anyone being asked again. A page listens with a watch entry: on refusal, when true, set a field.\n"
    },
@@ -1111,7 +1111,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n      '\n    provider: helper\n    writes: den\nwrites_asked: 2f8d6fd9555a6ed397ff5277b8ff2ab5afde26b10a1972ab9bd4641b930b5199\n---\n"
    },
@@ -1169,7 +1169,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\n- each: page.cash - page.payment >= 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 0\n---\n"
    },
@@ -1261,7 +1261,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\n- each: page.cash - page.payment >= 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 1\n---\n"
    },
@@ -1337,7 +1337,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\n- each: page.cash - page.payment >= 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 2\n---\n"
    },
@@ -1372,7 +1372,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -1414,7 +1414,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\ncash: 80\nturned_away: 0\n---\n"
    },
@@ -1453,7 +1453,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\n---\n"
    },
@@ -1492,7 +1492,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n      '\n    provider: helper\n    writes: den\n---\n"
    },
@@ -1529,7 +1529,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "The den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from now on and without anyone being asked again. A page listens with a watch entry: on refusal, when true, set a field.\n",
     "source": "---\n---\nThe den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from now on and without anyone being asked again. A page listens with a watch entry: on refusal, when true, set a field.\n"
    },
@@ -1568,7 +1568,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n      '\n    provider: helper\n    writes: den\nwrites_asked: 2f8d6fd9555a6ed397ff5277b8ff2ab5afde26b10a1972ab9bd4641b930b5199\n---\n"
    },
@@ -1657,7 +1657,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\napi: command\ncommand: stand\n---\n"
    },
@@ -1699,7 +1699,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\ncash: 80\nturned_away: 0\n---\n"
    },
@@ -1738,7 +1738,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\n---\n"
    },
@@ -1777,7 +1777,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n      '\n    provider: helper\n    writes: den\n---\n"
    },
@@ -1814,7 +1814,7 @@
     "watch": [],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "The den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from now on and without anyone being asked again. A page listens with a watch entry: on refusal, when true, set a field.\n",
     "source": "---\n---\nThe den refuses payments that would leave less than 20 in cash. Have the den count each one it turns away in its field turned_away, from now on and without anyone being asked again. A page listens with a watch entry: on refusal, when true, set a field.\n"
    },
@@ -1853,7 +1853,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nwithin: den\nwatch:\n- on: order\n  when: 'true'\n  ask:\n    prompt: 'The order reads: ![[order]]\n\n      '\n    provider: helper\n    writes: den\nwrites_asked: 2f8d6fd9555a6ed397ff5277b8ff2ab5afde26b10a1972ab9bd4641b930b5199\n---\n"
    },
@@ -1911,7 +1911,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\n- each: page.cash - page.payment >= 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 0\n---\n"
    },
@@ -2003,7 +2003,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\n- each: page.cash - page.payment >= 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 1\n---\n"
    },
@@ -2079,7 +2079,7 @@
     ],
     "shows": null,
     "within": [],
-    "known_as": [],
+    "aka": [],
     "body": "",
     "source": "---\nrules:\n- each: page.amount <= space.cash - 20\n- each: page.cash - page.payment >= 20\nwatch:\n- on: refusal\n  when: 'true'\n  set:\n    turned_away: page.turned_away + 1\ncash: 80\nturned_away: 2\n---\n"
    },

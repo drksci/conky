@@ -67,7 +67,7 @@
     "label": "den",
     "line": "The den pays its suppliers prom...",
     "within": [],
-    "known_as": [],
+    "aka": [],
     "thought": "den/count/thought",
     "refused": "den/count/refused"
    },
@@ -193,7 +193,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "thought": "keeper/count/thought",
     "refused": "keeper/count/refused"
    },
@@ -338,7 +338,7 @@
     "label": "helper",
     "line": "",
     "within": [],
-    "known_as": [],
+    "aka": [],
     "thought": "helper/count/thought",
     "refused": "helper/count/refused"
    },
@@ -405,7 +405,7 @@
     "label": "night-shift",
     "line": "Everyone on the night shift hol...",
     "within": [],
-    "known_as": [],
+    "aka": [],
     "thought": "night-shift/count/thought",
     "refused": "night-shift/count/refused"
    },
@@ -453,7 +453,7 @@
     "label": "order",
     "line": "Pay the miller 30.",
     "within": [],
-    "known_as": [],
+    "aka": [],
     "thought": "order/count/thought",
     "refused": "order/count/refused"
    },

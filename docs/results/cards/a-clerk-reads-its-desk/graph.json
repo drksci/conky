@@ -68,7 +68,7 @@
     "label": "clerk",
     "line": "",
     "within": [],
-    "known_as": [],
+    "aka": [],
     "thought": "clerk/count/thought",
     "refused": "clerk/count/refused"
    },
@@ -331,7 +331,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "thought": "note-1/count/thought",
     "refused": "note-1/count/refused"
    },
@@ -377,7 +377,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "thought": "note-2/count/thought",
     "refused": "note-2/count/refused"
    },
@@ -423,7 +423,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "thought": "note-3/count/thought",
     "refused": "note-3/count/refused"
    },
@@ -469,7 +469,7 @@
     "within": [
      "clerk"
     ],
-    "known_as": [],
+    "aka": [],
     "thought": "note-4/count/thought",
     "refused": "note-4/count/refused"
    },
@@ -512,7 +512,7 @@
     "label": "helper",
     "line": "",
     "within": [],
-    "known_as": [],
+    "aka": [],
     "thought": "helper/count/thought",
     "refused": "helper/count/refused"
    },

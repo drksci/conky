@@ -67,7 +67,7 @@
     "label": "den",
     "line": "",
     "within": [],
-    "known_as": [],
+    "aka": [],
     "thought": "den/count/thought",
     "refused": "den/count/refused"
    },
@@ -304,7 +304,7 @@
     "within": [
      "den"
     ],
-    "known_as": [],
+    "aka": [],
     "thought": "keeper/count/thought",
     "refused": "keeper/count/refused"
    },
@@ -456,7 +456,7 @@
     "label": "helper",
     "line": "",
     "within": [],
-    "known_as": [],
+    "aka": [],
     "thought": "helper/count/thought",
     "refused": "helper/count/refused"
    },
@@ -523,7 +523,7 @@
     "label": "order",
     "line": "The den refuses payments that w...",
     "within": [],
-    "known_as": [],
+    "aka": [],
     "thought": "order/count/thought",
     "refused": "order/count/refused"
    },
@@ -583,7 +583,7 @@
     "label": "landlord-payment",
     "line": "",
     "within": [],
-    "known_as": [],
+    "aka": [],
     "thought": "landlord-payment/count/thought",
     "refused": "landlord-payment/count/refused"
    },
@@ -640,7 +640,7 @@
     "label": "tailor-payment",
     "line": "",
     "within": [],
-    "known_as": [],
+    "aka": [],
     "thought": "tailor-payment/count/thought",
     "refused": "tailor-payment/count/refused"
    },

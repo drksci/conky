@@ -151,9 +151,9 @@ The most a space shows is a whole number from 1 to {cap}. Write most with a numb
 
 The first of a space is an expression that gives a number for each member, and it can read page, space and text only: {reason}
 
-## known-as-shape
+## aka-shape
 
-A page says what it is known as with a list of phrases of at least {least} characters each, as in known_as: ["Mrs Okafor", "the landlady"]. Write known_as as a list with at least one phrase, or leave it out.
+A page says what it is known as with a list of phrases of at least {least} characters each, as in aka: ["Mrs Okafor", "the landlady"]. Write aka as a list with at least one phrase, or leave it out.
 
 ## missing-elsewhere
 

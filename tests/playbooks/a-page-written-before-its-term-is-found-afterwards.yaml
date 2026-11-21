@@ -18,7 +18,7 @@ steps:
   - write: {page: b, body: "the landlady's keys"}
   - write: {page: ticket, fields: {text: two}}
   - expect: {fields: {reader.seen: "a: zebra\nb: the landlady's keys"}}
-  - write: {page: landlady, fields: {known_as: ["the landlady"], n: 0, watch: [{on: link, when: "true", set: {n: "page.n + 1"}}]}}
+  - write: {page: landlady, fields: {aka: ["the landlady"], n: 0, watch: [{on: link, when: "true", set: {n: "page.n + 1"}}]}}
   - expect: {fields: {landlady.n: 0}}
   - write: {page: ticket, fields: {text: three}}
   - expect: {fields: {reader.seen: "b: the landlady's keys\na: zebra"}, verify: true}

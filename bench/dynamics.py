@@ -58,9 +58,9 @@ TEXT_LENGTH = 140  # and at most this many characters of them
 VALUE_WIDTH = 100  # characters of a field's value a cell shows
 NOTE_WIDTH = 34  # characters of a note's first line a note shown to a space shows
 # Where a page's top-level fields are drawn, beside the rows of its holds panel: `avatar` and
-# `known_as` in the header, `shows` in a space's footer. `BOOKKEEPING` fields, and fields ending
+# `aka` in the header, `shows` in a space's footer. `BOOKKEEPING` fields, and fields ending
 # `_asked` (digests the runtime keeps), are not part of what a page says and are not drawn.
-HEADER_FIELDS = ("avatar", "known_as")
+HEADER_FIELDS = ("avatar", "aka")
 FOOTER_FIELDS = ("shows",)
 BOOKKEEPING = ("secret",)
 SOCKET = TOKENS["socket"]  # each kind of port: the pen meaning of its signal, word and prefix
@@ -266,7 +266,7 @@ def kinds_of(node: dict, spaces: set[str], crowd: set[str]) -> list[str]:
         out.append("space")
     if node["archetype"] in ("character", "provider"):
         out.append(node["archetype"])
-    if node.get("known_as") and not out:
+    if node.get("aka") and not out:
         out.append("term")
     return out or ["page"]
 
@@ -287,7 +287,7 @@ def graph(events: list[dict], card: str, draw: int) -> dict:
     def node_of(page: str, i: int) -> dict:
         if page not in nodes:
             nodes[page] = {"id": page, "rows": [], "appears": i, "archetype": "page",
-                           "parent": None, "within": [], "known_as": [], "avatar": None,
+                           "parent": None, "within": [], "aka": [], "avatar": None,
                            "versions": [], "changed": [], "state": None, "answers": 0,
                            "refused": 0}  # fmt: skip
         return nodes[page]
@@ -335,7 +335,7 @@ def graph(events: list[dict], card: str, draw: int) -> dict:
             state = e["state"] or {}
             whole = full(state)
             node |= {"archetype": e["role"], "parent": e["within"], "state": state}
-            node |= {"within": state.get("within", []), "known_as": state.get("known_as", [])}
+            node |= {"within": state.get("within", []), "aka": state.get("aka", [])}
             node["avatar"] = (state.get("fields") or {}).get("avatar")
             node["versions"].append({"step": i, "source": state.get("source", "")})
             node["changed"].append(i)
@@ -623,7 +623,7 @@ def graph(events: list[dict], card: str, draw: int) -> dict:
         told[s["appears"]]["appear"].append(s["id"])
 
     # A crowded space is drawn in regions, one arrangement a question it answered.
-    terms = sorted(n for n, node in nodes.items() if node["known_as"] and not node["parent"])
+    terms = sorted(n for n, node in nodes.items() if node["aka"] and not node["parent"])
     arrangements = [regions(None, nodes, crowd, terms)]
     at = [0] * len(told)
     for say in told:
@@ -851,7 +851,7 @@ def cell(node: dict, rows: dict, sockets: dict, key: set, spaces: set, crowd: se
             "label": digits(name) if name in crowd else name,
             "line": plain(body.splitlines()[0] if body else "", NOTE_WIDTH),
             "within": node["within"],
-            "known_as": node["known_as"],
+            "aka": node["aka"],
             "thought": f"{name}/count/thought",
             "refused": f"{name}/count/refused",
         },

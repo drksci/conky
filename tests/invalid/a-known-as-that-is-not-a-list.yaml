@@ -1,8 +1,0 @@
-# known_as is a list, not one phrase.
-pages:
-  okafor: {}
-write:
-  page: okafor
-  set:
-    known_as: "Mrs Okafor"
-refused: shape

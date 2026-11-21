@@ -19,7 +19,7 @@ arch:
 
 ## Decision
 
-A page may carry a field `known_as`, a list of one or more phrases, each text of at least two characters. It is a field, not a reserved key. It is proven when written: a value that is not a list, an empty list, an empty or one-character phrase or a phrase that is not text is refused for shape, with the sentence in `voice.md` saying what to write.
+A page may carry a field `aka`, a list of one or more phrases, each text of at least two characters. It is a field, not a reserved key. It is proven when written: a value that is not a list, an empty list, an empty or one-character phrase or a phrase that is not text is refused for shape, with the sentence in `voice.md` saying what to write.
 
 A phrase is recognised in a text when it occurs as whole words: compared without regard to case, with any run of whitespace standing for one space, and with a trailing `'s` or `’s` allowed after its last word. A letter or digit directly before or after the phrase, apart from that possessive, means it is not recognised. A page's own name is a phrase only when it is listed, so a page called `order` is not linked by every use of the word. A page does not recognise itself.
 
@@ -31,13 +31,13 @@ Expressions gain one function, `terms(TEXT)`, which gives the sorted names of th
 
 Recognition is worked out when asked, from the pages as they are, and nothing is stored, so reading history evaluates nothing and `conky verify` and `conky rebuild` agree on a vault with terms. A page written before a term page existed counts as linking to it as soon as the term page exists. Its watchers are not told late: a watch fires at a write, and there is no later pass.
 
-The phrases are read from the vault once per evaluation, when first needed: once for the links of a write and once for the expressions of a reaction, a rule judgement or an embed. Each phrase is then tried against the text, so a recognition costs the phrases in the vault times the length of the text. A vault with no `known_as` pays one read of the pages and no matching. A faster index is derived data and is not built.
+The phrases are read from the vault once per evaluation, when first needed: once for the links of a write and once for the expressions of a reaction, a rule judgement or an embed. Each phrase is then tried against the text, so a recognition costs the phrases in the vault times the length of the text. A vault with no `aka` pays one read of the pages and no matching. A faster index is derived data and is not built.
 
 ## What the old behaviour guaranteed
 
 - A page links only to what its body or text fields name in brackets. Given up in writing: a page also links to the pages whose stated phrases its body uses.
 - A body is never changed by linking. Kept: nothing is written to a body.
-- Explicit links work as before, and a vault with no `known_as` behaves as before. Kept, held by `test_a_vault_with_no_phrases_links_only_by_brackets`.
+- Explicit links work as before, and a vault with no `aka` behaves as before. Kept, held by `test_a_vault_with_no_phrases_links_only_by_brackets`.
 - A page never reacts to its own write through `on: link`. Kept, held by the playbook `a-text-that-uses-a-term-links-to-its-page`.
 - Only the body is read for phrases, as against the body and the text fields for brackets, so a field never links a page by accident.
 
