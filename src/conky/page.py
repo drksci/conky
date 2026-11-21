@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+from collections import deque
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Any
@@ -267,6 +268,8 @@ def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
             watch = value
         elif key == MEMBERS:
             raise ShapeError(voice.line("members-name"))
+        elif key == CONTEXT:
+            raise ShapeError(voice.line("context-name"))
         elif key == SHOWS:
             if value is not None:
                 _check_shows(value)
@@ -390,6 +393,16 @@ def parse(text: str) -> Page:
 
 
 MEMBERS = "members"
+CONTEXT = "context"
+CONTEXT_CAP = arch.constant(
+    5,
+    "context cap",
+    "conky.page.CONTEXT_CAP",
+    "slot.key",
+    "Most spaces whose words an embedded context shows before it counts the rest; "
+    "the length of one space's words is not capped.",
+    doc="vault-format.md#pages",
+)
 MEMBERS_CAP = arch.constant(
     20,
     "members cap",
@@ -486,10 +499,60 @@ def _members_text(space: str, lookup: dict[str, Page]) -> str | None:
     return "\n".join(lines) or None
 
 
+def above(
+    name: str, within: Any, load: Callable[[str], Page | None]
+) -> list[tuple[str, Page | None, int]]:
+    """Return the spaces above a page named name that is within `within`, each once.
+
+    Each comes with its page (None when it does not exist) and its distance: a space the
+    page names is at 1, the spaces it lies within at 2, and a space reached by two paths
+    at the nearer. They are ordered nearest first, and among spaces at one distance by the
+    order they were reached, which follows the order the page lists its spaces in. The
+    page itself appears when a loop leads back to it, and is not climbed past.
+    """
+    found: list[tuple[str, Page | None, int]] = []
+    queue = deque((space, 1) for space in spaces(within))
+    seen: set[str] = set()
+    while queue:
+        space, distance = queue.popleft()
+        if space in seen:
+            continue
+        seen.add(space)
+        held = None if space == name else load(space)
+        found.append((space, held, distance))
+        if held is not None:
+            queue.extend((up, distance + 1) for up in spaces(held.within))
+    return found
+
+
+def _context_spaces(name: str, lookup: dict[str, Page]) -> list[tuple[str, str]]:
+    """Return each space above a page with words, nearest first, as its name and its words."""
+    return [
+        (space, held.body.rstrip())
+        for space, held, _ in above(name, lookup[name].within, lookup.get)
+        if held is not None and held.body.strip()
+    ]
+
+
+def _context_text(name: str, lookup: dict[str, Page]) -> str | None:
+    """Return what the spaces above a page say, nearest first, or None when they say nothing.
+
+    Each space with a body gives `NAME says:` on a line and then the body as written, less its
+    closing blank space, the blocks separated by a blank line. Only the nearest CONTEXT_CAP are
+    shown, then a line counts the rest. Nothing says who wrote a body. Nothing is written.
+    """
+    saying = _context_spaces(name, lookup)
+    blocks = [f"{space} says:\n{body}" for space, body in saying[:CONTEXT_CAP]]
+    if len(saying) > CONTEXT_CAP:
+        blocks.append(f"({len(saying) - CONTEXT_CAP} more spaces not shown)")
+    return "\n\n".join(blocks) or None
+
+
 def _embed_text(name: str, field: str | None, lookup: dict[str, Page]) -> str | None:
     """Return the text an embed names in lookup, or None when there is nothing to embed.
 
-    With the part `members` it is the list of the pages within a space that exists. With a
+    With the part `members` it is the list of the pages within a space that exists. With `context`
+    it is what the spaces above a page say. With a
     field it is that field's value. Without one it is the body. A missing page, a missing
     field, an empty body and a space with no members give None.
     """
@@ -498,6 +561,8 @@ def _embed_text(name: str, field: str | None, lookup: dict[str, Page]) -> str | 
         return None
     if field == MEMBERS:
         return _members_text(name, lookup)
+    if field == CONTEXT:
+        return _context_text(name, lookup)
     if field is None:
         return target.body or None
     if field not in target.fields:
@@ -511,24 +576,38 @@ def _embed_text(name: str, field: str | None, lookup: dict[str, Page]) -> str | 
 
 
 def embedded(text: str, lookup: dict[str, Page]) -> list[str]:
-    """Return the pages whose fields or body text embeds, each once, in order of first use."""
+    """Return the pages whose fields or body text embeds, each once, in order of first use.
+
+    An embed of a page's context names the spaces whose words it shows, not the page.
+    """
     names: list[str] = []
     for found in EMBED.finditer(text):
         name = found.group(1)
-        if _embed_text(name, found.group(2), lookup) is not None and name not in names:
-            names.append(name)
+        if _embed_text(name, found.group(2), lookup) is None:
+            continue
+        shown = [name]
+        if found.group(2) == CONTEXT:
+            shown = [space for space, _ in _context_spaces(name, lookup)[:CONTEXT_CAP]]
+        names += [one for one in shown if one not in names]
     return names
 
 
 @arch.part(
     "part.embed",
     "layer.history",
-    "`![[page]]`, `![[page#field]]` or `![[space#members]]`, resolved on read and in prompts.",
+    "`![[page]]`, `![[page#field]]`, `![[space#members]]` or `![[page#context]]`, "
+    "resolved on read and in prompts.",
     doc="vault-format.md#pages",
 )
 @arch.law(
     "law.embed.anonymous",
     "An embed shows a page's words and nothing about who wrote them.",
+    doc="vault-format.md#pages",
+)
+@arch.law(
+    "law.embed.context",
+    "A prompt that embeds a page's context is told what its spaces say, so joining a space "
+    "changes what a character is told and leaving it takes that away.",
     doc="vault-format.md#pages",
 )
 def resolve_text(text: str, lookup: dict[str, Page]) -> str:

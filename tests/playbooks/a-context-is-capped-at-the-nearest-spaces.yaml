@@ -1,0 +1,28 @@
+# A context shows the nearest five spaces and counts the rest.
+pages:
+  s1: {}
+  s2: {within: s1}
+  s3: {within: s2}
+  s4: {within: s3}
+  s5: {within: s4}
+  s6: {within: s5}
+  s7: {within: s6}
+  reader:
+    within: s7
+    seen: ""
+    watch:
+      - on: ticket
+        when: "true"
+        ask: {provider: broken, prompt: p, otherwise: "![[reader#context]]", into: seen}
+  broken: {api: command, command: no-such-program-here}
+  ticket: {text: one}
+steps:
+  - write: {page: s1, body: "word 1"}
+  - write: {page: s2, body: "word 2"}
+  - write: {page: s3, body: "word 3"}
+  - write: {page: s4, body: "word 4"}
+  - write: {page: s5, body: "word 5"}
+  - write: {page: s6, body: "word 6"}
+  - write: {page: s7, body: "word 7"}
+  - write: {page: ticket, fields: {text: two}}
+  - expect: {fields: {reader.seen: "s7 says:\nword 7\n\ns6 says:\nword 6\n\ns5 says:\nword 5\n\ns4 says:\nword 4\n\ns3 says:\nword 3\n\n(2 more spaces not shown)"}}

@@ -1,0 +1,19 @@
+# A page that leaves a space is no longer shown what it says.
+pages:
+  night: {}
+  reader:
+    within: night
+    seen: ""
+    watch:
+      - on: ticket
+        when: "true"
+        ask: {provider: broken, prompt: p, otherwise: "![[reader#context]]", into: seen}
+  broken: {api: command, command: no-such-program-here}
+  ticket: {text: one}
+steps:
+  - write: {page: night, body: "Decline any large payment."}
+  - write: {page: ticket, fields: {text: two}}
+  - expect: {fields: {reader.seen: "night says:\nDecline any large payment."}}
+  - write: {page: reader, fields: {within: null}}
+  - write: {page: ticket, fields: {text: three}}
+  - expect: {fields: {reader.seen: ""}}

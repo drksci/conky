@@ -21,7 +21,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `key` | A signing key that belongs to one actor and never enters the vault. |
 | `link` | A page name written in a page so that one page points at another. |
 | `term` | A page that lists the phrases it is known by in a field `known_as`. Text that uses one of the phrases counts as linking to the page, and `terms(TEXT)` names the pages a text uses. |
-| `embed` | `![[page]]`, replaced by a field, a body or, for a space, the list of its members when a page is read. `#` selects the part. |
+| `embed` | `![[page]]`, replaced by a field, a body or, for a space, the list of its members, or with `#context` what the spaces above a page say (each introduced by `NAME says:`, nearest first, the nearest 5 shown), when a page is read. `#` selects the part. |
 | `rule` | An expression the runtime evaluates before a write is kept. |
 | `event` | A commit: one write or one refusal. |
 | `seal` | The signature on an event. |

@@ -1,0 +1,19 @@
+# A space above a space is shown after the nearer one, and a space with no words is skipped.
+pages:
+  camp: {}
+  tent: {within: camp}
+  hall: {}
+  reader:
+    within: [tent, hall]
+    seen: ""
+    watch:
+      - on: ticket
+        when: "true"
+        ask: {provider: broken, prompt: p, otherwise: "![[reader#context]]", into: seen}
+  broken: {api: command, command: no-such-program-here}
+  ticket: {text: one}
+steps:
+  - write: {page: camp, body: "Keep the fire low."}
+  - write: {page: tent, body: "Lights out at nine."}
+  - write: {page: ticket, fields: {text: two}}
+  - expect: {fields: {reader.seen: "tent says:\nLights out at nine.\n\ncamp says:\nKeep the fire low."}}

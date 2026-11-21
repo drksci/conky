@@ -1,0 +1,18 @@
+# A page within two spaces is shown what both say, the one listed first being its home.
+pages:
+  night: {}
+  keepers: {}
+  reader:
+    within: [night, keepers]
+    seen: ""
+    watch:
+      - on: ticket
+        when: "true"
+        ask: {provider: broken, prompt: p, otherwise: "![[reader#context]]", into: seen}
+  broken: {api: command, command: no-such-program-here}
+  ticket: {text: one}
+steps:
+  - write: {page: keepers, body: "Count every coin twice."}
+  - write: {page: night, body: "Decline any large payment.\n\nKnock before you enter."}
+  - write: {page: ticket, fields: {text: two}}
+  - expect: {fields: {reader.seen: "night says:\nDecline any large payment.\n\nKnock before you enter.\n\nkeepers says:\nCount every coin twice."}}

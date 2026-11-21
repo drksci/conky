@@ -1,0 +1,13 @@
+# A page within no space is shown nothing for its context.
+pages:
+  reader:
+    seen: ""
+    watch:
+      - on: ticket
+        when: "true"
+        ask: {provider: broken, prompt: p, otherwise: "![[reader#context]]", into: seen}
+  broken: {api: command, command: no-such-program-here}
+  ticket: {text: one}
+steps:
+  - write: {page: ticket, fields: {text: two}}
+  - expect: {fields: {reader.seen: ""}}

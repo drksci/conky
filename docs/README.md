@@ -83,6 +83,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0044-a-page-is-known-by-its-phrases.md](decisions/0044-a-page-is-known-by-its-phrases.md): A page is known by its phrases
 - [decisions/0045-a-page-may-be-within-several-spaces.md](decisions/0045-a-page-may-be-within-several-spaces.md): A page may be within several spaces
 - [decisions/0046-figures-are-drawn-from-the-shared-tokens.md](decisions/0046-figures-are-drawn-from-the-shared-tokens.md): Figures are drawn from the shared tokens
+- [decisions/0047-a-character-is-shown-what-its-spaces-say.md](decisions/0047-a-character-is-shown-what-its-spaces-say.md): A character is shown what its spaces say
 
 ### Research
 

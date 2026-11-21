@@ -99,6 +99,10 @@ Page {name} is written by an answer into {space}, so within is the name {space} 
 
 The name members is taken: it lists the pages within a space. Another name is needed.
 
+## context-name
+
+The name context is taken: it shows what the spaces above a page say. Another name is needed.
+
 ## shows-shape
 
 A space says what it shows with a mapping that has the keys {keys}, as in shows: {{most: 5, first: "text.size()"}}. Use only those keys.

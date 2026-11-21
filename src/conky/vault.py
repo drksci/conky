@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-from collections import deque
 from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -24,6 +23,7 @@ from conky.page import (
     Page,
     ShapeError,
     Terms,
+    above,
     apply,
     check_name,
     embedded,
@@ -522,27 +522,8 @@ class Vault:
         return Result(True, commit)
 
     def _above(self, name: str, within: Any) -> list[tuple[str, Page | None, int]]:
-        """Return the spaces above a page named name that is within `within`, each once.
-
-        Each comes with its page (None when it does not exist) and its distance: a space the
-        page names is at 1, the spaces it lies within at 2, and a space reached by two paths
-        at the nearer. They are ordered nearest first, and among spaces at one distance by the
-        order they were reached, which follows the order the page lists its spaces in. The
-        page itself appears when a loop leads back to it, and is not climbed past.
-        """
-        found: list[tuple[str, Page | None, int]] = []
-        queue = deque((space, 1) for space in spaces(within))
-        seen: set[str] = set()
-        while queue:
-            space, distance = queue.popleft()
-            if space in seen:
-                continue
-            seen.add(space)
-            held = None if space == name else self._load(space)
-            found.append((space, held, distance))
-            if held is not None:
-                queue.extend((up, distance + 1) for up in spaces(held.within))
-        return found
+        """Return the spaces above a page, nearest first, as `page.above` orders them."""
+        return above(name, within, self._load)
 
     def _inside(self, within: Any, space: str) -> bool:
         """Return whether a `within` is space or lies within it, directly or through spaces."""

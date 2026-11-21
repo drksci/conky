@@ -1,0 +1,8 @@
+# context is computed from the spaces above a page, so a page may not store a field of that name.
+pages:
+  den: {}
+write:
+  page: den
+  set:
+    context: "me"
+refused: shape
