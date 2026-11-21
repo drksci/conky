@@ -1,0 +1,9 @@
+{
+ "card": "a-clerk-finds-it-by-its-terms",
+ "model": "claude",
+ "date": "2026-11-21",
+ "draws": 5,
+ "passed": 5,
+ "shown": 1,
+ "commit": "760ff43"
+}

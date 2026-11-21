@@ -1,0 +1,141 @@
+vars: {
+  d2-config: {
+    layout-engine: elk
+    pad: 24
+    theme-id: 301
+    dark-theme-id: 301
+    theme-overrides: {
+      N1: "#141413"
+      N2: "#141413"
+      N3: "#595854"
+      N4: "#c9c8c3"
+      N5: "#c9c8c3"
+      N6: "#f1f0ec"
+      N7: "#fbfaf7"
+      B1: "#141413"
+      B2: "#141413"
+      B3: "#c9c8c3"
+      B4: "#ffffff"
+      B5: "#ffffff"
+      B6: "#ffffff"
+      AA2: "#141413"
+      AA4: "#fbfaf7"
+      AA5: "#fbfaf7"
+      AB4: "#fbfaf7"
+      AB5: "#fbfaf7"
+    }
+    dark-theme-overrides: {
+      N1: "#dcefd3"
+      N2: "#dcefd3"
+      N3: "#93aa9f"
+      N4: "#2c3568"
+      N5: "#2c3568"
+      N6: "#0b1038"
+      N7: "#030620"
+      B1: "#dcefd3"
+      B2: "#dcefd3"
+      B3: "#2c3568"
+      B4: "#070b2c"
+      B5: "#070b2c"
+      B6: "#070b2c"
+      AA2: "#dcefd3"
+      AA4: "#030620"
+      AA5: "#030620"
+      AB4: "#030620"
+      AB5: "#030620"
+    }
+  }
+}
+direction: right
+classes: {
+  character: {shape: person; style: {stroke-width: 1; font-size: 12; fill: transparent; text-transform: none}}
+  provider: {shape: hexagon; style: {stroke-width: 1; font-size: 12; text-transform: none}}
+  measure: {shape: circle; style: {stroke-width: 1; font-size: 12; text-transform: none}}
+  reflex: {shape: oval; style: {stroke-width: 1; font-size: 12; text-transform: none}}
+  screen: {shape: rectangle; style: {stroke-width: 1; font-size: 12; text-transform: none}}
+  hands: {shape: rectangle; style: {stroke-width: 1; font-size: 12; text-transform: none}}
+  page: {shape: page; style: {stroke-width: 1; font-size: 12; text-transform: none}}
+  note: {shape: square; style: {stroke-width: 1; font-size: 8; text-transform: none}}
+  room: {style: {stroke-width: 2; border-radius: 0; font-size: 12; bold: false; text-transform: none}}
+  added: {shape: text; style: {font-color: "#a2600c"; font-size: 12; text-transform: none}}
+  given: {shape: text; style: {font-size: 12; text-transform: none}}
+  bell: {shape: oval; style: {stroke-width: 1; font-size: 10; stroke: "#a2600c"; text-transform: none}}
+  bellq: {shape: oval; style: {stroke-width: 1; font-size: 10; text-transform: none}}
+  refusal: {style: {stroke: "#cc2a68"; font-color: "#cc2a68"; stroke-width: 2; font-size: 10; text-transform: none}}
+  edge: {style: {stroke-width: 1; font-size: 10; text-transform: none}}
+  title: {shape: text; style: {font-size: 22; text-transform: none}}
+  caption: {shape: text; style: {font-size: 12; text-transform: none}}
+  panel: {shape: sql_table; style: {stroke-width: 1; font-size: 10; text-transform: none}}
+}
+title: "a clerk finds it by its terms topology" {class: title; near: top-center}
+clerk: "clerk  ·  space, character" {
+  class: room
+  direction: right
+  fields: "fields" {class: panel
+    "heard": "Where di... nine?\n"
+    "said": "The pack..., is on"
+  }
+  hears: "hears" {class: panel
+    "within": "sets heard"
+    "clerk": "asks helper"
+  }
+  plugs: "plugs" {class: panel
+    "asks": "helper"
+    "shows": "8 most"
+  }
+  desk: "" {
+    grid-columns: 10
+    style.stroke-width: 0
+    style.fill: transparent
+    note-01: "1" {class: note}
+    note-02: "2" {class: note}
+    note-03: "3" {class: note}
+    note-04: "4" {class: note}
+    note-05: "5" {class: note}
+    note-06: "6" {class: note}
+    note-07: "7" {class: note}
+    note-08: "8" {class: note}
+    note-09: "9" {class: note}
+    note-10: "10" {class: note}
+    note-11: "11" {class: note}
+    note-12: "12" {class: note}
+    note-13: "13" {class: note}
+    note-14: "14" {class: note}
+    note-15: "15" {class: note}
+    note-16: "16" {class: note}
+    note-17: "17" {class: note}
+    note-18: "18" {class: note}
+    note-19: "19" {class: note}
+    note-20: "20" {class: note}
+    note-21: "21" {class: note}
+    note-22: "22" {class: note}
+    note-23: "23" {class: note}
+    note-24: "24" {class: note}
+    note-25: "25" {class: note}
+    note-26: "26" {class: note}
+    note-27: "27" {class: note}
+    note-28: "28" {class: note}
+    note-29: "29" {class: note}
+    note-30: "30" {class: note}
+    note-31: "31" {class: note}
+    note-32: "32" {class: note}
+    note-33: "33" {class: note}
+    note-34: "34" {class: note}
+    note-35: "35" {class: note}
+    note-36: "36" {class: note}
+    note-37: "37" {class: note}
+    note-38: "38" {class: note}
+    note-39: "39" {class: note}
+    note-40: "40" {class: note}
+  }
+}
+helper: "helper  ·  provider" {
+  class: room
+  direction: right
+  fields: "fields" {class: panel
+    "command": "stand"
+  }
+}
+mrs-okafor: "mrs-okafor" {class: page}
+parcel: "parcel" {class: page}
+clerk.plugs."asks" -> helper

@@ -1,0 +1,83 @@
+# The crowded desk again, and now the question uses none of the note's words. Two pages say what
+# they are known as, so "the package for the lady from number nine" and "Mrs Okafor's parcel"
+# are the same terms, and the desk shows first the notes that share terms with what was said.
+objective: a character finds what bears on a question that is put in other words, because the things spoken of have pages that say what they are known as
+hypothesis: with forty notes and eight shown in order of the terms they share with the newest note, a fact from the seventh note is given at the fortieth although the question shares no ordinary word with it
+success: {draws: 5, pass: 4, calls_at_most: 2}
+forecast: the right note is first among the eight in 5 of 5, since the order is computed; the clerk gives the shelf in 4 of 5, and a miss would be the clerk not taking the lady from number nine to be Mrs Okafor
+par:
+  outcome: shelf 12 is given
+  structure: one note a thing said, two pages that say what they are known as, one declaration on the desk
+  cost: two calls for two questions
+  craft: the clerk answers in the asker's words and says which note it read it from
+dial: the two term pages are given at the start; the next notch has a background sense write them from the notes
+if_not: look first at the eight lines the clerk was shown at the last note and whether the seventh note led them, then at whether the note saying who lives at number nine was among them
+pages:
+  helper: {api: command, command: stand}
+  mrs-okafor: {known_as: ["Mrs Okafor", "the lady from number nine", "the lady at number nine"]}
+  parcel: {known_as: [parcel, package]}
+  clerk:
+    heard: ""
+    said: ""
+    shows:
+      most: 8
+      first: "terms(space.heard).filter(t, terms(text).contains(t)).size()"
+    watch:
+      - on: within
+        when: "true"
+        set: {heard: "other_text"}
+      - on: clerk
+        when: "page.heard.trim().endsWith('?')"
+        ask:
+          provider: helper
+          into: said
+          prompt: |
+            You are the clerk at this desk.
+
+            On your desk: ![[clerk#members]]
+
+            Just now the desk says: ![[clerk#heard]]
+steps:
+  - write: {page: note-01, fields: {within: clerk}, body: "The lady at number nine is Mrs Okafor."}
+  - write: {page: note-02, fields: {within: clerk}, body: "Mr Lindqvist's parcel is on shelf 4."}
+  - write: {page: note-03, fields: {within: clerk}, body: "The stationery order arrives on Thursday."}
+  - write: {page: note-04, fields: {within: clerk}, body: "Mrs Okafor's umbrella is in the stand by the door."}
+  - write: {page: note-05, fields: {within: clerk}, body: "The spare key for the side gate hangs on hook 3."}
+  - write: {page: note-06, fields: {within: clerk}, body: "The printer in the back room needs a new drum."}
+  - write: {page: note-07, fields: {within: clerk}, body: "Mrs Okafor's parcel is on shelf 12."}
+  - write: {page: note-08, fields: {within: clerk}, body: "Miss Adeyemi's parcel is on shelf 9."}
+  - write: {page: note-09, fields: {within: clerk}, body: "The window cleaner comes on the first Friday."}
+  - write: {page: note-10, fields: {within: clerk}, body: "The float in the till is forty pounds."}
+  - write: {page: note-11, fields: {within: clerk}, body: "Mr Okafor rang about the meter reading."}
+  - write: {page: note-12, fields: {within: clerk}, body: "The fire extinguisher was checked in March."}
+  - write: {page: note-13, fields: {within: clerk}, body: "The shelf by the stairs is loose and should hold nothing heavy."}
+  - write: {page: note-14, fields: {within: clerk}, body: "Dr Mbeki's letters go in the red tray."}
+  - write: {page: note-15, fields: {within: clerk}, body: "The heating timer is set for seven."}
+  - write: {page: note-16, fields: {within: clerk}, body: "The courier collects at half past three."}
+  - write: {page: note-17, fields: {within: clerk}, body: "The visitor book is in the top drawer."}
+  - write: {page: note-18, fields: {within: clerk}, body: "Mrs Castellanos left a parcel for the surveyor."}
+  - write: {page: note-19, fields: {within: clerk}, body: "The lamp in the hall takes a bayonet bulb."}
+  - write: {page: note-20, fields: {within: clerk}, body: "The recycling goes out on Wednesday night."}
+  - write: {page: note-21, fields: {within: clerk}, body: "The back door sticks in wet weather."}
+  - says: live
+  - write: {page: note-22, fields: {within: clerk}, body: "Has the morning post come?"}
+  - write: {page: note-23, fields: {within: clerk}, body: "The guest network password is on the card by the phone."}
+  - write: {page: note-24, fields: {within: clerk}, body: "The parcel for the bakery was collected yesterday."}
+  - write: {page: note-25, fields: {within: clerk}, body: "Mr Haddad's bicycle is in the yard."}
+  - write: {page: note-26, fields: {within: clerk}, body: "The first aid box is under the counter."}
+  - write: {page: note-27, fields: {within: clerk}, body: "The tea money tin is nearly empty."}
+  - write: {page: note-28, fields: {within: clerk}, body: "The meeting room is booked on Tuesday afternoon."}
+  - write: {page: note-29, fields: {within: clerk}, body: "The ladder is kept behind the boiler."}
+  - write: {page: note-30, fields: {within: clerk}, body: "Shelf 2 is reserved for returns."}
+  - write: {page: note-31, fields: {within: clerk}, body: "The post box outside is emptied at five."}
+  - write: {page: note-32, fields: {within: clerk}, body: "The stamp book has six first class left."}
+  - write: {page: note-33, fields: {within: clerk}, body: "The plant on the sill is watered on Mondays."}
+  - write: {page: note-34, fields: {within: clerk}, body: "The carpet fitter is coming next week."}
+  - write: {page: note-35, fields: {within: clerk}, body: "The shredder jams on more than five sheets."}
+  - write: {page: note-36, fields: {within: clerk}, body: "Mrs Okafor asked for her newspaper to be kept."}
+  - write: {page: note-37, fields: {within: clerk}, body: "The clock in the hall runs four minutes fast."}
+  - write: {page: note-38, fields: {within: clerk}, body: "The cellar light switch is on the left."}
+  - write: {page: note-39, fields: {within: clerk}, body: "The umbrella stand was emptied on Friday."}
+  - says: live
+  - write: {page: note-40, fields: {within: clerk}, body: "Where did we put the package for the lady from number nine?"}
+  - expect: {answer: {clerk.said: "12"}}

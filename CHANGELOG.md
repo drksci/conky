@@ -4,6 +4,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ## [Unreleased]
 
+- New card `a-clerk-finds-it-by-its-terms`: the crowded desk with a question put in other words, found through two pages that say what they are known as.
 - New card `a-clerk-reads-a-crowded-desk`: forty notes on the desk and eight shown, in order of the words they share with what was just said; the clerk is asked only when a note is a question.
 - New card `a-clerk-reads-its-desk`: nothing is stored twice. Each thing said stays as a note within the clerk and the clerk is shown its notes, so a fact given once is given again three notes later with no memory kept.
 - New card `a-clerk-has-a-memory`: a memory page beside a clerk that is told nothing about remembering. It does not pass yet; the draws are recorded in the status page.
