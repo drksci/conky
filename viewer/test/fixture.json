@@ -1,0 +1,391 @@
+{
+ "card": "a-keeper-binds-itself",
+ "title": "a keeper binds itself",
+ "draw": 1,
+ "pens": [
+  "added",
+  "refused",
+  "heard",
+  "kept",
+  "thought"
+ ],
+ "nodes": [
+  {
+   "id": "den",
+   "name": "den",
+   "archetype": "page",
+   "kind": "space",
+   "symbol": "space",
+   "form": "space",
+   "label": "den",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "fields",
+     "title": "fields",
+     "symbol": "fields",
+     "more": 0,
+     "rows": [
+      {
+       "id": "den/fields/cash",
+       "name": "cash",
+       "value": "80",
+       "key": false,
+       "expr": null
+      }
+     ]
+    },
+    {
+     "kind": "rules",
+     "title": "rules",
+     "symbol": "rule",
+     "more": 0,
+     "rows": [
+      {
+       "id": "den/rules/space.cash - page.amount >= 20",
+       "name": "for every page within",
+       "value": "",
+       "key": true,
+       "expr": {
+        "reads": [
+         "page",
+         "space"
+        ],
+        "body": "space.cash - page.amount >= 20"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "keeper",
+   "name": "keeper",
+   "archetype": "character",
+   "kind": "character",
+   "symbol": "character",
+   "form": "cell",
+   "label": "keeper",
+   "parent": "den",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "hears",
+     "title": "listens for",
+     "symbol": "hears",
+     "more": 0,
+     "rows": [
+      {
+       "id": "keeper/hears/order:asks helper",
+       "name": "order",
+       "value": "asks helper",
+       "key": true,
+       "expr": null
+      }
+     ]
+    },
+    {
+     "kind": "plugs",
+     "title": "reaches",
+     "symbol": "connector",
+     "more": 0,
+     "rows": [
+      {
+       "id": "keeper/plugs/asks:helper",
+       "name": "asks",
+       "value": "helper",
+       "key": false,
+       "expr": null
+      },
+      {
+       "id": "keeper/plugs/writes:den",
+       "name": "writes into",
+       "value": "den",
+       "key": false,
+       "expr": null
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "payment-baker",
+   "name": "payment-baker",
+   "archetype": "page",
+   "kind": "page",
+   "symbol": "page",
+   "form": "cell",
+   "label": "payment-baker",
+   "parent": "den",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "fields",
+     "title": "fields",
+     "symbol": "fields",
+     "more": 0,
+     "rows": [
+      {
+       "id": "payment-baker/fields/amount",
+       "name": "amount",
+       "value": "30",
+       "key": false,
+       "expr": null
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "helper",
+   "name": "helper",
+   "archetype": "provider",
+   "kind": "provider",
+   "symbol": "provider",
+   "form": "cell",
+   "label": "helper",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "fields",
+     "title": "fields",
+     "symbol": "fields",
+     "more": 0,
+     "rows": [
+      {
+       "id": "helper/fields/command",
+       "name": "command",
+       "value": "stand",
+       "key": false,
+       "expr": null
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "order",
+   "name": "order",
+   "archetype": "page",
+   "kind": "page",
+   "symbol": "page",
+   "form": "cell",
+   "label": "order",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "landlord-payment",
+   "name": "landlord-payment",
+   "archetype": "page",
+   "kind": "page",
+   "symbol": "page",
+   "form": "cell",
+   "label": "landlord-payment",
+   "parent": null,
+   "avatar": null,
+   "refused": true,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  }
+ ],
+ "edges": [
+  {
+   "id": "heard:order->keeper/hears/order:asks helper",
+   "kind": "heard",
+   "label": "heard",
+   "source": "order",
+   "sourceRow": null,
+   "target": "keeper",
+   "targetRow": "keeper/hears/order:asks helper",
+   "modes": [
+    "dynamics",
+    "topology"
+   ]
+  },
+  {
+   "id": "plugs:keeper/plugs/asks:helper->helper",
+   "kind": "plugs",
+   "label": "asks",
+   "source": "keeper",
+   "sourceRow": "keeper/plugs/asks:helper",
+   "target": "helper",
+   "targetRow": null,
+   "modes": [
+    "topology"
+   ]
+  },
+  {
+   "id": "turned-away:landlord-payment->den/rules/space.cash - page.amount >= 20",
+   "kind": "turned-away",
+   "label": "turned away",
+   "source": "landlord-payment",
+   "sourceRow": null,
+   "target": "den",
+   "targetRow": "den/rules/space.cash - page.amount >= 20",
+   "modes": [
+    "dynamics",
+    "topology"
+   ]
+  },
+  {
+   "id": "wrote:keeper->payment-baker",
+   "kind": "wrote",
+   "label": "wrote",
+   "source": "keeper",
+   "sourceRow": null,
+   "target": "payment-baker",
+   "targetRow": null,
+   "modes": [
+    "dynamics",
+    "topology"
+   ]
+  }
+ ],
+ "steps": [
+  {
+   "i": 0,
+   "kind": "room",
+   "symbol": "space",
+   "caption": "The room as given.",
+   "appear": [
+    "helper",
+    "helper/fields/command",
+    "den",
+    "den/fields/cash",
+    "order",
+    "keeper",
+    "keeper/hears/order:asks helper",
+    "keeper/plugs/asks:helper",
+    "keeper/plugs/writes:den",
+    "heard:order->keeper/hears/order:asks helper",
+    "plugs:keeper/plugs/asks:helper->helper"
+   ],
+   "change": [],
+   "subject": [],
+   "dim": []
+  },
+  {
+   "i": 1,
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice writes order.",
+   "appear": [],
+   "change": [],
+   "subject": [
+    {
+     "id": "order",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 2,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "keeper reads order and answers.",
+   "appear": [],
+   "change": [],
+   "subject": [
+    {
+     "id": "keeper",
+     "pen": "thought"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 3,
+   "kind": "rule",
+   "symbol": "rule",
+   "caption": "keeper gives den a rule: space.cash - page.amount >= 20.",
+   "appear": [
+    "den/rules/space.cash - page.amount >= 20"
+   ],
+   "change": [],
+   "subject": [
+    {
+     "id": "den/rules/space.cash - page.amount >= 20",
+     "pen": "added"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 4,
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "keeper keeps payment-baker in den.",
+   "appear": [
+    "payment-baker",
+    "payment-baker/fields/amount",
+    "wrote:keeper->payment-baker"
+   ],
+   "change": [],
+   "subject": [
+    {
+     "id": "payment-baker",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 5,
+   "kind": "refused",
+   "symbol": "refusal",
+   "caption": "landlord-payment is turned away: it breaks den's rule space.cash - page.amount >= 20.",
+   "appear": [
+    "landlord-payment",
+    "turned-away:landlord-payment->den/rules/space.cash - page.amount >= 20"
+   ],
+   "change": [],
+   "subject": [
+    {
+     "id": "landlord-payment",
+     "pen": "refused"
+    },
+    {
+     "id": "turned-away:landlord-payment->den/rules/space.cash - page.amount >= 20",
+     "pen": "refused"
+    },
+    {
+     "id": "den/rules/space.cash - page.amount >= 20",
+     "pen": "refused"
+    }
+   ],
+   "dim": []
+  }
+ ]
+}

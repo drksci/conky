@@ -1,0 +1,1197 @@
+{
+ "card": "a-clerk-reads-a-crowded-desk",
+ "title": "a clerk reads a crowded desk",
+ "draw": 1,
+ "pens": [
+  "added",
+  "refused",
+  "heard",
+  "kept",
+  "thought"
+ ],
+ "nodes": [
+  {
+   "id": "clerk",
+   "name": "clerk",
+   "archetype": "character",
+   "kind": "space \u00b7 character",
+   "symbol": "character",
+   "form": "space",
+   "label": "clerk",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "fields",
+     "title": "fields",
+     "symbol": "fields",
+     "more": 0,
+     "rows": [
+      {
+       "id": "clerk/fields/heard",
+       "name": "heard",
+       "value": "",
+       "key": true,
+       "expr": null
+      },
+      {
+       "id": "clerk/fields/said",
+       "name": "said",
+       "value": "",
+       "key": true,
+       "expr": null
+      }
+     ]
+    },
+    {
+     "kind": "hears",
+     "title": "listens for",
+     "symbol": "hears",
+     "more": 0,
+     "rows": [
+      {
+       "id": "clerk/hears/within:sets heard",
+       "name": "a page put in it",
+       "value": "sets heard",
+       "key": true,
+       "expr": null
+      },
+      {
+       "id": "clerk/hears/clerk:asks helper",
+       "name": "clerk",
+       "value": "asks helper",
+       "key": false,
+       "expr": null
+      }
+     ]
+    },
+    {
+     "kind": "plugs",
+     "title": "reaches",
+     "symbol": "connector",
+     "more": 0,
+     "rows": [
+      {
+       "id": "clerk/plugs/asks:helper",
+       "name": "asks",
+       "value": "helper",
+       "key": false,
+       "expr": null
+      },
+      {
+       "id": "clerk/plugs/shows",
+       "name": "shows first",
+       "value": "8 at most",
+       "key": true,
+       "expr": {
+        "reads": [
+         "space",
+         "text"
+        ],
+        "body": "space.heard.lowerAscii().split(' ').filter(w, size(w) > 3 && text.lowerAscii().contains(w)).size()"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "note-01",
+   "name": "note-01",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "1",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-02",
+   "name": "note-02",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "2",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-03",
+   "name": "note-03",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "3",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-04",
+   "name": "note-04",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "4",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-05",
+   "name": "note-05",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "5",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-06",
+   "name": "note-06",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "6",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-07",
+   "name": "note-07",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "7",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-08",
+   "name": "note-08",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "8",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-09",
+   "name": "note-09",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "9",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-10",
+   "name": "note-10",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "10",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-11",
+   "name": "note-11",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "11",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-12",
+   "name": "note-12",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "12",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-13",
+   "name": "note-13",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "13",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-14",
+   "name": "note-14",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "14",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-15",
+   "name": "note-15",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "15",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-16",
+   "name": "note-16",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "16",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-17",
+   "name": "note-17",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "17",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-18",
+   "name": "note-18",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "18",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-19",
+   "name": "note-19",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "19",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-20",
+   "name": "note-20",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "20",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-21",
+   "name": "note-21",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "21",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-22",
+   "name": "note-22",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "22",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-23",
+   "name": "note-23",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "23",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-24",
+   "name": "note-24",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "24",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-25",
+   "name": "note-25",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "25",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-26",
+   "name": "note-26",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "26",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-27",
+   "name": "note-27",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "27",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-28",
+   "name": "note-28",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "28",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-29",
+   "name": "note-29",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "29",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-30",
+   "name": "note-30",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "30",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-31",
+   "name": "note-31",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "31",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-32",
+   "name": "note-32",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "32",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-33",
+   "name": "note-33",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "33",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-34",
+   "name": "note-34",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "34",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-35",
+   "name": "note-35",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "35",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-36",
+   "name": "note-36",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "36",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-37",
+   "name": "note-37",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "37",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-38",
+   "name": "note-38",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "38",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-39",
+   "name": "note-39",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "39",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-40",
+   "name": "note-40",
+   "archetype": "page",
+   "kind": "note",
+   "symbol": "note",
+   "form": "note",
+   "label": "40",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "helper",
+   "name": "helper",
+   "archetype": "provider",
+   "kind": "provider",
+   "symbol": "provider",
+   "form": "cell",
+   "label": "helper",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "fields",
+     "title": "fields",
+     "symbol": "fields",
+     "more": 0,
+     "rows": [
+      {
+       "id": "helper/fields/command",
+       "name": "command",
+       "value": "stand",
+       "key": false,
+       "expr": null
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "id": "plugs:clerk/plugs/asks:helper->helper",
+   "kind": "plugs",
+   "label": "asks",
+   "source": "clerk",
+   "sourceRow": "clerk/plugs/asks:helper",
+   "target": "helper",
+   "targetRow": null,
+   "modes": [
+    "topology"
+   ]
+  }
+ ],
+ "steps": [
+  {
+   "i": 0,
+   "kind": "room",
+   "symbol": "space",
+   "caption": "The room as given.",
+   "appear": [
+    "helper",
+    "helper/fields/command",
+    "clerk",
+    "clerk/fields/heard",
+    "clerk/fields/said",
+    "clerk/hears/within:sets heard",
+    "clerk/hears/clerk:asks helper",
+    "clerk/plugs/asks:helper",
+    "clerk/plugs/shows",
+    "note-01",
+    "note-02",
+    "note-03",
+    "note-04",
+    "note-05",
+    "note-06",
+    "note-07",
+    "note-08",
+    "note-09",
+    "note-10",
+    "note-11",
+    "note-12",
+    "note-13",
+    "note-14",
+    "note-15",
+    "note-16",
+    "note-17",
+    "note-18",
+    "note-19",
+    "note-20",
+    "note-21",
+    "note-22",
+    "plugs:clerk/plugs/asks:helper->helper"
+   ],
+   "change": [
+    {
+     "row": "clerk/fields/heard",
+     "value": "The back door sticks in wet wea..."
+    }
+   ],
+   "subject": [],
+   "dim": []
+  },
+  {
+   "i": 1,
+   "kind": "reflex",
+   "symbol": "reflex",
+   "caption": "clerk sets heard by itself: Has the morning post come?",
+   "appear": [],
+   "change": [
+    {
+     "row": "clerk/fields/heard",
+     "value": "Has the morning post come?"
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk/fields/heard",
+     "pen": "heard"
+    },
+    {
+     "id": "clerk/hears/within:sets heard",
+     "pen": "heard"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 2,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "clerk is shown 8 of its 22 pages, and answers.",
+   "appear": [],
+   "change": [
+    {
+     "row": "clerk/fields/said",
+     "value": "The desk notes don't say whethe..."
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/fields/said",
+     "pen": "thought"
+    },
+    {
+     "id": "note-22",
+     "pen": "kept"
+    },
+    {
+     "id": "note-01",
+     "pen": "kept"
+    },
+    {
+     "id": "note-02",
+     "pen": "kept"
+    },
+    {
+     "id": "note-03",
+     "pen": "kept"
+    },
+    {
+     "id": "note-04",
+     "pen": "kept"
+    },
+    {
+     "id": "note-05",
+     "pen": "kept"
+    },
+    {
+     "id": "note-06",
+     "pen": "kept"
+    },
+    {
+     "id": "note-07",
+     "pen": "kept"
+    },
+    {
+     "id": "clerk/plugs/shows",
+     "pen": "kept"
+    }
+   ],
+   "dim": [
+    "note-08",
+    "note-09",
+    "note-10",
+    "note-11",
+    "note-12",
+    "note-13",
+    "note-14",
+    "note-15",
+    "note-16",
+    "note-17",
+    "note-18",
+    "note-19",
+    "note-20",
+    "note-21",
+    "note-23",
+    "note-24",
+    "note-25",
+    "note-26",
+    "note-27",
+    "note-28",
+    "note-29",
+    "note-30",
+    "note-31",
+    "note-32",
+    "note-33",
+    "note-34",
+    "note-35",
+    "note-36",
+    "note-37",
+    "note-38",
+    "note-39",
+    "note-40"
+   ]
+  },
+  {
+   "i": 3,
+   "kind": "bulk",
+   "symbol": "kept",
+   "caption": "alice keeps 18 more pages in clerk.",
+   "appear": [
+    "note-23",
+    "note-24",
+    "note-25",
+    "note-26",
+    "note-27",
+    "note-28",
+    "note-29",
+    "note-30",
+    "note-31",
+    "note-32",
+    "note-33",
+    "note-34",
+    "note-35",
+    "note-36",
+    "note-37",
+    "note-38",
+    "note-39",
+    "note-40"
+   ],
+   "change": [
+    {
+     "row": "clerk/fields/heard",
+     "value": "Which shelf is Mrs Okafor's par..."
+    }
+   ],
+   "subject": [
+    {
+     "id": "note-23",
+     "pen": "kept"
+    },
+    {
+     "id": "note-24",
+     "pen": "kept"
+    },
+    {
+     "id": "note-25",
+     "pen": "kept"
+    },
+    {
+     "id": "note-26",
+     "pen": "kept"
+    },
+    {
+     "id": "note-27",
+     "pen": "kept"
+    },
+    {
+     "id": "note-28",
+     "pen": "kept"
+    },
+    {
+     "id": "note-29",
+     "pen": "kept"
+    },
+    {
+     "id": "note-30",
+     "pen": "kept"
+    },
+    {
+     "id": "note-31",
+     "pen": "kept"
+    },
+    {
+     "id": "note-32",
+     "pen": "kept"
+    },
+    {
+     "id": "note-33",
+     "pen": "kept"
+    },
+    {
+     "id": "note-34",
+     "pen": "kept"
+    },
+    {
+     "id": "note-35",
+     "pen": "kept"
+    },
+    {
+     "id": "note-36",
+     "pen": "kept"
+    },
+    {
+     "id": "note-37",
+     "pen": "kept"
+    },
+    {
+     "id": "note-38",
+     "pen": "kept"
+    },
+    {
+     "id": "note-39",
+     "pen": "kept"
+    },
+    {
+     "id": "note-40",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 4,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "clerk is shown 8 of its 40 pages, and answers.",
+   "appear": [],
+   "change": [
+    {
+     "row": "clerk/fields/said",
+     "value": "Mrs Okafor's parcel is on shelf..."
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/fields/said",
+     "pen": "thought"
+    },
+    {
+     "id": "note-40",
+     "pen": "kept"
+    },
+    {
+     "id": "note-07",
+     "pen": "kept"
+    },
+    {
+     "id": "note-02",
+     "pen": "kept"
+    },
+    {
+     "id": "note-08",
+     "pen": "kept"
+    },
+    {
+     "id": "note-04",
+     "pen": "kept"
+    },
+    {
+     "id": "note-13",
+     "pen": "kept"
+    },
+    {
+     "id": "note-18",
+     "pen": "kept"
+    },
+    {
+     "id": "note-24",
+     "pen": "kept"
+    },
+    {
+     "id": "clerk/plugs/shows",
+     "pen": "kept"
+    }
+   ],
+   "dim": [
+    "note-01",
+    "note-03",
+    "note-05",
+    "note-06",
+    "note-09",
+    "note-10",
+    "note-11",
+    "note-12",
+    "note-14",
+    "note-15",
+    "note-16",
+    "note-17",
+    "note-19",
+    "note-20",
+    "note-21",
+    "note-22",
+    "note-23",
+    "note-25",
+    "note-26",
+    "note-27",
+    "note-28",
+    "note-29",
+    "note-30",
+    "note-31",
+    "note-32",
+    "note-33",
+    "note-34",
+    "note-35",
+    "note-36",
+    "note-37",
+    "note-38",
+    "note-39"
+   ]
+  }
+ ]
+}

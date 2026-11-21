@@ -1,0 +1,511 @@
+{
+ "card": "a-clerk-reads-its-desk",
+ "title": "a clerk reads its desk",
+ "draw": 1,
+ "pens": [
+  "added",
+  "refused",
+  "heard",
+  "kept",
+  "thought"
+ ],
+ "nodes": [
+  {
+   "id": "clerk",
+   "name": "clerk",
+   "archetype": "character",
+   "kind": "space \u00b7 character",
+   "symbol": "character",
+   "form": "space",
+   "label": "clerk",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "fields",
+     "title": "fields",
+     "symbol": "fields",
+     "more": 0,
+     "rows": [
+      {
+       "id": "clerk/fields/heard",
+       "name": "heard",
+       "value": "",
+       "key": true,
+       "expr": null
+      },
+      {
+       "id": "clerk/fields/said",
+       "name": "said",
+       "value": "",
+       "key": true,
+       "expr": null
+      }
+     ]
+    },
+    {
+     "kind": "hears",
+     "title": "listens for",
+     "symbol": "hears",
+     "more": 0,
+     "rows": [
+      {
+       "id": "clerk/hears/within:sets heard",
+       "name": "a page put in it",
+       "value": "sets heard",
+       "key": true,
+       "expr": null
+      },
+      {
+       "id": "clerk/hears/clerk:asks helper",
+       "name": "clerk",
+       "value": "asks helper",
+       "key": false,
+       "expr": null
+      }
+     ]
+    },
+    {
+     "kind": "plugs",
+     "title": "reaches",
+     "symbol": "connector",
+     "more": 0,
+     "rows": [
+      {
+       "id": "clerk/plugs/asks:helper",
+       "name": "asks",
+       "value": "helper",
+       "key": false,
+       "expr": null
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "note-1",
+   "name": "note-1",
+   "archetype": "page",
+   "kind": "page",
+   "symbol": "page",
+   "form": "cell",
+   "label": "note-1",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-2",
+   "name": "note-2",
+   "archetype": "page",
+   "kind": "page",
+   "symbol": "page",
+   "form": "cell",
+   "label": "note-2",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-3",
+   "name": "note-3",
+   "archetype": "page",
+   "kind": "page",
+   "symbol": "page",
+   "form": "cell",
+   "label": "note-3",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "note-4",
+   "name": "note-4",
+   "archetype": "page",
+   "kind": "page",
+   "symbol": "page",
+   "form": "cell",
+   "label": "note-4",
+   "parent": "clerk",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "helper",
+   "name": "helper",
+   "archetype": "provider",
+   "kind": "provider",
+   "symbol": "provider",
+   "form": "cell",
+   "label": "helper",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "fields",
+     "title": "fields",
+     "symbol": "fields",
+     "more": 0,
+     "rows": [
+      {
+       "id": "helper/fields/command",
+       "name": "command",
+       "value": "stand",
+       "key": false,
+       "expr": null
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "id": "plugs:clerk/plugs/asks:helper->helper",
+   "kind": "plugs",
+   "label": "asks",
+   "source": "clerk",
+   "sourceRow": "clerk/plugs/asks:helper",
+   "target": "helper",
+   "targetRow": null,
+   "modes": [
+    "topology"
+   ]
+  }
+ ],
+ "steps": [
+  {
+   "i": 0,
+   "kind": "room",
+   "symbol": "space",
+   "caption": "The room as given.",
+   "appear": [
+    "helper",
+    "helper/fields/command",
+    "clerk",
+    "clerk/fields/heard",
+    "clerk/fields/said",
+    "clerk/hears/within:sets heard",
+    "clerk/hears/clerk:asks helper",
+    "clerk/plugs/asks:helper",
+    "note-1",
+    "plugs:clerk/plugs/asks:helper->helper"
+   ],
+   "change": [],
+   "subject": [],
+   "dim": []
+  },
+  {
+   "i": 1,
+   "kind": "reflex",
+   "symbol": "reflex",
+   "caption": "clerk sets heard by itself: Mrs Okafor's parcel is on shelf 12.",
+   "appear": [],
+   "change": [
+    {
+     "row": "clerk/fields/heard",
+     "value": "Mrs Okafor's parcel is on shelf..."
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk/fields/heard",
+     "pen": "heard"
+    },
+    {
+     "id": "clerk/hears/within:sets heard",
+     "pen": "heard"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 2,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "clerk is shown 1 of its 1 page, and answers.",
+   "appear": [],
+   "change": [
+    {
+     "row": "clerk/fields/said",
+     "value": "Noted: Mrs Okafor's parcel is o..."
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/fields/said",
+     "pen": "thought"
+    },
+    {
+     "id": "note-1",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 3,
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice keeps note-2 in clerk.",
+   "appear": [
+    "note-2"
+   ],
+   "change": [],
+   "subject": [
+    {
+     "id": "note-2",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 4,
+   "kind": "reflex",
+   "symbol": "reflex",
+   "caption": "clerk sets heard by itself: Has the morning post come?",
+   "appear": [],
+   "change": [
+    {
+     "row": "clerk/fields/heard",
+     "value": "Has the morning post come?"
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk/fields/heard",
+     "pen": "heard"
+    },
+    {
+     "id": "clerk/hears/within:sets heard",
+     "pen": "heard"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 5,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "clerk is shown 2 of its 2 pages, and answers.",
+   "appear": [],
+   "change": [
+    {
+     "row": "clerk/fields/said",
+     "value": "I can't tell from the desk. Not..."
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/fields/said",
+     "pen": "thought"
+    },
+    {
+     "id": "note-1",
+     "pen": "kept"
+    },
+    {
+     "id": "note-2",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 6,
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice keeps note-3 in clerk.",
+   "appear": [
+    "note-3"
+   ],
+   "change": [],
+   "subject": [
+    {
+     "id": "note-3",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 7,
+   "kind": "reflex",
+   "symbol": "reflex",
+   "caption": "clerk sets heard by itself: Is the lamp lit?",
+   "appear": [],
+   "change": [
+    {
+     "row": "clerk/fields/heard",
+     "value": "Is the lamp lit?"
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk/fields/heard",
+     "pen": "heard"
+    },
+    {
+     "id": "clerk/hears/within:sets heard",
+     "pen": "heard"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 8,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "clerk is shown 3 of its 3 pages, and answers.",
+   "appear": [],
+   "change": [
+    {
+     "row": "clerk/fields/said",
+     "value": "I can't tell from the desk. My..."
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/fields/said",
+     "pen": "thought"
+    },
+    {
+     "id": "note-1",
+     "pen": "kept"
+    },
+    {
+     "id": "note-2",
+     "pen": "kept"
+    },
+    {
+     "id": "note-3",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 9,
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice keeps note-4 in clerk.",
+   "appear": [
+    "note-4"
+   ],
+   "change": [],
+   "subject": [
+    {
+     "id": "note-4",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 10,
+   "kind": "reflex",
+   "symbol": "reflex",
+   "caption": "clerk sets heard by itself: Which shelf is Mrs Okafor's parcel on?",
+   "appear": [],
+   "change": [
+    {
+     "row": "clerk/fields/heard",
+     "value": "Which shelf is Mrs Okafor's par..."
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk/fields/heard",
+     "pen": "heard"
+    },
+    {
+     "id": "clerk/hears/within:sets heard",
+     "pen": "heard"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 11,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "clerk is shown 4 of its 4 pages, and answers.",
+   "appear": [],
+   "change": [
+    {
+     "row": "clerk/fields/said",
+     "value": "Mrs Okafor's parcel is on shelf..."
+    }
+   ],
+   "subject": [
+    {
+     "id": "clerk",
+     "pen": "thought"
+    },
+    {
+     "id": "clerk/fields/said",
+     "pen": "thought"
+    },
+    {
+     "id": "note-1",
+     "pen": "kept"
+    },
+    {
+     "id": "note-2",
+     "pen": "kept"
+    },
+    {
+     "id": "note-3",
+     "pen": "kept"
+    },
+    {
+     "id": "note-4",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  }
+ ]
+}

@@ -1,0 +1,454 @@
+{
+ "card": "a-keeper-hears-the-no",
+ "title": "a keeper hears the no",
+ "draw": 1,
+ "pens": [
+  "added",
+  "refused",
+  "heard",
+  "kept",
+  "thought"
+ ],
+ "nodes": [
+  {
+   "id": "den",
+   "name": "den",
+   "archetype": "reflex",
+   "kind": "space",
+   "symbol": "space",
+   "form": "space",
+   "label": "den",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "fields",
+     "title": "fields",
+     "symbol": "fields",
+     "more": 0,
+     "rows": [
+      {
+       "id": "den/fields/cash",
+       "name": "cash",
+       "value": "80",
+       "key": false,
+       "expr": null
+      },
+      {
+       "id": "den/fields/turned_away",
+       "name": "turned_away",
+       "value": "0",
+       "key": true,
+       "expr": null
+      }
+     ]
+    },
+    {
+     "kind": "rules",
+     "title": "rules",
+     "symbol": "rule",
+     "more": 0,
+     "rows": [
+      {
+       "id": "den/rules/page.amount <= space.cash - 20",
+       "name": "for every page within",
+       "value": "",
+       "key": true,
+       "expr": {
+        "reads": [
+         "page",
+         "space"
+        ],
+        "body": "page.amount <= space.cash - 20"
+       }
+      }
+     ]
+    },
+    {
+     "kind": "hears",
+     "title": "listens for",
+     "symbol": "hears",
+     "more": 0,
+     "rows": [
+      {
+       "id": "den/hears/refusal:sets turned_away",
+       "name": "a write turned away",
+       "value": "sets turned_away",
+       "key": true,
+       "expr": null
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "keeper",
+   "name": "keeper",
+   "archetype": "character",
+   "kind": "character",
+   "symbol": "character",
+   "form": "cell",
+   "label": "keeper",
+   "parent": "den",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "hears",
+     "title": "listens for",
+     "symbol": "hears",
+     "more": 0,
+     "rows": [
+      {
+       "id": "keeper/hears/order:asks helper",
+       "name": "order",
+       "value": "asks helper",
+       "key": true,
+       "expr": null
+      }
+     ]
+    },
+    {
+     "kind": "plugs",
+     "title": "reaches",
+     "symbol": "connector",
+     "more": 0,
+     "rows": [
+      {
+       "id": "keeper/plugs/asks:helper",
+       "name": "asks",
+       "value": "helper",
+       "key": false,
+       "expr": null
+      },
+      {
+       "id": "keeper/plugs/writes:den",
+       "name": "writes into",
+       "value": "den",
+       "key": false,
+       "expr": null
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "helper",
+   "name": "helper",
+   "archetype": "provider",
+   "kind": "provider",
+   "symbol": "provider",
+   "form": "cell",
+   "label": "helper",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "fields",
+     "title": "fields",
+     "symbol": "fields",
+     "more": 0,
+     "rows": [
+      {
+       "id": "helper/fields/command",
+       "name": "command",
+       "value": "stand",
+       "key": false,
+       "expr": null
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "order",
+   "name": "order",
+   "archetype": "page",
+   "kind": "page",
+   "symbol": "page",
+   "form": "cell",
+   "label": "order",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "landlord-payment",
+   "name": "landlord-payment",
+   "archetype": "page",
+   "kind": "page",
+   "symbol": "page",
+   "form": "cell",
+   "label": "landlord-payment",
+   "parent": null,
+   "avatar": null,
+   "refused": true,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "tailor-payment",
+   "name": "tailor-payment",
+   "archetype": "page",
+   "kind": "page",
+   "symbol": "page",
+   "form": "cell",
+   "label": "tailor-payment",
+   "parent": null,
+   "avatar": null,
+   "refused": true,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  }
+ ],
+ "edges": [
+  {
+   "id": "heard:order->keeper/hears/order:asks helper",
+   "kind": "heard",
+   "label": "heard",
+   "source": "order",
+   "sourceRow": null,
+   "target": "keeper",
+   "targetRow": "keeper/hears/order:asks helper",
+   "modes": [
+    "dynamics",
+    "topology"
+   ]
+  },
+  {
+   "id": "plugs:keeper/plugs/asks:helper->helper",
+   "kind": "plugs",
+   "label": "asks",
+   "source": "keeper",
+   "sourceRow": "keeper/plugs/asks:helper",
+   "target": "helper",
+   "targetRow": null,
+   "modes": [
+    "topology"
+   ]
+  },
+  {
+   "id": "turned-away:landlord-payment->den/rules/page.amount <= space.cash - 20",
+   "kind": "turned-away",
+   "label": "turned away",
+   "source": "landlord-payment",
+   "sourceRow": null,
+   "target": "den",
+   "targetRow": "den/rules/page.amount <= space.cash - 20",
+   "modes": [
+    "dynamics",
+    "topology"
+   ]
+  },
+  {
+   "id": "turned-away:tailor-payment->den/rules/page.amount <= space.cash - 20",
+   "kind": "turned-away",
+   "label": "turned away",
+   "source": "tailor-payment",
+   "sourceRow": null,
+   "target": "den",
+   "targetRow": "den/rules/page.amount <= space.cash - 20",
+   "modes": [
+    "dynamics",
+    "topology"
+   ]
+  }
+ ],
+ "steps": [
+  {
+   "i": 0,
+   "kind": "room",
+   "symbol": "space",
+   "caption": "The room as given.",
+   "appear": [
+    "helper",
+    "helper/fields/command",
+    "den",
+    "den/fields/cash",
+    "den/fields/turned_away",
+    "den/rules/page.amount <= space.cash - 20",
+    "order",
+    "keeper",
+    "keeper/hears/order:asks helper",
+    "keeper/plugs/asks:helper",
+    "keeper/plugs/writes:den",
+    "heard:order->keeper/hears/order:asks helper",
+    "plugs:keeper/plugs/asks:helper->helper"
+   ],
+   "change": [],
+   "subject": [],
+   "dim": []
+  },
+  {
+   "i": 1,
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice writes order.",
+   "appear": [],
+   "change": [],
+   "subject": [
+    {
+     "id": "order",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 2,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "keeper reads order and answers.",
+   "appear": [],
+   "change": [],
+   "subject": [
+    {
+     "id": "keeper",
+     "pen": "thought"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 3,
+   "kind": "watch",
+   "symbol": "hears",
+   "caption": "keeper makes den listen for a write turned away.",
+   "appear": [
+    "den/hears/refusal:sets turned_away"
+   ],
+   "change": [],
+   "subject": [
+    {
+     "id": "den/hears/refusal:sets turned_away",
+     "pen": "added"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 4,
+   "kind": "refused",
+   "symbol": "refusal",
+   "caption": "landlord-payment is turned away: it breaks den's rule page.amount <= space.cash - 20.",
+   "appear": [
+    "landlord-payment",
+    "turned-away:landlord-payment->den/rules/page.amount <= space.cash - 20"
+   ],
+   "change": [],
+   "subject": [
+    {
+     "id": "landlord-payment",
+     "pen": "refused"
+    },
+    {
+     "id": "turned-away:landlord-payment->den/rules/page.amount <= space.cash - 20",
+     "pen": "refused"
+    },
+    {
+     "id": "den/rules/page.amount <= space.cash - 20",
+     "pen": "refused"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 5,
+   "kind": "reflex",
+   "symbol": "reflex",
+   "caption": "den counts it by itself: turned_away is now 1.",
+   "appear": [],
+   "change": [
+    {
+     "row": "den/fields/turned_away",
+     "value": "1"
+    }
+   ],
+   "subject": [
+    {
+     "id": "den/fields/turned_away",
+     "pen": "heard"
+    },
+    {
+     "id": "den/hears/refusal:sets turned_away",
+     "pen": "heard"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 6,
+   "kind": "refused",
+   "symbol": "refusal",
+   "caption": "tailor-payment is turned away: it breaks den's rule page.amount <= space.cash - 20.",
+   "appear": [
+    "tailor-payment",
+    "turned-away:tailor-payment->den/rules/page.amount <= space.cash - 20"
+   ],
+   "change": [],
+   "subject": [
+    {
+     "id": "tailor-payment",
+     "pen": "refused"
+    },
+    {
+     "id": "turned-away:tailor-payment->den/rules/page.amount <= space.cash - 20",
+     "pen": "refused"
+    },
+    {
+     "id": "den/rules/page.amount <= space.cash - 20",
+     "pen": "refused"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 7,
+   "kind": "reflex",
+   "symbol": "reflex",
+   "caption": "den counts it by itself: turned_away is now 2.",
+   "appear": [],
+   "change": [
+    {
+     "row": "den/fields/turned_away",
+     "value": "2"
+    }
+   ],
+   "subject": [
+    {
+     "id": "den/fields/turned_away",
+     "pen": "heard"
+    },
+    {
+     "id": "den/hears/refusal:sets turned_away",
+     "pen": "heard"
+    }
+   ],
+   "dim": []
+  }
+ ]
+}

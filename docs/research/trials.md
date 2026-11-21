@@ -12,7 +12,7 @@ This page is generated from the cards and their published runs by `bench/dynamic
 
 Each card states its objective and the bar it must clear before it runs. A draw is one fresh vault and one pass of the card with a real model. Five draws of one small model support no claim: a met bar is a pilot, and a missed one says where to look. Cards that have not been drawn are listed with the rest.
 
-The animation under a card is drawn from one draw's vault history, and the topology under it is the same draw's final state. A frame is a space, a person is a character, a page is a page, and a table is one panel of a page: its fields, rules, what it hears or what it reaches. Amber is what the character added, pink is a write that was turned away, blue is what is heard, teal is what was kept and violet is a model's thought.
+The animation under a card is drawn from one draw's vault history by the view in `viewer/`, and the picture under it is the same draw's final state. Every page is one cell: a small line saying what it is, its name, then its rows, grouped as fields, rules, what it hears and what it plugs into. A space is a frame holding its members. Ink is the structure; a colour marks only the subject of a step: amber is what a character added, pink is a write turned away, blue is what is heard, teal is what was kept or shown and violet is a model's thought.
 
 ## a clerk finds it by its terms
 
@@ -20,10 +20,10 @@ The animation under a card is drawn from one draw's vault history, and the topol
 - Bar: at least 4 of 5 draws pass, median calls a draw at most 2
 - Latest verdict: met
 - Run: 5 draws, 5 passed, model `claude`, 2026-11-21, code at `760ff43`
-- Data: [rows](../results/cards/a-clerk-finds-it-by-its-terms/rows.jsonl), [what each draw left](../results/cards/a-clerk-finds-it-by-its-terms/observations.jsonl), [its history](../results/cards/a-clerk-finds-it-by-its-terms/timeline.json)
+- Data: [rows](../results/cards/a-clerk-finds-it-by-its-terms/rows.jsonl), [what each draw left](../results/cards/a-clerk-finds-it-by-its-terms/observations.jsonl), [its history](../results/cards/a-clerk-finds-it-by-its-terms/timeline.json), [the graph drawn](../results/cards/a-clerk-finds-it-by-its-terms/graph.json)
 
-<p align="center"><img src="../results/cards/a-clerk-finds-it-by-its-terms/dynamics.svg" alt="a clerk finds it by its terms, drawn as it happened in draw 1, the first that passed" width="720"></p>
-<p align="center"><img src="../results/cards/a-clerk-finds-it-by-its-terms/topology.svg" alt="a clerk finds it by its terms, drawn as it happened in draw 1, the first that passed" width="720"></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-clerk-finds-it-by-its-terms/dynamics-dark.webp"><img src="../results/cards/a-clerk-finds-it-by-its-terms/dynamics-light.webp" alt="a clerk finds it by its terms, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-clerk-finds-it-by-its-terms/topology-dark.png"><img src="../results/cards/a-clerk-finds-it-by-its-terms/topology-light.png" alt="a clerk finds it by its terms, its final state" width="720"></picture></p>
 
 ## a clerk has a memory
 
@@ -38,10 +38,10 @@ The animation under a card is drawn from one draw's vault history, and the topol
 - Bar: at least 4 of 5 draws pass, median calls a draw at most 2
 - Latest verdict: met
 - Run: 5 draws, 5 passed, model `claude`, 2026-11-20, code at `1fee3c31d9`
-- Data: [rows](../results/cards/a-clerk-reads-a-crowded-desk/rows.jsonl), [what each draw left](../results/cards/a-clerk-reads-a-crowded-desk/observations.jsonl), [its history](../results/cards/a-clerk-reads-a-crowded-desk/timeline.json)
+- Data: [rows](../results/cards/a-clerk-reads-a-crowded-desk/rows.jsonl), [what each draw left](../results/cards/a-clerk-reads-a-crowded-desk/observations.jsonl), [its history](../results/cards/a-clerk-reads-a-crowded-desk/timeline.json), [the graph drawn](../results/cards/a-clerk-reads-a-crowded-desk/graph.json)
 
-<p align="center"><img src="../results/cards/a-clerk-reads-a-crowded-desk/dynamics.svg" alt="a clerk reads a crowded desk, drawn as it happened in draw 1, the first that passed" width="720"></p>
-<p align="center"><img src="../results/cards/a-clerk-reads-a-crowded-desk/topology.svg" alt="a clerk reads a crowded desk, drawn as it happened in draw 1, the first that passed" width="720"></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-clerk-reads-a-crowded-desk/dynamics-dark.webp"><img src="../results/cards/a-clerk-reads-a-crowded-desk/dynamics-light.webp" alt="a clerk reads a crowded desk, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-clerk-reads-a-crowded-desk/topology-dark.png"><img src="../results/cards/a-clerk-reads-a-crowded-desk/topology-light.png" alt="a clerk reads a crowded desk, its final state" width="720"></picture></p>
 
 ## a clerk reads its desk
 
@@ -49,10 +49,10 @@ The animation under a card is drawn from one draw's vault history, and the topol
 - Bar: at least 5 of 5 draws pass, median calls a draw at most 4
 - Latest verdict: met
 - Run: 5 draws, 5 passed, model `claude`, 2026-11-20, code at `1fee3c31d9`
-- Data: [rows](../results/cards/a-clerk-reads-its-desk/rows.jsonl), [what each draw left](../results/cards/a-clerk-reads-its-desk/observations.jsonl), [its history](../results/cards/a-clerk-reads-its-desk/timeline.json)
+- Data: [rows](../results/cards/a-clerk-reads-its-desk/rows.jsonl), [what each draw left](../results/cards/a-clerk-reads-its-desk/observations.jsonl), [its history](../results/cards/a-clerk-reads-its-desk/timeline.json), [the graph drawn](../results/cards/a-clerk-reads-its-desk/graph.json)
 
-<p align="center"><img src="../results/cards/a-clerk-reads-its-desk/dynamics.svg" alt="a clerk reads its desk, drawn as it happened in draw 1, the first that passed" width="720"></p>
-<p align="center"><img src="../results/cards/a-clerk-reads-its-desk/topology.svg" alt="a clerk reads its desk, drawn as it happened in draw 1, the first that passed" width="720"></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-clerk-reads-its-desk/dynamics-dark.webp"><img src="../results/cards/a-clerk-reads-its-desk/dynamics-light.webp" alt="a clerk reads its desk, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-clerk-reads-its-desk/topology-dark.png"><img src="../results/cards/a-clerk-reads-its-desk/topology-light.png" alt="a clerk reads its desk, its final state" width="720"></picture></p>
 
 ## a clerk remembers
 
@@ -67,10 +67,10 @@ The animation under a card is drawn from one draw's vault history, and the topol
 - Bar: at least 4 of 5 draws pass
 - Latest verdict: met
 - Run: 5 draws, 4 passed, model `claude`, 2026-11-20, code at `1fee3c31d9`
-- Data: [rows](../results/cards/a-keeper-binds-itself/rows.jsonl), [what each draw left](../results/cards/a-keeper-binds-itself/observations.jsonl), [its history](../results/cards/a-keeper-binds-itself/timeline.json)
+- Data: [rows](../results/cards/a-keeper-binds-itself/rows.jsonl), [what each draw left](../results/cards/a-keeper-binds-itself/observations.jsonl), [its history](../results/cards/a-keeper-binds-itself/timeline.json), [the graph drawn](../results/cards/a-keeper-binds-itself/graph.json)
 
-<p align="center"><img src="../results/cards/a-keeper-binds-itself/dynamics.svg" alt="a keeper binds itself, drawn as it happened in draw 1, the first that passed" width="720"></p>
-<p align="center"><img src="../results/cards/a-keeper-binds-itself/topology.svg" alt="a keeper binds itself, drawn as it happened in draw 1, the first that passed" width="720"></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-keeper-binds-itself/dynamics-dark.webp"><img src="../results/cards/a-keeper-binds-itself/dynamics-light.webp" alt="a keeper binds itself, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-keeper-binds-itself/topology-dark.png"><img src="../results/cards/a-keeper-binds-itself/topology-light.png" alt="a keeper binds itself, its final state" width="720"></picture></p>
 
 ## a keeper hears the no
 
@@ -78,7 +78,7 @@ The animation under a card is drawn from one draw's vault history, and the topol
 - Bar: at least 3 of 5 draws pass, median calls a draw at most 2
 - Latest verdict: met
 - Run: 5 draws, 4 passed, model `claude`, 2026-11-20, code at `1fee3c31d9`
-- Data: [rows](../results/cards/a-keeper-hears-the-no/rows.jsonl), [what each draw left](../results/cards/a-keeper-hears-the-no/observations.jsonl), [its history](../results/cards/a-keeper-hears-the-no/timeline.json)
+- Data: [rows](../results/cards/a-keeper-hears-the-no/rows.jsonl), [what each draw left](../results/cards/a-keeper-hears-the-no/observations.jsonl), [its history](../results/cards/a-keeper-hears-the-no/timeline.json), [the graph drawn](../results/cards/a-keeper-hears-the-no/graph.json)
 
-<p align="center"><img src="../results/cards/a-keeper-hears-the-no/dynamics.svg" alt="a keeper hears the no, drawn as it happened in draw 1, the first that passed" width="720"></p>
-<p align="center"><img src="../results/cards/a-keeper-hears-the-no/topology.svg" alt="a keeper hears the no, drawn as it happened in draw 1, the first that passed" width="720"></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-keeper-hears-the-no/dynamics-dark.webp"><img src="../results/cards/a-keeper-hears-the-no/dynamics-light.webp" alt="a keeper hears the no, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-keeper-hears-the-no/topology-dark.png"><img src="../results/cards/a-keeper-hears-the-no/topology-light.png" alt="a keeper hears the no, its final state" width="720"></picture></p>

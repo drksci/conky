@@ -10,3 +10,6 @@ dist/
 
 # Runtime vaults do not belong in this repository
 /vault/
+
+# The view's packages (viewer/package-lock.json pins them)
+node_modules/

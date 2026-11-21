@@ -1,0 +1,387 @@
+/* The look of the view. Every colour, weight, dash, size and space is a token variable from
+   src/conky/tokens.json (see tokens.mjs); restyle here or in the token file, nowhere else.
+   Monochrome first: ink on a transparent ground, mute for secondary text, hair for quiet lines
+   and dimmed things. A pen only marks the subject of a step, through var(--pen), set by the
+   .is-<meaning> classes the token sheet defines. */
+
+html,
+body {
+  margin: 0;
+  background: var(--ds-color-paper);
+  color: var(--ds-color-ink);
+  font-family: var(--ds-font-text);
+  font-variant-ligatures: none;
+}
+
+html:has(.is-bare),
+html:has(.is-bare) body {
+  background: transparent;
+}
+
+.react-flow {
+  --xy-background-color: transparent;
+  --xy-edge-stroke: var(--ds-color-ink);
+  background: transparent;
+}
+
+/* ---------------------------------------------------------------- the view around the graph */
+
+.view {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: var(--ds-space-wide);
+  gap: var(--ds-space-base);
+}
+
+.view.is-bare {
+  display: inline-flex;
+  height: auto;
+  box-sizing: border-box;
+  min-height: var(--view-tall, 0);
+  padding: var(--ds-space-wide);
+}
+
+.view-head {
+  display: flex;
+  gap: var(--ds-space-wide);
+  align-items: baseline;
+}
+
+.view-title {
+  font-size: var(--ds-size-display);
+}
+
+.view-draw {
+  font-size: var(--ds-size-base);
+  color: var(--ds-color-mute);
+}
+
+.view-graph {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+.is-bare .view-graph {
+  flex: none;
+  width: var(--view-width);
+  height: var(--view-height);
+}
+
+.measure {
+  position: fixed;
+  inset: 0;
+  visibility: hidden;
+}
+
+.missing {
+  padding: var(--ds-space-far);
+  font-size: var(--ds-size-large);
+}
+
+/* ---------------------------------------------------------------- the one cell */
+
+.react-flow__node > .cell {
+  width: 100%;
+  height: 100%;
+}
+
+.cell {
+  box-sizing: border-box;
+  background: transparent;
+  color: var(--ds-color-ink);
+  border: var(--ds-weight-fine) solid var(--ds-color-ink);
+  border-radius: var(--ds-radius);
+  box-shadow: var(--ds-shadow);
+  padding: var(--ds-space-base);
+  font-size: var(--ds-size-base);
+  line-height: 1.35;
+  white-space: nowrap;
+  min-width: calc(var(--ds-space-far) * 2);
+  max-width: calc(var(--ds-space-far) * 13);
+}
+
+.row-value {
+  white-space: normal;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.cell-name {
+  white-space: nowrap;
+}
+
+.cell-space {
+  border-width: var(--ds-weight-base);
+}
+
+.cell-kind {
+  font-size: var(--ds-size-small);
+  color: var(--ds-color-mute);
+}
+
+.cell-name {
+  font-size: var(--ds-size-large);
+}
+
+.cell-avatar {
+  float: right;
+  width: var(--ds-space-far);
+  height: var(--ds-space-far);
+  margin-left: var(--ds-space-base);
+}
+
+.panel {
+  margin-top: var(--ds-space-fine);
+  padding-top: var(--ds-space-fine);
+  border-top: var(--ds-weight-hair) solid var(--ds-color-hair);
+}
+
+.panel-name,
+.panel-more {
+  font-size: var(--ds-size-micro);
+  color: var(--ds-color-mute);
+}
+
+.cell-header {
+  position: relative;
+}
+
+.row-line {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--ds-space-wide);
+}
+
+.expr {
+  font-family: var(--ds-font-code);
+  display: block;
+  width: 0;
+  min-width: 100%;
+  box-sizing: border-box;
+  margin: var(--ds-space-hair) 0 var(--ds-space-fine) calc(1.1em + 0.45em);
+  padding-left: var(--ds-space-base);
+  border-left: var(--ds-weight-hair) solid var(--ds-color-hair);
+  font-size: var(--ds-size-base);
+  color: var(--ds-color-ink);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.row.is-subject > .expr {
+  border-left-color: var(--pen);
+}
+
+.expr-mark,
+.expr-op {
+  color: var(--ds-color-mute);
+}
+
+.expr-literal {
+  color: var(--ds-color-mute);
+  font-style: italic;
+}
+
+.row-name {
+  display: inline-flex;
+  align-items: center;
+}
+
+.row-value {
+  color: var(--ds-color-mute);
+}
+
+.port {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.row-line > .react-flow__handle-left,
+.cell-header > .react-flow__handle-left {
+  left: calc(-1 * var(--ds-space-base));
+}
+
+.row-line > .react-flow__handle-right,
+.cell-header > .react-flow__handle-right {
+  right: calc(-1 * var(--ds-space-base));
+}
+
+.react-flow__handle.port {
+  width: var(--ds-weight-hair);
+  height: var(--ds-weight-hair);
+  min-width: 0;
+  min-height: 0;
+  border: none;
+}
+
+.cell-note {
+  min-width: calc(2ch + 2 * var(--ds-space-fine) + 2 * var(--ds-weight-fine));
+  padding: var(--ds-space-hair) var(--ds-space-fine);
+  font-size: var(--ds-size-small);
+  text-align: center;
+  line-height: 1.35;
+}
+
+/* ---------------------------------------------------------------- where a thing stands */
+
+.cell,
+.row-line > span,
+.react-flow__edge {
+  transition:
+    opacity 0.3s,
+    color 0.3s,
+    border-color 0.3s;
+}
+
+.is-bare .cell,
+.is-bare .row-line > span,
+.is-bare .react-flow__edge {
+  transition: none;
+}
+
+.is-hidden {
+  opacity: 0;
+}
+
+.cell.is-subject {
+  border-color: var(--pen);
+}
+
+.cell.is-subject > .cell-header > .cell-name,
+.cell-note.is-subject {
+  color: var(--pen);
+}
+
+.row.is-subject > .row-line > .row-name,
+.row.is-subject > .row-line > .row-value {
+  color: var(--pen);
+}
+
+.cell.is-dim {
+  border-color: var(--ds-color-hair);
+  color: var(--ds-color-hair);
+}
+
+/* ---------------------------------------------------------------- edges, by kind */
+
+.react-flow__edge.edge .react-flow__edge-path {
+  stroke: var(--ds-color-ink);
+  stroke-width: var(--ds-weight-fine);
+}
+
+.react-flow__edge.edge-heard .react-flow__edge-path {
+  stroke-dasharray: var(--ds-dash-short);
+}
+
+.react-flow__edge.edge-caused .react-flow__edge-path,
+.react-flow__edge.edge-plugs .react-flow__edge-path {
+  stroke: var(--ds-color-mute);
+}
+
+.react-flow__edge.edge-caused .react-flow__edge-path {
+  stroke-dasharray: var(--ds-dash-dot);
+}
+
+.react-flow__edge.edge-plugs .react-flow__edge-path {
+  stroke-dasharray: var(--ds-dash-long);
+}
+
+.react-flow__edge.edge.is-subject .react-flow__edge-path {
+  stroke: var(--pen);
+  stroke-width: var(--ds-weight-base);
+}
+
+.edge-label {
+  position: absolute;
+  font-size: var(--ds-size-small);
+  line-height: 1.2;
+  color: var(--ds-color-mute);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.edge-label.is-subject {
+  color: var(--pen);
+}
+
+/* ---------------------------------------------------------------- symbols and legend */
+
+.symbol {
+  width: 1.1em;
+  height: 1.1em;
+  stroke: currentColor;
+  stroke-width: var(--ds-weight-fine);
+  fill: none;
+  vertical-align: -0.2em;
+  margin-right: 0.45em;
+  flex: none;
+}
+
+.cell-avatar {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  margin-right: 0.45em;
+  vertical-align: -0.2em;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-fine) var(--ds-space-wide);
+  max-width: var(--view-width);
+  font-size: var(--ds-size-small);
+  color: var(--ds-color-mute);
+}
+
+.legend .symbol {
+  margin-right: 0.35em;
+}
+
+/* ---------------------------------------------------------------- caption and scrubber */
+
+.caption {
+  display: flex;
+  gap: var(--ds-space-base);
+  font-size: var(--ds-size-large);
+  max-width: var(--view-width);
+  white-space: normal;
+}
+
+.caption-count {
+  color: var(--ds-color-mute);
+}
+
+.caption-words {
+  color: var(--ds-color-ink);
+}
+
+.scrubber {
+  display: flex;
+  gap: var(--ds-space-base);
+  align-items: center;
+  font-size: var(--ds-size-base);
+}
+
+.scrubber button {
+  font: inherit;
+  color: var(--ds-color-ink);
+  background: transparent;
+  border: var(--ds-weight-fine) solid var(--ds-color-ink);
+  border-radius: var(--ds-radius);
+  padding: var(--ds-space-fine) var(--ds-space-base);
+  cursor: pointer;
+}
+
+.scrubber button:disabled {
+  color: var(--ds-color-hair);
+  border-color: var(--ds-color-hair);
+}
+
+.scrubber-range {
+  flex: 1;
+  accent-color: var(--ds-color-ink);
+}
