@@ -12,7 +12,7 @@ from functools import cache
 from pathlib import Path
 from typing import Any
 
-from conky import answer, arch, git, model, voice
+from conky import answer, arch, git, model, theatre, voice
 from conky.cache import Cache
 from conky.errors import BadInput, VerifyFailed
 from conky.page import (
@@ -163,7 +163,7 @@ class Vault:
     ) -> None:
         git.require_tools()
         self.path = Path(path)
-        if not (self.path / ".git").exists():
+        if not git.is_repository(self.path):
             raise BadInput(f"{self.path} is not a vault: create one with `conky init {self.path}`")
         self.pages_dir = self.path / "pages"
         self.signers = self.path / git.SIGNERS
@@ -176,9 +176,10 @@ class Vault:
     ) -> Vault:
         """Create an empty vault at path and return it."""
         git.require_tools()
-        if (Path(path) / ".git").exists():
+        if git.is_repository(Path(path)):
             raise BadInput(f"{path} is already a vault")
         git.init(Path(path))
+        theatre.exclude(Path(path))
         return cls(path, keys_dir, cache)
 
     @arch.part(
@@ -308,6 +309,7 @@ class Vault:
     )
     def verify(self) -> None:
         """Raise VerifyFailed naming the first problem in the tree, the objects or the history."""
+        self._check_theatre_file()
         if self._dirty():
             raise VerifyFailed(self._dirty_message())
         try:
@@ -360,6 +362,18 @@ class Vault:
             commit, *names = record.split("\n")
             changed[commit] = [n for n in names if n]
         return changed
+
+    def _check_theatre_file(self) -> None:
+        """Refuse a vault whose history holds the settings file that belongs to one machine."""
+        held = git.run(["ls-files", "--", theatre.FILE], self.path).strip()
+        if not held and self._has_commits():
+            held = git.run(["log", "-1", "--format=%h", "main", "--", theatre.FILE], self.path)
+        if held.strip():
+            raise VerifyFailed(
+                f"{theatre.FILE} is in the history, and it holds settings for one machine: "
+                f"remove it with `git rm --cached {theatre.FILE}` and rewrite the history "
+                "without it, then keep it out with the local exclude list"
+            )
 
     def _head(self) -> str:
         """Return the id of the latest event, or nothing in a vault with none."""

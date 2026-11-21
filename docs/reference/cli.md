@@ -18,9 +18,9 @@ conky [--vault DIR] [--keys DIR] [--cache-dir DIR] [--cache-mode MODE] [--color 
 
 | Option | Meaning |
 |---|---|
-| `--vault DIR` | The vault directory. Default: the current directory. |
-| `--keys DIR` | The directory that holds private keys. Default: `~/.conky/keys`. |
-| `--cache-dir DIR` | The directory that holds the cache. Default: `~/.conky/cache`, or `CONKY_CACHE_DIR`. |
+| `--vault DIR` | The vault directory. Default: the nearest folder at or above the current one that is a vault, else the current folder. See [theatre](#theatre). |
+| `--keys DIR` | The directory that holds private keys. Default: the `keys` setting of `marionette.md`, else `~/.conky/keys`. |
+| `--cache-dir DIR` | The directory that holds the cache. Default: `CONKY_CACHE_DIR`, else the `cache` setting of `marionette.md`, else `~/.conky/cache`. |
 | `--cache-mode MODE` | `on`, `off`, `refresh` or `only`. Default: `on`, or `CONKY_CACHE`. See [the cache](providers.md#cache). |
 | `--color WHEN` | `auto`, `always` or `never`. Default: `auto`. |
 
@@ -130,6 +130,36 @@ The skip rule does not apply: the question is asked every time. The answer is wr
 With `--writes <space>` the answer may also hold pages, which `actor` writes into that space, one signed commit each, caused by the answer ([an answer that is pages](rules-and-reactions.md#an-answer-that-is-pages)). `<into-field>` may then be left out, and the plain text of the answer is dropped. After the line for the answer, the command prints one line for each page, `<page>: written (commit <id>)` on standard output or `<page>: refused (commit <id>): <reason>` on standard error, and exits 1 if any page was refused. The pages that were not refused are kept.
 
 On success it prints `written (commit <id>)`. If the answer breaks a rule it prints `refused (commit <id>): <reason>` on standard error and exits 1, and the refusal is committed. A model that cannot be asked does not fail the command: a named provider that fails is recorded as a refusal whose reason starts with `model:`, then the detected models are tried, and when none answers a plain sentence is written. In that case the command prints the sentence on standard output, a one-line hint on standard error that lists the ways to give Conky a model, and exits 0 ([when no model answers](providers.md#when-no-model-answers)). The actor needs its key, as for `write`.
+
+### theatre
+
+```
+conky theatre
+```
+
+Prints the theatre the current folder belongs to, in a few plain lines: its full name (`name.domain`), where its vault is, the settings file if there is one, and each setting with its value and where it came from: `flag`, `environment`, `marionette.md` or `default`. A secret is never printed: for each key variable and each `CONKY_SECRET_<NAME>` it says whether the variable is set. It needs no vault and exits 0, or 1 when the settings file is malformed.
+
+A theatre is one distinct conky system, the outermost thing everything in it lives in. Today it is its vault together with `marionette.md`, the settings true only of the machine it is running on. A thing has a part that says what it is, which lives in the vault and travels, and a part that says where it is running, which stays on the machine; a provider's page and its secret in the environment already work this way.
+
+**Finding the vault.** Without `--vault`, a command walks up from the current folder to the nearest folder that holds a Git repository, which is how a vault is recognised, and uses it. If there is none it uses the current folder, and says what it said before: that it is not a vault and how to create one. `init` is unchanged.
+
+**The settings file.** `marionette.md` at the root of the vault's folder is optional: Markdown with frontmatter, the same document form as a page, but not a page of the vault. Its frontmatter is the settings and its body is free prose that nothing reads. It is never part of the history: `init`, and the first read of a file written by hand, add it to `.git/info/exclude`, which is not committed, and `verify` fails if the history holds it, advising that it be removed. A vault that is cloned or bundled arrives without it and runs on defaults. Relative paths in the file are relative to the file's folder. A file that is malformed, or names a key that is not below, stops the command with a reason that says what to write instead.
+
+| Key | Meaning | Default |
+|---|---|---|
+| `name` | The theatre's short name: lower-case letters, digits, `-` and `_`. | The vault folder's name, lower-cased, else `theatre`. |
+| `domain` | The domain of the full name. | `local` |
+| `keys` | The private key directory, the same as `--keys`. | `~/.conky/keys` |
+| `cache` | The cache directory, the same as `--cache-dir`. | `~/.conky/cache` |
+| `provider` | The provider an ask without one uses, the same as `CONKY_PROVIDER`: `anthropic`, `openai`, `claude`, `codex` or `none`. | A model is detected. |
+| `model` | The model for that provider, the same as `CONKY_MODEL`. | None. |
+| `command` | A mapping of a command name to its command line, the same as `CONKY_COMMAND_<NAME>`. | None. |
+
+**Precedence.** A command-line flag, then an environment variable, then `marionette.md`, then the default. `name`, `domain`, `provider` and `model` have no flag; `keys` has no variable.
+
+**No secrets.** A key whose name holds `secret`, `token`, `password` or `api_key` is refused with advice to put the value in the environment. Secrets keep coming from `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `CONKY_SECRET_<NAME>` and the key directory.
+
+Not built: `name` and `domain` are printed and nothing else reads them yet.
 
 ### model
 

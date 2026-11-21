@@ -115,6 +115,7 @@ Every concept word and verb of the [vocabulary](vocabulary.md), and each named p
 | <a id="part.connect.terminal"></a>`part.connect.terminal` | [`layer.edge`](#layer.edge) | The terminal connector, eyes and hands on a program. | [connectors.md#the-terminal-connector](connectors.md#the-terminal-connector) | `conky.connect.terminal` | - | built |
 | <a id="part.export.notion"></a>`part.export.notion` | [`layer.edge`](#layer.edge) | The committed pages as Markdown notes for Notion's import, as a folder and a zip. | [connectors.md#showing-a-vault-elsewhere](connectors.md#showing-a-vault-elsewhere) | `conky.export.notion` | - | built |
 | <a id="part.export.obsidian"></a>`part.export.obsidian` | [`layer.edge`](#layer.edge) | The committed pages as an Obsidian folder of notes, two JSON Canvas files and who.md. | [connectors.md#showing-a-vault-elsewhere](connectors.md#showing-a-vault-elsewhere) | `conky.export.obsidian` | - | built |
+| <a id="part.theatre"></a>`part.theatre` | [`layer.edge`](#layer.edge) | A vault and the settings true only on this machine, from marionette.md. | [cli.md#theatre](cli.md#theatre) | `conky.theatre.resolve` | R42 | built |
 | <a id="part.vault.assimilate"></a>`part.vault.assimilate` | [`layer.edge`](#layer.edge) | Take over a stopped vault from its folder alone. | [cli.md#assimilate](cli.md#assimilate) | `conky.assimilate.run` | R21 | built |
 | <a id="part.connect.protocol"></a>`part.connect.protocol` | [`layer.edge`](#layer.edge) | Connectors for the protocols people already use, each a door and not a room. | [connectors.md](../ideas/connectors.md) | - | R25 | planned |
 | <a id="part.screen"></a>`part.screen` | [`layer.edge`](#layer.edge) | A screen derived from the pages as A2UI messages, drawn by a renderer. | [a2ui.md](../ideas/a2ui.md) | - | R11b | planned |
@@ -136,7 +137,7 @@ From the store upwards. Each layer sits on the one before.
 | Reflexes (<a id="layer.reflex"></a>`layer.reflex`) | CEL rules, reactions, the depth bound, measures, pressure. | [`part.rule`](#part.rule), [`part.rule.captures`](#part.rule.captures), [`part.rule.capturesall`](#part.rule.capturesall), [`part.rule.indexof`](#part.rule.indexof), [`part.rule.join`](#part.rule.join), [`part.rule.lowerascii`](#part.rule.lowerascii), [`part.rule.replace`](#part.rule.replace), [`part.rule.split`](#part.rule.split), [`part.rule.substring`](#part.rule.substring), [`part.rule.trim`](#part.rule.trim), [`part.watch`](#part.watch) | [`part.seal.signer`](#part.seal.signer), [`part.rule.origin`](#part.rule.origin) |
 | Spaces (<a id="layer.space"></a>`layer.space`) | `within`, rules handed down, leaving judged. | [`part.space`](#part.space), [`part.space.context`](#part.space.context) | - |
 | Characters (<a id="layer.character"></a>`layer.character`) | Pages that ask a model, providers, answers that are pages. | [`part.answer.cache`](#part.answer.cache), [`part.answer.format`](#part.answer.format), [`part.provider.detect`](#part.provider.detect) | [`part.character.face`](#part.character.face), [`part.character.self`](#part.character.self), [`part.pattern.make`](#part.pattern.make), [`part.character.habit`](#part.character.habit) |
-| The edge (<a id="layer.edge"></a>`layer.edge`) | The command line, presenters, connectors, `demo`, `assimilate`. | [`part.cli.command`](#part.cli.command), [`part.cli.demo`](#part.cli.demo), [`part.cli.present`](#part.cli.present), [`part.connect.terminal`](#part.connect.terminal), [`part.export.notion`](#part.export.notion), [`part.export.obsidian`](#part.export.obsidian), [`part.vault.assimilate`](#part.vault.assimilate) | [`part.connect.protocol`](#part.connect.protocol), [`part.screen`](#part.screen), [`part.screen.page`](#part.screen.page), [`part.screen.update`](#part.screen.update), [`part.test.bench`](#part.test.bench), [`part.test.resume`](#part.test.resume), [`part.test.trial`](#part.test.trial), [`part.screen.live`](#part.screen.live) |
+| The edge (<a id="layer.edge"></a>`layer.edge`) | The command line, presenters, connectors, `demo`, `assimilate`. | [`part.cli.command`](#part.cli.command), [`part.cli.demo`](#part.cli.demo), [`part.cli.present`](#part.cli.present), [`part.connect.terminal`](#part.connect.terminal), [`part.export.notion`](#part.export.notion), [`part.export.obsidian`](#part.export.obsidian), [`part.theatre`](#part.theatre), [`part.vault.assimilate`](#part.vault.assimilate) | [`part.connect.protocol`](#part.connect.protocol), [`part.screen`](#part.screen), [`part.screen.page`](#part.screen.page), [`part.screen.update`](#part.screen.update), [`part.test.bench`](#part.test.bench), [`part.test.resume`](#part.test.resume), [`part.test.trial`](#part.test.trial), [`part.screen.live`](#part.screen.live) |
 
 ## 4. Archetypes
 
@@ -1286,6 +1287,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`part.test.bench`](#part.test.bench) | planned | not built | - | - |
 | [`part.test.resume`](#part.test.resume) | planned | not built | - | - |
 | [`part.test.trial`](#part.test.trial) | planned | not built | - | - |
+| [`part.theatre`](#part.theatre) | built | - | - | none |
 | [`part.vault`](#part.vault) | built | - | - | none |
 | [`part.vault.assimilate`](#part.vault.assimilate) | built | - | - | none |
 | [`part.watch`](#part.watch) | built | - | - | none |
@@ -1406,6 +1408,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0047-a-character-is-shown-what-its-spaces-say](../decisions/0047-a-character-is-shown-what-its-spaces-say.md) | accepted | [`law.embed.context`](#law.embed.context), [`part.embed`](#part.embed) |
 | [0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown](../decisions/0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown.md) | accepted | - |
 | [0049-a-cell-shows-the-whole-page](../decisions/0049-a-cell-shows-the-whole-page.md) | accepted | - |
+| [0050-a-theatre-knows-itself](../decisions/0050-a-theatre-knows-itself.md) | accepted | - |
 
 ### Unplaced
 
@@ -1415,6 +1418,7 @@ Found in the documents and fitting no row above.
 |---|---|---|
 | a cell shows the whole page | [0049-a-cell-shows-the-whole-page.md](../decisions/0049-a-cell-shows-the-whole-page.md) | Every page in a drawn trial is one cell with a header, panels in a fixed order and a footer of slots, and its connections run between sockets that carry one kind of signal each. |
 | a generated index for a notes application | [obsidian-view.md](../ideas/obsidian-view.md) | Derived data under R11. Nothing is designed beyond the idea. |
+| a theatre knows itself | [0050-a-theatre-knows-itself.md](../decisions/0050-a-theatre-knows-itself.md) | A vault and the settings true only on this machine, in an optional marionette.md outside the history, found from any folder in the vault. |
 | a trial is drawn as it happened | [0043-a-trial-is-drawn-as-it-happened.md](../decisions/0043-a-trial-is-drawn-as-it-happened.md) | A card's recorded draw is published as a graph with steps, read from the vault's own history, and one view draws it, in a browser and as the pictures in the README. |
 | ahead or different with each step | [0033-ahead-or-different-with-each-step.md](../decisions/0033-ahead-or-different-with-each-step.md) | Every step states the difference it makes against other harnesses and how that is shown; parity work waits until a difference depends on it. |
 | arcs | [arcs.md](../ideas/arcs.md) | A primary purpose with branches, each scored by its distance from it. Not yet worked out, and read as direction and drift. |

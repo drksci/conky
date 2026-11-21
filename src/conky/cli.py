@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
 import yaml
 
-from conky import arch, assimilate, cache, connect, demo, export, model, present
+from conky import arch, assimilate, cache, connect, demo, export, model, present, theatre
 from conky.assimilate import INTO
 from conky.errors import BadInput, VerifyFailed
 from conky.page import load_value, serialize
@@ -18,7 +19,11 @@ from conky.vault import Vault
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="conky", description="A vault of living Markdown pages.")
-    parser.add_argument("--vault", default=".", help="vault directory (default: .)")
+    parser.add_argument(
+        "--vault",
+        default=None,
+        help="vault directory (default: the nearest folder at or above this one that is a vault)",
+    )
     parser.add_argument(
         "--keys", default=None, help="private key directory (default: ~/.conky/keys)"
     )
@@ -67,6 +72,7 @@ def _parser() -> argparse.ArgumentParser:
     )
     ask.add_argument("--prompt", required=True)
     ask.add_argument("--as", dest="actor", required=True)
+    sub.add_parser("theatre", help="print the vault and settings this folder runs with, and why")
     sub.add_parser("model", help="print which model an ask without a provider would use")
     store = sub.add_parser("cache", help="show the cache of costly answers, or clear it")
     store.add_argument("action", nargs="?", choices=["clear"], default=None)
@@ -78,7 +84,7 @@ def _parser() -> argparse.ArgumentParser:
     link = sub.add_parser("connect", help="run a connector beside the vault")
     kinds = link.add_subparsers(dest="connector", required=True)
     term = kinds.add_parser("terminal", help="give a vault eyes and hands on a terminal program")
-    term.add_argument("--vault", default=argparse.SUPPRESS, help="vault directory (default: .)")
+    term.add_argument("--vault", default=argparse.SUPPRESS, help="vault directory")
     term.add_argument(
         "--keys", default=argparse.SUPPRESS, help="private key directory (default: ~/.conky/keys)"
     )
@@ -201,20 +207,38 @@ def _run(args: argparse.Namespace, ui: present.Plain, err: present.Plain) -> int
         return assimilate.run(
             args.source, Path(args.into), args.actor, keys, extra, _now, ui, print
         )
+    if args.command == "init":
+        store = cache.Cache.open(args.cache_dir, args.cache_mode)
+        Vault.init(args.path, args.keys, store)
+        print(ui.initialised(args.path))
+        return 0
+    root = Path(args.vault) if args.vault else theatre.find(Path.cwd()) or Path(".")
+    settings = theatre.resolve(root, os.environ, keys=args.keys, cache_dir=args.cache_dir)
+    if args.command == "theatre":
+        for line in settings.lines(os.environ):
+            print(line)
+        return 0
+    with theatre.applied(settings):
+        return _in(args, ui, err, root, settings)
+
+
+def _in(
+    args: argparse.Namespace,
+    ui: present.Plain,
+    err: present.Plain,
+    root: Path,
+    settings: theatre.Theatre,
+) -> int:
     if args.command == "model":
         for line in _model_lines():
             print(line)
         return 0
-    store = cache.Cache.open(args.cache_dir, args.cache_mode)
+    store = cache.Cache.open(settings.cache_dir(), args.cache_mode)
     if args.command == "cache":
         for line in _cache_lines(store, clear=args.action == "clear"):
             print(line)
         return 0
-    if args.command == "init":
-        Vault.init(args.path, args.keys, store)
-        print(ui.initialised(args.path))
-        return 0
-    vault = Vault(Path(args.vault), args.keys, store)
+    vault = Vault(root, settings.keys_dir(), store)
     if args.command == "connect":
         settings = connect.Settings(
             args.actor, args.screen, args.hands, args.settle, args.max_steps, args.first_line

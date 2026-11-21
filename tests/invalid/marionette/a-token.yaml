@@ -1,0 +1,3 @@
+# marionette.md, written wrongly.
+file: "---\ntoken: abc\n---\nNotes.\n"
+refused: "looks like a secret"

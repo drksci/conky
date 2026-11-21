@@ -38,6 +38,11 @@ def _run(
     return proc.stdout
 
 
+def is_repository(path: Path) -> bool:
+    """Return whether path holds a Git repository, which is how a vault is recognised."""
+    return (path / ".git").exists()
+
+
 @arch.step(
     "flow.vault.clone",
     1,

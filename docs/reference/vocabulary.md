@@ -26,6 +26,8 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `event` | A commit: one write or one refusal. |
 | `seal` | The signature on an event. |
 | `space` | A page that other pages lie within, handing down its rules. A space may carry `shows`, which says how many of its members an embedded list shows and in what order. |
+| `theatre` | One distinct conky system, the outermost thing everything in it lives in. Today it is its vault together with `marionette.md`, the settings true only of the machine it is running on. |
+| `marionette.md` | The optional settings file at the root of a vault's folder: Markdown with frontmatter, kept out of the vault's history, never a page. |
 | `error` | A message that says what went wrong and what to do next. |
 
 ## Verbs
@@ -43,6 +45,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `init` | Create an empty vault. |
 | `write` | Write fields and a body to a page. |
 | `ask` | Ask a model and write the answer to a field of a page. |
+| `theatre` | Print the vault and settings this folder runs with, and where each value came from. |
 | `model` | Print which model an ask without a provider would use. |
 | `cache` | Show the cache of costly answers, or clear it. |
 | `read` | Print a page with embeds resolved. |
@@ -58,7 +61,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 
 | Name | Meaning |
 |---|---|
-| `--vault` | The vault directory. |
+| `--vault` | The vault directory, in place of the nearest vault at or above the current folder. |
 | `--keys` | The directory that holds private keys. |
 | `--cache-dir` | The directory that holds the cache. |
 | `--cache-mode` | What the cache may do: `on`, `off`, `refresh` or `only`. |
@@ -86,6 +89,18 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `connect terminal --settle` | Seconds of quiet that end a screen. |
 | `connect terminal --max-steps` | The most screens to write. |
 | `connect terminal --first-line` | Type only the first non-empty line of the keys. |
+
+## Theatre keys
+
+| Name | Meaning |
+|---|---|
+| `name` | The theatre's short name. |
+| `domain` | The domain of the theatre's full name. |
+| `keys` | The private key directory, the same as `--keys`. |
+| `cache` | The cache directory, the same as `--cache-dir`. |
+| `provider` | The provider an ask without one uses, the same as `CONKY_PROVIDER`. |
+| `model` | The model for that provider, the same as `CONKY_MODEL`. |
+| `command` | A mapping of command name to command line, the same as `CONKY_COMMAND_<NAME>`. |
 
 ## Connectors
 

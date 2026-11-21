@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 import conky
-from conky import arch, cache, cli, connect, model, page, present, voice
+from conky import arch, cache, cli, connect, model, page, present, theatre, voice
 from conky.vault import KINDS, Refusal, Trailer
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -136,6 +136,7 @@ def code() -> dict[str, set[str]]:
         "Global options": options(parser),
         "Command options": command_options(),
         "Connectors": set(subparsers(subparsers(parser)["connect"])),
+        "Theatre keys": set(theatre.KEYS),
         "Reserved keys": set(page.RESERVED),
         "Shows keys": set(page.SHOWS_KEYS),
         "Watch keys": set(page.WATCH_KEYS),
