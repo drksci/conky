@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 import stat
 import sys
 from pathlib import Path
@@ -214,3 +215,183 @@ def test_the_verdict_is_met_only_when_every_stated_bar_holds_and_gives_the_numbe
     assert cards.verdict({"draws": 1, "pass": 1, "sent_at_most": 50}, [row(True, 1)]).startswith(
         "success not met"
     )
+
+
+JUDGED = """\
+objective: a character says whether the room is strange, and a judge reads what it said
+hypothesis: the clerk says the room is strange
+success: {draws: 2, pass: 1}
+forecast: the judge says yes in both
+par: {outcome: o, structure: s, cost: c, craft: f}
+dial: none
+if_not: look at what the clerk was shown
+judge: {provider: claude}
+pages:
+  helper: {api: command, command: stand}
+  clock: {}
+  clerk:
+    said: ""
+    watch:
+      - on: clock
+        when: "true"
+        ask: {provider: helper, into: said, prompt: "Describe the room."}
+steps:
+  - says: live
+  - write: {page: clock, fields: {}, body: "seven"}
+  - expect:
+      exists: [clerk]
+      judged:
+        - question: Does the clerk say something in the room is impossible?
+          evidence: [clerk.said, answers]
+          scale: [No, Partly, yes]
+          pass: [partly, yes]
+          note: only for the reader
+"""
+
+
+@pytest.fixture
+def judged(tmp_path: Path, canned: Path) -> Path:
+    """A card with one judged check and a stand-in program that answers the judge from judge.txt."""
+    program = canned.parent / "claude"
+    program.write_text(
+        f"#!{sys.executable}\nimport sys\nprompt = sys.stdin.read()\n"
+        f"open({str(tmp_path / 'seen.txt')!r}, 'a').write(prompt + '\\n=====\\n')\n"
+        f"name = 'judge.txt' if 'Question:' in prompt else 'canned.txt'\n"
+        f"print(open({str(tmp_path)!r} + '/' + name).read())\n"
+    )
+    canned.write_text("The clock shows seven and the oven is on the ceiling.")
+    card = tmp_path / "judged.yaml"
+    card.write_text(JUDGED)
+    return card
+
+
+def judge_says(card: Path, text: str) -> None:
+    (card.parent / "judge.txt").write_text(text)
+
+
+def test_a_judged_check_is_asked_once_and_its_record_says_who_gave_the_verdict(
+    judged: Path, tmp_path: Path
+) -> None:
+    judge_says(judged, "Yes.\nThe oven cannot be on a ceiling.")
+    out = tmp_path / "out"
+    assert cards.main([str(judged), "--draws", "2", "--out", str(out)]) == 0
+    first, second = rows(out)
+    assert (first["calls"], first["judge_calls"]) == (1, 1) and cards.passed(first)
+    (record,) = first["judged"]
+    assert record["question"] == "Does the clerk say something in the room is impossible?"
+    assert record["scale"] == ["no", "partly", "yes"] and record["pass"] == ["partly", "yes"]
+    assert record["step"] == 3 and record["passed"] and record["verdict"] == "yes"
+    assert record["reply"] == "Yes.\nThe oven cannot be on a ceiling."
+    assert record["reason"] == "The oven cannot be on a ceiling."
+    assert record["by"] == {"provider": "claude", "model": "claude"}
+    assert re.fullmatch(r"\d{4}-\d\d-\d\d", record["date"])
+    assert "[clerk.said]\nThe clock shows seven" in record["evidence"]
+    assert "[answers]\nAnswer 1:\nThe clock shows seven" in record["evidence"]
+    assert first["expects"] == [{"step": 3, "failed": []}] and second["judge_calls"] == 1
+    prompts = (tmp_path / "seen.txt").read_text().split("\n=====\n")
+    asked = [p for p in prompts if "Question:" in p]
+    assert len(asked) == 2
+    assert (
+        asked[0].strip()
+        == cards.judge_prompt(record["question"], record["evidence"], record["scale"]).strip()
+    )
+    for hidden in ("hypothesis", "forecast", "only for the reader", "passes"):
+        assert hidden not in asked[0]
+    assert "Scale, from least to most: no, partly, yes" in asked[0]
+
+
+def test_a_failing_verdict_fails_the_draw_and_the_tally_is_kept_with_the_verdict(
+    judged: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    judge_says(judged, "no\nIt only describes the clock.")
+    out = tmp_path / "out"
+    cards.main([str(judged), "--draws", "1", "--out", str(out)])
+    (row,) = rows(out)
+    assert not cards.passed(row) and row["expects"][0]["failed"] == []
+    kept = (out / "verdict.txt").read_text().splitlines()
+    assert kept[0].startswith("success not met") and len(kept) == 2
+    assert kept[1].startswith("judged, Does the clerk say") and "no 1, partly 0, yes 0" in kept[1]
+    assert "no verdict 0" in kept[1] and "by claude claude" in kept[1]
+    cards.main(["--read", str(out)])
+    said = capsys.readouterr().out
+    assert kept[1] in said and "judged no (does not pass): It only describes" in said
+
+
+def test_a_reply_off_the_scale_is_no_verdict_and_does_not_pass(
+    judged: Path, tmp_path: Path
+) -> None:
+    judge_says(judged, "Maybe, it is hard to say.\nNot clear.")
+    out = tmp_path / "out"
+    cards.main([str(judged), "--draws", "1", "--out", str(out)])
+    (row,) = rows(out)
+    (record,) = row["judged"]
+    assert record["verdict"] == "no verdict" and not record["passed"] and not cards.passed(row)
+    assert record["reply"].startswith("Maybe")
+    assert "no verdict 1" in (out / "verdict.txt").read_text()
+
+
+def test_the_verdict_is_the_first_word_lower_cased_and_stripped_of_punctuation() -> None:
+    scale = ["no", "partly", "yes"]
+    assert cards.verdict_of('  "PARTLY": some of it', scale) == "partly"
+    assert cards.verdict_of("Yes, because", scale) == "yes"
+    assert cards.verdict_of("yesterday", scale) == "no verdict"
+    assert cards.verdict_of("", scale) == "no verdict"
+
+
+def test_a_spent_cap_makes_the_judge_no_verdict_and_no_call(judged: Path, tmp_path: Path) -> None:
+    budget = tmp_path / "budget.txt"
+    budget.write_text("0")
+    check = {"question": "q?", "evidence": "answers", "scale": ["no", "yes"], "pass": ["yes"]}
+    vault = Vault.init(tmp_path / "v", tmp_path / "k")
+    (record,) = cards.judge_step([check], 3, vault, [], {}, budget)
+    assert record["reply"] is None and record["verdict"] == "no verdict"
+    assert "cap is spent" in record["reason"]
+    assert record["evidence"] == "[answers]\n(no answers yet)"
+
+
+@pytest.mark.parametrize(
+    ("old", "new", "said"),
+    [
+        (
+            "question: Does the clerk say something in the room is impossible?",
+            "question: ''",
+            "question: write the question",
+        ),
+        ("evidence: [clerk.said, answers]", "evidence: [the clerk]", "evidence: name"),
+        ("scale: [No, Partly, yes]", "scale: [yes]", "scale: write at least two"),
+        ("scale: [No, Partly, yes]", "scale: [no, no, yes]", "scale: write at least two"),
+        ("pass: [partly, yes]", "pass: [maybe]", "pass: write the words of the scale"),
+        ("pass: [partly, yes]", "pass: [yes]\n          pace: 1", "pace: not a key"),
+        ("judge: {provider: claude}", "judge: {provider: gpt}", "judge provider: use one of"),
+        (
+            "judge: {provider: claude}",
+            "judge: {provider: codex, model: x}",
+            "judge model: a command",
+        ),
+    ],
+)
+def test_a_card_with_a_malformed_judged_check_is_refused_before_any_draw(
+    judged: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str], old: str, new: str, said: str
+) -> None:
+    judged.write_text(JUDGED.replace(old, new))
+    out = tmp_path / "out"
+    assert cards.main([str(judged), "--draws", "1", "--out", str(out)]) == 1
+    assert said in capsys.readouterr().out and not out.exists()
+
+
+def test_judge_calls_are_in_the_cap_arithmetic_and_reported(
+    judged: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    judge_says(judged, "yes\nFine.")
+    out = tmp_path / "out"
+    assert cards.main([str(judged), "--draws", "2", "--out", str(out), "--cap", "5"]) == 1
+    assert "2 x 3 = 6 calls" in capsys.readouterr().out
+    assert cards.main([str(judged), "--draws", "2", "--out", str(out), "--cap", "6"]) == 0
+    said = capsys.readouterr().out
+    assert "1 judge calls" in said and "1 of 1 judged checks passed" in said
+    assert (out / "budget.txt").read_text() == "2"  # 2 draws x (1 ask + 1 judge) of 6 spent
+
+
+def test_a_playbook_test_never_reaches_a_judge(judged: Path, vault: Vault, tmp_path: Path) -> None:
+    with pytest.raises(playbook.Failed, match="run this file as a card"):
+        playbook.run(judged, vault, Stand(tmp_path / "stand"))

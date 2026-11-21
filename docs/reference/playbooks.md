@@ -71,6 +71,38 @@ A card is a playbook with `says: live` steps, which a real model answers, drawn 
 | `dial` | The notch this card sets and what the next notch would be. |
 | `if_not` | What a miss would point at: the lower layer to look at first. |
 
+### Judged checks
+
+Some questions a pattern cannot answer, such as whether a resident noticed something impossible. An `expect` step may carry `judged`, a list of checks that a judge model answers instead. Each check is a mapping:
+
+| Key | Meaning |
+|---|---|
+| `question` | The question, in plain words, answerable from the evidence alone. |
+| `evidence` | What the judge is shown: one name or a list. `PAGE.FIELD` is a field's value, `PAGE` is a page's body, and `answers` is the live answers of this draw so far, in order. A page that does not exist is shown as such. |
+| `scale` | The allowed verdict words, in order, at least two different single words. They are compared in lower case. |
+| `pass` | The words of the scale that count as passing. |
+| `note` | Optional words for the reader. The judge is never shown it. |
+
+The judge is named once for the card, `judge: {provider: claude}` at the top level, or by the runner with `--judge PROVIDER` and `--judge-model MODEL`, which win over the card. The provider is one of `anthropic`, `openai`, `claude` and `codex`, found by the same detection the draws use, and `model` is honoured by an API key only, as a command takes its model from its program. With no judge named, the judge is the first model detection finds, which is the one the draws use. A card with a malformed check, or a malformed `judge`, is refused before any draw with a line saying what to write.
+
+The judge is asked once for each check in each draw, when its `expect` step is reached, with the fixed prompt in `bench/judge.md`. That prompt carries the question, the evidence and the scale, asks for one word of the scale on the first line and one sentence of reason on the second, and holds nothing else: not the hypothesis, the forecast, the words that pass, nor which answer is hoped for. The verdict is the first word of the reply, lower-cased and stripped of punctuation. A reply whose first word is not on the scale, a failed call and a spent cap are each recorded as `no verdict`, which does not pass. There is no retry. A draw passes when its measured expects held and every judged check got a passing verdict.
+
+A judged check is recorded in the draw's row under `judged`, one entry each: `step`, `question`, `evidence` (the text the judge was shown), `scale`, `pass`, `reply` (the raw reply, none when no call was made), `verdict`, `reason`, `by` (`provider` and `model` of the judge) and `date`, and `passed`. `judge_calls` counts the calls the judge made. They are counted apart from `calls`, which is about the characters, and they are spent from the same `--cap`: the arithmetic that refuses an impossible run adds one call a judged check to each draw. The verdict file keeps its first line and adds one line a judged check, marked as judged, with the count of each verdict, and `--read` prints the same lines, so measured and judged checks are never read as one. The board of trials names each card's checks as measured, judged or both and gives the question and the tally for the judged ones.
+
+A worked example:
+
+```yaml
+judge: {provider: claude}
+steps:
+  - expect:
+      exists: [robbie]
+      judged:
+        - question: Does the resident say that something in the kitchen cannot be real?
+          evidence: [robbie.said]
+          scale: [no, partly, yes]
+          pass: [partly, yes]
+```
+
 A drawn card is published with `python -m bench.dynamics RUN_DIR` ([decision 0043](../decisions/0043-a-trial-is-drawn-as-it-happened.md)). It writes `docs/results/cards/<card>/`: the rows (without the vault paths), the observations, the verdict, `timeline.json` (each draw's vault history as plain events, read by `bench/timeline.py`), `run.json`, and `graph.json`, the lowest-numbered draw that passed as nodes, rows, edges and steps. When Node 20 or later is installed and `npm ci` has been run in `viewer/`, it then draws the pictures with the view: `dynamics-light.webp` and `dynamics-dark.webp` (the steps) and `topology-light.png` and `topology-dark.png` (the final state). Without them, `graph.json` is written, the pictures are left alone and the command says what to run. `python -m bench.dynamics --redraw` describes and draws every published card again. The command then rewrites the board `docs/research/trials.md` and the Dynamics block of the README from what is published.
 
 To step through a trial in a browser, run `npm run build` and `npm run view` in `viewer/` and open the address it prints; `?mode=topology` shows the final state, `?step=N` a step, `?theme=dark` the dark look. The page also opens from disk and asks for a `graph.json`. `npm test` there runs the view's smoke test, and `scripts/check` runs it too when `viewer/node_modules` exists.
@@ -108,12 +140,13 @@ The runner draws no charts. It prints the seven statements before drawing, one l
 | `card`, `draw` | The card's name and the draw's number. |
 | `objective`, `hypothesis`, `success`, `forecast`, `par`, `dial`, `if_not` | The card's statements, in the first row only. |
 | `model` | The names of the models that answered live steps. |
-| `expects` | One entry a `expect` step: `step` (its number) and `failed` (the lines that did not hold, empty when it held). |
+| `expects` | One entry a `expect` step: `step` (its number) and `failed` (the lines that did not hold, empty when it held). Judged checks are not in it. |
+| `judged`, `judge_calls` | Present only for a card with judged checks: the records and the number of judge calls, as above. |
 | `calls`, `sent`, `received`, `seconds` | Live calls, characters sent and received, and the draw's time. |
 | `vault` | The folder of the draw's vault, kept for later reports. |
 | `error` | Present when the draw stopped early, with why. |
 
-A draw passes when every `expect` held and it reached its end.
+A draw passes when every measured `expect` held, every judged check got a passing verdict, and it reached its end.
 
 The verdict line is `success met` or `success not met`, then the numbers against each bar, for example `success met: passed 4 of 5 (bar: at least 4 of 5); median calls a draw 4 (bar: at most 4)`. It is not met when fewer draws were made than the bar states. The runner prints it, records it in `verdict.txt` beside the rows, and still exits 0 once it has drawn: a verdict is a result, not an error.
 

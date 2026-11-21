@@ -11,6 +11,10 @@ to `rows.jsonl` and one line of what the draw did, read from its vault, to `obse
 `--read` prints a plain summary of the two. A card must state itself before it runs (objective,
 hypothesis, success, forecast, par, dial, if_not) or the runner refuses it; after the draws it
 prints and records one verdict line against the stated success.
+
+An `expect` step may carry `judged` checks (docs/reference/playbooks.md#judged-checks): each names
+its question, its evidence and its scale, and a judge is asked once for each in each draw, with
+the fixed prompt in `judge.md`. The reply, the verdict and who gave it are kept in the row.
 """
 
 from __future__ import annotations
@@ -19,12 +23,14 @@ import argparse
 import fcntl
 import json
 import os
+import re
 import shlex
 import statistics
 import subprocess
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from dataclasses import replace
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -49,6 +55,10 @@ OBSERVATIONS = "observations.jsonl"
 VERDICT = "verdict.txt"
 STATEMENTS = ("objective", "hypothesis", "success", "forecast", "par", "dial", "if_not")
 PAR = ("outcome", "structure", "cost", "craft")
+JUDGE_PROMPT = Path(__file__).with_name("judge.md")
+JUDGE_KEYS = ("question", "evidence", "scale", "pass", "note")
+NO_VERDICT = "no verdict"
+REASON = 300
 BARS = {"draws": None, "pass": None, "calls_at_most": "calls", "sent_at_most": "sent"}
 
 
@@ -107,6 +117,7 @@ def _keep(folder: Path, live: bool, name: str, sent: str, received: str, seconds
     row = {"live": live, "model": name, "sent": len(sent), "received": len(received)}
     row["seconds"] = round(seconds, 3)
     row["head"] = received.strip()[:HEAD]
+    row["text"] = received.strip()
     with (folder / CALLS).open("a", encoding="utf-8") as log:
         log.write(json.dumps(row) + "\n")
 
@@ -117,10 +128,13 @@ def calls(folder: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text().splitlines()] if path.exists() else []
 
 
-def draw(card: Path, number: int, folder: Path, budget: Path) -> tuple[dict, dict]:
+def draw(
+    card: Path, number: int, folder: Path, budget: Path, judge: dict | None = None
+) -> tuple[dict, dict]:
     """Play the card once in a fresh vault under folder and return its row and observation.
 
-    Live calls are taken from the shared count at budget.
+    Live calls are taken from the shared count at budget, the judge's too. A judge named in
+    `judge` (`provider`, `model`) is used in place of the card's own.
     """
     folder.mkdir(parents=True)
     stand = Stand(folder / "stand")
@@ -130,15 +144,24 @@ def draw(card: Path, number: int, folder: Path, budget: Path) -> tuple[dict, dic
         f"{shlex.quote(str(stand.folder))} {shlex.quote(str(budget))}"
     )
     expects: list[dict] = []
+    judged: list[dict] = []
+    plan = load_value(card.read_text(encoding="utf-8"))
+    who = {**plan.get("judge", {}), **(judge or {})}
     error = None
     saved = os.environ.get("CONKY_COMMAND_STAND")
     os.environ["CONKY_COMMAND_STAND"] = command
     started = time.monotonic()
     try:
         vault = Vault.init(folder / "vault", folder / "keys", Cache(folder / "cache", Mode.OFF))
-        playbook.run(
-            card, vault, stand, lambda step, lines: expects.append({"step": step, "failed": lines})
-        )
+
+        def found(step: int, lines: list[str]) -> None:
+            expects.append({"step": step, "failed": lines})
+            checks = plan["steps"][step - 1]["expect"].get("judged", [])
+            if checks:
+                seen = [c["text"] for c in calls(stand.folder) if c["live"]]
+                judged.extend(judge_step(checks, step, vault, seen, who, budget))
+
+        playbook.run(card, vault, stand, found)
     except (AssertionError, model.ModelError, KeyError, ValueError) as exc:
         error = f"{type(exc).__name__}: {exc}"
     finally:
@@ -157,9 +180,122 @@ def draw(card: Path, number: int, folder: Path, budget: Path) -> tuple[dict, dic
         "seconds": round(time.monotonic() - started, 3),
         "vault": str(folder / "vault"),
     }
+    if judged:
+        row["judged"] = judged
+        row["judge_calls"] = sum(1 for j in judged if j["reply"] is not None)
     if error:
         row["error"] = error
     return row, observe(card, number, folder / "vault", [c["head"] for c in made])
+
+
+def evidence_text(items: list[str], vault: Vault, answers: list[str]) -> str:
+    """Return the evidence a judge is shown: each item under its own label, in the order named.
+
+    `answers` is the live answers of the draw so far, in order; `PAGE.FIELD` is a field's value;
+    `PAGE` is a page's body.
+    """
+    parts = []
+    for item in items:
+        if item == "answers":
+            body = "\n\n".join(f"Answer {n}:\n{t}" for n, t in enumerate(answers, 1))
+            parts.append(f"[answers]\n{body or '(no answers yet)'}")
+            continue
+        page, _, field = item.partition(".")
+        if not (vault.pages_dir / f"{page}.md").exists():
+            parts.append(f"[{item}]\n(there is no page {page})")
+            continue
+        found = vault.read(page)
+        value = found.fields.get(field) if field else found.body
+        text = "" if value is None else str(value).strip()
+        parts.append(f"[{item}]\n{text or '(empty)'}")
+    return "\n\n".join(parts)
+
+
+def judge_prompt(question: str, evidence: str, scale: list[str]) -> str:
+    """Return the fixed prompt in judge.md with the question, the evidence and the scale in it."""
+    given = {"question": question, "evidence": evidence, "scale": ", ".join(scale)}
+    text = JUDGE_PROMPT.read_text(encoding="utf-8")
+    return re.sub(r"\{\{(question|evidence|scale)\}\}", lambda m: given[m[1]], text)
+
+
+def verdict_of(reply: str, scale: list[str]) -> str:
+    """Return the first word of the reply, lower-cased and stripped of punctuation, when it is on
+    the scale, else `no verdict`."""
+    words = reply.split()
+    word = re.sub(r"^\W+|\W+$", "", words[0]).lower() if words else ""
+    return word if word in scale else NO_VERDICT
+
+
+def kind_of(choice: model.Choice) -> str:
+    """Return the name a provider is chosen by: the program of a command, else its wire format."""
+    return choice.provider.command or choice.provider.api
+
+
+def pick_judge(who: dict) -> tuple[model.Choice | None, str]:
+    """Return the model that judges, or None with why: the provider named in who, else the first
+    detection finds, which is the one the draws use. A `model` in who is honoured by an API key."""
+    found = model.detect()
+    wanted = who.get("provider")
+    pool = [c for c in found.choices if wanted in (None, kind_of(c))]
+    if not pool:
+        why = "; ".join(found.notes) or "no model was detected"
+        named = f"the judge {wanted} is not available" if wanted else "no model was detected"
+        return None, f"{named} ({why}): see `conky model` for what to set up"
+    choice = pool[0]
+    if who.get("model") and not choice.provider.command:
+        choice = replace(choice, provider=replace(choice.provider, model=who["model"]))
+    return choice, ""
+
+
+def judge_step(
+    checks: list[dict], step: int, vault: Vault, answers: list[str], who: dict, budget: Path
+) -> list[dict]:
+    """Ask the judge once for each check of an expect step and return one record each.
+
+    A record keeps the question, the evidence given, the scale, the words that pass, the raw reply
+    (None when no call was made), the verdict, the reason, who gave it, the date, and whether it
+    passed. There is no retry: a reply off the scale, a failed call or a spent cap is `no verdict`.
+    """
+    choice, note = pick_judge(who)
+    made = []
+    for check in checks:
+        scale = [w.strip().lower() for w in check["scale"]]
+        shown = evidence_text(_items(check["evidence"]), vault, answers)
+        record: dict = {
+            "step": step,
+            "question": check["question"],
+            "evidence": shown,
+            "scale": scale,
+            "pass": [w.strip().lower() for w in check["pass"]],
+            "reply": None,
+            "verdict": NO_VERDICT,
+            "reason": note,
+            "by": {"provider": kind_of(choice) if choice else "none", "model": ""},
+            "date": datetime.now(UTC).date().isoformat(),
+        }
+        if choice and not _spend(budget):
+            record["reason"] = "the card's call cap is spent: raise --cap or draw fewer times"
+        elif choice:
+            record["by"]["model"] = choice.provider.name
+            prompt = judge_prompt(check["question"], shown, scale)
+            try:
+                reply = model.ask(
+                    choice.provider, choice.secret, prompt, Path.home() / ".conky" / "keys"
+                ).text
+            except model.ModelError as exc:
+                record["reply"], record["reason"] = "", trim(exc, REASON)
+            else:
+                first, _, rest = reply.strip().partition("\n")
+                record["reply"] = reply
+                record["verdict"] = verdict_of(reply, scale)
+                record["reason"] = trim(rest or first.partition(" ")[2], REASON)
+        record["passed"] = record["verdict"] in record["pass"]
+        made.append(record)
+    return made
+
+
+def _items(evidence: object) -> list:
+    return [evidence] if isinstance(evidence, str) else list(evidence)
 
 
 def observe(card: Path, number: int, vault: Path, answers: list[str]) -> dict:
@@ -187,8 +323,13 @@ def observe(card: Path, number: int, vault: Path, answers: list[str]) -> dict:
 
 
 def passed(row: dict) -> bool:
-    """Return whether every expect step of a draw held and the run reached its end."""
-    return "error" not in row and not any(e["failed"] for e in row["expects"])
+    """Return whether every measured expect held, every judged check got a passing verdict, and
+    the run reached its end."""
+    return (
+        "error" not in row
+        and not any(e["failed"] for e in row["expects"])
+        and all(j["passed"] for j in row.get("judged", []))
+    )
 
 
 def lines(path: Path) -> list[dict]:
@@ -234,6 +375,62 @@ def missing(plan: dict) -> list[str]:
             found.append("success pass: cannot be more than success draws")
     elif "success" in plan:
         found.append("success: write `{draws: N, pass: K}` so the bar is data")
+    return found + malformed_judged(plan)
+
+
+def malformed_judged(plan: dict) -> list[str]:
+    """Return what is wrong with the card's `judge` and `judged` checks, each as a line saying
+    what to write."""
+    found = []
+    judge = plan.get("judge")
+    if judge is not None:
+        kinds = [c for c in model.CHOICES if c != "none"]
+        if not isinstance(judge, dict) or not set(judge) <= {"provider", "model"}:
+            found.append("judge: write `{provider: NAME, model: NAME}`, both optional")
+        else:
+            if "provider" in judge and judge["provider"] not in kinds:
+                found.append(f"judge provider: use one of {', '.join(kinds)}")
+            if "model" in judge and judge.get("provider") in ("claude", "codex"):
+                found.append("judge model: a command provider takes its model from its program")
+    for number, step in enumerate(plan.get("steps", []), start=1):
+        checks = step.get("expect", {}).get("judged") if isinstance(step, dict) else None
+        if checks is None:
+            continue
+        if not isinstance(checks, list) or not checks:
+            found.append(f"step {number} judged: write a list of checks")
+            continue
+        for at, check in enumerate(checks, start=1):
+            found += [f"step {number} judged check {at} {line}" for line in malformed(check)]
+    return found
+
+
+def one_word(value: object) -> bool:
+    return isinstance(value, str) and len(value.split()) == 1
+
+
+def malformed(check: object) -> list[str]:
+    """Return what is wrong with one judged check, each as a line saying what to write."""
+    if not isinstance(check, dict):
+        return [f"write a mapping with {', '.join(JUDGE_KEYS[:4])}"]
+    found = [f"{k}: not a key of a judged check, use {', '.join(JUDGE_KEYS)}" for k in check
+             if k not in JUDGE_KEYS]  # fmt: skip
+    question = check.get("question")
+    if not isinstance(question, str) or not question.strip():
+        found.append("question: write the question in plain words")
+    evidence = check.get("evidence")
+    items = _items(evidence) if isinstance(evidence, (str, list)) else []
+    if not items or not all(map(one_word, items)):
+        found.append("evidence: name `answers`, `PAGE` or `PAGE.FIELD`, one or a list of them")
+    scale = check.get("scale")
+    names = [w.strip().lower() for w in scale] if isinstance(scale, list) else []
+    if len(names) < 2 or not all(map(one_word, names)) or len(set(names)) != len(names):
+        found.append("scale: write at least two different single words in order, [no, partly, yes]")
+    ok = check.get("pass")
+    passing = [w.strip().lower() for w in ok] if isinstance(ok, list) else []
+    if not passing or not set(passing) <= set(names):
+        found.append("pass: write the words of the scale that count as passing")
+    if "note" in check and not isinstance(check["note"], str):
+        found.append("note: write plain words")
     return found
 
 
@@ -265,6 +462,41 @@ def verdict(bar: dict, rows: list[dict]) -> str:
     return f"success {'met' if held else 'not met'}: " + "; ".join(parts)
 
 
+def tally(rows: list[dict]) -> list[dict]:
+    """Return, for each judged check, its question, scale, passing words, the count of each verdict
+    (the scale's words in order, then `no verdict`) and who judged, from every row."""
+    found: dict[tuple, dict] = {}
+    for row in rows:
+        for j in row.get("judged", []):
+            one = found.setdefault(
+                (j["step"], j["question"]),
+                {
+                    "step": j["step"],
+                    "question": j["question"],
+                    "scale": j["scale"],
+                    "pass": j["pass"],
+                    "counts": dict.fromkeys([*j["scale"], NO_VERDICT], 0),
+                    "by": [],
+                },
+            )
+            one["counts"][j["verdict"]] += 1
+            who = f"{j['by']['provider']} {j['by']['model']}".strip()
+            if who not in one["by"]:
+                one["by"].append(who)
+    return list(found.values())
+
+
+def tally_lines(rows: list[dict]) -> list[str]:
+    """Return one line a judged check: marked as judged, with the tally of verdicts and who gave
+    them."""
+    return [
+        f"judged, {trim(t['question'], 160)}: "
+        + ", ".join(f"{word} {n}" for word, n in t["counts"].items())
+        + f" (passes: {', '.join(t['pass'])}; by {', '.join(t['by'])})"
+        for t in tally(rows)
+    ]
+
+
 def read(out: Path) -> int:
     """Print a plain summary of a run from its rows and observations."""
     rows = lines(out / ROWS)
@@ -276,6 +508,9 @@ def read(out: Path) -> int:
     print(f"passed {sum(map(passed, rows))} of {len(rows)}")
     if isinstance(rows[0].get("success"), dict):
         print(verdict(rows[0]["success"], rows))
+    for line in tally_lines(rows):
+        print(line)
+
     for row in rows:
         did = seen.get(row["draw"], {})
         parts = [
@@ -284,6 +519,13 @@ def read(out: Path) -> int:
             for rule in rules
         ]
         parts += [f"refused {r['page']}: {trim(r['reason'])}" for r in did.get("refusals", [])]
+        parts += [
+            f"judged {j['verdict']} ({'passes' if j['passed'] else 'does not pass'}): "
+            f"{trim(j['reason'], 70)}"
+            for j in row.get("judged", [])
+        ]
+        if "judge_calls" in row:
+            parts.append(f"{row['judge_calls']} judge calls")
         if "error" in row:
             parts.append(trim(row["error"]))
         print(f"draw {row['draw']}: {'passed' if passed(row) else 'failed'}; " + "; ".join(parts))
@@ -293,14 +535,21 @@ def read(out: Path) -> int:
 def worst(plan: dict, draws: int, cap: int) -> str | None:
     """Return why the draws could pass the cap in the worst case, or None when they cannot."""
     asks = max(sum(1 for step in plan["steps"] if step.get("says") == playbook.LIVE), 1)
-    each = asks * ASKS
+    judging = judge_calls(plan)
+    each = asks * ASKS + judging
     if draws * each <= cap:
         return None
+    extra = f" + {judging} judge calls, one for each judged check" if judging else ""
     return (
         f"{draws} draws may take up to {draws} x {each} = {draws * each} calls "
-        f"({asks} live steps x {ASKS} asks, as an answer a rule refuses is asked "
+        f"({asks} live steps x {ASKS} asks{extra}, as an answer a rule refuses is asked "
         f"again once) and the cap is {cap}: raise --cap to {draws * each} or draw fewer times"
     )
+
+
+def judge_calls(plan: dict) -> int:
+    """Return the judge calls a draw makes: one for each judged check, with no retry."""
+    return sum(len(step.get("expect", {}).get("judged", [])) for step in plan["steps"])
 
 
 def main(argv: list[str]) -> int:
@@ -325,6 +574,14 @@ def main(argv: list[str]) -> int:
     ask.add_argument(
         "--out", type=Path, default=None, help="default ~/.conky/runs/cards/<card>-<time>"
     )
+    ask.add_argument(
+        "--judge",
+        default=None,
+        metavar="PROVIDER",
+        help="the provider that judges judged checks, over the card's own: "
+        + ", ".join(c for c in model.CHOICES if c != "none"),
+    )
+    ask.add_argument("--judge-model", default=None, help="the judge's model, for an API key")
     ask.add_argument("--cap", type=int, default=DEFAULT_CAP, help="most live model calls in all")
     args = ask.parse_args(argv)
     if args.read:
@@ -333,7 +590,9 @@ def main(argv: list[str]) -> int:
         ask.error("draw a card with CARD.yaml and --draws N, or read a run with --read DIR")
     plan = load_value(args.card.read_text(encoding="utf-8"))
     stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
-    lacks = missing(plan)
+    over = {"provider": args.judge, "model": args.judge_model}
+    over = {k: v for k, v in over.items() if v}
+    lacks = missing({**plan, "judge": {**plan.get("judge", {}), **over}} if over else plan)
     if lacks:
         print(f"refused: {args.card.name} does not state itself before it runs:")
         print("\n".join(f"  {line}" for line in lacks))
@@ -353,16 +612,21 @@ def main(argv: list[str]) -> int:
     done: dict[int, tuple[dict, dict]] = {}
     with ProcessPoolExecutor(max_workers=jobs) as pool:
         waiting = [
-            pool.submit(draw, args.card, n, out / f"draw-{n}", out / BUDGET)
+            pool.submit(draw, args.card, n, out / f"draw-{n}", out / BUDGET, over)
             for n in range(1, args.draws + 1)
         ]
         for future in as_completed(waiting):
             row, seen = future.result()
             done[row["draw"]] = (row, seen)
             held = sum(not e["failed"] for e in row["expects"])
+            cost = f"{row['calls']} calls"
+            if "judged" in row:
+                cost += f", {row['judge_calls']} judge calls"
+                held_j = sum(j["passed"] for j in row["judged"])
+                cost = f"{held_j} of {len(row['judged'])} judged checks passed, " + cost
             print(
                 f"draw {row['draw']}: {'passed' if passed(row) else 'failed'}, {held} of "
-                f"{len(row['expects'])} expects held, {row['calls']} calls, {row['seconds']}s",
+                f"{len(row['expects'])} expects held, {cost}, {row['seconds']}s",
                 flush=True,
             )
     with (out / ROWS).open("a", encoding="utf-8") as log:
@@ -377,9 +641,11 @@ def main(argv: list[str]) -> int:
     if int((out / BUDGET).read_text(encoding="utf-8")) <= 0:
         print(f"the cap of {args.cap} calls is spent: later calls were refused")
     print(f"passed {wins} of {drawn}")
-    line = verdict(plan["success"], [done[n][0] for n in sorted(done)])
-    (out / VERDICT).write_text(line + "\n", encoding="utf-8")
-    print(line)
+    made = [done[n][0] for n in sorted(done)]
+    line = verdict(plan["success"], made)
+    kept = [line, *tally_lines(made)]
+    (out / VERDICT).write_text("\n".join(kept) + "\n", encoding="utf-8")
+    print("\n".join(kept))
     return 0
 
 

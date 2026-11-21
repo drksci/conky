@@ -18,6 +18,7 @@ The animation under a card is drawn from one draw's vault history by the view in
 
 - Objective: a character finds what bears on a question that is put in other words, because the things spoken of have pages that say what they are known as
 - Bar: at least 4 of 5 draws pass, median calls a draw at most 2
+- Checks: measured
 - Latest verdict: met
 - Run: 5 draws, 5 passed, model `claude`, 2026-11-21, code at `760ff43`
 - Data: [rows](../results/cards/a-clerk-finds-it-by-its-terms/rows.jsonl), [what each draw left](../results/cards/a-clerk-finds-it-by-its-terms/observations.jsonl), [its history](../results/cards/a-clerk-finds-it-by-its-terms/timeline.json), [the graph drawn](../results/cards/a-clerk-finds-it-by-its-terms/graph.json)
@@ -29,6 +30,7 @@ The animation under a card is drawn from one draw's vault history by the view in
 
 - Objective: a character remembers across fresh calls without being told how, because a sense beside it keeps what matters in the character's own words
 - Bar: at least 4 of 5 draws pass, median calls a draw at most 8
+- Checks: measured
 - Latest verdict: not drawn
 - Run: none yet
 
@@ -36,6 +38,7 @@ The animation under a card is drawn from one draw's vault history by the view in
 
 - Objective: a character with more on record than it can be shown still answers from the record, because its space shows what bears on the matter first
 - Bar: at least 4 of 5 draws pass, median calls a draw at most 2
+- Checks: measured
 - Latest verdict: met
 - Run: 5 draws, 5 passed, model `claude`, 2026-11-20, code at `1fee3c31d9`
 - Data: [rows](../results/cards/a-clerk-reads-a-crowded-desk/rows.jsonl), [what each draw left](../results/cards/a-clerk-reads-a-crowded-desk/observations.jsonl), [its history](../results/cards/a-clerk-reads-a-crowded-desk/timeline.json), [the graph drawn](../results/cards/a-clerk-reads-a-crowded-desk/graph.json)
@@ -47,6 +50,7 @@ The animation under a card is drawn from one draw's vault history by the view in
 
 - Objective: a character answers from what is already on record, with no memory kept and no model deciding what to store
 - Bar: at least 5 of 5 draws pass, median calls a draw at most 4
+- Checks: measured
 - Latest verdict: met
 - Run: 5 draws, 5 passed, model `claude`, 2026-11-20, code at `1fee3c31d9`
 - Data: [rows](../results/cards/a-clerk-reads-its-desk/rows.jsonl), [what each draw left](../results/cards/a-clerk-reads-its-desk/observations.jsonl), [its history](../results/cards/a-clerk-reads-its-desk/timeline.json), [the graph drawn](../results/cards/a-clerk-reads-its-desk/graph.json)
@@ -58,6 +62,7 @@ The animation under a card is drawn from one draw's vault history by the view in
 
 - Objective: a fact shown once is carried across fresh model calls by what the character puts in bold, with no memory kept but one field a reflex fills
 - Bar: at least 3 of 5 draws pass, median calls a draw at most 4
+- Checks: measured
 - Latest verdict: not drawn
 - Run: none yet
 
@@ -65,6 +70,7 @@ The animation under a card is drawn from one draw's vault history by the view in
 
 - Objective: one character changes another's surroundings unseen, and the other notices and says so, with each acting only by writing pages
 - Bar: at least 4 of 5 draws pass, median calls a draw at most 6
+- Checks: measured
 - Latest verdict: not met
 - Run: 5 draws, 1 passed, model `claude`, 2026-11-21, code at `4ddbd94`
 - Data: [rows](../results/cards/a-house-with-a-hidden-hand/rows.jsonl), [what each draw left](../results/cards/a-house-with-a-hidden-hand/observations.jsonl), [its history](../results/cards/a-house-with-a-hidden-hand/timeline.json), [the graph drawn](../results/cards/a-house-with-a-hidden-hand/graph.json)
@@ -76,6 +82,7 @@ The animation under a card is drawn from one draw's vault history by the view in
 
 - Objective: a character states a standing limit on the space it works in, and that limit refuses a payment that breaks it
 - Bar: at least 4 of 5 draws pass
+- Checks: measured
 - Latest verdict: met
 - Run: 5 draws, 4 passed, model `claude`, 2026-11-20, code at `1fee3c31d9`
 - Data: [rows](../results/cards/a-keeper-binds-itself/rows.jsonl), [what each draw left](../results/cards/a-keeper-binds-itself/observations.jsonl), [its history](../results/cards/a-keeper-binds-itself/timeline.json), [the graph drawn](../results/cards/a-keeper-binds-itself/graph.json)
@@ -87,6 +94,7 @@ The animation under a card is drawn from one draw's vault history by the view in
 
 - Objective: a character makes its own space listen for refusals, so that what is turned away is counted with no further thought
 - Bar: at least 3 of 5 draws pass, median calls a draw at most 2
+- Checks: measured
 - Latest verdict: met
 - Run: 5 draws, 4 passed, model `claude`, 2026-11-20, code at `1fee3c31d9`
 - Data: [rows](../results/cards/a-keeper-hears-the-no/rows.jsonl), [what each draw left](../results/cards/a-keeper-hears-the-no/observations.jsonl), [its history](../results/cards/a-keeper-hears-the-no/timeline.json), [the graph drawn](../results/cards/a-keeper-hears-the-no/graph.json)
@@ -98,6 +106,7 @@ The animation under a card is drawn from one draw's vault history by the view in
 
 - Objective: joining a space changes what a character is told and so what it does, and leaving the space takes that away, with nothing copied into the character
 - Bar: at least 4 of 5 draws pass, median calls a draw at most 2
+- Checks: measured
 - Latest verdict: met
 - Run: 5 draws, 5 passed, model `claude`, 2026-11-21, code at `fc40432`
 - Data: [rows](../results/cards/a-keeper-on-the-night-shift/rows.jsonl), [what each draw left](../results/cards/a-keeper-on-the-night-shift/observations.jsonl), [its history](../results/cards/a-keeper-on-the-night-shift/timeline.json), [the graph drawn](../results/cards/a-keeper-on-the-night-shift/graph.json)
@@ -109,6 +118,7 @@ The animation under a card is drawn from one draw's vault history by the view in
 
 - Objective: a character notices when its surroundings change in ways that cannot be, and says so in its own words, while carrying on
 - Bar: at least 4 of 5 draws pass, median calls a draw at most 3
+- Checks: measured
 - Latest verdict: met
 - Run: 5 draws, 4 passed, model `claude`, 2026-11-21, code at `bfbcfd5`
 - Data: [rows](../results/cards/a-resident-notices-the-ovens/rows.jsonl), [what each draw left](../results/cards/a-resident-notices-the-ovens/observations.jsonl), [its history](../results/cards/a-resident-notices-the-ovens/timeline.json), [the graph drawn](../results/cards/a-resident-notices-the-ovens/graph.json)

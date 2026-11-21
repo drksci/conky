@@ -35,7 +35,7 @@ from datetime import UTC, datetime
 from importlib import resources
 from pathlib import Path
 
-from bench.cards import OBSERVATIONS, ROWS, VERDICT, lines, passed
+from bench.cards import OBSERVATIONS, ROWS, VERDICT, lines, passed, tally
 from bench.expression import lines as expression_lines
 from bench.timeline import timeline
 from conky.page import Page, load_value, parse
@@ -981,13 +981,15 @@ def cards(root: Path) -> list[dict]:
         info = (
             json.loads((folder / "run.json").read_text()) if (folder / "run.json").exists() else {}
         )
-        line = (folder / VERDICT).read_text(encoding="utf-8").strip() if info else ""
+        line = (folder / VERDICT).read_text(encoding="utf-8").splitlines()[0] if info else ""
+        rows = lines(folder / ROWS) if info else []
         found.append(
             {
                 "name": path.stem,
                 "plan": plan,
                 "info": info,
                 "line": line,
+                "tally": tally(rows),
                 "verdict": "not drawn" if not info else "not met" if "not met" in line else "met",
             }
         )
@@ -1003,6 +1005,23 @@ def bar(success: dict) -> str:
         if key in success:
             text += f", {words} {success[key]}"
     return text
+
+
+def kinds(plan: dict) -> str:
+    """Say whether a card's checks are measured, judged or both."""
+    expects = [s["expect"] for s in plan["steps"] if "expect" in s]
+    judged = any("judged" in e for e in expects)
+    measured = any(set(e) - {"judged"} for e in expects)
+    return "measured and judged" if judged and measured else "judged" if judged else "measured"
+
+
+def judged_line(t: dict) -> str:
+    """One judged check as the board says it: the question, the scale and the verdicts so far."""
+    counts = ", ".join(f"{word} {n}" for word, n in t["counts"].items())
+    return (
+        f"- Judged: {t['question']} Scale {', '.join(t['scale'])}; passes on "
+        f"{', '.join(t['pass'])}. Verdicts by {', '.join(t['by'])}: {counts}"
+    )
 
 
 def picture(name: str, base: str, info: dict, what: str = "dynamics") -> str:
@@ -1064,8 +1083,10 @@ def board(root: Path) -> str:
             "",
             f"- Objective: {plan['objective']}",
             f"- Bar: {bar(plan['success'])}",
+            f"- Checks: {kinds(plan)}",
             f"- Latest verdict: {c['verdict']}",
         ]
+        parts += [judged_line(t) for t in c["tally"]]
         if info:
             parts += [
                 f"- Run: {info['draws']} draws, {info['passed']} passed, model "

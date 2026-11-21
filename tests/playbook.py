@@ -36,6 +36,11 @@ def run(
     """
     plan = load_value(path.read_text(encoding="utf-8"))
     last = None
+    if found is None and any("judged" in s.get("expect", {}) for s in plan["steps"]):
+        raise Failed(
+            f"{path.stem}: judged checks ask a judge model, which a playbook test never does: "
+            f"run this file as a card, python -m bench.cards {path} --draws 1"
+        )
     for page, fields in plan.get("pages", {}).items():
         made = vault.write(page, fields, None, actor="alice", at=AT)
         assert made.ok, f"{path.stem}: starting page {page} was refused: {made.reason}"
@@ -132,6 +137,8 @@ def expectations(expect: dict[str, Any], vault: Vault, stand: Stand, last: Any) 
             check("commits answered by a model", wanted, len(said))
         elif key == "verify":
             vault.verify()
+        elif key == "judged":
+            continue  # a card's judge answers these, see bench/cards.py
         else:
             out.append(f"unknown expectation {key!r}")
     return out

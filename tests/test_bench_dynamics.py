@@ -374,3 +374,26 @@ def test_no_published_card_holds_a_key_or_a_repository() -> None:
         if path.is_file() and path.suffix in (".json", ".jsonl", ".txt"):
             assert "PRIVATE KEY" not in path.read_text(encoding="utf-8")
             assert "/tmp/" not in path.read_text(encoding="utf-8")
+
+
+def test_the_board_says_which_checks_are_measured_and_which_are_judged_with_the_tally() -> None:
+    from bench import cards
+
+    measured = {"steps": [{"expect": {"exists": ["a"]}}]}
+    both = {"steps": [{"expect": {"exists": ["a"], "judged": []}}]}
+    only = {"steps": [{"write": {}}, {"expect": {"judged": []}}]}
+    assert [dynamics.kinds(p) for p in (measured, both, only)] == [
+        "measured", "measured and judged", "judged",
+    ]  # fmt: skip
+    one = {
+        "step": 3, "question": "Is it odd?", "scale": ["no", "yes"], "pass": ["yes"],
+        "verdict": "yes", "by": {"provider": "claude", "model": "claude"},
+    }  # fmt: skip
+    rows = [{"judged": [one]}, {"judged": [one | {"verdict": "no verdict"}]}]
+    (found,) = cards.tally(rows)
+    assert dynamics.judged_line(found) == (
+        "- Judged: Is it odd? Scale no, yes; passes on yes. Verdicts by claude claude: "
+        "no 0, yes 1, no verdict 1"
+    )
+    board = (ROOT / dynamics.BOARD).read_text(encoding="utf-8")
+    assert board.count("- Checks: measured\n") == board.count("\n## ")
