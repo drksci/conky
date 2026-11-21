@@ -219,8 +219,9 @@ def test_one_vault_in_two_folders_has_one_history(tmp_path: Path, vault: Vault) 
     subprocess.run(["git", "clone", "-q", str(vault.path), str(twin)], check=True)
     settle(vault.path, "name: lemon\ndomain: home\nprovider: none\n")
     settle(twin, "name: pear\ndomain: farm\nprovider: claude\n")
-    assert resolved(vault.path).full_name == "lemon.home"
-    assert resolved(twin).full_name == "pear.farm"
+    short = git(vault.path, "rev-list", "--max-parents=0", "main").strip()[:8]
+    assert resolved(vault.path).full_name == f"lemon-{short}.home"
+    assert resolved(twin).full_name == f"pear-{short}.farm"
     log = ["log", "main", "--format=%H%B"]
     assert git(vault.path, *log) == git(twin, *log)
 

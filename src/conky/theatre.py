@@ -12,7 +12,7 @@ from typing import Any
 
 from conky import arch, cache, git, model
 from conky.errors import BadInput
-from conky.page import NAME, ShapeError, given
+from conky.page import NAME, THEATRE, ShapeError, given
 
 FILE = "marionette.md"
 EXCLUDE = Path(".git") / "info" / "exclude"
@@ -21,6 +21,8 @@ DEFAULT_DOMAIN = "local"
 DEFAULT_NAME = "theatre"
 DEFAULT_KEYS = "~/.conky/keys"
 FLAG, ENVIRONMENT, FILE_SOURCE, DEFAULT = "flag", "environment", FILE, "default"
+PAGE = "theatre page"
+SHORT = 8
 _DOMAIN = re.compile(r"^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$")
 _SECRET = re.compile(r"secret|token|password|api[_-]?key", re.IGNORECASE)
 
@@ -46,11 +48,18 @@ class Theatre:
     provider: Setting
     model: Setting
     commands: Mapping[str, Setting]
+    identity: str | None = None
+
+    @property
+    def short_id(self) -> str | None:
+        """Return the first characters of the vault's first commit, or nothing before it."""
+        return self.identity[:SHORT] if self.identity else None
 
     @property
     def full_name(self) -> str:
-        """Return the name and the domain, joined by a dot."""
-        return f"{self.name.value}.{self.domain.value}"
+        """Return `<name>-<short id>.<domain>`, or `<name>.<domain>` before the first write."""
+        suffix = f"-{self.short_id}" if self.short_id else ""
+        return f"{self.name.value}{suffix}.{self.domain.value}"
 
     def keys_dir(self) -> Path | None:
         """Return the private key directory, or nothing when the default applies."""
@@ -84,6 +93,7 @@ class Theatre:
             f"theatre: {self.full_name}",
             f"vault: {self.root}",
             f"settings file: {found}",
+            f"identity: {self.short_id or 'appears with the first write'}",
             f"name: {show(self.name, '')}",
             f"domain: {show(self.domain, '')}",
             f"keys: {show(self.keys, DEFAULT_KEYS)}",
@@ -227,7 +237,12 @@ def resolve(
         return own(key)
 
     folder = here.name.lower() if NAME.match(here.name.lower()) else DEFAULT_NAME
-    name = own("name") if "name" in mine else Setting(folder, DEFAULT)
+    carried = _page_name(root)
+    name = Setting(folder, DEFAULT)
+    if "name" in mine:
+        name = own("name")
+    elif carried:
+        name = Setting(carried, PAGE)
     domain = own("domain") if "domain" in mine else Setting(DEFAULT_DOMAIN, DEFAULT)
     keys_setting = Setting(keys, FLAG) if keys else own("keys")
     if keys_setting.source == FILE_SOURCE:
@@ -253,7 +268,35 @@ def resolve(
         provider=chosen(None, model.PROVIDER_VARIABLE, "provider"),
         model=chosen(None, model.MODEL_VARIABLE, "model"),
         commands=commands,
+        identity=identity(root),
     )
+
+
+def identity(root: Path) -> str | None:
+    """Return the id of the vault's first commit, or nothing when it has none yet.
+
+    The theatre is known by the commit it began with, which every clone shares.
+    """
+    if not git.is_repository(root):
+        return None
+    try:
+        first = git.run(["rev-list", "--max-parents=0", "--reverse", "main"], root).split()
+    except (BadInput, OSError):
+        return None
+    return first[0] if first else None
+
+
+def _page_name(root: Path) -> str | None:
+    """Return the `name` the vault's theatre page carries, when it has one that is valid."""
+    path = root / "pages" / f"{THEATRE}.md"
+    if not path.is_file():
+        return None
+    try:
+        head, _ = given(path.read_text(encoding="utf-8"))
+    except ShapeError:
+        return None
+    named = head.get("name")
+    return named if isinstance(named, str) and NAME.match(named) else None
 
 
 def exclude(root: Path) -> None:

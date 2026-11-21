@@ -137,9 +137,9 @@ On success it prints `written (commit <id>)`. If the answer breaks a rule it pri
 conky theatre
 ```
 
-Prints the theatre the current folder belongs to, in a few plain lines: its full name (`name.domain`), where its vault is, the settings file if there is one, and each setting with its value and where it came from: `flag`, `environment`, `marionette.md` or `default`. A secret is never printed: for each key variable and each `CONKY_SECRET_<NAME>` it says whether the variable is set. It needs no vault and exits 0, or 1 when the settings file is malformed.
+Prints the theatre the current folder belongs to, in a few plain lines: its full name (`name-<short id>.domain`, where the short id is the first eight characters of the vault's first commit and is left out until the vault has one), the identity, where its vault is, the settings file if there is one, and each setting with its value and where it came from: `flag`, `environment`, `marionette.md` or `default`. A secret is never printed: for each key variable and each `CONKY_SECRET_<NAME>` it says whether the variable is set. It needs no vault and exits 0, or 1 when the settings file is malformed.
 
-A theatre is one distinct conky system, the outermost thing everything in it lives in. Today it is its vault together with `marionette.md`, the settings true only of the machine it is running on. A thing has a part that says what it is, which lives in the vault and travels, and a part that says where it is running, which stays on the machine; a provider's page and its secret in the environment already work this way.
+A theatre is one distinct conky system, the outermost thing everything in it lives in. It is its vault together with `marionette.md`, the settings true only of the machine it is running on. A thing has a part that says what it is, which lives in the vault and travels, and a part that says where it is running, which stays on the machine; a provider's page and its secret in the environment already work this way.
 
 **Finding the vault.** Without `--vault`, a command walks up from the current folder to the nearest folder that holds a Git repository, which is how a vault is recognised, and uses it. If there is none it uses the current folder, and says what it said before: that it is not a vault and how to create one. `init` is unchanged.
 
@@ -147,7 +147,7 @@ A theatre is one distinct conky system, the outermost thing everything in it liv
 
 | Key | Meaning | Default |
 |---|---|---|
-| `name` | The theatre's short name: lower-case letters, digits, `-` and `_`. | The vault folder's name, lower-cased, else `theatre`. |
+| `name` | The theatre's short name: lower-case letters, digits, `-` and `_`. | The `name` field of the vault's page `theatre`, shown as `theatre page`, else the vault folder's name, lower-cased, else `theatre`. |
 | `domain` | The domain of the full name. | `local` |
 | `keys` | The private key directory, the same as `--keys`. | `~/.conky/keys` |
 | `cache` | The cache directory, the same as `--cache-dir`. | `~/.conky/cache` |

@@ -95,6 +95,14 @@ A space is named once in within. Write each space of the list one time, the firs
 
 Page {name} is written by an answer into {space}, so within is the name {space} or a space inside it, and not a list: an answer cannot join a page to further spaces.
 
+## theatre-within
+
+The theatre is the outermost space, so the page named theatre lies within nothing. Leave within out of it.
+
+## theatre-name
+
+The theatre's name is {name}: write name as a page name, lower-case letters, digits, - and _, such as lemon.
+
 ## members-name
 
 The name members is taken: it lists the pages within a space. Another name is needed.

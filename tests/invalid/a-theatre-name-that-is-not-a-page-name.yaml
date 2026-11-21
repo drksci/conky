@@ -1,0 +1,7 @@
+# the theatre's name travels with the vault as a page name.
+pages: {}
+write:
+  page: theatre
+  set:
+    name: "Lemon Tree"
+refused: shape

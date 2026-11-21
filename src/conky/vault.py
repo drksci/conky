@@ -26,6 +26,7 @@ from conky.page import (
     above,
     apply,
     check_name,
+    check_theatre,
     embedded,
     given,
     links,
@@ -519,6 +520,7 @@ class Vault:
             applied = {key: _joined(kept[key], changes[key]) for key in changes}
         try:
             result = apply(before or Page(), applied, body)
+            check_theatre(page, result)
         except ShapeError as exc:
             return refuse(f"{Refusal.SHAPE}: {exc}")
         if bound is not None and page != bound:
@@ -535,13 +537,19 @@ class Vault:
         self._react(page, result, commit, actor, at, depth)
         return Result(True, commit)
 
-    def _above(self, name: str, within: Any) -> list[tuple[str, Page | None, int]]:
+    def _above(
+        self, name: str, within: Any, theatre: bool = True
+    ) -> list[tuple[str, Page | None, int]]:
         """Return the spaces above a page, nearest first, as `page.above` orders them."""
-        return above(name, within, self._load)
+        return above(name, within, self._load, theatre)
 
-    def _inside(self, within: Any, space: str) -> bool:
-        """Return whether a `within` is space or lies within it, directly or through spaces."""
-        return any(owner == space for owner, _, _ in self._above("", within))
+    def _inside(self, within: Any, space: str, who: str = "", theatre: bool = True) -> bool:
+        """Return whether a `within` of the page `who` is space or lies within it.
+
+        The page named `theatre`, when there is one, is a space every page but itself lies in;
+        `theatre=False` leaves that out, so only the spaces a page names count.
+        """
+        return any(owner == space for owner, _, _ in self._above(who, within, theatre))
 
     def _scope(self, name: str, page: Page) -> dict[str, Any]:
         """Return what a rule reads for a page: its fields, its space, its size and its text."""
@@ -567,7 +575,7 @@ class Vault:
         terms = Terms(self._all)
         for member in sorted(p.stem for p in self.pages_dir.glob("*.md")):
             held = self._load(member)
-            if member == name or held is None or not self._inside(held.within, name):
+            if member == name or held is None or not self._inside(held.within, name, member):
                 continue
             scope = self._scope(member, held)
             for rule in rules:
@@ -610,7 +618,7 @@ class Vault:
         """
         if isinstance(page.within, list):
             return voice.line("breach-several", name=name, space=space)
-        if not self._inside(page.within, space):
+        if not self._inside(page.within, space, name, False):
             return f"page {name} is not within space {space}: set within to it or a space inside it"
         if before is not None and not self._all_inside(before.within, space):
             return f"page {name} lies outside space {space}, so an answer cannot change it"
@@ -621,7 +629,7 @@ class Vault:
             )
         for entry in page.watch:
             target = entry.get("ask", {}).get("writes")
-            if target is not None and not self._inside(target, space):
+            if target is not None and not self._inside(target, space, theatre=False):
                 return (
                     f"a watch entry of {name} writes into {target}, outside space {space}: "
                     f"name {space} or a space inside it"
@@ -630,7 +638,9 @@ class Vault:
 
     def _all_inside(self, within: Any, space: str) -> bool:
         """Return whether a page has spaces and every one of them is space or lies within it."""
-        return bool(spaces(within)) and all(self._inside(one, space) for one in spaces(within))
+        return bool(spaces(within)) and all(
+            self._inside(one, space, theatre=False) for one in spaces(within)
+        )
 
     @arch.change(
         "place.runtime.bind",
@@ -779,7 +789,7 @@ class Vault:
         `linked` gives the names the page just written links to, worked out once per reaction pass.
         """
         if on == "within":
-            return source != watcher and self._inside(written.within, watcher)
+            return source != watcher and self._inside(written.within, watcher, source)
         if on == "link":
             return source != watcher and watcher in linked()
         return on == source
@@ -915,7 +925,7 @@ class Vault:
             told = (
                 (watcher == page and kept is not None)
                 or watcher == actor
-                or self._inside(place, watcher)
+                or self._inside(place, watcher, page)
             )
             for entry in (self._load(watcher) or Page()).watch if told else []:
                 if entry["on"] == "refusal":

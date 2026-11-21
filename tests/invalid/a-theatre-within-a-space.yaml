@@ -1,0 +1,8 @@
+# the theatre is the outermost space, so the page named theatre lies within nothing.
+pages:
+  camp: {}
+write:
+  page: theatre
+  set:
+    within: camp
+refused: shape

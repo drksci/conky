@@ -26,7 +26,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `event` | A commit: one write or one refusal. |
 | `seal` | The signature on an event. |
 | `space` | A page that other pages lie within, handing down its rules. A space may carry `shows`, which says how many of its members an embedded list shows and in what order. |
-| `theatre` | One distinct conky system, the outermost thing everything in it lives in. Today it is its vault together with `marionette.md`, the settings true only of the machine it is running on. |
+| `theatre` | One distinct conky system, the outermost thing everything in it lives in: its vault together with `marionette.md`, the settings true only of the machine it is running on. Also the page named `theatre`, the outermost space: when a vault has it, every other page lies within it, and the id of the vault's first commit is the theatre's identity. |
 | `marionette.md` | The optional settings file at the root of a vault's folder: Markdown with frontmatter, kept out of the vault's history, never a page. |
 | `error` | A message that says what went wrong and what to do next. |
 
@@ -94,7 +94,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 
 | Name | Meaning |
 |---|---|
-| `name` | The theatre's short name. |
+| `name` | The theatre's short name. The `name` field of the theatre page is the next choice. |
 | `domain` | The domain of the theatre's full name. |
 | `keys` | The private key directory, the same as `--keys`. |
 | `cache` | The cache directory, the same as `--cache-dir`. |

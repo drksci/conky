@@ -49,6 +49,7 @@ ASK_KEYS = arch.constant(
     doc="vocabulary.md#ask-keys",
 )
 NAME = re.compile(r"^[a-z0-9][a-z0-9_-]{0,63}$")
+THEATRE = "theatre"
 EMBED = re.compile(r"!\[\[([^\]#]+)(?:#([^\]]+))?\]\]")
 
 
@@ -123,6 +124,17 @@ def _check_within(value: Any) -> str | list[str] | None:
     if len(set(value)) != len(value):
         raise ShapeError(voice.line("within-repeat"))
     return value[0] if len(value) == 1 else (value or None)
+
+
+def check_theatre(name: str, page: Page) -> None:
+    """Raise ShapeError when the page named `theatre` is within a space or has a bad `name`."""
+    if name != THEATRE:
+        return
+    if page.within is not None:
+        raise ShapeError(voice.line("theatre-within"))
+    given_name = page.fields.get("name")
+    if given_name is not None and not (isinstance(given_name, str) and NAME.match(given_name)):
+        raise ShapeError(voice.line("theatre-name", name=repr(given_name)))
 
 
 def check_name(name: str) -> str:
@@ -426,7 +438,12 @@ SHOWS_NAMES = ("page", "space", "text")
 
 
 def _within(name: str, space: str, lookup: dict[str, Page]) -> bool:
-    """Return whether the page name lies within space, directly or through spaces."""
+    """Return whether the page name lies within space, directly or through spaces.
+
+    Every page but the theatre lies within the page named `theatre`, when there is one.
+    """
+    if space == THEATRE and name != THEATRE and THEATRE in lookup:
+        return True
     seen: set[str] = set()
     todo = spaces(lookup[name].within) if name in lookup else []
     while todo:
@@ -499,8 +516,19 @@ def _members_text(space: str, lookup: dict[str, Page]) -> str | None:
     return "\n".join(lines) or None
 
 
+@arch.law(
+    "law.space.theatre",
+    "A vault with a page named theatre has every other page within it, last in the order of "
+    "spaces, so its rules, words and reactions reach the whole vault; without the page nothing "
+    "is outermost.",
+    doc="../decisions/0051-the-theatre-is-a-page.md",
+    roadmap="R43",
+)
 def above(
-    name: str, within: Any, load: Callable[[str], Page | None]
+    name: str,
+    within: Any,
+    load: Callable[[str], Page | None],
+    theatre: bool = True,
 ) -> list[tuple[str, Page | None, int]]:
     """Return the spaces above a page named name that is within `within`, each once.
 
@@ -509,9 +537,14 @@ def above(
     at the nearer. They are ordered nearest first, and among spaces at one distance by the
     order they were reached, which follows the order the page lists its spaces in. The
     page itself appears when a loop leads back to it, and is not climbed past.
+
+    When there is a page named `theatre`, every page but that one lies within it, so it comes
+    last, one step beyond the farthest space, however the page names it. Without `theatre` the
+    spaces are only those the page names.
     """
     found: list[tuple[str, Page | None, int]] = []
-    queue = deque((space, 1) for space in spaces(within))
+    outer = load(THEATRE) if theatre and name != THEATRE else None
+    queue = deque((space, 1) for space in spaces(within) if outer is None or space != THEATRE)
     seen: set[str] = set()
     while queue:
         space, distance = queue.popleft()
@@ -521,7 +554,11 @@ def above(
         held = None if space == name else load(space)
         found.append((space, held, distance))
         if held is not None:
-            queue.extend((up, distance + 1) for up in spaces(held.within))
+            queue.extend(
+                (up, distance + 1) for up in spaces(held.within) if outer is None or up != THEATRE
+            )
+    if outer is not None:
+        found.append((THEATRE, outer, max((d for _, _, d in found), default=0) + 1))
     return found
 
 
@@ -534,17 +571,31 @@ def _context_spaces(name: str, lookup: dict[str, Page]) -> list[tuple[str, str]]
     ]
 
 
+def _shown(saying: list[tuple[str, str]]) -> tuple[list[tuple[str, str]], int]:
+    """Return the spaces an embedded context shows and how many it leaves out.
+
+    The nearest CONTEXT_CAP are shown. When the theatre speaks and the cap cuts, it keeps the last
+    place and the cap cuts the middle, so the house rules are read whatever the nearer say.
+    """
+    if len(saying) <= CONTEXT_CAP:
+        return saying, 0
+    keep = CONTEXT_CAP - 1 if saying[-1][0] == THEATRE else CONTEXT_CAP
+    return saying[:keep] + saying[-1:][: CONTEXT_CAP - keep], len(saying) - CONTEXT_CAP
+
+
 def _context_text(name: str, lookup: dict[str, Page]) -> str | None:
     """Return what the spaces above a page say, nearest first, or None when they say nothing.
 
     Each space with a body gives `NAME says:` on a line and then the body as written, less its
-    closing blank space, the blocks separated by a blank line. Only the nearest CONTEXT_CAP are
-    shown, then a line counts the rest. Nothing says who wrote a body. Nothing is written.
+    closing blank space, the blocks separated by a blank line. Only CONTEXT_CAP are shown, then
+    a line counts the rest; the theatre, when it speaks, is always the last block shown. Nothing
+    says who wrote a body. Nothing is written.
     """
-    saying = _context_spaces(name, lookup)
-    blocks = [f"{space} says:\n{body}" for space, body in saying[:CONTEXT_CAP]]
-    if len(saying) > CONTEXT_CAP:
-        blocks.append(f"({len(saying) - CONTEXT_CAP} more spaces not shown)")
+    shown, left = _shown(_context_spaces(name, lookup))
+    blocks = [f"{space} says:\n{body}" for space, body in shown]
+    if left:
+        count = f"({left} more spaces not shown)"
+        blocks.insert(len(blocks) - (1 if shown[-1][0] == THEATRE else 0), count)
     return "\n\n".join(blocks) or None
 
 
@@ -587,7 +638,7 @@ def embedded(text: str, lookup: dict[str, Page]) -> list[str]:
             continue
         shown = [name]
         if found.group(2) == CONTEXT:
-            shown = [space for space, _ in _context_spaces(name, lookup)[:CONTEXT_CAP]]
+            shown = [space for space, _ in _shown(_context_spaces(name, lookup))[0]]
         names += [one for one in shown if one not in names]
     return names
 
