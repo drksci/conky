@@ -1,0 +1,5312 @@
+{
+ "1": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\napi: command\ncommand: stand\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "house",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "kitchen",
+   "by": "alice",
+   "cause": null,
+   "within": "house",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "house"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: house\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "director",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\n---\n"
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "clock",
+     "hears": "clock",
+     "when": "true",
+     "sets": [],
+     "set": {},
+     "into": null,
+     "asks": true,
+     "provider": "helper",
+     "writes": "kitchen"
+    }
+   ],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "robbie",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": ""
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: ''\n---\n"
+   },
+   "rules": [
+    {
+     "each": false,
+     "text": "event.by != 'director'"
+    }
+   ],
+   "watch": [
+    {
+     "on": "clock",
+     "hears": "clock",
+     "when": "true",
+     "sets": [],
+     "set": {},
+     "into": "said",
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "house",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "12 Wattle Street is the Hendersons' home: Karen, Dave, and their daughter Mia, who is nine.\n",
+    "source": "---\n---\n12 Wattle Street is the Hendersons' home: Karen, Dave, and their daughter Mia, who is nine.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "kitchen",
+   "by": "alice",
+   "cause": null,
+   "within": "house",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "house"
+    ],
+    "known_as": [],
+    "body": "The kitchen is a square room with one window over the sink and a door to the hall.\n",
+    "source": "---\nwithin: house\n---\nThe kitchen is a square room with one window over the sink and a door to the hall.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "oven",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A white oven against the north wall.\n",
+    "source": "---\nwithin: kitchen\n---\nA white oven against the north wall.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "fridge",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A fridge beside the door, with Mia's drawings held on by magnets.\n",
+    "source": "---\nwithin: kitchen\n---\nA fridge beside the door, with Mia's drawings held on by magnets.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "table",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A pine table with four chairs.\n",
+    "source": "---\nwithin: kitchen\n---\nA pine table with four chairs.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "sink",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A sink under the window, with two mugs in it.\n",
+    "source": "---\nwithin: kitchen\n---\nA sink under the window, with two mugs in it.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 13,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "seven in the morning\n",
+    "source": "---\n---\nseven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 14,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 13,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2304e\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     null,
+     "7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 15,
+   "kind": "refused",
+   "page": "robbie",
+   "by": "director",
+   "cause": 14,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "rule: event.by != 'director' (from robbie) is false",
+   "from": null
+  },
+  {
+   "n": 16,
+   "kind": "write",
+   "page": "table",
+   "by": "director",
+   "cause": 14,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A pine table with four chairs, one of them stuck upside down to the ceiling directly above it.\n",
+    "source": "---\nwithin: kitchen\n---\nA pine table with four chairs, one of them stuck upside down to the ceiling directly above it.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 17,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 15,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2304e\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": true,
+   "shown": [
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 18,
+   "kind": "write",
+   "page": "chair-five",
+   "by": "director",
+   "cause": 17,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A fifth chair, folded from cardboard, sits inside the oven with its back against the glass door.\n",
+    "source": "---\nwithin: kitchen\n---\nA fifth chair, folded from cardboard, sits inside the oven with its back against the glass door.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 19,
+   "kind": "write",
+   "page": "fridge",
+   "by": "director",
+   "cause": 17,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A fridge beside the door, with Mia's drawings held on by magnets shaped like teapots, and one drawing of the fridge itself.\n",
+    "source": "---\nwithin: kitchen\n---\nA fridge beside the door, with Mia's drawings held on by magnets shaped like teapots, and one drawing of the fridge itself.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 20,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 13,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "Three things are out of place: a folded cardboard chair is s"
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: 'Three things are out of place: a folded cardboard chair is sitting inside the oven against the glass, one real chair is stuck upside down to the ceiling above the table, and Mia has drawn the fridge. Before anything else, I''ll check that the oven is off, since cardboard inside it is a fire risk. Then I''ll try to get the ceiling chair down safely, wash the two mugs, and tell Karen and Dave about the chairs before Mia comes down for breakfast.'\nsaid_asked: ffd84fc61f22601a7e04563102e7f4bce0f30b0ea756e16a79f507a4c7a5d4c8\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "Three things are out of place: a folded cardboard chair is s"
+    ],
+    "said_asked": [
+     null,
+     "ffd84fc61f22601a7e04563102e7f4bce0f30b0ea756e16a79f507a4c7a5"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "chair-five",
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 21,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "five past seven in the morning\n",
+    "source": "---\n---\nfive past seven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 22,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 21,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: e9707ed527186a35f51cc7f7ca0d6c115d64293930a522314155734628367985\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     "7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2",
+     "e9707ed527186a35f51cc7f7ca0d6c115d64293930a52231415573462836"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "chair-five",
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 23,
+   "kind": "refused",
+   "page": "robbie",
+   "by": "director",
+   "cause": 22,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "rule: event.by != 'director' (from robbie) is false",
+   "from": null
+  },
+  {
+   "n": 24,
+   "kind": "write",
+   "page": "fridge",
+   "by": "director",
+   "cause": 22,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A second, smaller fridge sits inside the first one, with Mia's drawings held on its door by teapot magnets and one drawing of the fridge itself.\n",
+    "source": "---\nwithin: kitchen\n---\nA second, smaller fridge sits inside the first one, with Mia's drawings held on its door by teapot magnets and one drawing of the fridge itself.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 25,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 23,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: e9707ed527186a35f51cc7f7ca0d6c115d64293930a522314155734628367985\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": true,
+   "shown": [
+    "chair-five",
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 26,
+   "kind": "write",
+   "page": "window",
+   "by": "director",
+   "cause": 25,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A window above the sink, its glass replaced by a framed painting of a goldfish in a tuxedo, through which no light comes.\n",
+    "source": "---\nwithin: kitchen\n---\nA window above the sink, its glass replaced by a framed painting of a goldfish in a tuxedo, through which no light comes.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 27,
+   "kind": "write",
+   "page": "kettle",
+   "by": "director",
+   "cause": 25,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A copper kettle sits on top of the fridge, its lid open and holding a single folded paper crane.\n",
+    "source": "---\nwithin: kitchen\n---\nA copper kettle sits on top of the fridge, its lid open and holding a single folded paper crane.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 28,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 21,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "It's five past seven, and the kitchen has rearranged itself "
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: 'It''s five past seven, and the kitchen has rearranged itself overnight: a chair is in the oven, a smaller fridge is inside the big one, and a chair is stuck to the ceiling above the table. The window has no light coming through it, only a goldfish in a tuxedo. I''ll start by checking the mugs in the sink and the kettle''s paper crane, then begin breakfast for Karen, Dave, and Mia. Then I''ll work out how to get the chair down from the ceiling before anyone sits at the table.'\nsaid_asked: 9a4cd117affe83d3efe1a894dc845eea758e50ee131753969f7917c6db31c7d6\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "Three things are out of place: a folded cardboard chair is s",
+     "It's five past seven, and the kitchen has rearranged itself "
+    ],
+    "said_asked": [
+     "ffd84fc61f22601a7e04563102e7f4bce0f30b0ea756e16a79f507a4c7a5",
+     "9a4cd117affe83d3efe1a894dc845eea758e50ee131753969f7917c6db31"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "chair-five",
+    "fridge",
+    "kettle",
+    "oven",
+    "sink",
+    "table",
+    "window"
+   ]
+  },
+  {
+   "n": 29,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "ten past seven in the morning\n",
+    "source": "---\n---\nten past seven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 30,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 29,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 47f48d4c722d7a52f4981668046489b6d2b4a0e7b00c0377a36beb7720ddd5f8\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     "e9707ed527186a35f51cc7f7ca0d6c115d64293930a52231415573462836",
+     "47f48d4c722d7a52f4981668046489b6d2b4a0e7b00c0377a36beb7720dd"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "chair-five",
+    "fridge",
+    "kettle",
+    "oven",
+    "sink",
+    "table",
+    "window"
+   ]
+  },
+  {
+   "n": 31,
+   "kind": "refused",
+   "page": "robbie",
+   "by": "director",
+   "cause": 30,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "rule: event.by != 'director' (from robbie) is false",
+   "from": null
+  },
+  {
+   "n": 32,
+   "kind": "write",
+   "page": "toaster",
+   "by": "director",
+   "cause": 30,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A toaster sits on the table between two chairs, its slots holding two small ticking clocks set to different hours.\n",
+    "source": "---\nwithin: kitchen\n---\nA toaster sits on the table between two chairs, its slots holding two small ticking clocks set to different hours.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 33,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 31,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 47f48d4c722d7a52f4981668046489b6d2b4a0e7b00c0377a36beb7720ddd5f8\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": true,
+   "shown": [
+    "chair-five",
+    "fridge",
+    "kettle",
+    "oven",
+    "sink",
+    "table",
+    "window"
+   ]
+  },
+  {
+   "n": 34,
+   "kind": "refused",
+   "page": "robbie",
+   "by": "director",
+   "cause": 33,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "rule: event.by != 'director' (from robbie) is false",
+   "from": null
+  },
+  {
+   "n": 35,
+   "kind": "write",
+   "page": "window",
+   "by": "director",
+   "cause": 33,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "The framed goldfish in a tuxedo now hangs on the inside of the oven door, and the window above the sink is a bowl of cold tea.\n",
+    "source": "---\nwithin: kitchen\n---\nThe framed goldfish in a tuxedo now hangs on the inside of the oven door, and the window above the sink is a bowl of cold tea.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 36,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 29,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "Someone has rearranged the kitchen overnight: a cardboard ch"
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: 'Someone has rearranged the kitchen overnight: a cardboard chair is in the oven, a smaller fridge sits inside the big one, and the window over the sink has turned into a bowl of cold tea. Before anything else, I''ll take the two clocks out of the toaster so the Hendersons don''t wake to a kitchen running on two different hours. Then I''ll check the crane in the kettle and the chair in the oven, and I''ll look for Mia before I touch anything she might have set up on purpose.'\nsaid_asked: 659ac61218ba8e46673e2a5e6e0956ae59d6427e93140d16e7bee589629ee94c\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "It's five past seven, and the kitchen has rearranged itself ",
+     "Someone has rearranged the kitchen overnight: a cardboard ch"
+    ],
+    "said_asked": [
+     "9a4cd117affe83d3efe1a894dc845eea758e50ee131753969f7917c6db31",
+     "659ac61218ba8e46673e2a5e6e0956ae59d6427e93140d16e7bee589629e"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "chair-five",
+    "fridge",
+    "kettle",
+    "oven",
+    "sink",
+    "table",
+    "toaster",
+    "window"
+   ]
+  }
+ ],
+ "2": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\napi: command\ncommand: stand\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "house",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "kitchen",
+   "by": "alice",
+   "cause": null,
+   "within": "house",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "house"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: house\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "director",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\n---\n"
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "clock",
+     "hears": "clock",
+     "when": "true",
+     "sets": [],
+     "set": {},
+     "into": null,
+     "asks": true,
+     "provider": "helper",
+     "writes": "kitchen"
+    }
+   ],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "robbie",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": ""
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: ''\n---\n"
+   },
+   "rules": [
+    {
+     "each": false,
+     "text": "event.by != 'director'"
+    }
+   ],
+   "watch": [
+    {
+     "on": "clock",
+     "hears": "clock",
+     "when": "true",
+     "sets": [],
+     "set": {},
+     "into": "said",
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "house",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "12 Wattle Street is the Hendersons' home: Karen, Dave, and their daughter Mia, who is nine.\n",
+    "source": "---\n---\n12 Wattle Street is the Hendersons' home: Karen, Dave, and their daughter Mia, who is nine.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "kitchen",
+   "by": "alice",
+   "cause": null,
+   "within": "house",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "house"
+    ],
+    "known_as": [],
+    "body": "The kitchen is a square room with one window over the sink and a door to the hall.\n",
+    "source": "---\nwithin: house\n---\nThe kitchen is a square room with one window over the sink and a door to the hall.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "oven",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A white oven against the north wall.\n",
+    "source": "---\nwithin: kitchen\n---\nA white oven against the north wall.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "fridge",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A fridge beside the door, with Mia's drawings held on by magnets.\n",
+    "source": "---\nwithin: kitchen\n---\nA fridge beside the door, with Mia's drawings held on by magnets.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "table",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A pine table with four chairs.\n",
+    "source": "---\nwithin: kitchen\n---\nA pine table with four chairs.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "sink",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A sink under the window, with two mugs in it.\n",
+    "source": "---\nwithin: kitchen\n---\nA sink under the window, with two mugs in it.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 13,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "seven in the morning\n",
+    "source": "---\n---\nseven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 14,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 13,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2304e\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     null,
+     "7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 15,
+   "kind": "write",
+   "page": "oven",
+   "by": "director",
+   "cause": 14,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A white oven against the north wall, its door open to show a folded bicycle resting on the middle rack.\n",
+    "source": "---\nwithin: kitchen\n---\nA white oven against the north wall, its door open to show a folded bicycle resting on the middle rack.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 16,
+   "kind": "write",
+   "page": "goose",
+   "by": "director",
+   "cause": 14,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A grey goose sleeps on the mat beneath the table, its head tucked under one wing.\n",
+    "source": "---\nwithin: kitchen\n---\nA grey goose sleeps on the mat beneath the table, its head tucked under one wing.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 17,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 13,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "I notice a folded bicycle lying on the middle rack of the ov"
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: I notice a folded bicycle lying on the middle rack of the oven, which is not where anyone should keep it, and the goose is still asleep under the table. I'll gently lift the bicycle out and set it by the back door, then start on the two mugs in the sink and put the kettle on for the Hendersons' breakfast.\nsaid_asked: 342c8d18fde881e8e72d61e7cb694da8f1de4b7478e965b9eeaab1856db35ba4\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "I notice a folded bicycle lying on the middle rack of the ov"
+    ],
+    "said_asked": [
+     null,
+     "342c8d18fde881e8e72d61e7cb694da8f1de4b7478e965b9eeaab1856db3"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "goose",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 18,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "five past seven in the morning\n",
+    "source": "---\n---\nfive past seven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 19,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 18,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 585bf3aab94c69e312a8beffe36af0be469437ed428e0d1983fd2c32896a2a2d\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     "7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2",
+     "585bf3aab94c69e312a8beffe36af0be469437ed428e0d1983fd2c32896a"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "goose",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 20,
+   "kind": "write",
+   "page": "fridge_copy",
+   "by": "director",
+   "cause": 19,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A second fridge stands inside the oven, its door facing out into the room, with Mia's drawings held on by magnets.\n",
+    "source": "---\nwithin: kitchen\n---\nA second fridge stands inside the oven, its door facing out into the room, with Mia's drawings held on by magnets.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 21,
+   "kind": "write",
+   "page": "window",
+   "by": "director",
+   "cause": 19,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "Above the sink, a brass ship's porthole gives onto a flowerpot with a single tulip growing on a sandy seabed.\n",
+    "source": "---\nwithin: kitchen\n---\nAbove the sink, a brass ship's porthole gives onto a flowerpot with a single tulip growing on a sandy seabed.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 22,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 18,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "The oven is an odd place for a folded bicycle, and there's a"
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: The oven is an odd place for a folded bicycle, and there's a second fridge inside it too, so I'd better check it isn't a hazard before anyone reaches in to make breakfast. I'll leave the goose asleep on its mat, carefully lift the bicycle out onto the floor by the back door, and then start on the two mugs in the sink.\nsaid_asked: 6412bc952f1872993bbab8e9f95247328b079d72014a327389f6f1c6bcf5c381\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "I notice a folded bicycle lying on the middle rack of the ov",
+     "The oven is an odd place for a folded bicycle, and there's a"
+    ],
+    "said_asked": [
+     "342c8d18fde881e8e72d61e7cb694da8f1de4b7478e965b9eeaab1856db3",
+     "6412bc952f1872993bbab8e9f95247328b079d72014a327389f6f1c6bcf5"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "fridge_copy",
+    "goose",
+    "oven",
+    "sink",
+    "table",
+    "window"
+   ]
+  },
+  {
+   "n": 23,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "ten past seven in the morning\n",
+    "source": "---\n---\nten past seven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 24,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 23,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 50b77df01e089b71e180c045d7ed52133b293d910531fa6105aaf919a1cd1b35\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     "585bf3aab94c69e312a8beffe36af0be469437ed428e0d1983fd2c32896a",
+     "50b77df01e089b71e180c045d7ed52133b293d910531fa6105aaf919a1cd"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "fridge_copy",
+    "goose",
+    "oven",
+    "sink",
+    "table",
+    "window"
+   ]
+  },
+  {
+   "n": 25,
+   "kind": "write",
+   "page": "tide_clock",
+   "by": "director",
+   "cause": 24,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A brass clock stands on the pine table between two chairs, its hands running backward and keeping the tide.\n",
+    "source": "---\nwithin: kitchen\n---\nA brass clock stands on the pine table between two chairs, its hands running backward and keeping the tide.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 26,
+   "kind": "write",
+   "page": "goose",
+   "by": "director",
+   "cause": 24,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A grey goose sleeps on the mat beneath the table, its head tucked under one wing and a tiny sailor's cap on its head.\n",
+    "source": "---\nwithin: kitchen\n---\nA grey goose sleeps on the mat beneath the table, its head tucked under one wing and a tiny sailor's cap on its head.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 27,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 23,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "The tide clock is running backward, the goose has put on a s"
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: The tide clock is running backward, the goose has put on a sailor's cap, and there is a folded bicycle on the oven's middle rack, so this morning is already unusual. I'll start by checking on the bicycle, since it's the only thing here that could be a hazard, then ask Karen whether she knows how it got in there before I start breakfast.\nsaid_asked: c5027fa95f1612a77896e32ea7c028766529fe2f4aac7009a94ded7c0d44a8ea\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "The oven is an odd place for a folded bicycle, and there's a",
+     "The tide clock is running backward, the goose has put on a s"
+    ],
+    "said_asked": [
+     "6412bc952f1872993bbab8e9f95247328b079d72014a327389f6f1c6bcf5",
+     "c5027fa95f1612a77896e32ea7c028766529fe2f4aac7009a94ded7c0d44"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "fridge_copy",
+    "goose",
+    "oven",
+    "sink",
+    "table",
+    "tide_clock",
+    "window"
+   ]
+  }
+ ],
+ "3": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\napi: command\ncommand: stand\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "house",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "kitchen",
+   "by": "alice",
+   "cause": null,
+   "within": "house",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "house"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: house\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "director",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\n---\n"
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "clock",
+     "hears": "clock",
+     "when": "true",
+     "sets": [],
+     "set": {},
+     "into": null,
+     "asks": true,
+     "provider": "helper",
+     "writes": "kitchen"
+    }
+   ],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "robbie",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": ""
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: ''\n---\n"
+   },
+   "rules": [
+    {
+     "each": false,
+     "text": "event.by != 'director'"
+    }
+   ],
+   "watch": [
+    {
+     "on": "clock",
+     "hears": "clock",
+     "when": "true",
+     "sets": [],
+     "set": {},
+     "into": "said",
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "house",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "12 Wattle Street is the Hendersons' home: Karen, Dave, and their daughter Mia, who is nine.\n",
+    "source": "---\n---\n12 Wattle Street is the Hendersons' home: Karen, Dave, and their daughter Mia, who is nine.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "kitchen",
+   "by": "alice",
+   "cause": null,
+   "within": "house",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "house"
+    ],
+    "known_as": [],
+    "body": "The kitchen is a square room with one window over the sink and a door to the hall.\n",
+    "source": "---\nwithin: house\n---\nThe kitchen is a square room with one window over the sink and a door to the hall.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "oven",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A white oven against the north wall.\n",
+    "source": "---\nwithin: kitchen\n---\nA white oven against the north wall.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "fridge",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A fridge beside the door, with Mia's drawings held on by magnets.\n",
+    "source": "---\nwithin: kitchen\n---\nA fridge beside the door, with Mia's drawings held on by magnets.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "table",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A pine table with four chairs.\n",
+    "source": "---\nwithin: kitchen\n---\nA pine table with four chairs.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "sink",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A sink under the window, with two mugs in it.\n",
+    "source": "---\nwithin: kitchen\n---\nA sink under the window, with two mugs in it.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 13,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "seven in the morning\n",
+    "source": "---\n---\nseven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 14,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 13,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2304e\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     null,
+     "7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 15,
+   "kind": "write",
+   "page": "oven",
+   "by": "director",
+   "cause": 14,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A white oven against the north wall, with a fifth chair folded inside it.\n",
+    "source": "---\nwithin: kitchen\n---\nA white oven against the north wall, with a fifth chair folded inside it.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 16,
+   "kind": "write",
+   "page": "chair",
+   "by": "director",
+   "cause": 14,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A pine chair, folded flat, sitting inside the oven against the north wall.\n",
+    "source": "---\nwithin: kitchen\n---\nA pine chair, folded flat, sitting inside the oven against the north wall.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 17,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 13,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "A folded chair is inside the oven, which is an odd place for"
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: A folded chair is inside the oven, which is an odd place for furniture, and the table has only its four chairs. The two mugs in the sink can wait. I'll take the chair out, set it back with the others, then wash the mugs and start the Hendersons' breakfast before anyone comes down.\nsaid_asked: 520f0a684a1e1268e04f5acd019c86464a732fa552feb735148d8375f313bc03\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "A folded chair is inside the oven, which is an odd place for"
+    ],
+    "said_asked": [
+     null,
+     "520f0a684a1e1268e04f5acd019c86464a732fa552feb735148d8375f313"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "chair",
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 18,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "five past seven in the morning\n",
+    "source": "---\n---\nfive past seven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 19,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 18,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 08f277d0d2b6bd6cece7c0cf0fea5ffc78cae309041f1575056df6cad555f7cb\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     "7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2",
+     "08f277d0d2b6bd6cece7c0cf0fea5ffc78cae309041f1575056df6cad555"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "chair",
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 20,
+   "kind": "refused",
+   "page": "robbie",
+   "by": "director",
+   "cause": 19,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "rule: event.by != 'director' (from robbie) is false",
+   "from": null
+  },
+  {
+   "n": 21,
+   "kind": "write",
+   "page": "sink",
+   "by": "director",
+   "cause": 19,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A sink under the window holds two mugs and a small wooden rowboat floating in the water.\n",
+    "source": "---\nwithin: kitchen\n---\nA sink under the window holds two mugs and a small wooden rowboat floating in the water.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 22,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 20,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 08f277d0d2b6bd6cece7c0cf0fea5ffc78cae309041f1575056df6cad555f7cb\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": true,
+   "shown": [
+    "chair",
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 23,
+   "kind": "write",
+   "page": "lantern",
+   "by": "director",
+   "cause": 22,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A paper lantern, lit, hangs upside down from the table's centre post, its candle burning toward the floor.\n",
+    "source": "---\nwithin: kitchen\n---\nA paper lantern, lit, hangs upside down from the table's centre post, its candle burning toward the floor.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 24,
+   "kind": "write",
+   "page": "kettle",
+   "by": "director",
+   "cause": 22,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A copper kettle sits balanced on the top edge of the fridge, empty and faintly warm.\n",
+    "source": "---\nwithin: kitchen\n---\nA copper kettle sits balanced on the top edge of the fridge, empty and faintly warm.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 25,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 18,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "The lantern hanging upside down over the table is burning to"
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: The lantern hanging upside down over the table is burning toward the floor, and the chair is folded inside the oven, with the kettle balanced on top of the fridge and still faintly warm. Someone, probably Mia, has been rearranging the kitchen before breakfast, and the flame is the urgent problem. I'll put out the lantern first, then check that the oven is off before I move the chair, and set the kettle back on its base.\nsaid_asked: d0e67874f83ed282ccb4ec5abd2eba938ba9d3815ae1db633fc91582c99b632b\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "A folded chair is inside the oven, which is an odd place for",
+     "The lantern hanging upside down over the table is burning to"
+    ],
+    "said_asked": [
+     "520f0a684a1e1268e04f5acd019c86464a732fa552feb735148d8375f313",
+     "d0e67874f83ed282ccb4ec5abd2eba938ba9d3815ae1db633fc91582c99b"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "chair",
+    "fridge",
+    "kettle",
+    "lantern",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 26,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "ten past seven in the morning\n",
+    "source": "---\n---\nten past seven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 27,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 26,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: c404a4ddd1ed231045807ef6379a460345f5412ba4adc8c480a0b1bf276b35df\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     "08f277d0d2b6bd6cece7c0cf0fea5ffc78cae309041f1575056df6cad555",
+     "c404a4ddd1ed231045807ef6379a460345f5412ba4adc8c480a0b1bf276b"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "chair",
+    "fridge",
+    "kettle",
+    "lantern",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 28,
+   "kind": "write",
+   "page": "sugar",
+   "by": "director",
+   "cause": 27,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A sugar bowl sits on the windowsill above the sink, filled with river stones.\n",
+    "source": "---\nwithin: kitchen\n---\nA sugar bowl sits on the windowsill above the sink, filled with river stones.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 29,
+   "kind": "refused",
+   "page": "robbie",
+   "by": "director",
+   "cause": 27,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "rule: event.by != 'director' (from robbie) is false",
+   "from": null
+  },
+  {
+   "n": 30,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 29,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: c404a4ddd1ed231045807ef6379a460345f5412ba4adc8c480a0b1bf276b35df\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": true,
+   "shown": [
+    "chair",
+    "fridge",
+    "kettle",
+    "lantern",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 31,
+   "kind": "write",
+   "page": "rowboat",
+   "by": "director",
+   "cause": 30,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A small wooden rowboat floats in the sink, carrying one teaspoon as its only passenger.\n",
+    "source": "---\nwithin: kitchen\n---\nA small wooden rowboat floats in the sink, carrying one teaspoon as its only passenger.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 32,
+   "kind": "write",
+   "page": "window",
+   "by": "director",
+   "cause": 30,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "The window above the sink is a round brass porthole, and a goldfish swims slowly past it on the far side.\n",
+    "source": "---\nwithin: kitchen\n---\nThe window above the sink is a round brass porthole, and a goldfish swims slowly past it on the far side.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 33,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 26,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "Someone has rearranged the kitchen overnight. A chair is fol"
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: Someone has rearranged the kitchen overnight. A chair is folded inside the oven, the kettle is balanced on top of the fridge, and the lantern hangs upside down with its flame burning toward the floor, which is the most urgent problem. I'll lower the lantern and put out or steady its candle first, then fetch the kettle and chair back where they belong before I start breakfast for Karen, Dave, and Mia.\nsaid_asked: f1add8fd1e634184b4a435c487c9a0ffd4effff51b51fb8eec480f6e42ccf0d3\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "The lantern hanging upside down over the table is burning to",
+     "Someone has rearranged the kitchen overnight. A chair is fol"
+    ],
+    "said_asked": [
+     "d0e67874f83ed282ccb4ec5abd2eba938ba9d3815ae1db633fc91582c99b",
+     "f1add8fd1e634184b4a435c487c9a0ffd4effff51b51fb8eec480f6e42cc"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "chair",
+    "fridge",
+    "kettle",
+    "lantern",
+    "oven",
+    "rowboat",
+    "sink",
+    "sugar",
+    "table",
+    "window"
+   ]
+  }
+ ],
+ "4": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\napi: command\ncommand: stand\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "house",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "kitchen",
+   "by": "alice",
+   "cause": null,
+   "within": "house",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "house"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: house\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "director",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\n---\n"
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "clock",
+     "hears": "clock",
+     "when": "true",
+     "sets": [],
+     "set": {},
+     "into": null,
+     "asks": true,
+     "provider": "helper",
+     "writes": "kitchen"
+    }
+   ],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "robbie",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": ""
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: ''\n---\n"
+   },
+   "rules": [
+    {
+     "each": false,
+     "text": "event.by != 'director'"
+    }
+   ],
+   "watch": [
+    {
+     "on": "clock",
+     "hears": "clock",
+     "when": "true",
+     "sets": [],
+     "set": {},
+     "into": "said",
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "house",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "12 Wattle Street is the Hendersons' home: Karen, Dave, and their daughter Mia, who is nine.\n",
+    "source": "---\n---\n12 Wattle Street is the Hendersons' home: Karen, Dave, and their daughter Mia, who is nine.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "kitchen",
+   "by": "alice",
+   "cause": null,
+   "within": "house",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "house"
+    ],
+    "known_as": [],
+    "body": "The kitchen is a square room with one window over the sink and a door to the hall.\n",
+    "source": "---\nwithin: house\n---\nThe kitchen is a square room with one window over the sink and a door to the hall.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "oven",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A white oven against the north wall.\n",
+    "source": "---\nwithin: kitchen\n---\nA white oven against the north wall.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "fridge",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A fridge beside the door, with Mia's drawings held on by magnets.\n",
+    "source": "---\nwithin: kitchen\n---\nA fridge beside the door, with Mia's drawings held on by magnets.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "table",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A pine table with four chairs.\n",
+    "source": "---\nwithin: kitchen\n---\nA pine table with four chairs.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "sink",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A sink under the window, with two mugs in it.\n",
+    "source": "---\nwithin: kitchen\n---\nA sink under the window, with two mugs in it.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 13,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "seven in the morning\n",
+    "source": "---\n---\nseven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 14,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 13,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2304e\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     null,
+     "7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 15,
+   "kind": "refused",
+   "page": "clock",
+   "by": "director",
+   "cause": 14,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "limit: page clock lies outside space kitchen, so this write cannot change it",
+   "from": null
+  },
+  {
+   "n": 16,
+   "kind": "write",
+   "page": "table",
+   "by": "director",
+   "cause": 14,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A pine table with four chairs stands in the middle of the kitchen, and a fifth chair made of bread is pulled up at its head.\n",
+    "source": "---\nwithin: kitchen\n---\nA pine table with four chairs stands in the middle of the kitchen, and a fifth chair made of bread is pulled up at its head.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 17,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 13,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "The fifth chair at the head of the table is made of bread, a"
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: The fifth chair at the head of the table is made of bread, and it's the first thing I can't account for this morning. The two mugs in the sink are from last night, and the Hendersons' routine has been steady for two years, so the bread chair is out of place. I'll check the rest of the house for anything else that's changed, then put the kettle on and start breakfast while I work out what happened.\nsaid_asked: 4a4d83222ead2728683b221438703a2e7328633f842837c09b90d4abde56f4dd\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "The fifth chair at the head of the table is made of bread, a"
+    ],
+    "said_asked": [
+     null,
+     "4a4d83222ead2728683b221438703a2e7328633f842837c09b90d4abde56"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 18,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "five past seven in the morning\n",
+    "source": "---\n---\nfive past seven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 19,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 18,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 929a087da974cd38ed525aa32584b3fcc4fef8fd20f835d76bae94bcc4ede461\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     "7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2",
+     "929a087da974cd38ed525aa32584b3fcc4fef8fd20f835d76bae94bcc4ed"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 20,
+   "kind": "write",
+   "page": "kettle",
+   "by": "director",
+   "cause": 19,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A copper kettle sits on the windowsill above the sink, its spout turned toward the table, and it is quietly humming to itself.\n",
+    "source": "---\nwithin: kitchen\n---\nA copper kettle sits on the windowsill above the sink, its spout turned toward the table, and it is quietly humming to itself.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 21,
+   "kind": "write",
+   "page": "oven",
+   "by": "director",
+   "cause": 19,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A white oven against the north wall has its door hanging open onto a small, neatly made bed.\n",
+    "source": "---\nwithin: kitchen\n---\nA white oven against the north wall has its door hanging open onto a small, neatly made bed.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 22,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 18,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "The oven door is hanging open on a small, neatly made bed, a"
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: The oven door is hanging open on a small, neatly made bed, and a loaf-of-bread chair has been pulled up at the head of the table, which is not where bread chairs belong. The kettle is humming with its spout turned toward the table, as if it has something to say. I'll check the bed first to make sure nothing is hurt or hiding in there, then fill the kettle and see whether the bread chair is a family joke or something I need to put right before Mia comes down.\nsaid_asked: 82ef32880c6c20c5f4c3bb69bafc19a60d014c2e64ee535f1ef82223aab41d96\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "The fifth chair at the head of the table is made of bread, a",
+     "The oven door is hanging open on a small, neatly made bed, a"
+    ],
+    "said_asked": [
+     "4a4d83222ead2728683b221438703a2e7328633f842837c09b90d4abde56",
+     "82ef32880c6c20c5f4c3bb69bafc19a60d014c2e64ee535f1ef82223aab4"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "kettle",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 23,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "ten past seven in the morning\n",
+    "source": "---\n---\nten past seven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 24,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 23,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: f3d6b7053fa0de101e508b271f774e8983a85f092396e6e2c9f9ad60d8e38c54\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     "929a087da974cd38ed525aa32584b3fcc4fef8fd20f835d76bae94bcc4ed",
+     "f3d6b7053fa0de101e508b271f774e8983a85f092396e6e2c9f9ad60d8e3"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "kettle",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 25,
+   "kind": "write",
+   "page": "fridge",
+   "by": "director",
+   "cause": 24,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A fridge beside the door, with Mia's drawings held on by magnets, one of which shows the fridge eating the door.\n",
+    "source": "---\nwithin: kitchen\n---\nA fridge beside the door, with Mia's drawings held on by magnets, one of which shows the fridge eating the door.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 26,
+   "kind": "refused",
+   "page": "robbie",
+   "by": "director",
+   "cause": 24,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "rule: event.by != 'director' (from robbie) is false",
+   "from": null
+  },
+  {
+   "n": 27,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 26,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: f3d6b7053fa0de101e508b271f774e8983a85f092396e6e2c9f9ad60d8e38c54\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": true,
+   "shown": [
+    "fridge",
+    "kettle",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 28,
+   "kind": "write",
+   "page": "toaster",
+   "by": "director",
+   "cause": 27,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A toaster stands on top of the fridge, its two slots holding a folded map of the harbour, and it is warm to the touch.\n",
+    "source": "---\nwithin: kitchen\n---\nA toaster stands on top of the fridge, its two slots holding a folded map of the harbour, and it is warm to the touch.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 29,
+   "kind": "refused",
+   "page": "robbie",
+   "by": "director",
+   "cause": 27,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": null,
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": [],
+   "reason": "rule: event.by != 'director' (from robbie) is false",
+   "from": null
+  },
+  {
+   "n": 30,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 23,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "The toaster on top of the fridge is warm and has a folded ha"
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: The toaster on top of the fridge is warm and has a folded harbour map jammed in its slots, and the kettle is humming with its spout aimed at the table, where a chair made of bread sits at the head. I'll take the map out of the toaster first, since warm paper in a toaster could start a fire, then check the bread chair before I start on breakfast for Karen, Dave, and Mia.\nsaid_asked: bc2d51454a3380e904054a821b99e3682e623d5eab16ce737fd5df02314b7aae\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "The oven door is hanging open on a small, neatly made bed, a",
+     "The toaster on top of the fridge is warm and has a folded ha"
+    ],
+    "said_asked": [
+     "82ef32880c6c20c5f4c3bb69bafc19a60d014c2e64ee535f1ef82223aab4",
+     "bc2d51454a3380e904054a821b99e3682e623d5eab16ce737fd5df02314b"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "kettle",
+    "oven",
+    "sink",
+    "table",
+    "toaster"
+   ]
+  }
+ ],
+ "5": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\napi: command\ncommand: stand\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "house",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "kitchen",
+   "by": "alice",
+   "cause": null,
+   "within": "house",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "house"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: house\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "director",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\n---\n"
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "clock",
+     "hears": "clock",
+     "when": "true",
+     "sets": [],
+     "set": {},
+     "into": null,
+     "asks": true,
+     "provider": "helper",
+     "writes": "kitchen"
+    }
+   ],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "robbie",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": ""
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: ''\n---\n"
+   },
+   "rules": [
+    {
+     "each": false,
+     "text": "event.by != 'director'"
+    }
+   ],
+   "watch": [
+    {
+     "on": "clock",
+     "hears": "clock",
+     "when": "true",
+     "sets": [],
+     "set": {},
+     "into": "said",
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "house",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "12 Wattle Street is the Hendersons' home: Karen, Dave, and their daughter Mia, who is nine.\n",
+    "source": "---\n---\n12 Wattle Street is the Hendersons' home: Karen, Dave, and their daughter Mia, who is nine.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "kitchen",
+   "by": "alice",
+   "cause": null,
+   "within": "house",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "house"
+    ],
+    "known_as": [],
+    "body": "The kitchen is a square room with one window over the sink and a door to the hall.\n",
+    "source": "---\nwithin: house\n---\nThe kitchen is a square room with one window over the sink and a door to the hall.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "oven",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A white oven against the north wall.\n",
+    "source": "---\nwithin: kitchen\n---\nA white oven against the north wall.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "fridge",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A fridge beside the door, with Mia's drawings held on by magnets.\n",
+    "source": "---\nwithin: kitchen\n---\nA fridge beside the door, with Mia's drawings held on by magnets.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "table",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A pine table with four chairs.\n",
+    "source": "---\nwithin: kitchen\n---\nA pine table with four chairs.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "sink",
+   "by": "alice",
+   "cause": null,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A sink under the window, with two mugs in it.\n",
+    "source": "---\nwithin: kitchen\n---\nA sink under the window, with two mugs in it.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 13,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "seven in the morning\n",
+    "source": "---\n---\nseven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 14,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 13,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2304e\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     null,
+     "7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "oven",
+    "sink",
+    "table"
+   ]
+  },
+  {
+   "n": 15,
+   "kind": "write",
+   "page": "window",
+   "by": "director",
+   "cause": 14,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A round porthole window above the sink, looking out onto a painted sea with a small lighthouse.\n",
+    "source": "---\nwithin: kitchen\n---\nA round porthole window above the sink, looking out onto a painted sea with a small lighthouse.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 16,
+   "kind": "write",
+   "page": "table",
+   "by": "director",
+   "cause": 14,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A pine table with four chairs and a fifth chair made of folded newspaper, standing at the far end.\n",
+    "source": "---\nwithin: kitchen\n---\nA pine table with four chairs and a fifth chair made of folded newspaper, standing at the far end.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 17,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 13,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "The two mugs are still in the sink from last night, and the "
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: The two mugs are still in the sink from last night, and the newspaper chair at the far end of the table is out again, which probably means Mia has been building forts. I'll rinse the mugs, check the fridge for the eggs and milk, and start the kettle for Dave before the house wakes up.\nsaid_asked: 7a7543e9c6217d42a3a75864aaa0d0d3c46793e4545cceddb6380b0b16e79902\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "The two mugs are still in the sink from last night, and the "
+    ],
+    "said_asked": [
+     null,
+     "7a7543e9c6217d42a3a75864aaa0d0d3c46793e4545cceddb6380b0b16e7"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "oven",
+    "sink",
+    "table",
+    "window"
+   ]
+  },
+  {
+   "n": 18,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "five past seven in the morning\n",
+    "source": "---\n---\nfive past seven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 19,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 18,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 7d9effde3d8667b2729523b2a264e80e9b2387877296d62e1e4b1044fb794307\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     "7900aa3da871375a24a91f5826af81c0cdde4ca30e0565a3facf35034fd2",
+     "7d9effde3d8667b2729523b2a264e80e9b2387877296d62e1e4b1044fb79"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "fridge",
+    "oven",
+    "sink",
+    "table",
+    "window"
+   ]
+  },
+  {
+   "n": 20,
+   "kind": "write",
+   "page": "window",
+   "by": "director",
+   "cause": 19,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A round porthole window above the sink looks out onto a painted sea, where the small lighthouse now has a teapot balanced on its lamp.\n",
+    "source": "---\nwithin: kitchen\n---\nA round porthole window above the sink looks out onto a painted sea, where the small lighthouse now has a teapot balanced on its lamp.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 21,
+   "kind": "write",
+   "page": "forecast_chair",
+   "by": "director",
+   "cause": 19,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A sixth chair made of folded weather forecast stands inside the oven, its legs poking out of the door.\n",
+    "source": "---\nwithin: kitchen\n---\nA sixth chair made of folded weather forecast stands inside the oven, its legs poking out of the door.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 22,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 18,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "The folded forecast chair jammed in the oven and the teapot "
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: The folded forecast chair jammed in the oven and the teapot balanced on the painted lighthouse are both wrong for a Tuesday morning, and I can't tell whether Mia has been busy or something else has happened. I'll take the forecast chair out of the oven first, then check the sink and the table before the Hendersons come down for breakfast.\nsaid_asked: 1250001f752bef6667086e8bc85874b4c6eb60848799aa4a2582361ae245d31f\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "The two mugs are still in the sink from last night, and the ",
+     "The folded forecast chair jammed in the oven and the teapot "
+    ],
+    "said_asked": [
+     "7a7543e9c6217d42a3a75864aaa0d0d3c46793e4545cceddb6380b0b16e7",
+     "1250001f752bef6667086e8bc85874b4c6eb60848799aa4a2582361ae245"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "forecast_chair",
+    "fridge",
+    "oven",
+    "sink",
+    "table",
+    "window"
+   ]
+  },
+  {
+   "n": 23,
+   "kind": "write",
+   "page": "clock",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "ten past seven in the morning\n",
+    "source": "---\n---\nten past seven in the morning\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 24,
+   "kind": "write",
+   "page": "director",
+   "by": "director",
+   "cause": 23,
+   "within": null,
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": null,
+      "asks": true,
+      "provider": "helper",
+      "writes": "kitchen"
+     }
+    ],
+    "shows": null,
+    "within": [],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    prompt: 'You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.\n\n\n      The kitchen now holds: ![[kitchen#members]]\n\n\n      It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.\n\n      '\n    provider: helper\n    writes: kitchen\nwrites_asked: 95bf413bca0b3f7d8cfc2d1f5bdc97af4cd20a9a72736e2a20fda497f0464be8\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "writes_asked": [
+     "7d9effde3d8667b2729523b2a264e80e9b2387877296d62e1e4b1044fb79",
+     "95bf413bca0b3f7d8cfc2d1f5bdc97af4cd20a9a72736e2a20fda497f046"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "forecast_chair",
+    "fridge",
+    "oven",
+    "sink",
+    "table",
+    "window"
+   ]
+  },
+  {
+   "n": 25,
+   "kind": "write",
+   "page": "loaf",
+   "by": "director",
+   "cause": 24,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "A dry loaf of bread sits in the sink, with the two mugs stacked on top of it.\n",
+    "source": "---\nwithin: kitchen\n---\nA dry loaf of bread sits in the sink, with the two mugs stacked on top of it.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 26,
+   "kind": "write",
+   "page": "window",
+   "by": "director",
+   "cause": 24,
+   "within": "kitchen",
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "The round porthole window above the sink looks out onto a painted sea, where a yellow rubber duck floats beside the lighthouse.\n",
+    "source": "---\nwithin: kitchen\n---\nThe round porthole window above the sink looks out onto a painted sea, where a yellow rubber duck floats beside the lighthouse.\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 27,
+   "kind": "write",
+   "page": "robbie",
+   "by": "robbie",
+   "cause": 23,
+   "within": "kitchen",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "The forecast chair is stuck in the oven with its legs poking"
+    },
+    "rules": [
+     {
+      "each": false,
+      "text": "event.by != 'director'"
+     }
+    ],
+    "watch": [
+     {
+      "on": "clock",
+      "hears": "clock",
+      "when": "true",
+      "sets": [],
+      "set": {},
+      "into": "said",
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null,
+    "within": [
+     "kitchen"
+    ],
+    "known_as": [],
+    "body": "",
+    "source": "---\nwithin: kitchen\nrules:\n- event.by != 'director'\nwatch:\n- on: clock\n  when: 'true'\n  ask:\n    into: said\n    prompt: 'You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons'' home and you have worked in this kitchen every day for two years.\n\n\n      ![[robbie#context]]\n\n\n      It is ![[clock]] and you are standing in the kitchen. Around you:\n\n\n      ![[kitchen#members]]\n\n\n      Say in two or three sentences what you notice now and what you do next.\n\n      '\n    provider: helper\nsaid: The forecast chair is stuck in the oven with its legs poking out, and the dry loaf is under the two mugs in the sink, which someone has clearly been using as a bread bin. Before the Hendersons come down, I'll lift the forecast chair out of the oven, set it by the table with the others, and take the mugs out of the sink so I can wash them and find the loaf a proper place.\nsaid_asked: 0b1951f4f95bfa3d5f0f34108c21dca5bc5438471b0fb01a6e56ed315beb7ec5\n---\n"
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "The folded forecast chair jammed in the oven and the teapot ",
+     "The forecast chair is stuck in the oven with its legs poking"
+    ],
+    "said_asked": [
+     "1250001f752bef6667086e8bc85874b4c6eb60848799aa4a2582361ae245",
+     "0b1951f4f95bfa3d5f0f34108c21dca5bc5438471b0fb01a6e56ed315beb"
+    ]
+   },
+   "answered": true,
+   "shown": [
+    "forecast_chair",
+    "fridge",
+    "loaf",
+    "oven",
+    "sink",
+    "table",
+    "window"
+   ]
+  }
+ ]
+}

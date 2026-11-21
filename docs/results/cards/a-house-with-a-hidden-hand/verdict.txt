@@ -1,0 +1,1 @@
+success not met: passed 1 of 5 (bar: at least 4 of 5); median calls a draw 7 (bar: at most 6)

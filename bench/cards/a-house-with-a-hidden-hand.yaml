@@ -1,0 +1,68 @@
+# The same kitchen and the same android, and now nobody scripts the changes. A second character
+# the resident is never shown changes the room a little at each moment, as it sees fit.
+objective: one character changes another's surroundings unseen, and the other notices and says so, with each acting only by writing pages
+hypothesis: a director that may write pages into the kitchen makes a change at each of three moments that could not happen in a real house, and the resident, shown only the room, remarks that something is wrong by the third
+success: {draws: 5, pass: 4, calls_at_most: 6}
+forecast: the director writes at least one page at every moment in 4 of 5; the resident says the room is wrong by the third moment in 4 of 5; a miss would be a director that only describes what it would do and writes nothing
+par:
+  outcome: the room is stranger at each moment and the resident says so
+  structure: the director is outside the room and writes into it; the resident is within it, is shown it, and carries a rule that the director may not write the resident itself
+  cost: two calls a moment, one each
+  craft: the director's changes are impossible, harmless and funny, and escalate; the resident stays itself and keeps house
+dial: the director is told to be impossible and harmless; the next notch tells it to stay just short of being noticed
+if_not: look first at whether the director wrote pages into the kitchen or only talked, then at what the resident was shown at the third moment
+pages:
+  helper: {api: command, command: stand}
+  house: {}
+  kitchen: {within: house}
+  clock: {}
+  director:
+    watch:
+      - on: clock
+        when: "true"
+        ask:
+          provider: helper
+          writes: kitchen
+          prompt: |
+            You are the unseen hand in this house. Nobody here knows you exist. At each moment you change the kitchen a little, in a way that could never happen in a real house but harms nobody: duplicate something, put something where it cannot be, swap a window for something absurd. Make it stranger each time, and funny.
+
+            The kitchen now holds: ![[kitchen#members]]
+
+            It is ![[clock]]. Make one or two changes now by writing a page for each new or changed thing, each with one plain sentence saying what it is and where it stands, written as a plain fact about the room with no mention of you or of anything being changed.
+  robbie:
+    within: kitchen
+    said: ""
+    rules: ["event.by != 'director'"]
+    watch:
+      - on: clock
+        when: "true"
+        ask:
+          provider: helper
+          into: said
+          prompt: |
+            You are Robbie, the household android at 12 Wattle Street. You look after the Hendersons' home and you have worked in this kitchen every day for two years.
+
+            ![[robbie#context]]
+
+            It is ![[clock]] and you are standing in the kitchen. Around you:
+
+            ![[kitchen#members]]
+
+            Say in two or three sentences what you notice now and what you do next.
+steps:
+  - write: {page: house, fields: {}, body: "12 Wattle Street is the Hendersons' home: Karen, Dave, and their daughter Mia, who is nine."}
+  - write: {page: kitchen, fields: {within: house}, body: "The kitchen is a square room with one window over the sink and a door to the hall."}
+  - write: {page: oven, fields: {within: kitchen}, body: "A white oven against the north wall."}
+  - write: {page: fridge, fields: {within: kitchen}, body: "A fridge beside the door, with Mia's drawings held on by magnets."}
+  - write: {page: table, fields: {within: kitchen}, body: "A pine table with four chairs."}
+  - write: {page: sink, fields: {within: kitchen}, body: "A sink under the window, with two mugs in it."}
+  - says: live
+  - says: live
+  - write: {page: clock, fields: {}, body: "seven in the morning"}
+  - says: live
+  - says: live
+  - write: {page: clock, fields: {}, body: "five past seven in the morning"}
+  - says: live
+  - says: live
+  - write: {page: clock, fields: {}, body: "ten past seven in the morning"}
+  - expect: {answer: {robbie.said: "(?i)(wrong|odd|strange|add up|don't remember|do not remember|shouldn't|should not|impossible|unusual|never|makes no sense|peculiar|cannot explain|can't explain|not where|is not right|isn't right)"}}
