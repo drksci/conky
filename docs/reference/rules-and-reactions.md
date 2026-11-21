@@ -120,7 +120,7 @@ A write that cannot hold is refused and recorded as an empty signed commit that 
 | `cycle` | Reactions are nested deeper than 12. |
 | `watch` | A watch condition or value failed to evaluate. The refusal is recorded against the watching page. |
 | `model` | A question to a model could not be asked or was not answered. The refusal is recorded against the asking page. See [Asking a model](#asking-a-model). |
-| `limit` | A page written by an answer broke a limit of the space it was given: it is outside that space, or it names a secret or a command, or one of its watch entries would write outside the space. See [An answer that is pages](#an-answer-that-is-pages). |
+| `limit` | A write bound to a space broke a limit of that space, whether it is a page of an answer or a letter from another theatre ([connectors](connectors.md#the-post-connector)): it is outside that space, or it names a secret or a command, or one of its watch entries would write outside the space. See [An answer that is pages](#an-answer-that-is-pages). |
 
 Values given to a write must be plain data: text, numbers, booleans, lists and maps. Anything else is rejected before any commit is made.
 

@@ -154,6 +154,7 @@ A theatre is one distinct conky system, the outermost thing everything in it liv
 | `provider` | The provider an ask without one uses, the same as `CONKY_PROVIDER`: `anthropic`, `openai`, `claude`, `codex` or `none`. | A model is detected. |
 | `model` | The model for that provider, the same as `CONKY_MODEL`. | None. |
 | `command` | A mapping of a command name to its command line, the same as `CONKY_COMMAND_<NAME>`. | None. |
+| `carrier` | The carrier a peer page names none for: `local`. An unknown name is refused, and the message lists the carriers that exist. | `local` |
 
 **Precedence.** A command-line flag, then an environment variable, then `marionette.md`, then the default. `name`, `domain`, `provider` and `model` have no flag; `keys` has no variable.
 
@@ -228,6 +229,27 @@ Errors, each on one line beginning `error: `, include:
 - `error: --screen and --hands name the same page: give each its own page`
 - `error: --settle must be 0 or more seconds and --max-steps at least 1`
 - `error: cannot create the page '<page>': <reason>: create it first, or change the rule`
+
+### connect post
+
+```
+conky connect post publish [--vault V] [--keys K] [--out FILE]
+conky connect post take PEER [--vault V] [--keys K] [--from FILE]
+```
+
+Runs the [post connector](connectors.md#the-post-connector): letters cross between two theatres in a Git bundle.
+
+- `publish` runs in the sender's outbox vault. It verifies the outbox, hands it to the carrier, and prints where it went and the public key that signs it, which the receiver pins on the peer page after checking it by another route. `--out FILE` is where the `local` carrier puts the bundle. Default: beside the outbox, as `<outbox folder>.bundle`.
+- `take PEER` runs in the receiving vault. `PEER` is the page that stands for the other theatre. It asks the carrier for the peer's bundle, clones it into a temporary folder, verifies it, checks every commit against the one key on the peer page and writes each letter not yet taken as an ordinary write by the peer. `--from FILE` takes that bundle file instead of the one the peer page names.
+
+`take` prints one line per letter, `written` or `refused` with the reason, or `nothing new`, and exits 0. It exits 1 only when the bundle cannot be read or trusted, and then nothing is written. Errors include:
+
+- `error: PEER pins no key, so nothing was taken. ...`, with the key the bundle is signed by and the `conky write` command to pin it, to be run only after the key is checked with the other party
+- `error: commit <id> of the bundle is not signed by the key pinned on PEER ...`
+- `error: cannot read the bundle from PEER: ...`
+- `error: the bundle from PEER does not verify as a vault: ...`
+- `error: no bundle to take: write bundle=PATH on the peer page, or pass --from FILE`
+- `error: no carrier named '<name>': use one of local`
 
 ### export
 

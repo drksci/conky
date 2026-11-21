@@ -90,6 +90,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0051-the-theatre-is-a-page.md](decisions/0051-the-theatre-is-a-page.md): The theatre is a page, the outermost space
 - [decisions/0052-wires-attach-to-port-boards-and-parents-broker-crossings.md](decisions/0052-wires-attach-to-port-boards-and-parents-broker-crossings.md): Wires attach to port boards, and a parent brokers what crosses its wall
 - [decisions/0053-a-rule-sees-who-acts-and-a-name-cannot-be-borrowed.md](decisions/0053-a-rule-sees-who-acts-and-a-name-cannot-be-borrowed.md): A rule sees who acts, and a name cannot be borrowed
+- [decisions/0054-a-letter-crosses-between-two-theatres-over-a-carrier.md](decisions/0054-a-letter-crosses-between-two-theatres-over-a-carrier.md): A letter crosses between two theatres, over a carrier that can be swapped
 
 ### Research
 

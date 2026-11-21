@@ -56,7 +56,7 @@ A write commit changes one page. It has subject `write <page>` and these trailer
 |---|---|
 | `Kind` | `write` |
 | `Page` | the page name |
-| `Cause` | the full id of the triggering commit, only when the write is a reaction |
+| `Cause` | the full id of the triggering commit, only when the write is a reaction, or of the commit in another theatre's history that a letter was taken from ([connectors](connectors.md#the-post-connector)) |
 
 ### A model answer
 
@@ -91,7 +91,7 @@ A refused write is an empty commit, signed the same way. It changes no page. It 
 | `Attempt` | compact JSON of the attempted field changes |
 | `Body-Bytes` | the length of the supplied body in bytes, only when a body was supplied |
 | `From` | the space whose rule refused the write, only when the rule came from a space above the page and not from the page itself |
-| `Cause` | the triggering commit, only when the refused write was a reaction |
+| `Cause` | the triggering commit, only when the refused write was a reaction, or the foreign commit of a letter |
 
 The reasons begin with `shape`, `rule`, `cycle`, `watch`, `model` or `limit` ([rules and reactions](rules-and-reactions.md#refusals)). The reason names the space, as in `(from stand)`. `From` repeats it as a trailer so that refusals can be found by space without parsing the reason, and `conky log` shows it as `from <space>`.
 

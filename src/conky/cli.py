@@ -10,7 +10,19 @@ from pathlib import Path
 
 import yaml
 
-from conky import arch, assimilate, cache, connect, demo, export, model, present, theatre
+from conky import (
+    arch,
+    assimilate,
+    cache,
+    carrier,
+    connect,
+    demo,
+    export,
+    model,
+    post,
+    present,
+    theatre,
+)
 from conky.assimilate import INTO
 from conky.errors import BadInput, VerifyFailed
 from conky.page import load_value, serialize
@@ -103,6 +115,20 @@ def _parser() -> argparse.ArgumentParser:
         help="type only the first non-empty line of the keys; the page keeps the rest",
     )
     term.add_argument("program", nargs="+", metavar="COMMAND", help="after --, the program to run")
+    mail = kinds.add_parser("post", help="send letters to another theatre, or take its letters in")
+    posts = mail.add_subparsers(dest="action", required=True)
+    send = posts.add_parser("publish", help="hand this outbox vault to the carrier")
+    send.add_argument("--out", default=None, help="where to put the bundle (default: beside it)")
+    receive = posts.add_parser("take", help="take in the letters of a peer not yet taken")
+    receive.add_argument("peer", help="the peer page, named for the other theatre")
+    receive.add_argument("--from", dest="source", default=None, help="the bundle file to take")
+    for one in (send, receive):
+        one.add_argument("--vault", default=argparse.SUPPRESS, help="vault directory")
+        one.add_argument(
+            "--keys",
+            default=argparse.SUPPRESS,
+            help="private key directory (default: ~/.conky/keys)",
+        )
     demo_cmd = sub.add_parser("demo", help="build a small example vault and show it working")
     demo_cmd.add_argument(
         "name", nargs="?", default="lemonade", help="the example (default: lemonade)"
@@ -239,6 +265,11 @@ def _in(
             print(line)
         return 0
     vault = Vault(root, settings.keys_dir(), store)
+    if args.command == "connect" and args.connector == "post":
+        if args.action == "publish":
+            return post.publish(vault, args.out, settings.carrier.value or carrier.DEFAULT, print)
+        name = settings.carrier.value or carrier.DEFAULT
+        return post.take(vault, args.peer, name, args.source, _now, ui, print)
     if args.command == "connect":
         settings = connect.Settings(
             args.actor, args.screen, args.hands, args.settle, args.max_steps, args.first_line

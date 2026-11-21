@@ -29,6 +29,10 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `space` | A page that other pages lie within, handing down its rules. A space may carry `shows`, which says how many of its members an embedded list shows and in what order. |
 | `theatre` | One distinct conky system, the outermost thing everything in it lives in: its vault together with `marionette.md`, the settings true only of the machine it is running on. Also the page named `theatre`, the outermost space: when a vault has it, every other page lies within it, and the id of the vault's first commit is the theatre's identity. |
 | `marionette.md` | The optional settings file at the root of a vault's folder: Markdown with frontmatter, kept out of the vault's history, never a page. |
+| `peer` | A page that stands for another theatre: its `key` pins that theatre's public key, it is the actor name on what arrives from there, and it is the space those letters land in. |
+| `letter` | A page written in another theatre's outbox and taken into this one as an ordinary write by the peer. |
+| `carrier` | A plug that makes an outbox available as a Git bundle and brings a peer's bundle here. The `local` driver hands over a file. |
+| `post` | The connector that publishes an outbox and takes a peer's letters in. |
 | `error` | A message that says what went wrong and what to do next. |
 
 ## Verbs
@@ -102,12 +106,14 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `provider` | The provider an ask without one uses, the same as `CONKY_PROVIDER`. |
 | `model` | The model for that provider, the same as `CONKY_MODEL`. |
 | `command` | A mapping of command name to command line, the same as `CONKY_COMMAND_<NAME>`. |
+| `carrier` | The carrier a peer page names none for: `local`. |
 
 ## Connectors
 
 | Name | Meaning |
 |---|---|
 | `terminal` | Gives a vault eyes and hands on a terminal program. |
+| `post` | Publishes an outbox vault and takes a peer's letters into this one. |
 
 ## Reserved keys
 
@@ -157,7 +163,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 |---|---|
 | `Kind` | `write` or `refused`. |
 | `Page` | The page the event concerns. |
-| `Cause` | The event whose reaction this is. |
+| `Cause` | The event whose reaction this is, or the commit of another theatre a letter was taken from. |
 | `Reason` | Why a write was refused. |
 | `Attempt` | The refused change as compact JSON. |
 | `Body-Bytes` | The size of the body a refused write tried to set. |
@@ -185,7 +191,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `rule` | A rule was false, could not be evaluated or came from a space that is missing or loops. |
 | `watch` | A watch expression failed to evaluate. |
 | `model` | A named provider could not be asked or did not answer. |
-| `limit` | A page written by an answer broke a limit of the space it was given. |
+| `limit` | A write bound to a space, an answer or a letter, broke a limit of that space. |
 
 ## Errors
 

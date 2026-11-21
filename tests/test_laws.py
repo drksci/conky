@@ -712,3 +712,23 @@ def test_a_name_cannot_be_taken_over_with_another_key(vault: Vault, tmp_path: Pa
         taker.write("cooler", {"stock": 9}, None, actor="alice", at=AT)
     assert commits(vault) == before
     vault.verify()
+
+
+@arch.holds("law.post.pinned")
+def test_nothing_unverified_is_ever_attributed_to_a_peer(tmp_path: Path) -> None:
+    from conky.cli import main
+
+    out = Vault.init(tmp_path / "outbox", tmp_path / "ka")
+    home = Vault.init(tmp_path / "home", tmp_path / "kb")
+    assert w(out, "hello", {"n": 1}, actor="sender").ok
+    assert w(out, "forged", {"n": 2}, actor="stranger").ok
+    bundle = tmp_path / "out.bundle"
+    mine = ["--vault", str(out.path), "--keys", str(out.keys_dir)]
+    assert main([*mine, "connect", "post", "publish", "--out", str(bundle)]) == 0
+    kind, blob = (tmp_path / "ka" / "sender.pub").read_text().split()[:2]
+    assert w(home, "lisbon", {"key": f"{kind} {blob}", "bundle": str(bundle)}).ok
+    before = commits(home)
+    yours = ["--vault", str(home.path), "--keys", str(home.keys_dir)]
+    assert main([*yours, "connect", "post", "take", "lisbon"]) == 1
+    assert commits(home) == before
+    assert not (home.pages_dir / "hello.md").exists()

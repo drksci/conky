@@ -10,13 +10,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from conky import arch, cache, git, model
+from conky import arch, cache, carrier, git, model
 from conky.errors import BadInput
 from conky.page import NAME, THEATRE, ShapeError, given
 
 FILE = "marionette.md"
 EXCLUDE = Path(".git") / "info" / "exclude"
-KEYS = ("name", "domain", "keys", "cache", "provider", "model", "command")
+KEYS = ("name", "domain", "keys", "cache", "provider", "model", "command", "carrier")
 DEFAULT_DOMAIN = "local"
 DEFAULT_NAME = "theatre"
 DEFAULT_KEYS = "~/.conky/keys"
@@ -48,6 +48,7 @@ class Theatre:
     provider: Setting
     model: Setting
     commands: Mapping[str, Setting]
+    carrier: Setting
     identity: str | None = None
 
     @property
@@ -100,6 +101,7 @@ class Theatre:
             f"cache: {show(self.cache, '')}",
             f"provider: {show(self.provider, 'not set, so a model is detected')}",
             f"model: {show(self.model, 'not set')}",
+            f"carrier: {show(self.carrier, '')}",
         ]
         lines += [f"command {n}: {show(s, '')}" for n, s in sorted(self.commands.items())]
         names = [*model.KEY_VARIABLES.values()]
@@ -154,7 +156,7 @@ def _checked(head: dict[str, Any]) -> dict[str, Any]:
     if unknown:
         raise _refuse(f"{unknown[0]} is not a setting: use one of {', '.join(KEYS)}")
     out: dict[str, Any] = {}
-    for key in ("name", "domain", "keys", "cache", "provider", "model"):
+    for key in ("name", "domain", "keys", "cache", "provider", "model", "carrier"):
         if key in head:
             out[key] = _text(key, head[key], {"name": "lemon", "domain": "home"}.get(key, "value"))
     if "name" in out and not NAME.match(out["name"]):
@@ -168,6 +170,10 @@ def _checked(head: dict[str, Any]) -> dict[str, Any]:
     if "provider" in out and out["provider"].lower() not in (*model.CHOICES, "none"):
         raise _refuse(
             f"provider is {out['provider']!r}: use one of {', '.join((*model.CHOICES, 'none'))}"
+        )
+    if "carrier" in out and out["carrier"] not in carrier.DRIVERS:
+        raise _refuse(
+            f"carrier is {out['carrier']!r}: use one of {', '.join(sorted(carrier.DRIVERS))}"
         )
     if "command" in head:
         out["command"] = _commands(head["command"])
@@ -268,6 +274,7 @@ def resolve(
         provider=chosen(None, model.PROVIDER_VARIABLE, "provider"),
         model=chosen(None, model.MODEL_VARIABLE, "model"),
         commands=commands,
+        carrier=own("carrier") if "carrier" in mine else Setting(carrier.DEFAULT, DEFAULT),
         identity=identity(root),
     )
 

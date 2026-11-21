@@ -8,7 +8,7 @@ source: maintainers
 
 # Connectors
 
-This page specifies the terminal connector, the only connector built. A connector is a process that runs beside a vault, holds no state, signs its writes with its own key and obeys the same rules as any other actor. Stop it and start another and nothing is lost, because everything it did is in the vault's history. The idea is in [connectors](../ideas/connectors.md).
+This page specifies the connectors built: the terminal connector and the post connector. A connector is a process that runs beside a vault, holds no state, signs its writes with its own key and obeys the same rules as any other actor. Stop it and start another and nothing is lost, because everything it did is in the vault's history. The idea is in [connectors](../ideas/connectors.md).
 
 ## The terminal connector
 
@@ -62,6 +62,68 @@ One line for each screen written, one for each set of keys sent and one for the 
 - The program gets the terminal on its standard streams but not as its controlling terminal, so a program that opens `/dev/tty` directly may not work.
 - One program and one pair of pages per run. To play two programs, run two connectors with different `--screen`, `--hands` and `--as`.
 - A rule that refuses writes to the `--screen` page stops the run from recording screens. The refusal is recorded and printed.
+
+## The post connector
+
+```
+conky connect post publish [--vault V] [--keys K] [--out FILE]
+conky connect post take PEER [--vault V] [--keys K] [--from FILE]
+```
+
+The options are in the [command line reference](cli.md#connect-post). A letter is a page that crosses from one theatre to another. The image is a diplomatic bag: letters cross, laws do not, and the bag is sealed. Each theatre keeps its own rules, and the receiver judges every letter by them.
+
+**The outbox.** The sender's outbox is a small vault of its own, made with `conky init` and written with ordinary writes, so nothing else of the sender's vault leaves with it. Git bundles by commit range, not by path, and a signed commit covers a whole tree, so a separate vault is the one way to share a part. `publish` verifies it and hands it to the carrier.
+
+**What a bundle reveals.** There is no encryption. Whoever can fetch a bundle can read every page and every version in that outbox, every refusal, and the public keys of its actors. Use one outbox for each recipient where letters must stay apart.
+
+### The peer page
+
+A peer is a page in the receiver's vault, named for the other theatre (its short name, see `conky theatre`). It says who they are, it is the actor name on what arrives, and it is the space their letters land in.
+
+| Field | Meaning |
+|---|---|
+| `key` | The sender's public key line, `ssh-ed25519 AAAA...`. Writing it is the first contact accepted: a signed write by a person here, made after checking the key with the other party by another route. No secret is involved. |
+| `carrier` | Which driver brings the bundle. Default: the `carrier` of `marionette.md`, else `local`. |
+| `bundle` | For the `local` driver, the path of the bundle file. |
+| `within` | Optional: a space whose rules judge every peer's letters, such as an `inbox`. |
+
+### Taking letters in
+
+`take` works in this order, and a failure before the last step writes nothing:
+
+1. It reads the peer page and asks the carrier for the bundle file.
+2. It clones the bundle into a temporary folder, so nothing foreign enters the receiver's repository, and verifies it as a vault.
+3. It checks every commit against the one key on the peer page, with an allowed-signers file that holds that key alone. The bundle's own list of signers proves nothing and is not used. A commit signed by any other key, even one the bundle lists, stops the take.
+4. It lists the bundle's kept writes, oldest first, and skips those already taken.
+5. For each, it reads the page as written, keeps its fields and body, leaves its `rules` and `watch` behind and says so, sets its `within` to the peer page, and writes it to the receiver's vault as the peer, with `Cause` set to the foreign commit.
+
+A letter is judged like any write: by the rules of the spaces it lies within, and by these limits, which are the [bound write](rules-and-reactions.md#an-answer-that-is-pages) the runtime already has. It cannot change a page that lies outside the peer's space, cannot carry a `secret` or `command` field, and cannot be named after the peer page itself. A refusal is recorded like any other, with the letter's `Cause`.
+
+Nothing records what is taken apart from the history: the foreign commits already taken are the `Cause` values of commits by the peer. A letter is taken once, and one that was refused is refused once. A page the letter names that the peer already made is changed by the fields the letter sets, as any write changes a page.
+
+A space can say who may write: `each: "within(event.by, 'peers')"` on an inbox admits letters only from peers that lie within `peers`, and `each: "!has(page.text) || size(page.text) < 500"` turns away a long one. An `on: refusal` entry on the peer page counts or notes every letter turned away.
+
+### The carrier
+
+A carrier is the seam for real transports. It has two methods and holds no state:
+
+```
+publish(outbox: Path, to: str | None) -> str       # make the outbox available as a bundle; say where
+fetch(peer: Mapping, where: str | None) -> Path    # bring the peer's bundle here; return the file
+```
+
+`peer` is the fields of the peer page, and `where` is `--from`. Nothing else is asked of a carrier, because nothing else is consumed.
+
+The `local` driver, the default, writes `git bundle create FILE main` to a path and returns the path named by the peer page's `bundle` field. It reads nothing of the other theatre except that file, so a shared folder, a mail attachment or a removable drive carries a letter, and a test takes with the sender's vault deleted. Which driver is the default on a machine is the `carrier` key of `marionette.md`.
+
+The first real carrier planned is [Radicle](../research/discovery.md#what-fits-conky): a private repository for each outbox with the receiver's key allowed. It is not built.
+
+### Limits of the post connector
+
+- The `local` driver only. Announcing and finding peers are not built, because nothing consumes them.
+- A person writes a letter by writing into the outbox vault. A character in the main vault sending by writing into a space is the next increment.
+- One key for each outbox: every commit must be signed by the key on the peer page. A key change is a new peer write after a check by another route.
+- No encryption, and no address resolved across a network.
 
 ## Showing a vault elsewhere
 

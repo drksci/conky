@@ -216,8 +216,13 @@ class Vault:
         actor: str,
         at: str,
         cause: str | None = None,
+        bound: str | None = None,
     ) -> Result:
-        """Write fields and body to a page, or record why the write was refused."""
+        """Write fields and body to a page, or record why the write was refused.
+
+        A bound write may only make or change pages within the space `bound`: it cannot touch a
+        page outside it, the space page itself, or give a page a secret or a command.
+        """
         check_name(page)
         check_name(actor)
         try:
@@ -226,7 +231,11 @@ class Vault:
             raise BadInput(f"values must be plain JSON data: {exc}") from exc
         if self._dirty():
             raise BadInput(self._dirty_message())
-        return self._write(page, dict(set), body, actor, at, cause, 0)
+        if bound is not None and page == bound:
+            reason = f"{Refusal.LIMIT}: page {page} is the space this write is bound to, so it "
+            reason += "cannot change it: use another page name"
+            return self._refuse(page, dict(set), body, actor, at, cause, reason, 0)
+        return self._write(page, dict(set), body, actor, at, cause, 0, bound=bound)
 
     def ask(
         self,
@@ -661,7 +670,7 @@ class Vault:
         roadmap="R29",
     )
     def _breach(self, name: str, before: Page | None, page: Page, space: str) -> str | None:
-        """Return the limit a page written by an answer breaks, if any.
+        """Return the limit a page written within a space breaks, if any.
 
         The page must lie within the space before the write, when it exists, and after it.
         The space page itself is judged by `_bind`.
@@ -671,10 +680,10 @@ class Vault:
         if not self._inside(page.within, space, name, False):
             return f"page {name} is not within space {space}: set within to it or a space inside it"
         if before is not None and not self._all_inside(before.within, space):
-            return f"page {name} lies outside space {space}, so an answer cannot change it"
+            return f"page {name} lies outside space {space}, so this write cannot change it"
         if "secret" in page.fields or "command" in page.fields:
             return (
-                f"page {name} names a secret or a command, which a page written by an answer "
+                f"page {name} names a secret or a command, which a write bound to a space "
                 "may not: leave that to the person who sets up the provider"
             )
         for entry in page.watch:
