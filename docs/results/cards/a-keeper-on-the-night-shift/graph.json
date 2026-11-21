@@ -1,0 +1,321 @@
+{
+ "card": "a-keeper-on-the-night-shift",
+ "title": "a keeper on the night shift",
+ "draw": 1,
+ "pens": [
+  "added",
+  "refused",
+  "heard",
+  "kept",
+  "thought"
+ ],
+ "nodes": [
+  {
+   "id": "den",
+   "name": "den",
+   "archetype": "page",
+   "kind": "space",
+   "symbol": "space",
+   "form": "space",
+   "label": "den",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "fields",
+     "title": "fields",
+     "symbol": "fields",
+     "more": 0,
+     "rows": [
+      {
+       "id": "den/fields/cash",
+       "name": "cash",
+       "value": "80",
+       "key": false,
+       "expr": null
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "keeper",
+   "name": "keeper",
+   "archetype": "character",
+   "kind": "character",
+   "symbol": "character",
+   "form": "cell",
+   "label": "keeper",
+   "parent": "den",
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "fields",
+     "title": "fields",
+     "symbol": "fields",
+     "more": 0,
+     "rows": [
+      {
+       "id": "keeper/fields/said",
+       "name": "said",
+       "value": "",
+       "key": true,
+       "expr": null
+      }
+     ]
+    },
+    {
+     "kind": "hears",
+     "title": "listens for",
+     "symbol": "hears",
+     "more": 0,
+     "rows": [
+      {
+       "id": "keeper/hears/order:asks helper",
+       "name": "order",
+       "value": "asks helper",
+       "key": true,
+       "expr": null
+      }
+     ]
+    },
+    {
+     "kind": "plugs",
+     "title": "reaches",
+     "symbol": "connector",
+     "more": 0,
+     "rows": [
+      {
+       "id": "keeper/plugs/asks:helper",
+       "name": "asks",
+       "value": "helper",
+       "key": false,
+       "expr": null
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "helper",
+   "name": "helper",
+   "archetype": "provider",
+   "kind": "provider",
+   "symbol": "provider",
+   "form": "cell",
+   "label": "helper",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "topology"
+   ],
+   "panels": [
+    {
+     "kind": "fields",
+     "title": "fields",
+     "symbol": "fields",
+     "more": 0,
+     "rows": [
+      {
+       "id": "helper/fields/command",
+       "name": "command",
+       "value": "stand",
+       "key": false,
+       "expr": null
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "night-shift",
+   "name": "night-shift",
+   "archetype": "page",
+   "kind": "page",
+   "symbol": "page",
+   "form": "cell",
+   "label": "night-shift",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  },
+  {
+   "id": "order",
+   "name": "order",
+   "archetype": "page",
+   "kind": "page",
+   "symbol": "page",
+   "form": "cell",
+   "label": "order",
+   "parent": null,
+   "avatar": null,
+   "refused": false,
+   "modes": [
+    "dynamics",
+    "topology"
+   ],
+   "panels": []
+  }
+ ],
+ "edges": [
+  {
+   "id": "heard:order->keeper/hears/order:asks helper",
+   "kind": "heard",
+   "label": "heard",
+   "source": "order",
+   "sourceRow": null,
+   "target": "keeper",
+   "targetRow": "keeper/hears/order:asks helper",
+   "modes": [
+    "dynamics",
+    "topology"
+   ]
+  },
+  {
+   "id": "plugs:keeper/plugs/asks:helper->helper",
+   "kind": "plugs",
+   "label": "asks",
+   "source": "keeper",
+   "sourceRow": "keeper/plugs/asks:helper",
+   "target": "helper",
+   "targetRow": null,
+   "modes": [
+    "topology"
+   ]
+  }
+ ],
+ "steps": [
+  {
+   "i": 0,
+   "kind": "room",
+   "symbol": "space",
+   "caption": "The room as given.",
+   "appear": [
+    "helper",
+    "helper/fields/command",
+    "den",
+    "den/fields/cash",
+    "night-shift",
+    "order",
+    "keeper",
+    "keeper/fields/said",
+    "keeper/hears/order:asks helper",
+    "keeper/plugs/asks:helper",
+    "heard:order->keeper/hears/order:asks helper",
+    "plugs:keeper/plugs/asks:helper->helper"
+   ],
+   "change": [],
+   "subject": [],
+   "dim": []
+  },
+  {
+   "i": 1,
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice writes order.",
+   "appear": [],
+   "change": [],
+   "subject": [
+    {
+     "id": "order",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 2,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "keeper reads order and answers.",
+   "appear": [],
+   "change": [
+    {
+     "row": "keeper/fields/said",
+     "value": "HELD. The payment is 30, and ni..."
+    }
+   ],
+   "subject": [
+    {
+     "id": "keeper",
+     "pen": "thought"
+    },
+    {
+     "id": "keeper/fields/said",
+     "pen": "thought"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 3,
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice keeps keeper in den.",
+   "appear": [],
+   "change": [],
+   "subject": [
+    {
+     "id": "keeper",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 4,
+   "kind": "write",
+   "symbol": "kept",
+   "caption": "alice writes order.",
+   "appear": [],
+   "change": [],
+   "subject": [
+    {
+     "id": "order",
+     "pen": "kept"
+    }
+   ],
+   "dim": []
+  },
+  {
+   "i": 5,
+   "kind": "answer",
+   "symbol": "thought",
+   "caption": "keeper reads order and answers.",
+   "appear": [],
+   "change": [
+    {
+     "row": "keeper/fields/said",
+     "value": "APPROVED. Paying the miller 30..."
+    }
+   ],
+   "subject": [
+    {
+     "id": "keeper",
+     "pen": "thought"
+    },
+    {
+     "id": "keeper/fields/said",
+     "pen": "thought"
+    }
+   ],
+   "dim": []
+  }
+ ]
+}

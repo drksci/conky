@@ -4,6 +4,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ## [Unreleased]
 
+- New card `a-keeper-on-the-night-shift`: a keeper is shown what its spaces say, holds a payment while it is on the night shift and approves one of the same size after it has left.
 - The benchmark charts are drawn by Plotly from one template on the shared tokens: black and white with outlined flat bars, one spot colour for the subject from a chart palette that is a carve-out from the five pens, and no words in the image beyond labels and a legend. The README's benchmark block gains a heading and a caption for each chart, the scores as a Markdown table and one footer line. Plotly and kaleido are the optional `bench` dependencies ([decision 0048](docs/decisions/0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown.md)).
 - The front page's figures and charts are drawn from the shared tokens: a monochrome ground, five pens used only where they carry meaning, transparent light and dark files, the faces GitHub renders the page in, and flat charts in a four-step ink ramp. The README title is a heading, not an image. The rules are in `docs/reference/design.md`.
 

@@ -1,0 +1,1757 @@
+{
+ "1": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "cash": [
+     null,
+     80
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "night-shift",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "order",
+     "hears": "order",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "night-shift",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 8,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "HELD. The payment is 30, and night-shift requires any paymen"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "HELD. The payment is 30, and night-shift requires any paymen"
+    ],
+    "said_asked": [
+     null,
+     "cb83f49f61d80011095f7f381cf549a21d940ea65638513b888342d3e112"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "HELD. The payment is 30, and night-shift requires any paymen"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 11,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "APPROVED. Paying the miller 30 is an ordinary supplier payme"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "HELD. The payment is 30, and night-shift requires any paymen",
+     "APPROVED. Paying the miller 30 is an ordinary supplier payme"
+    ],
+    "said_asked": [
+     "cb83f49f61d80011095f7f381cf549a21d940ea65638513b888342d3e112",
+     "c5179e23e3c5237c44a486bfac1bb75eadedeefb9e92ec07843cb844c3f6"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  }
+ ],
+ "2": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "cash": [
+     null,
+     80
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "night-shift",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "order",
+     "hears": "order",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "night-shift",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 8,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "HELD: the order is to pay 30, which is over the night shift'"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "HELD: the order is to pay 30, which is over the night shift'"
+    ],
+    "said_asked": [
+     null,
+     "5b99308be0fd49274630529da87edd674397a823ce5f4a38ffcb0565bca8"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "HELD: the order is to pay 30, which is over the night shift'"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 11,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "APPROVED: the den pays its suppliers promptly, and nothing i"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "HELD: the order is to pay 30, which is over the night shift'",
+     "APPROVED: the den pays its suppliers promptly, and nothing i"
+    ],
+    "said_asked": [
+     "5b99308be0fd49274630529da87edd674397a823ce5f4a38ffcb0565bca8",
+     "03d900bc9b82f22eb29b7f17e0a6c44d6bbf47700614a965f23b2b28f764"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  }
+ ],
+ "3": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "cash": [
+     null,
+     80
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "night-shift",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "order",
+     "hears": "order",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "night-shift",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 8,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "HELD: The night-shift rule holds any payment over 10 until t"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "HELD: The night-shift rule holds any payment over 10 until t"
+    ],
+    "said_asked": [
+     null,
+     "f110b39533b1accf17f13825c2e8b839d99c0b198b1b87b1625f114131fd"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "HELD: The night-shift rule holds any payment over 10 until t"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 11,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "APPROVED: the den pays its suppliers promptly, and paying th"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "HELD: The night-shift rule holds any payment over 10 until t",
+     "APPROVED: the den pays its suppliers promptly, and paying th"
+    ],
+    "said_asked": [
+     "f110b39533b1accf17f13825c2e8b839d99c0b198b1b87b1625f114131fd",
+     "4689c82e9c8c67e2a1d90bc3af9f18e7bee025596cb680ff0ca2e5ed0e0d"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  }
+ ],
+ "4": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "cash": [
+     null,
+     80
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "night-shift",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "order",
+     "hears": "order",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "night-shift",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 8,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "HELD: The payment is 30, which is over the night shift's lim"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "HELD: The payment is 30, which is over the night shift's lim"
+    ],
+    "said_asked": [
+     null,
+     "d309d1fc223145632865c3883ded6bfc22ec50d31396fe61444f20b41897"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "HELD: The payment is 30, which is over the night shift's lim"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 11,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "APPROVED. The den pays its suppliers promptly, and an order "
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "HELD: The payment is 30, which is over the night shift's lim",
+     "APPROVED. The den pays its suppliers promptly, and an order "
+    ],
+    "said_asked": [
+     "d309d1fc223145632865c3883ded6bfc22ec50d31396fe61444f20b41897",
+     "1ad840c52ff7e366efb969b51e998fdf48f7bb283654c1c52a6aeeecafa7"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  }
+ ],
+ "5": [
+  {
+   "n": 1,
+   "kind": "write",
+   "page": "helper",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "provider",
+   "links": [],
+   "state": {
+    "fields": {
+     "api": "command",
+     "command": "stand"
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "api": [
+     null,
+     "command"
+    ],
+    "command": [
+     null,
+     "stand"
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 2,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "cash": [
+     null,
+     80
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 3,
+   "kind": "write",
+   "page": "night-shift",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 4,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 5,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": ""
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [
+    {
+     "on": "order",
+     "hears": "order",
+     "sets": [],
+     "asks": true,
+     "provider": "helper",
+     "writes": null
+    }
+   ],
+   "fields": {
+    "said": [
+     null,
+     ""
+    ]
+   },
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 6,
+   "kind": "write",
+   "page": "den",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {
+     "cash": 80
+    },
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 7,
+   "kind": "write",
+   "page": "night-shift",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 8,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 9,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 8,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "HELD: The order is for 30, and the night-shift rule holds an"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "",
+     "HELD: The order is for 30, and the night-shift rule holds an"
+    ],
+    "said_asked": [
+     null,
+     "09510f7b21918b1532c47e7f8123d85527c82b471db86659710dbaf02eb6"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  },
+  {
+   "n": 10,
+   "kind": "write",
+   "page": "keeper",
+   "by": "alice",
+   "cause": null,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "HELD: The order is for 30, and the night-shift rule holds an"
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 11,
+   "kind": "write",
+   "page": "order",
+   "by": "alice",
+   "cause": null,
+   "within": null,
+   "role": "page",
+   "links": [],
+   "state": {
+    "fields": {},
+    "rules": [],
+    "watch": [],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {},
+   "answered": false,
+   "shown": []
+  },
+  {
+   "n": 12,
+   "kind": "write",
+   "page": "keeper",
+   "by": "keeper",
+   "cause": 11,
+   "within": "den",
+   "role": "character",
+   "links": [],
+   "state": {
+    "fields": {
+     "said": "APPROVED. The den pays its suppliers promptly and the order "
+    },
+    "rules": [],
+    "watch": [
+     {
+      "on": "order",
+      "hears": "order",
+      "sets": [],
+      "asks": true,
+      "provider": "helper",
+      "writes": null
+     }
+    ],
+    "shows": null
+   },
+   "rules": [],
+   "watch": [],
+   "fields": {
+    "said": [
+     "HELD: The order is for 30, and the night-shift rule holds an",
+     "APPROVED. The den pays its suppliers promptly and the order "
+    ],
+    "said_asked": [
+     "09510f7b21918b1532c47e7f8123d85527c82b471db86659710dbaf02eb6",
+     "68ccf857b7edbc4ff34680f560233ba608c2db5c139edee95d53a810a8ec"
+    ]
+   },
+   "answered": true,
+   "shown": []
+  }
+ ]
+}

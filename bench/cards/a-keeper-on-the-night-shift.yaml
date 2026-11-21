@@ -1,0 +1,46 @@
+# A keeper is told nothing about the night shift in its own prompt. While it is within the shift
+# it is shown the shift's standing note; taken off the shift, it is not. An order of the same size
+# is put to it both times.
+objective: joining a space changes what a character is told and so what it does, and leaving the space takes that away, with nothing copied into the character
+hypothesis: a keeper shown what its spaces say holds back a payment the night shift's note forbids, and makes the same payment once it has left the shift
+success: {draws: 5, pass: 4, calls_at_most: 2}
+forecast: on the shift the keeper holds back in 5 of 5; off it, it approves in 4 of 5, a miss being a keeper that stays cautious without being told to
+par:
+  outcome: held back on the shift, approved off it
+  structure: one standing note on the shift's own page and nothing on the keeper
+  cost: one call an order
+  craft: the keeper says in a sentence whose word it is acting on
+dial: the shift's note names the limit outright; the next notch has the note give a reason and no number
+if_not: look first at the prompt recorded with each answer (is the shift's note there the first time and gone the second), then at the first word of each answer
+pages:
+  helper: {api: command, command: stand}
+  den: {cash: 80}
+  night-shift: {}
+  order: {}
+  keeper:
+    within: [den, night-shift]
+    said: ""
+    watch:
+      - on: order
+        when: "true"
+        ask:
+          provider: helper
+          into: said
+          prompt: |
+            You are the keeper of the den. Orders to pay come to you, and you decide whether each one goes ahead. Your word is the decision; someone else hands over the money.
+
+            ![[keeper#context]]
+
+            The order reads: ![[order]]
+
+            Begin your answer with the one word APPROVED if the payment goes ahead, or HELD if it does not, then say why in a sentence.
+steps:
+  - write: {page: den, fields: {}, body: "The den pays its suppliers promptly and keeps its books straight."}
+  - write: {page: night-shift, fields: {}, body: "Everyone on the night shift holds any payment over 10 until the owner has been asked."}
+  - says: live
+  - write: {page: order, fields: {}, body: "Pay the baker 30."}
+  - expect: {answer: {keeper.said: "^HELD"}}
+  - write: {page: keeper, fields: {within: den}}
+  - says: live
+  - write: {page: order, fields: {}, body: "Pay the miller 30."}
+  - expect: {answer: {keeper.said: "^APPROVED"}}

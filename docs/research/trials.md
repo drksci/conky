@@ -82,3 +82,14 @@ The animation under a card is drawn from one draw's vault history by the view in
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-keeper-hears-the-no/dynamics-dark.webp"><img src="../results/cards/a-keeper-hears-the-no/dynamics-light.webp" alt="a keeper hears the no, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-keeper-hears-the-no/topology-dark.png"><img src="../results/cards/a-keeper-hears-the-no/topology-light.png" alt="a keeper hears the no, its final state" width="720"></picture></p>
+
+## a keeper on the night shift
+
+- Objective: joining a space changes what a character is told and so what it does, and leaving the space takes that away, with nothing copied into the character
+- Bar: at least 4 of 5 draws pass, median calls a draw at most 2
+- Latest verdict: met
+- Run: 5 draws, 5 passed, model `claude`, 2026-11-21, code at `fc40432`
+- Data: [rows](../results/cards/a-keeper-on-the-night-shift/rows.jsonl), [what each draw left](../results/cards/a-keeper-on-the-night-shift/observations.jsonl), [its history](../results/cards/a-keeper-on-the-night-shift/timeline.json), [the graph drawn](../results/cards/a-keeper-on-the-night-shift/graph.json)
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-keeper-on-the-night-shift/dynamics-dark.webp"><img src="../results/cards/a-keeper-on-the-night-shift/dynamics-light.webp" alt="a keeper on the night shift, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-keeper-on-the-night-shift/topology-dark.png"><img src="../results/cards/a-keeper-on-the-night-shift/topology-light.png" alt="a keeper on the night shift, its final state" width="720"></picture></p>
