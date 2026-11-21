@@ -96,6 +96,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0057-charts-use-plotlys-built-in-themes-and-default-styles.md](decisions/0057-charts-use-plotlys-built-in-themes-and-default-styles.md): Charts use Plotly's built-in themes and default styles
 - [decisions/0058-a-budget-the-runtime-holds.md](decisions/0058-a-budget-the-runtime-holds.md): A budget the runtime holds: asks counted from the history, a limit refusal past it, refilled by a write
 - [decisions/0059-ports-are-bright-labelled-blocks-on-paired-boards.md](decisions/0059-ports-are-bright-labelled-blocks-on-paired-boards.md): Ports are bright labelled blocks on paired boards
+- [decisions/0060-charts-take-the-minty-theme-with-monochrome-text.md](decisions/0060-charts-take-the-minty-theme-with-monochrome-text.md): Charts take the Minty theme with monochrome text
 
 ### Research
 

@@ -1408,6 +1408,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0057-charts-use-plotlys-built-in-themes-and-default-styles](../decisions/0057-charts-use-plotlys-built-in-themes-and-default-styles.md) | accepted | - |
 | [0058-a-budget-the-runtime-holds](../decisions/0058-a-budget-the-runtime-holds.md) | accepted | [`law.budget.held`](#law.budget.held), [`stage.think.budget`](#stage.think.budget), [`place.runtime.budget`](#place.runtime.budget) |
 | [0059-ports-are-bright-labelled-blocks-on-paired-boards](../decisions/0059-ports-are-bright-labelled-blocks-on-paired-boards.md) | accepted | - |
+| [0060-charts-take-the-minty-theme-with-monochrome-text](../decisions/0060-charts-take-the-minty-theme-with-monochrome-text.md) | accepted | - |
 
 ### Unplaced
 
@@ -1426,6 +1427,7 @@ Found in the documents and fitting no row above.
 | attention | [attention.md](../ideas/attention.md) | Every page hears what it chose to hear, at the cheapest layer that can deal with it, and a thinking page is shown only what its own household passed up. It needs an event a watch can read and an ordered, budgeted list of members. |
 | build on bedrock | [0031-build-on-bedrock.md](../decisions/0031-build-on-bedrock.md) | Walk a new layer one step at a time before building on it. A working rule whose check is the benchmark walkthrough. |
 | charts are drawn by Plotly and words sit in Markdown | [0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown.md](../decisions/0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown.md) | Every benchmark chart is drawn by Plotly, and its heading, caption and conditions are written beside it in Markdown. How it is styled is decision 0056. |
+| charts take the Minty theme with monochrome text | [0060-charts-take-the-minty-theme-with-monochrome-text.md](../decisions/0060-charts-take-the-minty-theme-with-monochrome-text.md) | A benchmark chart is drawn with the Minty figure templates (minty for the light file, minty_dark for the dark file) in Plotly's default style, and everything that is not a data mark (text, axis lines, ticks, grid, the goal line) is one neutral a look. |
 | charts use Plotly's built-in themes | [0057-charts-use-plotlys-built-in-themes-and-default-styles.md](../decisions/0057-charts-use-plotlys-built-in-themes-and-default-styles.md) | A benchmark chart is drawn with Plotly's plotly_white (light file) or plotly_dark (dark file) theme and its default style for the chart type, with one small overlay for a transparent ground, the page's font, tight margins and the export width. |
 | energy unit | [energy-unit.md](../ideas/energy-unit.md) | A unit of value flow that conserves only if its conversion is recorded. It waits on a grouped write and a measure of spend, and has no step of its own. |
 | faculties | [faculties.md](../ideas/faculties.md) | A page that watches another and writes the rule, entry or link a sentence asks for, tried aside before it binds. A reflex kind costs nothing and a thinking kind costs a small call. |

@@ -1,15 +1,17 @@
-"""The drawing kit for the benchmark charts: Plotly's built-in themes and default styles.
+"""The drawing kit for the benchmark charts: the Minty templates, with monochrome words.
 
-A chart is drawn with Plotly's own `plotly_white` (the light file) or `plotly_dark` (the dark
-file) and Plotly's default style for its chart type: colours, gridlines, axes, bars, legends and
-text sizes are the theme's. One small overlay, `conky`, is added on top so a chart sits on a
-README page in either mode: a transparent ground, so the page's own colour shows, the faces
-GitHub renders the page in (`type.embedded_text` in `src/conky/tokens.json`), tight margins and
-the fixed export width. Charts are not drawn from the project's colour tokens: a standard chart
-should look like a standard chart, and a maintained theme beats a hand-made one.
+A chart is drawn with the Minty figure templates from `dash-bootstrap-templates`: `minty` (the
+light file) and `minty_dark` (the dark file), in Plotly's default style for its chart type. The
+colours of the marks, the layout, the legends and the text sizes are the template's. One small
+overlay a look is added on top so a chart sits on a README page in either mode: a transparent
+ground, so the page's own colour shows, the faces GitHub renders the page in
+(`type.embedded_text` in `src/conky/tokens.json`; the template's own first face is not on a
+reader's machine), tight margins, no outline on a bar, and everything that is not a data mark
+in one neutral: all text and the goal line in the look's `color.ink`, and axis lines, ticks and
+grid in its `color.mute`. Colour is carried only by the marks, and it is the template's.
 
-Plotly and kaleido are optional (`pip install -e '.[bench]'`); `available()` says whether they
-are installed, and nothing here imports them before a chart is drawn.
+Plotly, kaleido and the templates are optional (`pip install -e '.[bench]'`); `available()` says
+whether they are installed, and nothing here imports them before a chart is drawn.
 """
 
 from __future__ import annotations
@@ -24,7 +26,7 @@ TOKENS = json.loads(
     )
 )
 LOOKS = ("light", "dark")
-THEMES = {"light": "plotly_white", "dark": "plotly_dark"}
+THEMES = {"light": "minty", "dark": "minty_dark"}
 WIDTH = 720  # the width a chart is shown at in the README, so a pixel here is a pixel there
 
 
@@ -34,19 +36,34 @@ def stack(kind: str) -> str:
 
 
 TEXT = stack("embedded_text")
-OVERLAY = {
-    "layout": {
-        "paper_bgcolor": "rgba(0,0,0,0)",
-        "plot_bgcolor": "rgba(0,0,0,0)",
-        "font": {"family": TEXT},
-        "margin": {"l": 8, "r": 8, "t": 8, "b": 8},
+INK = TOKENS["color"]["ink"]  # every word on a chart, by look
+RULE = TOKENS["color"]["mute"]  # every axis line, tick and gridline, by look
+
+
+def overlay(look: str) -> dict:
+    """What is laid over a look's template: the page's ground and face, and one neutral for
+    the words and one for the rules, so that only the marks carry colour; a bar has no outline."""
+    ink, rule = INK[look], RULE[look]
+    axis = {"gridcolor": rule, "linecolor": rule, "zerolinecolor": rule, "tickcolor": rule}
+    return {
+        "layout": {
+            "paper_bgcolor": "rgba(0,0,0,0)",
+            "plot_bgcolor": "rgba(0,0,0,0)",
+            "font": {"family": TEXT, "color": ink},
+            "margin": {"l": 8, "r": 8, "t": 8, "b": 8},
+            "xaxis": axis,
+            "yaxis": axis,
+            "annotationdefaults": {"font": {"color": ink}, "arrowcolor": ink},
+            "shapedefaults": {"line": {"color": ink}},
+        },
+        "data": {"bar": [{"marker": {"line": {"width": 0}}}]},
     }
-}
 
 
 def available() -> bool:
-    """Whether Plotly and kaleido are installed, so charts can be drawn and exported."""
+    """Whether Plotly, kaleido and the templates are installed, so charts can be drawn."""
     try:
+        import dash_bootstrap_templates  # noqa: F401
         import kaleido  # noqa: F401
         import plotly  # noqa: F401
     except ImportError:
@@ -55,12 +72,18 @@ def available() -> bool:
 
 
 def template(look: str) -> str:
-    """The name of the template for a look: the built-in theme with the overlay on top."""
+    """The name of the template for a look: its Minty template with the overlay on top."""
     import plotly.io as pio
 
-    if "conky" not in pio.templates:
-        pio.templates["conky"] = OVERLAY
-    return f"{THEMES[look]}+conky"
+    if f"conky-{look}" not in pio.templates:
+        from dash_bootstrap_templates import load_figure_template
+
+        default = pio.templates.default
+        load_figure_template(list(THEMES.values()))  # registers both, and takes the default
+        pio.templates.default = default
+        for each in LOOKS:
+            pio.templates[f"conky-{each}"] = overlay(each)
+    return f"{THEMES[look]}+conky-{look}"
 
 
 def finish(fig, height: int, **layout):

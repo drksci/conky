@@ -2,17 +2,18 @@
 
     python -m bench.charts RESULTS_DIR --out DIR
 
-Writes each chart in `FIGURES` as `NAME.light.svg` and `NAME.dark.svg`, drawn by Plotly in its
-built-in theme and default style (`bench/kit.py`), and beside them `runs.csv` and `runs.json`
+Writes each chart in `FIGURES` as `NAME.light.svg` and `NAME.dark.svg`, drawn by Plotly in the
+Minty template and its default style (`bench/kit.py`), and beside them `runs.csv` and `runs.json`
 (the standard record of each run, see `bench/record.py`), `series.json` (its series) and
 `shapes.json` (what each run became), so the same data can be drawn another way. A chart sets
 its data and its chart type and nothing else. Its heading, caption and conditions are written
 beside it in Markdown by `bench/publish.py`.
 
 Harnesses are listed in one order (`rows`): the subject first, then the harnesses that use a
-model, then those that do not; Plotly's default colour sequence colours them in that order, so
-the subject takes the first colour in every chart. Without Plotly and kaleido the data files are
-still written and the charts already on disk are left as they are.
+model, then those that do not; the template's colour sequence colours them in that order, so
+the subject takes the first colour in every chart. Without Plotly, kaleido and the
+templates the data files are still written and the charts already on disk are left as
+they are.
 """
 
 from __future__ import annotations
@@ -137,7 +138,7 @@ def arm_order(arms: dict[str, list[Run]]) -> list[str]:
 def rows(arms: dict[str, list[Run]]) -> list[str]:
     """The one row order every chart uses: the subject, then the harnesses that use a model,
     then those that do not, each group by its label. A chart colours a harness by its place in
-    this order, so the subject takes Plotly's first colour in every chart."""
+    this order, so the subject takes the template's first colour in every chart."""
     return sorted(
         arms,
         key=lambda a: (
@@ -182,7 +183,7 @@ def ends(run: Run) -> dict:
 
 
 def _figure(look: str, traces, height: int, **layout):
-    """A figure on the look's theme, the traces in the colour order Plotly gives them."""
+    """A figure on the look's template, the traces in the colour order it gives them."""
     import plotly.graph_objects as go
 
     fig = go.Figure(data=list(traces), layout={"template": kit.template(look)})
@@ -387,8 +388,8 @@ FIGURES = {
 def render(runs: list[Run], out: Path, kind: str = "runs") -> list[Path]:
     """Write every chart and the data behind them. kind names the set: pilot, result or runs.
 
-    Without Plotly and kaleido only the data is written, the charts on disk are left alone, and
-    a line on standard error says so."""
+    Without Plotly, kaleido and the templates only the data is written, the charts on disk
+    are left alone, and a line on standard error says so."""
     out.mkdir(parents=True, exist_ok=True)
     written = []
     if kit.available():
@@ -400,8 +401,8 @@ def render(runs: list[Run], out: Path, kind: str = "runs") -> list[Path]:
         written += kit.export(figures)
     else:
         print(
-            "charts not drawn: Plotly and kaleido are not installed, so the charts already "
-            "here are kept; install them with pip install -e '.[bench]'",
+            "charts not drawn: Plotly, kaleido and the templates are not all installed, so the "
+            "charts already here are kept; install them with pip install -e '.[bench]'",
             file=sys.stderr,
         )
     written += export(runs, out)

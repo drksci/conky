@@ -1,8 +1,8 @@
 """The benchmark charts and the words beside them, from a tiny hand-made results directory.
 
 A chart is checked as the figure Plotly is asked to draw (its data and layout), so these tests
-need no browser; they skip where Plotly is not installed. One test exports a chart twice and
-compares the bytes, where kaleido is installed too.
+need no browser; they skip where Plotly or the templates are missing. One test exports a
+chart twice and compares the bytes, where kaleido is installed too.
 
 No model and no game are run. The fixture has two arms: `loop` arrives in three turns with three
 calls (one house rule broken on turn 1); `floor-random` makes no call, breaks the same rule on
@@ -130,10 +130,11 @@ def test_load_reads_plain_series(results: Path) -> None:
 def drawn(runs, chart: str, look: str = "light") -> dict:
     """A chart's figure as plain data: what Plotly is asked to draw, without drawing it."""
     pytest.importorskip("plotly")
+    pytest.importorskip("dash_bootstrap_templates")
     return charts.FIGURES[chart](runs, look).to_plotly_json()
 
 
-def test_every_chart_is_drawn_in_the_built_in_theme_for_its_file(results: Path) -> None:
+def test_every_chart_is_drawn_in_the_installed_template_for_its_file(results: Path) -> None:
     import plotly.io as pio
 
     runs = charts.load(results)
@@ -142,27 +143,60 @@ def test_every_chart_is_drawn_in_the_built_in_theme_for_its_file(results: Path) 
             layout = drawn(runs, chart, look)["layout"]
             theme = pio.templates[kit.THEMES[look]].layout
             made = layout["template"]["layout"]
-            # the grid colour is set by the theme alone, and differs between the two
-            assert made["xaxis"]["gridcolor"] == theme.xaxis.gridcolor
+            # the colours of the marks are the template's, and its layout
             assert made["colorway"] == list(theme.colorway)
+            assert made["xaxis"]["gridwidth"] == theme.xaxis.gridwidth
             assert made["paper_bgcolor"] == made["plot_bgcolor"] == "rgba(0,0,0,0)"
             assert made["font"]["family"] == kit.TEXT
             assert "title" not in layout, f"{chart}: a title belongs in the Markdown"
-    assert kit.THEMES == {"light": "plotly_white", "dark": "plotly_dark"}
-    assert (
-        pio.templates["plotly_white"].layout.xaxis.gridcolor
-        != pio.templates["plotly_dark"].layout.xaxis.gridcolor
-    )
+    assert len({kit.THEMES[look] for look in kit.LOOKS}) == len(kit.LOOKS)
+
+
+def named(tree, key: str) -> list:
+    """Every value held under a key anywhere in a figure's plain data."""
+    if isinstance(tree, dict):
+        return [v for k, v in tree.items() if k == key] + [
+            x for k, v in tree.items() if k != key for x in named(v, key)
+        ]
+    if isinstance(tree, list | tuple):
+        return [x for v in tree for x in named(v, key)]
+    return []
+
+
+def test_words_and_rules_are_one_neutral_and_only_marks_carry_colour(results: Path) -> None:
+    runs = charts.load(results)
+    for chart in charts.FIGURES:
+        for look in kit.LOOKS:
+            fig = drawn(runs, chart, look)
+            ink, rule = kit.INK[look], kit.RULE[look]
+            made = fig["layout"].pop("template")["layout"]
+            # every colour a word is given, anywhere in the template, is the look's ink
+            words = [c for font in named(made, "font") for c in named(font, "color")]
+            assert words and set(words) == {ink}, f"{chart}: a word in a colour"
+            assert named(made["annotationdefaults"], "arrowcolor") == [ink]
+            assert named(made["shapedefaults"], "color") == [ink]
+            for axis in ("xaxis", "yaxis"):
+                lines = [made[axis].get(k) for k in
+                         ("gridcolor", "linecolor", "zerolinecolor", "tickcolor")]  # fmt: skip
+                assert set(lines) == {rule}, f"{chart}: an axis line in a colour"
+            # and the figure itself gives no word, line or shape a colour of its own
+            assert not named(fig["layout"], "color") and not named(fig["layout"], "font")
+            assert not [c for trace in fig["data"] for c in named(trace, "textfont")]
+    assert kit.INK["light"] != kit.INK["dark"]
 
 
 def test_a_chart_sets_no_colour_of_its_own(results: Path) -> None:
     runs = charts.load(results)
     for chart in charts.FIGURES:
-        fig = drawn(runs, chart)
-        for trace in fig["data"]:
-            for key in ("marker", "line"):
-                assert "color" not in trace.get(key, {}), f"{chart}: a trace sets a colour"
-        assert "colorway" not in fig["layout"]
+        for look in kit.LOOKS:
+            fig = drawn(runs, chart, look)
+            for trace in fig["data"]:
+                assert not named(trace, "color"), f"{chart}: a trace sets a colour"
+                assert not named(trace, "pattern"), f"{chart}: a mark is not a plain fill"
+                assert "line" not in trace.get("marker", {}), f"{chart}: a mark is outlined"
+            assert "colorway" not in fig["layout"]
+            bars = fig["layout"]["template"]["data"]["bar"]
+            assert all(bar["marker"]["line"]["width"] == 0 for bar in bars)
 
 
 def test_rows_keep_one_order_in_every_chart(results: Path) -> None:
@@ -214,7 +248,7 @@ def test_proposals_that_did_not_reach_the_game_are_hollow(tmp_path: Path) -> Non
 
 def test_export_is_byte_stable(results: Path, tmp_path: Path) -> None:
     if not kit.available():
-        pytest.skip("Plotly and kaleido are not installed")
+        pytest.skip("Plotly, kaleido and the templates are not installed")
     runs = charts.load(results)
     first, second = tmp_path / "a.svg", tmp_path / "b.svg"
     kit.export({first: (charts.draw_text(runs, "dark"), "text-dark")})

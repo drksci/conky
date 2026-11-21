@@ -1,11 +1,11 @@
-"""The benchmark charts are Plotly's own; the schematic figures keep their audit.
+"""The benchmark charts take a maintained template; the schematic figures keep their audit.
 
-Measured: agreements between sources, computed contrast. A chart is drawn with a built-in Plotly
-theme and sets no colour of its own, so what is asserted of the published charts is that they
-hold no raster image, name their face once and set no text below 11 pixels, and that the drawing
-code holds no colour literal. The README's schematic figures are held to a stricter audit: no text
-below 11 pixels at the width the README gives them, and their text and strokes clear the WCAG
-contrast ratio against the page they are shown on.
+Measured: agreements between sources, computed contrast. A chart is drawn with an installed
+Plotly template and takes its colours from it, so what is asserted of the published charts is
+that they hold no raster image, name their face once and set no text below 11 pixels, and that
+the drawing code holds no colour literal. The README's schematic figures are held to a stricter
+audit: no text below 11 pixels at the width the README gives them, and their text and strokes
+clear the WCAG contrast ratio against the page they are shown on.
 """
 
 from __future__ import annotations
@@ -56,8 +56,6 @@ def test_the_drawing_code_names_no_colour():
         assert not HEX.findall(source), f"{module.__name__} holds a colour literal"
         paints = set(re.findall(r"rgba?\([^)]*\)", source))
         assert paints <= {"rgba(0,0,0,0)"}, f"{module.__name__} holds a colour literal"
-    assert "colorway" not in Path(charts.__file__).read_text(encoding="utf-8")
-    assert "colorway" not in Path(kit.__file__).read_text(encoding="utf-8")
 
 
 def test_a_chart_names_its_face_once_and_sets_no_small_text():
