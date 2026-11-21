@@ -2,14 +2,22 @@
 // (dynamics is compact, topology detailed) and both looks. Each is a property, measured:
 // - one cell a node, and every cell in the detailed density has a header;
 // - nothing overflows: every cell, row and code block holds its content (scrollWidth and
-//   scrollHeight within clientWidth and clientHeight; sockets sit in a cell's padding on purpose
-//   and are left out of this);
+//   scrollHeight within clientWidth and clientHeight), and every port's name sits inside its
+//   block;
 // - nothing overlaps except by containment, and a member sits inside its space or region with
 //   at least the token padding;
-// - no two sockets overlap, every edge ends on two sockets of its own kind of signal, every
-//   watch entry has an input and an output socket, and an empty slot is drawn hollow;
+// - no two ports overlap, and every edge ends on two ports of its own kind of signal;
+// - a cell with ports has a pair of boards, left and right or top and bottom, and nothing else,
+//   each the whole length of its edge; every port is a square as wide as its board is thick;
+//   every port of the graph is drawn, solid when something is plugged in and hatched when not,
+//   and its name is unique in its cell and the one graph.json gives;
 // - text has a WCAG contrast of at least 4.5, cell edges and connectors at least 3, against the
-//   ground a picture is shown on (#ffffff light, #0d1117 dark);
+//   ground a picture is shown on (#ffffff light, #0d1117 dark), and a port's white name at least
+//   4.5 against its block;
+// - the port colours: white on each at least 4.5 in both looks, and every two kinds told apart
+//   by a distance in OKLab of at least 0.09, and at least 0.03 (about one and a half times the
+//   smallest step most people see) with protanopia, deuteranopia and tritanopia simulated by the
+//   full-severity matrices of Machado, Oliveira and Fernandes (2009) in linear RGB;
 // - colours only from the token file, symbols only from its table, and no colour, weight or
 //   size literal in the components.
 import assert from "node:assert/strict";
@@ -45,7 +53,7 @@ const rgb = (hex) => {
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
 };
 const allowed = new Set(
-  [...Object.values(t.color), ...Object.values(t.pen)].flatMap((pair) => Object.values(pair)).map((hex) => `rgb(${rgb(hex).join(", ")})`),
+  [...Object.values(t.color), ...Object.values(t.pen), ...Object.values(t.port)].flatMap((pair) => Object.values(pair)).map((hex) => `rgb(${rgb(hex).join(", ")})`),
 );
 allowed.add("rgba(0, 0, 0, 0)");
 const parse = (css) => (css.match(/[\d.]+/g) ?? []).slice(0, 3).map(Number);
@@ -55,6 +63,41 @@ const contrast = (a, b) => {
   const [x, y] = [luminance(a), luminance(b)].sort((p, q) => q - p);
   return (x + 0.05) / (y + 0.05);
 };
+
+// The port colours, told apart at a glance by everyone.
+const linear = (c) => ((c /= 255) <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+const MACHADO = {
+  protanopia: [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]],
+  deuteranopia: [[0.367322, 0.860646, -0.227968], [0.280085, 0.672501, 0.047413], [-0.01182, 0.04294, 0.968881]],
+  tritanopia: [[1.255528, -0.076749, -0.178779], [-0.078411, 0.930809, 0.147602], [0.004733, 0.691367, 0.3039]],
+};
+const oklab = ([r, g, b]) => {
+  const [l, m, q] = [
+    0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b,
+    0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b,
+    0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b,
+  ].map(Math.cbrt);
+  return [0.2104542553 * l + 0.793617785 * m - 0.0040720468 * q, 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * q, 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * q];
+};
+const seenAs = (hex, m) => {
+  const c = rgb(hex).map(linear);
+  return m ? m.map((row) => Math.min(1, Math.max(0, row.reduce((t, k, j) => t + k * c[j], 0)))) : c;
+};
+const kindsOfPort = Object.keys(t.socket);
+assert.deepEqual(Object.keys(t.port).filter((k) => k !== "label"), kindsOfPort, "tokens.json: one port colour a kind of port, in the socket table's order");
+for (const look of ["light", "dark"]) {
+  for (const k of kindsOfPort)
+    assert.ok(contrast(rgb(t.port.label[look]), rgb(t.port[k][look])) >= 4.5, `port ${k} (${look}): its white name is too faint on it`);
+  for (const [name, m] of [["normal vision", null], ...Object.entries(MACHADO)])
+    for (const [i, a] of kindsOfPort.entries())
+      for (const b of kindsOfPort.slice(i + 1)) {
+        const [p, q] = [oklab(seenAs(t.port[a][look], m)), oklab(seenAs(t.port[b][look], m))];
+        const d = Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
+        assert.ok(d >= (m ? 0.03 : 0.09), `ports ${a} and ${b} (${look}) are too alike with ${name}: ${d.toFixed(3)}`);
+      }
+}
+const prefixes = Object.values(t.socket).map((s) => s.prefix);
+assert.equal(new Set(prefixes).size, prefixes.length, "tokens.json: two kinds of port share a prefix");
 
 const server = await serve(0);
 const browser = await chromium();
@@ -96,12 +139,21 @@ try {
           };
           const hidden = (el) => Boolean(el.closest(".is-hidden"));
           const sockets = [...document.querySelectorAll(".view-graph [data-socket]")].filter((el) => !hidden(el));
-          const socketBoxes = sockets.map((el) => ({ id: el.dataset.socket, hollow: el.classList.contains("is-hollow"), ...box(el) }));
-          sockets.forEach((el) => (el.style.display = "none"));
-          const overflow = [...document.querySelectorAll(".view-graph [data-cell], .view-graph .cell-head-row, .view-graph .holds-row > *, .view-graph .rule, .view-graph .when-cell, .view-graph .then-cell, .view-graph .record-row, .view-graph .board-entry, .view-graph .expr, .view-graph .region")]
+          const socketBoxes = sockets.map((el) => {
+            const name = el.querySelector(".port-name");
+            return {
+              id: el.dataset.socket,
+              idle: el.classList.contains("is-idle"),
+              name: name.textContent,
+              label: box(name),
+              fill: getComputedStyle(el).backgroundColor,
+              ink: getComputedStyle(name).color,
+              ...box(el),
+            };
+          });
+          const overflow = [...document.querySelectorAll(".view-graph [data-cell], .view-graph .cell-head-row, .view-graph .holds-row > *, .view-graph .rule, .view-graph .when-cell, .view-graph .then-cell, .view-graph .record-row, .view-graph .foot-slot, .view-graph .expr, .view-graph .region")]
             .filter((el) => el.scrollWidth > el.clientWidth + 0.5 || el.scrollHeight > el.clientHeight + 0.5)
             .map((el) => `${el.dataset.cell ?? el.className} ${el.scrollWidth}/${el.clientWidth} ${el.scrollHeight}/${el.clientHeight}`);
-          sockets.forEach((el) => (el.style.display = ""));
           const cells = [...document.querySelectorAll(".react-flow__node [data-cell]")].map((el) => ({
             id: el.dataset.cell,
             ...box(el),
@@ -133,6 +185,7 @@ try {
           for (let n = walker.nextNode(); n; n = walker.nextNode()) {
             const el = n.parentElement;
             if (!n.textContent.trim() || hidden(el) || el.closest(".measure")) continue;
+            if (el.closest(".port:not(.is-idle), .port-tag:not(.is-idle)")) continue; // white on its block, checked against it
             texts.push({ text: n.textContent.trim().slice(0, 30), colour: getComputedStyle(el).color });
           }
           const strokes = [...document.querySelectorAll(".view-graph .react-flow__edge:not(.is-hidden) .react-flow__edge-path")].map((el) => getComputedStyle(el).stroke);
@@ -141,7 +194,8 @@ try {
         });
         const ground = rgb(GROUND[look]);
         assert.deepEqual(seen.overflow, [], `${where}: content overflows`);
-        const want = graph.nodes.filter((n) => n.modes.includes(mode)).map((n) => n.id).sort();
+        const nodesIn = graph.nodes.filter((n) => n.modes.includes(mode));
+        const want = nodesIn.map((n) => n.id).sort();
         assert.deepEqual(seen.cells.map((c) => c.id).sort(), want, `${where}: one cell a node`);
         if (mode === "topology") for (const c of seen.cells) assert.ok(c.head, `${where}: ${c.id} has no header`);
         const parent = Object.fromEntries(graph.nodes.map((n) => [n.id, n.parent]));
@@ -188,13 +242,16 @@ try {
           for (const b of seen.boards.slice(k + 1)) assert.ok(!meet(a, b), `${where}: boards ${a.id} and ${b.id} overlap`);
           const owner = a.id.split(":")[0];
           for (const c of seen.cells.filter((c) => !c.hidden)) if (!holds(c.id, owner)) assert.ok(!meet(a, c), `${where}: board ${a.id} lies on ${c.id}`);
-          // a board runs the whole edge it is on: a side board the body's height, a top or bottom
-          // board the body's width with the side boards it covers at the corners
+          // a board runs the whole edge it is on, and every port on it is a square as wide as the
+          // board is thick
           const body = seen.cells.find((c) => c.id === owner);
-          const sides = seen.boards.filter((b) => b.id === `${owner}:west` || b.id === `${owner}:east`).reduce((w, b) => w + b.w, 0);
-          const long = a.id.endsWith(":west") || a.id.endsWith(":east") ? [a.h, body.h] : [a.w, body.w + sides];
+          const upright = a.id.endsWith(":west") || a.id.endsWith(":east");
+          const long = upright ? [a.h, body.h] : [a.w, body.w];
           assert.ok(Math.abs(long[0] - long[1]) <= 1, `${where}: board ${a.id} is ${long[0]} long on an edge ${long[1]} long`);
-          const along = a.id.endsWith(":west") || a.id.endsWith(":east") ? "y" : "x";
+          const thick = upright ? a.w : a.h;
+          for (const p of a.sockets)
+            assert.ok(Math.abs(p.w - thick) <= 1 && Math.abs(p.h - thick) <= 1, `${where}: port ${p.id} is ${p.w} by ${p.h} on a board ${thick} thick`);
+          const along = upright ? "y" : "x";
           const order = [...a.sockets].sort((p, q) => p[along] - q[along]).map((s) => kinds.indexOf(sockets.get(s.id).kind));
           assert.deepEqual(order, [...order].sort((x, y) => x - y), `${where}: board ${a.id} is not in the standard order`);
         }
@@ -207,9 +264,33 @@ try {
             assert.ok(!inside, `${where}: ${d.id} enters ${s.id} away from its board`);
           }
         }
-        const hollow = new Map(seen.socketBoxes.map((s) => [s.id, s.hollow]));
-        for (const n of graph.nodes)
-          for (const s of n.footer.slots) if (!s.filled && hollow.has(s.socket)) assert.ok(hollow.get(s.socket), `${where}: empty slot ${s.id} is not hollow`);
+        // the pair of boards, and every port: drawn, named as graph.json names it, solid when
+        // something is plugged in and hatched when nothing is, its white name legible on it
+        const edgesIn = graph.edges.filter((e) => e.modes.includes(mode));
+        const crossed = new Set(edgesIn.flatMap((e) => e.hops.flatMap((h) => [h.sourceSocket, h.targetSocket])));
+        const appeared = new Set(graph.steps.slice(0, step + 1).flatMap((s) => s.appear));
+        const shownHops = edgesIn.flatMap((e) => e.hops).filter((h) => mode === "topology" || appeared.has(h.id));
+        const plugged = new Set(shownHops.flatMap((h) => [h.sourceSocket, h.targetSocket]));
+        const drawn = new Map(seen.socketBoxes.map((s) => [s.id, s]));
+        for (const n of nodesIn) {
+          if (mode === "dynamics" && !appeared.has(n.id)) continue;
+          const ports = n.board.filter((s) => s.face !== "wall" || crossed.has(s.id)).filter((s) => mode === "topology" || appeared.has(s.id));
+          const pair = seen.boards.filter((b) => b.id.split(":")[0] === n.id).map((b) => b.id.split(":")[1]).sort();
+          if (ports.length) assert.ok(["east,west", "north,south"].includes(pair.join(",")), `${where}: ${n.id} has boards ${pair.join(", ")}, not a pair`);
+          const slots = new Map(n.footer.slots.map((s) => [s.socket, s]));
+          const names = ports.map((s) => s.name);
+          assert.equal(new Set(names).size, names.length, `${where}: ${n.id} names two ports alike`);
+          for (const s of ports) {
+            const d = drawn.get(s.id);
+            assert.ok(d, `${where}: port ${s.id} is not drawn`);
+            assert.equal(d.name, s.name, `${where}: port ${s.id} is named ${d.name}, not ${s.name}`);
+            const solid = slots.has(s.id) ? slots.get(s.id).filled : plugged.has(s.id);
+            assert.equal(!d.idle, solid, `${where}: port ${s.id} is ${d.idle ? "hatched" : "solid"} with ${solid ? "something" : "nothing"} plugged in`);
+            const l = d.label;
+            assert.ok(l.x >= d.x - 0.5 && l.y >= d.y - 0.5 && l.x + l.w <= d.x + d.w + 0.5 && l.y + l.h <= d.y + d.h + 0.5, `${where}: the name of ${s.id} overflows its block`);
+            if (!d.idle) assert.ok(contrast(parse(d.ink), parse(d.fill)) >= 4.5, `${where}: the name on ${s.id} is too faint on its block`);
+          }
+        }
         for (const x of seen.texts) assert.ok(contrast(parse(x.colour), ground) >= 4.5, `${where}: "${x.text}" in ${x.colour} is too faint`);
         for (const c of seen.cells.filter((c) => !c.hidden)) assert.ok(contrast(parse(c.border), ground) >= 3, `${where}: ${c.id}'s edge in ${c.border} is too faint`);
         for (const s of seen.strokes) assert.ok(contrast(parse(s), ground) >= 3, `${where}: a connector in ${s} is too faint`);

@@ -2,13 +2,14 @@
    src/conky/tokens.json (see tokens.mjs); restyle here or in the token file, nowhere else.
    Monochrome first: ink on a transparent ground, mute for secondary text, hair for quiet lines
    inside a cell. A pen marks the subject of a step, through var(--pen) set by the .is-<meaning>
-   classes, and the kind of signal a socket and its connector carry, through var(--signal) set
-   by the .signal-<kind> classes: the one place colour is structural. */
+   classes. The ports are the one carve-out: each kind of port is a bright block in its own
+   colour from the port table, through var(--signal) set by the .signal-<kind> classes, and the
+   cables it leaves by and every chip that names it take that colour too. */
 
 :root {
   --cell-pad: var(--ds-space-base);
   --line: calc(var(--ds-size-base) * 1.4);
-  --socket: var(--ds-space-base);
+  --port: calc(var(--ds-space-wide) + var(--ds-space-fine));
   --prose: calc(var(--ds-space-far) * 8);
 }
 
@@ -182,8 +183,7 @@ html:has(.is-bare) body {
 .panel-head,
 .panel-more,
 .region-label,
-.socket-label,
-.row-tie,
+.foot-slot-word,
 .foot-tail,
 .foot-expr-label {
   font-family: var(--ds-font-code);
@@ -372,6 +372,25 @@ html:has(.is-bare) body {
   margin-bottom: var(--ds-space-fine);
 }
 
+.foot-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--ds-space-wide);
+  margin-bottom: var(--ds-space-fine);
+}
+
+.foot-slot {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-fine);
+  line-height: var(--line);
+  white-space: nowrap;
+}
+
+.foot-slot-value {
+  font-size: var(--ds-size-small);
+}
+
 .foot-tail {
   text-align: right;
   line-height: var(--line);
@@ -383,14 +402,8 @@ html:has(.is-bare) body {
   flex: 1;
 }
 
-/* a row's small number, shared with its socket on a board when the two are not side by side */
-
-.row-tie {
-  margin-left: var(--ds-space-fine);
-  text-transform: none;
-}
-
-/* port boards: a thin rectangle of its own outside an edge of the cell, sockets in a row */
+/* port boards: a pair of thin strips outside the cell, each as thick as a port is wide, a
+   hairline frame on its three outer edges; the ports sit in a row along it */
 
 .board {
   position: absolute;
@@ -419,156 +432,118 @@ html:has(.is-bare) body {
   position: absolute;
   box-sizing: border-box;
   display: flex;
-  align-items: center;
-  gap: var(--ds-space-fine);
-  height: var(--line);
-}
-
-.board-west .board-entry,
-.board-east .board-entry {
-  align-items: flex-start;
-}
-
-.board-west .board-entry:not(.is-above) > .socket-seat,
-.board-east .board-entry:not(.is-above) > .socket-seat {
-  margin-top: calc((var(--line) - var(--socket)) / 2);
-}
-
-/* a side board is thin and fixed: its words wrap there */
-.board-west .socket-label,
-.board-east .socket-label,
-.board-side-words .socket-label {
-  display: flex;
-  flex-wrap: wrap;
-  white-space: normal;
-  row-gap: 0;
-}
-
-.board-east .socket-label {
-  justify-content: flex-end;
-  text-align: right;
-}
-
-.board-side-words {
-  display: block;
-}
-
-.board-west .board-entry {
-  padding-left: calc((var(--line) - var(--socket)) / 2);
-}
-
-.board-east .board-entry {
-  flex-direction: row-reverse;
-  padding-right: calc((var(--line) - var(--socket)) / 2);
-}
-
-/* on an edge running up and down, a wall's words sit on the line above its socket, clear of the
-   jumper that goes on through */
-.board-entry.is-above {
-  flex-direction: column-reverse;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 0;
-}
-
-.board-east .board-entry.is-above {
-  align-items: flex-end;
-}
-
-.board-entry.is-above > .socket-seat {
-  margin: calc((var(--line) - var(--socket)) / 2) 0;
-}
-
-.board-north .board-entry.is-above,
-.board-south .board-entry.is-above {
-  flex-direction: row;
-  align-items: center;
-  gap: var(--ds-space-fine);
-}
-
-.board-north .board-entry.is-above > .socket-seat,
-.board-south .board-entry.is-above > .socket-seat {
-  margin: 0;
-}
-
-.board-words {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: flex-end;
 }
 
-/* sockets: small squares on a board, a mark in the pen of their signal */
+/* a port: a flat square block in its kind's colour, edge to edge across the board, its short
+   name in tiny white code type in the middle */
 
-.socket-seat {
+.port-seat {
   position: relative;
   flex: none;
-  width: var(--socket);
-  height: var(--socket);
+  width: var(--port);
+  height: var(--port);
 }
 
-.react-flow__handle.socket,
-.react-flow__handle.socket-through {
+.react-flow__handle.port,
+.react-flow__handle.port-through {
   position: absolute;
   left: 0;
   top: 0;
   box-sizing: border-box;
-  width: var(--socket);
-  height: var(--socket);
+  width: var(--port);
+  height: var(--port);
   min-width: 0;
   min-height: 0;
-  border: var(--ds-weight-fine) solid var(--ds-color-ink);
+  border: none;
   border-radius: 0;
   background: transparent;
   pointer-events: none;
   transform: none;
 }
 
-.react-flow__handle.socket::after {
-  content: "";
-  position: absolute;
-  inset: var(--ds-weight-base);
+.react-flow__handle.port {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--signal);
 }
 
-.react-flow__handle.socket-through {
+.react-flow__handle.port-through {
   opacity: 0;
 }
 
-.react-flow__handle.socket.is-hollow {
-  border-color: var(--ds-color-mute);
-}
-
-.react-flow__handle.socket.is-hollow::after {
-  display: none;
-}
-
-.socket-label {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--ds-space-fine);
-  text-transform: none;
-  line-height: var(--line);
-  white-space: nowrap;
-  color: var(--signal);
-  pointer-events: auto;
-}
-
-.socket-label .symbol {
-  margin-right: 0;
-}
-
-.socket-value {
-  font-family: var(--ds-font-text);
-  font-size: var(--ds-size-small);
+.port-name,
+.port-tag {
+  position: relative;
+  font-family: var(--ds-font-code);
+  font-size: var(--ds-size-micro);
+  line-height: 1;
   letter-spacing: 0;
+  white-space: nowrap;
+  color: var(--ds-port-label);
+}
+
+/* nothing plugged in: the same block hatched in its colour on the ground, with a dotted edge,
+   and its name in ink on a patch of ground, since white would not show there */
+.react-flow__handle.port.is-idle {
+  background: transparent;
+  border: var(--ds-weight-fine) dotted var(--signal);
+}
+
+.react-flow__handle.port.is-idle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(135deg, var(--signal) 0 var(--ds-weight-hair), transparent var(--ds-weight-hair) var(--ds-space-fine));
+}
+
+.port.is-idle .port-name,
+.port-tag.is-idle {
   color: var(--ds-color-ink);
 }
 
-.socket-tie {
-  color: var(--ds-color-mute);
+.port.is-idle .port-name {
+  padding: var(--ds-weight-hair);
+  background: var(--ds-color-paper);
+}
+
+/* the rules a wall judged at a port, on the line above its block */
+.port-rules {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--line);
+  font-size: var(--ds-size-micro);
+  color: var(--signal);
+}
+
+.port-rules .symbol {
+  margin-right: 0;
+}
+
+/* a port's name where a row, the footer, the legend or the side panel refers to it: a chip that
+   looks like the port */
+.port-tags {
+  display: inline-flex;
+  gap: var(--ds-space-hair);
+  margin-left: var(--ds-space-fine);
+  vertical-align: middle;
+}
+
+.port-tag {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: var(--ds-weight-base) var(--ds-space-hair);
+  border: var(--ds-weight-hair) solid var(--signal);
+  background: var(--signal);
+  vertical-align: middle;
+}
+
+.port-tag.is-idle {
+  border-style: dotted;
+  background: var(--ds-color-paper);
 }
 
 /* notes in a crowd, and the regions they are drawn in */
@@ -678,8 +653,7 @@ html:has(.is-bare) body {
 .when-row.is-subject .when-words,
 .when-row.is-subject .then-words,
 .record-row.is-subject,
-.board-entry.is-subject .socket-label,
-.socket-value.is-subject,
+.foot-slot.is-subject .foot-slot-value,
 .panel-text.is-subject .cell-text {
   color: var(--pen);
 }
@@ -689,8 +663,8 @@ html:has(.is-bare) body {
   border-left-color: var(--pen);
 }
 
-.board-entry.is-subject .react-flow__handle.socket {
-  border-color: var(--pen);
+.board-entry.is-subject .react-flow__handle.port {
+  outline: var(--ds-weight-base) solid var(--pen);
 }
 
 .cell.is-dim {
@@ -765,25 +739,7 @@ html:has(.is-bare) body {
   margin-right: 0.35em;
 }
 
-.legend-socket {
-  position: relative;
-  box-sizing: border-box;
-  width: var(--socket);
-  height: var(--socket);
-  margin-right: 0.45em;
-  border: var(--ds-weight-fine) solid var(--ds-color-ink);
-}
-
-.legend-socket::after {
-  content: "";
-  position: absolute;
-  inset: var(--ds-weight-base);
-  background: var(--signal);
-}
-
-.legend-mark {
-  font-family: var(--ds-font-code);
-  color: var(--signal);
+.legend .port-tag {
   margin-right: 0.45em;
 }
 
@@ -861,6 +817,22 @@ html:has(.is-bare) body {
   font-family: var(--ds-font-code);
   font-size: var(--ds-size-micro);
   color: var(--ds-color-mute);
+}
+
+.side-ports {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-fine) var(--ds-space-wide);
+  margin: 0;
+  padding: var(--ds-space-base) 0 0;
+  list-style: none;
+  font-size: var(--ds-size-small);
+}
+
+.side-port {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-fine);
 }
 
 .side-tabs {

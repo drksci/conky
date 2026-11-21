@@ -80,9 +80,8 @@ function flowNodes(graph: Graph, regions: Region[], placed: Placed | null): Node
 }
 
 /** Draw every cell once, placed nowhere and unseen, with each value at its longest, and read
- * back what React Flow measured: each cell's body, the band above a space's members and its
- * footer below them, the bottom of its header, where each row sits, and the size of the words
- * each of its sockets has on a board. */
+ * back what React Flow measured: each cell's body, and the band above a space's members and its
+ * footer below them. */
 function Measure({ graph, seen, onDone }: { graph: Graph; seen: Seen; onDone: (size: Record<string, Measured>) => void }) {
   const box = useRef<HTMLDivElement>(null);
   const nodes = useMemo(
@@ -103,24 +102,9 @@ function Measure({ graph, seen, onDone }: { graph: Graph; seen: Seen; onDone: (s
       const c = cell.getBoundingClientRect();
       const width = Math.ceil(c.width);
       const height = Math.ceil(c.height);
-      const rows: Measured["rows"] = {};
-      cell.querySelectorAll<HTMLElement>("[data-row]").forEach((el) => {
-        const r = el.getBoundingClientRect();
-        rows[el.dataset.row!] = { top: r.top - c.top, bottom: r.bottom - c.top };
-      });
-      const labels: Measured["labels"] = {};
-      wrap.querySelectorAll<HTMLElement>("[data-words]").forEach((el) => {
-        const words = el.firstElementChild?.getBoundingClientRect();
-        labels[el.dataset.words!] = { width: Math.ceil(words?.width ?? 0), height: Math.ceil(words?.height ?? 0) };
-      });
-      const sides: Measured["sides"] = {};
-      wrap.querySelectorAll<HTMLElement>("[data-side-words]").forEach((el) => {
-        sides[el.dataset.sideWords!] = Math.ceil(el.firstElementChild?.getBoundingClientRect().height ?? 0);
-      });
-      const head = cell.querySelector<HTMLElement>("[data-head]")?.getBoundingClientRect();
       const members = cell.querySelector<HTMLElement>("[data-members]");
       const band = members ? Math.ceil(members.getBoundingClientRect().top - c.top) : 0;
-      size[n.id] = { width, height, band, foot: members ? height - band : 0, head: head ? head.bottom - c.top : 0, rows, labels, sides };
+      size[n.id] = { width, height, band, foot: members ? height - band : 0 };
     }
     onDone(size);
   }, [ready, onDone, graph]);
@@ -219,11 +203,11 @@ export function App({ graph: whole, mode: firstMode, step: firstStep, bare }: { 
   const layOut = useCallback(
     (size: Record<string, Measured>) => {
       sizes.current[layoutKey] = size;
-      place(graph, size, regions, density)
+      place(graph, size, regions)
         .then((p) => setPlaced((all) => ({ ...all, [layoutKey]: p })))
         .catch((e: Error) => console.error(`the layout failed: ${e.message}`));
     },
-    [graph, regions, density, layoutKey],
+    [graph, regions, layoutKey],
   );
   const onOutgrown = useCallback(
     (grow: Record<string, { width: number; height: number }>) => {
@@ -292,7 +276,9 @@ export function App({ graph: whole, mode: firstMode, step: firstStep, bare }: { 
         </div>
         {node && (
           <Suspense fallback={<aside className="side" />}>
-            <SidePanel node={node as GraphNode} step={seen.frame.step} onClose={() => setOpened(null)} />
+            <FrameContext.Provider value={seen}>
+              <SidePanel node={node as GraphNode} step={seen.frame.step} onClose={() => setOpened(null)} />
+            </FrameContext.Provider>
           </Suspense>
         )}
       </div>

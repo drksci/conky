@@ -168,7 +168,7 @@ def test_a_connection_crosses_a_wall_only_through_its_board(tiny: Vault) -> None
     wall = next(s for s in den["board"] if s["id"] == refused["targetSocket"])
     assert [r["says"] for r in wall["rules"]] == ["no"] and len(refused["hops"]) == 1
     rule = next(r for p in den["panels"] if p["kind"] == "bound" for r in p["rows"])
-    assert wall["rules"][0]["row"] == rule["id"] and wall["rules"][0]["mark"] == rule["mark"]
+    assert wall["rules"][0]["row"] == rule["id"]
     assert not next(s for s in den["board"] if s["kind"] == "heard")["rules"]  # heard, not written
 
 
@@ -241,8 +241,48 @@ def test_every_symbol_named_is_in_the_one_table(tiny: Vault) -> None:
     assert set(dynamics.STEP_SYMBOL.values()) <= known
     sockets = {s["kind"] for n in g["nodes"] for s in n["board"]}
     assert sockets <= set(TOKENS["socket"]) == set(dynamics.BOARD_ORDER)
-    marks = [v["mark"] for v in TOKENS["socket"].values()]
-    assert len(set(marks)) == len(marks)  # one mark a kind, never two kinds alike
+    prefixes = [v["prefix"] for v in TOKENS["socket"].values()]
+    assert len(set(prefixes)) == len(prefixes)  # one prefix a kind, never two kinds alike
+    assert all(re.fullmatch(r"[a-z]{2,3}", p) for p in prefixes)
+    assert g["ports"] == {k: {"prefix": v["prefix"], "word": v["word"]}
+                          for k, v in TOKENS["socket"].items()}  # fmt: skip
+
+
+def test_every_port_has_a_short_name_from_the_prefix_table(tiny: Vault) -> None:
+    g = tiny_graph(tiny)
+    for n in g["nodes"]:
+        names = [s["name"] for s in n["board"]]
+        assert len(set(names)) == len(names), n["id"]  # unique within a cell
+        seen: dict[str, int] = {}
+        for s in n["board"]:  # the kind's prefix, then its index among the cell's ports of it
+            k = seen[s["kind"]] = seen.get(s["kind"], -1) + 1
+            assert s["name"] == f"{TOKENS['socket'][s['kind']]['prefix']}{k}"
+            assert s["pair"] == ("first" if s["face"] == "in" else "second") or s["face"] == "wall"
+
+
+def test_a_port_keeps_its_name_through_the_steps(tiny: Vault) -> None:
+    g = tiny_graph(tiny)
+    names = {s["id"]: s["name"] for n in g["nodes"] for s in n["board"]}
+    appeared = [x for step in g["steps"] for x in step["appear"] if x in names]
+    assert sorted(appeared) == sorted(names)  # each port appears once, at the step it arrives
+    for step in g["steps"]:  # and a step names a port only by its id, so never renames it
+        assert not {k for k in step if "name" in k}
+        assert all(c["id"] not in names for c in step["change"])
+
+
+def test_every_port_is_in_the_contract_plugged_in_or_not(tiny: Vault) -> None:
+    g = tiny_graph(tiny)
+    plugged = {x for e in g["edges"] for h in e["hops"] for x in (h["sourceSocket"],
+                                                                h["targetSocket"])}  # fmt: skip
+    for n in g["nodes"]:
+        board = {(s["row"], s["kind"], s["face"]) for s in n["board"]}
+        for p in n["panels"]:
+            for r in p["rows"] if p["kind"] == "when" else []:  # a watch entry: in and out
+                assert {(r["id"], "heard", "in"), (r["id"], "wrote", "out")} <= board
+        for slot in n["footer"]["slots"]:  # a standing slot, filled or not
+            assert slot["socket"] in {s["id"] for s in n["board"]}
+    den = next(n for n in g["nodes"] if n["id"] == "den")
+    assert any(s["id"] not in plugged for s in den["board"])  # its own watch hears itself
 
 
 def test_publishing_writes_the_records_the_graph_the_board_and_the_block(

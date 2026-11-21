@@ -29,9 +29,15 @@ export function onto(points: Point[], s: Point, t: Point, down: boolean): Point[
     return [s, { x: mx, y: s.y }, { x: mx, y: t.y }, t];
   }
   const p = points.map((c) => ({ ...c }));
+  const between = (v: number, a: number, b: number) => v >= Math.min(a, b) - NEAR && v <= Math.max(a, b) + NEAR;
   const fix = (end: number, next: number, to: Point): Point[] | null => {
     const a = p[end];
-    if (Math.abs(a.x - to.x) > NEAR || Math.abs(a.y - to.y) > NEAR) return null;
+    const b = p[next];
+    const near = Math.abs(a.x - to.x) <= NEAR && Math.abs(a.y - to.y) <= NEAR;
+    // an end on the line of its first stretch, as where a jumper leaves the inner face of a wall
+    // port that ELK put on the outer edge of the board, is moved along that line
+    const inLine = horizontal(a, b) ? Math.abs(a.y - to.y) <= NEAR && between(to.x, a.x, b.x) : Math.abs(a.x - to.x) <= NEAR && between(to.y, a.y, b.y);
+    if (!near && !inLine) return null;
     if (p.length > 2) {
       if (horizontal(a, p[next])) p[next].y = to.y;
       else p[next].x = to.x;

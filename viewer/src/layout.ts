@@ -1,39 +1,36 @@
 // Layout by ELK layered with hierarchy: members laid out inside their space, the notes of a
 // crowded space packed in labelled regions, and every hop of a connection routed between two
-// sockets on port boards. ELK chooses the edge of a cell each socket faces in a first pass with
-// free ports; each cell then gets a board on each edge that has sockets, and ELK lays the graph
-// out again with those boards as part of the cell, the sockets in the standard order. Sizes are
-// what React Flow measured of the cells as drawn. Every position comes from ELK or from a
-// board's own fixed measures; this file only translates the graph into ELK's terms and back.
+// ports on port boards. A cell with ports has a pair of boards on one axis: left and right, or
+// top and bottom. A first pass with free ports shows which way a cell's connections run, and a
+// cell takes the axis most of them run along (a space always left and right, so a jumper never
+// crosses its own rows). Inputs sit on the first board of the pair, outputs and slots on the
+// second, each board's ports in a row in the standard order. ELK then lays the graph out again
+// with those boards as part of the cell. Sizes are what React Flow measured of the cells as
+// drawn. Every position comes from ELK or from a board's own fixed measures; this file only
+// translates the graph into ELK's terms and back.
 import ELK, { type ElkExtendedEdge, type ElkNode, type ElkPort } from "elkjs/lib/elk.bundled.js";
-import type { Density, Graph, GraphNode, Region, Side, Socket } from "./graph";
-import { hopsOf, socketsIn, wiredIn } from "./graph";
-import { BOARD, GRID_COLUMNS, REGION_HEAD, SPACE, THICK } from "./metrics";
+import type { Graph, GraphNode, Region, Side, Socket } from "./graph";
+import { hopsOf, wiredIn } from "./graph";
+import { GRID_COLUMNS, PORT, REGION_HEAD, SPACE } from "./metrics";
 import type { Point } from "./components/Edge";
 
-/** A cell as React Flow measured it before layout: its body, the band above a space's members
- * and the footer below them, the bottom of its header, where each row sits (all from the top of
- * the body), and the size of each socket's label as a board prints it. */
+/** A cell as React Flow measured it before layout: its body, and the band above a space's
+ * members and the footer below them, from the top of the body. */
 export interface Measured {
   width: number;
   height: number;
   band: number;
   foot: number;
-  head: number;
-  rows: Record<string, { top: number; bottom: number }>;
-  labels: Record<string, { width: number; height: number }>;
-  sides: Record<string, number>; // the height of each socket's words, wrapped as a side board holds them
 }
 
-/** A socket's place on a board, in the cell's coordinates: the box of its socket and label.
- * `tied` when it is not beside its row, so both show the mark they share. */
+/** A port's place on a board, in the cell's coordinates: its block, with the line for its rules
+ * above it when a wall shows them. */
 export interface Entry {
   id: string;
   x: number;
   y: number;
   width: number;
   height: number;
-  tied: boolean;
 }
 
 export interface Board {
@@ -65,6 +62,8 @@ export interface Placed {
 const elk = new ELK();
 const SIDES: Side[] = ["NORTH", "EAST", "SOUTH", "WEST"]; // clockwise, as ELK counts ports
 const vertical = (s: Side) => s === "WEST" || s === "EAST";
+const PAIRS = { across: ["WEST", "EAST"], down: ["NORTH", "SOUTH"] } as const;
+type Axis = keyof typeof PAIRS;
 
 const ROOT = {
   "elk.algorithm": "layered",
@@ -102,50 +101,61 @@ const GRID = (count: number, w: number, h: number, columns: number) => ({
   "elk.aspectRatio": String((Math.min(count, columns) * (w + SPACE.fine)) / (Math.ceil(count / columns) * (h + SPACE.fine))),
 });
 
-/** The box of one socket's entry on a board, and how far along it the socket's centre is. On
- * an edge running up and down, a socket on a space's wall with a label has the label on a line
- * above it, so the jumper that goes on through the wall crosses no words. */
-function entrySize(s: Socket, label: { width: number } | undefined, wrapped: number, side: Side, density: Density) {
-  const lw = label?.width ?? 0;
-  if (!vertical(side)) return { w: BOARD.socket + (lw ? BOARD.gap + lw : 0), h: BOARD.line, along: BOARD.socket / 2 };
-  const w = THICK.side[density] - BOARD.pad;
-  const lh = lw ? Math.max(BOARD.line, wrapped) : 0;
-  if (s.face === "wall" && lw) return { w, h: lh + BOARD.line, along: lh + BOARD.line / 2 };
-  return { w, h: Math.max(BOARD.line, lh), along: BOARD.line / 2 };
-}
+/** How long a port's entry is along its board, and how far along it the block's centre is: a
+ * block, after the line for its rules where a wall shows them. */
+const long = (s: Socket) => PORT.block + (s.rules.length ? PORT.line : 0);
+const along = (s: Socket) => long(s) - PORT.block / 2;
+/** How long a row of ports is, with a pad at each end. */
+const rowLength = (on: Socket[]) => (on.length ? on.reduce((t, s) => t + long(s), 0) + (on.length - 1) * PORT.gap + 2 * PORT.pad : 0);
 
-type Sized = Socket & { w: number; h: number; along: number };
-
-export async function place(graph: Graph, size: Record<string, Measured>, regions: Region[], density: Density): Promise<Placed> {
+export async function place(graph: Graph, size: Record<string, Measured>, regions: Region[]): Promise<Placed> {
   const inRegion = new Map(regions.flatMap((r) => r.members.map((m) => [m, r] as const)));
   const members = (parent: string | null) => graph.nodes.filter((n) => n.parent === parent && !inRegion.has(n.id));
   const byId = new Map(graph.nodes.map((n) => [n.id, n]));
   const wired = wiredIn(graph);
-  const drawn = new Map(graph.nodes.map((n) => [n.id, socketsIn(n, density, wired)]));
   const hops = hopsOf(graph);
   const touched = new Set(hops.flatMap((h) => [h.source, h.target]));
   const apart = (kids: GraphNode[]) => kids.every((k) => !touched.has(k.id) && !members(k.id).length);
   const isSpace = (n: GraphNode) => members(n.id).length > 0 || regions.some((r) => r.space === n.id);
 
-  // Pass one: free ports, so that ELK turns each socket to face what it connects to.
-  const side: Record<string, Side> = {};
+  const side: Record<string, Side> = {}; // each port's edge
   const inset: Record<string, Record<Side, number>> = {};
-  const leaf: Record<string, { body: { width: number; height: number }; entries: Map<string, { x: number; y: number; side: Side }> }> = {};
-  const sized: Record<string, Sized[]> = {};
+  const leaf: Record<string, { body: { width: number; height: number }; at: Map<string, Point> }> = {};
   const widen: Record<string, number> = {}; // room on the right of a space, from a first pass
 
   const portsOf = (n: GraphNode, second: boolean): ElkPort[] => {
-    const all = (drawn.get(n.id) ?? []).filter((s) => wired.has(s.id));
-    if (!second) return all.map((s) => ({ id: s.id, width: 0, height: 0 }));
+    if (!second) return n.board.filter((s) => wired.has(s.id)).map((s) => ({ id: s.id, width: 0, height: 0 }));
     if (!isSpace(n)) {
-      const at = leaf[n.id].entries;
-      return all.map((s) => ({ id: s.id, x: at.get(s.id)!.x, y: at.get(s.id)!.y, width: 0, height: 0, layoutOptions: { "elk.port.side": side[s.id] } }));
+      const at = leaf[n.id].at;
+      return n.board.map((s) => ({ id: s.id, x: at.get(s.id)!.x, y: at.get(s.id)!.y, width: 0, height: 0, layoutOptions: { "elk.port.side": side[s.id] } }));
     }
+    // ELK keeps the order of a space's ports only among those with a connection, and puts the
+    // rest after them: it is given those, and the boards set every port in its row afterwards
     const round = SIDES.flatMap((d) => {
-      const on = all.filter((s) => side[s.id] === d);
+      const on = n.board.filter((s) => side[s.id] === d && wired.has(s.id));
       return d === "SOUTH" || d === "WEST" ? on.reverse() : on; // clockwise
     });
     return round.map((s, k) => ({ id: s.id, width: 0, height: 0, layoutOptions: { "elk.port.side": side[s.id], "elk.port.index": String(k) } }));
+  };
+  /** Where each of a space's ports sits along its board: in a row in the standard order, an even
+   * gap apart, between the band above its members and its footer, the row placed where its
+   * connected ports come closest to where ELK routed their connections. */
+  const rowsOf = (n: GraphNode, c: ElkNode): Map<string, number> => {
+    const elkAt = new Map((c.ports ?? []).map((p) => [p.id, p.y ?? 0]));
+    const out = new Map<string, number>();
+    for (const d of PAIRS.across) {
+      const on = n.board.filter((s) => side[s.id] === d);
+      const offset = new Map<string, number>();
+      on.reduce((t, s) => (offset.set(s.id, t + along(s)), t + long(s) + PORT.gap), 0);
+      const lo = inset[n.id].NORTH + size[n.id].band + PORT.pad;
+      const hi = Math.max(lo, (c.height ?? 0) - inset[n.id].SOUTH - size[n.id].foot - rowLength(on) + PORT.pad);
+      const wiredOn = on.filter((s) => elkAt.has(s.id));
+      const cost = (start: number) => wiredOn.reduce((t, s) => t + Math.abs(start + offset.get(s.id)! - elkAt.get(s.id)!), 0);
+      const starts = [lo, ...wiredOn.map((s) => Math.min(hi, Math.max(lo, elkAt.get(s.id)! - offset.get(s.id)!)))];
+      const start = starts.reduce((best, x) => (cost(x) < cost(best) ? x : best), starts[starts.length > 1 ? 1 : 0]);
+      on.forEach((s) => out.set(s.id, start + offset.get(s.id)!));
+    }
+    return out;
   };
 
   const region = (r: Region, second: boolean): ElkNode => {
@@ -170,14 +180,21 @@ export async function place(graph: Graph, size: Record<string, Measured>, region
     const i = second ? inset[n.id] : { WEST: 0, EAST: 0, NORTH: 0, SOUTH: 0 };
     const kids = members(n.id);
     const own = regions.filter((r) => r.space === n.id);
-    const pitch = Math.max(BOARD.line, ...(sized[n.id] ?? []).filter((s) => vertical(side[s.id])).map((s) => s.h)) + BOARD.gap;
+    const rows = Math.max(...PAIRS.across.map((d) => rowLength(n.board.filter((s) => side[s.id] === d))));
     return {
       id: n.id,
       ports: portsOf(n, second),
       children: [...kids.map((k) => build(k, second)), ...own.map((r) => region(r, second))],
       layoutOptions: {
         "elk.portConstraints": second ? "FIXED_ORDER" : "FREE",
-        ...(second ? { "elk.spacing.portPort": String(pitch), "elk.spacing.portsSurrounding": `[top=${i.NORTH + m.band + BOARD.pad},left=0,bottom=${i.SOUTH + m.foot + BOARD.pad},right=0]` } : {}),
+        ...(second
+          ? {
+              "elk.spacing.portPort": String(Math.max(...n.board.map(long)) + PORT.gap),
+              "elk.spacing.portsSurrounding": `[top=${i.NORTH + m.band + PORT.pad},left=0,bottom=${i.SOUTH + m.foot + PORT.pad},right=0]`,
+              "elk.nodeSize.constraints": "[MINIMUM_SIZE]",
+              "elk.nodeSize.minimum": `(0,${i.NORTH + m.band + rows + m.foot + i.SOUTH})`,
+            }
+          : {}),
         ...(apart(kids) ? BESIDE : {}),
         "elk.padding": `[top=${i.NORTH + m.band + SPACE.base},left=${i.WEST + SPACE.wide},bottom=${i.SOUTH + m.foot + SPACE.base},right=${i.EAST + SPACE.wide + (widen[n.id] ?? 0)}]`,
       },
@@ -191,68 +208,58 @@ export async function place(graph: Graph, size: Record<string, Measured>, region
       edges: hops.map((h) => ({ id: h.id, sources: [h.sourceSocket], targets: [h.targetSocket] }) as ElkExtendedEdge),
     });
 
+  // Pass one: free ports, so that ELK turns each port toward what it connects to.
+  const faced: Record<string, Side> = {};
   const facing = (n: ElkNode): void =>
     (n.children ?? []).forEach((c) => {
-      const space = byId.has(c.id) && isSpace(byId.get(c.id)!);
       for (const p of c.ports ?? []) {
         const w = c.width ?? 0;
         const h = c.height ?? 0;
         const d: [Side, number][] = [["WEST", p.x ?? 0], ["EAST", w - (p.x ?? 0)], ["NORTH", p.y ?? 0], ["SOUTH", h - (p.y ?? 0)]];
-        let s = d.sort((a, b) => a[1] - b[1])[0][0];
-        if (space && !vertical(s)) s = (p.x ?? 0) < w / 2 ? "WEST" : "EAST"; // a crossing never runs through a space's own rows
-        side[p.id] = s;
+        faced[p.id] = d.sort((a, b) => a[1] - b[1])[0][0];
       }
       facing(c);
     });
   facing(await run(false));
 
-  // The boards: a socket nothing plugs into sits on the bottom board, beside the slot it is.
+  // The pair of boards: on the axis most of a cell's connections run along, inputs first.
   for (const n of graph.nodes) {
     const m = size[n.id];
     if (!m) continue;
-    const all = (drawn.get(n.id) ?? []).map((s) => {
-      const d = side[s.id] ?? "SOUTH";
-      side[s.id] = d;
-      return { ...s, ...entrySize(s, m.labels[s.id], m.sides[s.id] ?? 0, d, density) };
-    });
-    sized[n.id] = all;
     const i = { WEST: 0, EAST: 0, NORTH: 0, SOUTH: 0 } as Record<Side, number>;
-    for (const d of SIDES) {
-      const on = all.filter((s) => side[s.id] === d);
-      if (on.length) i[d] = vertical(d) ? THICK.side[density] : THICK.across;
-    }
     inset[n.id] = i;
-    if (isSpace(n)) continue;
-    // A leaf's sockets beside their rows where the standard order allows, else just after.
-    const entries = new Map<string, { x: number; y: number; side: Side }>();
-    let height = m.height;
-    let width = m.width;
-    for (const d of ["WEST", "EAST"] as Side[]) {
-      let cursor = i.NORTH + m.head + BOARD.pad;
-      for (const s of all.filter((x) => side[x.id] === d)) {
-        const row = s.row ? m.rows[s.row] : undefined;
-        const want = row ? i.NORTH + (row.top + row.bottom) / 2 - s.along : cursor;
-        const top = Math.max(cursor, want);
-        entries.set(s.id, { x: 0, y: top + s.along, side: d }); // x set below, once the width is known
-        cursor = top + s.h + BOARD.gap;
-      }
-      height = Math.max(height, cursor - BOARD.gap + BOARD.pad - i.NORTH);
+    const across = n.board.filter((s) => faced[s.id] && vertical(faced[s.id])).length;
+    const down = n.board.filter((s) => faced[s.id] && !vertical(faced[s.id])).length;
+    const axis: Axis = isSpace(n) || across >= down ? "across" : "down";
+    const [first, second] = PAIRS[axis];
+    n.board.forEach((s) => (side[s.id] = s.pair === "first" ? first : second));
+    if (!n.board.length) {
+      leaf[n.id] = { body: { width: m.width, height: m.height }, at: new Map() };
+      continue;
     }
-    for (const d of ["NORTH", "SOUTH"] as Side[]) {
-      let cursor = i.WEST + BOARD.pad;
-      for (const s of all.filter((x) => side[x.id] === d)) {
-        entries.set(s.id, { x: cursor + s.along, y: 0, side: d });
-        cursor += s.w + 2 * BOARD.gap;
+    i[first] = i[second] = PORT.block;
+    if (isSpace(n)) continue;
+    // A leaf's ports in a row from the start of each board, an even gap apart.
+    const at = new Map<string, Point>();
+    let { width, height } = m;
+    for (const d of [first, second]) {
+      const on = n.board.filter((s) => side[s.id] === d);
+      let cursor = PORT.pad;
+      for (const s of on) {
+        at.set(s.id, vertical(d) ? { x: 0, y: cursor + along(s) } : { x: cursor + along(s), y: 0 });
+        cursor += long(s) + PORT.gap;
       }
-      width = Math.max(width, cursor - 2 * BOARD.gap + BOARD.pad - i.WEST);
+      if (vertical(d)) height = Math.max(height, rowLength(on));
+      else width = Math.max(width, rowLength(on));
     }
     const W = width + i.WEST + i.EAST;
     const H = height + i.NORTH + i.SOUTH;
-    for (const e of entries.values()) {
-      if (e.side === "EAST") e.x = W;
-      if (e.side === "SOUTH") e.y = H;
+    for (const [id, p] of at) {
+      if (side[id] === "EAST") p.x = W;
+      if (side[id] === "SOUTH") p.y = H;
+      if (side[id] === "NORTH" || side[id] === "SOUTH") p.x += i.WEST;
     }
-    leaf[n.id] = { body: { width, height }, entries };
+    leaf[n.id] = { body: { width, height }, at };
   }
 
   // Pass two. ELK sizes a space around its members and may leave it narrower than its own rows:
@@ -284,35 +291,26 @@ export async function place(graph: Graph, size: Record<string, Measured>, region
       walk(c, c.id, origin[c.id]);
     }
   };
-  /** The boards of a placed cell, around the entries of its sockets. */
+  /** The pair of boards of a placed cell, each the whole length of its edge, with its ports
+   * where ELK or the leaf's own row put them. */
   const boards = (n: GraphNode, c: ElkNode, box: Box, i: Record<Side, number>): Board[] => {
-    const m = size[n.id];
     const port = new Map((c.ports ?? []).map((p) => [p.id, { x: p.x ?? 0, y: p.y ?? 0 }]));
-    const at = leaf[n.id]?.entries;
+    if (isSpace(n)) rowsOf(n, c).forEach((y, id) => port.set(id, { x: 0, y }));
     const out: Board[] = [];
     for (const d of SIDES) {
-      const on = sized[n.id].filter((s) => side[s.id] === d);
-      if (!on.length) continue;
-      const entries: Entry[] = [];
-      let cursor = i.WEST + BOARD.pad; // where a socket nothing plugs into goes, after the rest
-      for (const s of on) {
-        const p = at?.get(s.id) ?? port.get(s.id) ?? { x: cursor + s.along, y: box.height };
-        if (vertical(d)) {
-          const y = p.y - s.along;
-          const x = d === "WEST" ? 0 : box.width - s.w;
-          const row = s.row ? m.rows[s.row] : undefined;
-          const tied = s.mark !== null && !(row && p.y >= i.NORTH + row.top && p.y <= i.NORTH + row.bottom);
-          entries.push({ id: s.id, x, y, width: s.w, height: s.h, tied });
-        } else {
-          const x = p.x - s.along;
-          entries.push({ id: s.id, x, y: d === "NORTH" ? 0 : box.height - s.h, width: s.w, height: s.h, tied: s.mark !== null });
-          cursor = Math.max(cursor, x + s.w + 2 * BOARD.gap);
-        }
-      }
+      if (!i[d]) continue;
       const t = i[d];
+      const entries: Entry[] = n.board
+        .filter((s) => side[s.id] === d)
+        .map((s) => {
+          const p = port.get(s.id)!;
+          return vertical(d)
+            ? { id: s.id, x: d === "WEST" ? 0 : box.width - t, y: p.y - along(s), width: t, height: long(s) }
+            : { id: s.id, x: p.x - t / 2, y: d === "NORTH" ? 0 : box.height - t, width: t, height: t };
+        });
       out.push(
         vertical(d)
-          ? { side: d, x: d === "WEST" ? 0 : box.width - t, y: i.NORTH, width: t, height: box.height - i.NORTH - i.SOUTH, entries }
+          ? { side: d, x: d === "WEST" ? 0 : box.width - t, y: 0, width: t, height: box.height, entries }
           : { side: d, x: 0, y: d === "NORTH" ? 0 : box.height - t, width: box.width, height: t, entries },
       );
     }

@@ -1,12 +1,13 @@
 // The design tokens as CSS custom properties, generated from src/conky/tokens.json at build time.
 //
-// Every colour pair becomes --ds-color-<name> and every pen --ds-pen-<name>, with the light value
-// by default, the dark value under prefers-color-scheme: dark, and either one forced by
+// Every colour pair becomes --ds-color-<name>, every pen --ds-pen-<name> and every port colour
+// --ds-port-<kind> (and --ds-port-label for the name on a block), with the light value by
+// default, the dark value under prefers-color-scheme: dark, and either one forced by
 // data-theme="light" or data-theme="dark" on the root. Weights, dashes, sizes and spaces become
 // --ds-weight-*, --ds-dash-*, --ds-size-* and --ds-space-* in px. Each meaning gets a class,
 // .is-<meaning>, that sets --pen to the pen carrying it: a stylesheet colours a subject with
-// var(--pen) and never names a pen itself. Each kind of socket gets .signal-<kind>, setting
-// --signal to the pen of the signal it carries, for sockets and the connectors plugged into them.
+// var(--pen) and never names a pen itself. Each kind of port gets .signal-<kind>, setting
+// --signal to its port colour, for the port, its name wherever it is used, and the cables it leaves by.
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
@@ -21,6 +22,7 @@ export function tokensCss(t = tokens()) {
     [
       ...Object.entries(t.color).map(([k, v]) => `  --ds-color-${k}: ${v[which]};`),
       ...Object.entries(t.pen).map(([k, v]) => `  --ds-pen-${k}: ${v[which]};`),
+      ...Object.entries(t.port).map(([k, v]) => `  --ds-port-${k}: ${v[which]};`),
       `  color-scheme: ${which};`,
     ].join("\n");
   const scale = [
@@ -37,7 +39,7 @@ export function tokensCss(t = tokens()) {
     .map(([meaning, pen]) => `.is-${meaning} { --pen: var(--ds-pen-${pen}); }`)
     .join("\n");
   const signals = Object.entries(t.socket)
-    .map(([kind, s]) => `.signal-${kind} { --signal: var(--ds-pen-${t.meaning[s.meaning]}); }`)
+    .map(([kind]) => `.signal-${kind} { --signal: var(--ds-port-${kind}); }`)
     .join("\n");
   return [
     "/* generated from src/conky/tokens.json by viewer/tokens.mjs; edit the token file */",

@@ -42,6 +42,24 @@ Charts are not drawn from the tokens. A benchmark chart is drawn with Plotly's b
 
 One small overlay, `conky` in `bench/kit.py`, sits on top of each theme so a chart can stand on a README page in either mode: a transparent ground, so GitHub's own page colour shows; the faces GitHub renders the page in (`type.embedded_text`); tight margins; and the fixed export width. A chart sets its data mapping and its chart type, and nothing else visual. Harnesses are listed in one order, the subject first, so Plotly's default colour sequence gives the subject its first colour in every chart.
 
+## Ports
+
+Ports are the second carve-out from the five pens. In a drawn trial a port is a block a few pixels wide, and a reader has to tell its kind at a glance at that size, as on the back of a network switch, where ports are colour coded. The `port` section of the token file holds one bright colour a kind, and ports, the chips that name them and the cables they leave by read nothing else for colour. Each kind also has a short prefix in the socket table; a port is named by its prefix and its index in its cell ([decision 0059](../decisions/0059-ports-are-bright-labelled-blocks-on-paired-boards.md)).
+
+| Kind | Prefix | Light | Dark | White on it |
+|---|---|---|---|---|
+| heard | `hr` | `#573ffe` | `#5b4cff` | 5.9, 5.4 |
+| turned away | `ta` | `#d00b54` | `#d21055` | 5.4, 5.3 |
+| wrote | `wr` | `#9c4700` | `#a04c00` | 6.3, 6.0 |
+| kept | `kp` | `#00837b` | `#00837b` | 4.6, 4.6 |
+| asks | `as` | `#aa04d7` | `#af14dc` | 5.7, 5.3 |
+| writes into | `wi` | `#006e29` | `#1b7b36` | 6.4, 5.3 |
+| connector | `cn` | `#525d78` | `#606b87` | 6.6, 5.3 |
+| hands down | `hd` | `#d008a4` | `#d008a4` | 4.9, 4.9 |
+| shows | `sh` | `#7d7800` | `#7d7800` | 4.6, 4.6 |
+
+The name on a port is white (`port.label`), so every colour keeps white at 4.5 or more: no pale yellow, an olive or an orange instead. The dark value is lifted where the cable needs 3 to 1 on the dark page. Every two kinds stay at least 0.09 apart in OKLab for normal vision and at least 0.03 under simulated protanopia, deuteranopia and tritanopia; `npm test` in `viewer/` checks both. A port with nothing plugged in is hatched in its colour with its name in ink. The swatches are drawn in the legend of every trial picture under `docs/results/cards/`; no separate swatch file is generated.
+
 ## Weights, dashes, sizes
 
 | Weight | hair 0.8 | fine 1.2 | base 1.6 | bold 2.4 | heavy 3.2 |

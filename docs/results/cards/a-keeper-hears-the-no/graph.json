@@ -9,6 +9,44 @@
   "kept",
   "thought"
  ],
+ "ports": {
+  "heard": {
+   "prefix": "hr",
+   "word": "heard"
+  },
+  "refused": {
+   "prefix": "ta",
+   "word": "turned away"
+  },
+  "wrote": {
+   "prefix": "wr",
+   "word": "wrote"
+  },
+  "kept": {
+   "prefix": "kp",
+   "word": "kept"
+  },
+  "asks": {
+   "prefix": "as",
+   "word": "asks"
+  },
+  "writes": {
+   "prefix": "wi",
+   "word": "writes into"
+  },
+  "connector": {
+   "prefix": "cn",
+   "word": "connector"
+  },
+  "hands": {
+   "prefix": "hd",
+   "word": "hands down"
+  },
+  "shows": {
+   "prefix": "sh",
+   "word": "shows"
+  }
+ },
  "nodes": [
   {
    "id": "den",
@@ -69,7 +107,6 @@
          "page.amount <= space.cash - 20"
         ]
        },
-       "mark": 1,
        "key": true
       }
      ]
@@ -97,7 +134,6 @@
          }
         }
        ],
-       "mark": null,
        "key": true
       }
      ],
@@ -133,25 +169,37 @@
      "id": "den#heard:wall:1",
      "kind": "heard",
      "face": "wall",
+     "pair": "first",
      "row": null,
      "order": 0,
+     "name": "hr0",
      "label": "heard",
-     "mark": null,
+     "rules": []
+    },
+    {
+     "id": "den/when/refusal:sets turned_away#heard:in",
+     "kind": "heard",
+     "face": "in",
+     "pair": "first",
+     "row": "den/when/refusal:sets turned_away",
+     "order": 1,
+     "name": "hr1",
+     "label": "heard",
      "rules": []
     },
     {
      "id": "den#refused:wall:2",
      "kind": "refused",
      "face": "wall",
+     "pair": "first",
      "row": null,
-     "order": 1,
+     "order": 2,
+     "name": "ta0",
      "label": "turned away",
-     "mark": null,
      "rules": [
       {
        "row": "den/bound/page.amount <= space.cash - 20",
-       "says": "no",
-       "mark": 1
+       "says": "no"
       }
      ]
     },
@@ -159,46 +207,60 @@
      "id": "den#refused:wall:3",
      "kind": "refused",
      "face": "wall",
+     "pair": "first",
      "row": null,
-     "order": 2,
+     "order": 3,
+     "name": "ta1",
      "label": "turned away",
-     "mark": null,
      "rules": [
       {
        "row": "den/bound/page.amount <= space.cash - 20",
-       "says": "no",
-       "mark": 1
+       "says": "no"
       }
      ]
+    },
+    {
+     "id": "den/when/refusal:sets turned_away#wrote:out",
+     "kind": "wrote",
+     "face": "out",
+     "pair": "second",
+     "row": "den/when/refusal:sets turned_away",
+     "order": 4,
+     "name": "wr0",
+     "label": "wrote",
+     "rules": []
     },
     {
      "id": "den#asks:wall:4",
      "kind": "asks",
      "face": "wall",
+     "pair": "second",
      "row": null,
-     "order": 3,
+     "order": 5,
+     "name": "as0",
      "label": "asks",
-     "mark": null,
      "rules": []
     },
     {
      "id": "den/slot/hands#hands:slot",
      "kind": "hands",
      "face": "slot",
+     "pair": "second",
      "row": "den/slot/hands",
-     "order": 4,
+     "order": 6,
+     "name": "hd0",
      "label": "hands down",
-     "mark": null,
      "rules": []
     },
     {
      "id": "den/slot/shows#shows:slot",
      "kind": "shows",
      "face": "slot",
+     "pair": "second",
      "row": "den/slot/shows",
-     "order": 5,
+     "order": 7,
+     "name": "sh0",
      "label": "shows",
-     "mark": null,
      "rules": []
     }
    ],
@@ -265,7 +327,6 @@
          "page.amount <= space.cash - 20"
         ]
        },
-       "mark": null,
        "key": false
       }
      ]
@@ -285,14 +346,12 @@
          "expr": null
         }
        ],
-       "mark": 1,
        "key": true
       }
      ],
      "record": [
       {
        "id": "keeper/record/watch:den",
-       "mark": null,
        "key": true
       }
      ]
@@ -327,30 +386,44 @@
      "id": "keeper/when/order:asks helper#heard:in",
      "kind": "heard",
      "face": "in",
+     "pair": "first",
      "row": "keeper/when/order:asks helper",
      "order": 0,
+     "name": "hr0",
      "label": "heard",
-     "mark": 1,
+     "rules": []
+    },
+    {
+     "id": "keeper/when/order:asks helper#wrote:out",
+     "kind": "wrote",
+     "face": "out",
+     "pair": "second",
+     "row": "keeper/when/order:asks helper",
+     "order": 1,
+     "name": "wr0",
+     "label": "wrote",
      "rules": []
     },
     {
      "id": "keeper/slot/asks:helper#asks:slot",
      "kind": "asks",
      "face": "slot",
+     "pair": "second",
      "row": "keeper/slot/asks:helper",
-     "order": 1,
+     "order": 2,
+     "name": "as0",
      "label": "asks",
-     "mark": null,
      "rules": []
     },
     {
      "id": "keeper/slot/writes:den#writes:slot",
      "kind": "writes",
      "face": "slot",
+     "pair": "second",
      "row": "keeper/slot/writes:den",
-     "order": 2,
+     "order": 3,
+     "name": "wi0",
      "label": "writes into",
-     "mark": null,
      "rules": []
     }
    ],
@@ -416,10 +489,11 @@
      "id": "helper#asks:in",
      "kind": "asks",
      "face": "in",
+     "pair": "first",
      "row": null,
      "order": 0,
+     "name": "as0",
      "label": "asks",
-     "mark": null,
      "rules": []
     }
    ],
@@ -471,10 +545,11 @@
      "id": "order#heard:out",
      "kind": "heard",
      "face": "out",
+     "pair": "second",
      "row": null,
      "order": 0,
+     "name": "hr0",
      "label": "heard",
-     "mark": null,
      "rules": []
     }
    ],
@@ -521,7 +596,6 @@
      "record": [
       {
        "id": "landlord-payment/record/refused",
-       "mark": 1,
        "key": true
       }
      ]
@@ -537,10 +611,11 @@
      "id": "landlord-payment/record/refused#refused:out",
      "kind": "refused",
      "face": "out",
+     "pair": "second",
      "row": "landlord-payment/record/refused",
      "order": 0,
+     "name": "ta0",
      "label": "turned away",
-     "mark": 1,
      "rules": []
     }
    ],
@@ -578,7 +653,6 @@
      "record": [
       {
        "id": "tailor-payment/record/refused",
-       "mark": 1,
        "key": true
       }
      ]
@@ -594,10 +668,11 @@
      "id": "tailor-payment/record/refused#refused:out",
      "kind": "refused",
      "face": "out",
+     "pair": "second",
      "row": "tailor-payment/record/refused",
      "order": 0,
+     "name": "ta0",
      "label": "turned away",
-     "mark": 1,
      "rules": []
     }
    ],
@@ -787,6 +862,7 @@
     "keeper/slot/asks:helper#asks:slot",
     "keeper/slot/writes:den#writes:slot",
     "keeper/when/order:asks helper#heard:in",
+    "keeper/when/order:asks helper#wrote:out",
     "order#heard:out",
     "den#heard:wall:1",
     "helper#asks:in",
@@ -860,7 +936,9 @@
    "arrangement": 0,
    "appear": [
     "den/when/refusal:sets turned_away",
-    "keeper/record/watch:den"
+    "keeper/record/watch:den",
+    "den/when/refusal:sets turned_away#heard:in",
+    "den/when/refusal:sets turned_away#wrote:out"
    ],
    "change": [
     {

@@ -14,18 +14,22 @@ export interface Expr {
   lines: string[];
 }
 
-/** A socket on a cell's port board. `face` says what plugs in: a connector arriving (in) or
+/** A port on a cell's pair of boards. `face` says what plugs in: a connector arriving (in) or
  * leaving (out), a slot's standing connection, or, on a space, a connection crossing its wall,
- * with the space's rules judged there. A board lists them in the standard order. */
+ * with the space's rules judged there. `pair` is the board of the pair it sits on: inputs the
+ * first (left or top), outputs and slots the second. `name` is its short name, its kind's
+ * prefix and its index among the cell's ports of that kind. A board lists them in the standard
+ * order. */
 export interface Socket {
   id: string;
   kind: string; // a key of the socket table in src/conky/tokens.json
   face: "in" | "out" | "slot" | "wall";
+  pair: "first" | "second";
   row: string | null;
   order: number;
+  name: string;
   label: string;
-  mark: number | null; // the small number it shares with its row
-  rules: { row: string; says: "yes" | "no"; mark: number }[];
+  rules: { row: string; says: "yes" | "no" }[];
 }
 
 /** One stretch of a connection, from a socket to the next: a jumper when it runs inside a
@@ -55,14 +59,13 @@ export interface HoldsPanel {
 export interface BoundPanel {
   kind: "bound";
   title: string;
-  rows: { id: string; label: string; from: string | null; expr: Expr; mark: number | null; key: boolean }[];
+  rows: { id: string; label: string; from: string | null; expr: Expr; key: boolean }[];
 }
 export interface WhenRow {
   id: string;
   when: string;
   expr: Expr | null;
   then: { words: string; expr: Expr | null }[];
-  mark: number | null;
   key: boolean;
 }
 export interface WhenPanel {
@@ -70,7 +73,7 @@ export interface WhenPanel {
   title: string;
   then: string;
   rows: WhenRow[];
-  record: { id: string; mark: number | null; key: boolean }[];
+  record: { id: string; key: boolean }[];
 }
 export type Panel = TextPanel | HoldsPanel | BoundPanel | WhenPanel;
 
@@ -145,6 +148,7 @@ export interface Graph {
   title: string;
   draw: number;
   pens: string[];
+  ports: Record<string, { prefix: string; word: string }>; // each kind of port, in the standard order
   nodes: GraphNode[];
   edges: GraphEdge[];
   values: Record<string, string>;
@@ -160,7 +164,7 @@ export interface Frame {
   values: Map<string, string>;
   pens: Map<string, string>;
   dim: Set<string>;
-  plugged: Set<string>; // the sockets a connector shown in this frame plugs into
+  plugged: Set<string>; // the ports a connector shown in this frame plugs into
   regions: Region[];
   step: number;
 }
@@ -234,33 +238,39 @@ export function slotsIn(node: GraphNode, density: Density): Slot[] {
 /** Every hop of a graph's connections. */
 export const hopsOf = (graph: Graph): Hop[] => graph.edges.flatMap((e) => e.hops);
 
-/** The sockets a connector shown plugs into: a socket is filled from the step its connector
- * arrives, not before. */
+/** The ports a connector shown plugs into: a port is solid from the step its connector arrives,
+ * not before. */
 export const pluggedIn = (graph: Graph, shown: Set<string>): Set<string> =>
   new Set(hopsOf(graph).filter((h) => shown.has(h.id)).flatMap((h) => [h.sourceSocket, h.targetSocket]));
 
-/** The sockets something plugs into: the ends of the hops. */
+/** The ports something plugs into: the ends of the hops. */
 export const wiredIn = (graph: Graph): Set<string> => new Set(hopsOf(graph).flatMap((h) => [h.sourceSocket, h.targetSocket]));
 
-/** The sockets a cell draws on its boards in a density: the slots it shows, and the sockets a
- * connector plugs into, of the rows it shows or of the cell itself. */
-export function socketsIn(node: GraphNode, density: Density, wired: Set<string>): Socket[] {
-  const slots = new Set(slotsIn(node, density).map((s) => s.socket));
-  if (density === "detailed") return node.board.filter((s) => slots.has(s.id) || wired.has(s.id));
-  const rows = new Set<string>();
-  for (const p of panelsIn(node, density)) {
-    if (p.kind === "text") continue;
-    p.rows.forEach((r) => rows.add(r.id));
-    if (p.kind === "when") p.record.forEach((r) => rows.add(r.id));
+/** Whether something is plugged into a port in a frame: a connector shown ending on it, or, for
+ * a slot, what stands in it. */
+export const isPlugged = (frame: Frame, socket: Socket, slot: Slot | undefined): boolean => (slot ? slot.filled : frame.plugged.has(socket.id));
+
+/** The ports that belong to each row of a cell: a watch entry's input and output, a record
+ * row's output, a slot's own port, and the wall ports where a rule was judged. */
+export function portsByRow(node: GraphNode): Map<string, Socket[]> {
+  const out = new Map<string, Socket[]>();
+  const add = (row: string, s: Socket) => out.set(row, [...(out.get(row) ?? []), s]);
+  for (const s of node.board) {
+    if (s.row) add(s.row, s);
+    s.rules.forEach((r) => add(r.row, s));
   }
-  return node.board.filter((s) => slots.has(s.id) || (wired.has(s.id) && (s.row === null || rows.has(s.row))));
+  return out;
 }
 
+/** A graph as one mode draws it: the nodes and edges it shows, and on each wall only the ports a
+ * connection it shows crosses by (a wall port exists for its crossing alone). */
 export function inMode(graph: Graph, mode: Mode): Graph {
+  const edges = graph.edges.filter((e) => e.modes.includes(mode));
+  const crossed = new Set(edges.flatMap((e) => e.hops.flatMap((h) => [h.sourceSocket, h.targetSocket])));
   return {
     ...graph,
-    nodes: graph.nodes.filter((n) => n.modes.includes(mode)),
-    edges: graph.edges.filter((e) => e.modes.includes(mode)),
+    nodes: graph.nodes.filter((n) => n.modes.includes(mode)).map((n) => ({ ...n, board: n.board.filter((s) => s.face !== "wall" || crossed.has(s.id)) })),
+    edges,
   };
 }
 

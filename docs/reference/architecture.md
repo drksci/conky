@@ -1407,6 +1407,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0056-a-space-hands-down-reactions](../decisions/0056-a-space-hands-down-reactions.md) | accepted | [`law.reflex.down`](#law.reflex.down), [`law.reflex.free`](#law.reflex.free), [`part.space`](#part.space) |
 | [0057-charts-use-plotlys-built-in-themes-and-default-styles](../decisions/0057-charts-use-plotlys-built-in-themes-and-default-styles.md) | accepted | - |
 | [0058-a-budget-the-runtime-holds](../decisions/0058-a-budget-the-runtime-holds.md) | accepted | [`law.budget.held`](#law.budget.held), [`stage.think.budget`](#stage.think.budget), [`place.runtime.budget`](#place.runtime.budget) |
+| [0059-ports-are-bright-labelled-blocks-on-paired-boards](../decisions/0059-ports-are-bright-labelled-blocks-on-paired-boards.md) | accepted | - |
 
 ### Unplaced
 
@@ -1417,6 +1418,7 @@ Found in the documents and fitting no row above.
 | a cell shows the whole page | [0049-a-cell-shows-the-whole-page.md](../decisions/0049-a-cell-shows-the-whole-page.md) | Every page in a drawn trial is one cell with a header, panels in a fixed order and a footer of slots, and its connections run between sockets that carry one kind of signal each. |
 | a generated index for a notes application | [obsidian-view.md](../ideas/obsidian-view.md) | Derived data under R11. Nothing is designed beyond the idea. |
 | a parent brokers what crosses its wall | [0052-wires-attach-to-port-boards-and-parents-broker-crossings.md](../decisions/0052-wires-attach-to-port-boards-and-parents-broker-crossings.md) | In a drawn trial every connection is a list of hops, and a hop that crosses a space's wall ends at a socket on that space's port board, where the space's rules judge a write into it. |
+| a port is a named block on a pair of boards | [0059-ports-are-bright-labelled-blocks-on-paired-boards.md](../decisions/0059-ports-are-bright-labelled-blocks-on-paired-boards.md) | In a drawn trial every port a cell has is a block coloured by its kind and named by a prefix and an index, on a pair of boards on one axis, inputs on the first and outputs and slots on the second, solid when plugged in and hatched when not. |
 | a theatre knows itself | [0050-a-theatre-knows-itself.md](../decisions/0050-a-theatre-knows-itself.md) | A vault and the settings true only on this machine, in an optional marionette.md outside the history, found from any folder in the vault. |
 | a trial is drawn as it happened | [0043-a-trial-is-drawn-as-it-happened.md](../decisions/0043-a-trial-is-drawn-as-it-happened.md) | A card's recorded draw is published as a graph with steps, read from the vault's own history, and one view draws it, in a browser and as the pictures in the README. |
 | ahead or different with each step | [0033-ahead-or-different-with-each-step.md](../decisions/0033-ahead-or-different-with-each-step.md) | Every step states the difference it makes against other harnesses and how that is shown; parity work waits until a difference depends on it. |

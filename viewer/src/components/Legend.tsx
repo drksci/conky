@@ -1,10 +1,11 @@
 import tokens from "../../../src/conky/tokens.json";
-import { densityOf, panelsIn, socketsIn, wiredIn, type Graph, type Mode } from "../graph";
-import { socketLabel } from "./Socket";
+import { densityOf, panelsIn, type Graph, type Mode } from "../graph";
 import { Symbol, wordOf } from "./Symbol";
 
 /** The key to the picture, small and quiet under the caption: the symbols it uses, each with
- * its word, then the sockets it draws, each with its mark and what its colour carries. */
+ * its word, then the kinds of port it draws, each a chip in its colour with the prefix its
+ * ports' names start with and the word it stands for, and last how a port looks with nothing
+ * plugged in. The table comes from graph.json. */
 export function Legend({ graph, mode }: { graph: Graph; mode: Mode }) {
   const density = densityOf(mode);
   const used = [
@@ -13,9 +14,8 @@ export function Legend({ graph, mode }: { graph: Graph; mode: Mode }) {
     ...graph.steps.map((s) => s.symbol),
   ];
   const names = [...new Set(used)];
-  const wired = wiredIn(graph);
-  const kinds = new Set(graph.nodes.flatMap((n) => socketsIn(n, density, wired).map((s) => s.kind)));
-  const sockets = Object.keys(tokens.socket).filter((k) => kinds.has(k));
+  const kinds = new Set(graph.nodes.flatMap((n) => n.board.map((s) => s.kind)));
+  const ports = Object.entries(graph.ports).filter(([k]) => kinds.has(k));
   return (
     <div className="legend">
       <div className="legend-line">
@@ -26,15 +26,18 @@ export function Legend({ graph, mode }: { graph: Graph; mode: Mode }) {
           </span>
         ))}
       </div>
-      {sockets.length > 0 && (
+      {ports.length > 0 && (
         <div className="legend-line">
-          {sockets.map((k) => (
-            <span key={k} className={`legend-item signal-${k}`}>
-              <span className="legend-socket" />
-              {density === "compact" && <span className="legend-mark">{socketLabel(k, "compact")}</span>}
-              {socketLabel(k, "detailed")}
+          {ports.map(([k, p]) => (
+            <span key={k} className="legend-item">
+              <span className={`port-tag signal-${k}`}>{p.prefix}</span>
+              {p.word}
             </span>
           ))}
+          <span className="legend-item">
+            <span className={`port-tag signal-${ports[0][0]} is-idle`}>{ports[0][1].prefix}</span>
+            {tokens.words.idle}
+          </span>
         </div>
       )}
     </div>

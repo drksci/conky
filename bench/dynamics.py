@@ -63,7 +63,7 @@ NOTE_WIDTH = 34  # characters of a note's first line a note shown to a space sho
 HEADER_FIELDS = ("avatar", "known_as")
 FOOTER_FIELDS = ("shows",)
 BOOKKEEPING = ("secret",)
-SOCKET = TOKENS["socket"]  # each kind of socket: the pen meaning of its signal, mark and word
+SOCKET = TOKENS["socket"]  # each kind of port: the pen meaning of its signal, word and prefix
 BOARD_ORDER = tuple(SOCKET)  # the standard order of sockets on every board: the table's order
 WORDS = TOKENS["words"] | {k: v["word"] for k, v in SOCKET.items()}
 HEARD = {"refusal": "a write turned away", "within": "a page written within it",
@@ -495,8 +495,11 @@ def graph(events: list[dict], card: str, draw: int) -> dict:
             and not (holds(a, b) or holds(b, a))
         )
 
-    # Sockets and the connections between them. A socket is made only where something plugs
-    # in, and for a slot, filled or empty. A connection runs from an output socket to an input
+    # Sockets and the connections between them. Every port a cell has is a socket, whether or
+    # not anything plugs in: a slot, filled or empty, and every watch entry's input and output.
+    # Inputs sit on the first board of a cell's pair, outputs and slots on the second; a socket
+    # on a wall is an input where a connection enters the space and an output where it leaves.
+    # A connection runs from an output socket to an input
     # socket of the same kind of signal as a list of hops: nothing crosses a space's wall
     # directly. A hop ends at a socket on the board of each space the connection leaves or
     # enters, and the next hop, a jumper, goes on from the inside of that socket. A write into a
@@ -507,6 +510,7 @@ def graph(events: list[dict], card: str, draw: int) -> dict:
     def socket(node: str, kind: str, face: str, row: str | None = None, at: int = 0) -> str:
         sid = f"{row or node}#{kind}:{face}"
         sockets.setdefault(sid, {"id": sid, "node": node, "kind": kind, "face": face,
+                                 "pair": "first" if face == "in" else "second",
                                  "row": row, "appears": at, "rules": []})  # fmt: skip
         return sid
 
@@ -548,7 +552,8 @@ def graph(events: list[dict], card: str, draw: int) -> dict:
             sid = f"{s}#{a['kind']}:wall:{n}"
             rules = judged(s, at, why if s == end else None) if writes and s in enter else []
             sockets[sid] = {"id": sid, "node": s, "kind": a["kind"], "face": "wall", "row": None,
-                            "appears": at, "rules": rules}  # fmt: skip
+                            "pair": "first" if s in enter else "second", "appears": at,
+                            "rules": rules}  # fmt: skip
             ends.append(sid)
         if why is None:
             ends.append(target)
@@ -576,8 +581,10 @@ def graph(events: list[dict], card: str, draw: int) -> dict:
             r["socket"] = socket(r["node"], r["slot"], "slot", rid, r["appears"])
     for r in list(rows.values()):
         at = max(r["appears"], nodes.get(r.get("to") or r.get("hears") or "", {}).get("appears", 0))
-        if r["panel"] == "when" and apart(r.get("hears"), r["node"]):
+        if r["panel"] == "when":
             r["in"] = socket(r["node"], "heard", "in", r["id"], r["appears"])
+            r["out"] = socket(r["node"], "wrote", "out", r["id"], r["appears"])
+        if r["panel"] == "when" and apart(r.get("hears"), r["node"]):
             out = socket(r["hears"], "heard", "out", None, nodes[r["hears"]]["appears"])
             connect("heard", out, r["in"], max(at, nodes[r["hears"]]["appears"]))
         elif r["panel"] == "slot" and r["slot"] == "asks" and apart(r["node"], r.get("to")):
@@ -669,6 +676,7 @@ def graph(events: list[dict], card: str, draw: int) -> dict:
         "title": card.replace("-", " "),
         "draw": draw,
         "pens": list(PENS),
+        "ports": {k: {"prefix": v["prefix"], "word": v["word"]} for k, v in SOCKET.items()},
         "nodes": out_nodes,
         "edges": out_edges,
         "values": dict(sorted(values.items())),
@@ -784,8 +792,9 @@ def excerpt(body: str) -> str:
 def cell(node: dict, rows: dict, sockets: dict, key: set, spaces: set, crowd: set,
          providers: set) -> dict:  # fmt: skip
     """One node of graph.json: header, panels in their order, footer, and its board: every
-    socket it has, in the standard order, each tied to its row by a small mark. Which edge of
-    the cell a socket sits on is left to the layout."""
+    port it has, in the standard order, each with its short name (its kind's prefix and its
+    index among the cell's ports of that kind) and the board of the pair it sits on. Whether
+    the pair runs left and right or top and bottom is left to the layout."""
     name = node["id"]
     mine = [rows[r] for r in node["rows"]]
     board = sorted(
@@ -793,12 +802,11 @@ def cell(node: dict, rows: dict, sockets: dict, key: set, spaces: set, crowd: se
         key=lambda s: (BOARD_ORDER.index(s["kind"]),
                        node["rows"].index(s["row"]) if s["row"] else -1, s["id"]),
     )  # fmt: skip
-    marks: dict[str, int] = {}
+    names: dict[str, str] = {}  # a port's short name: its kind's prefix and its index in kind
+    count: dict[str, int] = {}
     for s in board:
-        for rid in ([s["row"]] if s["row"] and s["face"] in ("in", "out") else []) + [
-            r["row"] for r in s["rules"]
-        ]:
-            marks.setdefault(rid, len(marks) + 1)
+        k = count[s["kind"]] = count.get(s["kind"], -1) + 1
+        names[s["id"]] = f"{SOCKET[s['kind']]['prefix']}{k}"
     kinds = kinds_of(node, spaces, crowd)
     symbol = next((k for k in ("character", "provider") if k in kinds), kinds[0])
     text = next((r for r in mine if r["panel"] == "text"), None)
@@ -816,17 +824,15 @@ def cell(node: dict, rows: dict, sockets: dict, key: set, spaces: set, crowd: se
     if bound:
         panels.append({"kind": "bound", "title": WORDS["bound"], "rows": [
             {"id": r["id"], "label": WORDS["each"] if r["each"] else WORDS["itself"],
-             "from": r["from"], "expr": r["expr"], "mark": marks.get(r["id"]),
-             "key": r["id"] in key}
+             "from": r["from"], "expr": r["expr"], "key": r["id"] in key}
             for r in bound]})  # fmt: skip
     when = [r for r in mine if r["panel"] == "when"]
     record = [r for r in mine if r["panel"] == "record"]
     if when or record:
         panels.append({"kind": "when", "title": WORDS["when"], "then": WORDS["then"], "rows": [
             {"id": r["id"], "when": r["name"], "expr": r["expr"], "then": r["then"],
-             "mark": marks.get(r["id"]), "key": r["id"] in key} for r in when
-        ], "record": [{"id": r["id"], "mark": marks.get(r["id"]), "key": r["id"] in key}
-                      for r in record]})  # fmt: skip
+             "key": r["id"] in key} for r in when
+        ], "record": [{"id": r["id"], "key": r["id"] in key} for r in record]})  # fmt: skip
     slots = sorted(
         (r for r in mine if r["panel"] == "slot"), key=lambda r: BOARD_ORDER.index(r["slot"])
     )
@@ -871,11 +877,12 @@ def cell(node: dict, rows: dict, sockets: dict, key: set, spaces: set, crowd: se
                 "id": s["id"],
                 "kind": s["kind"],
                 "face": s["face"],
+                "pair": s["pair"],
                 "row": s["row"],
                 "order": k,
+                "name": names[s["id"]],
                 "label": WORDS[s["kind"]],
-                "mark": marks.get(s["row"]) if s["face"] in ("in", "out") else None,
-                "rules": [{**r, "mark": marks[r["row"]]} for r in s["rules"]],
+                "rules": s["rules"],
             }
             for k, s in enumerate(board)
         ],  # fmt: skip

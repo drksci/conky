@@ -9,6 +9,44 @@
   "kept",
   "thought"
  ],
+ "ports": {
+  "heard": {
+   "prefix": "hr",
+   "word": "heard"
+  },
+  "refused": {
+   "prefix": "ta",
+   "word": "turned away"
+  },
+  "wrote": {
+   "prefix": "wr",
+   "word": "wrote"
+  },
+  "kept": {
+   "prefix": "kp",
+   "word": "kept"
+  },
+  "asks": {
+   "prefix": "as",
+   "word": "asks"
+  },
+  "writes": {
+   "prefix": "wi",
+   "word": "writes into"
+  },
+  "connector": {
+   "prefix": "cn",
+   "word": "connector"
+  },
+  "hands": {
+   "prefix": "hd",
+   "word": "hands down"
+  },
+  "shows": {
+   "prefix": "sh",
+   "word": "shows"
+  }
+ },
  "nodes": [
   {
    "id": "den",
@@ -64,7 +102,6 @@
          "space.cash - page.amount >= 20"
         ]
        },
-       "mark": 1,
        "key": true
       }
      ]
@@ -99,25 +136,26 @@
      "id": "den#heard:wall:1",
      "kind": "heard",
      "face": "wall",
+     "pair": "first",
      "row": null,
      "order": 0,
+     "name": "hr0",
      "label": "heard",
-     "mark": null,
      "rules": []
     },
     {
      "id": "den#refused:wall:2",
      "kind": "refused",
      "face": "wall",
+     "pair": "first",
      "row": null,
      "order": 1,
+     "name": "ta0",
      "label": "turned away",
-     "mark": null,
      "rules": [
       {
        "row": "den/bound/space.cash - page.amount >= 20",
-       "says": "no",
-       "mark": 1
+       "says": "no"
       }
      ]
     },
@@ -125,30 +163,33 @@
      "id": "den#asks:wall:3",
      "kind": "asks",
      "face": "wall",
+     "pair": "second",
      "row": null,
      "order": 2,
+     "name": "as0",
      "label": "asks",
-     "mark": null,
      "rules": []
     },
     {
      "id": "den/slot/hands#hands:slot",
      "kind": "hands",
      "face": "slot",
+     "pair": "second",
      "row": "den/slot/hands",
      "order": 3,
+     "name": "hd0",
      "label": "hands down",
-     "mark": null,
      "rules": []
     },
     {
      "id": "den/slot/shows#shows:slot",
      "kind": "shows",
      "face": "slot",
+     "pair": "second",
      "row": "den/slot/shows",
      "order": 4,
+     "name": "sh0",
      "label": "shows",
-     "mark": null,
      "rules": []
     }
    ],
@@ -207,7 +248,6 @@
          "space.cash - page.amount >= 20"
         ]
        },
-       "mark": null,
        "key": false
       }
      ]
@@ -227,19 +267,16 @@
          "expr": null
         }
        ],
-       "mark": 1,
        "key": true
       }
      ],
      "record": [
       {
        "id": "keeper/record/rule:den",
-       "mark": null,
        "key": true
       },
       {
        "id": "keeper/record/wrote:payment-baker",
-       "mark": 2,
        "key": true
       }
      ]
@@ -274,40 +311,55 @@
      "id": "keeper/when/order:asks helper#heard:in",
      "kind": "heard",
      "face": "in",
+     "pair": "first",
      "row": "keeper/when/order:asks helper",
      "order": 0,
+     "name": "hr0",
      "label": "heard",
-     "mark": 1,
+     "rules": []
+    },
+    {
+     "id": "keeper/when/order:asks helper#wrote:out",
+     "kind": "wrote",
+     "face": "out",
+     "pair": "second",
+     "row": "keeper/when/order:asks helper",
+     "order": 1,
+     "name": "wr0",
+     "label": "wrote",
      "rules": []
     },
     {
      "id": "keeper/record/wrote:payment-baker#wrote:out",
      "kind": "wrote",
      "face": "out",
+     "pair": "second",
      "row": "keeper/record/wrote:payment-baker",
-     "order": 1,
+     "order": 2,
+     "name": "wr1",
      "label": "wrote",
-     "mark": 2,
      "rules": []
     },
     {
      "id": "keeper/slot/asks:helper#asks:slot",
      "kind": "asks",
      "face": "slot",
+     "pair": "second",
      "row": "keeper/slot/asks:helper",
-     "order": 2,
+     "order": 3,
+     "name": "as0",
      "label": "asks",
-     "mark": null,
      "rules": []
     },
     {
      "id": "keeper/slot/writes:den#writes:slot",
      "kind": "writes",
      "face": "slot",
+     "pair": "second",
      "row": "keeper/slot/writes:den",
-     "order": 3,
+     "order": 4,
+     "name": "wi0",
      "label": "writes into",
-     "mark": null,
      "rules": []
     }
    ],
@@ -384,7 +436,6 @@
          "space.cash - page.amount >= 20"
         ]
        },
-       "mark": null,
        "key": false
       }
      ]
@@ -400,10 +451,11 @@
      "id": "payment-baker#wrote:in",
      "kind": "wrote",
      "face": "in",
+     "pair": "first",
      "row": null,
      "order": 0,
+     "name": "wr0",
      "label": "wrote",
-     "mark": null,
      "rules": []
     }
    ],
@@ -465,10 +517,11 @@
      "id": "helper#asks:in",
      "kind": "asks",
      "face": "in",
+     "pair": "first",
      "row": null,
      "order": 0,
+     "name": "as0",
      "label": "asks",
-     "mark": null,
      "rules": []
     }
    ],
@@ -520,10 +573,11 @@
      "id": "order#heard:out",
      "kind": "heard",
      "face": "out",
+     "pair": "second",
      "row": null,
      "order": 0,
+     "name": "hr0",
      "label": "heard",
-     "mark": null,
      "rules": []
     }
    ],
@@ -570,7 +624,6 @@
      "record": [
       {
        "id": "landlord-payment/record/refused",
-       "mark": 1,
        "key": true
       }
      ]
@@ -586,10 +639,11 @@
      "id": "landlord-payment/record/refused#refused:out",
      "kind": "refused",
      "face": "out",
+     "pair": "second",
      "row": "landlord-payment/record/refused",
      "order": 0,
+     "name": "ta0",
      "label": "turned away",
-     "mark": 1,
      "rules": []
     }
    ],
@@ -777,6 +831,7 @@
     "keeper/slot/asks:helper#asks:slot",
     "keeper/slot/writes:den#writes:slot",
     "keeper/when/order:asks helper#heard:in",
+    "keeper/when/order:asks helper#wrote:out",
     "order#heard:out",
     "den#heard:wall:1",
     "helper#asks:in",

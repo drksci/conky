@@ -9,6 +9,44 @@
   "kept",
   "thought"
  ],
+ "ports": {
+  "heard": {
+   "prefix": "hr",
+   "word": "heard"
+  },
+  "refused": {
+   "prefix": "ta",
+   "word": "turned away"
+  },
+  "wrote": {
+   "prefix": "wr",
+   "word": "wrote"
+  },
+  "kept": {
+   "prefix": "kp",
+   "word": "kept"
+  },
+  "asks": {
+   "prefix": "as",
+   "word": "asks"
+  },
+  "writes": {
+   "prefix": "wi",
+   "word": "writes into"
+  },
+  "connector": {
+   "prefix": "cn",
+   "word": "connector"
+  },
+  "hands": {
+   "prefix": "hd",
+   "word": "hands down"
+  },
+  "shows": {
+   "prefix": "sh",
+   "word": "shows"
+  }
+ },
  "nodes": [
   {
    "id": "den",
@@ -82,40 +120,44 @@
      "id": "den#heard:wall:1",
      "kind": "heard",
      "face": "wall",
+     "pair": "first",
      "row": null,
      "order": 0,
+     "name": "hr0",
      "label": "heard",
-     "mark": null,
      "rules": []
     },
     {
      "id": "den#asks:wall:2",
      "kind": "asks",
      "face": "wall",
+     "pair": "second",
      "row": null,
      "order": 1,
+     "name": "as0",
      "label": "asks",
-     "mark": null,
      "rules": []
     },
     {
      "id": "den/slot/hands#hands:slot",
      "kind": "hands",
      "face": "slot",
+     "pair": "second",
      "row": "den/slot/hands",
      "order": 2,
+     "name": "hd0",
      "label": "hands down",
-     "mark": null,
      "rules": []
     },
     {
      "id": "den/slot/shows#shows:slot",
      "kind": "shows",
      "face": "slot",
+     "pair": "second",
      "row": "den/slot/shows",
      "order": 3,
+     "name": "sh0",
      "label": "shows",
-     "mark": null,
      "rules": []
     }
    ],
@@ -183,7 +225,6 @@
          "expr": null
         }
        ],
-       "mark": 1,
        "key": true
       }
      ],
@@ -219,30 +260,44 @@
      "id": "keeper/when/order:asks helper#heard:in",
      "kind": "heard",
      "face": "in",
+     "pair": "first",
      "row": "keeper/when/order:asks helper",
      "order": 0,
+     "name": "hr0",
      "label": "heard",
-     "mark": 1,
+     "rules": []
+    },
+    {
+     "id": "keeper/when/order:asks helper#wrote:out",
+     "kind": "wrote",
+     "face": "out",
+     "pair": "second",
+     "row": "keeper/when/order:asks helper",
+     "order": 1,
+     "name": "wr0",
+     "label": "wrote",
      "rules": []
     },
     {
      "id": "keeper/slot/asks:helper#asks:slot",
      "kind": "asks",
      "face": "slot",
+     "pair": "second",
      "row": "keeper/slot/asks:helper",
-     "order": 1,
+     "order": 2,
+     "name": "as0",
      "label": "asks",
-     "mark": null,
      "rules": []
     },
     {
      "id": "keeper/slot/writes:#writes:slot",
      "kind": "writes",
      "face": "slot",
+     "pair": "second",
      "row": "keeper/slot/writes:",
-     "order": 2,
+     "order": 3,
+     "name": "wi0",
      "label": "writes into",
-     "mark": null,
      "rules": []
     }
    ],
@@ -316,10 +371,11 @@
      "id": "helper#asks:in",
      "kind": "asks",
      "face": "in",
+     "pair": "first",
      "row": null,
      "order": 0,
+     "name": "as0",
      "label": "asks",
-     "mark": null,
      "rules": []
     }
    ],
@@ -419,10 +475,11 @@
      "id": "order#heard:out",
      "kind": "heard",
      "face": "out",
+     "pair": "second",
      "row": null,
      "order": 0,
+     "name": "hr0",
      "label": "heard",
-     "mark": null,
      "rules": []
     }
    ],
@@ -574,6 +631,7 @@
     "keeper/slot/asks:helper#asks:slot",
     "keeper/slot/writes:#writes:slot",
     "keeper/when/order:asks helper#heard:in",
+    "keeper/when/order:asks helper#wrote:out",
     "order#heard:out",
     "den#heard:wall:1",
     "helper#asks:in",

@@ -9,6 +9,44 @@
   "kept",
   "thought"
  ],
+ "ports": {
+  "heard": {
+   "prefix": "hr",
+   "word": "heard"
+  },
+  "refused": {
+   "prefix": "ta",
+   "word": "turned away"
+  },
+  "wrote": {
+   "prefix": "wr",
+   "word": "wrote"
+  },
+  "kept": {
+   "prefix": "kp",
+   "word": "kept"
+  },
+  "asks": {
+   "prefix": "as",
+   "word": "asks"
+  },
+  "writes": {
+   "prefix": "wi",
+   "word": "writes into"
+  },
+  "connector": {
+   "prefix": "cn",
+   "word": "connector"
+  },
+  "hands": {
+   "prefix": "hd",
+   "word": "hands down"
+  },
+  "shows": {
+   "prefix": "sh",
+   "word": "shows"
+  }
+ },
  "nodes": [
   {
    "id": "clerk",
@@ -75,7 +113,6 @@
          }
         }
        ],
-       "mark": null,
        "key": true
       },
       {
@@ -96,7 +133,6 @@
          "expr": null
         }
        ],
-       "mark": null,
        "key": true
       }
      ],
@@ -147,43 +183,91 @@
    },
    "board": [
     {
+     "id": "clerk/when/within:sets heard#heard:in",
+     "kind": "heard",
+     "face": "in",
+     "pair": "first",
+     "row": "clerk/when/within:sets heard",
+     "order": 0,
+     "name": "hr0",
+     "label": "heard",
+     "rules": []
+    },
+    {
+     "id": "clerk/when/clerk:asks helper#heard:in",
+     "kind": "heard",
+     "face": "in",
+     "pair": "first",
+     "row": "clerk/when/clerk:asks helper",
+     "order": 1,
+     "name": "hr1",
+     "label": "heard",
+     "rules": []
+    },
+    {
+     "id": "clerk/when/within:sets heard#wrote:out",
+     "kind": "wrote",
+     "face": "out",
+     "pair": "second",
+     "row": "clerk/when/within:sets heard",
+     "order": 2,
+     "name": "wr0",
+     "label": "wrote",
+     "rules": []
+    },
+    {
+     "id": "clerk/when/clerk:asks helper#wrote:out",
+     "kind": "wrote",
+     "face": "out",
+     "pair": "second",
+     "row": "clerk/when/clerk:asks helper",
+     "order": 3,
+     "name": "wr1",
+     "label": "wrote",
+     "rules": []
+    },
+    {
      "id": "clerk/slot/asks:helper#asks:slot",
      "kind": "asks",
      "face": "slot",
+     "pair": "second",
      "row": "clerk/slot/asks:helper",
-     "order": 0,
+     "order": 4,
+     "name": "as0",
      "label": "asks",
-     "mark": null,
      "rules": []
     },
     {
      "id": "clerk/slot/writes:#writes:slot",
      "kind": "writes",
      "face": "slot",
+     "pair": "second",
      "row": "clerk/slot/writes:",
-     "order": 1,
+     "order": 5,
+     "name": "wi0",
      "label": "writes into",
-     "mark": null,
      "rules": []
     },
     {
      "id": "clerk/slot/hands#hands:slot",
      "kind": "hands",
      "face": "slot",
+     "pair": "second",
      "row": "clerk/slot/hands",
-     "order": 2,
+     "order": 6,
+     "name": "hd0",
      "label": "hands down",
-     "mark": null,
      "rules": []
     },
     {
      "id": "clerk/slot/shows#shows:slot",
      "kind": "shows",
      "face": "slot",
+     "pair": "second",
      "row": "clerk/slot/shows",
-     "order": 3,
+     "order": 7,
+     "name": "sh0",
      "label": "shows",
-     "mark": null,
      "rules": []
     }
    ],
@@ -461,10 +545,11 @@
      "id": "helper#asks:in",
      "kind": "asks",
      "face": "in",
+     "pair": "first",
      "row": null,
      "order": 0,
+     "name": "as0",
      "label": "asks",
-     "mark": null,
      "rules": []
     }
    ],
@@ -562,6 +647,10 @@
     "clerk/slot/writes:#writes:slot",
     "clerk/slot/hands#hands:slot",
     "clerk/slot/shows#shows:slot",
+    "clerk/when/within:sets heard#heard:in",
+    "clerk/when/within:sets heard#wrote:out",
+    "clerk/when/clerk:asks helper#heard:in",
+    "clerk/when/clerk:asks helper#wrote:out",
     "helper#asks:in"
    ],
    "change": [],
