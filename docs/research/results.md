@@ -43,25 +43,76 @@ Counts are runs. Other columns are the median over seeds.
 | `conky` | one character in a vault | 4 of 5 | 2,040 | 38 | 0 | 284 |
 | `loop` | the bare model, asked each turn | 3 of 5 | 2,040 | 42 | 0 | 261 |
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/reached.dark.svg"><img src="../results/pilot-3/reached.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, under the model, seeds, budget and commit that were held equal." width="720"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/became.dark.svg"><img src="../results/pilot-3/became.light.svg" alt="Parts each harness was made of when its median run stopped, with counts beneath." width="720"></picture></p>
+### Scores
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/cost.dark.svg"><img src="../results/pilot-3/cost.light.svg" alt="Cost against progress made, one line for every run, with the median run drawn heavy." width="720"></picture></p>
+| Harness | Version | Model | Reached | Cost | Model s | Own s | Score |
+|---|---|---|--:|--:|--:|--:|--:|
+| **[conky](https://github.com/drksci/conky)** | **26cb5e3** | **`haiku`** | **4/5** | **$0.0039** | **266** | **18** | **75** |
+| [bare](https://github.com/drksci/conky/tree/main/bench/adapters/loop) | 26cb5e3 | `haiku` | 3/5 | $0.0056 | 250 | 11 | 57 |
+| [claude code](https://claude.com/claude-code) | 2.1.329 | `haiku` | 3/5 | $0.0168 | 55 | 16 | 50 |
+| [constant](https://github.com/drksci/conky/tree/main/bench/adapters/floor) | 26cb5e3 | `none` | 0/5 |  |  | 5 | 0 |
+| [random](https://github.com/drksci/conky/tree/main/bench/adapters/floor) | 26cb5e3 | `none` | 0/5 |  |  | 13 | 0 |
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/time.dark.svg"><img src="../results/pilot-3/time.light.svg" alt="Time each harness took in its median run, as a flame graph: the run, each turn, then time in the model or in the harness." width="720"></picture></p>
+Best first. A score is out of 100: reaching the goal gives 70, and cost and the harness's own seconds give up to 15 each, against the cheapest and the quickest.
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/text.dark.svg"><img src="../results/pilot-3/text.light.svg" alt="Text each harness sent in its median run, as a flame graph: the run, each turn, each call, then where its text came from." width="720"></picture></p>
+### Charts
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/scores.dark.svg"><img src="../results/pilot-3/scores.light.svg" alt="Scores as a table, one line a harness, best first: version, model, runs that reached the goal, cost, seconds in the model and in the harness, and a score out of 100." width="720"></picture></p>
+#### How far each run got
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/progress.dark.svg"><img src="../results/pilot-3/progress.light.svg" alt="miles left to Oregon against turn, one line per arm." width="720"></picture></p>
+<picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/reached.dark.svg"><img src="../results/pilot-3/reached.light.svg" alt="Horizontal bars, one a run, grouped by harness, each running from Independence toward Oregon." width="720"></picture>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/spend.dark.svg"><img src="../results/pilot-3/spend.light.svg" alt="Model calls and text sent against turn, one line per arm." width="720"></picture></p>
+A bar a run, from Independence to Oregon; conky reached Oregon in 4 of 5. Model `haiku`, 5 runs a harness, a pilot.
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/rules.dark.svg"><img src="../results/pilot-3/rules.light.svg" alt="House rules broken in the game, by turn, for each run." width="720"></picture></p>
+#### What each harness left behind
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/board.dark.svg"><img src="../results/pilot-3/board.light.svg" alt="Every measure for every arm on one board." width="720"></picture></p>
+<picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/became.dark.svg"><img src="../results/pilot-3/became.light.svg" alt="Horizontal bars, one a harness, of the parts its median run ended with." width="720"></picture>
+
+The parts each median run ended with; conky ended with 11 pages, 2 of them its own. Model `haiku`, 5 runs a harness, a pilot.
+
+#### What a run cost
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/cost.dark.svg"><img src="../results/pilot-3/cost.light.svg" alt="Horizontal bars, one a harness that uses a model, of a median run's cost." width="720"></picture>
+
+Dollars a median run, at list price; conky cost least, $0.0039. Model `haiku`, 5 runs a harness, a pilot.
+
+#### Where the time went
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/time.dark.svg"><img src="../results/pilot-3/time.light.svg" alt="Stacked horizontal bars, one a harness, of a median run's seconds." width="720"></picture>
+
+Seconds a median run, waiting on the model or working in the harness; conky spent 267 of its 286 seconds waiting on the model. Model `haiku`, 5 runs a harness, a pilot.
+
+#### Where the text came from
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/text.dark.svg"><img src="../results/pilot-3/text.light.svg" alt="Stacked horizontal bars, one a harness that uses a model, of a median run's text." width="720"></picture>
+
+Characters the median run sent, by where they came from; conky sent 32% less than bare. Model `haiku`, 5 runs a harness, a pilot.
+
+#### Distance left, turn by turn
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/progress.dark.svg"><img src="../results/pilot-3/progress.light.svg" alt="Step lines of miles left against turn, one a harness." width="720"></picture>
+
+Miles left to Oregon at each turn, the median over seeds. Model `haiku`, 5 runs a harness, a pilot.
+
+#### Model calls, turn by turn
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/spend.dark.svg"><img src="../results/pilot-3/spend.light.svg" alt="Step lines of model calls made against turn, one a harness that uses a model." width="720"></picture>
+
+Model calls made by each turn, the median over seeds. Model `haiku`, 5 runs a harness, a pilot.
+
+#### House rules broken
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/rules.dark.svg"><img src="../results/pilot-3/rules.light.svg" alt="A row a run with a square at each turn a house rule was broken." width="720"></picture>
+
+A square at each turn a house rule was broken in the game. Model `haiku`, 5 runs a harness, a pilot.
+
+#### Every measure on one board
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="../results/pilot-3/board.dark.svg"><img src="../results/pilot-3/board.light.svg" alt="A shaded grid: a row a harness, a column a measure, the median in each cell." width="720"></picture>
+
+The median of each measure, each column shaded from worst (pale) to best (deep) on its own scale. Model `haiku`, 5 runs a harness, a pilot.
+
+<sub>[the data](../results/pilot-3/runs.csv) · [the protocol](benchmark-protocol.md) · [the code that ran](https://github.com/drksci/conky/commit/26cb5e37ab69a0876c548510809e9580722e39b5) · claude-haiku-5-5 at $0.10 in and $0.50 out a million tokens · tokens estimated at 4 characters each</sub>
 
 ## Data
 

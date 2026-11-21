@@ -1404,6 +1404,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0045-a-page-may-be-within-several-spaces](../decisions/0045-a-page-may-be-within-several-spaces.md) | accepted | [`law.rule.tighten`](#law.rule.tighten), [`law.context.down`](#law.context.down), [`part.space`](#part.space) |
 | [0046-figures-are-drawn-from-the-shared-tokens](../decisions/0046-figures-are-drawn-from-the-shared-tokens.md) | accepted | - |
 | [0047-a-character-is-shown-what-its-spaces-say](../decisions/0047-a-character-is-shown-what-its-spaces-say.md) | accepted | [`law.embed.context`](#law.embed.context), [`part.embed`](#part.embed) |
+| [0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown](../decisions/0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown.md) | accepted | - |
 
 ### Unplaced
 
@@ -1417,6 +1418,7 @@ Found in the documents and fitting no row above.
 | arcs | [arcs.md](../ideas/arcs.md) | A primary purpose with branches, each scored by its distance from it. Not yet worked out, and read as direction and drift. |
 | attention | [attention.md](../ideas/attention.md) | Every page hears what it chose to hear, at the cheapest layer that can deal with it, and a thinking page is shown only what its own household passed up. It needs an event a watch can read and an ordered, budgeted list of members. |
 | build on bedrock | [0031-build-on-bedrock.md](../decisions/0031-build-on-bedrock.md) | Walk a new layer one step at a time before building on it. A working rule whose check is the benchmark walkthrough. |
+| charts are drawn by Plotly from one template | [0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown.md](../decisions/0048-charts-are-drawn-by-plotly-and-words-sit-in-markdown.md) | Every benchmark chart is drawn by Plotly from one template built on src/conky/tokens.json, black and white with one spot colour, and its heading, caption and conditions are written beside it in Markdown. |
 | energy unit | [energy-unit.md](../ideas/energy-unit.md) | A unit of value flow that conserves only if its conversion is recorded. It waits on a grouped write and a measure of spend, and has no step of its own. |
 | faculties | [faculties.md](../ideas/faculties.md) | A page that watches another and writes the rule, entry or link a sentence asks for, tried aside before it binds. A reflex kind costs nothing and a thinking kind costs a small call. |
 | figures are drawn from the shared tokens | [0046-figures-are-drawn-from-the-shared-tokens.md](../decisions/0046-figures-are-drawn-from-the-shared-tokens.md) | Every figure and chart on the front page takes its colours, weights, sizes and faces from src/conky/tokens.json, on a transparent ground in a light and a dark file. |

@@ -14,6 +14,7 @@ dependencies = ["pyyaml>=6", "cel-python>=0.2"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "pytest-xdist>=3", "pytest-testmon>=2", "ruff>=0.6", "vale>=3"]
+bench = ["plotly>=7.1,<8", "kaleido>=1.5,<2"]
 
 [project.urls]
 Repository = "https://github.com/drksci/conky"

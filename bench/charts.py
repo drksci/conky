@@ -1,16 +1,17 @@
-"""Draw a benchmark results directory as six SVG charts, with the data behind them.
+"""Draw a benchmark results directory as charts, with the data behind them.
 
     python -m bench.charts RESULTS_DIR --out DIR
 
-Writes the front-page plates `reached`, `text` and `time` (drawn by `bench/plate.py`) and
-`progress`, `spend`,
-`where`, `rules` and `board`, each as `NAME.light.svg` (ink on transparent, for light pages) and
-`NAME.dark.svg`. Arms are told apart by line style and direct labels. Every chart carries, bottom
-right, `DATA` or `SCRIPTED: NOT A RESULT` from the runs' backend, and bottom left the scenario,
-model, seeds and date. Beside them it writes `runs.csv` and `runs.json` (the standard record of
-each run, see `bench/record.py`) and `series.json` (its series), so the same data can be drawn
-another way. It reads the run files that bench.run writes, through `bench/record.py`. Standard
-library only.
+Writes each chart in `FIGURES` as `NAME.light.svg` and `NAME.dark.svg`, drawn by Plotly from the
+one template in `bench/kit.py`, and beside them `runs.csv` and `runs.json` (the standard record of
+each run, see `bench/record.py`), `series.json` (its series) and `shapes.json` (what each run
+became), so the same data can be drawn another way. A chart carries only what must sit on its
+marks: row labels, a few direct values and a small legend. Its heading, caption and conditions
+are written beside it in Markdown by `bench/publish.py`.
+
+Every chart has one row a harness, in the same order (`rows`): the subject first, then the
+harnesses that use a model, then those that do not. Without Plotly and kaleido the data files are
+still written and the charts already on disk are left as they are.
 """
 
 from __future__ import annotations
@@ -22,21 +23,11 @@ import statistics
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from xml.sax.saxutils import escape
 
-from bench import plate, record, shape
+from bench import kit, record, shape
 
-WIDTH = 880
-YELLOW = "#F4C430"
-INKS = {"light": "#1E1E1E", "dark": "#EDEDED"}
-FONT = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-DASHES = ("", "7 3", "1.5 3", "7 3 1.5 3")
-LAYERS = (
-    ("task", "TASK TEXT"),
-    ("screen", "SCREEN"),
-    ("scaffold", "SCAFFOLDING"),
-    ("other", "OTHER"),
-)
+LAYERS = ("task", "screen", "scaffold", "answer")  # where a call's text came from
+SOURCES = {"task": "task", "screen": "screen", "scaffold": "scaffolding", "answer": "answer"}
 
 
 @dataclass
@@ -134,416 +125,415 @@ def left_at(run: Run, turn: int) -> float:
     return run.left[max(known)] if known else float(run.progress["goal"])
 
 
-def modelled(arms: dict[str, list[Run]], order: list[str]) -> list[str]:
-    """The arms that use a model, in drawing order: each takes a band hue."""
-    return [a for a in order if arms[a][0].model != "none"]
-
-
 def arm_order(arms: dict[str, list[Run]]) -> list[str]:
     """Arms that use no model first, then the rest by name."""
     return sorted(arms, key=lambda a: (arms[a][0].model != "none", a))
 
 
-def goal_ticks(goal: float) -> list[float]:
-    """Round ticks from zero up to the goal, with the goal itself last."""
-    step = nice(goal / 5)
-    return [*(k * step for k in range(int(goal * 0.9 / step) + 1)), goal]
-
-
 # ---------------------------------------------------------------- drawing
 
 
-class Canvas:
-    def __init__(self, height: int, ink: str) -> None:
-        self.height = height
-        self.ink = ink
-        self.parts: list[str] = []
-
-    def add(self, text: str) -> None:
-        self.parts.append(text)
-
-    def line(self, x1, y1, x2, y2, width=1.0, dash="", opacity=1.0, color=None) -> None:
-        extra = f' stroke-dasharray="{dash}"' if dash else ""
-        self.add(
-            f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
-            f'stroke="{color or self.ink}" stroke-width="{width}" opacity="{opacity}"{extra}/>'
-        )
-
-    def path(self, points, width=1.5, dash="", opacity=1.0, fill="none", close=False) -> None:
-        if not points:
-            return
-        d = "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in points) + (" Z" if close else "")
-        extra = f' stroke-dasharray="{dash}"' if dash else ""
-        stroke = "none" if fill != "none" else self.ink
-        self.add(
-            f'<path d="{d}" fill="{fill}" stroke="{stroke}" stroke-width="{width}" '
-            f'opacity="{opacity}" stroke-linejoin="round"{extra}/>'
-        )
-
-    def text(
-        self, x, y, s, size=10, anchor="start", opacity=1.0, weight="normal", fill=None
-    ) -> None:
-        self.add(
-            f'<text x="{x:.1f}" y="{y:.1f}" font-size="{size}" text-anchor="{anchor}" '
-            f'opacity="{opacity}" font-weight="{weight}" fill="{fill or self.ink}">'
-            f"{escape(s)}</text>"
-        )
-
-    def rect(self, x, y, w, h, fill="none", opacity=1.0, stroke="none", sw=1.0) -> None:
-        self.add(
-            f'<rect x="{x:.1f}" y="{y:.1f}" width="{max(w, 0):.1f}" height="{max(h, 0):.1f}" '
-            f'fill="{fill}" opacity="{opacity}" stroke="{stroke}" stroke-width="{sw}"/>'
-        )
-
-    def circle(self, x, y, r, fill="none", sw=1.2, opacity=1.0) -> None:
-        self.add(
-            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" fill="{fill}" stroke="{self.ink}" '
-            f'stroke-width="{sw}" opacity="{opacity}"/>'
-        )
-
-    def svg(self, title: str) -> str:
-        head = (
-            f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{self.height}" '
-            f'viewBox="0 0 {WIDTH} {self.height}" font-family="{FONT}" '
-            f'stroke-linecap="round" letter-spacing=".1em" role="img" '
-            f'aria-label="{escape(title)}">\n<title>{escape(title)}</title>\n'
-        )
-        return head + "\n".join(self.parts) + "\n</svg>\n"
-
-
-def stamp(runs: list[Run]) -> tuple[str, str]:
-    """The footer: scenario, model, seeds and date on the left; the data class on the right."""
-    seeds = sorted({r.seed for r in runs})
-    span = f"{seeds[0]}-{seeds[-1]}" if len(seeds) > 1 else f"{seeds[0]}"
-    models = ",".join(sorted({r.model for r in runs if r.model != "none"})) or "none"
-    date = max(r.date for r in runs)
-    left = f"{runs[0].scenario} / model {models} / seeds {span} / {date}"
-    stand_in = any(r.backend == "scripted" for r in runs)
-    return left, ("SCRIPTED: NOT A RESULT" if stand_in else "DATA")
-
-
-def frame(height: int, ink: str, title: str, subtitle: str, runs: list[Run]) -> Canvas:
-    c = Canvas(height, ink)
-    c.text(24, 26, title.upper(), 13, weight="bold")
-    c.text(24, 43, subtitle, 10, opacity=0.65)
-    left, right = stamp(runs)
-    c.line(24, height - 28, WIDTH - 24, height - 28, 0.6, opacity=0.35)
-    c.text(24, height - 12, left, 9, opacity=0.65)
-    c.text(WIDTH - 24, height - 12, right, 9, anchor="end", weight="bold")
-    return c
-
-
-def nice(top: float) -> float:
-    """A round axis top at or above top."""
-    if top <= 0:
-        return 1.0
-    mag = 10 ** (len(str(int(top))) - 1)
-    for step in (1, 2, 2.5, 5, 10):
-        if step * mag >= top:
-            return step * mag
-    return 10 * mag
-
-
-def axes(
-    c: Canvas, x0, x1, y0, y1, xmax, ymax, ylabel, xlabel=None, ticks=None, fmt="{:,.0f}"
-) -> None:
-    """Thin axes with faint ticks. y0 is the top of the plot, y1 the bottom."""
-    c.line(x0, y1, x1, y1, 0.8)
-    c.line(x0, y0, x0, y1, 0.8)
-    for value in ticks or round_ticks(ymax):
-        y = y1 - (y1 - y0) * value / ymax
-        c.line(x0 - 3, y, x1, y, 0.5, opacity=0.18)
-        c.text(x0 - 7, y + 3, fmt.format(value), 9, anchor="end", opacity=0.7)
-    step = 1 if xmax <= 16 else 2 if xmax <= 32 else 5
-    for t in range(0, int(xmax) + 1, step):
-        x = x0 + (x1 - x0) * t / xmax
-        c.line(x, y1, x, y1 + 3, 0.8)
-        c.text(x, y1 + 14, str(t), 9, anchor="middle", opacity=0.7)
-    c.text(x0, y0 - 8, ylabel.upper(), 9, opacity=0.8)
-    if xlabel:
-        c.text(x1, y1 + 27, xlabel.upper(), 9, anchor="end", opacity=0.8)
-
-
-def round_ticks(top: float) -> list[float]:
-    """Five ticks for a top of 25 or 5 times a power of ten, four otherwise."""
-    lead = top / 10 ** (len(str(int(top))) - 1)
-    n = 5 if lead in (2.5, 5) else 4
-    return [top * i / n for i in range(n + 1)]
-
-
-def dodge(ys: list[float], gap: float, low: float, high: float) -> list[float]:
-    """Spread label positions so none are closer than gap, keeping order and the bounds."""
-    order = sorted(range(len(ys)), key=lambda i: ys[i])
-    placed: dict[int, float] = {}
-    last = low - gap
-    for i in order:
-        last = max(ys[i], last + gap)
-        placed[i] = last
-    over = last - high
-    if over > 0:
-        for i in order:
-            placed[i] -= over
-    return [placed[i] for i in range(len(ys))]
-
-
-def mark(c: Canvas, x, y, ending: str) -> None:
-    """The small mark that says why a run ended."""
-    if ending == "reached":
-        c.circle(x, y, 3.2)
-    elif ending == "lost":
-        c.line(x - 3, y - 3, x + 3, y + 3, 1.4)
-        c.line(x - 3, y + 3, x + 3, y - 3, 1.4)
-    elif ending == "capped":
-        c.line(x, y - 4, x, y + 4, 1.6)
-        c.line(x - 3, y - 4, x + 3, y - 4, 1.6)
-    else:
-        c.text(x, y + 4, "!", 11, anchor="middle", weight="bold")
-
-
-MARK_KEY = "ENDS: o ARRIVED  x LOST  T BUDGET  ! CRASHED"
-
-
-def line_chart(c, arms, box, xmax, ymax, value, label, ends=False) -> None:
-    """Median line with a min-to-max band per arm, labelled where its own line ends."""
-    x0, x1, y0, y1 = box
-
-    def px(t):
-        return x0 + (x1 - x0) * t / xmax
-
-    def py(v):
-        return y1 - (y1 - y0) * min(v, ymax) / ymax
-
-    spots = []
-    for i, runs in enumerate(arms.values()):
-        rows = band(runs, value)
-        top = [(px(t), py(hi)) for t, _, _, hi in rows]
-        bottom = [(px(t), py(lo)) for t, _, lo, _ in reversed(rows)]
-        c.path(top + bottom, fill=c.ink, opacity=0.1, width=0, close=True)
-        c.path([(px(t), py(m)) for t, m, _, _ in rows], 1.6, DASHES[i % len(DASHES)])
-        if ends:
-            for run in runs:
-                mark(c, px(run.turns), py(value(run, run.turns)), run.ending)
-        spots.append((px(rows[-1][0]), py(rows[-1][1])) if rows else (x0, y1))
-    height = dodge([y for _, y in spots], 13, y0 + 4, y1 + 8)
-    for (x, y), at, (name, runs) in zip(spots, height, arms.items(), strict=True):
-        c.line(x + (6 if ends else 3), y, x1 + 6, at, 0.6, "1 2", 0.6)
-        c.text(x1 + 10, at + 3, label(name, runs), 10, weight="bold")
-
-
-def draw_progress(runs: list[Run], ink: str) -> Canvas:
-    arms = by_arm(runs)
-    goal, unit, end = runs[0].progress["goal"], runs[0].progress["unit"], runs[0].progress["end"]
-    c = frame(
-        340,
-        ink,
-        f"Progress: {unit} left to {end}",
-        "MEDIAN OF SEEDS, BAND LOWEST TO HIGHEST  |  " + MARK_KEY,
-        runs,
-    )
-    x0, x1, y0, y1 = 70, 690, 78, 280
-    xmax = max(max(r.turns for r in rs) for rs in arms.values()) or 1
-    axes(c, x0, x1, y0, y1, xmax, goal, f"{unit} left", "turn", goal_ticks(goal))
-    line_chart(
-        c,
+def rows(arms: dict[str, list[Run]]) -> list[str]:
+    """The one row order every chart uses: the subject, then the harnesses that use a model,
+    then those that do not, each group by its label."""
+    return sorted(
         arms,
-        (x0, x1, y0, y1),
-        xmax,
-        goal,
-        left_at,
-        lambda name, rs: f"{name} {sum(r.ending == 'reached' for r in rs)}/{len(rs)} arrived",
-        ends=True,
+        key=lambda a: (
+            not record.manifest(a).get("accent"),
+            arms[a][0].model == "none",
+            record.label(a),
+        ),
     )
-    return c
 
 
-def draw_spend(runs: list[Run], ink: str) -> Canvas:
+def subject(arm: str) -> bool:
+    return bool(record.manifest(arm).get("accent"))
+
+
+def name(arm: str) -> str:
+    """A row label: the harness's name, bold for the subject."""
+    return f"<b>{record.label(arm)}</b>" if subject(arm) else record.label(arm)
+
+
+def median_run(rs: list[Run], key) -> Run:
+    """The run nearest the median on key, among those that reached the goal when any did."""
+    pool = [r for r in rs if r.ending == "reached"] or rs
+    middle = statistics.median(key(r) for r in pool)
+    return min(pool, key=lambda r: (abs(key(r) - middle), r.seed))
+
+
+def short(number: float) -> str:
+    return f"{number / 1000:,.0f}k" if number >= 1000 else f"{number:,.0f}"
+
+
+def _height(n: int, each: float, extra: float = 0) -> int:
+    return round(n * each + extra + 12)
+
+
+def _hbar(look, label, values, ys, role, text=None, **extra):
+    import plotly.graph_objects as go
+
+    return go.Bar(
+        name=label,
+        # An empty segment draws nothing, not a stray outline; a label rides on an empty one.
+        x=values if text else [v or None for v in values],
+        y=ys,
+        orientation="h",
+        marker=kit.fill(role, look),
+        text=text,
+        textposition="outside",
+        cliponaxis=False,
+        outsidetextfont={"size": kit.FONT, "color": kit.palette(look)["ink"]},
+        hoverinfo="skip",
+        **extra,
+    )
+
+
+def _rows_axis(order: list[str]) -> dict:
+    """A category axis that lists the rows top to bottom."""
+    return {
+        "type": "category",
+        "categoryorder": "array",
+        "categoryarray": [name(a) for a in reversed(order)],
+    }
+
+
+def draw_reached(runs: list[Run], look: str):
+    """How far every run got: one row a harness, a thin bar a run, the goal as one line."""
     arms = by_arm(runs)
-    c = frame(
-        470,
-        ink,
-        "Spend: model calls and tokens",
-        "CUMULATIVE, MEDIAN OF SEEDS, BAND LOWEST TO HIGHEST",
-        runs,
-    )
-    x0, x1 = 70, 690
-    xmax = max(max(r.turns for r in rs) for rs in arms.values()) or 1
-    budget = max(r.budget_calls for r in runs)
-    most = max((len(r.calls) for r in runs), default=0)
-    off = budget > 2.5 * max(most, 1)
-    ymax = nice(most * 1.15) if off or not budget else nice(budget)
-    y0, y1 = 78, 245
-    axes(c, x0, x1, y0, y1, xmax, ymax, "model calls")
-    if budget:
-        yb = y0 if off else y1 - (y1 - y0) * budget / ymax
-        c.line(x0, yb, x1, yb, 1.2, "2 3")
-        c.text(x1 + 8, yb + 3, f"BUDGET {budget}" + (" (OFF SCALE)" if off else ""), 9, opacity=0.8)
-    line_chart(
-        c,
-        arms,
-        (x0, x1, y0, y1),
-        xmax,
-        ymax,
-        lambda r, t: cumulative(r, t, "calls"),
-        lambda name, rs: f"{name} {statistics.median(len(r.calls) for r in rs):,.0f}",
-    )
-    known = all(r.tokens_known for r in runs if r.calls)
-    key = "tokens" if known else "chars"
-    top = max((total(r, key) for r in runs), default=0)
-    ymax2 = nice(top * 1.05) if top else 1.0
-    y2, y3 = 305, 410
-    axes(
-        c,
-        x0,
-        x1,
-        y2,
-        y3,
-        xmax,
-        ymax2,
-        "tokens" if known else "characters sent and received (tokens unknown)",
-        "turn",
-    )
-    line_chart(
-        c,
-        arms,
-        (x0, x1, y2, y3),
-        xmax,
-        ymax2,
-        lambda r, t: cumulative(r, t, key),
-        lambda name, rs: f"{name} {statistics.median(total(r, key) for r in rs):,.0f}",
-    )
-    return c
-
-
-def median_run(runs: list[Run]) -> Run:
-    """The run whose total bytes sent is the median of the arm's seeds."""
-
-    def total(r: Run) -> int:
-        return sum(sum(c[k] for k, _ in LAYERS) for c in r.calls)
-
-    ordered = sorted(runs, key=total)
-    return ordered[(len(ordered) - 1) // 2]
-
-
-def draw_where(runs: list[Run], ink: str) -> Canvas:
-    arms = by_arm(runs)
-    picks = {arm: median_run(rs) for arm, rs in arms.items()}
-    c = frame(
-        380,
-        ink,
-        "Where the bytes go",
-        "BYTES SENT PER CALL, ONE MEDIAN RUN PER ARM, SHARED SCALE",
-        runs,
-    )
-    top = max(
-        (sum(call[k] for k, _ in LAYERS) for r in picks.values() for call in r.calls), default=0
-    )
-    ymax = nice(top * 1.05) if top else 1.0
-    gap, left, right = 22, 70, 740
-    width = (right - left - gap * (len(arms) - 1)) / len(arms)
-    y0, y1 = 82, 310
-    fills = (1.0, 0.5, 0.2, 0.0)
-    for i, (arm, run) in enumerate(picks.items()):
-        x0 = left + i * (width + gap)
-        c.line(x0, y1, x0 + width, y1, 0.8)
-        c.text(x0, y0 - 14, arm.upper(), 10, weight="bold")
-        c.text(x0, y0 - 3, f"seed {run.seed}, {len(run.calls)} calls", 9, opacity=0.65)
-        if i == 0:
-            c.line(x0, y0, x0, y1, 0.8)
-            for k in range(5):
-                y = y1 - (y1 - y0) * k / 4
-                c.line(x0 - 3, y, x0 + width * 0 + 3, y, 0.8)
-                c.text(x0 - 7, y + 3, f"{ymax * k / 4:,.0f}", 9, anchor="end", opacity=0.7)
-        if not run.calls:
-            c.text(x0 + width / 2, (y0 + y1) / 2, "NO MODEL CALLS", 9, anchor="middle", opacity=0.6)
-            continue
-        bar = width / max(len(run.calls), 1)
-        for n, call in enumerate(run.calls):
-            base = y1
-            for (key, _), op in zip(LAYERS, fills, strict=True):
-                h = (y1 - y0) * call[key] / ymax
-                if h > 0:
-                    c.rect(
-                        x0 + n * bar,
-                        base - h,
-                        max(bar - 0.8, 0.8),
-                        h,
-                        c.ink,
-                        op if op else 0.0,
-                        stroke=c.ink if op < 0.3 else "none",
-                        sw=0.5,
-                    )
-                base -= h
-    mean = (
+    order = rows(arms)
+    goal = runs[0].progress["goal"]
+    seeds = max(len(rs) for rs in arms.values())
+    lane = seeds + 2
+    traces, ticks, words = [], [], []
+    for i, arm in enumerate(order):
+        rs = arms[arm]
+        ys = [-(i * lane + k) for k in range(len(rs))]
+        traces.append(
+            _hbar(
+                look,
+                record.label(arm),
+                [max(r.value, goal * 0.004) for r in rs],
+                ys,
+                "subject" if subject(arm) else "other",
+                width=0.62,
+            )
+        )
+        ticks.append(-(i * lane + (len(rs) - 1) / 2))
+        words.append(name(arm))
+    c = kit.palette(look)
+    notes = [
         {
-            k: statistics.fmean(call[k] for r in picks.values() for call in r.calls)
-            for k, _ in LAYERS
+            "x": 1.0,
+            "xref": "paper",
+            "xanchor": "left",
+            "y": tick,
+            "text": f"{sum(r.ending == 'reached' for r in arms[arm])} of {len(arms[arm])}",
+            "showarrow": False,
+            "font": {"size": kit.FONT, "color": c["ink"]},
         }
-        if top
-        else {}
+        for tick, arm in zip(ticks, order, strict=True)
+    ]
+    end = runs[0].progress
+    return kit.figure(
+        look,
+        *traces,
+        height=_height(len(order) * lane, 9.5, 30),
+        barmode="overlay",
+        xaxis={
+            "range": [0, goal],
+            "tickvals": [0, goal],
+            "ticktext": [end["start"], end["end"]],
+        },
+        yaxis={"tickvals": ticks, "ticktext": words, "range": [-(len(order) * lane - 1.2), 0.8]},
+        shapes=[
+            {
+                "type": "line",
+                "x0": goal,
+                "x1": goal,
+                "y0": 0,
+                "y1": 1,
+                "yref": "paper",
+                "line": {"color": c["ink"], "width": 1},
+            }
+        ],
+        annotations=notes,
+        margin={"l": 4, "r": 56, "t": 4, "b": 4, "pad": 6},
     )
-    if mean:
-        kx, base = right + 24, y1
-        for (key, name), op in zip(LAYERS, fills, strict=True):
-            h = (y1 - y0) * mean[key] / ymax
-            c.rect(kx, base - h, 14, h, c.ink, op, stroke=c.ink if op < 0.3 else "none", sw=0.5)
-            if mean[key] > 0:
-                c.text(kx + 20, base - h / 2 + 3, name, 9)
-            base -= h
-        c.text(kx, y1 + 14, "MEAN CALL", 9, opacity=0.7)
-    c.text(left, y1 + 16, "CALL, IN ORDER", 9, opacity=0.7)
-    return c
 
 
-def draw_rules(runs: list[Run], ink: str) -> Canvas:
+def ends(run: Run) -> dict:
+    """What a run had become when it stopped: everything it ended with, and what it kept."""
+    found = {f["name"]: f["value"] for f in shape.shape(run.folder)["facts"]}
+    if "pages at end" in found:
+        return {"all": found["pages at end"], "own": found["pages it wrote"], "unit": "pages"}
+    if "messages" in found:
+        own = found.get("kept after it stops", 0)
+        return {"all": found["messages"], "own": own, "unit": "messages"}
+    return {"all": 0, "own": 0, "unit": ""}
+
+
+def draw_became(runs: list[Run], look: str):
+    """What each harness's median run ended as: the parts it was handed and those it kept."""
     arms = by_arm(runs)
-    rows = sum(len(rs) for rs in arms.values())
-    height = 110 + rows * 16 + len(arms) * 14 + 30
-    c = frame(
-        height,
-        ink,
-        "Rules broken",
-        "FILLED: HOUSE RULE BROKEN IN THE GAME  |  HOLLOW: BREAKING INPUT PROPOSED, NOT TYPED",
-        runs,
+    order = rows(arms)
+    end = {a: ends(median_run(arms[a], lambda r: r.row["chars"])) for a in order}
+    given = [end[a]["all"] - end[a]["own"] for a in order]
+    own = [end[a]["own"] for a in order]
+    ys = [name(a) for a in order]
+    words = []
+    for a in order:
+        e = end[a]
+        if not e["unit"]:
+            words.append("nothing")
+        elif not e["all"]:
+            words.append("not recorded")
+        else:
+            words.append(f"{e['all']} {e['unit']}, {e['own'] or 'none'} its own")
+    kept = [
+        _hbar(look, "its own", [o], [y], "subject" if subject(a) else "harness")
+        for a, o, y in zip(order, own, ys, strict=True)
+    ]
+    marks = _hbar(look, "handed to it", given, ys, "other")
+    tail = _hbar(look, "", [0] * len(order), ys, "idle", text=words)
+    tail.marker.line.width = 0
+    return kit.figure(
+        look,
+        marks,
+        *kept,
+        tail,
+        height=_height(len(order), 30, 8),
+        yaxis=_rows_axis(order),
+        xaxis={"visible": False, "range": [0, max(e["all"] for e in end.values()) * 1.35 or 1]},
     )
-    x0, x1 = 200, 760
-    xmax = max(max(r.turns for r in rs) for rs in arms.values()) or 1
-    y = 70
-    for arm, rs in arms.items():
-        c.text(24, y + 11, arm.upper(), 10, weight="bold")
-        total = sum(len(r.breaks) for r in rs)
-        c.text(WIDTH - 24, y + 11, f"{total} broken", 10, anchor="end", weight="bold")
-        for r in rs:
-            c.text(x0 - 10, y + 12, f"seed {r.seed}", 9, anchor="end", opacity=0.65)
-            c.line(x0, y + 8, x0 + (x1 - x0) * r.turns / xmax, y + 8, 0.8, opacity=0.5)
-            typed = set(r.breaks)
+
+
+def run_cost(rs: list[Run]) -> float:
+    """The median dollars of the runs whose cost is known, or nothing."""
+    known = [r.row["cost"] for r in rs if r.row["cost"] is not None]
+    return statistics.median(known) if known else 0.0
+
+
+def draw_cost(runs: list[Run], look: str):
+    """What the median run cost, in dollars at list price: one row a harness that uses a model."""
+    arms = by_arm(runs)
+    order = [a for a in rows(arms) if arms[a][0].model != "none"]
+    ys = [name(a) for a in order]
+    medians = [run_cost(arms[a]) for a in order]
+    bars = [
+        _hbar(
+            look,
+            record.label(a),
+            [m],
+            [y],
+            "subject" if subject(a) else "other",
+            text=[f"${m:.4f}"],
+        )  # fmt: skip
+        for a, m, y in zip(order, medians, ys, strict=True)
+    ]
+    most = max(medians, default=0) or 1
+    return kit.figure(
+        look,
+        *bars,
+        height=_height(len(order), 34, 8),
+        yaxis=_rows_axis(order),
+        xaxis={"visible": False, "range": [0, most * 1.25]},
+    )
+
+
+def _parts(look, order, totals: dict[str, dict[str, float]], kinds, words, unit):
+    """One stacked bar a harness, a segment a kind, its total written at the end."""
+    ys = [name(a) for a in order]
+    traces = [
+        _hbar(look, words[k], [totals[a].get(k, 0) for a in order], ys, k, legendrank=n)
+        for n, k in enumerate(kinds)
+    ]
+    whole = [sum(totals[a].values()) for a in order]
+    tail = _hbar(
+        look,
+        "",
+        [0] * len(order),
+        ys,
+        "idle",
+        text=[f"{short(w)} {unit}" if w else "not recorded" for w in whole],
+        showlegend=False,
+    )
+    tail.marker.line.width = 0
+    return kit.figure(
+        look,
+        *traces,
+        tail,
+        height=_height(len(order), 34, 34),
+        showlegend=True,
+        yaxis=_rows_axis(order),
+        xaxis={"visible": False, "range": [0, max(whole, default=1) * 1.2 or 1]},
+        margin={"l": 4, "r": 4, "t": 30, "b": 4, "pad": 6},
+    )
+
+
+def draw_text(runs: list[Run], look: str):
+    """Where the text of each harness's median run came from, in characters."""
+    arms = by_arm(runs)
+    order = [a for a in rows(arms) if arms[a][0].model != "none"]
+    totals = {}
+    for a in order:
+        run = median_run(arms[a], lambda r: r.row["chars"])
+        totals[a] = {k: float(sum(c.get(k, 0) for c in run.calls)) for k in LAYERS}
+    return _parts(look, order, totals, LAYERS, SOURCES, "characters")
+
+
+def draw_time(runs: list[Run], look: str):
+    """Where the time of each harness's median run went: in the model or in the harness."""
+    arms = by_arm(runs)
+    order = rows(arms)
+    totals = {}
+    for a in order:
+        run = median_run(arms[a], lambda r: r.wall)
+        model = run.row["model_s"] or 0.0
+        totals[a] = {"model": model, "harness": max(run.wall - model, 0.0)}
+    words = {"model": "in the model", "harness": "in the harness"}
+    return _parts(look, order, totals, ("model", "harness"), words, "seconds")
+
+
+DASHES = ("solid", "dot", "dash", "longdash", "dashdot")
+
+
+def _lines(look, arms, order, value, top):
+    """A median line an arm against turn: the subject in its colour, the rest in ink, dashed."""
+    import plotly.graph_objects as go
+
+    c = kit.palette(look)
+    traces = []
+    for n, a in enumerate(order):
+        rows_ = band(arms[a], value)
+        traces.append(
+            go.Scatter(
+                name=record.label(a),
+                x=[t for t, *_ in rows_],
+                y=[m for _, m, *_ in rows_],
+                mode="lines",
+                line={
+                    "color": c["subject"] if subject(a) else c["ink"],
+                    "width": 2.4 if subject(a) else 1.2,
+                    "dash": "solid" if subject(a) else DASHES[1 + n % 4],
+                    "shape": "hv",
+                },
+                hoverinfo="skip",
+            )
+        )
+    return traces
+
+
+def _turn_axis(look) -> dict:
+    return {"title": {"text": "turn"}, "showline": True, "linecolor": kit.palette(look)["ink"]}
+
+
+def draw_progress(runs: list[Run], look: str):
+    """What was left to the goal at each turn, the median over seeds, one line an arm."""
+    arms = by_arm(runs)
+    order = rows(arms)
+    p = runs[0].progress
+    return kit.figure(
+        look,
+        *_lines(look, arms, order, left_at, p["goal"]),
+        height=300,
+        showlegend=True,
+        xaxis=_turn_axis(look),
+        yaxis={"title": {"text": f"{p['unit']} left"}, "rangemode": "tozero"},
+        margin={"l": 4, "r": 4, "t": 30, "b": 4, "pad": 4},
+    )
+
+
+def draw_spend(runs: list[Run], look: str):
+    """Model calls made by each turn, the median over seeds, one line an arm that uses a model."""
+    arms = by_arm(runs)
+    order = [a for a in rows(arms) if arms[a][0].model != "none"]
+    return kit.figure(
+        look,
+        *_lines(look, arms, order, lambda r, t: cumulative(r, t, "calls"), None),
+        height=280,
+        showlegend=True,
+        xaxis=_turn_axis(look),
+        yaxis={"title": {"text": "model calls"}, "rangemode": "tozero"},
+        margin={"l": 4, "r": 4, "t": 30, "b": 4, "pad": 4},
+    )
+
+
+def draw_rules(runs: list[Run], look: str):
+    """Each house rule broken in the game, at its turn, as a filled square; a breaking input
+    a model proposed that never reached the game, as a hollow one. One line a run."""
+    import plotly.graph_objects as go
+
+    arms = by_arm(runs)
+    order = rows(arms)
+    c = kit.palette(look)
+    ys, xs, labels, spans, offered = [], [], [], [], []
+    for a in order:
+        for r in arms[a]:
+            label = f"{record.label(a)} {r.seed}"
+            labels.append(f"<b>{label}</b>" if subject(a) else label)
+            spans.append((label, r.turns))
             for t, _ in r.breaks:
-                x = x0 + (x1 - x0) * t / xmax
-                c.rect(x - 1.5, y, 3, 16, YELLOW, stroke=c.ink, sw=0.5)
-            for t, rule in r.proposed:
-                if (t, rule) not in typed:
-                    x = x0 + (x1 - x0) * t / xmax
-                    c.rect(x - 2, y + 1, 4, 14, "none", stroke=YELLOW, sw=1.4)
-            y += 16
-        y += 14
-    c.line(x0, y - 6, x1, y - 6, 0.8)
-    step = 1 if xmax <= 16 else 2
-    for t in range(0, int(xmax) + 1, step):
-        x = x0 + (x1 - x0) * t / xmax
-        c.line(x, y - 6, x, y - 3, 0.8)
-        c.text(x, y + 6, str(t), 9, anchor="middle", opacity=0.7)
-    c.text(x1, y + 18, "TURN", 9, anchor="end", opacity=0.8)
-    return c
+                xs.append(t)
+                ys.append(labels[-1])
+            typed = set(r.breaks)
+            offered += [(t, labels[-1]) for t, rule in r.proposed if (t, rule) not in typed]
+    track = go.Bar(
+        x=[t for _, t in spans],
+        y=labels,
+        orientation="h",
+        width=0.08,
+        marker={"color": c["ramp2"], "line": {"width": 0}},
+        hoverinfo="skip",
+    )
+    broken = go.Scatter(
+        x=xs,
+        y=ys,
+        mode="markers",
+        marker={
+            "symbol": "square",
+            "size": 9,
+            "color": kit.colour("notable", look),
+            "line": {"color": c["ink"], "width": 1},
+        },
+        hoverinfo="skip",
+    )
+    hollow = go.Scatter(
+        x=[t for t, _ in offered],
+        y=[y for _, y in offered],
+        mode="markers",
+        marker={
+            "symbol": "square-open",
+            "size": 9,
+            "color": kit.colour("notable", look),
+            "line": {"width": 1.5},
+        },
+        hoverinfo="skip",
+    )
+    return kit.figure(
+        look,
+        track,
+        broken,
+        hollow,
+        height=_height(len(labels), 18, 30),
+        xaxis=_turn_axis(look),
+        yaxis={
+            "type": "category",
+            "categoryorder": "array",
+            "categoryarray": list(reversed(labels)),
+        },
+    )
 
 
 COLUMNS = (
     # key, header, best direction
-    ("outcome", "ARRIVED", "high"),
-    ("value", "PROGRESS", "high"),
-    ("turns", "TURNS", "low"),
-    ("calls", "CALLS", "low"),
-    ("tokens", "TOKENS", "low"),
-    ("wall", "WALL S", "low"),
-    ("broken", "RULES BROKEN", "low"),
+    ("outcome", "arrived", "high"),
+    ("value", "progress", "high"),
+    ("turns", "turns", "low"),
+    ("calls", "calls", "low"),
+    ("tokens", "tokens", "low"),
+    ("wall", "seconds", "low"),
+    ("broken", "rules broken", "low"),
 )
 
 
@@ -560,119 +550,116 @@ def board_values(rs: list[Run]) -> dict[str, list[float]]:
     }
 
 
-def draw_board(runs: list[Run], ink: str) -> Canvas:
+def board(runs: list[Run]) -> tuple[list[str], list[list[float]], list[list[str]]]:
+    """The board's rows, a shade a cell (0 worst to 1 best in its column) and its median."""
     arms = by_arm(runs)
-    data = {arm: board_values(rs) for arm, rs in arms.items()}
+    order = rows(arms)
+    data = {a: board_values(arms[a]) for a in order}
+    shades, words = [], []
+    for a in order:
+        line, said = [], []
+        for key, _, direction in COLUMNS:
+            med = statistics.median(data[a][key])
+            pool = [statistics.median(data[b][key]) for b in order]
+            low, high = min(pool), max(pool)
+            share = (med - low) / (high - low) if high > low else 1.0
+            line.append(share if direction == "high" else 1 - share)
+            n = len(data[a][key])
+            said.append(f"{int(sum(data[a][key]))} of {n}" if key == "outcome" else f"{med:,.0f}")
+        shades.append(line)
+        words.append(said)
+    return order, shades, words
+
+
+def draw_board(runs: list[Run], look: str):
+    """Every measure for every arm, the median over seeds, each column shaded on its own scale
+    from worst (pale) to best (deep)."""
+    import plotly.graph_objects as go
+
+    order, shades, words = board(runs)
+    c = kit.palette(look)
+    ramp = [c[f"seq{i}"] for i in range(1, len(kit.CHART["sequential"][look]) + 1)]
     known = all(r.tokens_known for r in runs if r.calls)
-    height = 100 + 46 * len(arms) + 30
-    c = frame(
-        height,
-        ink,
-        "Scoreboard",
-        "DOT: MEDIAN, LINE: LOWEST TO HIGHEST SEED, RING: BEST ARM, EACH COLUMN ON ITS OWN SCALE",
-        runs,
+    heads = [
+        runs[0].progress["unit"] if k == "value" else "characters" if k == "tokens" and not known
+        else h
+        for k, h, _ in COLUMNS
+    ]  # fmt: skip
+    top = len(order) - 1
+    cells = [
+        {
+            "type": "rect",
+            "x0": j - 0.48,
+            "x1": j + 0.48,
+            "y0": top - i - 0.44,
+            "y1": top - i + 0.44,
+            "fillcolor": ramp[round(share * (len(ramp) - 1))],
+            "line": {"width": 0},
+            "layer": "below",
+        }
+        for i, line in enumerate(shades)
+        for j, share in enumerate(line)
+    ]  # a shape a cell, drawn as vector: a heatmap trace would export as a raster image
+    said = go.Scatter(
+        x=[j for line in words for j in range(len(line))],
+        y=[top - i for i, line in enumerate(words) for _ in line],
+        text=[w for line in words for w in line],
+        mode="text",
+        textfont={"size": kit.FONT, "color": c["ink"]},
+        hoverinfo="skip",
     )
-    left, colw = 24, (WIDTH - 24 - 150 - 24) / len(COLUMNS)
-    top = 66
-    best: dict[str, float | None] = {}
-    for key, _, direction in COLUMNS:
-        pool = [
-            statistics.median(d[key])
-            for arm, d in data.items()
-            if not (key == "turns" and not any(data[arm]["outcome"]))
-        ]
-        best[key] = (max(pool) if direction == "high" else min(pool)) if pool else None
-    for j, (key, head, _) in enumerate(COLUMNS):
-        x = 150 + j * colw
-        title = "CHARS" if key == "tokens" and not known else head
-        if key == "value":
-            title = runs[0].progress["unit"].upper()
-        c.text(x + 6, top, title, 9, weight="bold")
-    for i, (arm, d) in enumerate(data.items()):
-        y = top + 16 + i * 46
-        c.line(left, y - 6, WIDTH - 24, y - 6, 0.5, opacity=0.2)
-        c.text(left, y + 18, arm.upper(), 10, weight="bold")
-        for j, (key, _, _) in enumerate(COLUMNS):
-            x = 150 + j * colw + 6
-            w = colw - 22
-            vals = d[key]
-            med = statistics.median(vals)
-            if key == "outcome":
-                n = len(vals)
-                gap = min(11.0, w / max(n, 1))
-                for k in range(n):
-                    c.circle(x + 4 + k * gap, y + 10, 3.6, c.ink if vals[k] else "none", 1.2)
-                c.text(x, y + 30, f"{int(sum(vals))} OF {n}", 9, opacity=0.8)
-                if sum(vals) and med == best[key]:
-                    c.rect(x - 4, y + 21, 46, 12, "none", stroke=c.ink, sw=0.9)
-                continue
-            cap = (
-                float(runs[0].progress["goal"])
-                if key == "value"
-                else max(max(x_ for x_ in dd[key]) for dd in data.values()) or 1.0
-            )
-
-            def px(v, x=x, w=w, cap=cap):
-                return x + w * min(v, cap) / cap
-
-            c.line(x, y + 10, x + w, y + 10, 0.5, opacity=0.25)
-            c.line(px(min(vals)), y + 10, px(max(vals)), y + 10, 1.4)
-            c.circle(px(med), y + 10, 3.6, c.ink, 1.2)
-            if best[key] is not None and med == best[key]:
-                c.circle(px(med), y + 10, 7.5, "none", 0.9)
-            c.text(
-                x,
-                y + 30,
-                f"{med:,.0f}" if med >= 10 or med == int(med) else f"{med:.1f}",
-                9,
-                opacity=0.8,
-            )
-    return c
+    return kit.figure(
+        look,
+        said,
+        shapes=cells,
+        height=_height(len(order), 34, 30),
+        xaxis={
+            "side": "top",
+            "tickvals": list(range(len(heads))),
+            "ticktext": heads,
+            "range": [-0.5, len(heads) - 0.5],
+        },
+        yaxis={
+            "tickvals": list(range(len(order))),
+            "ticktext": [name(a) for a in reversed(order)],
+            "range": [-0.5, len(order) - 0.5],
+        },
+    )
 
 
-CHARTS = {
+FIGURES = {
+    "reached": draw_reached,
+    "became": draw_became,
+    "cost": draw_cost,
+    "time": draw_time,
+    "text": draw_text,
     "progress": draw_progress,
     "spend": draw_spend,
-    "where": draw_where,
     "rules": draw_rules,
     "board": draw_board,
 }
 
-TITLES = {
-    "progress": "{unit} left to {end} against turn, one line per arm",
-    "spend": "Cumulative model calls and tokens against turn, one line per arm",
-    "where": "Bytes sent per call, split by source, one median run per arm",
-    "rules": "House rules broken in the game, by turn, per run",
-    "board": "Scoreboard, one row per arm",
-}
-
 
 def render(runs: list[Run], out: Path, kind: str = "runs") -> list[Path]:
-    """Write every chart and the data behind them. kind names the set: pilot, result or runs."""
+    """Write every chart and the data behind them. kind names the set: pilot, result or runs.
+
+    Without Plotly and kaleido only the data is written, the charts on disk are left alone, and
+    a line on standard error says so."""
     out.mkdir(parents=True, exist_ok=True)
     written = []
-    ordered = sorted(runs, key=lambda r: (r.arm, r.seed))
-    rows = [r.row for r in ordered]
-    series = [{"harness": r.arm, "seed": r.seed, "series": r.series} for r in ordered]
-    made = [{"harness": r.arm, "seed": r.seed, "calls": r.calls} for r in ordered]
-    for look in INKS:
-        drawn = {
-            "reached": plate.reached(rows, series, runs[0].progress, kind, look),
-            "became": plate.became(rows, [shape.shape(r.folder) for r in ordered], look),
-            "cost": plate.cost(rows, series, made, runs[0].progress, look),
-            "text": plate.text(rows, made, look),
-            "time": plate.time(rows, made, look),
+    if kit.available():
+        figures = {
+            out / f"{chart}.{look}.svg": (draw(runs, look), f"{chart}-{look}")
+            for chart, draw in FIGURES.items()
+            for look in kit.LOOKS
         }
-        for name, svg in drawn.items():
-            path = out / f"{name}.{look}.svg"
-            path.write_text(svg, encoding="utf-8")
-            written.append(path)
-    for name, draw in CHARTS.items():
-        for look, ink in INKS.items():
-            path = out / f"{name}.{look}.svg"
-            title = TITLES[name].format(**runs[0].progress)
-            path.write_text(draw(runs, ink).svg(title), encoding="utf-8")
-            written.append(path)
+        written += kit.export(figures)
+    else:
+        print(
+            "charts not drawn: Plotly and kaleido are not installed, so the charts already "
+            "here are kept; install them with pip install -e '.[bench]'",
+            file=sys.stderr,
+        )
     written += export(runs, out)
     return written
 

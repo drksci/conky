@@ -1,4 +1,8 @@
-"""The benchmark charts, from a tiny hand-made results directory with known numbers.
+"""The benchmark charts and the words beside them, from a tiny hand-made results directory.
+
+A chart is checked as the figure Plotly is asked to draw (its data and layout), so these tests
+need no browser; they skip where Plotly is not installed. One test exports a chart twice and
+compares the bytes, where kaleido is installed too.
 
 No model and no game are run. The fixture has two arms: `loop` arrives in three turns with three
 calls (one house rule broken on turn 1); `floor-random` makes no call, breaks the same rule on
@@ -8,7 +12,6 @@ turn 1 and dies.
 from __future__ import annotations
 
 import json
-import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -124,67 +127,57 @@ def test_load_reads_plain_series(results: Path) -> None:
     )
 
 
-def test_every_chart_renders_light_and_dark(results: Path, tmp_path: Path) -> None:
-    written = charts.render(charts.load(results), tmp_path / "svg")
-    drawn = [p for p in written if p.suffix == ".svg"]
-    assert sorted(p.name for p in drawn) == sorted(
-        f"{name}.{look}.svg"
-        for name in ("reached", "became", "cost", "text", "time", *charts.CHARTS)
-        for look in ("light", "dark")
-    )
-    assert sorted(p.name for p in written if p not in drawn) == [
-        "runs.csv",
-        "runs.json",
-        "series.json",
-        "shapes.json",
-    ]
-    table = (tmp_path / "svg" / "runs.csv").read_text(encoding="utf-8").splitlines()
-    assert table[0] == ",".join(record.KEYS)
-    assert len(table) == 1 + len(charts.load(results))
-    for path in drawn:
-        svg = parsed(path)
-        assert "SCRIPTED: NOT A RESULT" in svg
-        if path.name.split(".")[0] in charts.CHARTS:
-            assert "trail / model stand-in / seeds 1 / 2026-11-20" in svg
-        look = "light" if ".light." in path.name else "dark"
-        drawn_by_plate = path.name.split(".")[0] not in charts.CHARTS
-        ink = kit.palette(look)["ink"] if drawn_by_plate else charts.INKS[look]
-        assert ink in svg
-    assert charts.INKS == {"light": "#1E1E1E", "dark": "#EDEDED"}
+def drawn(runs, chart: str, look: str = "light") -> dict:
+    """A chart's figure as plain data: what Plotly is asked to draw, without drawing it."""
+    pytest.importorskip("plotly")
+    return charts.FIGURES[chart](runs, look).to_plotly_json()
 
 
-def test_a_real_backend_is_labelled_data(tmp_path: Path) -> None:
-    runs = charts.load(build(tmp_path / "live", "conky-model"))
-    svg = charts.draw_board(runs, "#1E1E1E").svg("t")
-    assert ">DATA<" in svg and "NOT A RESULT" not in svg
+def test_every_chart_is_drawn_on_the_one_template(results: Path) -> None:
+    runs = charts.load(results)
+    for chart in charts.FIGURES:
+        for look in kit.LOOKS:
+            fig = drawn(runs, chart, look)
+            layout = fig["layout"]
+            assert layout["template"]["layout"]["font"]["family"] == kit.TEXT
+            assert layout["template"]["layout"]["paper_bgcolor"] == "rgba(0,0,0,0)"
+            assert "title" not in layout, f"{chart}: a title belongs in the Markdown"
 
 
-def test_progress_puts_the_median_where_the_miles_are(results: Path, tmp_path: Path) -> None:
-    svg = charts.draw_progress(charts.load(results), "#1E1E1E").svg("t")
-    # turn 2 of 3 on a 70..690 axis, 1740 of 2040 miles left on a 280..78 axis
-    assert "483.3,107.7" in svg
-    assert "loop 1/1 arrived" in svg and "floor-random 0/1 arrived" in svg
+def test_rows_keep_one_order_in_every_chart(results: Path) -> None:
+    runs = charts.load(results)
+    assert charts.rows(charts.by_arm(runs)) == ["loop", "floor-random"]
+    became = drawn(runs, "became")["layout"]["yaxis"]["categoryarray"]
+    assert became == ["random", "bare"]  # listed bottom to top
 
 
-def test_spend_counts_calls_against_the_budget(results: Path) -> None:
-    svg = charts.draw_spend(charts.load(results), "#1E1E1E").svg("t")
-    assert "BUDGET 10 (OFF SCALE)" in svg  # ten calls allowed, three made
-    assert "690.0,144.8" in svg  # three calls at the last turn, axis top 5
-    assert "loop 3" in svg
+def test_reached_draws_a_bar_a_run_to_its_distance(results: Path) -> None:
+    fig = drawn(charts.load(results), "reached")
+    bars = {t["name"]: t["x"] for t in fig["data"]}
+    assert list(bars["bare"]) == [2040.0]
+    assert list(bars["random"]) == [pytest.approx(2040 * 0.004)]  # a run that went nowhere
+    assert [a["text"] for a in fig["layout"]["annotations"]] == ["1 of 1", "0 of 1"]
 
 
-def test_where_stacks_the_bytes_of_the_first_call(results: Path) -> None:
-    svg = charts.draw_where(charts.load(results), "#1E1E1E").svg("t")
-    # task text 100 bytes on a 1000 byte axis over 228 units, in the second panel
-    assert 'x="416.0" y="287.2" width="107.2" height="22.8"' in svg
-    assert "NO MODEL CALLS" in svg
+def test_time_splits_the_median_run_between_model_and_harness(results: Path) -> None:
+    fig = drawn(charts.load(results), "time")
+    parts = {t["name"]: list(t["x"]) for t in fig["data"] if t["name"]}
+    assert set(parts) == {"in the model", "in the harness"}
+    assert parts["in the harness"][1] == pytest.approx(30.0)  # random: no model, all harness
+
+
+def test_text_stacks_each_source_of_the_median_run(results: Path) -> None:
+    fig = drawn(charts.load(results), "text")
+    parts = {t["name"]: list(t["x"]) for t in fig["data"] if t["name"]}
+    assert parts["screen"][0] == 900.0  # 200 + 300 + 400 characters of screen
+    assert parts["task"][0] == 300.0
 
 
 def test_rules_marks_the_turn_of_each_break(results: Path) -> None:
-    svg = charts.draw_rules(charts.load(results), "#1E1E1E").svg("t")
-    filled = re.findall(r'<rect x="385\.2"[^>]*fill="#F4C430"', svg)
-    assert len(filled) == 2  # one in each arm, turn 1 of 3 on a 200..760 axis
-    assert "1 broken" in svg
+    fig = drawn(charts.load(results), "rules")
+    broken = fig["data"][1]
+    assert list(broken["x"]) == [1, 1]  # one in each arm, at turn 1
+    assert broken["marker"]["color"] == kit.colour("notable", "light")
 
 
 def test_proposals_that_did_not_reach_the_game_are_hollow(tmp_path: Path) -> None:
@@ -193,34 +186,65 @@ def test_proposals_that_did_not_reach_the_game_are_hollow(tmp_path: Path) -> Non
     rows = [json.loads(x) for x in meter.read_text().splitlines()]
     rows[2]["note"] = {"proposed": "attack-friendly"}
     write(meter, rows)
-    svg = charts.draw_rules(charts.load(root), "#1E1E1E").svg("t")
-    assert re.search(r'fill="none"[^>]*stroke="#F4C430"', svg)
+    hollow = drawn(charts.load(root), "rules")["data"][2]
+    assert hollow["marker"]["symbol"] == "square-open" and list(hollow["x"]) == [2]
 
 
-def test_board_places_the_dot_on_its_own_scale(results: Path) -> None:
-    svg = charts.draw_board(charts.load(results), "#1E1E1E").svg("t")
-    # calls column: loop made 3, the column's top; second row
-    assert 'cx="523.7" cy="138.0"' in svg
-    assert "3 OF 3" not in svg and "1 OF 1" in svg
+def test_board_shades_each_column_on_its_own_scale(results: Path) -> None:
+    order, shades, words = charts.board(charts.load(results))
+    assert order == ["loop", "floor-random"]
+    assert words[0][0] == "1 of 1" and words[1][0] == "0 of 1"
+    assert shades[0][0] == 1.0 and shades[1][0] == 0.0  # arrived: loop best, random worst
+    assert shades[0][3] == 0.0  # calls: loop made more, so it is the worse of the two
 
 
-def test_the_command_writes_every_chart_and_refuses_an_empty_directory(
-    results: Path, tmp_path: Path, capsys: pytest.CaptureFixture
+def test_export_is_byte_stable(results: Path, tmp_path: Path) -> None:
+    if not kit.available():
+        pytest.skip("Plotly and kaleido are not installed")
+    runs = charts.load(results)
+    first, second = tmp_path / "a.svg", tmp_path / "b.svg"
+    kit.export({first: (charts.draw_text(runs, "dark"), "text-dark")})
+    kit.export({second: (charts.draw_text(runs, "dark"), "text-dark")})
+    svg = parsed(first)
+    assert first.read_bytes() == second.read_bytes()
+    assert svg.count("font-family") == 1 and "rgb(" not in svg
+
+
+def test_without_plotly_the_data_is_written_and_the_charts_left_alone(
+    results: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys
 ) -> None:
-    out_dir = tmp_path / "charts"
-    assert charts.main([str(results), "--out", str(out_dir)]) == 0
-    assert len(list(out_dir.glob("*.svg"))) == 2 * (len(charts.CHARTS) + 5)
+    out = tmp_path / "svg"
+    out.mkdir()
+    (out / "reached.light.svg").write_text("<svg/>", encoding="utf-8")
+    monkeypatch.setattr(kit, "available", lambda: False)
+    written = charts.render(charts.load(results), out)
+    assert sorted(p.name for p in written) == [
+        "runs.csv",
+        "runs.json",
+        "series.json",
+        "shapes.json",
+    ]
+    assert (out / "reached.light.svg").read_text() == "<svg/>"
+    assert "charts not drawn" in capsys.readouterr().err
+    table = (out / "runs.csv").read_text(encoding="utf-8").splitlines()
+    assert table[0] == ",".join(record.KEYS)
+
+
+def test_the_command_refuses_an_empty_directory(
+    tmp_path: Path, capsys: pytest.CaptureFixture
+) -> None:
     empty = tmp_path / "none"
     empty.mkdir()
-    assert charts.main([str(empty), "--out", str(out_dir)]) == 1
+    assert charts.main([str(empty), "--out", str(tmp_path / "charts")]) == 1
     assert "run bench.run first" in capsys.readouterr().err
 
 
 def test_publishing_writes_the_page_the_data_and_the_readme_block_and_is_repeatable(
-    results: Path, tmp_path: Path
+    results: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     from bench import publish
 
+    monkeypatch.setattr(kit, "available", lambda: False)  # the words, not the drawing
     root = tmp_path / "repo"
     (root / "docs" / "research").mkdir(parents=True)
     readme = root / "README.md"
@@ -231,10 +255,21 @@ def test_publishing_writes_the_page_the_data_and_the_readme_block_and_is_repeata
     assert text.startswith("before\n") and text.endswith("\nafter\n") and "old" not in text
     assert "### Benchmark" in text and "docs/results/sample/reached.dark.svg" in text
     assert "scripted stand-in" in text and "none of it counts" in text
+    block = text.split(publish.START)[1].split(publish.END)[0]
+    for chart in publish.SHOWN:
+        head = f"#### {publish.HEADS[chart]}"
+        assert head in block, f"no heading for {chart}"
+        after = block.split(head)[1].split("\n\n")
+        assert f"{chart}.light.svg" in after[1], f"{chart}: the chart is not under its heading"
+        assert after[2].endswith("a scripted stand-in, not a result."), f"{chart}: caption"
+        assert not publish.HEADS[chart].startswith("The ")
+    assert "| Harness | Version | Model | Reached | Cost | Model s | Own s | Score |" in block
+    assert "scores.light.svg" not in block
+    assert "<sub>[Method and every chart](docs/research/results.md)" in block
     page = (root / "docs" / "research" / "results.md").read_text(encoding="utf-8")
     assert page.startswith("---\nkind: research\n") and "status: draft" in page
     assert (root / "docs" / "results" / "sample" / "runs.csv").exists()
-    assert "## Compared like for like" in page
+    assert "## Compared like for like" in page and "### Scores" in page
     publish.publish(results, "sample", "pilot", root)
     assert {p: p.read_bytes() for p in written} == first
     readme.write_text("no markers", encoding="utf-8")
@@ -242,9 +277,12 @@ def test_publishing_writes_the_page_the_data_and_the_readme_block_and_is_repeata
         publish.publish(results, "sample", "pilot", root)
 
 
-def test_a_result_is_refused_when_the_arms_are_not_comparable(tmp_path: Path) -> None:
+def test_a_result_is_refused_when_the_arms_are_not_comparable(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     from bench import publish
 
+    monkeypatch.setattr(kit, "available", lambda: False)
     root = build(tmp_path / "mixed", "scripted")
     meta = root / "trail" / "loop" / "full" / "seed-1" / "run.json"
     record_ = json.loads(meta.read_text())

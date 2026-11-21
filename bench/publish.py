@@ -5,8 +5,11 @@
 Writes, from the run files alone:
 
 - `docs/results/NAME/`: the charts (light and dark) with `runs.csv` and `runs.json` beside them;
-- `docs/research/results.md`: the method, the table, every chart and the limits;
-- the block between the two `bench` markers in `README.md`: one chart and a short summary.
+- `docs/research/results.md`: the method, the tables, every chart and the limits;
+- the block between the two `bench` markers in `README.md`: a short summary, then each chart
+  under a heading with a caption, the scores as a table, and one footer line of links and units.
+
+A chart carries only what sits on its marks; every word about it is written here, in Markdown.
 
 Running it again on the same runs writes the same files. `--kind pilot` says the runs are too few
 to support a claim, and the words say so; `--kind result` is for a run of the fixed protocol.
@@ -19,38 +22,45 @@ import statistics
 import sys
 from pathlib import Path
 
-from bench import analyse, charts, dynamics, plate, record
+from bench import analyse, charts, dynamics, record
 
 ROOT = Path(__file__).resolve().parent.parent
 REPOSITORY = "https://github.com/drksci/conky"
 PAGE = "docs/research/results.md"
 START, END = "<!-- bench:start -->", "<!-- bench:end -->"
-PLATES = ("reached", "became", "cost", "time", "text")
-BOARD = "scores"
-SHOWN = (*PLATES, BOARD, "progress", "spend", "rules", "board")
+SHOWN = ("reached", "became", "cost", "time", "text")  # on the front page, in this order
+PAGE_ONLY = ("progress", "spend", "rules", "board")
+HEADS = {
+    "reached": "How far each run got",
+    "became": "What each harness left behind",
+    "cost": "What a run cost",
+    "time": "Where the time went",
+    "text": "Where the text came from",
+    "progress": "Distance left, turn by turn",
+    "spend": "Model calls, turn by turn",
+    "rules": "House rules broken",
+    "board": "Every measure on one board",
+}
 ALT = {
-    "reached": "Every run drawn as a bar from {start} to {end}, one band per harness, under "
-    "the model, seeds, budget and commit that were held equal.",
-    "scores": "Scores as a table, one line a harness, best first: version, model, runs that "
-    "reached the goal, cost, seconds in the model and in the harness, and a score out of 100.",
-    "became": "Parts each harness was made of when its median run stopped, with counts beneath.",
-    "cost": "Cost against progress made, one line for every run, with the median run drawn heavy.",
-    "text": "Text each harness sent in its median run, as a flame graph: the run, each turn, "
-    "each call, then where its text came from.",
-    "time": "Time each harness took in its median run, as a flame graph: the run, each turn, "
-    "then time in the model or in the harness.",
-    "progress": "{unit} left to {end} against turn, one line per arm.",
-    "spend": "Model calls and text sent against turn, one line per arm.",
-    "rules": "House rules broken in the game, by turn, for each run.",
-    "board": "Every measure for every arm on one board.",
+    "reached": "Horizontal bars, one a run, grouped by harness, each running from {start} "
+    "toward {end}.",
+    "became": "Horizontal bars, one a harness, of the parts its median run ended with.",
+    "cost": "Horizontal bars, one a harness that uses a model, of a median run's cost.",
+    "time": "Stacked horizontal bars, one a harness, of a median run's seconds.",
+    "text": "Stacked horizontal bars, one a harness that uses a model, of a median run's text.",
+    "progress": "Step lines of {unit} left against turn, one a harness.",
+    "spend": "Step lines of model calls made against turn, one a harness that uses a model.",
+    "rules": "A row a run with a square at each turn a house rule was broken.",
+    "board": "A shaded grid: a row a harness, a column a measure, the median in each cell.",
 }
 
 
 def picture(folder: str, name: str, f: dict, width: int = 720) -> str:
+    alt = ALT[name].format(**f["progress"])
     return (
         f'<picture><source media="(prefers-color-scheme: dark)" '
         f'srcset="{folder}/{name}.dark.svg"><img src="{folder}/{name}.light.svg" '
-        f'alt="{ALT[name].format(**f["progress"])}" width="{width}"></picture>'
+        f'alt="{alt}" width="{width}"></picture>'
     )
 
 
@@ -173,51 +183,129 @@ def totals(runs: list[charts.Run], order: list[str]) -> dict[str, dict]:
     return out
 
 
-def standings(found: dict[str, dict]) -> list[dict]:
-    """The scoreboard's lines, best first: each cell with whether it is the best or the worst."""
-
-    def standing(key: str, arm: str, high: bool) -> str:
-        everyone = key in ("reach", "score")
-        pool = [t[key] for t in found.values() if t[key] is not None and (everyone or t["uses"])]
-        value = found[arm][key]
-        if value is None or not (everyone or found[arm]["uses"]) or len(set(pool)) < 2:
-            return ""
-        best, worst = (max(pool), min(pool)) if high else (min(pool), max(pool))
-        return "best" if value == best else "worst" if value == worst else ""
-
-    lines = []
-    for arm in sorted(found, key=lambda arm: -found[arm]["score"]):
+def scores(found: dict[str, dict]) -> str:
+    """The scores as a Markdown table, best first, each harness linked and the subject in bold."""
+    lines = [
+        "| Harness | Version | Model | Reached | Cost | Model s | Own s | Score |",
+        "|---|---|---|--:|--:|--:|--:|--:|",
+    ]
+    for arm in sorted(found, key=lambda arm: (-found[arm]["score"], record.label(arm))):
         t = found[arm]
-        lines.append(
-            {
-                "name": record.label(arm),
-                "accent": bool(record.manifest(arm).get("accent")),
-                "cells": [
-                    (t["row"]["version"], ""),
-                    (t["row"]["model"], ""),
-                    (f"{round(t['reach'] * t['n'])}/{t['n']}", standing("reach", arm, True)),
-                    (f"${t['cost']:.4f}" if t["cost"] else "", standing("cost", arm, False)),
-                    (
-                        f"{t['time'] - t['own']:,.0f}"
-                        if t["own"] is not None and t["uses"]
-                        else "",
-                        "",
-                    ),
-                    (f"{t['pace']:,.0f}", standing("pace", arm, False)),
-                    (f"{t['score']}", standing("score", arm, True)),
-                ],
-            }
+        where, label = record.link(arm), record.label(arm)
+        cells = [
+            f"[{label}]({where})" if where else label,
+            t["row"]["version"],
+            f"`{t['row']['model']}`",
+            f"{round(t['reach'] * t['n'])}/{t['n']}",
+            f"${t['cost']:.4f}" if t["cost"] else "",
+            f"{t['time'] - t['own']:,.0f}" if t["own"] is not None and t["uses"] else "",
+            f"{t['pace']:,.0f}",
+            f"{t['score']}",
+        ]
+        if record.manifest(arm).get("accent"):
+            cells = [f"**{c}**" if c else c for c in cells]
+        lines.append("| " + " | ".join(cells) + " |")
+    return "\n".join(lines)
+
+
+def conditions(kind: str, f: dict) -> str:
+    """What every number in a caption was measured under, in a few words."""
+    n = len(f["seeds"])
+    model = ", ".join(f"`{m}`" for m in f["models"])
+    state = (
+        "a scripted stand-in, not a result"
+        if f["scripted"]
+        else "a pilot"
+        if kind == "pilot"
+        else "a result"
+    )
+    return f"Model {model}, {n} runs a harness, {state}."
+
+
+def captions(kind: str, f: dict, runs: list[charts.Run]) -> dict[str, str]:
+    """One sentence a chart: what it shows and the one thing to notice, then its conditions."""
+    arms = charts.by_arm(runs)
+    order = charts.rows(arms)
+    lead = order[0]
+    who = record.label(lead)
+    p = f["progress"]
+    got = sum(r.ending == "reached" for r in arms[lead])
+    paid = [a for a in order if arms[a][0].model != "none"]
+    cost = {a: charts.run_cost(arms[a]) for a in paid}
+    cheapest = min(cost, key=cost.get) if cost else lead
+    run = charts.median_run(arms[lead], lambda r: r.wall)
+    model_s = run.row["model_s"] or 0.0
+    ends = charts.ends(charts.median_run(arms[lead], lambda r: r.row["chars"]))
+    sent = {
+        a: statistics.median(r.row["chars"] for r in arms[a])
+        for a in paid
+        if any(r.row["chars"] for r in arms[a])
+    }
+    text = "Characters the median run sent, by where they came from"
+    others = [a for a in sent if a != lead]
+    if lead in sent and others:
+        rival = others[0]
+        change = round(100 * (1 - sent[lead] / sent[rival]))
+        more = "less" if change >= 0 else "more"
+        text += f"; {who} sent {abs(change)}% {more} than {record.label(rival)}"
+    words = {
+        "reached": f"A bar a run, from {p['start']} to {p['end']}; {who} reached {p['end']} "
+        f"in {got} of {len(arms[lead])}.",
+        "became": f"The parts each median run ended with; {who} ended with {ends['all']} "
+        f"{ends['unit']}, {ends['own']} of them its own.",
+        "cost": f"Dollars a median run, at list price; {record.label(cheapest)} cost least, "
+        f"${cost.get(cheapest, 0):.4f}."
+        if cost
+        else "No harness here uses a model.",
+        "time": f"Seconds a median run, waiting on the model or working in the harness; "
+        f"{who} spent {model_s:,.0f} of its {run.wall:,.0f} seconds waiting on the model.",
+        "text": text + ".",
+        "progress": f"{p['unit'].capitalize()} left to {p['end']} at each turn, the median "
+        "over seeds.",
+        "spend": "Model calls made by each turn, the median over seeds.",
+        "rules": "A square at each turn a house rule was broken in the game.",
+        "board": "The median of each measure, each column shaded from worst (pale) to best "
+        "(deep) on its own scale.",
+    }
+    tail = conditions(kind, f)
+    return {k: f"{v} {tail}" for k, v in words.items()}
+
+
+def footer(name: str, f: dict, runs: list[charts.Run], links: str) -> str:
+    """One line under the charts: where the method, data and code are, and the units."""
+    folder = f"docs/results/{name}" if links == "readme" else f"../results/{name}"
+    page = PAGE if links == "readme" else "results.md"
+    protocol = (
+        "docs/research/benchmark-protocol.md" if links == "readme" else "benchmark-protocol.md"
+    )
+    commit = f["commit"].removesuffix("+changes")
+    parts = []
+    if links == "readme":
+        parts.append(f"[Method and every chart]({page})")
+    parts += [f"[the data]({folder}/runs.csv)", f"[the protocol]({protocol})"]
+    if commit:
+        parts.append(f"[the code that ran]({REPOSITORY}/commit/{commit})")
+    listed = record.prices()
+    priced = [listed["models"][m] for m in f["models"] if m in listed["models"]]
+    for price in priced:
+        parts.append(
+            f"{price['priced_as']} at ${price['input']:.2f} in and ${price['output']:.2f} "
+            "out a million tokens"
         )
-    return lines
+    if priced:
+        parts.append(f"tokens estimated at {listed['characters_per_token']} characters each")
+    return "<sub>" + " · ".join(parts) + "</sub>"
 
 
-def linked(found: dict[str, dict]) -> str:
-    """The harnesses as one line of links, in the scoreboard's order."""
-    names = []
-    for arm in sorted(found, key=lambda arm: -found[arm]["score"]):
-        where, name = record.link(arm), record.label(arm)
-        names.append(f'<a href="{where}">{name}</a>' if where else name)
-    return '<p align="center"><sub>' + "&nbsp;&nbsp;·&nbsp;&nbsp;".join(names) + "</sub></p>"
+def charted(folder: str, names: tuple[str, ...], said: dict[str, str], f: dict, link: str) -> list:
+    """Each chart under its heading, with its caption below."""
+    out = []
+    for chart in names:
+        shown = picture(folder, chart, f)
+        if link:
+            shown = f'<a href="{link}">{shown}</a>'
+        out += [f"#### {HEADS[chart]}", "", shown, "", said[chart], ""]
+    return out
 
 
 def setup(f: dict) -> str:
@@ -291,13 +379,7 @@ def story(kind: str, f: dict, runs: list[charts.Run]) -> str:
 
 
 def readme_block(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
-    folder = f"docs/results/{name}"
-    commit = f["commit"].removesuffix("+changes")
-    code = (
-        f'&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{REPOSITORY}/commit/{commit}">the code that ran</a>'
-        if commit
-        else ""
-    )
+    said = captions(kind, f, runs)
     return "\n".join(
         [
             START,
@@ -305,28 +387,25 @@ def readme_block(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
             "",
             story(kind, f, runs),
             "",
-            *(
-                line
-                for name in PLATES
-                for line in (
-                    f'<p align="center"><a href="{PAGE}">{picture(folder, name, f)}</a></p>',
-                    "",
-                )
-            ),
+            *charted(f"docs/results/{name}", SHOWN, said, f, PAGE),
+            "#### Scores",
             "",
-            f'<p align="center"><a href="{PAGE}">{picture(folder, "scores", f)}</a></p>',
+            scores(totals(runs, f["order"])),
             "",
-            linked(totals(runs, f["order"])),
+            f"Best first. {SCORING} {conditions(kind, f)}",
             "",
-            f'<p align="center"><a href="{PAGE}">Method and every chart</a>'
-            f'&nbsp;&nbsp;·&nbsp;&nbsp;<a href="{folder}/runs.csv">the data</a>'
-            f'&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/research/benchmark-protocol.md">'
-            f"the protocol</a>{code}</p>",
+            footer(name, f, runs, "readme"),
             "",
             "<br>",
             END,
         ]
     )
+
+
+SCORING = (
+    "A score is out of 100: reaching the goal gives 70, and cost and the harness's own "
+    "seconds give up to 15 each, against the cheapest and the quickest."
+)
 
 
 def page(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
@@ -365,9 +444,19 @@ def page(name: str, kind: str, f: dict, runs: list[charts.Run]) -> str:
         "Counts are runs. Other columns are the median over seeds.",
         "",
         table(f),
+        "",
+        "### Scores",
+        "",
+        scores(totals(runs, f["order"])),
+        "",
+        f"Best first. {SCORING}",
+        "",
+        "### Charts",
+        "",
+        *charted(folder, (*SHOWN, *PAGE_ONLY), captions(kind, f, runs), f, ""),
+        footer(name, f, runs, "page"),
+        "",
     ]
-    for chart in SHOWN:
-        parts += [f'<p align="center">{picture(folder, chart, f)}</p>', ""]
     parts += [
         "## Data",
         "",
@@ -394,19 +483,15 @@ def publish(results: Path, name: str, kind: str, root: Path = ROOT) -> list[Path
             raise SystemExit(f"these runs cannot be published as a result: {why}")
         print(f"not comparable: {why}", file=sys.stderr)
     out = root / "docs" / "results" / name
+    drawn = (*SHOWN, *PAGE_ONLY)
     written = [
         p
         for p in charts.render(runs, out, kind)
-        if p.suffix != ".svg" or p.name.split(".")[0] in SHOWN
+        if p.suffix != ".svg" or p.name.split(".")[0] in drawn
     ]
     for stray in out.glob("*.svg"):
-        if stray.name.split(".")[0] not in SHOWN:
+        if stray.name.split(".")[0] not in drawn:
             stray.unlink()
-    lines = standings(totals(runs, f["order"]))
-    for look in plate.LOOKS:
-        board = out / f"scores.{look}.svg"
-        board.write_text(plate.scoreboard(lines, look), encoding="utf-8")
-        written.append(board)
     doc = root / "docs" / "research" / "results.md"
     doc.write_text(page(name, kind, f, runs), encoding="utf-8")
     readme = root / "README.md"

@@ -62,22 +62,49 @@ Conky is... different, for many reasons, but here are some:
 
 5 trips each to Oregon: same game, same small model, same luck, same prompt. The bare model, asked each turn, arrived 3 times. A Conky character arrived 4 times, sent 32% less text and kept 6 pages of its own notes. Stock Claude Code arrived 3 times. It is a pilot: too few trips to call a winner, so none is called. This game is a worked example, kept for fun: it fits in one conversation and has one thing to manage, so it shows the apparatus working and not what a harness is for.
 
-<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/reached.dark.svg"><img src="docs/results/pilot-3/reached.light.svg" alt="Every run drawn as a bar from Independence to Oregon, one band per harness, under the model, seeds, budget and commit that were held equal." width="720"></picture></a></p>
+#### How far each run got
 
-<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/became.dark.svg"><img src="docs/results/pilot-3/became.light.svg" alt="Parts each harness was made of when its median run stopped, with counts beneath." width="720"></picture></a></p>
+<a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/reached.dark.svg"><img src="docs/results/pilot-3/reached.light.svg" alt="Horizontal bars, one a run, grouped by harness, each running from Independence toward Oregon." width="720"></picture></a>
 
-<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/cost.dark.svg"><img src="docs/results/pilot-3/cost.light.svg" alt="Cost against progress made, one line for every run, with the median run drawn heavy." width="720"></picture></a></p>
+A bar a run, from Independence to Oregon; conky reached Oregon in 4 of 5. Model `haiku`, 5 runs a harness, a pilot.
 
-<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/time.dark.svg"><img src="docs/results/pilot-3/time.light.svg" alt="Time each harness took in its median run, as a flame graph: the run, each turn, then time in the model or in the harness." width="720"></picture></a></p>
+#### What each harness left behind
 
-<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/text.dark.svg"><img src="docs/results/pilot-3/text.light.svg" alt="Text each harness sent in its median run, as a flame graph: the run, each turn, each call, then where its text came from." width="720"></picture></a></p>
+<a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/became.dark.svg"><img src="docs/results/pilot-3/became.light.svg" alt="Horizontal bars, one a harness, of the parts its median run ended with." width="720"></picture></a>
 
+The parts each median run ended with; conky ended with 11 pages, 2 of them its own. Model `haiku`, 5 runs a harness, a pilot.
 
-<p align="center"><a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/scores.dark.svg"><img src="docs/results/pilot-3/scores.light.svg" alt="Scores as a table, one line a harness, best first: version, model, runs that reached the goal, cost, seconds in the model and in the harness, and a score out of 100." width="720"></picture></a></p>
+#### What a run cost
 
-<p align="center"><sub><a href="https://github.com/drksci/conky">conky</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/loop">bare</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://claude.com/claude-code">claude code</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/floor">constant</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/tree/main/bench/adapters/floor">random</a></sub></p>
+<a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/cost.dark.svg"><img src="docs/results/pilot-3/cost.light.svg" alt="Horizontal bars, one a harness that uses a model, of a median run's cost." width="720"></picture></a>
 
-<p align="center"><a href="docs/research/results.md">Method and every chart</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/results/pilot-3/runs.csv">the data</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/research/benchmark-protocol.md">the protocol</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://github.com/drksci/conky/commit/26cb5e37ab69a0876c548510809e9580722e39b5">the code that ran</a></p>
+Dollars a median run, at list price; conky cost least, $0.0039. Model `haiku`, 5 runs a harness, a pilot.
+
+#### Where the time went
+
+<a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/time.dark.svg"><img src="docs/results/pilot-3/time.light.svg" alt="Stacked horizontal bars, one a harness, of a median run's seconds." width="720"></picture></a>
+
+Seconds a median run, waiting on the model or working in the harness; conky spent 267 of its 286 seconds waiting on the model. Model `haiku`, 5 runs a harness, a pilot.
+
+#### Where the text came from
+
+<a href="docs/research/results.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/pilot-3/text.dark.svg"><img src="docs/results/pilot-3/text.light.svg" alt="Stacked horizontal bars, one a harness that uses a model, of a median run's text." width="720"></picture></a>
+
+Characters the median run sent, by where they came from; conky sent 32% less than bare. Model `haiku`, 5 runs a harness, a pilot.
+
+#### Scores
+
+| Harness | Version | Model | Reached | Cost | Model s | Own s | Score |
+|---|---|---|--:|--:|--:|--:|--:|
+| **[conky](https://github.com/drksci/conky)** | **26cb5e3** | **`haiku`** | **4/5** | **$0.0039** | **266** | **18** | **75** |
+| [bare](https://github.com/drksci/conky/tree/main/bench/adapters/loop) | 26cb5e3 | `haiku` | 3/5 | $0.0056 | 250 | 11 | 57 |
+| [claude code](https://claude.com/claude-code) | 2.1.329 | `haiku` | 3/5 | $0.0168 | 55 | 16 | 50 |
+| [constant](https://github.com/drksci/conky/tree/main/bench/adapters/floor) | 26cb5e3 | `none` | 0/5 |  |  | 5 | 0 |
+| [random](https://github.com/drksci/conky/tree/main/bench/adapters/floor) | 26cb5e3 | `none` | 0/5 |  |  | 13 | 0 |
+
+Best first. A score is out of 100: reaching the goal gives 70, and cost and the harness's own seconds give up to 15 each, against the cheapest and the quickest. Model `haiku`, 5 runs a harness, a pilot.
+
+<sub>[Method and every chart](docs/research/results.md) · [the data](docs/results/pilot-3/runs.csv) · [the protocol](docs/research/benchmark-protocol.md) · [the code that ran](https://github.com/drksci/conky/commit/26cb5e37ab69a0876c548510809e9580722e39b5) · claude-haiku-5-5 at $0.10 in and $0.50 out a million tokens · tokens estimated at 4 characters each</sub>
 
 <br>
 <!-- bench:end -->
