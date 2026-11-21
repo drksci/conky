@@ -1330,6 +1330,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [keys](../ideas/keys.md) | idea | [`part.key.rotate`](#part.key.rotate) |
 | [learned-reactions](../ideas/learned-reactions.md) | idea | - |
 | [ledger](../ideas/ledger.md) | idea | - |
+| [looks](../ideas/looks.md) | idea | - |
 | [measures](../ideas/measures.md) | enforced | [`law.pressure.notice`](#law.pressure.notice), [`law.measure.watch`](#law.measure.watch), [`flow.watch.measure`](#flow.watch.measure), [`kind.measure`](#kind.measure), [`stage.attention.measure`](#stage.attention.measure) |
 | [model-choice](../ideas/model-choice.md) | idea | [`kind.router`](#kind.router) |
 | [model-pages](../ideas/model-pages.md) | enforced | [`flow.ask.model`](#flow.ask.model), [`kind.provider`](#kind.provider), [`stage.think.ask`](#stage.think.ask), [`stage.think.context`](#stage.think.context) |
@@ -1427,6 +1428,7 @@ Found in the documents and fitting no row above.
 |---|---|---|
 | a cell shows the whole page | [0049-a-cell-shows-the-whole-page.md](../decisions/0049-a-cell-shows-the-whole-page.md) | Every page in a drawn trial is one cell with a header, panels in a fixed order and a footer of slots, and its connections run between sockets that carry one kind of signal each. |
 | a generated index for a notes application | [obsidian-view.md](../ideas/obsidian-view.md) | Derived data under R11. Nothing is designed beyond the idea. |
+| a look handed down by a space | [looks.md](../ideas/looks.md) | A page whose body is drawn against whichever page reads it, with views named from a fixed list. Nothing is built; a trial outside this repository comes first. |
 | a parent brokers what crosses its wall | [0052-wires-attach-to-port-boards-and-parents-broker-crossings.md](../decisions/0052-wires-attach-to-port-boards-and-parents-broker-crossings.md) | In a drawn trial every connection is a list of hops, and a hop that crosses a space's wall ends at a socket on that space's port board, where the space's rules judge a write into it. |
 | a port is a named block on a pair of boards | [0059-ports-are-bright-labelled-blocks-on-paired-boards.md](../decisions/0059-ports-are-bright-labelled-blocks-on-paired-boards.md) | In a drawn trial every port a cell has is a block coloured by its kind and named by a prefix and an index, on a pair of boards on one axis, inputs on the first and outputs and slots on the second, solid when plugged in and hatched when not. |
 | a port with nothing plugged in is a bar | [0061-figures-take-the-chart-themes-colours.md](../decisions/0061-figures-take-the-chart-themes-colours.md) | In a drawn trial a port with nothing plugged in is no block, only a solid bar in its kind's colour along the edge that touches the cell, a fixed share of the port's depth, with its name in ink beside it. |

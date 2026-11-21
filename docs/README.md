@@ -164,6 +164,7 @@ Candidates, not requirements. Each states its rung.
 - [ideas/keys.md](ideas/keys.md): Keys that change hands
 - [ideas/learned-reactions.md](ideas/learned-reactions.md): Learned reactions
 - [ideas/ledger.md](ideas/ledger.md): Ledger
+- [ideas/looks.md](ideas/looks.md): A look: a kind's page says how its pages are drawn
 - [ideas/codec.md](ideas/codec.md): A codec: one tree into another, written once and applied by reflex
 - [ideas/measures.md](ideas/measures.md): Measures
 - [ideas/model-pages.md](ideas/model-pages.md): Pages that ask a model
