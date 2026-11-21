@@ -5,7 +5,7 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}}
 :root[data-theme="dark"]{--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}
 svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif}
-.m,.g,.tx,.pt{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
+.m,.g,.tx{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
 .k{stroke:var(--ink);stroke-width:0.8}
@@ -24,6 +24,8 @@ svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetic
 .rf{fill:var(--pink);stroke:none}
 .x1{fill:none;stroke:var(--paper);stroke-width:1.6;stroke-linecap:round}
 .mu{fill:var(--mute)}
+.fz11_76{font-size:11.76px}
+.fz12_6{font-size:12.6px}
 </style>
 <defs><pattern id="d12" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d25" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern></defs>
 <g transform="translate(0 -21)">
@@ -81,9 +83,9 @@ svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetic
 <circle class="d" cx="752.5" cy="168" r="2.6"/>
 <path class="k" d="M775 156L775 180"/>
 <circle class="d" cx="797.5" cy="168" r="2.6"/>
-<text class="t" x="195" y="206" font-size="12.6" fill-opacity="1" text-anchor="middle">HERE</text>
-<text class="t" x="685" y="206" font-size="12.6" fill-opacity="1" text-anchor="middle">THERE</text>
-<text class="t" x="440" y="80" font-size="11.76" fill-opacity="1" text-anchor="middle">COPY</text>
+<text class="t fz12_6" x="195" y="206" fill-opacity="1" text-anchor="middle">HERE</text>
+<text class="t fz12_6" x="685" y="206" fill-opacity="1" text-anchor="middle">THERE</text>
+<text class="t fz11_76" x="440" y="80" fill-opacity="1" text-anchor="middle">COPY</text>
 <path class="a" d="M344 100L530 100"/>
 <path class="i" d="M530 100L536 100"/>
 <path class="i" d="M530.81 96.49L538 100L530.81 103.51"/>
@@ -93,6 +95,6 @@ svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetic
 <path class="z" d="M130 234L230 234"/>
 <path class="i" d="M224.81 230.49L232 234L224.81 237.51"/>
 <path class="a" d="M244 224L244 244"/>
-<text class="t" x="262" y="238" font-size="12.6" fill-opacity="1" text-anchor="start">KEYS STAY</text>
+<text class="t fz12_6" x="262" y="238" fill-opacity="1" text-anchor="start">KEYS STAY</text>
 </g>
 </svg>

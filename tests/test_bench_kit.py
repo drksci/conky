@@ -6,7 +6,9 @@ chart names its face once, on its root; no text is smaller than about 11 pixels 
 every text colour and data stroke clears the WCAG contrast ratio against the page it is shown on;
 and the chart palette's neighbours stay apart. The palette check is a colour difference in OKLab
 (times 100): at least 15 for normal vision, and at least 8 under protanopia and deuteranopia
-simulated with the Machado, Oliveira and Fernandes (2009) matrices at full severity.
+simulated with the Machado, Oliveira and Fernandes (2009) matrices at full severity. The README's
+schematic figures are held to the same 11 pixel floor at the width the README gives them, and
+their text and strokes to the same ratios.
 """
 
 from __future__ import annotations
@@ -195,3 +197,69 @@ def test_the_figures_text_clears_the_contrast_ratio():
             got = ratio(colour.lower(), page)
             assert got >= 4.5, f"{svg.name}: text in {colour} is {got:.2f} to 1 on {page}"
     assert checked, "no figure text was found to check"
+
+
+SHOWN_FIGURE = re.compile(r'src="docs/assets/figures/([\w-]+)\.light\.svg"[^>]*?\swidth="(\d+)"')
+SIZE_RULE = re.compile(r"font-size:\s*([\d.]+)px")
+
+
+def readme_figures() -> dict[str, int]:
+    """Each drawn figure the README shows, with the width it shows it at."""
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    found = {
+        name: int(width) for name, width in SHOWN_FIGURE.findall(readme) if name not in BRAND_MARKS
+    }
+    assert found, "the README shows no drawn figure"
+    return found
+
+
+def test_the_figures_set_no_text_below_11_px_at_readme_width():
+    for name, width in readme_figures().items():
+        for look in ("light", "dark"):
+            svg = (FIGURES / f"{name}.{look}.svg").read_text(encoding="utf-8")
+            assert not re.search(r"<(?:text|tspan)[^>]*\sfont-size=", svg), (
+                f"{name}: a text node sets its own size; give it a size class on the root"
+            )
+            box = float(re.search(r'viewBox="\S+ \S+ ([\d.]+) ', svg).group(1))
+            sizes = [
+                float(s)
+                for s in SIZE_RULE.findall("".join(re.findall(r"<style>(.*?)</style>", svg, re.S)))
+            ]
+            assert sizes, f"{name}: no size class found"
+            px = min(sizes) * width / box
+            assert px >= 11, (
+                f"{name}: text at {px:.1f} px at README width {width}; say less, or set it larger"
+            )
+
+
+def stroke_colours(svg: str) -> set[str]:
+    """The colours of strokes at least one unit wide, resolved through the root variables."""
+    style = "".join(re.findall(r"<style>(.*?)</style>", svg, re.S))
+    root = dict(re.findall(r"--([\w-]+):(#[0-9a-fA-F]{6})", style.split("}", 1)[0]))
+    found = set()
+    for _selectors, body in RULE.findall(style):
+        paint = re.search(r"(?<![-\w])stroke:\s*var\(--([\w-]+)\)", body)
+        width = re.search(r"stroke-width:\s*([\d.]+)", body)
+        # paper is the token for a mark drawn on a pen (see the design page): seen against the pen
+        if (
+            paint
+            and paint.group(1) in root
+            and paint.group(1) != "paper"
+            and (not width or float(width.group(1)) >= 1)
+        ):
+            found.add(root[paint.group(1)])
+    return found
+
+
+def test_the_figures_strokes_clear_the_contrast_ratio():
+    checked = 0
+    for name in readme_figures():
+        for look in ("light", "dark"):
+            svg = (FIGURES / f"{name}.{look}.svg").read_text(encoding="utf-8")
+            for colour in stroke_colours(svg):
+                checked += 1
+                got = ratio(colour.lower(), PAGE[look])
+                assert got >= 3, (
+                    f"{name}.{look}: a stroke in {colour} is {got:.2f} to 1 on {PAGE[look]}"
+                )
+    assert checked, "no figure stroke was found to check"

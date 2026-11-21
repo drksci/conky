@@ -3,7 +3,7 @@
 <style>
 :root{--paper:#fbfaf7;--ink:#141413;--mute:#595854;--sunken:#f1f0ec;--raised:#ffffff;--hair:#c9c8c3;--pink:#cc2a68;--blue:#2c4fd0;--teal:#007c84;--amber:#a2600c;--violet:#6c46d6;--blend:multiply}
 svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif}
-.m,.g,.tx,.pt{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
+.m,.g,.tx{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
 .k{stroke:var(--ink);stroke-width:0.8}
@@ -22,6 +22,7 @@ svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetic
 .rf{fill:var(--pink);stroke:none}
 .x1{fill:none;stroke:var(--paper);stroke-width:1.6;stroke-linecap:round}
 .mu{fill:var(--mute)}
+.fz10_92{font-size:10.92px}
 </style>
 <defs><pattern id="d25" width="8" height="8" x="0" y="0.8" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern></defs>
 <g transform="translate(0 -37.8)">
@@ -30,24 +31,24 @@ svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetic
 <path class="s" d="M280 100V108A40 11 0 0 0 360 108V100A40 11 0 0 0 280 100Z"/>
 <ellipse class="s" cx="320" cy="100" rx="40" ry="11"/>
 <ellipse class="k" cx="320" cy="101" rx="26" ry="6"/>
-<text class="t" x="320" y="146" font-size="10.92" fill-opacity="1" text-anchor="middle">ORIGINAL</text>
+<text class="t fz10_92" x="320" y="146" fill-opacity="1" text-anchor="middle">ORIGINAL</text>
 <path class="f25" d="M420 100V108A40 11 0 0 0 500 108V100A40 11 0 0 0 420 100Z"/>
 <path class="s" d="M420 100V108A40 11 0 0 0 500 108V100A40 11 0 0 0 420 100Z"/>
 <ellipse class="s" cx="460" cy="100" rx="40" ry="11"/>
 <ellipse class="k" cx="460" cy="101" rx="26" ry="6"/>
-<text class="t" x="460" y="146" font-size="10.92" fill-opacity="1" text-anchor="middle">COPY</text>
+<text class="t fz10_92" x="460" y="146" fill-opacity="1" text-anchor="middle">COPY</text>
 <path class="a" d="M452 62L458 69L469 55"/>
 <path class="f25" d="M560 100V108A40 11 0 0 0 640 108V100A40 11 0 0 0 560 100Z"/>
 <path class="s" d="M560 100V108A40 11 0 0 0 640 108V100A40 11 0 0 0 560 100Z"/>
 <ellipse class="s" cx="600" cy="100" rx="40" ry="11"/>
 <ellipse class="k" cx="600" cy="101" rx="26" ry="6"/>
-<text class="t" x="600" y="146" font-size="10.92" fill-opacity="1" text-anchor="middle">COPY</text>
+<text class="t fz10_92" x="600" y="146" fill-opacity="1" text-anchor="middle">COPY</text>
 <path class="a" d="M592 62L598 69L609 55"/>
 <path class="f25" d="M700 100V108A40 11 0 0 0 780 108V100A40 11 0 0 0 700 100Z"/>
 <path class="s" d="M700 100V108A40 11 0 0 0 780 108V100A40 11 0 0 0 700 100Z"/>
 <ellipse class="s" cx="740" cy="100" rx="40" ry="11"/>
 <ellipse class="k" cx="740" cy="101" rx="26" ry="6"/>
-<text class="t" x="740" y="146" font-size="10.92" fill-opacity="1" text-anchor="middle">COPY</text>
+<text class="t fz10_92" x="740" y="146" fill-opacity="1" text-anchor="middle">COPY</text>
 <path class="a" d="M732 62L738 69L749 55"/>
 <path class="f25" d="M55 68H107Q110 68 110 71V78Q110 81 107 81H55Q52 81 52 78V71Q52 68 55 68Z"/>
 <path class="s" d="M55 68H107Q110 68 110 71V78Q110 81 107 81H55Q52 81 52 78V71Q52 68 55 68Z"/>

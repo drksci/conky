@@ -18,7 +18,9 @@ A lemonade stand that minds its own business.
 🍋 user@lemonstand ❯ uvx --from git+https://github.com/drksci/conky conky demo lemonade
 ```
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/demo.dark.svg"><img src="docs/assets/figures/demo.light.svg" alt="Left, a terminal playing the demo: Maya sets up a lemonade stand with one house rule, fills the cooler, a cup count below zero is refused, a busy hour empties the cooler and the supplier orders lemons by itself. Right, a wireframe of the same thing as a screen, in the pages' own words: the house rule, the cooler's count, the supplier's order and lines from the daybook, updating in step." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/demo.dark.svg"><img src="docs/assets/figures/demo.light.svg" alt="On the left, six numbered terminal steps, each marked written or refused in a coloured block; on the right, a window of four panels named stand, cooler, supplier and daybook, holding the house rule, a count of 4 cups, an order for lemons and four diary lines." width="800"></picture></p>
+
+Example: the demo's output beside the same pages drawn as a screen, updating in step. Sam's minus one cup is refused, and the supplier orders lemons with nobody asking.
 
 ### Oregon Trail
 
@@ -28,9 +30,13 @@ Your agents wake up inside a computer game from 1992 and have to reach Oregon al
 🛸 user@thething ❯ uvx --from git+https://github.com/drksci/conky conky assimilate
 ```
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-oregon-trail.dark.svg"><img src="docs/assets/figures/fig-oregon-trail.light.svg" alt="Left, real screens from The Oregon Trail Deluxe (MECC, 1992): the title, the general store, the trail and a river crossing. Right, a schematic of Conky beside it: a console where the party notices each screen, a house rule refuses a hunt and Ma says to push on, and below it the same moment composed as a screen with the four travellers and their supplies." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-oregon-trail.dark.svg"><img src="docs/assets/figures/fig-oregon-trail.light.svg" alt="A game window cycling through four colour screenshots: the title, a general store, the trail and a river crossing. To its right, a console of ticked lines with one refused line in a pink block, and below it a screen of four portrait cards named Ma, Jed, Doc and Tully, a speech bubble, a campfire and bars for food, bullets and miles." width="800"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-composition.dark.svg"><img src="docs/assets/figures/fig-composition.light.svg" alt="An animated schematic graph of who noticed what: the screen reaches Ma and Jed, Ma reads The Art of War from the patterns shelf, Jed is stopped by the house rules, Ma speaks at the campfire, the hands type back to the game, and the diary gains a line." width="800"></picture></p>
+Schematic beside real screens: four screens of The Oregon Trail Deluxe (MECC, 1992), and the party's console and screen drawn beat by beat. In the third beat a house rule refuses Jed's hunt, and Ma pushes on.
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-composition.dark.svg"><img src="docs/assets/figures/fig-composition.light.svg" alt="Boxes and four faces joined by dashed arrows that draw themselves: a box named screen points down into a dotted outline named wagon party; one face points up to a patterns box and down to a campfire box, another down to a pink cross above a box named house rules; arrows run on to hands, out to the game, and across to a diary." width="800"></picture></p>
+
+Schematic: the first beat as a graph of pages. Every arrow reaches its page except Jed's, which stops at the house rules.
 
 
 
@@ -45,7 +51,9 @@ Conky is the body. Keeping the rules, signing the record and noticing what chang
 
 Conky uses plain Markdown files in Git, so you can read them in Obsidian, VS Code, GitHub, or whatever you like really. You could print them and mail them to Grandma, or post them on Reddit. Conky isn't here to tell you how to live your life.
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-0-folder.dark.svg"><img src="docs/assets/figures/fig-0-folder.light.svg" alt="An early Macintosh folder window titled Lemonade stand, in black and white. Inside are six page icons named stand, cooler, supplier, daybook, maya and sam. Dashed arrows run from stand to cooler to supplier, and the daybook has an arrow looping back to itself. The status line reads: 6 pages, running itself." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-0-folder.dark.svg"><img src="docs/assets/figures/fig-0-folder.light.svg" alt="An early Macintosh folder window titled Lemonade stand, holding six page icons named stand, cooler, supplier, daybook, maya and sam, with dashed arrows from stand to cooler to supplier and a loop from the daybook back to itself." width="800"></picture></p>
+
+Schematic: a whole lemonade stand is six pages in one folder. The arrows are reactions, and the supplier, highlighted, has just changed by itself.
 
 <br>
 
@@ -53,7 +61,9 @@ Conky uses plain Markdown files in Git, so you can read them in Obsidian, VS Cod
 
 Conky is... different, for many reasons, but here are some:
 
-<p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-contrast.dark.svg"><img src="docs/assets/figures/fig-contrast.light.svg" alt="Five comparisons of the usual way beside Conky. The truth is scattered, or it is on the page. The rules are a polite request, or they hold by themselves. One loop runs everything, or nobody is in charge. Nobody knows why it did that, or every change says why. Too big to move, or pick it up and walk out." width="800"></picture></a></p>
+<p align="center"><a href="docs/research/harnesses.md"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-contrast.dark.svg"><img src="docs/assets/figures/fig-contrast.light.svg" alt="Five rows of small line drawings split by a dotted line, a sentence on each side: scattered stores beside a stack of pages, a speech bubble beside a gate and a tick, a hub with spokes beside three separate pages, a scribble beside a sealed strip, and a stranded whale skeleton beside a walking figure carrying a box out of a door." width="800"></picture></a></p>
+
+Schematic: the usual way on the left, Conky on the right. The parts each side means, from LangGraph, CrewAI, the OpenAI Agents SDK, Microsoft Agent Framework and the Claude Agent SDK, are named in the harness comparison the figure links to.
 
 <br>
 
@@ -132,19 +142,33 @@ Each trial is drawn from the history of one of its draws, step by step. Every pa
 
 A few parts, wrapped in layers, with the world plugging in at the edge. Solid is built, dotted is planned. The complete inventory, with a swimlane for every flow, is the <a href="docs/reference/architecture.md">architecture index</a>.
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-topology.dark.svg"><img src="docs/assets/figures/fig-topology.light.svg" alt="A parts alphabet beside a cross-section of Conky: git at the centre, then pages, reflexes, spaces, characters and an outer edge where connectors, models and people plug in." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-topology.dark.svg"><img src="docs/assets/figures/fig-topology.light.svg" alt="Nine small glyphs named vault, page, space, rule, watch, key, link, event and seal, beside concentric rings labelled git, pages, reflexes, spaces, characters and edge, with five connector plugs on the left of the outer wall, three model plugs at its top right and a dotted people plug at its foot." width="800"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-archetypes.dark.svg"><img src="docs/assets/figures/fig-archetypes.light.svg" alt="One page shape wearing twelve hats: character, space, provider, screen, hands and daybook are built; tool and clock are planned; team, pattern, lens and go-between are made by a character." width="800"></picture></p>
+Schematic, whole system: the nine parts on the left make the cross-section on the right. Models are tried top to bottom, and of the connectors only the terminal is built.
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-who-changes.dark.svg"><img src="docs/assets/figures/fig-who-changes.light.svg" alt="Three bands: what is changed by writing a page, the small fixed runtime with its write loop, and what sits beside the vault; below them, three laws drawn on nested membranes." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-archetypes.dark.svg"><img src="docs/assets/figures/fig-archetypes.light.svg" alt="Fifteen page icons in three rows, each with a small mark, a name and a few words: character, space, provider, screen, hands and daybook drawn solid; tool, clock, file, table, stream, team, pattern, lens and go-between dotted, with an arrow marking the last four." width="800"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-functions.dark.svg"><img src="docs/assets/figures/fig-functions.light.svg" alt="Six definitions with small diagrams: pages are rebuilt from history, a rule is a pure test, a measure is recorded as a write, a watch turns a change into a write, a model answers a prompt built from embeds, and a lens maps both ways; then one change drawn as write, rule, seal, watch, write." width="800"></picture></p>
+Schematic, archetypes: one page shape wearing fifteen hats. Six are built, and the last four are made by a character from pages.
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-compositions.dark.svg"><img src="docs/assets/figures/fig-compositions.light.svg" alt="Six recipes written as sums of parts: pattern, approval, budget, go-between, character and breakpoint." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-who-changes.dark.svg"><img src="docs/assets/figures/fig-who-changes.light.svg" alt="Three columns headed yours, the runtime and beside the vault: nine part glyphs, a loop of four boxes from write to run reactions, and five listed items; below them, three pairs of nested ovals named reach flows down, rules only tighten and spending is conserved." width="800"></picture></p>
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-flows.dark.svg"><img src="docs/assets/figures/fig-flows.light.svg" alt="A seven-lane swimlane of one change: a stimulus is perceived, a page is written, the rules are checked, the change is signed and appended, watchers notice, a prompt goes to a provider and the answer comes back as a write, with a refusal branch and planned steps dotted." width="800"></picture></p>
+Schematic, who changes what: your pages, the small fixed runtime with its write loop, and what sits beside the vault. Below them are the three laws the runtime keeps on every write, the third not yet built.
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-recursion.dark.svg"><img src="docs/assets/figures/fig-recursion.light.svg" alt="One membrane drawn five times, each zooming into a member of the last: a vault, a space, a character, the habit a character keeps, and one case with its when, then, because and expect." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-functions.dark.svg"><img src="docs/assets/figures/fig-functions.light.svg" alt="Seven rows, each a formula such as pages = rebuild(history), a short claim and a small diagram, above a row of five boxes, write, rule, seal, watch, write, and a branch where rule leads to a pink refusal mark." width="800"></picture></p>
+
+Schematic, functions: what each part computes, with one change drawn at the foot. A false rule ends the change as a recorded refusal, with no reactions.
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-compositions.dark.svg"><img src="docs/assets/figures/fig-compositions.light.svg" alt="Eight sums in two columns, each a row of part glyphs joined by plus signs and equal to a name in capitals: pattern, approval, budget, go-between, character, breakpoint, habit and warning, each with an example beneath." width="800"></picture></p>
+
+Schematic, compositions: eight things a character makes from parts that already exist, none of them a runtime feature. A recipe with a dotted part waits on that part.
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-flows.dark.svg"><img src="docs/assets/figures/fig-flows.light.svg" alt="A swimlane of seven lanes from outside to people, with boxes joined by arrows: stimulus, perceive, write, rules, sign, append, watch, prompt, provider and answer, a pink mark under rules, act and action leaving at the top, and dotted clock and screen boxes." width="800"></picture></p>
+
+Schematic, flows: one change as a swimlane. A refusal stops in the history lane, and every answer goes round the same loop as an ordinary write.
+
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-recursion.dark.svg"><img src="docs/assets/figures/fig-recursion.light.svg" alt="Five circles in a row, joined by pairs of thin zoom lines and named vault, space, character, lobe and case; the first three drawn solid and the last two dotted." width="800"></picture></p>
+
+Schematic, one shape at every depth: the membrane that holds a vault also holds a space, a character, a lobe and a single case. The lobe and the case are planned.
 
 <br>
 

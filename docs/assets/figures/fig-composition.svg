@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 210" width="800" height="210" role="img" aria-labelledby="t">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 8 792 224" width="792" height="224" role="img" aria-labelledby="t">
 <title id="t">A graph of pages composing itself: the screen changes and Ma and Jed notice; Ma reads The Art of War from the patterns shelf; Jed's wish to hunt stops at the house rules; Ma pushes on at the campfire; the hands type back to the game; the diary gains a line</title>
 <style>
 :root{--paper:#fbfaf7;--ink:#141413;--mute:#595854;--sunken:#f1f0ec;--raised:#ffffff;--hair:#c9c8c3;--pink:#cc2a68;--blue:#2c4fd0;--teal:#007c84;--amber:#a2600c;--violet:#6c46d6;--blend:multiply}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}}
 :root[data-theme="dark"]{--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}
 svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif}
-.m,.g,.tx,.pt{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
+.m,.g,.tx{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
 .k{stroke:var(--ink);stroke-width:0.8}
@@ -71,60 +71,61 @@ svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetic
 @keyframes d38{0%,82.222%{stroke-dashoffset:1}86.111%,100%{stroke-dashoffset:0}}.d38{animation:d38 18s linear -16s infinite}
 @keyframes a39{0%,81.667%{opacity:0}83.333%,96.667%{opacity:1}100%{opacity:0}}.a39{animation:a39 18s linear -16s infinite}
 @media (prefers-reduced-motion:reduce){.an{animation:none!important}}
+.fz11{font-size:11px}
+.fz11_5{font-size:11.5px}
+.fz12{font-size:12px}
 </style>
 <defs><pattern id="d12" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 4h2v2h-2z"/></pattern><pattern id="d25" width="8" height="8" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern><pattern id="d50" width="4" height="4" x="0" y="0" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM2 2h2v2h-2z"/></pattern></defs>
-<text class="t" x="10" y="14" font-size="7.14" fill-opacity="1" text-anchor="start">WHO NOTICED WHAT</text>
-<text class="t" x="792" y="204" font-size="6.72" fill-opacity="1" text-anchor="end">SCHEMATIC</text>
-<g class="a0 an"><path class="sp" d="M240.12 62H522V134H168V62H176"/><text class="t" x="179" y="65" font-size="7.14" fill-opacity="1" text-anchor="start">WAGON PARTY</text></g>
-<g class="a1 an"><path class="f12" d="M201 92a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/>
-<path class="s" d="M201 92a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/><circle class="k" cx="208" cy="91" r="3.2"/><circle class="k" cx="216" cy="91" r="3.2"/><path class="k" d="M211.2 91L212.8 91"/><circle class="d" cx="208" cy="91" r="1"/><circle class="d" cx="216" cy="91" r="1"/><path class="k" d="M209 97Q212 99 215 97"/><path class="k" d="M203 85Q212 75 221 85"/><text class="m" x="212" y="116" font-size="9" text-anchor="middle">Doc</text></g>
-<g class="a2 an"><path class="f25" d="M289 92a11 11 0 1 0 22 0a11 11 0 1 0 -22 0ZM293.6 91a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0ZM301.6 91a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0Z"/>
-<path class="s" d="M289 92a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/><circle class="d" cx="296" cy="91" r="1.1"/><circle class="d" cx="304" cy="91" r="1.1"/><path class="k" d="M297 97Q300 99 303 97"/><path class="f50" d="M295.8 78a4.2 4.2 0 1 0 8.4 0a4.2 4.2 0 1 0 -8.4 0Z"/>
-<path class="s" d="M295.8 78a4.2 4.2 0 1 0 8.4 0a4.2 4.2 0 1 0 -8.4 0Z"/><text class="m" x="300" y="116" font-size="9" text-anchor="middle">Ma</text></g>
-<g class="a3 an"><path class="f25" d="M383 92a11 11 0 1 0 22 0a11 11 0 1 0 -22 0ZM387.6 91a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0ZM395.6 91a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0Z"/>
-<path class="s" d="M383 92a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/><circle class="d" cx="390" cy="91" r="1.1"/><circle class="d" cx="398" cy="91" r="1.1"/><path class="k" d="M391 97Q394 99 397 97"/><path class="d" d="M383 89A11 11 0 0 1 405 89Z"/><path class="i" d="M392 89L410 89"/><text class="m" x="394" y="116" font-size="9" text-anchor="middle">Jed</text></g>
-<g class="a4 an"><path class="f50" d="M471 92a11 11 0 1 0 22 0a11 11 0 1 0 -22 0ZM475.6 91a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0ZM483.6 91a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0Z"/>
-<path class="s" d="M471 92a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/><circle class="d" cx="478" cy="91" r="1.1"/><circle class="d" cx="486" cy="91" r="1.1"/><path class="k" d="M479 97Q482 99 485 97"/><circle class="d" cx="474" cy="81" r="2.6"/><circle class="d" cx="490" cy="81" r="2.6"/><text class="m" x="482" y="116" font-size="9" text-anchor="middle">Tully</text></g>
-<g class="a5 an"><path class="k" d="M312 24H382V46H312Z"/><text class="m" x="347" y="38.2" font-size="9" text-anchor="middle">screen</text></g>
-<g class="a6 an"><path class="k" d="M130 24H270V58H130Z"/><text class="t" x="138" y="35" font-size="7.14" fill-opacity="1" text-anchor="start">PATTERNS</text><path class="k" d="M138 40H262V52H138Z"/><text class="sn" x="144" y="49" font-size="8.5" text-anchor="start">The Art of War</text></g>
-<g class="a7 an"><path class="k" d="M612 74H772V132H612Z"/><text class="t" x="620" y="87" font-size="7.14" fill-opacity="1" text-anchor="start">DIARY</text><path class="k" d="M620 100L730 100"/><path class="k" d="M620 110L708 110"/></g>
-<g class="a8 an"><path class="k" d="M256 158H344V190H256Z"/><text class="m" x="300" y="172" font-size="9" text-anchor="middle">campfire</text><text class="sn" x="300" y="184" font-size="8.5" text-anchor="middle">"we push on"</text></g>
-<g class="a9 an"><path class="k" d="M354 160H434V182H354Z"/><text class="m" x="394" y="174.2" font-size="9" text-anchor="middle">house rules</text></g>
-<g class="a10 an"><path class="k" d="M84 165H154V187H84Z"/><text class="m" x="119" y="179.2" font-size="9" text-anchor="middle">hands</text></g>
-<mask id="ma" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="210"><path class="dr d11 an" pathLength="1" d="M347 46L347 56L308 56L308 68"/></mask>
-<path class="z" mask="url(#ma)" d="M347 46L347 56L308 56L308 68"/>
-<g class="a12 an"><path class="i" d="M311.07 63.71L308 70L304.93 63.71"/></g>
-<path class="pl p13 an" pathLength="1" d="M347 46L347 56L308 56L308 70"/>
-<mask id="mb" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="210"><path class="dr d14 an" pathLength="1" d="M347 46L347 56L386 56L386 68"/></mask>
-<path class="z" mask="url(#mb)" d="M347 46L347 56L386 56L386 68"/>
-<g class="a15 an"><path class="i" d="M389.07 63.71L386 70L382.93 63.71"/></g>
-<path class="pl p16 an" pathLength="1" d="M347 46L347 56L386 56L386 70"/>
-<mask id="mc" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="210"><path class="dr d17 an" pathLength="1" d="M288 72L288 41L272 41"/></mask>
-<path class="z" mask="url(#mc)" d="M288 72L288 41L272 41"/>
-<g class="a18 an"><path class="i" d="M276.29 44.07L270 41L276.29 37.93"/></g>
-<path class="pl p19 an" pathLength="1" d="M288 72L288 41L270 41"/>
-<g class="a20 an"><path class="a" d="M138 40H262V52H138Z"/></g>
-<mask id="md" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="210"><path class="dr d21 an" pathLength="1" d="M394 120L394 158"/></mask>
-<path class="z" mask="url(#md)" d="M394 120L394 158"/>
-<g class="a22 an"><path class="i" d="M397.07 153.71L394 160L390.93 153.71"/></g>
-<path class="pl p23 an" pathLength="1" d="M394 120L394 140"/>
-<g class="a24 an"><rect x="387.5" y="140.5" width="13" height="13" class="rf"/><path class="x1" d="M391 144L397 150"/><path class="x1" d="M391 150L397 144"/></g>
-<mask id="me" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="210"><path class="dr d25 an" pathLength="1" d="M300 120L300 156"/></mask>
-<path class="z" mask="url(#me)" d="M300 120L300 156"/>
-<g class="a26 an"><path class="i" d="M303.07 151.71L300 158L296.93 151.71"/></g>
-<path class="pl p27 an" pathLength="1" d="M300 120L300 158"/>
-<mask id="mf" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="210"><path class="dr d28 an" pathLength="1" d="M256 176L156 176"/></mask>
-<path class="z" mask="url(#mf)" d="M256 176L156 176"/>
-<g class="a29 an"><path class="i" d="M160.29 179.07L154 176L160.29 172.93"/></g>
-<path class="pl p30 an" pathLength="1" d="M256 176L154 176"/>
-<mask id="mg" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="210"><path class="dr d31 an" pathLength="1" d="M84 176L3 176"/></mask>
-<path class="z" mask="url(#mg)" d="M84 176L3 176"/>
-<g class="a32 an"><path class="i" d="M7.29 179.07L1 176L7.29 172.93"/></g>
-<path class="pl p33 an" pathLength="1" d="M84 176L1 176"/>
-<g class="a34 an"><text class="t" x="6" y="169" font-size="6.72" fill-opacity="1" text-anchor="start">THE GAME</text></g>
-<mask id="mh" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="210"><path class="dr d35 an" pathLength="1" d="M522 103L610 103"/></mask>
-<path class="z" mask="url(#mh)" d="M522 103L610 103"/>
-<g class="a36 an"><path class="i" d="M605.71 99.93L612 103L605.71 106.07"/></g>
-<path class="pl p37 an" pathLength="1" d="M522 103L612 103"/>
-<g class="a39 an"><path class="dl d38 an" pathLength="1" d="M620 120H744"/></g>
+<g class="a0 an"><path class="sp" d="M263.57 74H540V158H160V74H168"/><text class="t fz11" x="171" y="78.5" fill-opacity="1" text-anchor="start">WAGON PARTY</text></g>
+<g class="a1 an"><path class="f12" d="M199 108a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/>
+<path class="s" d="M199 108a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/><circle class="k" cx="206" cy="107" r="3.2"/><circle class="k" cx="214" cy="107" r="3.2"/><path class="k" d="M209.2 107L210.8 107"/><circle class="d" cx="206" cy="107" r="1"/><circle class="d" cx="214" cy="107" r="1"/><path class="k" d="M207 113Q210 115 213 113"/><path class="k" d="M201 101Q210 91 219 101"/><text class="m fz11_5" x="210" y="136" text-anchor="middle">Doc</text></g>
+<g class="a2 an"><path class="f25" d="M289 108a11 11 0 1 0 22 0a11 11 0 1 0 -22 0ZM293.6 107a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0ZM301.6 107a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0Z"/>
+<path class="s" d="M289 108a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/><circle class="d" cx="296" cy="107" r="1.1"/><circle class="d" cx="304" cy="107" r="1.1"/><path class="k" d="M297 113Q300 115 303 113"/><path class="f50" d="M295.8 94a4.2 4.2 0 1 0 8.4 0a4.2 4.2 0 1 0 -8.4 0Z"/>
+<path class="s" d="M295.8 94a4.2 4.2 0 1 0 8.4 0a4.2 4.2 0 1 0 -8.4 0Z"/><text class="m fz11_5" x="300" y="136" text-anchor="middle">Ma</text></g>
+<g class="a3 an"><path class="f25" d="M389 108a11 11 0 1 0 22 0a11 11 0 1 0 -22 0ZM393.6 107a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0ZM401.6 107a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0Z"/>
+<path class="s" d="M389 108a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/><circle class="d" cx="396" cy="107" r="1.1"/><circle class="d" cx="404" cy="107" r="1.1"/><path class="k" d="M397 113Q400 115 403 113"/><path class="d" d="M389 105A11 11 0 0 1 411 105Z"/><path class="i" d="M398 105L416 105"/><text class="m fz11_5" x="400" y="136" text-anchor="middle">Jed</text></g>
+<g class="a4 an"><path class="f50" d="M479 108a11 11 0 1 0 22 0a11 11 0 1 0 -22 0ZM483.6 107a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0ZM491.6 107a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0 -4.8 0Z"/>
+<path class="s" d="M479 108a11 11 0 1 0 22 0a11 11 0 1 0 -22 0Z"/><circle class="d" cx="486" cy="107" r="1.1"/><circle class="d" cx="494" cy="107" r="1.1"/><path class="k" d="M487 113Q490 115 493 113"/><circle class="d" cx="482" cy="97" r="2.6"/><circle class="d" cx="498" cy="97" r="2.6"/><text class="m fz11_5" x="490" y="136" text-anchor="middle">Tully</text></g>
+<g class="a5 an"><path class="k" d="M310 24H400V50H310Z"/><text class="m fz11_5" x="355" y="41" text-anchor="middle">screen</text></g>
+<g class="a6 an"><path class="k" d="M110 14H270V58H110Z"/><text class="t fz11" x="118" y="29" fill-opacity="1" text-anchor="start">PATTERNS</text><path class="k" d="M118 35H262V52H118Z"/><text class="sn fz12" x="124" y="48" text-anchor="start">The Art of War</text></g>
+<g class="a7 an"><path class="k" d="M604 86H784V150H604Z"/><text class="t fz11" x="612" y="103" fill-opacity="1" text-anchor="start">DIARY</text><path class="k" d="M612 118L734 118"/><path class="k" d="M612 129L710 129"/></g>
+<g class="a8 an"><path class="k" d="M250 186H350V226H250Z"/><text class="m fz11_5" x="300" y="202" text-anchor="middle">campfire</text><text class="sn fz12" x="300" y="219" text-anchor="middle">"we push on"</text></g>
+<g class="a9 an"><path class="k" d="M356 192H456V218H356Z"/><text class="m fz11_5" x="406" y="209" text-anchor="middle">house rules</text></g>
+<g class="a10 an"><path class="k" d="M84 198H164V224H84Z"/><text class="m fz11_5" x="124" y="215" text-anchor="middle">hands</text></g>
+<mask id="ma" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="236"><path class="dr d11 an" pathLength="1" d="M355 50L355 64L308 64L308 84"/></mask>
+<path class="z" mask="url(#ma)" d="M355 50L355 64L308 64L308 84"/>
+<g class="a12 an"><path class="i" d="M311.07 79.71L308 86L304.93 79.71"/></g>
+<path class="pl p13 an" pathLength="1" d="M355 50L355 64L308 64L308 86"/>
+<mask id="mb" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="236"><path class="dr d14 an" pathLength="1" d="M355 50L355 64L392 64L392 84"/></mask>
+<path class="z" mask="url(#mb)" d="M355 50L355 64L392 64L392 84"/>
+<g class="a15 an"><path class="i" d="M395.07 79.71L392 86L388.93 79.71"/></g>
+<path class="pl p16 an" pathLength="1" d="M355 50L355 64L392 64L392 86"/>
+<mask id="mc" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="236"><path class="dr d17 an" pathLength="1" d="M288 88L288 36L272 36"/></mask>
+<path class="z" mask="url(#mc)" d="M288 88L288 36L272 36"/>
+<g class="a18 an"><path class="i" d="M276.29 39.07L270 36L276.29 32.93"/></g>
+<path class="pl p19 an" pathLength="1" d="M288 88L288 36L270 36"/>
+<g class="a20 an"><path class="a" d="M118 35H262V52H118Z"/></g>
+<mask id="md" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="236"><path class="dr d21 an" pathLength="1" d="M400 142L400 190"/></mask>
+<path class="z" mask="url(#md)" d="M400 142L400 190"/>
+<g class="a22 an"><path class="i" d="M403.07 185.71L400 192L396.93 185.71"/></g>
+<path class="pl p23 an" pathLength="1" d="M400 142L400 173"/>
+<g class="a24 an"><rect x="393.5" y="173.5" width="13" height="13" class="rf"/><path class="x1" d="M397 177L403 183"/><path class="x1" d="M397 183L403 177"/></g>
+<mask id="me" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="236"><path class="dr d25 an" pathLength="1" d="M300 142L300 184"/></mask>
+<path class="z" mask="url(#me)" d="M300 142L300 184"/>
+<g class="a26 an"><path class="i" d="M303.07 179.71L300 186L296.93 179.71"/></g>
+<path class="pl p27 an" pathLength="1" d="M300 142L300 186"/>
+<mask id="mf" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="236"><path class="dr d28 an" pathLength="1" d="M250 211L166 211"/></mask>
+<path class="z" mask="url(#mf)" d="M250 211L166 211"/>
+<g class="a29 an"><path class="i" d="M170.29 214.07L164 211L170.29 207.93"/></g>
+<path class="pl p30 an" pathLength="1" d="M250 211L164 211"/>
+<mask id="mg" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="236"><path class="dr d31 an" pathLength="1" d="M84 211L3 211"/></mask>
+<path class="z" mask="url(#mg)" d="M84 211L3 211"/>
+<g class="a32 an"><path class="i" d="M7.29 214.07L1 211L7.29 207.93"/></g>
+<path class="pl p33 an" pathLength="1" d="M84 211L1 211"/>
+<g class="a34 an"><text class="t fz11" x="4" y="203" fill-opacity="1" text-anchor="start">THE GAME</text></g>
+<mask id="mh" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="236"><path class="dr d35 an" pathLength="1" d="M540 118L602 118"/></mask>
+<path class="z" mask="url(#mh)" d="M540 118L602 118"/>
+<g class="a36 an"><path class="i" d="M597.71 114.93L604 118L597.71 121.07"/></g>
+<path class="pl p37 an" pathLength="1" d="M540 118L604 118"/>
+<g class="a39 an"><path class="dl d38 an" pathLength="1" d="M612 140H754"/></g>
 </svg>

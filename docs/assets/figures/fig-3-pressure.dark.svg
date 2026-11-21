@@ -3,7 +3,7 @@
 <style>
 :root{--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}
 svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif}
-.m,.g,.tx,.pt{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
+.m,.g,.tx{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .i{stroke:var(--ink);stroke-width:1.2}
 .k{stroke:var(--ink);stroke-width:0.8}
@@ -22,11 +22,12 @@ svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetic
 .rf{fill:var(--pink);stroke:none}
 .x1{fill:none;stroke:var(--paper);stroke-width:1.6;stroke-linecap:round}
 .mu{fill:var(--mute)}
+.fz13_44{font-size:13.44px}
 </style>
 <defs><pattern id="d25" width="8" height="8" x="0" y="0.5" patternUnits="userSpaceOnUse"><path class="d" shape-rendering="crispEdges" d="M0 0h2v2h-2zM4 0h2v2h-2zM2 4h2v2h-2zM6 4h2v2h-2z"/></pattern></defs>
 <g transform="translate(-1 -48.5)">
-<text class="t" x="72" y="74" font-size="13.44" fill-opacity="1" text-anchor="start">WALL</text>
-<text class="t" x="470" y="74" font-size="13.44" fill-opacity="1" text-anchor="start">PRESSURE</text>
+<text class="t fz13_44" x="72" y="74" fill-opacity="1" text-anchor="start">WALL</text>
+<text class="t fz13_44" x="470" y="74" fill-opacity="1" text-anchor="start">PRESSURE</text>
 <path class="s" d="M72 96H128L142 110V192H72Z"/>
 <path class="k" d="M128 96V110H142"/>
 <path class="k" d="M86 130L128 130"/>

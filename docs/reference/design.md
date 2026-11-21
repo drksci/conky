@@ -86,7 +86,8 @@ Radius is 0 and there are no shadows.
 - Text is ink by default. Text clears 4.5 to 1 against the page it is shown on, and a data stroke 3 to 1; the test computes both.
 - Charts are flat: bars filled with ink, a ramp step or a chart colour, outlined in one pixel of ink, square, parted by a small gap of empty page. No gradients, gridlines, boxes, tick marks, rounded corners or shadows.
 - Words about a chart sit in Markdown beside it: a heading above, one caption sentence below with the conditions of its numbers, and a footer line for method, data and units. The image carries only row labels, a few direct values and a small legend. A table is a Markdown table, never an image.
-- No text on a figure or chart is smaller than about 11 pixels at the width the README shows it.
+- No text on a figure or chart is smaller than about 11 pixels at the width the README shows it. A figure sets its sizes as classes on its root, so the test reads the smallest class, the figure's width and the width the README gives it.
+- Words about a schematic sit in Markdown too: the heading it sits under, one caption line below it that opens with "Schematic" or "Example", and alt text that describes the picture. The image keeps short names on its parts.
 - Separate with space, not rules. Lines appear only inside tables and charts.
 - A caption says what a figure shows, not what kind of figure it is. No heading or figure title opens with "The". A number keeps its conditions beside it.
 - Brand marks are not restyled and keep their own colours: the sponsor wordmark and the three-band ornament are exempt from the colour audit, by name.
@@ -99,4 +100,4 @@ A README image cannot load a web font, so a front-page figure sets its text in t
 
 - The docs site and the viewer's interface rules.
 - Embedded fonts.
-- Text of at least about 11 pixels on screen in the schematic figures, whose smallest labels land between 6 and 9 pixels at README width, and moving their titles and long labels into Markdown captions. The benchmark charts meet both.
+- Figures that stay legible at a phone width of about 360 pixels, where the schematics' smallest text lands near 5 pixels.
