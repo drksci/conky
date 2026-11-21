@@ -1074,13 +1074,18 @@ def board(root: Path) -> str:
         "cell: its name and what it is, then its text, the fields it holds, the rules it is "
         "bound by, and what it does when it hears something, then a footer naming who it asks "
         "and where it writes. A space is a frame holding its members. Connections plug into "
-        "small sockets on port boards, thin strips along the edges of a cell that face what "
-        "they connect to, and are coloured by what flows: blue is heard, amber is written or "
-        "added, pink is a write turned away, violet is a model asked, teal is what was kept or "
-        "shown. Nothing crosses a space's wall directly: a connection goes to a socket on the "
-        "space's board and on inside, and a write into the space is judged there by its rules, "
-        "so one turned away stops at that board. Otherwise ink is the structure, and a colour "
-        "marks the subject of a step with the same meanings.",
+        "ports on a cell's pair of port boards, thin strips along two facing edges. A port is "
+        "a square block in the colour of its kind with a short name on it in white, such as "
+        "`hr0` for the first thing heard or `wr0` for the first write; the key under each "
+        "picture names the kinds. A port with nothing plugged in is only a bar in its colour "
+        "on the edge that touches the cell, with its name in ink. A cable takes the colour of "
+        "the port it leaves. Nothing crosses a space's wall directly: a connection goes to a "
+        "port on the space's board and on inside, and a write into the space is judged there "
+        "by its rules, so one turned away stops at that board. Otherwise ink is the structure "
+        "and every word is ink. In the animation a pen marks what a step is about, as an edge, "
+        "a line under a name or a bar beside a row: yellow for what a character added, teal "
+        "for what is heard, coral for a write turned away, green for what was kept or shown, "
+        "mint for a model's thought. The pens are the five colours of the benchmark charts.",
         "",
     ]
     for c in found:
@@ -1119,9 +1124,10 @@ def block(root: Path) -> str:
         "### Dynamics",
         "",
         "Each trial is drawn from the history of one of its draws, step by step. Every page is "
-        "one cell, a space is a frame around its members, and a colour says what flows or what "
-        "a step is about: amber for what a character added, blue for what is heard, pink for a "
-        "write turned away, teal for what was kept or shown, violet for a model's thought.",
+        "one cell, a space is a frame around its members, and cables run between ports "
+        "coloured by kind, named in the key under each picture. A pen marks what a step is "
+        "about: yellow for what a character added, teal for what is heard, coral for a write "
+        "turned away, green for what was kept or shown, mint for a model's thought.",
         "",
     ]
     for c in drawn:

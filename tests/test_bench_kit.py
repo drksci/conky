@@ -1,5 +1,9 @@
 """The benchmark charts take a maintained template; the schematic figures keep their audit.
 
+The five pens are the chart template's five series colours: the dark value of each is the
+colour itself, and the light value is that colour darkened by the one rule the token file
+states, so a figure and a chart share a palette from one source.
+
 Measured: agreements between sources, computed contrast. A chart is drawn with an installed
 Plotly template and takes its colours from it, so what is asserted of the published charts is
 that they hold no raster image, name their face once and set no text below 11 pixels, and that
@@ -10,9 +14,11 @@ clear the WCAG contrast ratio against the page they are shown on.
 
 from __future__ import annotations
 
+import math
 import re
 from pathlib import Path
 
+import pytest
 from bench import charts, kit, publish
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -165,3 +171,84 @@ def test_the_figures_strokes_clear_the_contrast_ratio():
                     f"{name}.{look}: a stroke in {colour} is {got:.2f} to 1 on {PAGE[look]}"
                 )
     assert checked, "no figure stroke was found to check"
+
+
+# --- the pens: the chart template's colours, darkened by one rule for the light look -------------
+
+PENS = kit.TOKENS["pen"]
+
+
+def oklch(colour: str) -> tuple[float, float, float]:
+    """A colour as OKLCH lightness, chroma and hue (CSS Color 4)."""
+    r, g, b = linear(colour)
+    long = (0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b) ** (1 / 3)
+    mid = (0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b) ** (1 / 3)
+    short = (0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b) ** (1 / 3)
+    a = 1.9779984951 * long - 2.4285922050 * mid + 0.4505937099 * short
+    b2 = 0.0259040371 * long + 0.7827717662 * mid - 0.8086757660 * short
+    light = 0.2104542553 * long + 0.7936177850 * mid - 0.0040720468 * short
+    return light, math.hypot(a, b2), math.atan2(b2, a)
+
+
+def srgb(light: float, chroma: float, hue: float) -> tuple[float, float, float]:
+    """An OKLCH colour as linear sRGB, which may lie outside the gamut."""
+    a, b = chroma * math.cos(hue), chroma * math.sin(hue)
+    long = (light + 0.3963377774 * a + 0.2158037573 * b) ** 3
+    mid = (light - 0.1055613458 * a - 0.0638541728 * b) ** 3
+    short = (light - 0.0894841775 * a - 1.2914855480 * b) ** 3
+    return (
+        4.0767416621 * long - 3.3077115913 * mid + 0.2309699292 * short,
+        -1.2684380046 * long + 2.6097574011 * mid - 0.3413193965 * short,
+        -0.0041960863 * long - 0.7034186147 * mid + 1.7076147010 * short,
+    )
+
+
+def darkened(colour: str) -> str:
+    """A pen's light value by the token file's rule: its lightness scaled, its hue kept, and
+    its chroma lowered a step at a time only until the colour is inside sRGB."""
+    rule = kit.TOKENS["pen_light"]
+    assert rule["space"] == "oklch"
+    light, chroma, hue = oklch(colour)
+    while True:
+        rgb = srgb(light * rule["lightness"], chroma, hue)
+        if all(-1e-9 <= c <= 1 + 1e-9 for c in rgb):
+            break
+        chroma -= rule["chroma_step"]
+
+    def channel(c: float) -> int:
+        c = min(1.0, max(0.0, c))
+        return round(255 * (12.92 * c if c <= 0.0031308 else 1.055 * c ** (1 / 2.4) - 0.055))
+
+    return "#" + "".join(f"{channel(c):02x}" for c in rgb)
+
+
+def test_the_pens_are_the_chart_templates_colours():
+    pytest.importorskip("plotly", reason="the chart extras are not installed")
+    pytest.importorskip("dash_bootstrap_templates", reason="the chart extras are not installed")
+    import plotly.io as pio
+
+    kit.template("dark")  # registers the templates
+    for name in kit.THEMES.values():
+        theme = [c.lower() for c in pio.templates[name].layout.colorway]
+        assert [pen["dark"] for pen in PENS.values()] == theme, (
+            f"the pens are not the colours of {name}, in its order"
+        )
+
+
+def test_a_pens_light_value_is_its_colour_darkened_by_the_stated_rule():
+    for name, pen in PENS.items():
+        assert pen["light"] == darkened(pen["dark"]), f"pen {name}: light is not the rule's"
+
+
+def test_every_meaning_names_a_pen_and_every_pen_carries_one():
+    assert sorted(kit.TOKENS["meaning"].values()) == sorted(PENS)
+
+
+def test_a_pen_clears_the_stroke_floor_on_every_ground_it_is_drawn_on():
+    for name, pen in PENS.items():
+        for look in kit.LOOKS:
+            tokens = (kit.TOKENS["color"][g][look] for g in ("paper", "raised", "sunken"))
+            grounds = (PAGE[look], *tokens)
+            for ground in grounds:
+                got = ratio(pen[look], ground)
+                assert got >= 3, f"pen {name} ({look}) is {got:.2f} to 1 on {ground}"

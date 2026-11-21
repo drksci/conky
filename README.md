@@ -30,11 +30,11 @@ Your agents wake up inside a computer game from 1992 and have to reach Oregon al
 🛸 user@thething ❯ uvx --from git+https://github.com/drksci/conky conky assimilate
 ```
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-oregon-trail.dark.svg"><img src="docs/assets/figures/fig-oregon-trail.light.svg" alt="A game window cycling through four colour screenshots: the title, a general store, the trail and a river crossing. To its right, a console of ticked lines with one refused line in a pink block, and below it a screen of four portrait cards named Ma, Jed, Doc and Tully, a speech bubble, a campfire and bars for food, bullets and miles." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-oregon-trail.dark.svg"><img src="docs/assets/figures/fig-oregon-trail.light.svg" alt="A game window cycling through four colour screenshots: the title, a general store, the trail and a river crossing. To its right, a console of ticked lines with one refused line in a coral frame, and below it a screen of four portrait cards named Ma, Jed, Doc and Tully, a speech bubble, a campfire and bars for food, bullets and miles." width="800"></picture></p>
 
 Schematic beside real screens: four screens of The Oregon Trail Deluxe (MECC, 1992), and the party's console and screen drawn beat by beat. In the third beat a house rule refuses Jed's hunt, and Ma pushes on.
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-composition.dark.svg"><img src="docs/assets/figures/fig-composition.light.svg" alt="Boxes and four faces joined by dashed arrows that draw themselves: a box named screen points down into a dotted outline named wagon party; one face points up to a patterns box and down to a campfire box, another down to a pink cross above a box named house rules; arrows run on to hands, out to the game, and across to a diary." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-composition.dark.svg"><img src="docs/assets/figures/fig-composition.light.svg" alt="Boxes and four faces joined by dashed arrows that draw themselves: a box named screen points down into a dotted outline named wagon party; one face points up to a patterns box and down to a campfire box, another down to a coral cross above a box named house rules; arrows run on to hands, out to the game, and across to a diary." width="800"></picture></p>
 
 Schematic: the first beat as a graph of pages. Every arrow reaches its page except Jed's, which stops at the house rules.
 
@@ -122,7 +122,7 @@ Best first. A score is out of 100: reaching the goal gives 70, and cost and the 
 <!-- dynamics:start -->
 ### Dynamics
 
-Each trial is drawn from the history of one of its draws, step by step. Every page is one cell, a space is a frame around its members, and a colour says what flows or what a step is about: amber for what a character added, blue for what is heard, pink for a write turned away, teal for what was kept or shown, violet for a model's thought.
+Each trial is drawn from the history of one of its draws, step by step. Every page is one cell, a space is a frame around its members, and cables run between ports coloured by kind, named in the key under each picture. A pen marks what a step is about: yellow for what a character added, teal for what is heard, coral for a write turned away, green for what was kept or shown, mint for a model's thought.
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/results/cards/a-keeper-binds-itself/dynamics-dark.webp"><img src="docs/results/cards/a-keeper-binds-itself/dynamics-light.webp" alt="a keeper binds itself, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
 <p align="center"><sub>A character states a standing limit on the space it works in, and that limit refuses a payment that breaks it. Draw 1 of 5, the first that passed.</sub></p>
@@ -162,7 +162,7 @@ Schematic, functions: what each part computes, with one change drawn at the foot
 
 Schematic, compositions: eight things a character makes from parts that already exist, none of them a runtime feature. A recipe with a dotted part waits on that part.
 
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-flows.dark.svg"><img src="docs/assets/figures/fig-flows.light.svg" alt="A swimlane of seven lanes from outside to people, with boxes joined by arrows: stimulus, perceive, write, rules, sign, append, watch, prompt, provider and answer, a pink mark under rules, act and action leaving at the top, and dotted clock and screen boxes." width="800"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/fig-flows.dark.svg"><img src="docs/assets/figures/fig-flows.light.svg" alt="A swimlane of seven lanes from outside to people, with boxes joined by arrows: stimulus, perceive, write, rules, sign, append, watch, prompt, provider and answer, a coral mark under rules, act and action leaving at the top, and dotted clock and screen boxes." width="800"></picture></p>
 
 Schematic, flows: one change as a swimlane. A refusal stops in the history lane, and every answer goes round the same loop as an ordinary write.
 

@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 244.4" width="880" height="244.4" role="img" aria-labelledby="t">
 <title id="t">A rule reaches every page</title>
 <style>
-:root{--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}
+:root{--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--mint:#7bc5af;--coral:#fa7851;--green:#83fbc8;--yellow:#fed56b;--teal:#4c9bad;--blend:screen}
 svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif}
 .m,.g,.tx{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
@@ -19,7 +19,8 @@ svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetic
 .f50{fill:url(#d50)}
 .t{fill:var(--ink);letter-spacing:.14em}
 .b{font-weight:700}
-.rf{fill:var(--pink);stroke:none}
+.rf{fill:var(--coral);stroke:none}
+.ro{fill:none;stroke:var(--coral);stroke-width:1.6}
 .x1{fill:none;stroke:var(--paper);stroke-width:1.6;stroke-linecap:round}
 .mu{fill:var(--mute)}
 .fz11_76{font-size:11.76px}

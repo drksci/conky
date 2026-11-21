@@ -1409,6 +1409,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0058-a-budget-the-runtime-holds](../decisions/0058-a-budget-the-runtime-holds.md) | accepted | [`law.budget.held`](#law.budget.held), [`stage.think.budget`](#stage.think.budget), [`place.runtime.budget`](#place.runtime.budget) |
 | [0059-ports-are-bright-labelled-blocks-on-paired-boards](../decisions/0059-ports-are-bright-labelled-blocks-on-paired-boards.md) | accepted | - |
 | [0060-charts-take-the-minty-theme-with-monochrome-text](../decisions/0060-charts-take-the-minty-theme-with-monochrome-text.md) | accepted | - |
+| [0061-figures-take-the-chart-themes-colours](../decisions/0061-figures-take-the-chart-themes-colours.md) | accepted | - |
 
 ### Unplaced
 
@@ -1420,6 +1421,7 @@ Found in the documents and fitting no row above.
 | a generated index for a notes application | [obsidian-view.md](../ideas/obsidian-view.md) | Derived data under R11. Nothing is designed beyond the idea. |
 | a parent brokers what crosses its wall | [0052-wires-attach-to-port-boards-and-parents-broker-crossings.md](../decisions/0052-wires-attach-to-port-boards-and-parents-broker-crossings.md) | In a drawn trial every connection is a list of hops, and a hop that crosses a space's wall ends at a socket on that space's port board, where the space's rules judge a write into it. |
 | a port is a named block on a pair of boards | [0059-ports-are-bright-labelled-blocks-on-paired-boards.md](../decisions/0059-ports-are-bright-labelled-blocks-on-paired-boards.md) | In a drawn trial every port a cell has is a block coloured by its kind and named by a prefix and an index, on a pair of boards on one axis, inputs on the first and outputs and slots on the second, solid when plugged in and hatched when not. |
+| a port with nothing plugged in is a bar | [0061-figures-take-the-chart-themes-colours.md](../decisions/0061-figures-take-the-chart-themes-colours.md) | In a drawn trial a port with nothing plugged in is no block, only a solid bar in its kind's colour along the edge that touches the cell, a fixed share of the port's depth, with its name in ink beside it. |
 | a theatre knows itself | [0050-a-theatre-knows-itself.md](../decisions/0050-a-theatre-knows-itself.md) | A vault and the settings true only on this machine, in an optional marionette.md outside the history, found from any folder in the vault. |
 | a trial is drawn as it happened | [0043-a-trial-is-drawn-as-it-happened.md](../decisions/0043-a-trial-is-drawn-as-it-happened.md) | A card's recorded draw is published as a graph with steps, read from the vault's own history, and one view draws it, in a browser and as the pictures in the README. |
 | ahead or different with each step | [0033-ahead-or-different-with-each-step.md](../decisions/0033-ahead-or-different-with-each-step.md) | Every step states the difference it makes against other harnesses and how that is shown; parity work waits until a difference depends on it. |
@@ -1438,5 +1440,6 @@ Found in the documents and fitting no row above.
 | results publish themselves | [0032-results-publish-themselves.md](../decisions/0032-results-publish-themselves.md) | A benchmark's charts, data, results page and README block are generated from the run files by one command and never edited by hand. |
 | rules outside conky | [0002-git-is-the-store.md](../decisions/0002-git-is-the-store.md) | Rules are not enforced on commits made outside conky, and removing the last commit is not detectable from one copy. Verify does not evaluate rules. |
 | standing | [standing.md](../ideas/standing.md) | A measure of how much each page matters now, which orders what is listed within a space. It needs the members list ordered by a field. |
+| the five pens are the chart theme's five colours | [0061-figures-take-the-chart-themes-colours.md](../decisions/0061-figures-take-the-chart-themes-colours.md) | The five pens in the token file are the five series colours of the Minty chart template, in its order; the dark value of a pen is the colour itself and the light value is that colour darkened by one stated rule, and a pen draws marks and lines only, never words. |
 | the objective | [0001-objective.md](../decisions/0001-objective.md) | An organisation that runs, delivers and improves without its builders directing each step. It is an aim and prescribes no mechanism. |
 | write throughput | [0002-git-is-the-store.md](../decisions/0002-git-is-the-store.md) | One signed commit per write limits throughput to the order of tens a second. |

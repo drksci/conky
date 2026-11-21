@@ -97,6 +97,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0058-a-budget-the-runtime-holds.md](decisions/0058-a-budget-the-runtime-holds.md): A budget the runtime holds: asks counted from the history, a limit refusal past it, refilled by a write
 - [decisions/0059-ports-are-bright-labelled-blocks-on-paired-boards.md](decisions/0059-ports-are-bright-labelled-blocks-on-paired-boards.md): Ports are bright labelled blocks on paired boards
 - [decisions/0060-charts-take-the-minty-theme-with-monochrome-text.md](decisions/0060-charts-take-the-minty-theme-with-monochrome-text.md): Charts take the Minty theme with monochrome text
+- [decisions/0061-figures-take-the-chart-themes-colours.md](decisions/0061-figures-take-the-chart-themes-colours.md): Figures take the chart theme's colours
 
 ### Research
 

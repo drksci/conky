@@ -9,7 +9,7 @@
 // - no two ports overlap, and every edge ends on two ports of its own kind of signal;
 // - a cell with ports has a pair of boards, left and right or top and bottom, and nothing else,
 //   each the whole length of its edge; every port is a square as wide as its board is thick;
-//   every port of the graph is drawn, solid when something is plugged in and hatched when not,
+//   every port of the graph is drawn, solid when something is plugged in and a bar when not,
 //   and its name is unique in its cell and the one graph.json gives;
 // - text has a WCAG contrast of at least 4.5, cell edges and connectors at least 3, against the
 //   ground a picture is shown on (#ffffff light, #0d1117 dark), and a port's white name at least
@@ -53,7 +53,7 @@ const rgb = (hex) => {
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
 };
 const allowed = new Set(
-  [...Object.values(t.color), ...Object.values(t.pen), ...Object.values(t.port)].flatMap((pair) => Object.values(pair)).map((hex) => `rgb(${rgb(hex).join(", ")})`),
+  [...Object.values(t.color), ...Object.values(t.pen), ...Object.values(t.port).filter((v) => typeof v === "object")].flatMap((pair) => Object.values(pair)).map((hex) => `rgb(${rgb(hex).join(", ")})`),
 );
 allowed.add("rgba(0, 0, 0, 0)");
 const parse = (css) => (css.match(/[\d.]+/g) ?? []).slice(0, 3).map(Number);
@@ -84,7 +84,7 @@ const seenAs = (hex, m) => {
   return m ? m.map((row) => Math.min(1, Math.max(0, row.reduce((t, k, j) => t + k * c[j], 0)))) : c;
 };
 const kindsOfPort = Object.keys(t.socket);
-assert.deepEqual(Object.keys(t.port).filter((k) => k !== "label"), kindsOfPort, "tokens.json: one port colour a kind of port, in the socket table's order");
+assert.deepEqual(Object.keys(t.port).filter((k) => typeof t.port[k] === "object" && k !== "label"), kindsOfPort, "tokens.json: one port colour a kind of port, in the socket table's order");
 for (const look of ["light", "dark"]) {
   for (const k of kindsOfPort)
     assert.ok(contrast(rgb(t.port.label[look]), rgb(t.port[k][look])) >= 4.5, `port ${k} (${look}): its white name is too faint on it`);
@@ -147,6 +147,9 @@ try {
               name: name.textContent,
               label: box(name),
               fill: getComputedStyle(el).backgroundColor,
+              side: el.dataset.side,
+              deep: el.offsetWidth,
+              bars: Object.fromEntries(["Top", "Right", "Bottom", "Left"].map((d) => [d, [parseFloat(getComputedStyle(el)[`border${d}Width`]), getComputedStyle(el)[`border${d}Color`]]])),
               ink: getComputedStyle(name).color,
               ...box(el),
             };
@@ -265,7 +268,7 @@ try {
           }
         }
         // the pair of boards, and every port: drawn, named as graph.json names it, solid when
-        // something is plugged in and hatched when nothing is, its white name legible on it
+        // something is plugged in and a bar on the cell's side when nothing is, its white name legible on it
         const edgesIn = graph.edges.filter((e) => e.modes.includes(mode));
         const crossed = new Set(edgesIn.flatMap((e) => e.hops.flatMap((h) => [h.sourceSocket, h.targetSocket])));
         const appeared = new Set(graph.steps.slice(0, step + 1).flatMap((s) => s.appear));
@@ -285,10 +288,23 @@ try {
             assert.ok(d, `${where}: port ${s.id} is not drawn`);
             assert.equal(d.name, s.name, `${where}: port ${s.id} is named ${d.name}, not ${s.name}`);
             const solid = slots.has(s.id) ? slots.get(s.id).filled : plugged.has(s.id);
-            assert.equal(!d.idle, solid, `${where}: port ${s.id} is ${d.idle ? "hatched" : "solid"} with ${solid ? "something" : "nothing"} plugged in`);
+            assert.equal(!d.idle, solid, `${where}: port ${s.id} is ${d.idle ? "a bar" : "solid"} with ${solid ? "something" : "nothing"} plugged in`);
             const l = d.label;
             assert.ok(l.x >= d.x - 0.5 && l.y >= d.y - 0.5 && l.x + l.w <= d.x + d.w + 0.5 && l.y + l.h <= d.y + d.h + 0.5, `${where}: the name of ${s.id} overflows its block`);
             if (!d.idle) assert.ok(contrast(parse(d.ink), parse(d.fill)) >= 4.5, `${where}: the name on ${s.id} is too faint on its block`);
+            else {
+              // nothing plugged in: no fill, and one bar in the kind's colour on the edge that
+              // touches the cell, the token's share of the port's depth
+              const facing = { WEST: "Right", EAST: "Left", NORTH: "Bottom", SOUTH: "Top" }[d.side];
+              assert.equal(d.fill, "rgba(0, 0, 0, 0)", `${where}: idle port ${s.id} is filled`);
+              for (const [edge, [wide, colour]] of Object.entries(d.bars)) {
+                if (edge !== facing) assert.equal(wide, 0, `${where}: idle port ${s.id} has an edge on its ${edge.toLowerCase()}`);
+                else {
+                  assert.ok(Math.abs(wide - t.port.idle_bar * d.deep) <= 0.5, `${where}: the bar of ${s.id} is ${wide} px of ${d.deep}`);
+                  assert.equal(colour, `rgb(${rgb(t.port[s.kind][look]).join(", ")})`, `${where}: the bar of ${s.id} is not its kind's colour`);
+                }
+              }
+            }
           }
         }
         for (const x of seen.texts) assert.ok(contrast(parse(x.colour), ground) >= 4.5, `${where}: "${x.text}" in ${x.colour} is too faint`);

@@ -2,7 +2,8 @@
    src/conky/tokens.json (see tokens.mjs); restyle here or in the token file, nowhere else.
    Monochrome first: ink on a transparent ground, mute for secondary text, hair for quiet lines
    inside a cell. A pen marks the subject of a step, through var(--pen) set by the .is-<meaning>
-   classes. The ports are the one carve-out: each kind of port is a bright block in its own
+   classes: an edge, a rule beside a row or a line under a name, never the words, which stay
+   ink. The ports are the one carve-out: each kind of port is a bright block in its own
    colour from the port table, through var(--signal) set by the .signal-<kind> classes, and the
    cables it leaves by and every chip that names it take that colour too. */
 
@@ -10,6 +11,9 @@
   --cell-pad: var(--ds-space-base);
   --line: calc(var(--ds-size-base) * 1.4);
   --port: calc(var(--ds-space-wide) + var(--ds-space-fine));
+  --port-bar: calc(var(--port) * var(--ds-port-idle-bar));
+  --chip: calc(var(--ds-size-micro) + 2 * var(--ds-weight-base) + 2 * var(--ds-weight-hair));
+  --chip-bar: calc(var(--chip) * var(--ds-port-idle-bar));
   --prose: calc(var(--ds-space-far) * 8);
 }
 
@@ -485,28 +489,31 @@ html:has(.is-bare) body {
   color: var(--ds-port-label);
 }
 
-/* nothing plugged in: the same block hatched in its colour on the ground, with a dotted edge,
-   and its name in ink on a patch of ground, since white would not show there */
+/* nothing plugged in: no block, only a solid bar in the kind's colour along the edge that
+   touches the cell, a fixed share of the port's depth, and the name in ink in the room left */
 .react-flow__handle.port.is-idle {
   background: transparent;
-  border: var(--ds-weight-fine) dotted var(--signal);
 }
 
-.react-flow__handle.port.is-idle::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(135deg, var(--signal) 0 var(--ds-weight-hair), transparent var(--ds-weight-hair) var(--ds-space-fine));
+.react-flow__handle.port.is-idle[data-side="WEST"] {
+  border-right: var(--port-bar) solid var(--signal);
+}
+
+.react-flow__handle.port.is-idle[data-side="EAST"] {
+  border-left: var(--port-bar) solid var(--signal);
+}
+
+.react-flow__handle.port.is-idle[data-side="NORTH"] {
+  border-bottom: var(--port-bar) solid var(--signal);
+}
+
+.react-flow__handle.port.is-idle[data-side="SOUTH"] {
+  border-top: var(--port-bar) solid var(--signal);
 }
 
 .port.is-idle .port-name,
 .port-tag.is-idle {
   color: var(--ds-color-ink);
-}
-
-.port.is-idle .port-name {
-  padding: var(--ds-weight-hair);
-  background: var(--ds-color-paper);
 }
 
 /* the rules a wall judged at a port, on the line above its block */
@@ -541,9 +548,11 @@ html:has(.is-bare) body {
   vertical-align: middle;
 }
 
+/* a chip for a port with nothing plugged in: the bar alone, on its leading edge */
 .port-tag.is-idle {
-  border-style: dotted;
-  background: var(--ds-color-paper);
+  border-color: transparent;
+  border-left: var(--chip-bar) solid var(--signal);
+  background: transparent;
 }
 
 /* notes in a crowd, and the regions they are drawn in */
@@ -630,17 +639,15 @@ html:has(.is-bare) body {
   opacity: 0;
 }
 
-/* a subject takes the pen on its edge or its row's text, never a fill; a space's frame stays
-   ink and its header takes the pen instead */
+/* a subject takes the pen on its edge, as a line under its name or as a rule beside its row,
+   never on its words and never as a fill; a space's frame stays ink and its name is underlined */
 .cell.is-subject:not(.cell-space) {
   border-color: var(--pen);
   border-width: var(--ds-weight-base);
 }
 
-.cell.is-subject > .cell-head .cell-name,
-.cell-note.is-subject,
-.cell-note.is-subject .note-number {
-  color: var(--pen);
+.cell.is-subject > .cell-head .cell-name {
+  box-shadow: 0 var(--ds-weight-bold) 0 var(--pen);
 }
 
 .cell-note.is-subject {
@@ -648,14 +655,27 @@ html:has(.is-bare) body {
 }
 
 .holds-row.is-subject > dt,
-.holds-row.is-subject > dd,
-.rule.is-subject > .rule-label,
-.when-row.is-subject .when-words,
-.when-row.is-subject .then-words,
+.rule.is-subject,
+.when-row.is-subject > .when-cell,
 .record-row.is-subject,
-.foot-slot.is-subject .foot-slot-value,
-.panel-text.is-subject .cell-text {
-  color: var(--pen);
+.foot-slot.is-subject,
+.panel-text.is-subject {
+  position: relative;
+}
+
+.holds-row.is-subject > dt::before,
+.rule.is-subject::before,
+.when-row.is-subject > .when-cell::before,
+.record-row.is-subject::before,
+.foot-slot.is-subject::before,
+.panel-text.is-subject::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--ds-space-fine) - var(--ds-weight-bold));
+  top: 0;
+  bottom: 0;
+  width: var(--ds-weight-bold);
+  background: var(--pen);
 }
 
 .rule.is-subject > .expr,
@@ -759,6 +779,11 @@ html:has(.is-bare) body {
 
 .caption-words {
   color: var(--ds-color-ink);
+}
+
+/* the step's symbol is a mark, so it takes the pen; its words stay ink */
+.caption-symbol .symbol:not(.symbol-text) {
+  color: var(--pen, currentColor);
 }
 
 .scrubber {
@@ -888,22 +913,15 @@ html:has(.is-bare) body {
   color: var(--ds-color-mute);
 }
 
-.hljs-string {
-  color: var(--ds-pen-teal);
-}
-
+.hljs-string,
 .hljs-number,
 .hljs-literal {
-  color: var(--ds-pen-amber);
+  font-style: italic;
 }
 
 .hljs-bullet,
 .hljs-strong,
-.hljs-emphasis {
-  color: var(--ds-pen-violet);
-}
-
 .hljs-link,
 .hljs-symbol {
-  color: var(--ds-pen-blue);
+  font-weight: 600;
 }

@@ -190,7 +190,10 @@ export async function place(graph: Graph, size: Record<string, Measured>, region
         ...(second
           ? {
               "elk.spacing.portPort": String(Math.max(...n.board.map(long)) + PORT.gap),
-              "elk.spacing.portsSurrounding": `[top=${i.NORTH + m.band + PORT.pad},left=0,bottom=${i.SOUTH + m.foot + PORT.pad},right=0]`,
+              // ELK keeps ports clear of the padding by itself, and the padding already holds the
+              // band above the members and the footer: naming them here too would count them
+              // twice, and the member a port connects to would be pulled that far down
+              "elk.spacing.portsSurrounding": `[top=${PORT.pad},left=0,bottom=${PORT.pad},right=0]`,
               "elk.nodeSize.constraints": "[MINIMUM_SIZE]",
               "elk.nodeSize.minimum": `(0,${i.NORTH + m.band + rows + m.foot + i.SOUTH})`,
             }

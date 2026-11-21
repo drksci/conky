@@ -8,8 +8,9 @@ const OUTER: Record<Side, Position> = { WEST: Position.Left, EAST: Position.Righ
 const INNER: Record<Side, Position> = { WEST: Position.Right, EAST: Position.Left, NORTH: Position.Bottom, SOUTH: Position.Top };
 
 /** A port: a flat square block in its kind's colour, as wide as its board is thick, with its
- * short name on it. It is solid while something is plugged in, and hatched on the ground while
- * nothing is: before its connector arrives, or while its slot is empty. It is a React Flow
+ * short name on it. It is solid while something is plugged in. While nothing is (before its
+ * connector arrives, or while its slot is empty) it is no block, only a bar in its colour along
+ * the edge that touches the cell, with its name in ink beside it. It is a React Flow
  * handle, so a cable ends on its outer face; a port on a wall has a second handle on its inner
  * face, where the jumper goes on inside. */
 export function Port({ socket, side, slot }: { socket: Socket; side: Side; slot?: Slot }) {
@@ -49,7 +50,7 @@ export function PortRules({ socket }: { socket: Socket }) {
 }
 
 /** A port's short name where something else refers to it (a row, the footer, the side panel):
- * a small chip that looks like the port, solid or hatched as the port is now. */
+ * a small chip that looks like the port, solid or a bar as the port is now. */
 export function PortTag({ socket, slot }: { socket: Socket; slot?: Slot }) {
   const seen = useSeen();
   const idle = !isPlugged(seen.frame, socket, slot);

@@ -19,8 +19,8 @@ const horizontal = (a: Point, b: Point) => Math.abs(a.y - b.y) < 0.5;
 /** ELK's route with its ends on the sockets React Flow drew. An end a little off its socket is
  * moved onto it with the next corner, so the route stays square. ELK moves a port on the border
  * of a space it lays out with its members away from the place it was given; where an end is
- * far off, the route keeps ELK's way and turns to the socket just before the border it enters,
- * in the gap ELK left there. */
+ * far off, its last stretch is slid onto the port, and only a route with no turn to slide
+ * along turns to the port just before the border it enters, in the gap ELK left there. */
 export function onto(points: Point[], s: Point, t: Point, down: boolean): Point[] {
   if (points.length < 2) {
     if (Math.abs(s.y - t.y) < 1) return [s, t];
@@ -37,7 +37,13 @@ export function onto(points: Point[], s: Point, t: Point, down: boolean): Point[
     // an end on the line of its first stretch, as where a jumper leaves the inner face of a wall
     // port that ELK put on the outer edge of the board, is moved along that line
     const inLine = horizontal(a, b) ? Math.abs(a.y - to.y) <= NEAR && between(to.x, a.x, b.x) : Math.abs(a.x - to.x) <= NEAR && between(to.y, a.y, b.y);
-    if (!near && !inLine) return null;
+    // an end far off its port, where a space set its ports in their row: the last stretch,
+    // which runs square to the board in the gap ELK left before it, is slid along the turn
+    // behind it onto the port, so the route gains no corner
+    const square = end === 0 && down ? !horizontal(a, b) : horizontal(a, b);
+    const ahead = horizontal(a, b) ? (to.x - b.x) * (a.x - b.x) > 0 : (to.y - b.y) * (a.y - b.y) > 0;
+    const slid = p.length > 2 && square && ahead;
+    if (!near && !inLine && !slid) return null;
     if (p.length > 2) {
       if (horizontal(a, p[next])) p[next].y = to.y;
       else p[next].x = to.x;

@@ -26,7 +26,7 @@ function split(source: string): { head: string; body: string } {
 /** The side panel of the interactive view, loaded only when a cell is first opened: the page in
  * full as of the current step, rendered as a small printed article (Markdown by marked) or as
  * its source, frontmatter and Markdown highlighted by highlight.js in a theme built from the
- * tokens in view.css. Above the page, every port it has by its short name, solid or hatched as
+ * tokens in view.css. Above the page, every port it has by its short name, solid or a bar as
  * it stands at the step. Nothing is capped here. */
 export default function SidePanel({ node, step, onClose }: { node: GraphNode; step: number; onClose: () => void }) {
   const [tab, setTab] = useState<"page" | "source">("page");

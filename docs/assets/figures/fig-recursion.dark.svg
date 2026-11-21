@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="16 26 848 196" width="848" height="196" role="img" aria-labelledby="t">
 <title id="t">Plate 7, the same shape at every depth. One membrane is drawn five times, each zooming into a member of the last: a vault holds a space, a space holds a character, a character holds lobes, the habit lobe holds cases, and a case has four parts: when, then, because, expect. Solid is built, dotted is planned.</title>
 <style>
-:root{--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--pink:#ff7fb2;--blue:#93aaff;--teal:#58efd9;--amber:#ffc95c;--violet:#c6acff;--blend:screen}
+:root{--paper:#030620;--ink:#f2f2ef;--mute:#a3a7ad;--sunken:#0b1038;--raised:#070b2c;--hair:#2c3568;--mint:#7bc5af;--coral:#fa7851;--green:#83fbc8;--yellow:#fed56b;--teal:#4c9bad;--blend:screen}
 svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif}
 .m,.g,.tx{font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace}
 .i,.k,.a,.h,.z,.y{fill:none;stroke-linecap:round;stroke-linejoin:round}
@@ -19,12 +19,13 @@ svg{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetic
 .f50{fill:url(#d50)}
 .t{fill:var(--ink);letter-spacing:.14em}
 .b{font-weight:700}
-.rf{fill:var(--pink);stroke:none}
+.rf{fill:var(--coral);stroke:none}
+.ro{fill:none;stroke:var(--coral);stroke-width:1.6}
 .x1{fill:none;stroke:var(--paper);stroke-width:1.6;stroke-linecap:round}
 .mu{fill:var(--mute)}
 .m{fill:var(--ink);letter-spacing:.02em}
 .pl{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:1 3;stroke-linecap:round;stroke-linejoin:round}
-.th{stroke:var(--violet);mix-blend-mode:var(--blend)}
+.th{stroke:var(--mint);mix-blend-mode:var(--blend)}
 .fz12_18{font-size:12.18px}
 .fz12_5{font-size:12.5px}
 </style>
