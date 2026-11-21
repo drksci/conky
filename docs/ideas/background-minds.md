@@ -35,7 +35,7 @@ Cheap [model pages](model-pages.md) with a declared budget do a character's quie
 - Tidying: relief for crowded or stale pages ([staleness](staleness.md)).
 - Orientation: a short summary of what matters now, for an actor about to act.
 
-Each is an ordinary page in the actor's space that watches and writes. Each has a measure of what it has spent and stops at its budget, as the rule for anything that runs in the background requires. Nothing of this is built.
+Each is an ordinary page in the actor's space that watches and writes. Each has a measure of what it has spent and stops at its budget, as the rule for anything that runs in the background requires. The budget is built: a page may carry `budget: {asks: N}`, the runtime counts its asks from the history and refuses an ask past it, and a space hands a default down ([decision 0058](../decisions/0058-a-budget-the-runtime-holds.md)). The four minds, tokens, money, a time window and a pool shared by a space are not built.
 
 ## Allowance follows use
 

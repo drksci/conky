@@ -94,6 +94,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0055-a-letter-is-a-page-written-within-a-peer.md](decisions/0055-a-letter-is-a-page-written-within-a-peer.md): A letter is a page written within a peer, carried from an outbox that is derived data
 - [decisions/0056-a-space-hands-down-reactions.md](decisions/0056-a-space-hands-down-reactions.md): A space hands down reactions: an `each` watch entry is a reflex every page within has
 - [decisions/0057-charts-use-plotlys-built-in-themes-and-default-styles.md](decisions/0057-charts-use-plotlys-built-in-themes-and-default-styles.md): Charts use Plotly's built-in themes and default styles
+- [decisions/0058-a-budget-the-runtime-holds.md](decisions/0058-a-budget-the-runtime-holds.md): A budget the runtime holds: asks counted from the history, a limit refusal past it, refilled by a write
 
 ### Research
 

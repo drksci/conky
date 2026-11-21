@@ -23,6 +23,8 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `term` | A page that lists the phrases it is known by in a field `known_as`. Text that uses one of the phrases counts as linking to the page, and `terms(TEXT)` names the pages a text uses. |
 | `within(NAME, SPACE)` | A function in expressions: whether a page called NAME exists and lies within SPACE, so a space can say who may write. |
 | `embed` | `![[page]]`, replaced by a field, a body or, for a space, the list of its members, or with `#context` what the spaces above a page say (each introduced by `NAME says:`, nearest first, the nearest 5 shown), when a page is read. `#` selects the part. |
+| `budget` | A field of a page: how many asks it may make since the budget was last written. A space's budget is a default for each member. |
+| `asks` | In an expression, `asks.spent` and `asks.left`: the asks a page has made under its budget and the asks it has left. In a prompt, `![[PAGE#asks]]` says how many are left. |
 | `rule` | An expression the runtime evaluates before a write is kept. |
 | `event` | A commit: one write or one refusal. In a rule it is the write being judged, with `kind`, `by`, `reason` and `id`; in a watch it is the event reacted to. |
 | `seal` | The signature on an event. |
@@ -132,6 +134,12 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `most` | The most members a space's embedded list shows, from 1 to the cap of 20. |
 | `first` | An expression that gives each member a number; the highest are shown first. |
 
+## Budget keys
+
+| Name | Meaning |
+|---|---|
+| `asks` | The most times the page may ask a model since the budget was last written, a whole number of zero or more. |
+
 ## Watch keys
 
 | Name | Meaning |
@@ -177,6 +185,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `Tokens-Out` | Tokens in the answer, when the provider reports them. |
 | `Read` | A page embedded in the prompt. |
 | `Cache` | `hit` when the answer came from the cache and was not paid for again. |
+| `Budget` | The asks of the budget a write set, or `none` when it removed it: the point where the count of asks starts again. |
 
 ## Kinds
 

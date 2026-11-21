@@ -1,0 +1,8 @@
+# A budget is a mapping with asks, not a number.
+pages:
+  desk: {}
+write:
+  page: desk
+  set:
+    budget: 5
+refused: shape

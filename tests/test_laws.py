@@ -732,3 +732,27 @@ def test_nothing_unverified_is_ever_attributed_to_a_peer(tmp_path: Path) -> None
     assert main([*yours, "connect", "post", "take", "lisbon"]) == 1
     assert commits(home) == before
     assert not (home.pages_dir / "hello.md").exists()
+
+
+@arch.holds("law.budget.held", "law.refusal.record")
+def test_a_page_cannot_ask_past_its_budget(
+    vault: Vault, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    calls = tmp_path / "calls.txt"
+    program = tmp_path / "model.py"
+    program.write_text(
+        f"import sys\nsys.stdin.read()\nopen({str(calls)!r}, 'a').write('x')\nprint('ok')\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("CONKY_COMMAND_STAND", f"{sys.executable} {program}")
+    assert w(vault, "helper", {"api": "command", "command": "stand"}).ok
+    ask = {"provider": "helper", "prompt": "Seen ![[ticket#n]].", "into": "said"}
+    watch = [{"on": "ticket", "when": "true", "ask": ask}]
+    assert w(vault, "ticket", {"n": 0}).ok
+    assert w(vault, "scribe", {"watch": watch, "budget": {"asks": 1}}).ok
+    for n in range(1, 4):
+        assert w(vault, "ticket", {"n": n}).ok
+    assert calls.read_text() == "x"
+    said = git(vault.path, "log", "--format=%B", "main")
+    assert said.count("Reason: limit: Page scribe has made all 1 asks") == 2
+    vault.verify()

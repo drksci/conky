@@ -1,0 +1,11 @@
+# A budget the model could raise would be no budget: an answer cannot set one.
+pages:
+  den: {}
+answer: |
+  === page: kid ===
+  ---
+  within: den
+  budget: {asks: 99}
+  ---
+  === end ===
+refused: limit

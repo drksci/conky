@@ -1,0 +1,8 @@
+# Asks are counted whole.
+pages:
+  desk: {}
+write:
+  page: desk
+  set:
+    budget: {asks: 1.5}
+refused: shape

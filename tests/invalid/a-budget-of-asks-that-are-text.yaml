@@ -1,0 +1,8 @@
+# Asks are a number.
+pages:
+  desk: {}
+write:
+  page: desk
+  set:
+    budget: {asks: "two"}
+refused: shape

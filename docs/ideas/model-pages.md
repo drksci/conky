@@ -26,6 +26,8 @@ A page can pose a question state cannot answer to an AI model and write the answ
 
 A provider is itself a page: it names an endpoint and a model, and its secret key stays outside the vault, like signing keys. A page that needs a model points at a provider page, so changing provider is editing one page, and different pages can use different ones (a cheap one for housekeeping, a strong one for hard questions).
 
+A page may carry a budget of asks, counted from the history, with an ask past it refused for `limit` and refilled by writing the budget again ([decision 0058](../decisions/0058-a-budget-the-runtime-holds.md)). Tokens and money are not metered.
+
 ## Composes from
 
 Page, key, write, watch, rule.

@@ -183,7 +183,7 @@ def _plain(value: Any) -> Any:
     raise RuleError(f"result of type {type(value).__name__} cannot be stored")
 
 
-RULE_NAMES = ("page", "space", "size", "text", "event")
+RULE_NAMES = ("page", "space", "size", "text", "event", "asks")
 WATCH_NAMES = (*RULE_NAMES, "other", "other_text", "other_size", "other_name")
 EVENT_FIELDS = ("kind", "by", "reason", "id")
 _BINDING = ("all", "exists", "exists_one", "map", "filter")

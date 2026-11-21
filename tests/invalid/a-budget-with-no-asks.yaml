@@ -1,0 +1,8 @@
+# A budget that counts nothing is not a budget.
+pages:
+  desk: {}
+write:
+  page: desk
+  set:
+    budget: {}
+refused: shape

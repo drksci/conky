@@ -1,0 +1,8 @@
+# The only key of a budget is asks: tokens and money are not metered.
+pages:
+  desk: {}
+write:
+  page: desk
+  set:
+    budget: {asks: 2, tokens: 9}
+refused: shape

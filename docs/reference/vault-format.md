@@ -56,6 +56,7 @@ A write commit changes one page. It has subject `write <page>` and these trailer
 |---|---|
 | `Kind` | `write` |
 | `Page` | the page name |
+| `Budget` | only when the write sets the field `budget`: its `asks`, or `none` when it removes it. The count of asks starts again here ([a budget](rules-and-reactions.md#a-budget)) |
 | `Cause` | the full id of the triggering commit, only when the write is a reaction, or of the commit in another theatre's history that a letter was taken from ([connectors](connectors.md#the-post-connector)) |
 
 ### A model answer

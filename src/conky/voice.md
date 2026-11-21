@@ -123,6 +123,22 @@ The name members is taken: it lists the pages within a space. Another name is ne
 
 The name context is taken: it shows what the spaces above a page say. Another name is needed.
 
+## budget-shape
+
+A page says how often it may ask a model with a mapping that has the key {keys}, as in budget: {{asks: 5}}. Write asks as a whole number of zero or more, and use no other key.
+
+## budget-spent
+
+Page {page} has made all {asks} asks that the budget of {holder} allows, so no model was asked. Write the budget of {holder} again to refill it.
+
+## budget-bound
+
+Page {name} is written by an answer into {space}, so it cannot set a budget: leave a budget to the person who keeps the space.
+
+## asks-left
+
+{left} of {asks} asks left
+
 ## shows-shape
 
 A space says what it shows with a mapping that has the keys {keys}, as in shows: {{most: 5, first: "text.size()"}}. Use only those keys.

@@ -9,12 +9,7 @@ arch:
   - law.provider.page
   - kind.provider
   - flow.ask.model
-  items:
-  - kind: stage
-    name: stage.think.budget
-    phase: think
-    text: A budget that stops spending. Token counts are recorded and nothing bounds them yet.
-    roadmap: R17
+  - stage.think.budget
 ---
 
 # 0019 Providers are pages

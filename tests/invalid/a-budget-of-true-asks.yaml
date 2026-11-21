@@ -1,0 +1,8 @@
+# A truth is not a number of asks.
+pages:
+  desk: {}
+write:
+  page: desk
+  set:
+    budget: {asks: true}
+refused: shape

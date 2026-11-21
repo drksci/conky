@@ -139,6 +139,7 @@ def code() -> dict[str, set[str]]:
         "Theatre keys": set(theatre.KEYS),
         "Reserved keys": set(page.RESERVED),
         "Shows keys": set(page.SHOWS_KEYS),
+        "Budget keys": set(page.BUDGET_KEYS),
         "Watch keys": set(page.WATCH_KEYS),
         "Watch relations": set(page.RELATIONS),
         "Ask keys": set(page.ASK_KEYS),
@@ -211,5 +212,5 @@ def test_every_line_the_runtime_says_to_a_model_is_on_the_voice_page_and_used():
 
 FILLED = [
     *("keys", "cap", "page", "space", "reason", "shown", "least"),
-    *("entry", "root", "name", "where", "other"),
+    *("entry", "root", "name", "where", "other", "asks", "holder", "left"),
 ]

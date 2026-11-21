@@ -232,6 +232,14 @@ def links(page: Page, terms: Terms | None = None, name: str = "") -> set[str]:
     return found
 
 
+def _check_budget(value: Any) -> None:
+    """Raise ShapeError unless value is a mapping with `asks`, a whole number of zero or more."""
+    asks = value.get("asks") if isinstance(value, dict) else None
+    ok = isinstance(value, dict) and set(value) == set(BUDGET_KEYS)
+    if not ok or isinstance(asks, bool) or not isinstance(asks, int) or asks < 0:
+        raise ShapeError(voice.line("budget-shape", keys=", ".join(BUDGET_KEYS)))
+
+
 def _check_known_as(value: Any) -> None:
     """Refuse a `known_as` that is not a list of phrases of at least two characters."""
     ok = (
@@ -296,6 +304,12 @@ def apply(page: Page, changes: dict[str, Any], body: str | None) -> Page:
             raise ShapeError(voice.line("members-name"))
         elif key == CONTEXT:
             raise ShapeError(voice.line("context-name"))
+        elif key == BUDGET:
+            if value is None:
+                fields.pop(key, None)
+            else:
+                _check_budget(value)
+                fields[key] = value
         elif key == SHOWS:
             if value is not None:
                 _check_shows(value)
@@ -422,6 +436,16 @@ def parse(text: str) -> Page:
 
 MEMBERS = "members"
 CONTEXT = "context"
+ASKS = "asks"
+BUDGET = "budget"
+BUDGET_KEYS = arch.constant(
+    ("asks",),
+    "budget key",
+    "conky.page.BUDGET_KEYS",
+    "slot.key",
+    "Keys of a page's `budget`: how many times the page may ask a model.",
+    doc="vocabulary.md#budget-keys",
+)
 CONTEXT_CAP = arch.constant(
     5,
     "context cap",

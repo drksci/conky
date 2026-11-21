@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -16,6 +17,8 @@ from conky import answer, arch, git, model, theatre, voice
 from conky.cache import Cache
 from conky.errors import BadInput, VerifyFailed
 from conky.page import (
+    ASKS,
+    BUDGET,
     EMBED,
     MEMBERS,
     NAME,
@@ -48,6 +51,7 @@ KINDS = arch.constant(
     doc="vault-format.md#commits",
 )
 CACHE_HIT = "hit"
+UNLIMITED = 1_000_000
 
 
 @arch.slot(
@@ -69,6 +73,7 @@ class Trailer(StrEnum):
     TOKENS_OUT = "Tokens-Out"
     READ = "Read"
     CACHE = "Cache"
+    BUDGET = "Budget"
 
 
 @arch.slot(
@@ -557,6 +562,9 @@ class Vault:
             return refuse(f"{Refusal.SHAPE}: {page} names a watch relation: use another page name")
         before = self._load(page)
         applied = changes
+        if bound is not None and BUDGET in changes:
+            barred = voice.line("budget-bound", name=page, space=bound)
+            return refuse(f"{Refusal.LIMIT}: {barred}")
         if bound is not None and page == bound:
             problem = self._bind(page, before, changes, body)
             if problem:
@@ -584,6 +592,9 @@ class Vault:
             if space != page:
                 asked = ([*asked[0], (Trailer.FROM, space)], asked[1])
             return self._refuse(page, changes, body, actor, at, cause, reason, depth, asked)
+        if BUDGET in changes:
+            asks = result.fields.get(BUDGET, {}).get("asks", "none")
+            asked = ([*asked[0], (Trailer.BUDGET, str(asks))], asked[1])
         commit = self._record("write", page, actor, at, cause, asked[0], result, asked[1])
         self._react(page, result, commit, actor, at, depth)
         return Result(True, commit)
@@ -618,6 +629,7 @@ class Vault:
             "size": _size(page),
             "text": page.body,
             "event": {"id": "", "kind": "write", "by": actor, "reason": ""},
+            "asks": self._asks(name, page),
         }
 
     @arch.law(
@@ -1050,6 +1062,7 @@ class Vault:
             "other_text": text,
             "text": current.body,
             "event": event,
+            "asks": self._asks(watcher, current),
         }
         if owner is not None and not all(
             concerns(e, scope) for e in (entry["when"], *entry.get("set", {}).values())
@@ -1137,7 +1150,7 @@ class Vault:
         if depth > MAX_DEPTH:
             return self._refuse(page, {}, None, actor, at, cause, _CYCLE, depth)
         pages = self._all()
-        prompt = resolve_text(ask.prompt, pages)
+        prompt = resolve_text(self._tally(ask.prompt, pages), pages)
         if ask.writes is not None:
             shown = any(
                 (found.group(1), found.group(2)) == (ask.writes, MEMBERS)
@@ -1165,6 +1178,97 @@ class Vault:
         last = (page, actor, at, refused.id, depth)
         return self._plain(last, ask, pages, prompt, False)
 
+    @arch.law(
+        "law.budget.held",
+        "A page may carry a budget of asks, counted from the history, and an ask past it is "
+        "not made: a limit refusal is recorded instead, and writing the budget again refills it.",
+        doc="../decisions/0058-a-budget-the-runtime-holds.md",
+        roadmap="R17",
+    )
+    @arch.stage(
+        "think",
+        "stage.think.budget",
+        "A page's asks are counted from the history, and an ask past its budget is refused for "
+        "limit before any model is called.",
+        doc="rules-and-reactions.md#a-budget",
+        roadmap="R17",
+    )
+    @arch.change(
+        "place.runtime.budget",
+        "Counting a page's asks from the history and stopping the one past its budget.",
+        doc="rules-and-reactions.md#a-budget",
+        roadmap="R17",
+    )
+    def _budget(self, name: str, page: Page) -> tuple[str, int] | None:
+        """Return the page that holds the budget a page lives under, and its asks, or None.
+
+        A page's own `budget` wins. Without one it takes the budget of the nearest space above it
+        that has one, by the order `page.above` gives and the theatre last. A space's budget is a
+        default for each member, not a pool the members share.
+        """
+        if page.fields.get(BUDGET) is not None:
+            return name, page.fields[BUDGET]["asks"]
+        for owner, space, _ in self._above(name, page.within):
+            if space is not None and owner != name and space.fields.get(BUDGET) is not None:
+                return owner, space.fields[BUDGET]["asks"]
+        return None
+
+    def _count(self, name: str, holder: str) -> int:
+        """Return the asks a page has made since the budget it lives under was last written.
+
+        Read from the history alone, oldest first. An ask is a commit of the page, kept or
+        refused, that records a model's answer and not a replay of one from the cache: an answer
+        a rule refused is spent, and so is the ask repeated after it. A write that sets `budget`,
+        on the page or on the space that holds the budget, starts the count again, whether or not
+        the value changed.
+        """
+        pattern = f"^{Trailer.PAGE}: ({name}|{holder})$"
+        out = git.run(
+            ["log", "--reverse", "-E", f"--grep={pattern}", "--format=%x1e%B", "main"], self.path
+        )
+        spent = 0
+        for record in out.split("\x1e")[1:]:
+            found = git.trailers(record)
+            if Trailer.BUDGET in found:
+                spent = 0
+            elif found.get(Trailer.PAGE) == name and Trailer.CACHE not in found:
+                spent += int(found.get(Trailer.MODEL, "none") != "none")
+        return spent
+
+    def _asks(self, name: str, page: Page) -> dict[str, int]:
+        """Return `asks` as a rule reads it: what a page has spent and has left.
+
+        Without a budget nothing is counted: `spent` is 0 and `left` is UNLIMITED.
+        """
+        held = self._budget(name, page) if self._has_commits() else None
+        if held is None:
+            return {"spent": 0, "left": UNLIMITED}
+        spent = self._count(name, held[0])
+        return {"spent": spent, "left": max(held[1] - spent, 0)}
+
+    def _spent(self, name: str) -> str | None:
+        """Return the limit reason when the page's budget is spent, or None when it may ask."""
+        page = self._load(name) or Page()
+        held = self._budget(name, page)
+        if held is None or self._count(name, held[0]) < held[1]:
+            return None
+        said = voice.line("budget-spent", page=name, asks=held[1], holder=held[0])
+        return f"{Refusal.LIMIT}: {said}"
+
+    def _tally(self, prompt: str, pages: dict[str, Page]) -> str:
+        """Return prompt with each `![[PAGE#asks]]` replaced by what that page has left to ask."""
+
+        def left(found: re.Match[str]) -> str:
+            name, part = found.group(1), found.group(2)
+            target = pages.get(name)
+            held = self._budget(name, target) if part == ASKS and target is not None else None
+            if held is None:
+                return found.group(0)
+            gone = self._count(name, held[0])
+            return voice.line("asks-left", left=max(held[1] - gone, 0), asks=held[1])
+
+        return EMBED.sub(left, prompt)
+
     def _think(
         self,
         ask: Ask,
@@ -1179,7 +1283,10 @@ class Vault:
         The question is settled by prompt, the digest of what the entry asked, so a retry that
         adds a note to sent still settles the entry's own prompt.
         """
-        page, actor, at, cause, _ = where
+        page, actor, at, cause, depth = where
+        spent = self._spent(page)
+        if spent is not None:
+            return self._refuse(page, {}, None, actor, at, cause, spent, depth)
         moment = cause or self._head()
         if ask.provider is not None:
             try:

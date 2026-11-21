@@ -1,0 +1,8 @@
+# A page cannot be given fewer than no asks.
+pages:
+  desk: {}
+write:
+  page: desk
+  set:
+    budget: {asks: -1}
+refused: shape

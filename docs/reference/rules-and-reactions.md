@@ -47,6 +47,7 @@ Every function is pure. Text over 65536 characters, a result over 65536 characte
 | Rule | `size` | The byte length of the serialised page as it would be after the write. |
 | Rule | `text` | The body of the page as it would be after the write, empty when the page has none. |
 | Rule | `event` | The write being judged, with the fields a watch sees: `kind` is `write`, `by` is the actor, `reason` is empty text and `id` is empty text, because the commit does not exist yet. |
+| Rule | `asks` | The asks of the page, `asks.spent` and `asks.left`, as they stand before the write (see [A budget](#a-budget)). |
 | Watch | `page` | The fields of the watching page as it is now. |
 | Watch | `space` | The same, for the watching page. |
 | Watch | `size` | The byte length of the watching page as it is now. |
@@ -55,6 +56,7 @@ Every function is pure. Text over 65536 characters, a result over 65536 characte
 | Watch | `other` | The fields of the page that was just written. |
 | Watch | `other_size` | The byte length of the page that was just written. |
 | Watch | `other_name` | The name of the page that was just written. |
+| Watch | `asks` | `asks.spent` and `asks.left` of the watching page. |
 | Watch | `event` | A map describing the event being reacted to, for every kind of watch. |
 | Watch | `event.id` | The id of the commit being reacted to. A case can keep it in a field to mark what it has met, then test `page.met != event.id`. |
 | Watch | `event.kind` | `write` for a kept write, `refused` for a refusal, the words of the `Kind` trailer. |
@@ -120,7 +122,7 @@ A write that cannot hold is refused and recorded as an empty signed commit that 
 | `cycle` | Reactions are nested deeper than 12. |
 | `watch` | A watch condition or value failed to evaluate. The refusal is recorded against the watching page. |
 | `model` | A question to a model could not be asked or was not answered. The refusal is recorded against the asking page. See [Asking a model](#asking-a-model). |
-| `limit` | A write bound to a space broke a limit of that space, whether it is a page of an answer or a letter from another theatre ([connectors](connectors.md#the-post-connector)): it is outside that space, or it names a secret or a command, or one of its watch entries would write outside the space. See [An answer that is pages](#an-answer-that-is-pages). |
+| `limit` | A write bound to a space broke a limit of that space, whether it is a page of an answer or a letter from another theatre ([connectors](connectors.md#the-post-connector)): it is outside that space, or it names a secret or a command, or one of its watch entries would write outside the space. See [An answer that is pages](#an-answer-that-is-pages). Also an ask that the budget of the page does not allow: see [A budget](#a-budget). |
 
 Values given to a write must be plain data: text, numbers, booleans, lists and maps. Anything else is rejected before any commit is made.
 
@@ -269,6 +271,25 @@ The retry is one, and no more. When the second answer is refused by a rule too, 
 ### When asking fails
 
 Each of these, for a named provider page, is recorded as a refusal on the asking page, and the question then falls through to detection and the plain sentence: a missing or malformed provider page, a secret that cannot be found, a failed connection, an HTTP error, a reply with no answer text, and no reply within 60 seconds. The reason starts with `model:` and says what to do next, for example `model: secret 'openrouter' not found: set CONKY_SECRET_OPENROUTER or put it in openrouter.secret in the key directory`. A failure to ask is not retried. The write that triggered the entry stands and every other reaction runs, so everything that needs no model works with no network.
+
+## A budget
+
+A page may carry `budget: {asks: 5}`, the most times it may ask a model since the budget was last written ([decision 0058](../decisions/0058-a-budget-the-runtime-holds.md)).
+
+- **Counted from the history.** An ask is spent when a commit of the page, kept or refused, records a model's answer: a `Model` trailer that is not `none`, and no `Cache` trailer. An answer a rule refused is spent, and so is the ask repeated after it. A replayed answer, a plain sentence, a failed provider and a `limit` refusal are not. Nothing is stored for the count.
+- **Refilled by a write.** The count starts again at the last write that set `budget`, on the page or on the space that holds the budget it lives under, even to the same value. Such a write carries the trailer `Budget`. A write that leaves `budget` alone changes nothing. No clock is involved: a clock page, when there is one, refills by writing.
+- **Past it, a refusal.** When the asks spent have reached `asks`, no model is called, and a refusal for `limit` is recorded on the page, saying how many asks were allowed and that writing the budget again refills it. A cached answer is not looked for. An entry with `on: refusal` hears it like any refusal.
+- **Handed down.** A member with no `budget` of its own takes that of the nearest space above it that has one, the theatre last. It is a default for each member and not a pool: two members of a space with `asks: 1` ask once each. A shared pool is not built.
+- **Read.** A condition reads `asks.spent` and `asks.left`. With no budget, `asks.spent` is 0 and `asks.left` is 1000000. A prompt embeds `![[PAGE#asks]]`, which says `3 of 5 asks left`, and for a page with no budget reads the field called `asks` as before. The embed resolves in a prompt, not when a page is read.
+- **Not lowered.** An answer may not set `budget` on a page it writes, and may still not add an `ask` to its space; a space still may not hand down an `ask`.
+
+```yaml
+budget: {asks: 20}
+watch:
+  - on: ticket
+    when: "asks.left > 0"
+    ask: {prompt: "Summarise ![[ticket#text]]. ![[scribe#asks]].", into: summary}
+```
 
 ## Measures
 
