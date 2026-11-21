@@ -1,9 +1,16 @@
-"""Text functions in the rule language: what a playbook cannot say, the examples and the limits."""
+"""The rule language: its text functions, what an expression costs and what it gives back."""
+
+import resource
+import subprocess
+import sys
+import time
 
 import pytest
 
-from conky import rules
+from conky import arch, rules
 from conky.rules import RuleError, evaluate
+
+from .conftest import AT
 
 
 @pytest.mark.parametrize(
@@ -65,3 +72,145 @@ def test_a_result_over_the_limit_is_an_error():
 
 def test_text_at_the_limit_is_accepted():
     assert evaluate("x.trim().size()", {"x": "a" * rules.MAX_TEXT}) == rules.MAX_TEXT
+
+
+CHOICES = "\n".join(f"Choice number {n}" for n in range(57))
+CHOOSES = (
+    "event.by != 'ada' || !has(page.next) || page.can.split('\\n').exists(c, "
+    "c.lowerAscii() == page.next.split('\\n')[0].trim().lowerAscii())"
+)
+
+
+def bounded(code: str, seconds: int = 60, megabytes: int = 1024) -> str:
+    """Run code in a fresh interpreter that is stopped at a time and a memory limit."""
+
+    def limit() -> None:
+        size = megabytes * 1024 * 1024
+        resource.setrlimit(resource.RLIMIT_AS, (size, size))
+
+    done = subprocess.run(
+        [sys.executable, "-c", code],
+        capture_output=True,
+        text=True,
+        timeout=seconds,
+        preexec_fn=limit,
+        check=False,
+    )
+    return done.stdout.strip() or done.stderr.strip().splitlines()[-1]
+
+
+def test_a_list_where_every_item_fails_is_judged_in_bounded_time_and_memory():
+    code = (
+        "from conky.rules import RuleError, evaluate\n"
+        f"scope = {{'page': {{'can': {CHOICES!r}}}, 'event': {{'by': 'ada'}}}}\n"
+        "try:\n"
+        "    print(evaluate(\"page.can.split('\\\\n').exists(c, c == page.next)\", scope))\n"
+        "except RuleError:\n"
+        "    print('refused')\n"
+    )
+    assert bounded(code) == "refused"
+
+
+def test_a_page_with_a_long_list_of_choices_is_written_and_judged(tmp_path):
+    code = (
+        "from pathlib import Path\n"
+        "from conky import Vault\n"
+        f"vault = Vault.init(Path({str(tmp_path / 'vault')!r}), Path({str(tmp_path / 'keys')!r}))\n"
+        "def w(changes, actor):\n"
+        f"    return vault.write('door', changes, None, actor=actor, at={AT!r})\n"
+        f"first = w({{'can': {CHOICES!r}, 'rules': [{CHOOSES!r}]}}, 'bob')\n"
+        "chosen = w({'next': 'choice NUMBER 56\\nand on'}, 'ada')\n"
+        "refused = w({'next': 'the window'}, 'ada')\n"
+        "print(first.ok, chosen.ok, refused.ok, refused.reason.split(':')[0])\n"
+    )
+    assert bounded(code) == "True True False rule"
+
+
+@arch.holds("law.rule.bounded")
+def test_a_rule_costs_no_more_than_the_items_it_reads():
+    seen: list[str] = []
+
+    def terms(text: str) -> list[str]:
+        seen.append(text)
+        return []
+
+    items = {"page": {"items": [f"item {n}" for n in range(400)]}}
+    began = time.perf_counter()
+    assert evaluate("page.items.exists(i, terms(i).size() == 0)", items, terms) is True
+    assert seen == ["item 0"]
+    seen.clear()
+    assert evaluate("page.items.all(i, terms(i).size() == 1)", items, terms) is False
+    assert seen == ["item 0"]
+    seen.clear()
+    assert evaluate("page.items.exists(i, terms(i).size() == 1)", items, terms) is False
+    assert len(seen) == 400
+    for macro in ("exists", "all"):
+        with pytest.raises(RuleError) as failed:
+            evaluate(f"page.items.{macro}(i, i == page.gone)", items)
+        assert len(str(failed.value)) < 400
+    assert time.perf_counter() - began < 5
+
+
+@arch.holds("law.rule.bounded")
+def test_a_decided_or_and_and_evaluate_nothing_more():
+    seen: list[str] = []
+
+    def terms(text: str) -> list[str]:
+        seen.append(text)
+        return []
+
+    assert evaluate("true || terms('a').size() == 0", {}, terms) is True
+    assert evaluate("false && terms('a').size() == 0", {}, terms) is False
+    assert seen == []
+    assert evaluate("false || terms('a').size() == 0", {}, terms) is True
+    assert seen == ["a"]
+
+
+@pytest.mark.parametrize(
+    ("expression", "expected"),
+    [
+        ("page.gone == 1 || true", True),
+        ("true || page.gone == 1", True),
+        ("page.gone == 1 && false", False),
+        ("false && page.gone == 1", False),
+        ("[1, 2].exists(n, n / (n - 1) == 2)", True),
+        ("[1, 2].all(n, n / (n - 1) == 7)", False),
+        ("[].exists(n, n == 1)", False),
+        ("[].all(n, n == 1)", True),
+        ("{'a': 1, 'b': 2}.exists(k, k == 'b')", True),
+        ("{'a': 1, 'b': 2}.all(k, k == 'b')", False),
+    ],
+)
+def test_or_and_and_keep_the_standard_answer_beside_an_error(expression, expected):
+    assert evaluate(expression, {"page": {}}) is expected
+
+
+@pytest.mark.parametrize(
+    "expression",
+    [
+        "page.gone == 1 || false",
+        "false || page.gone == 1",
+        "page.gone == 1 && true",
+        "1 || false",
+        "[1, 2].exists(n, n / (n - 1) == 7)",
+        "[1, 2].all(n, n / (n - 1) == 2)",
+        "page.gone.exists(n, n == 1)",
+    ],
+)
+def test_an_error_nothing_decides_is_still_an_error(expression):
+    with pytest.raises(RuleError):
+        evaluate(expression, {"page": {}})
+
+
+@pytest.mark.parametrize(
+    ("expression", "expected"),
+    [
+        ("('\\n' + page.can + '\\n').contains('\\nb\\n')", True),
+        ("(page.can + 'c').endsWith('c')", True),
+        ("page.can + '!'", "a\nb!"),
+        ("(page.list + ['c']).size()", 3),
+        ("page.list + ['c']", ["a", "b", "c"]),
+    ],
+)
+def test_joined_text_and_joined_lists_keep_their_methods(expression, expected):
+    assert evaluate(expression, {"page": {"can": "a\nb", "list": ["a", "b"]}}) == expected

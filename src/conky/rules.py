@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+import operator
 import re
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 from typing import Any
 
 import celpy
 from celpy import celtypes
+from celpy.evaluation import CELEvalError, Evaluator
 
 from conky import arch, voice
 
@@ -158,7 +160,86 @@ def _within(lies: Callable[[str, str], bool]) -> Callable[[str, str], celtypes.B
     return within
 
 
-_ENV = celpy.Environment()
+def _typed(value: Any) -> Any:
+    """Give a value an operator made its CEL type back, so it keeps its methods and can be kept."""
+    if type(value) is str:
+        return _str(value)
+    if type(value) is list:
+        return celtypes.ListType(value)
+    return value
+
+
+# cel-python maps `+` to Python's own, which joins two texts or two lists into a plain Python
+# value: one with no CEL methods, and one that cannot be given back as a result.
+_OPERATORS: dict[str, Any] = {"_+_": lambda left, right: _typed(operator.add(left, right))}
+
+
+@arch.law(
+    "law.rule.bounded",
+    "A rule costs no more than the items it reads, and a decided `||`, `&&`, `exists` or `all` "
+    "evaluates nothing more.",
+    doc="rules-and-reactions.md#what-an-expression-costs",
+)
+def _decide(values: Iterable[Any], decisive: bool, tree: Any) -> Any:
+    """Fold `||` (decisive true) or `&&` (decisive false) over values taken one at a time.
+
+    The answer is CEL's: a decisive value wins whatever stands beside it, and otherwise an error
+    or a value that is no boolean makes the whole an error. The first decisive value ends the
+    fold, so nothing after it is evaluated, and an error is carried as it is and never quoted
+    inside another.
+    """
+    failed: CELEvalError | None = None
+    for value in values:
+        if isinstance(value, celtypes.BoolType):
+            if bool(value) is decisive:
+                return value
+        elif failed is None:
+            if isinstance(value, CELEvalError):
+                failed = value
+            else:
+                kind = type(value).__name__
+                failed = CELEvalError(f"no such overload: {kind} is not true or false", tree=tree)
+    return celtypes.BoolType(not decisive) if failed is None else failed
+
+
+class _Judge(Evaluator):
+    """cel-python's evaluator with `||`, `&&`, `exists` and `all` folded by `_decide`.
+
+    The library evaluates both sides of `||` and `&&` and every item of `exists` and `all`
+    before it combines them, and it combines two errors into one that quotes both, so a list in
+    which every item fails makes a message that doubles with each item.
+    """
+
+    def sub_evaluator(self, ast: Any) -> Evaluator:
+        return _Judge(ast, activation=self.activation)
+
+    def _either(self, tree: Any, decisive: bool) -> Any:
+        if len(tree.children) != 2:
+            return self.visit_children(tree)[0]
+        return _decide((self.visit(side) for side in tree.children), decisive, tree)
+
+    def conditionalor(self, tree: Any) -> Any:
+        return self._either(tree, True)
+
+    def conditionaland(self, tree: Any) -> Any:
+        return self._either(tree, False)
+
+    def member_dot_arg(self, tree: Any) -> Any:
+        if len(tree.children) != 3 or str(tree.children[1]) not in ("exists", "all"):
+            return super().member_dot_arg(tree)
+        items = self.visit(tree.children[0])
+        if isinstance(items, CELEvalError):
+            return items
+        judge = self.build_ss_macro_eval(tree)
+        return _decide(map(judge, items), str(tree.children[1]) == "exists", tree)
+
+
+class _Runner(celpy.InterpretedRunner):
+    def evaluate(self, context: Any) -> Any:
+        return _Judge(ast=self.ast, activation=self.new_activation()).evaluate(context)
+
+
+_ENV = celpy.Environment(runner_class=_Runner)
 
 
 class RuleError(Exception):
@@ -304,7 +385,7 @@ def evaluate(
     may call `within(NAME, SPACE)`, which says whether the page NAME lies within SPACE. Both read
     the pages that exist when they are called and nothing else.
     """
-    functions = dict(_FUNCTIONS)
+    functions = {**_FUNCTIONS, **_OPERATORS}
     if terms is not None:
         functions["terms"] = _terms(terms)
         lies = getattr(terms, "within", None)

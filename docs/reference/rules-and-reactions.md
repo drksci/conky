@@ -16,6 +16,16 @@ Rules, watch conditions and watch values are CEL (Common Expression Language) ex
 
 A rule or a `when` condition holds only if it evaluates to the boolean `true`. Any other result, including a non-boolean, counts as false. An expression that fails to parse or evaluate is refused under its own reason ([Refusals](#refusals)).
 
+### What an expression costs
+
+An expression is read from left to right and stops as soon as its answer is known. `a || b` does not evaluate `b` when `a` is true, and `a && b` does not evaluate `b` when `a` is false. `list.exists(x, ...)` stops at the first item that gives true, and `list.all(x, ...)` at the first that gives false. A rule over a list therefore costs at most one evaluation of its inner expression for each item.
+
+The answers are the ones the CEL standard gives. `true` beside an error is still `true` under `||`, on either side, and `false` beside an error is still `false` under `&&`. Where nothing decides, an error, or a value that is neither true nor false, makes the whole expression an error. An error is carried as it is: the reason for a list in which every item fails is as short as the reason for one item.
+
+`+` joins two texts or two lists into a text or a list like any other, so `('\n' + page.can + '\n').contains('\nb\n')` works and a `set` value can be a joined text.
+
+cel-python alone does none of this: it evaluates both sides and every item first, quotes both errors inside a new one whenever two meet, which doubles the message for each item of a list, and gives joined text back as a value with no methods. The runtime replaces those four folds and the `+` function ([`rules.py`](../../src/conky/rules.py)).
+
 ### Text functions
 
 An expression can take text apart with these functions. All but `captures` and `capturesAll` take their names and shapes from the strings extension of the CEL project ([cel-go `ext/README.md`](https://github.com/google/cel-go/blob/master/ext/README.md#strings), read 2026-11-20). Each can be called as a method (`text.split(',')`) or as a function (`split(text, ',')`). Positions count characters from zero.
