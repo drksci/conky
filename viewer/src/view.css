@@ -925,3 +925,67 @@ html:has(.is-bare) body {
 .hljs-symbol {
   font-weight: 600;
 }
+
+/* Exploring (?explore=1): the whole graph fits the frame, and a cell shows more the closer the reader comes.
+   Far: a name on a box, cables and nesting. Mid: what it holds and how it is bound, without the long text. Near: everything. */
+.view-flow[data-lod="far"] .panel,
+.view-flow[data-lod="far"] .cell-foot,
+.view-flow[data-lod="far"] .cell-sub,
+.view-flow[data-lod="far"] .cell-note,
+.view-flow[data-lod="far"] .cell-kind,
+.view-flow[data-lod="far"] .cell-counts,
+.view-flow[data-lod="far"] .cell-members,
+.view-flow[data-lod="far"] .port-tag,
+.view-flow[data-lod="far"] .port-rules {
+  visibility: hidden;
+}
+.view-flow[data-lod="far"] .cell {
+  overflow: hidden;
+}
+.view-flow[data-lod="far"] .cell-name {
+  font-size: calc(var(--ds-size-base) * var(--inv, 1) * 0.9);
+  line-height: 1.1;
+}
+.view-flow[data-lod="far"] .cell-mark {
+  transform: scale(calc(var(--inv, 1) * 0.8));
+  transform-origin: top left;
+  margin-right: calc(var(--ds-space-base) * var(--inv, 1));
+}
+.view-flow[data-lod="mid"] .cell-text,
+.view-flow[data-lod="mid"] .record-row,
+.view-flow[data-lod="mid"] .foot-tail,
+.view-flow[data-lod="mid"] .cell-note,
+.view-flow[data-lod="mid"] .expr {
+  visibility: hidden;
+}
+.view-flow[data-lod="mid"] .cell-name {
+  font-size: calc(var(--ds-size-base) * var(--inv, 1) * 0.75);
+}
+.view-tools {
+  position: absolute;
+  right: var(--ds-space-wide);
+  bottom: var(--ds-space-wide);
+  display: flex;
+  flex-direction: column;
+  border: var(--ds-weight-fine) solid var(--ds-color-ink);
+  background: var(--ds-color-ground, Canvas);
+  z-index: 5;
+}
+.view-tools button {
+  width: 28px;
+  height: 28px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--ds-color-ink);
+  background: none;
+  border: 0;
+  border-bottom: var(--ds-weight-fine) solid var(--ds-color-ink);
+  cursor: pointer;
+}
+.view-tools button:last-child {
+  border-bottom: 0;
+}
+.view-tools button:hover {
+  background: var(--ds-color-ink);
+  color: var(--ds-color-ground, Canvas);
+}

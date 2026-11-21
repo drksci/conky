@@ -13,3 +13,4 @@ export const REGION_HEAD = tokens.space.wide + tokens.space.base; // room for a 
 export const SHEET = 720; // CSS pixels a rendered picture is at most wide: the README's width
 export const MAX_ZOOM = 1.25; // a small graph is not blown up past this
 export const MIN_ZOOM = 0.6; // below this the labels stop being legible
+export const EXPLORE_MIN = 0.03; // exploring, the whole graph fits; what a cell shows follows the zoom

@@ -17,7 +17,7 @@ npm run render    # writes the pictures of every published card
 npm test          # builds, then a headless smoke test
 ```
 
-The address takes `?graph=<url>&mode=dynamics|topology&step=N&theme=light|dark&bare=1`. `bare=1` is the picture alone, as the README shows it.
+The address takes `?graph=<url>&mode=dynamics|topology&step=N&theme=light|dark&bare=1&explore=1`. `bare=1` is the picture alone, as the README shows it. `explore=1` is for a large graph: the whole of it fits the frame, three buttons bring the reader closer, further or back to everything, and a cell shows more the closer the reader comes (a name on a box from far off, what it holds and how it is bound nearer, everything close up).
 
 ## Restyling
 

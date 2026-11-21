@@ -12,7 +12,7 @@ const root = createRoot(document.getElementById("root")!);
 
 function Missing({ why }: { why: string }) {
   const open = (file: File | undefined) =>
-    file?.text().then((text) => root.render(<App graph={JSON.parse(text) as Graph} mode={params.mode} step={params.step} bare={params.bare} />));
+    file?.text().then((text) => root.render(<App graph={JSON.parse(text) as Graph} mode={params.mode} step={params.step} bare={params.bare} explore={params.explore} />));
   return (
     <div className="missing">
       <p>{why}</p>
@@ -30,6 +30,6 @@ if (!params.graph) {
 } else {
   fetch(params.graph)
     .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`${r.status} ${r.statusText}`))))
-    .then((graph: Graph) => root.render(<App graph={graph} mode={params.mode} step={params.step} bare={params.bare} />))
+    .then((graph: Graph) => root.render(<App graph={graph} mode={params.mode} step={params.step} bare={params.bare} explore={params.explore} />))
     .catch((e: Error) => root.render(<Missing why={`Could not load ${params.graph}: ${e.message}.`} />));
 }

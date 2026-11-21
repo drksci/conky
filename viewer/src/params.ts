@@ -1,4 +1,4 @@
-// The address of a view: ?graph=<url>&mode=dynamics|topology&step=N&theme=light|dark&bare=1
+// The address of a view: ?graph=<url>&mode=dynamics|topology&step=N&theme=light|dark&bare=1&explore=1
 import type { Mode } from "./graph";
 
 export interface Params {
@@ -7,6 +7,7 @@ export interface Params {
   step: number | null;
   theme: "light" | "dark" | null;
   bare: boolean;
+  explore: boolean;
 }
 
 export function readParams(search: string = window.location.search): Params {
@@ -19,5 +20,6 @@ export function readParams(search: string = window.location.search): Params {
     step: step !== null && /^\d+$/.test(step) ? Number(step) : null,
     theme: theme === "light" || theme === "dark" ? theme : null,
     bare: q.get("bare") === "1",
+    explore: q.get("explore") === "1",
   };
 }

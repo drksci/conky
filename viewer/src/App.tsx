@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { ConnectionMode, ReactFlow, ReactFlowProvider, useReactFlow, type Node } from "@xyflow/react";
 import { densityOf, frame, inMode, lastStep, widest, type Graph, type GraphNode, type Mode, type Region } from "./graph";
 import { FrameContext, type Seen } from "./frame-context";
@@ -10,7 +10,7 @@ import { Scrubber } from "./components/Scrubber";
 import { Legend } from "./components/Legend";
 import type { CellData } from "./components/Cell";
 import { place, type Measured, type Placed } from "./layout";
-import { MAX_ZOOM, MIN_ZOOM, SHEET, SPACE } from "./metrics";
+import { EXPLORE_MIN, MAX_ZOOM, MIN_ZOOM, SHEET, SPACE } from "./metrics";
 
 const SidePanel = lazy(() => import("./components/SidePanel"));
 
@@ -131,7 +131,7 @@ function outgrown(root: HTMLElement, placed: Placed): Record<string, { width: nu
   return out;
 }
 
-function Drawn({ graph, placed, seen, bare, onReady, onOutgrown }: { graph: Graph; placed: Placed; seen: Seen; bare: boolean; onReady: () => void; onOutgrown: (grow: Record<string, { width: number; height: number }>) => boolean }) {
+function Drawn({ graph, placed, seen, bare, explore, onReady, onOutgrown }: { graph: Graph; placed: Placed; seen: Seen; bare: boolean; explore: boolean; onReady: () => void; onOutgrown: (grow: Record<string, { width: number; height: number }>) => boolean }) {
   const flow = useReactFlow();
   const box = useRef<HTMLDivElement>(null);
   const nodes = useMemo(() => flowNodes(graph, seen.frame.regions, placed), [graph, seen.frame.regions, placed]);
@@ -144,10 +144,25 @@ function Drawn({ graph, placed, seen, bare, onReady, onOutgrown }: { graph: Grap
     if (!ready || !box.current) return;
     const grow = outgrown(box.current, placed);
     if (Object.keys(grow).length && onOutgrown(grow)) return;
-    flow.fitView({ padding: bare ? 0.02 : 0.05, minZoom: MIN_ZOOM, maxZoom: MAX_ZOOM }).then(nextFrame).then(onReady);
-  }, [ready, bare, flow, onReady, onOutgrown, placed]);
+    flow
+      .fitView({ padding: bare ? 0.02 : 0.05, minZoom: explore ? EXPLORE_MIN : MIN_ZOOM, maxZoom: MAX_ZOOM })
+      .then(nextFrame)
+      .then(() => setZoom(flow.getZoom()))
+      .then(onReady);
+  }, [ready, bare, explore, flow, onReady, onOutgrown, placed]);
+  // Exploring: the whole graph fits, and how much a cell shows follows how close the reader is.
+  const [zoom, setZoom] = useState(1);
+  const lod = !explore ? undefined : zoom < 0.45 ? "far" : zoom < 0.8 ? "mid" : "near";
+  const fit = () => flow.fitView({ padding: 0.05, minZoom: EXPLORE_MIN, maxZoom: MAX_ZOOM, duration: 200 });
+  // Exploring, the picture is fitted again whenever its frame changes size.
+  useEffect(() => {
+    if (!explore || !box.current) return;
+    const watch = new ResizeObserver(() => flow.fitView({ padding: 0.05, minZoom: EXPLORE_MIN, maxZoom: MAX_ZOOM }).then(() => setZoom(flow.getZoom())));
+    watch.observe(box.current);
+    return () => watch.disconnect();
+  }, [explore, flow]);
   return (
-    <div className="view-flow" ref={box}>
+    <div className="view-flow" ref={box} data-lod={lod} style={explore ? ({ "--inv": Math.min(3.2, 1 / zoom) } as CSSProperties) : undefined}>
       <FrameContext.Provider value={seen}>
         <ReactFlow
           nodes={nodes}
@@ -162,9 +177,18 @@ function Drawn({ graph, placed, seen, bare, onReady, onOutgrown }: { graph: Grap
           zoomOnScroll={!bare}
           zoomOnDoubleClick={false}
           onNodeClick={seen.open ? (_, n) => n.type !== "region" && n.type !== "bounds" && seen.open!(n.id) : undefined}
-          minZoom={MIN_ZOOM / 2}
-          proOptions={{ hideAttribution: bare }}
+          minZoom={explore ? EXPLORE_MIN : MIN_ZOOM / 2}
+          maxZoom={explore ? 2.5 : undefined}
+          onMove={explore ? (_, viewport) => setZoom(viewport.zoom) : undefined}
+          proOptions={{ hideAttribution: bare || explore }}
         />
+        {explore && (
+          <div className="view-tools">
+            <button type="button" aria-label="closer" title="closer" onClick={() => flow.zoomIn({ duration: 150 })}>+</button>
+            <button type="button" aria-label="further" title="further" onClick={() => flow.zoomOut({ duration: 150 })}>−</button>
+            <button type="button" aria-label="show everything" title="show everything" onClick={fit}>◎</button>
+          </div>
+        )}
       </FrameContext.Provider>
     </div>
   );
@@ -178,7 +202,7 @@ function sheet(placed: Placed) {
   return { width: Math.ceil(placed.width * zoom) + SPACE.base, height: Math.ceil(placed.height * zoom) + SPACE.base };
 }
 
-export function App({ graph: whole, mode: firstMode, step: firstStep, bare }: { graph: Graph; mode: Mode; step: number | null; bare: boolean }) {
+export function App({ graph: whole, mode: firstMode, step: firstStep, bare, explore = false }: { graph: Graph; mode: Mode; step: number | null; bare: boolean; explore?: boolean }) {
   const [mode, setMode] = useState<Mode>(firstMode);
   const graph = useMemo(() => inMode(whole, mode), [whole, mode]);
   const last = whole.steps.length - 1;
@@ -257,8 +281,8 @@ export function App({ graph: whole, mode: firstMode, step: firstStep, bare }: { 
   }, [step, asked, readyFor, layoutKey, now]);
   const node = opened ? whole.nodes.find((n) => n.id === opened) : undefined;
   return (
-    <div className={`view view-${mode} ${bare ? "is-bare" : ""}`}>
-      {!bare && (
+    <div className={`view view-${mode} ${bare ? "is-bare" : ""} ${explore ? "is-explore" : ""}`}>
+      {!bare && !explore && (
         <header className="view-head">
           <span className="view-title">{whole.title}</span>
           <span className="view-draw">draw {whole.draw}</span>
@@ -268,7 +292,7 @@ export function App({ graph: whole, mode: firstMode, step: firstStep, bare }: { 
         <div className="view-graph">
           <ReactFlowProvider key={`${layoutKey}:${now ? "drawn" : "measure"}:${opened ? "beside" : "alone"}`}>
             {now ? (
-              <Drawn graph={graph} placed={now} seen={seen} bare={bare} onReady={onReady} onOutgrown={onOutgrown} />
+              <Drawn graph={graph} placed={now} seen={seen} bare={bare} explore={explore} onReady={onReady} onOutgrown={onOutgrown} />
             ) : (
               <Measure graph={graph} seen={measuring} onDone={layOut} />
             )}
@@ -283,7 +307,7 @@ export function App({ graph: whole, mode: firstMode, step: firstStep, bare }: { 
         )}
       </div>
       <Caption graph={whole} mode={mode} step={step} />
-      <Legend graph={graph} mode={mode} />
+      {!explore && <Legend graph={graph} mode={mode} />}
       {!bare && <Scrubber steps={whole.steps.length} step={step} mode={mode} onStep={setStep} onMode={setMode} />}
     </div>
   );
