@@ -8,6 +8,7 @@ arch:
   items:
   - kind: part
     name: part.rule.was
+    roadmap: R46
     layer: layer.reflex
     text: A rule and a watch can read the fields a page had before the write being judged, as event.was, so a constraint on a change is written as a rule.
     state: idea

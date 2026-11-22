@@ -8,6 +8,7 @@ arch:
   items:
   - kind: part
     name: part.history.said
+    roadmap: R47
     layer: layer.edge
     text: What is happening and not yet recorded is said as a line in a file beside the vault by whoever watches, never read back by the runtime and safe to delete.
     state: idea

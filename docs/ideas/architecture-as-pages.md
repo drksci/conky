@@ -8,6 +8,7 @@ arch:
   items:
   - kind: part
     name: part.docs.pages
+    roadmap: R48
     layer: layer.edge
     text: Each entry of the architecture index written as a page in a vault of the project's own, by a script outside the runtime, with notes beside it written by anyone.
     state: idea
