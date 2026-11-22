@@ -3,6 +3,7 @@
 No test reaches a live model: the programs are small scripts written by the tests.
 """
 
+import json
 import shutil
 import stat
 import sys
@@ -91,6 +92,44 @@ def test_the_model_field_names_the_model_in_the_commit_and_sends_nothing_extra(
     assert asked(vault).ok
     assert vault.read("desk").fields["summary"] == "[]"
     assert trailers(git(vault.path, "log", "-1", "--format=%B"))["Model-Name"] == "some-model"
+
+
+def fake_claude(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, seen: Path) -> None:
+    """Put a stand-in claude on the PATH that writes the argv it was started with to seen."""
+    path_with(tmp_path, monkeypatch, "claude")
+    body = (
+        f"import json\nopen({str(seen)!r}, 'w').write(json.dumps(sys.argv[1:]))\n"
+        "print('answered')\n"
+    )
+    tool = tmp_path / "bin" / "claude"
+    tool.write_text(f"#!{sys.executable}\nimport sys\nprompt = sys.stdin.read()\n" + body)
+    tool.chmod(0o755)
+
+
+def test_the_built_in_claude_is_told_the_default_model_and_the_record_names_it(
+    vault: Vault, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.delenv("CONKY_PROVIDER")
+    seen = tmp_path / "argv.json"
+    fake_claude(tmp_path, monkeypatch, seen)
+    assert asked(vault, None).ok
+    assert json.loads(seen.read_text(encoding="utf-8"))[-2:] == [
+        "--model",
+        model.ANTHROPIC_DEFAULT_MODEL,
+    ]
+    assert vault.read("desk").fields["summary"] == "answered"
+    assert head(vault)["Model-Name"] == model.ANTHROPIC_DEFAULT_MODEL
+
+
+def test_a_model_named_on_the_claude_page_wins_over_the_default(
+    vault: Vault, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    seen = tmp_path / "argv.json"
+    fake_claude(tmp_path, monkeypatch, seen)
+    provider(vault, command="claude", model="some-model")
+    assert asked(vault).ok
+    assert json.loads(seen.read_text(encoding="utf-8"))[-2:] == ["--model", "some-model"]
+    assert head(vault)["Model-Name"] == "some-model"
 
 
 def test_the_argv_comes_from_a_file_in_the_key_directory(

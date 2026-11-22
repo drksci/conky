@@ -109,6 +109,8 @@ class Answer:
     tokens_in: int | None
     tokens_out: int | None
     cached: bool = False
+    # The model a built-in program was told to answer with; None when the program's own was used.
+    model: str | None = None
 
 
 @arch.law(
@@ -215,11 +217,13 @@ def find_secret(name: str, keys_dir: Path) -> str:
     doc="providers.md#command",
     roadmap="R26",
 )
-def find_command(name: str, keys_dir: Path) -> list[str]:
-    """Return the argv for a command name, from outside the vault and never through a shell.
+def find_command(name: str, keys_dir: Path, model: str | None) -> tuple[list[str], str | None]:
+    """Return the argv for a command name and the model it is told, never through a shell.
 
     The order is the environment variable CONKY_COMMAND_<NAME>, then <name>.command in keys_dir,
-    then the built-in argv when its program is on the PATH.
+    then the built-in argv when its program is on the PATH. Only the built-in claude is given a
+    model: the one the page names, else ANTHROPIC_DEFAULT_MODEL. A configured command is run as
+    written, so the model told is None.
     """
     variable = f"{COMMAND_PREFIX}{name.upper()}"
     text = os.environ.get(variable, "").strip()
@@ -234,15 +238,18 @@ def find_command(name: str, keys_dir: Path) -> list[str]:
         ) from exc
     if not argv and name in BUILTIN_COMMANDS and shutil.which(BUILTIN_COMMANDS[name][0]):
         argv = list(BUILTIN_COMMANDS[name])
+        if name == "claude":
+            told = model or ANTHROPIC_DEFAULT_MODEL
+            return [*argv, "--model", told], told
     if not argv:
         raise ModelError(
             f"command {name!r} is not set up: set {variable} to the program and its options, "
             f"or put them in {name}.command in the key directory"
         )
-    return argv
+    return argv, None
 
 
-def _run(found: Provider, argv: list[str], prompt: str) -> Answer:
+def _run(found: Provider, argv: list[str], prompt: str, told: str | None) -> Answer:
     where = f"provider {found.page!r}"
     try:
         # A model sees its prompt and nothing else: the program starts in an empty folder, so
@@ -286,7 +293,7 @@ def _run(found: Provider, argv: list[str], prompt: str) -> Answer:
             f"{where} printed no answer: check that {argv[0]!r} writes its answer to "
             "standard output"
         )
-    return Answer(text, None, None)
+    return Answer(text, None, None, model=told)
 
 
 @dataclass(frozen=True)
@@ -448,7 +455,8 @@ def ask(found: Provider, secret: str | None, prompt: str, keys_dir: Path) -> Ans
     """Send prompt to the provider once, with no retry, and return its answer."""
     where = f"provider {found.page!r}"
     if found.command is not None:
-        return _run(found, find_command(found.command, keys_dir), prompt)
+        argv, told = find_command(found.command, keys_dir, found.model)
+        return _run(found, argv, prompt, told)
     try:
         with urllib.request.urlopen(_request(found, secret, prompt), timeout=TIMEOUT) as reply:
             data = json.loads(reply.read())
@@ -518,9 +526,12 @@ def ask_once(
     key = moment_key(found, prompt, cause)
     kept = cache.get(key)
     if isinstance(kept, dict) and isinstance(kept.get("text"), str) and kept["text"].strip():
-        return Answer(kept["text"], None, None, cached=True)
+        told = kept.get("model")
+        return Answer(
+            kept["text"], None, None, cached=True, model=told if isinstance(told, str) else None
+        )
     if cache.mode == Mode.ONLY:
         return None
     reply = ask(found, secret(), prompt, keys_dir)
-    cache.put(key, {"text": reply.text})
+    cache.put(key, {"text": reply.text, "model": reply.model})
     return reply

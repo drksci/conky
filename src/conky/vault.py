@@ -1346,7 +1346,7 @@ class Vault:
         actor, caused by the answer, one level deeper.
         """
         page, actor, at, cause, depth = where
-        trailers = [(Trailer.MODEL, found.page), (Trailer.MODEL_NAME, found.name)]
+        trailers = [(Trailer.MODEL, found.page), (Trailer.MODEL_NAME, reply.model or found.name)]
         if reply.cached:
             trailers.append((Trailer.CACHE, CACHE_HIT))
         if reply.tokens_in is not None:
