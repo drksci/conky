@@ -135,7 +135,8 @@ def drawn(runs, chart: str, look: str = "light") -> dict:
 
 
 def test_every_chart_is_drawn_in_the_installed_template_for_its_file(results: Path) -> None:
-    import plotly.io as pio
+    pio = pytest.importorskip("plotly.io")
+    pytest.importorskip("dash_bootstrap_templates")
 
     runs = charts.load(results)
     for chart in charts.FIGURES:
