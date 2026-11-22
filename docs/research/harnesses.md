@@ -2,8 +2,8 @@
 kind: research
 title: "Agent harnesses compared"
 status: current
-date: 2026-11-20
-source: "project documentation of each harness, fetched 2026-11-20"
+date: 2026-11-22
+source: "project documentation of each harness, fetched 2026-11-20; AWorld read from its repository at commit bef598fc, 9 November 2026"
 ---
 
 # Agent harnesses compared
@@ -49,6 +49,7 @@ conky is described from its own documents ([design](../design.md), [status](../p
 | Claude Agent SDK | Transcript files on local disk; optional session-store adapter | Not confirmed | Hooks in code deny tool calls; crashed hook may let call proceed | Model each turn until a reply has no tool calls | Transcript; resume and fork; file checkpointing separate | Same machine by default; store adapter or moved file elsewhere | Code, or markdown files in `.claude/agents/` | JSONL transcripts; editing not confirmed | `max_turns`, `max_budget_usd`; default no limit; cost an estimate |
 | Letta | Memory as git repo of Markdown files; other state not confirmed | Not confirmed | Not confirmed | Not confirmed | Every memory edit committed to git | Cloud agents sync by push; local-only agents need own backup | Not confirmed; shared memory between cloud agents | Markdown with YAML frontmatter; human editing not stated | Not confirmed |
 | Temporal | Event History; state rebuilt by replay, not snapshot | Event History called the source of truth | Workflow code must be deterministic; rule layer not confirmed | LLM call runs as an Activity chosen by your code | Complete ordered event history; replay reuses recorded results | Any worker with the same code can replay; not stated outright | Code: workflows and activities | Not confirmed | Retries delegated to Temporal; cost bound not confirmed |
+| AWorld | Process memory: a context per run, an in-memory session service, an in-memory checkpoint repository, an in-memory trace backend by default. Databases and NDJSON files for memory. A trajectory log and journals of model calls and tool actions. Where the self-evolve ledger lives not verified | Not stated as one rule. The model's final reply completes a task and an independent evaluator judges correctness (docs). Journals are evidence, separate from the trajectory | Developer code in hooks, including a deny on a tool call. Permission modes allow, deny or ask. Workspace trust and file path policies. Turn cap and retries. No declared rule evaluated on each write found; effect of a failing hook not verified | Each agent turn calls the model until its reply has no tool calls. No model-free reaction layer found; hooks are code run between steps | Trajectory per task; OpenTelemetry spans; event-bus messages; journals. Not signed. No replay mechanism found. Refusals are events, not commits | Resume by session identity and recovery records (docs). Checkpoints are in memory only. Copying state to another machine not verified | Code: swarm builders. Markdown: agent definitions and skill packages. No structure stored as data that the system edits, except self-evolve on allowlisted skills | Skills and agent files are Markdown. Trajectories and session files are JSON or NDJSON. SQL stores need a tool. Editing state by hand is not discussed | Turn cap default 20 on the v1 agent; the docs describe step limits as disabled by default for the bundled agent and swarm, and the two are not reconciled in the code read. Token accounting. Stage-aware self-evolve budgets. A run-cost field exists in configuration; enforcement not verified |
 | conky | Signed hash-chained event log; pages are projections | The log; pages rebuilt from it | CEL rules enforced by runtime on every write; refusals recorded | State-derived reactions use none; model-backed pages not built | Full signed log; `verify` and `rebuild` byte for byte | Copied vault verifies and rebuilds; resume by a consumer unbuilt | Data: pages, watch entries, `within` chains | Markdown pages readable; by rule never edited by hand | Asks per page counted from the history and refused past a stated budget; tokens and money not metered; reaction depth capped at 12 |
 
 ## Per-harness notes
@@ -100,6 +101,12 @@ Sources: [docs home](https://docs.letta.com/), [concepts](https://docs.letta.com
 Workflows are described as resilient and able to continue after the application crashes. Event History is a complete ordered log and the source of truth. On resume Temporal re-runs the workflow code and uses the history to rebuild prior state, reusing recorded Activity results, so the code must be deterministic; anything touching the outside world, including LLM calls, belongs in Activities. The AI cookbook shows an agentic loop where the model call and tool calls are Activities, the OpenAI client is created with retries off because Temporal handles retries, and human approval uses Signals.
 
 Sources: [workflows](https://docs.temporal.io/workflows), [AI cookbook](https://docs.temporal.io/ai-cookbook), [agentic loop recipe](https://docs.temporal.io/ai-cookbook/agentic-loop-tool-call-openai-python). Notable: the workflows page does not state that another worker can resume; the fetch reading marked that as inferred from the design, so it is not claimed here. Timeouts and replay details were not covered by the cookbook index.
+
+### AWorld
+
+Read from the repository at commit `bef598fc` (9 November 2026), not from fetched documentation pages, so its row weighs less than the others: several cells rest on file and docstring reading, and the cells say where a point is not verified. No test, install or command was run, and the benchmark figures the README quotes were not fetched. It is a Python multi-agent framework with agents, tools, a sandbox, a gateway to chat channels, a command line, skills, an evaluation package and a training package. Its self-evolve loop improves skills through gated candidate runs with apply and rollback; whether the backups are signed was not verified. Nothing here says it performs better or worse than any other row.
+
+Sources: [repository](https://github.com/inclusionAI/AWorld), commit `bef598fc`. Notable: the docs and the code read disagree on whether step limits are off by default, and the reading did not settle which applies.
 
 ## Where conky differs, and why
 
@@ -163,3 +170,4 @@ All fetched 2026-11-20.
 - https://docs.temporal.io/workflows
 - https://docs.temporal.io/ai-cookbook
 - https://docs.temporal.io/ai-cookbook/agentic-loop-tool-call-openai-python
+- https://github.com/inclusionAI/AWorld, read from the repository at commit `bef598fc` (9 November 2026), not fetched

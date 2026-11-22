@@ -2,7 +2,7 @@
 kind: idea
 title: Patterns
 status: idea
-date: 2026-11-20
+date: 2026-11-22
 source: maintainers
 arch:
   items:
@@ -48,6 +48,20 @@ A page that links to a peer is noticed by the built link watch. Taking the offer
 ## What it exposes
 
 Expressing double-entry as a pattern shows what the ledger idea was hiding: a general need for one write to change several pages together, all or nothing, with rules able to see the whole group, so that what leaves one account arrives in another. Git can commit several files together ([decision 0002](../decisions/0002-git-is-the-store.md)), but a write changes one page per commit today. What remains to build is a write that changes several pages together, and rules that can see the whole group. Accounting is then only a pattern on top.
+
+## What a rule on the page as it was makes writable
+
+Rung: idea. Nothing here is built. These are patterns that become writable once a rule can read `event.was` ([a rule sees the page as it was](the-page-as-it-was.md)). Each is a rule a character writes, from words that already exist, so none is a feature:
+
+- A base check by a count. A page carries a `rev`; a write must name the next one, so a write made from an old reading is refused. Composes from: a field, `event.was`, a refusal.
+- A counter that only goes up. A write may not lower a number it already held. Composes from: a field, `event.was`.
+- Allowed transitions between states. A status moves along the steps listed and never back. Composes from: a field, `event.was`, a list.
+- A field one actor owns. Anyone may write the page, and a change to that field by anyone else is refused. Composes from: `event.by`, `event.was`.
+- A body that only grows. A write may add to what was there and not cut it. Composes from: `event.was`, which may need to give the body, a question left open on that page.
+- A type that holds once set. A field written once keeps its value. Composes from: `has` on `event.was`, a field.
+- A retired page. Once a page says it is retired, no later write is kept. Composes from: a field, `event.was`.
+- A budget the bound page cannot raise. The page carries its own budget and may spend it and may not enlarge it; only the space that bound it may. Composes from: the `budget` field ([decision 0058](../decisions/0058-a-budget-the-runtime-holds.md)), `event.by`, `event.was`.
+- A comment with two writable fields. Of the fields a comment page carries, only two may change after it is written. Composes from: `event.was`, a rule on each other field.
 
 ## Falsifying test
 

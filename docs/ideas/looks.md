@@ -2,7 +2,7 @@
 kind: idea
 title: "A look: a kind's page says how its pages are drawn"
 status: idea
-date: 2026-11-21
+date: 2026-11-22
 source: maintainers
 arch:
   items:
@@ -56,6 +56,10 @@ So the first thing to try is a reader that picks the view from the shape, takes 
 7. The trial. Below.
 8. How it is seen. Opening the look shows the kind drawn with its example values. Opening any page of the kind shows the same shape with that page's values, changing as writes arrive.
 9. The smallest step. Resolve one look against one recorded page into data, outside this repository, before any screen is changed.
+
+## Whose contract it is
+
+A kind's contract belongs to the kind. The slots a page is drawn into follow from what the page carries: its fields, its ports, its shape. Nothing is declared again for each page. A page that carries a `budget` has a place for a budget, and a page that does not has none.
 
 ## Three parts
 

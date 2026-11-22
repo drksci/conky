@@ -2,7 +2,7 @@
 kind: idea
 title: A screen from the pages
 status: idea
-date: 2026-11-20
+date: 2026-11-22
 source: maintainers
 arch:
   covers:
@@ -67,6 +67,10 @@ In the A2UI specification (v1.0, read on 2026-11-20), an interface is declarativ
 The screen is derived from the page. Its fields and words decide the components, and it can be regenerated at any time. It shows the page's own words, so it reads as a person's notice, not a dashboard of machine labels.
 
 How a layout is chosen is the subject of [the compositor](compositor.md). How the messages reach a renderer is the subject of [connectors](connectors.md).
+
+## Beside the vault
+
+The core speaks no protocol. The screen is a connector beside the vault that says the history in A2UI's shapes: it follows the commits and sends what changed, as [what is happening can be watched](said-beside.md) describes for the lines of a run. Data comes before layout: the first thing sent is the values of the page's fields, and how they are laid out is a second choice a reader may make, or make differently.
 
 ## Composes from
 

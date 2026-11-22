@@ -2,7 +2,7 @@
 kind: idea
 title: Text as it arrives
 status: idea
-date: 2026-11-20
+date: 2026-11-22
 source: "research/streams-and-trees.md (AG-UI text events in start, content and end pieces; Server-Sent Events with a resume point) and research/gaps.md, which gives streaming no verdict because the harness comparison does not cover it"
 arch:
   items:
@@ -20,6 +20,8 @@ arch:
 
 A person watching a screen wants to see an answer form. The history wants one event that holds the whole answer. Both hold when the pieces are derived data. The screen or a connector shows the text as it arrives and keeps none of it, and the runtime writes the finished answer as the one signed write it already is. A stream that stops leaves a refusal starting `model:`, as a failed call does today. No partial answer is ever an event, so replay and the cache are unchanged.
 
+The answer so far is said beside the vault, as a line in a file that nothing reads back ([what is happening can be watched](said-beside.md)), and the screen follows that file. The history still holds only the finished answer.
+
 ## Composes from
 
 An ask, [the screen](a2ui.md), and derived data ([decision 0017](../decisions/0017-derived-data.md)).
@@ -34,4 +36,5 @@ Cutting a streamed answer short leaves the history exactly as an unanswered ask 
 
 ## Open questions
 
+- What a cut answer leaves on the record. A refusal starting `model:` says that the call failed, and says nothing of the words that had arrived. Whether those words are worth keeping, or are better left in the file beside the vault and lost with it, waits for a trial.
 - The stream's format, Server-Sent Events or AG-UI text events, is the screen's choice and belongs with its update step (R11d).
