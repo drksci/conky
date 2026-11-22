@@ -113,6 +113,7 @@ Outside work, compared on a fixed basis, with the depth of reading stated.
 - [research/papers.md](research/papers.md): Paper register
 - [research/discovery.md](research/discovery.md): How worlds could be found: discovery, registries and federation compared
 - [research/observability.md](research/observability.md): Observability standards for an agent runtime
+- [research/pkms.md](research/pkms.md): Personal and team knowledge tools compared on how they hold, link, serve and stream pages
 - [research/protocols.md](research/protocols.md): Protocols for agents, tools and interfaces
 - [research/streams-and-trees.md](research/streams-and-trees.md): Standards for trees, paths, patches and streams
 - [research/anxiety-kernels.md](research/anxiety-kernels.md): Anxiety kernels: warnings that reach someone who will act
