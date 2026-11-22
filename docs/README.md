@@ -165,6 +165,9 @@ Candidates, not requirements. Each states its rung.
 - [ideas/learned-reactions.md](ideas/learned-reactions.md): Learned reactions
 - [ideas/ledger.md](ideas/ledger.md): Ledger
 - [ideas/looks.md](ideas/looks.md): A look: a kind's page says how its pages are drawn
+- [ideas/the-page-as-it-was.md](ideas/the-page-as-it-was.md): A rule sees the page as it was
+- [ideas/said-beside.md](ideas/said-beside.md): What is happening can be watched
+- [ideas/architecture-as-pages.md](ideas/architecture-as-pages.md): The architecture as pages
 - [ideas/codec.md](ideas/codec.md): A codec: one tree into another, written once and applied by reflex
 - [ideas/measures.md](ideas/measures.md): Measures
 - [ideas/model-pages.md](ideas/model-pages.md): Pages that ask a model
