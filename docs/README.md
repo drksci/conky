@@ -153,6 +153,7 @@ Candidates, not requirements. Each states its rung.
 - [ideas/cascading-context.md](ideas/cascading-context.md): Context that flows down
 - [ideas/clock.md](ideas/clock.md): Time as an ordinary change
 - [ideas/compositor.md](ideas/compositor.md): The compositor: a screen that is asked for once
+- [ideas/a-minds-desktop.md](ideas/a-minds-desktop.md): A mind's desktop
 - [ideas/connectors.md](ideas/connectors.md): Connectors: every protocol is a door, not a room
 - [ideas/gatekeeper.md](ideas/gatekeeper.md): Permission that stays out of the way
 - [ideas/habit.md](ideas/habit.md): A habit: what recurs is thought about once
