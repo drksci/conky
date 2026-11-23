@@ -4,6 +4,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ## [Unreleased]
 
+- `conky model` says what it found and where: after the order it prints each thing this machine offers (keys set by name, programs on the PATH, one local address, a hosting agent) with its source. The look is read-only and nothing found is used yet beyond the order that already applied.
 - Fixed: the built-in `claude` command saves no session, so an ask through it leaves nothing in the program's own session store (`--no-session-persistence`).
 - Fixed: the built-in `claude` command is given `--model` with `ANTHROPIC_DEFAULT_MODEL` when no model is named, and its commits record that model in `Model-Name`. A model named on the command page wins. A configured command is run as written and records its name, as before. `codex` has the same gap and is unchanged.
 - Three ideas are added: a rule sees the page as it was, what is happening is said beside the vault, and the architecture as pages. Five idea pages are amended to agree with them, AWorld is added to the harness comparison as read from its code, and the status page is corrected: the card `a-keeper-binds-itself` passed 4 of 5 after the rewording of `voice.md` (3 of 5 before it), and no published card carries a judged check.

@@ -192,6 +192,12 @@ def _model_lines() -> list[str]:
     if not found.choices:
         lines.append(f"to give Conky a model: {model.WAYS}")
     lines.append("a provider page named by an ask is tried before all of these")
+    seen = model.probe()
+    if seen:
+        lines.append("this machine offers (shown as found; only some are used):")
+        lines += [f"  {f.what} ({f.source})" for f in seen]
+    else:
+        lines.append("this machine offers nothing Conky looks for")
     return lines
 
 

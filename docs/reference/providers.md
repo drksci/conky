@@ -101,6 +101,10 @@ The default Anthropic model id is the constant `ANTHROPIC_DEFAULT_MODEL` in `src
 
 The commit of a detected answer records `Model` as `detected:<kind>`, for example `detected:claude`, and `Model-Name` as the model passed to the built-in `claude`, or else the model or command name. `conky model` prints the order that applies now and calls nothing.
 
+### What conky model found
+
+After that order, `conky model` prints what this machine offers, one finding to a line with where it was seen: `ANTHROPIC_API_KEY is set (the environment, by name)`, `claude is on the PATH (PATH)`. The look is read-only. It asks whether `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` is set (by name, never the value), whether `claude`, `codex`, `llm`, `ollama`, `bwrap`, `docker` or `podman` is on the PATH, whether `CLAUDECODE` is set, and whether `127.0.0.1:11434`, the default address of `ollama`, answers within 0.3 seconds. It installs nothing, starts nothing, sends nothing off the machine and writes no file. The list is the constant `PROBE` in `src/conky/model.py`. Findings are shown as found: `llm`, `ollama` and the sandbox programs are not used, and the order above does not change. With nothing found it says so.
+
 ## When no model answers
 
 Asking never blocks work. These are the cases:

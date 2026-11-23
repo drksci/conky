@@ -7,6 +7,7 @@ import json
 import os
 import shlex
 import shutil
+import socket
 import subprocess
 import tempfile
 import urllib.error
@@ -78,6 +79,29 @@ WAYS = (
     "set ANTHROPIC_API_KEY, set OPENAI_API_KEY with CONKY_MODEL, "
     "put claude or codex on the PATH, or write a provider page and name it"
 )
+PROBE = arch.constant(
+    {
+        "variables": ("ANTHROPIC_API_KEY", "OPENAI_API_KEY"),
+        "programs": ("claude", "codex", "llm", "ollama"),
+        "address": ("ollama", "127.0.0.1", 11434),
+        "host": "CLAUDECODE",
+        "rooms": ("bwrap", "docker", "podman"),
+    },
+    "probe",
+    "conky.model.PROBE",
+    "slot.probe",
+    "Everything the read-only look at this machine asks about, and nothing else.",
+    doc="providers.md#what-conky-model-found",
+)
+PROBE_TIMEOUT = 0.3
+
+
+@dataclass(frozen=True)
+class Finding:
+    """One thing the machine offers, and where Conky saw it."""
+
+    what: str
+    source: str
 
 
 class ModelError(Exception):
@@ -536,3 +560,39 @@ def ask_once(
     reply = ask(found, secret(), prompt, keys_dir)
     cache.put(key, {"text": reply.text, "model": reply.model})
     return reply
+
+
+def _answers(host: str, port: int) -> bool:
+    try:
+        socket.create_connection((host, port), PROBE_TIMEOUT).close()
+    except OSError:
+        return False
+    return True
+
+
+def probe(answers: Callable[[str, int], bool] | None = None) -> list[Finding]:
+    """Say what this machine offers: names only, never a value, nothing started or sent.
+
+    It reads whether a variable is set, whether a program is on the PATH, and whether one local
+    address answers. `answers` is that one question, so a test can stand in for the network.
+    """
+    ask = answers or _answers
+    env = os.environ
+    found = [
+        Finding(f"{name} is set", "the environment, by name")
+        for name in PROBE["variables"]
+        if env.get(name, "").strip()
+    ]
+    found += [
+        Finding(f"{name} is on the PATH", "PATH")
+        for name in (*PROBE["programs"], *PROBE["rooms"])
+        if shutil.which(name)
+    ]
+    who, host, port = PROBE["address"]
+    if ask(host, port):
+        found.append(Finding(f"{who} answers on {host}:{port}", f"the address {host}:{port}"))
+    if env.get(PROBE["host"], "").strip():
+        found.append(
+            Finding("this session is hosted by Claude Code", f"{PROBE['host']} in the environment")
+        )
+    return found

@@ -510,3 +510,50 @@ def test_a_command_provider_starts_in_an_empty_folder_and_sees_only_its_prompt(
     assert vault.read("desk").fields["summary"] == "files 0 False"
     assert model.BUILTIN_COMMANDS["claude"][:4] == ["claude", "-p", "--tools", ""]
     assert model.BUILTIN_COMMANDS["claude"][-2:] == ["--system-prompt", model.PLAIN]
+
+
+def test_the_probe_names_each_finding_with_its_source_and_never_a_value(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    keys = model.PROBE["variables"]
+    for name in (*keys, model.PROBE["host"]):
+        monkeypatch.delenv(name, raising=False)
+    path_with(tmp_path, monkeypatch)
+    assert model.probe(lambda host, port: False) == []
+    programs = (*model.PROBE["programs"], *model.PROBE["rooms"])
+    path_with(tmp_path, monkeypatch, *programs)
+    monkeypatch.setenv(keys[0], "sekret-value")
+    monkeypatch.setenv(model.PROBE["host"], "1")
+    asked: list[tuple[str, int]] = []
+
+    def answers(host: str, port: int) -> bool:
+        asked.append((host, port))
+        return True
+
+    found = model.probe(answers)
+    assert asked == [model.PROBE["address"][1:]]
+    whats = [f.what for f in found]
+    assert f"{keys[0]} is set" in whats and f"{keys[1]} is set" not in whats
+    assert all(f"{p} is on the PATH" in whats for p in programs)
+    assert any("answers on" in w for w in whats) and any("hosted by" in w for w in whats)
+    assert {f.source for f in found if "PATH" in f.what} == {"PATH"}
+    assert "sekret-value" not in repr(found)
+
+
+def test_conky_model_lists_the_findings_and_says_when_there_are_none(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    monkeypatch.setattr(model, "_answers", lambda host, port: False)
+    monkeypatch.delenv(model.PROBE["host"], raising=False)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sekret-value")
+    path_with(tmp_path, monkeypatch, "claude")
+    assert main(["model"]) == 0
+    out = capsys.readouterr().out
+    assert "ANTHROPIC_API_KEY is set (the environment, by name)" in out
+    assert "claude is on the PATH (PATH)" in out and "sekret-value" not in out
+    monkeypatch.delenv("ANTHROPIC_API_KEY")
+    path_with(tmp_path, monkeypatch)
+    assert main(["model"]) == 0
+    out = capsys.readouterr().out
+    assert "no model is available" in out and "offers nothing" in out
