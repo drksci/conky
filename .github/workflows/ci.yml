@@ -1,9 +1,19 @@
 name: CI
 
+# The drksci org stays on GitHub Free: 2,000 Actions minutes a month, with a
+# $0 budget that blocks every job once they run out. So CI runs on a pull
+# request, on main after a push, and by hand; a newer push to the same ref
+# cancels the run still going (38 of November's 224 main runs overlapped one).
+# scripts/check runs in the pre-push hook as well, so run it before pushing.
 on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
