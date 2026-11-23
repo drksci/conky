@@ -130,6 +130,7 @@ def test_the_built_in_claude_saves_no_session(
     assert asked(vault, None).ok
     argv = json.loads(seen.read_text(encoding="utf-8"))
     assert "--no-session-persistence" in argv
+    assert argv[argv.index("--setting-sources") + 1] == ""
 
 
 def test_a_model_named_on_the_claude_page_wins_over_the_default(

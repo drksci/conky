@@ -51,6 +51,8 @@ BUILTIN_COMMANDS = arch.constant(
             "--strict-mcp-config",
             "--disable-slash-commands",
             "--no-session-persistence",
+            "--setting-sources",
+            "",
             "--system-prompt",
             PLAIN,
         ],
