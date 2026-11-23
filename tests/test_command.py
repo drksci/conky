@@ -121,6 +121,17 @@ def test_the_built_in_claude_is_told_the_default_model_and_the_record_names_it(
     assert head(vault)["Model-Name"] == model.ANTHROPIC_DEFAULT_MODEL
 
 
+def test_the_built_in_claude_saves_no_session(
+    vault: Vault, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.delenv("CONKY_PROVIDER")
+    seen = tmp_path / "argv.json"
+    fake_claude(tmp_path, monkeypatch, seen)
+    assert asked(vault, None).ok
+    argv = json.loads(seen.read_text(encoding="utf-8"))
+    assert "--no-session-persistence" in argv
+
+
 def test_a_model_named_on_the_claude_page_wins_over_the_default(
     vault: Vault, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

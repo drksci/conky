@@ -4,6 +4,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ## [Unreleased]
 
+- Fixed: the built-in `claude` command saves no session, so an ask through it leaves nothing in the program's own session store (`--no-session-persistence`).
 - Fixed: the built-in `claude` command is given `--model` with `ANTHROPIC_DEFAULT_MODEL` when no model is named, and its commits record that model in `Model-Name`. A model named on the command page wins. A configured command is run as written and records its name, as before. `codex` has the same gap and is unchanged.
 - Three ideas are added: a rule sees the page as it was, what is happening is said beside the vault, and the architecture as pages. Five idea pages are amended to agree with them, AWorld is added to the harness comparison as read from its code, and the status page is corrected: the card `a-keeper-binds-itself` passed 4 of 5 after the rewording of `voice.md` (3 of 5 before it), and no published card carries a judged check.
 - Fixed: the chart test skips without plotly like the others, so `scripts/check` passes on a clean install with only `.[dev]`. With the `bench` extra it still checks every chart in its template.
