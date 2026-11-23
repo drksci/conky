@@ -138,6 +138,7 @@ Every concept word and verb of the [vocabulary](vocabulary.md), and each named p
 | <a id="part.test.trial"></a>`part.test.trial` | [`layer.edge`](#layer.edge) | The exploratory trail trial: a party plays a text Oregon Trail through the terminal connector, run by Conky and by a plain single-loop baseline. | [0025-the-screen-is-built-in-small-steps.md](../decisions/0025-the-screen-is-built-in-small-steps.md) | - | R27 | planned |
 | <a id="part.docs.pages"></a>`part.docs.pages` | [`layer.edge`](#layer.edge) | Each entry of the architecture index written as a page in a vault of the project's own, by a script outside the runtime, with notes beside it written by anyone. | [architecture-as-pages.md](../ideas/architecture-as-pages.md) | - | R48 | idea |
 | <a id="part.history.said"></a>`part.history.said` | [`layer.edge`](#layer.edge) | What is happening and not yet recorded is said as a line in a file beside the vault by whoever watches, never read back by the runtime and safe to delete. | [said-beside.md](../ideas/said-beside.md) | - | R47 | idea |
+| <a id="part.screen.desktop"></a>`part.screen.desktop` | [`layer.edge`](#layer.edge) | A desktop drawn from what one character read, said and did, live from the history and the lines said beside it, or replayed from them, or rendered to film. | [a-minds-desktop.md](../ideas/a-minds-desktop.md) | - | - | idea |
 | <a id="part.screen.live"></a>`part.screen.live` | [`layer.edge`](#layer.edge) | A model's answer shown to a person while it arrives, as derived data, with only the finished answer written. | [streaming.md](../ideas/streaming.md) | - | R36 | idea |
 
 ## 3. Layers
@@ -151,7 +152,7 @@ From the store upwards. Each layer sits on the one before.
 | Reflexes (<a id="layer.reflex"></a>`layer.reflex`) | CEL rules, reactions, the depth bound, measures, pressure. | [`part.rule`](#part.rule), [`part.rule.captures`](#part.rule.captures), [`part.rule.capturesall`](#part.rule.capturesall), [`part.rule.indexof`](#part.rule.indexof), [`part.rule.join`](#part.rule.join), [`part.rule.lowerascii`](#part.rule.lowerascii), [`part.rule.replace`](#part.rule.replace), [`part.rule.split`](#part.rule.split), [`part.rule.substring`](#part.rule.substring), [`part.rule.trim`](#part.rule.trim), [`part.rule.within`](#part.rule.within), [`part.watch`](#part.watch) | [`part.seal.signer`](#part.seal.signer), [`part.rule.origin`](#part.rule.origin), [`part.rule.was`](#part.rule.was) |
 | Spaces (<a id="layer.space"></a>`layer.space`) | `within`, rules handed down, leaving judged. | [`part.space`](#part.space), [`part.space.context`](#part.space.context) | - |
 | Characters (<a id="layer.character"></a>`layer.character`) | Pages that ask a model, providers, answers that are pages. | [`part.answer.cache`](#part.answer.cache), [`part.answer.format`](#part.answer.format), [`part.provider.detect`](#part.provider.detect) | [`part.character.face`](#part.character.face), [`part.character.self`](#part.character.self), [`part.pattern.make`](#part.pattern.make), [`part.character.habit`](#part.character.habit) |
-| The edge (<a id="layer.edge"></a>`layer.edge`) | The command line, presenters, connectors, `demo`, `assimilate`. | [`part.cli.command`](#part.cli.command), [`part.cli.demo`](#part.cli.demo), [`part.cli.present`](#part.cli.present), [`part.connect.post`](#part.connect.post), [`part.connect.terminal`](#part.connect.terminal), [`part.export.notion`](#part.export.notion), [`part.export.obsidian`](#part.export.obsidian), [`part.theatre`](#part.theatre), [`part.vault.assimilate`](#part.vault.assimilate) | [`part.connect.protocol`](#part.connect.protocol), [`part.screen`](#part.screen), [`part.screen.page`](#part.screen.page), [`part.screen.update`](#part.screen.update), [`part.test.bench`](#part.test.bench), [`part.test.resume`](#part.test.resume), [`part.test.trial`](#part.test.trial), [`part.docs.pages`](#part.docs.pages), [`part.history.said`](#part.history.said), [`part.screen.live`](#part.screen.live) |
+| The edge (<a id="layer.edge"></a>`layer.edge`) | The command line, presenters, connectors, `demo`, `assimilate`. | [`part.cli.command`](#part.cli.command), [`part.cli.demo`](#part.cli.demo), [`part.cli.present`](#part.cli.present), [`part.connect.post`](#part.connect.post), [`part.connect.terminal`](#part.connect.terminal), [`part.export.notion`](#part.export.notion), [`part.export.obsidian`](#part.export.obsidian), [`part.theatre`](#part.theatre), [`part.vault.assimilate`](#part.vault.assimilate) | [`part.connect.protocol`](#part.connect.protocol), [`part.screen`](#part.screen), [`part.screen.page`](#part.screen.page), [`part.screen.update`](#part.screen.update), [`part.test.bench`](#part.test.bench), [`part.test.resume`](#part.test.resume), [`part.test.trial`](#part.test.trial), [`part.docs.pages`](#part.docs.pages), [`part.history.said`](#part.history.said), [`part.screen.desktop`](#part.screen.desktop), [`part.screen.live`](#part.screen.live) |
 
 ## 4. Archetypes
 
@@ -1280,6 +1281,7 @@ Every law, flow and part with its check. A measured check is a deterministic ass
 | [`part.rule.was`](#part.rule.was) | idea | not built | - | - |
 | [`part.rule.within`](#part.rule.within) | built | - | - | none |
 | [`part.screen`](#part.screen) | planned | not built | - | - |
+| [`part.screen.desktop`](#part.screen.desktop) | idea | not built | - | - |
 | [`part.screen.live`](#part.screen.live) | idea | not built | - | - |
 | [`part.screen.page`](#part.screen.page) | planned | not built | - | - |
 | [`part.screen.update`](#part.screen.update) | planned | not built | - | - |
@@ -1312,6 +1314,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 
 | Idea | Rung | Carried by |
 |---|---|---|
+| [a-minds-desktop](../ideas/a-minds-desktop.md) | idea | [`part.screen.desktop`](#part.screen.desktop) |
 | [a2ui](../ideas/a2ui.md) | idea | [`part.cli.present`](#part.cli.present), [`part.screen`](#part.screen), [`part.screen.page`](#part.screen.page), [`part.screen.update`](#part.screen.update), [`flow.screen.prompt`](#flow.screen.prompt) |
 | [approvals](../ideas/approvals.md) | idea | [`part.seal.signer`](#part.seal.signer), [`part.seal.signer`](#part.seal.signer), [`kind.proposal`](#kind.proposal), [`flow.proposal.approve`](#flow.proposal.approve) |
 | [architecture-as-pages](../ideas/architecture-as-pages.md) | idea | [`part.docs.pages`](#part.docs.pages) |
