@@ -103,6 +103,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0064-an-embed-inside-an-embed-is-followed.md](decisions/0064-an-embed-inside-an-embed-is-followed.md): An embed inside an embedded page is followed
 - [decisions/0065-a-command-provider-page-names-its-model-and-effort.md](decisions/0065-a-command-provider-page-names-its-model-and-effort.md): A command provider page names its model and effort
 - [decisions/0066-a-character-is-born-with-a-memory-and-a-sense-for-what-changed.md](decisions/0066-a-character-is-born-with-a-memory-and-a-sense-for-what-changed.md): A character is born with a memory and a sense for what changed
+- [decisions/0067-an-answer-refused-for-its-shape-is-asked-again.md](decisions/0067-an-answer-refused-for-its-shape-is-asked-again.md): An answer refused for its shape is asked again
 
 ### Research
 

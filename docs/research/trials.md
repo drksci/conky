@@ -37,7 +37,7 @@ The animation under a card is drawn from one draw's vault history by the view in
 ## a clerk notices what changed
 
 - Objective: a character remembers and notices across fresh calls without being told how, because pages within it keep what matters and say what changed, in its own voice and on a small model under a budget
-- Bar: at least 3 of 5 draws pass, median calls a draw at most 15
+- Bar: at least 3 of 5 draws pass, median calls a draw at most 17
 - Checks: measured
 - Latest verdict: not drawn
 - Run: none yet
