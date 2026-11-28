@@ -104,6 +104,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0065-a-command-provider-page-names-its-model-and-effort.md](decisions/0065-a-command-provider-page-names-its-model-and-effort.md): A command provider page names its model and effort
 - [decisions/0066-a-character-is-born-with-a-memory-and-a-sense-for-what-changed.md](decisions/0066-a-character-is-born-with-a-memory-and-a-sense-for-what-changed.md): A character is born with a memory and a sense for what changed
 - [decisions/0067-an-answer-refused-for-its-shape-is-asked-again.md](decisions/0067-an-answer-refused-for-its-shape-is-asked-again.md): An answer refused for its shape is asked again
+- [decisions/0068-what-lands-in-this-repository.md](decisions/0068-what-lands-in-this-repository.md): What lands in this repository
 
 ### Research
 
