@@ -102,10 +102,13 @@ def _mark(prompt: str, answer: str | None) -> str:
     return hashlib.sha256(f"{prompt}\0{answer or ''}".encode()).hexdigest()
 
 
-def _ruled(result: Result) -> Result | None:
-    """Return the first write of an answer that a rule refused, or None."""
+_TURNED_AWAY = (f"{Refusal.RULE}:", f"{Refusal.SHAPE}:")
+
+
+def _turned_away(result: Result) -> Result | None:
+    """Return the first write of an answer refused for a rule or for its shape, or None."""
     for found in (result, *(each for _, each in result.pages)):
-        if not found.ok and (found.reason or "").startswith(f"{Refusal.RULE}:"):
+        if not found.ok and (found.reason or "").startswith(_TURNED_AWAY):
             return found
     return None
 
@@ -1113,8 +1116,8 @@ class Vault:
     @arch.stage(
         "think",
         "stage.think.retry",
-        "An answer a rule refused is asked again once, with the reason; a second refusal "
-        "writes the entry's `otherwise` text or stops.",
+        "An answer refused for a rule or its shape is asked again once, with the reason; a "
+        "second refusal writes the entry's `otherwise` text or stops.",
         doc="rules-and-reactions.md#when-an-answer-is-refused",
     )
     @arch.stage(
@@ -1149,9 +1152,10 @@ class Vault:
         and when none answers a plain sentence is written. Returns None when the question is
         skipped because its answer is already recorded.
 
-        When a rule refuses the answer, or a page of it, the same prompt is sent once more with
-        the reason after it, caused by the refusal. A second refusal by a rule writes the
-        entry's `otherwise` text when it has one and stops. Never more than that one retry.
+        When a rule or the shape of the answer, or of a page of it, is refused, the same prompt
+        is sent once more with the reason after it, caused by the refusal. A second such refusal
+        writes the entry's `otherwise` text when it has one and stops. Never more than that one
+        retry, and a refusal for `limit`, `cycle` or `model` is not retried.
         """
         if depth > MAX_DEPTH:
             return self._refuse(page, {}, None, actor, at, cause, _CYCLE, depth)
@@ -1172,13 +1176,13 @@ class Vault:
             return None
         where = (page, actor, at, cause, depth)
         result = self._think(ask, pages, prompt, prompt, where, skip_settled)
-        refused = None if result is None or result.plain else _ruled(result)
+        refused = None if result is None or result.plain else _turned_away(result)
         if refused is None:
             return result
         note = voice.told("retry", page=page, reason=_sentence(refused.reason))
         again = (page, actor, at, refused.id, depth)
         result = self._think(ask, pages, prompt, f"{prompt}\n\n{note}", again, False)
-        refused = None if result is None or result.plain else _ruled(result)
+        refused = None if result is None or result.plain else _turned_away(result)
         if refused is None or ask.into is None or ask.otherwise is None:
             return result
         last = (page, actor, at, refused.id, depth)

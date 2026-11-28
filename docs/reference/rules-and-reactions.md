@@ -287,15 +287,15 @@ When no model answers, the plain sentence goes to `into` as today and no pages a
 
 ### When an answer is refused
 
-When a rule refuses the write of an answer, whether the write to `into` or a page the answer holds, the same question is sent once more. The second prompt is the first followed by a blank line and one fixed stage direction, so it is the last thing the model reads:
+When a rule refuses the write of an answer, or the answer is refused for its shape, whether in the write to `into` or in a page the answer holds, the same question is sent once more. The second prompt is the first followed by a blank line and one fixed stage direction, so it is the last thing the model reads:
 
 ```
 *<page>'s last answer was turned away: <reason> <page> may answer again so that it holds.*
 ```
 
-`<page>` is the asking page. `<reason>` is the reason recorded on the refusal, ended with a full stop when it has none, for example `rule: page.said != 'no' (from camp) is false`. The history of a retried answer reads in this order: the write that triggered the entry, the refusal of the first answer, then the second answer, whose `Cause` is the refusal. The second ask is an ordinary recorded ask, and its prompt, which differs from the first, is a different moment for the cache, so it never hits the first answer. The field `<into>_asked` holds the digest of the entry's own prompt, so the question settles as if it had been asked once.
+`<page>` is the asking page. `<reason>` is the reason recorded on the refusal, ended with a full stop when it has none, for example `rule: page.said != 'no' (from camp) is false` or `shape: page block Mrs Okafor's parcel: The header ... does not name a page.` The history of a retried answer reads in this order: the write that triggered the entry, the refusal of the first answer, then the second answer, whose `Cause` is the refusal. The second ask is an ordinary recorded ask, and its prompt, which differs from the first, is a different moment for the cache, so it never hits the first answer. The field `<into>_asked` holds the digest of the entry's own prompt, so the question settles as if it had been asked once.
 
-The retry is one, and no more. When the second answer is refused by a rule too, the entry's `otherwise` text is written to `into` as an ordinary write that the rules judge, and when that is refused it is recorded and the asking stops. With no `otherwise` text, or no `into`, the asking stops with the second refusal recorded and the field keeps its value. A refusal with reason `shape`, `limit` or `cycle` is not retried, and neither is a failure to ask, which is covered below.
+The retry is one, and no more. When the second answer is refused for a rule or its shape too, the entry's `otherwise` text is written to `into` as an ordinary write that the rules judge, and when that is refused it is recorded and the asking stops. With no `otherwise` text, or no `into`, the asking stops with the second refusal recorded and the field keeps its value. A refusal with reason `limit` or `cycle` is not retried, and neither is a failure to ask, which is covered below.
 
 ### When asking fails
 
@@ -305,7 +305,7 @@ Each of these, for a named provider page, is recorded as a refusal on the asking
 
 A page may carry `budget: {asks: 5}`, the most times it may ask a model since the budget was last written ([decision 0058](../decisions/0058-a-budget-the-runtime-holds.md)).
 
-- **Counted from the history.** An ask is spent when a commit of the page, kept or refused, records a model's answer: a `Model` trailer that is not `none`, and no `Cache` trailer. An answer a rule refused is spent, and so is the ask repeated after it. A replayed answer, a plain sentence, a failed provider and a `limit` refusal are not. Nothing is stored for the count.
+- **Counted from the history.** An ask is spent when a commit of the page, kept or refused, records a model's answer: a `Model` trailer that is not `none`, and no `Cache` trailer. An answer refused for a rule or its shape is spent, and so is the ask repeated after it. A replayed answer, a plain sentence, a failed provider and a `limit` refusal are not. Nothing is stored for the count.
 - **Refilled by a write.** The count starts again at the last write that set `budget`, on the page or on the space that holds the budget it lives under, even to the same value. Such a write carries the trailer `Budget`. A write that leaves `budget` alone changes nothing. No clock is involved: a clock page, when there is one, refills by writing.
 - **Past it, a refusal.** When the asks spent have reached `asks`, no model is called, and a refusal for `limit` is recorded on the page, saying how many asks were allowed and that writing the budget again refills it. A cached answer is not looked for. An entry with `on: refusal` hears it like any refusal.
 - **Handed down.** A member with no `budget` of its own takes that of the nearest space above it that has one, the theatre last. It is a default for each member and not a pool: two members of a space with `asks: 1` ask once each. A shared pool is not built.

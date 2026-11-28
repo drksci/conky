@@ -1,4 +1,4 @@
-# A page block with no name is refused for its shape, not by a rule, so the question is not asked again.
+# A page block with no name is refused for its shape, and the question is asked again once with the reason; the same answer is refused again and it stops.
 pages:
   helper: {api: command, command: stand}
   camp: {}
@@ -13,4 +13,4 @@ pages:
 steps:
   - says: "kept\n=== page:  ===\nhello\n=== end ==="
   - write: {page: gate, fields: {asks: hunt}}
-  - expect: {fields: {guide.said: "kept"}, model_calls: 1, verify: true}
+  - expect: {fields: {guide.said: "kept"}, model_calls: 2, verify: true}
