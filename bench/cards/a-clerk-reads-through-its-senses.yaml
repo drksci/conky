@@ -1,0 +1,39 @@
+# One page gathers what a clerk's ear heard, and the clerk's prompt embeds that one page. The fact
+# written to the ear once must be in front of the clerk when it is asked, with nothing said about
+# senses or memory.
+objective: a character is shown what its senses wrote through one page that gathers them, so the prompt stays one line and a character composes from pages
+hypothesis: when a page whose body embeds a field of another page is itself embedded in a prompt, the clerk is shown the field's words and answers from them, at one call
+success: {draws: 5, pass: 5, calls_at_most: 1}
+forecast: 5 of 5, since the fact is in front of the clerk when it is asked; a miss would be the clerk reading the fact and giving another shelf
+par:
+  outcome: the shelf is given correctly
+  structure: one page gathers the senses and the prompt names that page
+  cost: one call, and none to collect what was heard
+  craft: the clerk answers the question and does not recite the senses
+dial: one sense gathered; the next notch is three senses on the one page, which needs the page to say them in order
+if_not: look first at whether the words the clerk was sent held the fact or the raw embed, then at whether the clerk answered from them
+pages:
+  helper: {api: command, command: stand}
+  ear:
+    heard: ""
+  clerk:
+    asked: ""
+    said: ""
+    watch:
+      - on: clerk
+        when: "page.asked != ''"
+        ask:
+          provider: helper
+          into: said
+          prompt: |
+            You are the clerk at this desk.
+
+            ![[clerk-senses]]
+
+            You are asked: ![[clerk#asked]]
+steps:
+  - write: {page: clerk-senses, fields: {}, body: "What the ear heard: ![[ear#heard]]"}
+  - write: {page: ear, fields: {heard: "Mrs Okafor's parcel is on shelf 12."}}
+  - says: live
+  - write: {page: clerk, fields: {asked: "Which shelf is Mrs Okafor's parcel on?"}}
+  - expect: {answer: {clerk.said: "12"}}

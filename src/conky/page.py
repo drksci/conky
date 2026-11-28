@@ -473,6 +473,15 @@ MEMBERS_CAP = arch.constant(
     "Most lines an embedded list of members shows before it counts the rest.",
     doc="vault-format.md#pages",
 )
+EMBED_DEPTH = arch.constant(
+    3,
+    "embed depth",
+    "conky.page.EMBED_DEPTH",
+    "slot.key",
+    "Deepest an embed is followed: one written in a prompt or a page read is at depth 1, one "
+    "written in the text it brought in is at depth 2.",
+    doc="vault-format.md#pages",
+)
 
 
 SHOWS = "shows"
@@ -720,23 +729,6 @@ def _embed_text(name: str, field: str | None, lookup: dict[str, Page]) -> str | 
     return "" if value is None else json.dumps(value, sort_keys=True, ensure_ascii=False)
 
 
-def embedded(text: str, lookup: dict[str, Page]) -> list[str]:
-    """Return the pages whose fields or body text embeds, each once, in order of first use.
-
-    An embed of a page's context names the spaces whose words it shows, not the page.
-    """
-    names: list[str] = []
-    for found in EMBED.finditer(text):
-        name = found.group(1)
-        if _embed_text(name, found.group(2), lookup) is None:
-            continue
-        shown = [name]
-        if found.group(2) == CONTEXT:
-            shown = [space for space, _ in _shown(_context_spaces(name, lookup))[0]]
-        names += [one for one in shown if one not in names]
-    return names
-
-
 @arch.part(
     "part.embed",
     "layer.history",
@@ -750,14 +742,84 @@ def embedded(text: str, lookup: dict[str, Page]) -> list[str]:
     doc="vault-format.md#pages",
 )
 @arch.law(
+    "law.embed.followed",
+    "An embed in the text an embed brings in is followed to a stated depth; a loop or a deeper "
+    "embed is cut and said in what is shown, and what was cut is not read.",
+    doc="vault-format.md#pages",
+)
+@arch.law(
     "law.embed.context",
     "A prompt that embeds a page's context is told what its spaces say, so joining a space "
     "changes what a character is told and leaving it takes that away.",
     doc="vault-format.md#pages",
 )
-def resolve_text(text: str, lookup: dict[str, Page]) -> str:
-    """Return text with each embed replaced by the field or body it names in lookup."""
-    return EMBED.sub(lambda m: _embed_text(m.group(1), m.group(2), lookup) or "", text)
+def resolve_text(
+    text: str,
+    lookup: dict[str, Page],
+    asks: Callable[[str], str | None] | None = None,
+) -> str:
+    """Return text with each embed replaced by the field or body it names in lookup.
+
+    Embeds in the field or body an embed brings in are followed too, to EMBED_DEPTH. One that
+    would repeat a page and part already being resolved, or that lies deeper, is replaced by a
+    stage direction that says so. The text of a list of members or of a context is shown as
+    written. When asks is given, it is handed the name of a page embedded as `#asks` and gives
+    the words for what that page has left to ask, or None to read the part as a field.
+    """
+    return _follow(text, lookup, asks, (), 1, [])
+
+
+def embedded(
+    text: str,
+    lookup: dict[str, Page],
+    asks: Callable[[str], str | None] | None = None,
+) -> list[str]:
+    """Return the pages whose fields or body text shows, each once, in order of first use.
+
+    The same walk as resolve_text, so a page shown at any depth is named, outer before inner, and
+    one cut for depth or for a loop is not. An embed of a page's context names the spaces whose
+    words it shows, not the page.
+    """
+    names: list[str] = []
+    _follow(text, lookup, asks, (), 1, names)
+    return names
+
+
+def _follow(
+    text: str,
+    lookup: dict[str, Page],
+    asks: Callable[[str], str | None] | None,
+    chain: tuple[tuple[str, str | None], ...],
+    depth: int,
+    names: list[str],
+) -> str:
+    """Return text with embeds resolved at depth, and add each page shown to names.
+
+    chain holds the page and part of each embed being resolved on the way down.
+    """
+
+    def one(found: re.Match[str]) -> str:
+        name, part = found.group(1), found.group(2)
+        if part == ASKS and asks is not None:
+            left = asks(name)
+            if left is not None:
+                return left
+        shown = _embed_text(name, part, lookup)
+        if shown is None:
+            return ""
+        if (name, part) in chain:
+            return voice.told("embed-loop", page=name)
+        if depth > EMBED_DEPTH:
+            return voice.told("embed-depth", page=name, cap=EMBED_DEPTH)
+        spaces = [name]
+        if part == CONTEXT:
+            spaces = [space for space, _ in _shown(_context_spaces(name, lookup))[0]]
+        names.extend(one for one in spaces if one not in names)
+        if part in (MEMBERS, CONTEXT):
+            return shown
+        return _follow(shown, lookup, asks, (*chain, (name, part)), depth + 1, names)
+
+    return EMBED.sub(one, text)
 
 
 @arch.step(
