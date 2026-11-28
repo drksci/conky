@@ -1439,6 +1439,7 @@ Every idea and decision, with its rung or status and the rows that carry it. The
 | [0065-a-command-provider-page-names-its-model-and-effort](../decisions/0065-a-command-provider-page-names-its-model-and-effort.md) | accepted | [`part.provider.detect`](#part.provider.detect), [`flow.ask.model`](#flow.ask.model) |
 | [0066-a-character-is-born-with-a-memory-and-a-sense-for-what-changed](../decisions/0066-a-character-is-born-with-a-memory-and-a-sense-for-what-changed.md) | accepted | [`kind.mind`](#kind.mind) |
 | [0067-an-answer-refused-for-its-shape-is-asked-again](../decisions/0067-an-answer-refused-for-its-shape-is-asked-again.md) | accepted | [`stage.think.retry`](#stage.think.retry) |
+| [0068-what-lands-in-this-repository](../decisions/0068-what-lands-in-this-repository.md) | accepted | - |
 
 ### Unplaced
 
@@ -1472,4 +1473,5 @@ Found in the documents and fitting no row above.
 | standing | [standing.md](../ideas/standing.md) | A measure of how much each page matters now, which orders what is listed within a space. It needs the members list ordered by a field. |
 | the five pens are the chart theme's five colours | [0061-figures-take-the-chart-themes-colours.md](../decisions/0061-figures-take-the-chart-themes-colours.md) | The five pens in the token file are the five series colours of the Minty chart template, in its order; the dark value of a pen is the colour itself and the light value is that colour darkened by one stated rule, and a pen draws marks and lines only, never words. |
 | the objective | [0001-objective.md](../decisions/0001-objective.md) | An organisation that runs, delivers and improves without its builders directing each step. It is an aim and prescribes no mechanism. |
+| what lands here | [0068-what-lands-in-this-repository.md](../decisions/0068-what-lands-in-this-repository.md) | This repository holds conky and what is about conky. An experiment built on it lives elsewhere, and a change it prompted is said here without it. |
 | write throughput | [0002-git-is-the-store.md](../decisions/0002-git-is-the-store.md) | One signed commit per write limits throughput to the order of tens a second. |
