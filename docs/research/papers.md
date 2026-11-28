@@ -2,7 +2,7 @@
 kind: research
 title: "Paper register"
 status: current
-date: 2026-11-20
+date: 2026-11-28
 source: "research/dair-2026.md and the papers' own pages"
 ---
 
@@ -42,10 +42,13 @@ Notes on the fetched pages. Pages on arxiv.org are the abstract pages. Pages on 
 | 1,000 Synthetic Computers | May 4 - 10 | abstract | benchmark candidate | Synthetic user computers with realistic files host long simulated work by a user agent and a worker agent | Consider as a shared scenario seed for the harness-neutral benchmark | [page](https://arxiv.org/abs/2604.28181) |
 | MerchantBench | Aug 3 - 9 | abstract | benchmark candidate | A 365-day simulated e-commerce operation that tests coherence over a long horizon | Consider as a long-horizon scenario; no action until a model is attached | [page](https://arxiv.org/abs/2607.28956) |
 | OneManCompany | Apr 26 - May 3 | abstract | prior art | Organisation structure as portable agent identities recruited per task | Compare with spaces, `within` chains and patterns when read in full | [page](https://arxiv.org/abs/2604.22446) |
+| Self-Improvement Memory | Nov 16 - 22 | listed | supports | A harness optimizer keeps each past edit with its rationale, predicted and observed outcome | Nothing yet; compare with how the history records why a page changed | [page](https://academy.dair.ai/papers/self-improvement-memory-enables-continual-recursive-self-improvement-2611.18856) |
+| GUARD | Nov 16 - 22 | listed | prior art | A self-edit to a harness is accepted only when its gains outweigh the behaviours it breaks | Nothing yet; compare with a refused write recorded as an empty commit | [page](https://academy.dair.ai/papers/guard-stabilizing-recursive-self-improvement-with-regret-guidance-2611.23476) |
+| Safe Personal RSI | Nov 16 - 22 | listed | supports | A self-proposed change to an assistant's instructions must pass executable cases, else the current ones stay | Nothing yet; compare with a rule the runtime evaluates over a change a character proposes | [page](https://academy.dair.ai/papers/safe-personal-rsi-evaluating-and-repairing-personal-agent-updates-2611.23651) |
 
 ## Entries
 
-Each entry says what the source says at the depth reached, which conky document it bears on, and any numbers exactly as the fetched page gave them. Every depth below is `abstract`.
+Each entry says what the source says at the depth reached, which conky document it bears on, and any numbers exactly as the fetched page gave them. The depth of each entry is the one in its table row; the three added on 2026-11-28 are `listed`.
 
 ### JevAct
 
@@ -106,6 +109,18 @@ Abstract level: the arXiv title is "MerchantBench: Benchmarking LLM Agents for L
 ### OneManCompany
 
 Abstract level: the arXiv title is "From Skills to Talent: Organising Heterogeneous Agents as a Real-World Company". It argues multi-agent systems lack an organisational layer and packages skills, tools and runtime configurations into portable agent identities called Talents, recruited on demand from a Talent Market, with an Explore-Execute-Review tree search. Bears on [Patterns](../ideas/patterns.md) and the `within` chains in the [design](../design.md). Numbers, as reported: 84.67% success rate on PRDBench, which the authors report as 15.48 percentage points above the prior state of the art.
+
+### Self-Improvement Memory
+
+Listed only: the DAIR.AI entry says a harness optimizer is given its own memory of past edits, grouped by the recurring problem each addressed and holding the rationale, the predicted outcome, the observed outcome and the evaluation context. The entry reports, as reported, a harness evolved with one model scoring below the plain seed on another. The paper was not read and no abstract page was fetched. Bears on the event log as the record of why a page changed.
+
+### GUARD
+
+Listed only: the DAIR.AI entry says a harness of prompts, skills, tool rules and memory is evolved around a frozen model with no reference answers; each task is split into self-checks, and an edit is accepted only when its gains outweigh the behaviours it breaks. The paper was not read and no abstract page was fetched. Bears on refused writes and on rules the runtime evaluates.
+
+### Safe Personal RSI
+
+Listed only: the DAIR.AI entry says a self-proposed update to an assistant's instructions is tested against executable cases and kept only if a version passes; otherwise the current instructions stay. The entry reports, as reported, 20 of 21 risky update attempts rejected. The paper was not read and no abstract page was fetched. Bears on the fallback rule: a failed change leaves the earlier state in force.
 
 ## How this register is kept
 
