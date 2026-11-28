@@ -4,6 +4,7 @@ All notable changes are recorded here. The format follows [Keep a Changelog](htt
 
 ## [Unreleased]
 
+- The paper index is rescanned: week Nov 16 - 22 is added with five papers kept, and three of them are registered in the paper register at depth `listed`.
 - `conky model` says what it found and where: after the order it prints each thing this machine offers (keys set by name, programs on the PATH, one local address, a hosting agent) with its source. The look is read-only and nothing found is used yet beyond the order that already applied.
 - Fixed: the built-in `claude` command reads none of the machine's own settings (`--setting-sources ""`), so the person's hooks and plugins never reach a model and a call starts in about 4 s, not 11 s.
 - Fixed: the built-in `claude` command saves no session, so an ask through it leaves nothing in the program's own session store (`--no-session-persistence`).
