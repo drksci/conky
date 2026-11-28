@@ -1,0 +1,99 @@
+# A clerk answers each moment at its desk in a fresh call and is told nothing about remembering or
+# noticing. Within it, born with it, one page keeps what matters as pages of their own and one says
+# when what is in front of the clerk differs from what it knew, each in the clerk's voice, at a small model's cost.
+objective: a character remembers and notices across fresh calls without being told how, because pages within it keep what matters and say what changed, in its own voice and on a small model under a budget
+hypothesis: with a memory and a noticing page within the clerk, each asking a small model under a budget, the clerk gives a fact three moments after it was said and the noticing page says so when the shelf it knew holds something else, while the clerk's own prompt holds no word about either
+success: {draws: 5, pass: 3, calls_at_most: 15}
+forecast: the shelf is given at the fourth moment in 4 of 5 draws, the ordinary second moment passes with nothing said in 4, and the change on shelf 12 is said in 3; a failed draw is most likely the memory judging nothing worth a page at the first moment, as the earlier memory card did, or the noticing page speaking at an ordinary moment
+par:
+  outcome: shelf 12 is given when asked, nothing is said at the ordinary moment, and the bicycle on Mrs Okafor's shelf is said when it appears
+  structure: two pages within the clerk that ask, one space of kept pages, one page the clerk's prompt embeds, and no word of either in the clerk's prompt
+  cost: two small calls and one call by the clerk a moment, fifteen in all, and none to gather what they wrote
+  craft: one kept page for the parcel whose first line gives the shelf and whose it is, in the clerk's voice; one sentence when the shelf changes, and silence otherwise
+dial: the memory and the noticing page are present; the other notch is the same pages and steps without those two, where the clerk meets the fourth moment with nothing to go on
+if_not: look first at the pages within book after the first moment (is the parcel there with its shelf), then at what the noticing page wrote at the second and fifth moments, then at the clerk's prompt at the fourth
+pages:
+  small: {api: command, command: stand, model: claude-haiku-5-5, effort: low}
+  dear: {api: command, command: stand, effort: medium}
+  desk: {}
+  the-clerk:
+    voice: "Dry and careful, a little weary, and kind to the people at the counter."
+    said: ""
+    watch:
+      - on: desk
+        when: "true"
+        ask:
+          provider: dear
+          into: said
+          prompt: |
+            You are the clerk at this desk. ![[the-clerk#voice]]
+
+            ![[front-of-mind]]
+
+            The desk says: ![[desk]]
+  book:
+    within: the-clerk
+    heard: ""
+    budget: {asks: 0}
+    shows:
+      most: 8
+      first: "space.heard.lowerAscii().split(' ').filter(w, size(w) > 3 && text.lowerAscii().contains(w)).size()"
+    watch:
+      - on: desk
+        when: "true"
+        set: {heard: "other_text"}
+  front-of-mind:
+    within: the-clerk
+  noticing:
+    within: the-clerk
+    noticed: ""
+    budget: {asks: 5}
+    watch:
+      - on: desk
+        when: "true"
+        ask:
+          provider: small
+          into: noticed
+          prompt: |
+            The clerk, talking to itself. Its voice: ![[the-clerk#voice]]
+
+            What it knew before:
+            ![[book#members]]
+
+            In front of it now: ![[desk]]
+
+            If something here is different from before or out of the ordinary, it says so to itself in one sentence, in its own voice. If not, the answer is the one word: nothing.
+      - on: noticing
+        when: "page.noticed.trim().lowerAscii().startsWith('nothing')"
+        set: {noticed: "''"}
+  memory:
+    within: the-clerk
+    budget: {asks: 5}
+    watch:
+      - on: the-clerk
+        when: "other.said != ''"
+        ask:
+          provider: small
+          writes: book
+          prompt: |
+            The clerk, after a moment at the desk, noting for itself what is worth knowing later. Its voice: ![[the-clerk#voice]]
+
+            What it already knows:
+            ![[book#members]]
+
+            The desk said: ![[desk]]
+
+            It answered: ![[the-clerk#said]]
+
+            Each new thing worth knowing later gets its own page, named for what it is, whose first line says the whole of it and what it means, in the clerk's own voice.
+steps:
+  - write: {page: front-of-mind, fields: {}, body: "![[noticing#noticed]]\n\nWhat I know:\n![[book#members]]"}
+  - says: live
+  - write: {page: desk, fields: {}, body: "Mrs Okafor's parcel is on shelf 12."}
+  - write: {page: desk, fields: {}, body: "Has the morning post come?"}
+  - expect: {fields: {noticing.noticed: ""}}
+  - write: {page: desk, fields: {}, body: "Is the lamp lit?"}
+  - write: {page: desk, fields: {}, body: "Which shelf is Mrs Okafor's parcel on?"}
+  - expect: {answer: {the-clerk.said: "12"}}
+  - write: {page: desk, fields: {}, body: "Mr Lindqvist has left his bicycle on shelf 12."}
+  - expect: {answer: {noticing.noticed: "(?i)okafor|parcel"}}

@@ -32,6 +32,8 @@ This is built and shown in the [getting started](../guide/getting-started.md) wa
 
 So routine consequences carry no thought, and model capacity goes to character, judgement, conversation and curiosity. The same state gives the same reflex, so the body can be replayed and checked, and each reaction is an event in the history with its cause named. Budgets bound what thought costs, which is a constraint to manage, not a goal.
 
+Between the reflex and the character there is a middle layer. A cheap page within a character can watch it and write for it, in its voice, under a budget: one keeps what mattered as pages of their own, and one says when what is in front of the character differs from what it knew. The character is shown what they wrote and is told nothing of them, so its thought stays on the person at the counter. The pattern is written as a card and walked with stand-ins; no live model has yet judged what is worth a page.
+
 ## Hypothesis
 
 Most of the bookkeeping of a running organisation can be expressed as reflexes to state. A vault whose reflexes are free can spend its model calls on characters that notice, take an interest and write in their own words. Two runs of the same vault will then differ, the way two days do, above a floor that never moves.
@@ -42,4 +44,5 @@ Most of the bookkeeping of a running organisation can be expressed as reflexes t
 - Reaction rules grow so numerous and tangled that they are harder to maintain than the reasoning they replaced.
 - Cascades or cycles become common in practice, rather than the rare edge the depth limit is meant for.
 - Characters with temperaments make a vault harder to follow, so variety costs more than it gives.
+- The character does as well with those pages absent, so the middle layer buys nothing.
 - A run that is not scripted shows model-driven pages doing routine work faster or more reliably than reactions. No such run has been made yet, so this is a hypothesis, not a finding.

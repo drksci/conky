@@ -35,12 +35,12 @@ Getting each event to the cheapest thing that can deal with it, and passing only
 | Where | `on`: a name, `within`, `link`; and `on: refusal` | built ([decision 0039](../decisions/0039-an-event-can-be-noticed.md)) |
 | What happened | `event.kind`, `event.by`, `event.reason` readable in a watch | built |
 | Layer | `set` is a reflex, `ask` of a small provider is a faculty, `ask` of the character's own provider is thought | built; a faculty is a convention with no golden yet ([faculties](faculties.md)) |
-| Household | a character is a space and its faculties are pages within it | composable now; untested |
-| Bubble up | a faculty writes a field and the character's prompt embeds it | built (embed); untested as a pattern |
+| Household | a character is a space and its faculties are pages within it | composed in the card `a-clerk-notices-what-changed`, walked with stand-ins; not drawn live |
+| Bubble up | a faculty writes a field and the character's prompt embeds it | built (an embed inside an embed is followed); composed in the same card; not drawn live |
 | Escalate | a higher entry's `when` reads a lower layer's field | built; trial T3 |
 | Adapt | thresholds and order are fields a reflex recomputes | measures built; [standing](standing.md) not built |
 | Order and cut | members shown in order of a field, cut to a budget | built for an order the space states ([decision 0042](../decisions/0042-a-space-shows-what-bears-first.md)); an order by use, which standing would keep, not built |
-| Budget | every layer declares its allowance and is metered | not built |
+| Budget | every layer declares its allowance and is metered | built for asks (`budget: {asks: N}`); no other allowance is metered |
 | Walls | `each` rules on the household; the depth limit | built |
 | Outside | a connector is a listener and emitter beside the vault ([connectors](connectors.md)) | terminal only |
 
@@ -68,6 +68,12 @@ The same table read across is a stack of communication layers. Each talks only t
 - Brooks's subsumption architecture: lower layers act, and higher layers inhibit or redirect.
 - Selective receive in actor mailboxes: a receiver takes the messages it matches and leaves the rest.
 - Triage: the cheapest competent person sees each case first, and only the residue reaches the specialist.
+
+## Built so far
+
+- The layer, the bubble up and the budget are composed in one card, `a-clerk-notices-what-changed`: two pages within the clerk ask a small provider under `budget: {asks: N}`, write a field and pages of their own, and the clerk's prompt embeds one page that gathers them. Walked with stand-in programs in `tests/test_notices.py`; not drawn live ([decision 0066](../decisions/0066-a-character-is-born-with-a-memory-and-a-sense-for-what-changed.md)).
+- Trial T2 below is written as that card and not drawn.
+- Not built: sinking of what is unused, and a stated order of reactions (the pages are named to sort before the clerk).
 
 ## Trial ladder
 

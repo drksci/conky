@@ -23,7 +23,7 @@ With a model available, the page's temperament and recent history go to the mode
 
 Temperament is context a model reads. It never controls anything and never gets round a rule. A vault's general manner comes from its taste page ([house-style](house-style.md)), and a page's own temperament sits within it. The premise is recorded in [decision 0020](../decisions/0020-everything-is-somebody.md).
 
-Nothing of this is built. Pages in the example vault carry human-written content, a page can ask a model, and no page has a generated temperament or voice.
+A voice exists as a field that a character's own pages embed in their prompts, in one card ([decision 0066](../decisions/0066-a-character-is-born-with-a-memory-and-a-sense-for-what-changed.md)); temperament is not built. Otherwise nothing of this is built. Pages in the example vault carry human-written content, a page can ask a model, and no page has a generated temperament or voice.
 
 ## Composes from
 
