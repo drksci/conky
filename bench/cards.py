@@ -20,6 +20,7 @@ the fixed prompt in `judge.md`. The reply, the verdict and who gave it are kept 
 from __future__ import annotations
 
 import argparse
+import dataclasses
 import fcntl
 import json
 import os
@@ -86,14 +87,23 @@ def relay(folder: Path, budget: Path) -> int:
         return 1
     found = model.detect()
     keys = Path.home() / ".conky" / "keys"
+    # The stand provider's page names the model and effort of this call; the detected provider
+    # is asked with them in place of its own.
+    named = {
+        "model": os.environ.get(model.ASK_MODEL_VARIABLE) or None,
+        "effort": os.environ.get(model.ASK_EFFORT_VARIABLE) or None,
+    }
     for choice in found.choices:
         started = time.monotonic()
+        provider = dataclasses.replace(
+            choice.provider, **{key: value for key, value in named.items() if value}
+        )
         try:
-            reply = model.ask(choice.provider, choice.secret, prompt, keys)
+            reply = model.ask(provider, choice.secret, prompt, keys)
         except model.ModelError as exc:
             print(exc, file=sys.stderr)
             continue
-        _keep(folder, True, choice.provider.name, prompt, reply.text, time.monotonic() - started)
+        _keep(folder, True, provider.name, prompt, reply.text, time.monotonic() - started)
         print(reply.text)
         return 0
     notes = "; ".join(found.notes) or "no model was detected"

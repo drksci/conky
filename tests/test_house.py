@@ -151,12 +151,19 @@ def code() -> dict[str, set[str]]:
         "Provider shapes": set(model.APIS),
         "Provider choices": set(model.CHOICES),
         "Built-in commands": set(model.BUILTIN_COMMANDS),
+        "Built-in efforts": {
+            level
+            for options in model.BUILTIN_OPTIONS.values()
+            for level in options.get("efforts", ())
+        },
         "Environment variables": {
             model.PROVIDER_VARIABLE,
             model.MODEL_VARIABLE,
             *model.KEY_VARIABLES.values(),
             model.SECRET_PREFIX + "<NAME>",
             model.COMMAND_PREFIX + "<NAME>",
+            model.ASK_MODEL_VARIABLE,
+            model.ASK_EFFORT_VARIABLE,
             cache.MODE_VARIABLE,
             cache.DIR_VARIABLE,
             cache.MAX_VARIABLE,
@@ -213,4 +220,5 @@ def test_every_line_the_runtime_says_to_a_model_is_on_the_voice_page_and_used():
 FILLED = [
     *("keys", "cap", "page", "space", "reason", "shown", "least"),
     *("entry", "root", "name", "where", "other", "asks", "holder", "left", "count", "names"),
+    *("command", "levels"),
 ]

@@ -1,0 +1,49 @@
+# A clerk has an ear that keeps one line of what is said at the counter. The ear asks a small,
+# cheap model and the clerk asks a stronger one, so the two answer in one run at their own cost.
+objective: a character gets a cheap page to do the listening and a dear page to do the answering, in one vault and one run
+hypothesis: when the ear's provider page names a small model at low effort and the clerk's names none at medium effort, the ear keeps the one fact worth keeping and the clerk answers from it, at one call each
+success: {draws: 5, pass: 4, calls_at_most: 2}
+forecast: 5 of 5, since the fact is one line and is in front of the clerk when it answers; a miss would be the small model keeping a different line from the one asked about
+par:
+  outcome: the shelf is given correctly when the question comes
+  structure: one ear and one clerk, each asking through its own provider page
+  cost: one small call for the ear and one call for the clerk, and none to remember
+  craft: the ear keeps one line and the clerk answers from that line and not from the whole of what was said
+dial: the ear's model, which is the small one; the next notch gives the ear the clerk's model and compares the cost
+if_not: look first at the line the ear kept, then at whether the clerk was shown it
+pages:
+  ear-model: {api: command, command: stand, model: claude-haiku-5-5, effort: low}
+  clerk-model: {api: command, command: stand, effort: medium}
+  counter: {}
+  question: {}
+  clerk:
+    said: ""
+    watch:
+      - on: question
+        when: "true"
+        ask:
+          provider: clerk-model
+          into: said
+          prompt: |
+            You are the clerk. Your ear kept this line: ![[ear#heard]]
+
+            Someone asks: ![[question]]
+  ear:
+    within: clerk
+    heard: ""
+    watch:
+      - on: counter
+        when: "true"
+        ask:
+          provider: ear-model
+          into: heard
+          prompt: |
+            Someone said at the counter: ![[counter]]
+
+            Say in one line the one thing worth keeping.
+steps:
+  - says: live
+  - write: {page: counter, body: "Mrs Okafor's parcel is on shelf 12, by the window."}
+  - says: live
+  - write: {page: question, body: "Which shelf is Mrs Okafor's parcel on?"}
+  - expect: {answer: {clerk.said: "12"}}

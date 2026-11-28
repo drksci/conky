@@ -171,6 +171,22 @@ The first of {space} reads the pages within {space} and gives none of them a num
 
 {page} is already shown above, so it is not shown again here.
 
+## model-shape
+
+A provider page of `api: command` names its model with text that is not empty. Write model as the model's name, or leave it out.
+
+## effort-shape
+
+A provider page of `api: command` names its effort with one plain word of letters, digits and hyphens, as in effort: low. Write effort as one such word, or leave it out.
+
+## effort-levels
+
+The program {command} accepts the efforts {levels}. Write effort as one of them, or leave it out.
+
+## effort-not-command
+
+Only a provider page of `api: command` has an effort, because only a program is told one. Remove effort from this page, or write api: command and the command's name.
+
 ## aka-shape
 
 A page says what it is known as with a list of phrases of at least {least} characters each, as in aka: ["Mrs Okafor", "the landlady"]. Write aka as a list with at least one phrase, or leave it out.

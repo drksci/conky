@@ -34,6 +34,14 @@ The animation under a card is drawn from one draw's vault history by the view in
 - Latest verdict: not drawn
 - Run: none yet
 
+## a clerk has a small ear
+
+- Objective: a character gets a cheap page to do the listening and a dear page to do the answering, in one vault and one run
+- Bar: at least 4 of 5 draws pass, median calls a draw at most 2
+- Checks: measured
+- Latest verdict: not drawn
+- Run: none yet
+
 ## a clerk reads a crowded desk
 
 - Objective: a character with more on record than it can be shown still answers from the record, because its space shows what bears on the matter first

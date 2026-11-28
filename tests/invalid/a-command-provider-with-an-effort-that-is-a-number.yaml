@@ -1,0 +1,8 @@
+# An effort is one plain word, and a number is not one.
+pages:
+  helper: {api: command, command: claude}
+write:
+  page: helper
+  set:
+    effort: 3
+refused: shape

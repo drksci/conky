@@ -101,6 +101,7 @@ One record per decision: context, decision, consequences.
 - [decisions/0062-an-order-that-fails-says-so.md](decisions/0062-an-order-that-fails-says-so.md): An order that fails says so
 - [decisions/0063-a-rule-says-why-in-its-own-words.md](decisions/0063-a-rule-says-why-in-its-own-words.md): A rule says why in its own words
 - [decisions/0064-an-embed-inside-an-embed-is-followed.md](decisions/0064-an-embed-inside-an-embed-is-followed.md): An embed inside an embedded page is followed
+- [decisions/0065-a-command-provider-page-names-its-model-and-effort.md](decisions/0065-a-command-provider-page-names-its-model-and-effort.md): A command provider page names its model and effort
 
 ### Research
 
