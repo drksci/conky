@@ -1,0 +1,8 @@
+# Only a provider page of api command has an effort, because only a program is told one.
+pages:
+  helper: {api: openai, url: "https://api.example.com/v1/chat/completions", model: some-model}
+write:
+  page: helper
+  set:
+    effort: low
+refused: shape

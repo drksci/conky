@@ -28,10 +28,11 @@ max_tokens: 400
 | `url` | The full address that requests are posted to, beginning `http://` or `https://`. Required for `openai` and `anthropic`. |
 | `model` | The model's name, sent as it is written. Required for `openai` and `anthropic`. |
 | `command` | For `command` only: the name of a program, never a command line. See [command](#command). |
+| `effort` | For `command` only: how hard the model is to try, one plain word of letters, digits and hyphens, as in `effort: low`. Optional. See [command](#command). |
 | `secret` | The name of a secret, never the secret itself: lowercase letters, digits, `-` and `_`. Optional. Without it no credential is sent. |
 | `max_tokens` | The most tokens the model may write, a positive whole number. Optional. |
 
-Other fields and the body are ignored, so a provider page can carry notes. Rules constrain provider pages like any page, for example a space that allows only approved model names.
+A page of `api: command` is checked when it is written: `model`, when present, must be text that is not empty, and `effort`, when present, must be one plain word, and for a built-in program it must be one the program accepts. A page of another `api` that has an `effort` is refused, because only a program is told one. The rest of a provider page is checked when it is asked. Other fields and the body are ignored, so a provider page can carry notes. Rules constrain provider pages like any page, for example a space that allows only approved model names.
 
 A missing page or a malformed field is recorded as a refusal with a reason that starts `model:` and names the field to correct. What happens next is in [when no model answers](#when-no-model-answers).
 
@@ -72,7 +73,9 @@ command: claude
 - The prompt is written to the program's standard input. The answer is its standard output with trailing white space trimmed.
 - The program and its arguments come from outside the vault, resolved like a secret: the environment variable `CONKY_COMMAND_<NAME>` (the name in upper case), then the file `<name>.command` in the key directory. The text is split into words with shell quoting rules and run directly, never through a shell. `CONKY_COMMAND_ECHO='python3 /path/echo.py'` runs `python3` with one argument.
 - Two names are built in and need no setup when the program is on the PATH: `claude` runs `claude -p --no-session-persistence` with its tools, its tool servers, its commands and the machine's own settings (hooks and plugins) switched off, and saves no session and its own instructions replaced by one line saying the prompt is all there is, and `codex` runs `codex exec`. The `claude` form is given `--model` with `ANTHROPIC_DEFAULT_MODEL`, or with the model the page names, and `codex` is given none. Every command provider is started in an empty folder, so the program finds no project files or instructions where it starts: a model sees its prompt and nothing else. A program given through the environment variable or the file is run as written, so anyone who sets one is responsible for switching its tools off. The environment variable and the file win over them. The `claude` form was checked against `claude --help` and a live call, see [status](../project/status.md). The `codex` form is unverified: it was not installed where it was written.
-- `model` is optional. For the built-in `claude` it is passed as `--model`, and `ANTHROPIC_DEFAULT_MODEL` is passed when none is named. For any other program it is used only as the name recorded in the commit. `max_tokens` is ignored. Nothing else is passed to the program.
+- `model` is optional. For the built-in `claude` it is passed as `--model`, and `ANTHROPIC_DEFAULT_MODEL` is passed when none is named. For any other program it is used only as the name recorded in the commit. `max_tokens` is ignored.
+- `effort` is optional and names how hard the model is to try. Each built-in names its own options: `claude` takes `--effort` with `low`, `medium`, `high`, `xhigh` or `max`, and `codex` takes none, so an `effort` on a `codex` page is a `model:` failure whose reason says to remove it or to give the program through `CONKY_COMMAND_CODEX`. A program given through the environment variable or the file takes any one plain word. Without an `effort` nothing about effort is told or recorded.
+- Every command provider is started with two variables set for that one process and no other change to its environment: `CONKY_ASK_MODEL`, the page's `model`, and `CONKY_ASK_EFFORT`, the page's `effort`, each only when the page names one. A program or a wrapper run as written, which is given no option for either, reads them. Two pages that name two models or two efforts are answered by two different runs, so a cheap page and a dear one answer in one vault in one run. Nothing else is passed to the program.
 - The call times out after 120 seconds and is not retried. A non-zero exit, an empty answer, a timeout and a program that cannot be started are failures. A name that cannot be resolved is a failure whose message says which variable to set.
 - Token counts are not known, so `Tokens-In` and `Tokens-Out` are left out.
 
@@ -99,7 +102,7 @@ When a watch `ask` or `conky ask` names no provider, Conky detects one from the 
 
 The default Anthropic model id is the constant `ANTHROPIC_DEFAULT_MODEL` in `src/conky/model.py`, taken from the current model table of the Claude API documentation. A key is read straight from `ANTHROPIC_API_KEY` or `OPENAI_API_KEY`, so it is never copied anywhere. `CONKY_MODEL` does not change a command.
 
-The commit of a detected answer records `Model` as `detected:<kind>`, for example `detected:claude`, and `Model-Name` as the model passed to the built-in `claude`, or else the model or command name. `conky model` prints the order that applies now and calls nothing.
+The commit of a detected answer records `Model` as `detected:<kind>`, for example `detected:claude`, and `Model-Name` as the model passed to the built-in `claude`, or else the model or command name, and `Effort` when the page named one. `conky model` prints the order that applies now and calls nothing.
 
 ### What conky model found
 
@@ -128,7 +131,7 @@ A question is paid for once. Before any provider is called, Conky looks for the 
 
 The key of an entry is the hash of:
 
-- the provider's shape, its `url` or `command` name, its `model` and the most tokens it may write (1024 for `anthropic` when the page sets none);
+- the provider's shape, its `url` or `command` name, its `model`, its `effort` when it names one, and the most tokens it may write (1024 for `anthropic` when the page sets none);
 - the whole prompt as sent, including the instruction added when the entry may write pages;
 - the cause of the question: the commit that made a watch entry react, or for `conky ask` the latest commit of the vault.
 

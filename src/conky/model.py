@@ -5,6 +5,7 @@ from __future__ import annotations
 import http.client
 import json
 import os
+import re
 import shlex
 import shutil
 import socket
@@ -64,11 +65,31 @@ BUILTIN_COMMANDS = arch.constant(
     "Programs a command provider can run with nothing set up.",
     doc="providers.md#command",
 )
+# What each built-in program takes: the option that names a model, the option that names an
+# effort, and the efforts it accepts. A program with no entry for an option takes none.
+BUILTIN_OPTIONS = arch.constant(
+    {
+        "claude": {
+            "model": "--model",
+            "effort": "--effort",
+            "efforts": ("low", "medium", "high", "xhigh", "max"),
+        },
+        "codex": {},
+    },
+    "built-in option",
+    "conky.model.BUILTIN_OPTIONS",
+    "slot.command.option",
+    "The options a built-in command takes for a model and an effort, and the efforts it accepts.",
+    doc="providers.md#command",
+)
+EFFORT = re.compile(r"^[A-Za-z0-9][A-Za-z0-9-]*$")
 PROVIDER_VARIABLE = "CONKY_PROVIDER"
 MODEL_VARIABLE = "CONKY_MODEL"
 KEY_VARIABLES = {"anthropic": "ANTHROPIC_API_KEY", "openai": "OPENAI_API_KEY"}
 SECRET_PREFIX = "CONKY_SECRET_"
 COMMAND_PREFIX = "CONKY_COMMAND_"
+ASK_MODEL_VARIABLE = "CONKY_ASK_MODEL"
+ASK_EFFORT_VARIABLE = "CONKY_ASK_EFFORT"
 CHOICES = arch.constant(
     ("anthropic", "openai", "claude", "codex", "none"),
     "provider choice",
@@ -121,6 +142,7 @@ class Provider:
     secret: str | None
     max_tokens: int | None
     command: str | None = None
+    effort: str | None = None
 
     @property
     def name(self) -> str:
@@ -138,6 +160,36 @@ class Answer:
     cached: bool = False
     # The model a built-in program was told to answer with; None when the program's own was used.
     model: str | None = None
+    # The effort a command was told; None when none was.
+    effort: str | None = None
+
+
+def check_provider(fields: dict[str, Any]) -> str | None:
+    """Return what is wrong with the model and effort of a command provider page, else None.
+
+    A page with no `api` is not a provider page and is never checked. A page of another `api` is
+    checked only for an `effort`, which only a command reads.
+    """
+    api = fields.get("api")
+    if api is None:
+        return None
+    if api != "command":
+        return voice.line("effort-not-command") if "effort" in fields else None
+    model = fields.get("model")
+    if "model" in fields and not (isinstance(model, str) and model):
+        return voice.line("model-shape")
+    if "effort" not in fields:
+        return None
+    effort = fields["effort"]
+    if not (isinstance(effort, str) and EFFORT.match(effort)):
+        return voice.line("effort-shape")
+    command = fields.get("command")
+    levels = None
+    if isinstance(command, str):
+        levels = BUILTIN_OPTIONS.get(command, {}).get("efforts")
+    if levels and effort not in levels:
+        return voice.line("effort-levels", command=command, levels=", ".join(levels))
+    return None
 
 
 @arch.law(
@@ -184,9 +236,10 @@ def provider(page: str, fields: dict[str, Any] | None) -> Provider:
         name = fields.get("command")
         if not (isinstance(name, str) and NAME.match(name)):
             raise bad("command must be the name of a program, never a command line")
-        if model is not None and not (isinstance(model, str) and model):
-            raise bad("model must be the model's name")
-        return Provider(page, api, None, model, None, None, name)
+        problem = check_provider(fields)
+        if problem is not None:
+            raise bad(problem)
+        return Provider(page, api, None, model, None, None, name, fields.get("effort"))
     if not (isinstance(url, str) and url.startswith(("http://", "https://"))):
         raise bad("url must be an http or https address")
     if not (isinstance(model, str) and model):
@@ -244,12 +297,15 @@ def find_secret(name: str, keys_dir: Path) -> str:
     doc="providers.md#command",
     roadmap="R26",
 )
-def find_command(name: str, keys_dir: Path, model: str | None) -> tuple[list[str], str | None]:
+def find_command(
+    name: str, keys_dir: Path, model: str | None, effort: str | None = None
+) -> tuple[list[str], str | None]:
     """Return the argv for a command name and the model it is told, never through a shell.
 
     The order is the environment variable CONKY_COMMAND_<NAME>, then <name>.command in keys_dir,
-    then the built-in argv when its program is on the PATH. Only the built-in claude is given a
-    model: the one the page names, else ANTHROPIC_DEFAULT_MODEL. A configured command is run as
+    then the built-in argv when its program is on the PATH. A built-in is given the options its
+    entry in BUILTIN_OPTIONS names: claude is told the model the page names, else
+    ANTHROPIC_DEFAULT_MODEL, and the effort the page names. A configured command is run as
     written, so the model told is None.
     """
     variable = f"{COMMAND_PREFIX}{name.upper()}"
@@ -264,10 +320,18 @@ def find_command(name: str, keys_dir: Path, model: str | None) -> tuple[list[str
             "correct its quoting"
         ) from exc
     if not argv and name in BUILTIN_COMMANDS and shutil.which(BUILTIN_COMMANDS[name][0]):
-        argv = list(BUILTIN_COMMANDS[name])
-        if name == "claude":
+        argv, options, told = list(BUILTIN_COMMANDS[name]), BUILTIN_OPTIONS.get(name, {}), None
+        if effort is not None and "effort" not in options:
+            raise ModelError(
+                f"command {name!r} takes no effort: remove effort from the page, or give the "
+                f"program and its options in {variable}"
+            )
+        if "model" in options:
             told = model or ANTHROPIC_DEFAULT_MODEL
-            return [*argv, "--model", told], told
+            argv += [options["model"], told]
+        if effort is not None:
+            argv += [options["effort"], effort]
+        return argv, told
     if not argv:
         raise ModelError(
             f"command {name!r} is not set up: set {variable} to the program and its options, "
@@ -277,6 +341,9 @@ def find_command(name: str, keys_dir: Path, model: str | None) -> tuple[list[str
 
 
 def _run(found: Provider, argv: list[str], prompt: str, told: str | None) -> Answer:
+    # The program is told, for this one process, the model and effort its page names.
+    named = {ASK_MODEL_VARIABLE: found.model, ASK_EFFORT_VARIABLE: found.effort}
+    env = {**os.environ, **{key: value for key, value in named.items() if value}}
     where = f"provider {found.page!r}"
     try:
         # A model sees its prompt and nothing else: the program starts in an empty folder, so
@@ -291,6 +358,7 @@ def _run(found: Provider, argv: list[str], prompt: str, told: str | None) -> Ans
                 timeout=COMMAND_TIMEOUT,
                 check=False,
                 cwd=room,
+                env=env,
             )
     except FileNotFoundError as exc:
         raise ModelError(
@@ -320,7 +388,7 @@ def _run(found: Provider, argv: list[str], prompt: str, told: str | None) -> Ans
             f"{where} printed no answer: check that {argv[0]!r} writes its answer to "
             "standard output"
         )
-    return Answer(text, None, None, model=told)
+    return Answer(text, None, None, model=told, effort=found.effort)
 
 
 @dataclass(frozen=True)
@@ -482,7 +550,7 @@ def ask(found: Provider, secret: str | None, prompt: str, keys_dir: Path) -> Ans
     """Send prompt to the provider once, with no retry, and return its answer."""
     where = f"provider {found.page!r}"
     if found.command is not None:
-        argv, told = find_command(found.command, keys_dir, found.model)
+        argv, told = find_command(found.command, keys_dir, found.model, found.effort)
         return _run(found, argv, prompt, told)
     try:
         with urllib.request.urlopen(_request(found, secret, prompt), timeout=TIMEOUT) as reply:
@@ -514,10 +582,13 @@ def moment_key(found: Provider, prompt: str, cause: str) -> str:
     """Return the cache key of one question put in one moment.
 
     It is the hash of the provider's shape, its endpoint or command name, its model, the most
-    tokens it may write, the whole prompt as sent and the event that caused the question. The
-    same words asked after a new event have another key, so a character answers afresh.
+    tokens it may write, its effort when it names one, the whole prompt as sent and the event
+    that caused the question. The same words asked after a new event have another key, so a
+    character answers afresh.
     """
     limit = found.max_tokens or (ANTHROPIC_MAX_TOKENS if found.api == "anthropic" else None)
+    # The effort joins the key only when there is one, so every key of a page without it stays.
+    effort = [found.effort] if found.effort else []
     return digest(
         "answer",
         found.api,
@@ -527,6 +598,7 @@ def moment_key(found: Provider, prompt: str, cause: str) -> str:
         str(limit or ""),
         prompt,
         cause,
+        *effort,
     )
 
 
@@ -553,14 +625,19 @@ def ask_once(
     key = moment_key(found, prompt, cause)
     kept = cache.get(key)
     if isinstance(kept, dict) and isinstance(kept.get("text"), str) and kept["text"].strip():
-        told = kept.get("model")
+        told, effort = kept.get("model"), kept.get("effort")
         return Answer(
-            kept["text"], None, None, cached=True, model=told if isinstance(told, str) else None
+            kept["text"],
+            None,
+            None,
+            cached=True,
+            model=told if isinstance(told, str) else None,
+            effort=effort if isinstance(effort, str) else None,
         )
     if cache.mode == Mode.ONLY:
         return None
     reply = ask(found, secret(), prompt, keys_dir)
-    cache.put(key, {"text": reply.text, "model": reply.model})
+    cache.put(key, {"text": reply.text, "model": reply.model, "effort": reply.effort})
     return reply
 
 

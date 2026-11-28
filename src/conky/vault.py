@@ -69,6 +69,7 @@ class Trailer(StrEnum):
     FROM = "From"
     MODEL = "Model"
     MODEL_NAME = "Model-Name"
+    EFFORT = "Effort"
     TOKENS_IN = "Tokens-In"
     TOKENS_OUT = "Tokens-Out"
     READ = "Read"
@@ -577,6 +578,9 @@ class Vault:
             check_theatre(page, result)
         except ShapeError as exc:
             return refuse(f"{Refusal.SHAPE}: {exc}")
+        wrong = model.check_provider(result.fields)
+        if wrong is not None:
+            return refuse(f"{Refusal.SHAPE}: {wrong}")
         if SHOWS in changes:
             unscored = unshown(page, {**self._all(), page: result})
             if unscored:
@@ -1344,6 +1348,8 @@ class Vault:
         """
         page, actor, at, cause, depth = where
         trailers = [(Trailer.MODEL, found.page), (Trailer.MODEL_NAME, reply.model or found.name)]
+        if reply.effort is not None:
+            trailers.append((Trailer.EFFORT, reply.effort))
         if reply.cached:
             trailers.append((Trailer.CACHE, CACHE_HIT))
         if reply.tokens_in is not None:

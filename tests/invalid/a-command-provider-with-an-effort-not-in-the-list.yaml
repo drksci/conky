@@ -1,0 +1,8 @@
+# The built-in claude accepts a stated list of efforts, and extreme is not on it.
+pages:
+  helper: {api: command, command: claude}
+write:
+  page: helper
+  set:
+    effort: extreme
+refused: shape

@@ -1,0 +1,8 @@
+# A provider page of api command that names a model must name it with text that is not empty.
+pages:
+  helper: {api: command, command: claude}
+write:
+  page: helper
+  set:
+    model: ""
+refused: shape

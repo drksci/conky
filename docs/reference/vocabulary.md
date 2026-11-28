@@ -181,6 +181,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `From` | The space whose rule refused the write. |
 | `Model` | The provider page that answered, or `none`. |
 | `Model-Name` | The model's name. |
+| `Effort` | The effort a command was told, when its provider page named one. |
 | `Tokens-In` | Tokens in the prompt, when the provider reports them. |
 | `Tokens-Out` | Tokens in the answer, when the provider reports them. |
 | `Read` | A page embedded in the prompt. |
@@ -249,6 +250,16 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `claude` | Runs `claude -p`. |
 | `codex` | Runs `codex exec`. |
 
+## Built-in efforts
+
+| Name | Meaning |
+|---|---|
+| `low` | The lightest effort `claude` accepts. |
+| `medium` | The middle effort `claude` accepts. |
+| `high` | A heavy effort `claude` accepts. |
+| `xhigh` | A heavier effort `claude` accepts. |
+| `max` | The heaviest effort `claude` accepts. |
+
 ## Environment variables
 
 | Name | Meaning |
@@ -259,6 +270,8 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `OPENAI_API_KEY` | The key for the detected `openai` choice. |
 | `CONKY_SECRET_<NAME>` | The secret called `<name>` that a provider page names. |
 | `CONKY_COMMAND_<NAME>` | The program and options for the command called `<name>`. |
+| `CONKY_ASK_MODEL` | Set for a command provider's program: the model its page names. |
+| `CONKY_ASK_EFFORT` | Set for a command provider's program: the effort its page names. |
 | `CONKY_CACHE` | The cache mode, the same as `--cache-mode`. |
 | `CONKY_CACHE_DIR` | The cache directory, the same as `--cache-dir`. |
 | `CONKY_CACHE_MAX` | The most megabytes the cache keeps. |

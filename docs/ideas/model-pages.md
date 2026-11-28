@@ -45,6 +45,7 @@ The same vault runs unchanged against two providers by editing one page. Every m
 - A provider is an ordinary page with `api`, `url`, `model`, an optional `secret` and an optional `max_tokens`. The secret is a name, looked up in the environment or in a file in the key directory, and never enters the vault. See [providers](../reference/providers.md).
 - A watch entry may carry `ask` in place of `set`. The resolved prompt is sent once, and the answer is written to a field of the asking page as an ordinary signed write that carries `Cause`. A question already answered for the same resolved prompt is skipped. See [rules and reactions](../reference/rules-and-reactions.md#asking-a-model).
 - The commit records `Model`, `Model-Name`, token counts when the provider reports them, and the resolved prompt as its message body ([vault format](../reference/vault-format.md#a-model-answer)).
+- A provider page of `api: command` may carry `model` and `effort`, and the program is told both (`--model` and `--effort` for the built-in `claude`, and `CONKY_ASK_MODEL` and `CONKY_ASK_EFFORT` for every command), so two pages in one vault can ask a cheap model and a dear one in one run. The commit records `Effort` ([decision 0065](../decisions/0065-a-command-provider-page-names-its-model-and-effort.md)).
 - A failure to ask is a refusal with a reason that starts `model:`. The write that triggered it stands.
 - `conky ask` is the one-off form ([command line](../reference/cli.md#ask)).
 - Two wire formats are supported, `openai` and `anthropic`, using the standard library only.
