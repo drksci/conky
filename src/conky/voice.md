@@ -163,6 +163,14 @@ The first of {space} reads the pages within {space} and gives none of them a num
 
 ({count} not ordered: first gives no number for {names})
 
+## embed-depth
+
+{page} is not shown here: embeds are followed only {cap} deep.
+
+## embed-loop
+
+{page} is already shown above, so it is not shown again here.
+
 ## aka-shape
 
 A page says what it is known as with a list of phrases of at least {least} characters each, as in aka: ["Mrs Okafor", "the landlady"]. Write aka as a list with at least one phrase, or leave it out.

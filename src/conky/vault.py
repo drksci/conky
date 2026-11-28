@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import re
 from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -17,7 +16,6 @@ from conky import answer, arch, git, model, theatre, voice
 from conky.cache import Cache
 from conky.errors import BadInput, VerifyFailed
 from conky.page import (
-    ASKS,
     BUDGET,
     EMBED,
     MEMBERS,
@@ -1154,7 +1152,7 @@ class Vault:
         if depth > MAX_DEPTH:
             return self._refuse(page, {}, None, actor, at, cause, _CYCLE, depth)
         pages = self._all()
-        prompt = resolve_text(self._tally(ask.prompt, pages), pages)
+        prompt = resolve_text(ask.prompt, pages, self._asks_left(pages))
         if ask.writes is not None:
             shown = any(
                 (found.group(1), found.group(2)) == (ask.writes, MEMBERS)
@@ -1259,19 +1257,18 @@ class Vault:
         said = voice.line("budget-spent", page=name, asks=held[1], holder=held[0])
         return f"{Refusal.LIMIT}: {said}"
 
-    def _tally(self, prompt: str, pages: dict[str, Page]) -> str:
-        """Return prompt with each `![[PAGE#asks]]` replaced by what that page has left to ask."""
+    def _asks_left(self, pages: dict[str, Page]) -> Callable[[str], str | None]:
+        """Return a function that says what a page has left to ask, or None with no budget."""
 
-        def left(found: re.Match[str]) -> str:
-            name, part = found.group(1), found.group(2)
+        def left(name: str) -> str | None:
             target = pages.get(name)
-            held = self._budget(name, target) if part == ASKS and target is not None else None
+            held = self._budget(name, target) if target is not None else None
             if held is None:
-                return found.group(0)
+                return None
             gone = self._count(name, held[0])
             return voice.line("asks-left", left=max(held[1] - gone, 0), asks=held[1])
 
-        return EMBED.sub(left, prompt)
+        return left
 
     def _think(
         self,
@@ -1353,7 +1350,8 @@ class Vault:
             trailers.append((Trailer.TOKENS_IN, str(reply.tokens_in)))
         if reply.tokens_out is not None:
             trailers.append((Trailer.TOKENS_OUT, str(reply.tokens_out)))
-        trailers += [(Trailer.READ, name) for name in embedded(ask.prompt, pages)]
+        read = embedded(ask.prompt, pages, self._asks_left(pages))
+        trailers += [(Trailer.READ, name) for name in read]
         text, blocks = reply.text, []
         if ask.writes is not None:
             text, blocks = answer.split(reply.text)
@@ -1450,7 +1448,7 @@ class Vault:
         if skip_same and (self._load(page) or Page()).fields.get(ask.into) == text:
             return None
         trailers = [(Trailer.MODEL, "none")] + [
-            (Trailer.READ, name) for name in embedded(ask.prompt, pages)
+            (Trailer.READ, name) for name in embedded(ask.prompt, pages, self._asks_left(pages))
         ]
         changes = {ask.into: text}
         result = self._write(page, changes, None, actor, at, cause, depth, (trailers, prompt))

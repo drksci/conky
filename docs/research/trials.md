@@ -58,6 +58,14 @@ The animation under a card is drawn from one draw's vault history by the view in
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-clerk-reads-its-desk/dynamics-dark.webp"><img src="../results/cards/a-clerk-reads-its-desk/dynamics-light.webp" alt="a clerk reads its desk, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-clerk-reads-its-desk/topology-dark.png"><img src="../results/cards/a-clerk-reads-its-desk/topology-light.png" alt="a clerk reads its desk, its final state" width="720"></picture></p>
 
+## a clerk reads through its senses
+
+- Objective: a character is shown what its senses wrote through one page that gathers them, so the prompt stays one line and a character composes from pages
+- Bar: at least 5 of 5 draws pass, median calls a draw at most 1
+- Checks: measured
+- Latest verdict: not drawn
+- Run: none yet
+
 ## a clerk remembers
 
 - Objective: a fact shown once is carried across fresh model calls by what the character puts in bold, with no memory kept but one field a reflex fills

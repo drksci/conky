@@ -22,7 +22,7 @@ The runtime also searches the `PATH` for programs and uses the home directory fo
 | `link` | A page name written in a page so that one page points at another. |
 | `term` | A page that lists the phrases it is known by in a field `aka`. Text that uses one of the phrases counts as linking to the page, and `terms(TEXT)` names the pages a text uses. |
 | `within(NAME, SPACE)` | A function in expressions: whether a page called NAME exists and lies within SPACE, so a space can say who may write. |
-| `embed` | `![[page]]`, replaced by a field, a body or, for a space, the list of its members, or with `#context` what the spaces above a page say (each introduced by `NAME says:`, nearest first, the nearest 5 shown), when a page is read. `#` selects the part. |
+| `embed` | `![[page]]`, replaced by a field, a body or, for a space, the list of its members, or with `#context` what the spaces above a page say (each introduced by `NAME says:`, nearest first, the nearest 5 shown), when a page is read. `#` selects the part. An embed in the text an embed brings in is followed too, to a depth of 3, and a loop or a deeper embed is replaced by a stage direction. |
 | `budget` | A field of a page: how many asks it may make since the budget was last written. A space's budget is a default for each member. |
 | `asks` | In an expression, `asks.spent` and `asks.left`: the asks a page has made under its budget and the asks it has left. In a prompt, `![[PAGE#asks]]` says how many are left. |
 | `rule` | An expression the runtime evaluates before a write is kept. |
