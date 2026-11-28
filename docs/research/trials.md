@@ -26,18 +26,18 @@ The animation under a card is drawn from one draw's vault history by the view in
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-clerk-finds-it-by-its-terms/dynamics-dark.webp"><img src="../results/cards/a-clerk-finds-it-by-its-terms/dynamics-light.webp" alt="a clerk finds it by its terms, drawn as it happened in draw 1, the first that passed" width="720"></picture></p>
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="../results/cards/a-clerk-finds-it-by-its-terms/topology-dark.png"><img src="../results/cards/a-clerk-finds-it-by-its-terms/topology-light.png" alt="a clerk finds it by its terms, its final state" width="720"></picture></p>
 
-## a clerk has a memory
-
-- Objective: a character remembers across fresh calls without being told how, because a sense beside it keeps what matters in the character's own words
-- Bar: at least 4 of 5 draws pass, median calls a draw at most 8
-- Checks: measured
-- Latest verdict: not drawn
-- Run: none yet
-
 ## a clerk has a small ear
 
 - Objective: a character gets a cheap page to do the listening and a dear page to do the answering, in one vault and one run
 - Bar: at least 4 of 5 draws pass, median calls a draw at most 2
+- Checks: measured
+- Latest verdict: not drawn
+- Run: none yet
+
+## a clerk notices what changed
+
+- Objective: a character remembers and notices across fresh calls without being told how, because pages within it keep what matters and say what changed, in its own voice and on a small model under a budget
+- Bar: at least 3 of 5 draws pass, median calls a draw at most 15
 - Checks: measured
 - Latest verdict: not drawn
 - Run: none yet

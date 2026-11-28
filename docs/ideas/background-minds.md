@@ -37,6 +37,8 @@ Cheap [model pages](model-pages.md) with a declared budget do a character's quie
 
 Each is an ordinary page in the actor's space that watches and writes. Each has a measure of what it has spent and stops at its budget, as the rule for anything that runs in the background requires. The budget is built: a page may carry `budget: {asks: N}`, the runtime counts its asks from the history and refuses an ask past it, and a space hands a default down ([decision 0058](../decisions/0058-a-budget-the-runtime-holds.md)). The four minds, tokens, money, a time window and a pool shared by a space are not built.
 
+The first two pages of this kind exist as the starting pages of a card, one that keeps what matters and one that says what changed ([decision 0066](../decisions/0066-a-character-is-born-with-a-memory-and-a-sense-for-what-changed.md)); doubt and orientation are not built.
+
 ## Allowance follows use
 
 A mind's allowance is set by [standing](standing.md): the share of what it wrote that was later used, by a link or a write within. A mind whose notes are taken up keeps its allowance, and one whose notes nobody uses gets less. Reflection stays quiet while a plain trend measure is good, since a mind that has nothing to doubt needs no turn. A forecast that missed is evidence and is acted on regardless of that quiet. The two triggers differ on purpose: doubt on success is optional, a miss is not.
